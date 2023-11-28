@@ -1,0 +1,767 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Construir la interfaz de usuario (II)</title>
+<link type="text/css" href="../skin/highlight/shCore.css" rel="stylesheet">
+<link type="text/css" href="../skin/highlight/shThemeEclipse.css" rel="stylesheet">
+<script src="../skin/highlight/shCore.js" type="text/javascript"></script><script src="../skin/highlight/shAutoloader.js" type="text/javascript"></script>
+<link type="text/css" href="../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../skin/profile.css" rel="stylesheet">
+<script src="../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="../images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Groovy&amp;Grails: desarrollo r&aacute;pido de aplicaciones" src="../images/baner_j2ee_der.gif" title="Groovy&amp;Grails: desarrollo r&aacute;pido de aplicaciones"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="../index.html">Home</a>
+</li>
+<li class="current">
+<a class="base-selected" href="../sesiones/index.html">Sesiones</a>
+</li>
+<li>
+<a class="base-not-selected" href="../ejercicios/index.html">Ejercicios</a>
+</li>
+<li>
+<a class="base-not-selected" href="../bibliografia/index.html">Bibliograf&iacute;a</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../sesiones/sesion01-apuntes.html" title="Introducci&oacute;n a Groovy">Sesi&oacute;n 1</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion02-apuntes.html" title="El lenguaje Groovy">Sesi&oacute;n 2</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion03-apuntes.html" title="Aspectos avanzados en Groovy">Sesi&oacute;n 3</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion04-apuntes.html" title="Librer&iacute;as propias en Groovy">Sesi&oacute;n 4</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion05-apuntes.html" title="Introducci&oacute;n a Grails">Sesi&oacute;n 5</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion06-apuntes.html" title="Construir la interfaz de usuario (I)">Sesi&oacute;n 6</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion07-apuntes.html" title="Controladores">Sesi&oacute;n 7</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesi&oacute;n 8</div>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion09-apuntes.html" title="Dominios y servicios (I)">Sesi&oacute;n 9</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion10-apuntes.html" title="Dominios y servicios (II)">Sesi&oacute;n 10</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion11-apuntes.html" title="Seguridad">Sesi&oacute;n 11</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion12-apuntes.html" title="Despliegue de aplicaciones">Sesi&oacute;n 12</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion13-apuntes.html" title="Web 2.0">Sesi&oacute;n 13</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion14-apuntes.html" title="AJAX">Sesi&oacute;n 14</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion15-apuntes.html" title="Dos horas para crear twitter">Sesi&oacute;n 15</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion08-apuntes.pdf"><img alt="PDF -icon" src="../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Construir la interfaz de usuario (II)</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Tests">Tests</a>
+<ul class="minitoc">
+<li>
+<a href="#Tests+de+integraci%C3%B3n">Tests de integraci&oacute;n</a>
+</li>
+<li>
+<a href="#Tests+funcionales">Tests funcionales</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Validaci%C3%B3n+y+errores">Validaci&oacute;n y errores</a>
+</li>
+<li>
+<a href="#Externalizaci%C3%B3n+de+cadenas+de+caracteres">Externalizaci&oacute;n de cadenas de caracteres</a>
+</li>
+</ul>
+</div>
+         
+
+<p>
+
+
+</p>
+
+
+<a name="N1000F"></a><a name="Tests"></a>
+<h2 class="underlined_10">Tests</h2>
+<div class="section">
+<p>
+	Siguiendo con la idea inicial de unir en un mismo framework varias de las herramientas de c&oacute;digo abierto m&aacute;s utilizadas en el mundo del desarrollo de aplicaciones, Grails opt&oacute; por incluir dos de los m&aacute;s populares frameworks de tests existentes en la actualidad como son <a class="external" href="http://www.junit.org/">JUnit</a> y <a class="external" href="http://webtest.canoo.com/webtest/manual/WebTestHome.html">Canoo</a>. Mediante estos frameworks vamos a poder realizar tests unitarios y de integraci&oacute;n, as&iacute; como tests funcionales. El prop&oacute;sito de &eacute;stos tests es verificar que la aplicaci&oacute;n funciona tal y como esperamos y confirmar que &eacute;sta no ha dejado de funcionar despu&eacute;s de iterar sobre la misma. Como estar&aacute;s pensando, en una aplicaci&oacute;n con muchas personas trabajando, es igual de importante desarrollar una buena aplicaci&oacute;n como crear un buen paquete de tests. Hay incluso algunas teor&iacute;as con las que est&aacute;n de acuerdo muchos desarrolladores que afirman que los tests deben ser implementados incluso con anterioridad a la aplicaci&oacute;n.
+</p>
+<p>
+	En primer lugar vamos a realizar algunos tests de integraci&oacute;n para verificar que los m&eacute;todos <span class="codefrag">handleLogin()</span> y <span class="codefrag">logout()</span> funcionan correctamente. Posteriormente crearemos tambi&eacute;n unos tests funcionales para comprobar la funcionalidad del encabezado de nuestra aplicaci&oacute;n. Empecemos por los tests de integraci&oacute;n. 
+</p>
+<a name="N10029"></a><a name="Tests+de+integraci%C3%B3n"></a>
+<h3 class="underlined_5">Tests de integraci&oacute;n</h3>
+<p>
+	En la primera sesi&oacute;n sobre Grails ya vimos como se pueden crear tests de integraci&oacute;n en Grails gracias al comando <span class="codefrag">grails create-integration-test</span> seguido del controlador sobre el que deseamos generar los tests. Este comando crear&aacute; un fichero en el directorio <em>test/integration</em> llamado <em>UsuarioTests.groovy</em> con el siguiente contenido:
+</p>
+<pre class="code">package biblioteca
+
+import grails.test.*
+
+class UsuarioTests extends GroovyTestCase {
+	protected void setUp() {
+	    super.setUp()
+	}
+
+	protected void tearDown() {
+	    super.tearDown()
+	}
+
+	void testSomething() {
+
+	}
+}</pre>
+<p>
+	Recordemos que el m&eacute;todo <span class="codefrag">setUp()</span> se ejecutar&aacute; antes que cualquier test de la clase en cuesti&oacute;n, mientras que el m&eacute;todo <span class="codefrag">tearDown()</span> ser&aacute; lo &uacute;ltimo que se haga. La t&iacute;pica utilidad del m&eacute;todo <span class="codefrag">setUp()</span> es eliminar todos los datos de la correspondiente clase de dominio para dejarla en un estado conocido.
+</p>
+<p>
+	En primer lugar, vamos a comprobar el funcionamiento del m&eacute;todo <span class="codefrag">handleLogin()</span> y para ello vamos a crear un par de tests, uno con un usuario correcto que compruebe que el usuario puede entrar en el sistema sin problemas y otro con un usuario incorrecto que no podr&aacute; entrar en el sistema. Los m&eacute;todos deber&aacute;n empezar por la palabra <em>test</em> para que sean tenidos en cuenta cuando se pase la bater&iacute;a de tests. El siguiente c&oacute;digo muestra la funci&oacute;n <span class="codefrag">testHandleLogin()</span> que comprueba que un usuario v&aacute;lido consigue entrar en el sistema.
+</p>
+<pre class="code">Usuario u
+UsuarioController uc
+
+protected void setUp() {
+	//Creo el usuario
+	u = new Usuario(login:'frangarcia2',
+			password:'mipassword',
+			nombre:'Francisco Jos&eacute;',
+			apellidos:'Garc&iacute;a Rico',
+			tipo:'administrador', 
+			email:'fgarcia@ua.es')
+	u.save()
+
+	//Inicializo el controlador
+	uc = new UsuarioController()
+}
+
+protected void tearDown() {
+	u.delete()
+}
+
+void testHandleLogin() {
+	// Establece los par&aacute;metros del usuario
+	uc.params.login = u.login
+
+	// Invoca la acci&oacute;n
+	uc.handleLogin()
+
+	// Si la acci&oacute;n ha funcionado correctamente, 
+	// la variable session tendr&aacute; los datos del usuario
+	def sessUsuario = uc.session.usuario
+
+	//Compruebo que la sesi&oacute;n del usuario se ha creado correctamente
+	//y que no es null
+	assert sessUsuario
+
+	assertEquals(u.login, sessUsuario.login)
+	// Y el usuario se redirige a la p&aacute;gina para realizar operaciones
+	assertEquals "/operacion", uc.response.redirectedUrl
+}</pre>
+<p>
+	Para comprobar que la aplicaci&oacute;n pasa correctamente nuestra bater&iacute;a de tests, debemos ejecutar el comando <span class="codefrag">grails test-app</span>. Este comando nos mostrar&aacute; por pantalla toda la informaci&oacute;n relativa a los tests indic&aacute;ndonos si han tenido &eacute;xito o no, pero adem&aacute;s, nos generar&aacute; un informe completo sobre ellos en el directorio <em>target/test-reports</em>. Si s&oacute;lo queremos realizar los tests sobre la clase reci&eacute;n creada <em>UsuarioTests</em> podemos ejecutar tambi&eacute;n el comando <span class="codefrag">grails test-app biblioteca.Usuario</span>.
+</p>
+<p>
+	Ya tenemos comprobado que un usuario v&aacute;lido en nuestro sistema puede entrar correctamente en el mismo. Lo siguiente que vamos a hacer es crear otro test que compruebe que un usuario no v&aacute;lido no puede entrar en la aplicaci&oacute;n. Para ello creamos el m&eacute;todo <span class="codefrag">testHandleLoginInvalidUser()</span> y en &eacute;l comprobaremos, al igual que hicimos en el m&eacute;todo anterior que el usuario es redirigido a una determinada p&aacute;gina as&iacute; como el mensaje de error devuelto por el sistema.
+</p>
+<pre class="code">void testHandleLoginInvalidUser() {
+	// Establece los par&aacute;metros del usuario
+	uc.params.login = "loginincorrecto"
+
+	// Invoca la acci&oacute;n
+	uc.handleLogin()
+
+	//Compruebo que la acci&oacute;n ha redireccionado de nuevo a la p&aacute;gina de login
+	assertEquals "/usuario/login", uc.response.redirectedUrl
+
+	//Compruebo el mensaje flash devuelto por el controlador
+	def message = uc.flash.message
+	assert message
+	assert message.startsWith("El usuario ${uc.params.login} no existe")
+}</pre>
+<p>
+	Volvemos a ejecutar el comando <span class="codefrag">grails test-app biblioteca.Usuario</span> para comprobar que todo sigue funcionando tal y como pens&aacute;bamos.
+</p>
+<p>
+	Si todo ha ido bien, ya habremos realizado un test positivo (con un usuario v&aacute;lido) y otro negativo (con un usuario no v&aacute;lido) sobre nuestra aplicaci&oacute;n para el m&eacute;todo <span class="codefrag">handleLogin()</span>. Por &uacute;ltimo, vamos a realizar un nuevo test de integraci&oacute;n para comprobar que el m&eacute;todo <span class="codefrag">logout()</span> funciona correctamente. En este test comprobaremos que al abandonar el sistema, la variable <span class="codefrag">session</span> se queda vac&iacute;a y que el usuario es redirigido a la p&aacute;gina de <em>/usuario/login</em> para que vuelva a identificarse.
+</p>
+<pre class="code">void testLogout() {
+	// Simulamos que el usuario ya se ha identificado en el sistema
+	// copiando sus datos en la variable session
+	uc.session.usuario = u
+	// Abandonamos la aplicaci&oacute;n
+	uc.logout()
+
+	def sessUsuario = uc.session.usuario
+	//Comprueba que la variable sessUsuario es null
+	assertNull("Expected session user to be null", sessUsuario)
+	//Comprueba que el usuario es redirigido a la p&aacute;gina usuario/login
+	assertEquals "/usuario/login", uc.response.redirectedUrl
+}</pre>
+<p>
+	Si ahora ejecutamos el comando <span class="codefrag">grails test-app biblioteca.Usuario</span> podemos comprobar si nuestros tests se han ejecutado correctamente.
+</p>
+<p>
+	
+<img alt="Informes de tests" height="292" src="../images/sesion8/reportstests.jpg" width="700">
+</p>
+<p>
+	A partir de ahora, lo ideal es desarrollar los tests de integraci&oacute;n al mismo tiempo que se desarrolla la aplicaci&oacute;n, ya que con ellos conseguiremos ahorrar mucho tiempo y esfuerzo cada vez que introduzcamos modificaciones en nuestra aplicaci&oacute;n.
+</p>
+<a name="N100A0"></a><a name="Tests+funcionales"></a>
+<h3 class="underlined_5">Tests funcionales</h3>
+<p>
+	Los siguientes tests que vamos a utilizar en nuestra aplicaci&oacute;n son los llamados <em>tests funcionales</em> y que como su propio nombre indica pretenden comprobar la funcionalidad de la aplicaci&oacute;n. En estos tests se pretende imitar las posibles acciones que pueden los realizar los usuarios interactuando con la aplicaci&oacute;n tales como hacer clics sobre enlaces y enviar formularios. Hasta ahora, esto lo estamos haciendo a mano y cada vez que hacemos un cambio debemos realizar una serie de pruebas m&iacute;nimas para comprobar que no hemos hecho algo incorrecto al introducir estos cambios en el c&oacute;digo. Con los tests funcionales vamos a poder automatizar este proceso.
+</p>
+<p>
+	Grails pone a disposici&oacute;n de los desarrolladores un plugin de <a class="external" href="http://webtest.canoo.com">Canoo</a>, un popular framework de c&oacute;digo abierto para la implementaci&oacute;n de tests funcionales (recuerda que todos los frameworks utilizados en Grails ya han sido ampliamente utilizados por otras comunidades). Este plugin nos facilitar&aacute; la realizaci&oacute;n de tests funcionales para las cuatro operaciones b&aacute;sicas de cualquier aplicaci&oacute;n (creaci&oacute;n, lectura, edici&oacute;n y borrado).
+</p>
+<p>
+	Como hemos dicho, la posibilidad de realizar tests funcionales en Grails viene gracias a un plugin del framework Canoo. En Grails tenemos la suerte de disponer de una comunidad de usuarios cada vez mayor que desarrollan aquello que en Grails no viene por defecto mediante un sistema de plugins. A lo largo de este curso, veremos diferentes plugins que podemos utilizar en el desarrollo de nuestras aplicaciones. Ten&eacute;is una amplia referencia de todos los plugins disponibles en Grails en la direcci&oacute;n <a class="external" href="http://www.grails.org/plugin/home">http://www.grails.org/plugin/home</a>.
+</p>
+<p>
+	La instalaci&oacute;n del plugin de Canoo es tan sencilla como ejecutar el comando <span class="codefrag">grails install-plugin webtest</span> desde el directorio de la aplicaci&oacute;n. Grails se encarga de descargar el plugin e instalarlo para que pueda ser utilizado en la aplicaci&oacute;n. Una vez instalado, crearemos nuestro primer test funcional que pretende comprobar que la funcionalidad b&aacute;sica de la gesti&oacute;n de los usuarios (creaci&oacute;n, edici&oacute;n, listado y eliminaci&oacute;n) se ejecuta correctamente.
+</p>
+<p>
+	En ocasiones, cuando instalamos un plugin en Grails, &eacute;ste crea nuevos comandos que pueden ser ejecutados para facilitarnos la labor. Este es el caso del plugin de Canoo, que nos crea el comando <span class="codefrag">create-webtest</span>, que recibe como par&aacute;metro el nombre  
+</p>
+<p>
+	Para crear el test funcional ejecutamos el comando <span class="codefrag">grails create-webtest Usuario</span>. La ejecuci&oacute;n de este comando crear&aacute; un nuevo directorio llamado <em>webtest</em> dentro del directorio <em>test</em> de la aplicaci&oacute;n con un dos subdirectorios: <em>conf</em> y <em>biblioteca</em>. Dentro del directorio <em>conf</em> se encuentra un archivo de configuraci&oacute;n del plugin, que en principio no se debe modificar y que b&aacute;sicamente contiene la siguiente informaci&oacute;n:
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	
+<tr>
+		
+<th colspan="1" rowspan="1">Nombre</th>
+		<th colspan="1" rowspan="1">Valor inicial</th>
+		<th colspan="1" rowspan="1">Descripci&oacute;n</th>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">wt.config.host</td>
+		<td colspan="1" rowspan="1">localhost</td>
+		<td colspan="1" rowspan="1">Nombre del servidor</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">wt.config.port</td>
+		<td colspan="1" rowspan="1">8080</td>
+		<td colspan="1" rowspan="1">N&uacute;mero de puerto donde se arranca el servidor</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">wt.config.protocol</td>
+		<td colspan="1" rowspan="1">http</td>
+		<td colspan="1" rowspan="1">Protocolo utilizado para la comunicaci&oacute;n con el servidor</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">wt.config.summary</td>
+		<td colspan="1" rowspan="1">true</td>
+		<td colspan="1" rowspan="1">Indica si se debe imprimir un resumen del informe</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">wt.config.saveresponse</td>
+		<td colspan="1" rowspan="1">true</td>
+		<td colspan="1" rowspan="1">Indica si se debe guardar la respuesta en el informe</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">wt.config.resultfile</td>
+		<td colspan="1" rowspan="1">WebTestOverview.xml</td>
+		<td colspan="1" rowspan="1">Indica el nombre del fichero con el informe</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">wt.junitLikeReports.file</td>
+		<td colspan="1" rowspan="1">target/test-reports/webtest/TEST-WebTests.junit.xml</td>
+		<td colspan="1" rowspan="1">Indica el nombre del fichero con los resultados del informe generado</td>
+	
+</tr>	
+	
+<tr>
+		
+<td colspan="1" rowspan="1">wt.config.haltonerror</td>
+		<td colspan="1" rowspan="1">false</td>
+		<td colspan="1" rowspan="1">Indica si se debe parar la ejecuci&oacute;n del test en caso de que se encuentre un error</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">wt.config.errorproperty</td>
+		<td colspan="1" rowspan="1">webTestError</td>
+		<td colspan="1" rowspan="1">Indica el nombre de la propiedad Ant cuando se produce un error</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">wt.config.haltonfailure</td>
+		<td colspan="1" rowspan="1">false</td>
+		<td colspan="1" rowspan="1">Indica si se debe parar la ejecuci&oacute;n del test en caso de que se encuentre un fallo</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">wt.config.failureproperty</td>
+		<td colspan="1" rowspan="1">webTestFailure</td>
+		<td colspan="1" rowspan="1">Indica el nombre de la propiedad Ant cuando se produce un fallo</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">wt.config.showhtmlparseroutput</td>
+		<td colspan="1" rowspan="1">true</td>
+		<td colspan="1" rowspan="1">Indica si se deben mostrar los errores y los fallos parseados en la consola</td>
+	
+</tr>	
+
+</table>
+<p>
+	Ahora que ya tenemos instalado el plugin de Canoo para la realizaci&oacute;n de tests funcionales, vamos a ver como quedar&iacute;a nuestro primer test funcional. Para ello, cuando ejecutamos <span class="codefrag">grails create-webtest Usuario</span>, Grails creo un archivo en el directorio <em>test/webtest/biblioteca</em> llamado <em>UsuarioWebTests.groovy</em> que ya contiene un esqueleto de lo que podr&iacute;a ser un test funcional. Nosotros vamos a completar este esqueleto de test funcional para que conseguir nuestro objetivo.
+</p>
+<pre class="code">package biblioteca
+	
+class UsuarioWebTests extends grails.util.WebTest {
+
+    // Unlike unit tests, functional tests are sometimes sequence dependent.
+    // Methods starting with 'test' will be run automatically in alphabetical order.
+    // If you require a specific sequence, prefix the method name (following 'test') with a sequence
+    // e.g. test001XclassNameXListNewDelete
+
+   void testSomething() {
+        invoke '/'
+    }
+
+}</pre>
+<p>
+	El primer test funcional que vamos a crear tal y como coment&aacute;bamos anteriormente ser&aacute; un test que compruebe las operaciones b&aacute;sicas que se pueden realizar sobre los usuarios, que son listar, crear, editar y eliminar usuarios. En versiones anteriores, el plugin de webtest generaba autom&aacute;ticamente un test funcional para comprobar estas cuatro operaciones b&aacute;sicas, pero en las &uacute;ltimas versiones esta generaci&oacute;n autom&aacute;tica se ha eliminado. El contenido de este test funcional generado es el que se muestra a continuaci&oacute;n.
+</p>
+<pre class="code">package biblioteca
+
+class UsuarioWebTests extends grails.util.WebTest {
+
+    // Unlike unit tests, functional tests are sometimes sequence dependent.
+    // Methods starting with 'test' will be run automatically in alphabetical order.
+    // If you require a specific sequence, prefix the method name (following 'test') with a sequence
+    // e.g. test001UsuarioListNewDelete
+
+    def testUsuarioListNewDelete() {
+		invoke      'usuario'
+		verifyText  'Home'
+
+		verifyListSize 0
+
+		clickLink   'New Usuario'
+		verifyText  'Create Usuario'
+		clickButton 'Create'
+		verifyText  'Show Usuario', description:'Detail page'
+		clickLink   'List', description:'Back to list view'
+
+		verifyListSize 1
+
+		group(description:'edit the one element') {
+			showFirstElementDetails()
+			clickButton 'Edit'
+			verifyText  'Edit Usuario'
+			clickButton 'Update'
+			verifyText  'Show Usuario'
+			clickLink   'List', description:'Back to list view'
+		}
+
+		verifyListSize 1
+
+		group(description:'delete the only element') {
+			showFirstElementDetails()
+			clickButton 'Delete'
+			verifyXPath xpath:  "//div[@class='message']",
+				text:   /.*Usuario.*deleted.*/,
+				regex:  true
+		}
+
+		verifyListSize 0
+    }
+
+    String ROW_COUNT_XPATH = "count(//div[@class='list']//tbody/tr)"
+
+    def verifyListSize(int size) {
+		ant.group(description:"verify Usuario list view with $size row(s)") {
+			verifyText  'Usuario List'
+			verifyXPath xpath:      ROW_COUNT_XPATH,
+			text:       size,
+			description:"$size row(s) of data expected"
+		}
+    }
+
+    def showFirstElementDetails() {
+		clickLink   '1', description:'go to detail view'
+    }
+}</pre>
+<p>
+	Echando un vistazo r&aacute;pido al c&oacute;digo, podemos intuir su funcionamiento. Hacer clic sobre enlaces (<em>clickLink</em>) o botones (<em>clickButton</em>), comprobar que un texto est&aacute; en la p&aacute;gina (<em>verifyText</em>) y comprobar el contenido encerrado en etiquetas del c&oacute;digo HTML (<em>verifyXPath</em>) son algunos de los m&eacute;todos en estos tests funcionales. Adem&aacute;s, se ha creado un m&eacute;todo (<span class="codefrag">verifyListSize()</span>) para comprobar cuantos usuarios aparecen en el listado.
+</p>
+<p>
+	Si ahora ejecutamos el comando <span class="codefrag">grails test-app -functional</span> (aseg&uacute;rate de que la aplicaci&oacute;n no se est&eacute; ejecutando en este momento, porque webtest necesita del puerto 8080) veremos como empiezan a ejecutarse los tests funcionales de nuestra aplicaci&oacute;n. Sin embargo, nos ha surgido un problema y es que el test intenta crear un nuevo usuario sin haberse identificado en el sistema. As&iacute; que antes de empezar a crear usuarios debemos a&ntilde;adir el c&oacute;digo necesario en el test para identificarnos en el sistema y posteriormente realizar todas las operaciones necesarias. Si a&ntilde;adimos el siguiente c&oacute;digo inmediatamente despu&eacute;s de <span class="codefrag">verifyText 'Home'</span> para identificarnos en el sistema, este problema estar&aacute; solucionado.
+</p>
+<pre class="code">group(description:'intento identificarme en el sistema') {
+    clickLink 'Login'
+    verifyText  'Login'
+    clickButton 'Login'
+    verifyText  'Logout'
+    clickLink   'Home', description:'Back home'
+    verifyText 'biblioteca.UsuarioController'
+    clickLink 'biblioteca.UsuarioController'
+}</pre>
+<p>
+	Si intentamos pasar de nuevo el test funcional con el comando <span class="codefrag">grails test-app -functional</span> y repasamos el informe correspondiente, veremos como este test ha fallado nuevamente. Este informe nos indica cuantos tests se han ejecutado correctamente e incluso nos da informaci&oacute;n de cuantos <em>pasos</em> han llegado a ejecutarse.
+</p>
+<p>
+	Echando un vistazo al informe, vemos como lo primero que nos indica es que la primera llamada al m&eacute;todo <span class="codefrag">verifyListSize()</span> ha fallado y adem&aacute;s nos indica que el valor que esperaba era 0 mientras que el encontrado ha sido el valor 5. Esto es debido a que los tests funcionales cuentan tambi&eacute;n con la informaci&oacute;n a&ntilde;adida en el archivo <em>conf/BootStrap.groovy</em>, con lo que el n&uacute;mero de usuarios al arrancar la aplicaci&oacute;n empieza desde 5. Debemos cambiar todas las l&iacute;neas en nuestro test donde se comprueba esto para aumentarle el valor en 5, por ejemplo la primera comprobaci&oacute;n quedar&iacute;a <span class="codefrag">verifyListSize 5</span>, mientras que la segunda una vez creado el usuario <span class="codefrag">verifyListSize 6</span>.
+</p>
+<p>
+	Si volvemos a realizar los tests funcionales veremos como ahora el problema que nos da es que el usuario no ha podido ser creado correctamente. Esto es debido a que hemos dejado en blanco todos los campos del formulario. Para rellenarlos podemos utilizar la funci&oacute;n <span class="codefrag">setInputField()</span> de la siguiente forma:
+</p>
+<pre class="code">setInputField(name:'login','usuario2')
+setInputField(name:'password','mipassword')
+setInputField(name:'nombre','Usuario')
+setInputField(name:'apellidos','Dos')
+setInputField(name:'email','miemail@ua.es')</pre>
+<p>
+	Ahora los campos necesarios para crear un usuario ya est&aacute;n completos y el test funcionar&aacute; correctamente. Este ser&aacute; el contenido final del test funcional que acabamos de pasar satisfactoriamente.
+</p>
+<pre class="code">package biblioteca
+
+class UsuarioWebTests extends grails.util.WebTest {
+
+    // Unlike unit tests, functional tests are sometimes sequence dependent.
+    // Methods starting with 'test' will be run automatically in alphabetical order.
+    // If you require a specific sequence, prefix the method name (following 'test') with a sequence
+    // e.g. test001UsuarioListNewDelete
+
+    def testUsuarioListNewDelete() {
+        invoke      'usuario'
+        verifyText  'Home'
+
+        group(description:'intento identificarme en el sistema') {
+            clickLink 'Login'
+            verifyText  'Login'
+            clickButton 'Login'
+            verifyText  'Logout'
+            clickLink   'Home', description:'Back home'
+            verifyText 'biblioteca.UsuarioController'
+            clickLink 'biblioteca.UsuarioController'
+        }
+
+        verifyListSize 5
+
+        clickLink   'New Usuario'
+        verifyText  'Create Usuario'
+        setInputField(name:'login','usuario2')
+        setInputField(name:'password','mipassword')
+        setInputField(name:'nombre','Usuario')
+        setInputField(name:'apellidos','Dos')
+        setInputField(name:'email','miemail@ua.es')
+        clickButton 'Create'
+        verifyText  'Show Usuario', description:'Detail page'
+        clickLink   'List', description:'Back to list view'
+
+        verifyListSize 6
+
+        group(description:'edit the one element') {
+                showFirstElementDetails()
+                clickButton 'Edit'
+                verifyText  'Edit Usuario'
+                clickButton 'Update'
+                verifyText  'Show Usuario'
+                clickLink   'List', description:'Back to list view'
+        }
+
+        verifyListSize 6
+
+        group(description:'delete the only element') {
+                showFirstElementDetails()
+                clickButton 'Delete'
+                verifyXPath xpath:  "//div[@class='message']",
+                        text:   /.*Usuario.*deleted.*/,
+                        regex:  true
+        }
+
+        verifyListSize 5
+    }
+
+    String ROW_COUNT_XPATH = "count(//div[@class='list']//tbody/tr)"
+
+    def verifyListSize(int size) {
+        ant.group(description:"verify Usuario list view with $size row(s)") {
+                verifyText  'Usuario List'
+                verifyXPath xpath:      ROW_COUNT_XPATH,
+                text:       size,
+                description:"$size row(s) of data expected"
+        }
+    }
+
+    def showFirstElementDetails() {
+        clickLink   '1', description:'go to detail view'
+    }
+}</pre>
+<p>
+	El resultado del informe nos indica que todos los tests funcionales se han ejecutado correctamente y que nuestra aplicaci&oacute;n funciona tal y como esper&aacute;bamos.<img alt="Test funcionales con webtest" height="338" src="../images/sesion8/webtestresults.jpg" width="700">
+</p>
+<p>
+	Un aspecto importante en los tests funcionales es el orden en el que se ejecutan. Los tests se ejecutan por orden alfab&eacute;tico, con lo que si en alg&uacute;n momento es importante el orden para que los tests se ejecuten correctamente debemos a&ntilde;adir al principio del nombre del test, una numeraci&oacute;n del estilo <em>0001</em>, <em>0002</em>, etc, para que los tests se ejecuten en el orden que nosotros queremos.
+</p>
+</div>
+
+
+<a name="N1023B"></a><a name="Validaci%C3%B3n+y+errores"></a>
+<h2 class="underlined_10">Validaci&oacute;n y errores</h2>
+<div class="section">
+<p>
+	Si navegamos un poco por los ejemplos que hemos desarrollado a lo largo de las sesiones de Grails, podemos encontrar varias referencias a los <em>errores</em> en funciones como <span class="codefrag">hasErrors()</span> que son utilizados en los controladores para detectar la presencia de errores, as&iacute; como de los <em>mensajes flash</em> para mostrar al usuario determinados mensajes tales <em>Usuario creado</em> o <em>Usuario modificado</em>. Veamos algunos ejemplos.  
+</p>
+<p>
+	Vamos a probar a crear un nuevo usuario y olvidaremos indicarle todos los datos posibles (<em>login</em>, <em>password</em>, <em>nombre</em> y <em>apellidos</em>). Como imaginamos, la aplicaci&oacute;n nos indicar&aacute; que se han cometido una serie de errores y que ha sido imposible crear el nuevo usuario. Es m&aacute;s, Grails nos mostrar&aacute; un listado con todos los errores que se han cometido en el formulario. Si ahora abrimos el archivo de la vista <em>create.gsp</em>, r&aacute;pidamente veremos el fragmento de c&oacute;digo que se encarga de esta gesti&oacute;n de errores.
+</p>
+<pre class="code">&lt;g:hasErrors bean="${usuarioInstance}"&gt;
+&lt;div class="errors"&gt;
+    &lt;g:renderErrors bean="${usuarioInstance}" as="list" /&gt;
+&lt;/div&gt;
+&lt;/g:hasErrors&gt;</pre>
+<p>
+	En primer lugar, la etiqueta <span class="codefrag">&lt;g:hasErrors&gt;</span> comprueba si se han producido errores en el <em>bean</em> pasado por par&aacute;metro. En caso afirmativo, &eacute;stos se imprimir&aacute;n gracias a la etiqueta <span class="codefrag">&lt;g:renderErrors&gt;</span>, la cual recorre todos los errores mostr&aacute;ndolos uno por uno. Esta &uacute;ltima etiqueta permite el par&aacute;metro <em>field</em> para el caso de que s&oacute;lo queramos mostrar el error producido en un determinado campo. Por ejemplo, si s&oacute;lo queremos mostrar el error producido en el campo <em>login</em> podr&iacute;amos escribir <span class="codefrag">&lt;g:renderErrors bean="${book}" as="list" field="title"/&gt;</span>. Lo mismo sucede con la etiqueta <span class="codefrag">&lt;g:hasErrors&gt;</span>.
+</p>
+<p>
+	Sin embargo, esta t&eacute;cnica funciona porque la p&aacute;gina se genera directamente desde el controlador, algo que no siempre sucede. Por ejemplo, en el mismo caso de crear un nuevo usuario, si todo ha ido correctamente el usuario es redirigido a la vista <em>show.gsp</em> para mostrar los datos del usuario reci&eacute;n creado, pero adem&aacute;s, en la parte superior se muestra un texto indicando que el usuario ha sido creado correctamente. Recordemos que el c&oacute;digo de la funci&oacute;n <span class="codefrag">save()</span> es el siguiente:
+</p>
+<pre class="code">def save = {
+    def usuarioInstance = new Usuario(params)
+    if (usuarioInstance.save(flush: true)) {
+        flash.message = "${message(code: 'default.created.message', 
+		args: [message(code: 'usuario.label', default: 'Usuario'), usuarioInstance.id])}"
+        redirect(action: "show", id: usuarioInstance.id)
+    }
+    else {
+        render(view: "create", model: [usuarioInstance: usuarioInstance])
+    }
+}</pre>
+<p>
+	Como vemos, si el usuario se ha podido almacenar en la base de datos, se carga la variable <em>flash.message</em> con el texto que deseamos mostrar en la parte superior y posteriormente se redirige al usuario a la vista <em>show.gsp</em>. Si ahora abrimos el archivo de la vista <em>show.gsp</em> podemos comprobar que antes de mostrar los datos del usuario seleccionado, se comprueba que la variable <em>flash.message</em> no est&eacute; vac&iacute;a y en caso afirmativo se mostrar&aacute; el contenido de esa variable.
+</p>
+<pre class="code">&lt;g:if test="${flash.message}"&gt;
+	&lt;div class="message"&gt;${flash.message}&lt;/div&gt;
+&lt;/g:if&gt;</pre>
+<p>
+	En los casos en los que se utiliza la redirecci&oacute;n entre p&aacute;ginas es donde Grails hace uso de la t&eacute;cnica de los mensajes flash. Posiblemente habr&iacute;an otras soluciones como la posibilidad de almacenar en la variable <em>session</em> este tipo de mensajes y comprobarlos en cada p&aacute;gina. No obstante, esto supone tener que borrar el contenido de esta variable para no mostrarlo por duplicado, algo que en cualquier momento se nos puede pasar por alto.
+</p>
+<p>
+	Y es ah&iacute; donde Grails hace el trabajo por nosotros, ya que su soluci&oacute;n es en parte el caso que acabamos de exponer. Grails utiliza el <em>&aacute;mbito</em> flash al igual que existen otros &aacute;mbitos como <em>application</em>, <em>session</em>, <em>request</em> y <em>page</em>, tal y como coment&aacute;bamos en la sesi&oacute;n anterior. El nuevo &aacute;mbito flash permite almacenar variables en forma de <em>mapa</em> que pueden ser accedidas en cualquier momento. Pero lo mejor de este &aacute;mbito es que su contenido se destruye entre peticiones, con lo que el problema de olvidarnos de eliminar el mensaje est&aacute; solucionado.
+</p>
+</div>
+
+<a name="N102BD"></a><a name="Externalizaci%C3%B3n+de+cadenas+de+caracteres"></a>
+<h2 class="underlined_10">Externalizaci&oacute;n de cadenas de caracteres</h2>
+<div class="section">
+<p>
+	En las primeras versiones de Grails, todos los mensajes generados autom&aacute;ticamente en la aplicaci&oacute;n estaban directamente incluidos tanto en el c&oacute;digo de los controladores como en el de las vistas. Esto ha cambiado en las &uacute;ltimas versiones y cuando generamos el scaffolding de nuestra aplicaci&oacute;n en Grails, los mensajes ya se encuentran externalizados de tal forma que editando una serie de ficheros con todos los literales de la aplicaci&oacute;n, vamos a poder editar todo el contenido de nuestra aplicaci&oacute;n.
+</p>
+<p>
+	La externalizaci&oacute;n de cadenas de texto de la aplicaci&oacute;n es muy importante por diversos motivos. En primer lugar, imaginemos, que al cliente que va a utilizar la aplicaci&oacute;n no le gustan determinados mensajes mostrados y los quiere modificar. Si estos mensajes no estuvieran externalizados y estuvieran incluidos directamente en el c&oacute;digo de nuestra aplicaci&oacute;n, deber&iacute;amos editar todos los archivos implicados en los cambios solicitados con la correspondiente p&eacute;rdida de tiempo y dinero.
+</p>
+<p>
+	Gracias a este cambio de planteamiento introducido en Grails en las &uacute;ltimas versiones, internacionalizar una aplicaci&oacute;n en Grails se ha convertido en un juego de ni&ntilde;os.La internacionalizaci&oacute;n de una aplicaci&oacute;n, entre otras cosas, supone la necesidad de disponer de ficheros de traducci&oacute;n externos con los mensajes utilizados en ella (entre otras cosas). Estos archivos pueden ser enviados a traductores profesionales externos a nuestra entidad que se encarguen de la traducci&oacute;n de dichos archivos. 
+</p>
+<p>
+	La externalizaci&oacute;n de cadenas de texto en Grails se encuentra por convenci&oacute;n en el directorio <em>grails-app/i18n/</em>. Si echamos un vistazo a este directorio, veremos que existen una serie de ejemplos ya generados para varios de los idiomas m&aacute;s comunes (ingl&eacute;s, espa&ntilde;ol, franc&eacute;s, alem&aacute;n, etc.). Si abrimos por ejemplo el archivo <em>message.properties</em> veremos determinadas cadenas de texto que nos resultar&aacute;n familiares, ya que son las que se muestran en nuestra aplicaci&oacute;n cuando se produce un error en la misma.
+</p>
+<pre class="code">....
+default.doesnt.match.message=Property [{0}] of class [{1}] with value [{2}] does not match the required pattern [{3}]
+default.invalid.url.message=Property [{0}] of class [{1}] with value [{2}] is not a valid URL
+default.invalid.creditCard.message=Property [{0}] of class [{1}] with value [{2}] is not a valid credit card number
+default.invalid.email.message=Property [{0}] of class [{1}] with value [{2}] is not a valid e-mail address
+default.invalid.range.message=Property [{0}] of class [{1}] with value [{2}] does not fall within the valid range from [{3}] to [{4}]
+....</pre>
+<p>
+	Para comprender un poco mejor el funcionamiento de la externalizaci&oacute;n de cadenas en Grails, vamos a crear un par de nuevas entradas en este fichero que contendr&aacute;n las cadenas de texto referentes a <em>Login</em> y <em>Logout</em>. Para ello, al final del archivo <em>message.properties</em> vamos a a&ntilde;adir las siguientes l&iacute;neas:
+</p>
+<pre class="code">encabezado.login = Login
+encabezado.logout = Logout</pre>
+<p>
+	El siguiente paso ser&aacute; modificar la p&aacute;gina <em>_header.gsp</em> para contemplar la nueva metodolog&iacute;a. Os recuerdo que est&aacute; p&aacute;gina se encuentra en el directorio <em>common</em>. A partir de ahora, en lugar de escribir directamente el texto que queremos mostrar en nuestra p&aacute;gina gsp, vamos a utilizar la etiqueta <span class="codefrag">&lt;g:message&gt;</span> pas&aacute;ndole el par&aacute;metro <span class="codefrag">code</span> en el que le especificaremos el nombre de la nueva cadena de traducci&oacute;n a&ntilde;adida al archivo <em>message.properties</em>. El archivo <em>_header.gsp</em> quedar&iacute;a as&iacute;: 
+</p>
+<pre class="code">&lt;div id="menu"&gt;
+	&lt;nobr&gt;
+	&lt;g:if test="${session.usuario}"&gt;
+		&lt;b&gt;${session.usuario?.nombre}&nbsp;${session.usuario?.apellidos}&lt;/b&gt; |
+		&lt;g:link controller="usuario" action="logout"&gt;&lt;g:message code="encabezado.logout"/&gt;&lt;/g:link&gt;
+	&lt;/g:if&gt;
+	&lt;g:else&gt;
+		&lt;g:link controller="usuario" action="login"&gt;&lt;g:message code="encabezado.login"/&gt;&lt;/g:link&gt;
+	&lt;/g:else&gt;
+	&lt;/nobr&gt;
+&lt;/div&gt;</pre>
+<p>
+	El archivo que nosotros hemos modificado es el que Grails utiliza por defecto, sin embargo, Grails intenta resolver la localizaci&oacute;n del usuario para mostrarle los mensajes en el idioma correcto. As&iacute; que, es m&aacute;s que probable Grails est&eacute; mostrando los mensajes de error de la aplicaci&oacute;n en castellano y no en ingl&eacute;s, que es el archivo que hemos modificado. Esto depender&aacute; de como tengamos configurado las opciones de idiomas de nuestro navegador.
+</p>
+<p>
+	El siguiente paso va a ser a&ntilde;adir estas dos nuevas variables en el archivo <em>message_es.properties</em> que quedar&aacute; de la siguiente forma:
+</p>
+<pre class="code">encabezado.login = Identificarse
+encabezado.logout = Salir</pre>
+<p>
+	Esto que acabamos de hacer es un primer paso hacia la internacionalizaci&oacute;n de nuestra aplicaci&oacute;n. El principal problema de <em>internacionalizar</em> nuestra aplicaci&oacute;n se refiere a los tests funcionales que ve&iacute;amos anteriormente. Estos tests comprueban la existen de determinados textos en las p&aacute;ginas de la aplicaci&oacute;n para testear su validez y si ahora cambiamos estos textos, es posible que nos encontremos con que un test funcional que antes se ejecutaba correctamente ahora ha dejado de funcionar.
+</p>
+<p>
+	Pero vayamos m&aacute;s all&aacute; de mostrar un simple mensaje de texto. &iquest;Qu&eacute; pasa si queremos mostrar un mensaje personalizado del estilo <em>El usuario Pablo Mar Mol ha sido modificado correctamente</em>? Para poder hacer esto, necesitamos pasar par&aacute;metros al mensaje a mostrar, lo cual debemos hacer en tres partes. En primer lugar, especificando en la cadena de texto del archivo <em>message.properties</em> los par&aacute;metros y la posici&oacute;n de &eacute;ste en la cadena, como por ejemplo <span class="codefrag">usuario.updated.message = El usuario {0} {1} ha sido modificado correctamente</span>, donde los valores <em>{0}</em> y <em>{1}</em> ser&aacute;n sustituidos posteriormente por el nombre y apellidos del usuario. Ser&aacute; necesario tener esto en cuenta a la hora de definir las cadenas de texto. 
+</p>
+<p>En segundo lugar, debemos modificar las controladores para que en lugar de mostrar un mensaje de texto directamente, &eacute;ste acepte la posibilidad de tener par&aacute;metros. Por ejemplo, en el fragmento de c&oacute;digo donde se modifica la informaci&oacute;n del usuario (<span class="codefrag">update()</span>) tenemos el siguiente c&oacute;digo
+</p>
+<pre class="code">if(!usuarioInstance.hasErrors() &amp;&amp; usuarioInstance.save(flush:true)) {
+    flash.message = "${message(code: 'default.updated.message', 
+	args: [message(code: 'usuario.label', default: 'Usuario'), usuarioInstance.id])}"
+    redirect(action:show,id:usuarioInstance.id)
+}</pre>
+<p>
+	Para la externalizaci&oacute;n de esta cadena, necesitamos pasar una serie de argumentos y aprovecharemos tambi&eacute;n para pasar un texto por defecto para el caso en que el c&oacute;digo de la cadena no se encuentre en el archivo <em>message.properties</em>. Podemos sustituir el c&oacute;digo anterior por el siguiente:
+</p>
+<pre class="code">if(!usuarioInstance.hasErrors() &amp;&amp; usuarioInstance.save(flush:true)) {
+    flash.message = "usuario.updated.message"
+    flash.args = [usuarioInstance.nombre, usuarioInstance.apellidos]
+    flash.defaultMsg = "Usuario modificado correctamente"
+    redirect(action:show,id:usuarioInstance.id)
+}</pre>
+<p>
+	Si comprobamos ahora el mensaje que nos muestra la aplicaci&oacute;n al editar los datos de un usuario, comprobaremos como el mensaje mostrado es <em>usuario.updated.message</em>, que no es lo que queremos. Esto es debido a que en la vista correspondiente donde se muestra el resultado de la operaci&oacute;n de editar un usuario, <em>show.gsp</em> seguimos teniendo el mismo c&oacute;digo de antes y no hemos realizado ninguna modificaci&oacute;n, tal y como se ve en el siguiente fragmento de c&oacute;digo.
+</p>
+<pre class="code">&lt;g:if test="${flash.message}"&gt;
+	&lt;div class="message"&gt;${flash.message}&lt;/div&gt;
+&lt;/g:if&gt;</pre>
+<p>
+	Si queremos aplicar los cambios de los que hemos hablado, ya no podemos mostrar directamente el contenido de la variable <em>flash.message</em>, porque &eacute;sta ha dejado de contener el mensaje a mostrar y ahora su contenido es el nombre de una variable del archivo <em>message.properties</em>. Para esto, necesitamos utilizar la etiqueta <span class="codefrag">&lt;g:message&gt;</span> con una serie de par&aacute;metros, tal y como aparece en el siguiente trozo de c&oacute;digo.
+</p>
+<pre class="code">&lt;div class="message"&gt;
+    &lt;g:message code="${flash.message}" args="${flash.args}" default="${flash.defaultMsg}"/&gt;
+&lt;/div&gt;</pre>
+<p>
+	Por &uacute;ltimo, debemos a&ntilde;adir al archivo <em>message.properties</em> una nueva entrada con la cadena de texto a mostrar
+</p>
+<pre class="code">usuario.updated.message = El usuario {0} ha sido correctamente modificado</pre>
+<p>
+	Ahora s&iacute;, nuestro mensaje aparece tal y como nosotros queremos. <img alt="Usuario modificado correctamente" height="289" src="../images/sesion8/updateduser.jpg" width="393">
+</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010-2011 Depto. Ciencia de la Computaci&oacute;n e IA</div>
+</div>
+<script type="text/javascript">
+     
+         SyntaxHighlighter.defaults['toolbar'] = false;
+         SyntaxHighlighter.autoloader(
+  		     'java                   skin/highlight/shBrushJava.js',
+  		     'xml xhtml xslt html    skin/highlight/shBrushXml.js',
+  		     'js jscript javascript  skin/highlight/shBrushJScript.js',
+  		     'groovy                 skin/highlight/shBrushGroovy.js',
+  		     'bash shell             skin/highlight/shBrushBash.js',
+  		     'php                    skin/highlight/shBrushPhp.js',
+  		     'css                    skin/highlight/shBrushCss.js',
+  		     'sql                    skin/highlight/shBrushSql.js',
+  		     'objc                   skin/highlight/shBrushObjC.js',
+  		     'cpp c                  skin/highlight/shBrushCpp.js',
+  		     'text plain             skin/highlight/shBrushPlain.js'
+         );
+         SyntaxHighlighter.all();
+     </script><a href="skin/highlight/shBrushJava.js"></a><a href="skin/highlight/shBrushXml.js"></a><a href="skin/highlight/shBrushJScript.js"></a><a href="skin/highlight/shBrushGroovy.js"></a><a href="skin/highlight/shBrushBash.js"></a><a href="skin/highlight/shBrushPhp.js"></a><a href="skin/highlight/shBrushCss.js"></a><a href="skin/highlight/shBrushSql.js"></a><a href="skin/highlight/shBrushObjC.js"></a><a href="skin/highlight/shBrushCpp.js"></a><a href="skin/highlight/shBrushPlain.js"></a>
+</body>
+</html>

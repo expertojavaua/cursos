@@ -1,0 +1,966 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Introducci&oacute;n a Grails</title>
+<link type="text/css" href="../skin/highlight/shCore.css" rel="stylesheet">
+<link type="text/css" href="../skin/highlight/shThemeEclipse.css" rel="stylesheet">
+<script src="../skin/highlight/shCore.js" type="text/javascript"></script><script src="../skin/highlight/shAutoloader.js" type="text/javascript"></script>
+<link type="text/css" href="../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../skin/profile.css" rel="stylesheet">
+<script src="../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="../images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Groovy&amp;Grails: desarrollo r&aacute;pido de aplicaciones" src="../images/baner_j2ee_der.gif" title="Groovy&amp;Grails: desarrollo r&aacute;pido de aplicaciones"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="../index.html">Home</a>
+</li>
+<li class="current">
+<a class="base-selected" href="../sesiones/index.html">Sesiones</a>
+</li>
+<li>
+<a class="base-not-selected" href="../ejercicios/index.html">Ejercicios</a>
+</li>
+<li>
+<a class="base-not-selected" href="../bibliografia/index.html">Bibliograf&iacute;a</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../sesiones/sesion01-apuntes.html" title="Introducci&oacute;n a Groovy">Sesi&oacute;n 1</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion02-apuntes.html" title="El lenguaje Groovy">Sesi&oacute;n 2</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion03-apuntes.html" title="Aspectos avanzados en Groovy">Sesi&oacute;n 3</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion04-apuntes.html" title="Librer&iacute;as propias en Groovy">Sesi&oacute;n 4</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesi&oacute;n 5</div>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion06-apuntes.html" title="Construir la interfaz de usuario (I)">Sesi&oacute;n 6</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion07-apuntes.html" title="Controladores">Sesi&oacute;n 7</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion08-apuntes.html" title="Construir la interfaz de usuario (II)">Sesi&oacute;n 8</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion09-apuntes.html" title="Dominios y servicios (I)">Sesi&oacute;n 9</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion10-apuntes.html" title="Dominios y servicios (II)">Sesi&oacute;n 10</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion11-apuntes.html" title="Seguridad">Sesi&oacute;n 11</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion12-apuntes.html" title="Despliegue de aplicaciones">Sesi&oacute;n 12</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion13-apuntes.html" title="Web 2.0">Sesi&oacute;n 13</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion14-apuntes.html" title="AJAX">Sesi&oacute;n 14</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion15-apuntes.html" title="Dos horas para crear twitter">Sesi&oacute;n 15</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion05-apuntes.pdf"><img alt="PDF -icon" src="../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Introducci&oacute;n a Grails</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#%C2%BFQu%C3%A9+es%3F">&iquest;Qu&eacute; es?</a>
+<ul class="minitoc">
+<li>
+<a href="#Caracter%C3%ADsticas+de+Grails">Caracter&iacute;sticas de Grails</a>
+</li>
+<li>
+<a href="#Software+de+c%C3%B3digo+abierto">Software de c&oacute;digo abierto</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Arquitectura">Arquitectura</a>
+</li>
+<li>
+<a href="#Instalaci%C3%B3n+de+Grails">Instalaci&oacute;n de Grails</a>
+</li>
+<li>
+<a href="#Scaffolding">Scaffolding</a>
+<ul class="minitoc">
+<li>
+<a href="#Descripci%C3%B3n+de+la+aplicaci%C3%B3n+ejemplo">Descripci&oacute;n de la aplicaci&oacute;n ejemplo</a>
+</li>
+<li>
+<a href="#Creaci%C3%B3n+del+proyecto+Grails">Creaci&oacute;n del proyecto Grails</a>
+</li>
+<li>
+<a href="#Creaci%C3%B3n+de+clases+de+dominio">Creaci&oacute;n de clases de dominio</a>
+</li>
+<li>
+<a href="#Creaci%C3%B3n+de+controladores">Creaci&oacute;n de controladores</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+         
+
+<p>
+	En esta primera sesi&oacute;n de Grails, comenzaremos, como no puede ser de otra forma, viendo una descripci&oacute;n de lo que es Grails, sus caracter&iacute;sticas y las ventajas que conlleva su uso como entorno para el desarrollo r&aacute;pido de aplicaciones. Seguiremos analizando su arquitectura y las herramientas de c&oacute;digo abierto que a&uacute;na Grails y terminaremos desarrollando nuestra primera aplicaci&oacute;n en Grails aprovech&aacute;ndonos del <em>scaffolding</em>.
+</p>
+
+
+<a name="N10012"></a><a name="%C2%BFQu%C3%A9+es%3F"></a>
+<h2 class="underlined_10">&iquest;Qu&eacute; es?</h2>
+<div class="section">
+<p>
+	Grails es un framework para el desarrollo de aplicaciones web basado en el lenguaje de programaci&oacute;n Groovy, que a su vez se basa en la Plataforma Java. Grails est&aacute; basado en los paradigmas <em>convenci&oacute;n sobre configuraci&oacute;n</em> y <em>DRY (don't repite yourself)</em> o no te repitas, los cuales permiten al programador olvidarse en gran parte de los detalles de configuraci&oacute;n de m&aacute;s bajo nivel. 
+</p>
+<p>
+	Como la mayor&iacute;a de los framework de desarrollo web, Grails est&aacute; basado en el patr&oacute;n <em>Modelo Vista Controlador (MVC)</em>. En Grails los <em>modelos</em> son tratados como <em>clases de dominio</em> que permiten a la aplicaci&oacute;n mostrar los datos utilizando la <em>vista</em>. A diferencia de otros frameworks, en Grails las clases de dominio de Grails son autom&aacute;ticamente persistidas y es incluso posible generar el esquema de la base de datos. Los <em>controladores</em> por su parte, permiten gestionar las peticiones a la aplicaci&oacute;n y organizar los servicios proporcionados. Por &uacute;ltimo, la <em>vista</em> en <em>Grails son las conocidas como Groovy Server Pages (GSP)</em> (an&aacute;logamente a las Java Server Pages -JSP-) y habitualmente se encargan de generar el contenido de nuestra aplicaci&oacute;n en formato HTML.
+</p>
+<p>
+	Como coment&aacute;bamos anteriormente, Grails permite al programador olvidarse de gran parte de la configuraci&oacute;n t&iacute;pica que incluyen los frameworks MVC. Adem&aacute;s Grails se aprovecha de un lenguaje din&aacute;mico como Groovy para acortar los tiempos de desarrollo y que el equipo de desarrolladores puedan centrarse simplemente en escribir c&oacute;digo, actualizar, testear y depurar fallos. Esto hace que el desarrollo de la aplicaci&oacute;n sea mucho m&aacute;s &aacute;gil que con otros frameworks MVC.
+</p>
+<p>
+	Habitualmente cuando hablamos de frameworks, se entiende como un marco de los programadores pueden utilizar las t&eacute;cnicas del Modelo Vista Controlador para el desarrollo r&aacute;pido de sus aplicaciones. Pero, &iquest;qu&eacute; pasa con el resto de elementos necesarios para el desarrollo de una aplicaci&oacute;n como pueden ser los servidores web o los gestores de bases de datos?. En este sentido, Grails no es simplemente un framework sino que es m&aacute;s una plataforma completa, puesto que incluye tambi&eacute;n un contenedor web, bases de datos, sistemas de empaquetado de la aplicaci&oacute;n y un completo sistema para la realizaci&oacute;n de tests. De esta forma, no debemos perder el tiempo buscando y descargando un servidor web para nuestra futura aplicaci&oacute;n o un gestor de base de datos. Ni tan siquiera ser&aacute; necesario escribir complicados scripts de configuraci&oacute;n para el empaquetado de la aplicaci&oacute;n. Todo esto se convierte en una tarea tan sencilla como instalar Grails.
+</p>
+<a name="N1003F"></a><a name="Caracter%C3%ADsticas+de+Grails"></a>
+<h3 class="underlined_5">Caracter&iacute;sticas de Grails</h3>
+<p>
+		Algunas de las caracter&iacute;sticas m&aacute;s importantes que presenta Grails son las siguientes:
+	</p>
+<ul>
+		
+<li>
+			
+<strong>Convenci&oacute;n sobre configuraci&oacute;n</strong>
+			
+<p>
+				En lugar de tener que escribir interminables archivos de configuraci&oacute;n en formato XML, Grails se basa en una serie de convenciones para que el desarrollo de la aplicaci&oacute;n sea mucho m&aacute;s r&aacute;pido y productivo. Adem&aacute;s, gracias al uso de convenciones, se refuerza el otro principio del que habl&aacute;bamos anteriormente, <em>DRY (don't repite yourself)</em> o no te repitas. 
+			</p> 
+		
+</li>
+		
+<li>
+			
+<strong>Tests</strong>
+			
+<p>
+				Una de las partes m&aacute;s importantes en el desarrollo de software se refiere a los tests implementados que garantizan un software de calidad y el f&aacute;cil mantenimiento de una aplicaci&oacute;n. Gracias a estos tests, es muy sencillo detectar y solucionar fallos provocados por cambios en el c&oacute;digo. Cada vez que se genera en Grails una clase de dominio o un controlador, paralelamente es generado tambi&eacute;n un test para comprobar la nueva clase o controlador.  
+			</p>
+			
+<p>
+				Grails distingue entre tests unitarios y tests de integraci&oacute;n. Los tests unitarios son tests sin dependencias de ning&uacute;n tipo, salvo alg&uacute;n que otro objeto <em>mock</em>. Por otro lado, los tests de integraci&oacute;n tienen acceso completo al entorno de Grails, incluyendo la base de datos. Adem&aacute;s, Grails permite tambi&eacute;n la creaci&oacute;n de tests funcionales para comprobar la funcionalidad de nuestra aplicaci&oacute;n web.
+			</p>
+		
+</li>
+		
+<li>
+			
+<strong>Scaffolding</strong>
+			
+<p>
+				Grails permite tambi&eacute;n utilizar scaffolding en nuestras aplicaciones. El scaffolding es una caracter&iacute;stica de determinados frameworks que permite la generaci&oacute;n autom&aacute;tica de c&oacute;digo para las cuatro operaciones b&aacute;sicas de cualquier aplicaci&oacute;n, que son la <em>creaci&oacute;n</em>, <em>lectura</em>, <em>edici&oacute;n</em> y <em>borrado</em>, lo que en ingl&eacute;s se conoce como <em>CRUD (create, read, update and delete)</em>. El scaffolding en Grails se consigue escribiendo muy pocas l&iacute;neas de c&oacute;digo, con lo que podemos centrarnos en especificar las propiedades, comportamientos y restricciones de nuestras clases de dominio.
+			</p>
+		
+</li>
+		
+<li>
+			
+<strong>Mapeo objeto-relacional</strong>
+			
+<p>
+				Grails incluye un potente framework para el mapeo objeto-relacional conocido como <em>GORM (Grails Object Relational Mapping)</em>. Como cualquier framework de persistencia, GORM permite mapear objetos contra bases de datos relacionales y representar relaciones entre dichos objetos del tipo <em>uno-a-uno</em>, <em>uno-a-muchos</em> y <em>muchos-a-muchos</em>.
+			</p>
+		
+</li>	
+		
+<li>
+			
+<strong>Plugins</strong>
+			
+<p>
+				Sin embargo, Grails no siempre es la soluci&oacute;n a cualquier problema que se nos pueda plantear en el desarrollo de aplicaciones web. Para ayudarnos, Grails dispone de una arquitectura de plugins con una comunidad de usuarios detr&aacute;s (cada vez m&aacute;s grande) que ofrecen plugins para seguridad, AJAX, testeo, b&uacute;squeda, informes y servicios web. Este sistema de plugins hace que a&ntilde;adir complejas funcionalidades a nuestra aplicaci&oacute;n se convierte en algo muy sencillo.
+			</p>
+		
+</li>		
+	
+</ul>
+<a name="N1009D"></a><a name="Software+de+c%C3%B3digo+abierto"></a>
+<h3 class="underlined_5">Software de c&oacute;digo abierto</h3>
+<p>
+		Por suerte, Grails no sufre del s&iacute;ndrome <em><a class="external" href="http://en.wikipedia.org/wiki/Not_Invented_Here">Not Invented Here (NIH)</a></em> y lo hace integrando en su arquitectura las mejores soluciones de software libre del mercado para crear un framework robusto. Veamos cuales son estas soluciones.
+	</p>
+<ul>
+		
+<li>
+			
+<strong>Groovy</strong>
+			
+<p>
+				
+<a class="external" href="http://groovy.codehaus.org/">Groovy</a> es la parte fundamental en la que se basa Grails. Como vimos en sesiones anteriores, Groovy es un potente y flexible lenguaje de programaci&oacute;n. Su integraci&oacute;n con Java, las caracter&iacute;sticas como lenguaje din&aacute;mico y su sintaxis sencilla, hacen de este lenguaje de programaci&oacute;n el compa&ntilde;ero perfecto para Grails. 
+			</p>
+		
+</li>
+		
+<li>
+			
+<strong>Framework Spring</strong>
+			
+<p>
+				El framework <a class="external" href="http://www.springsource.org/">Spring</a> ofrece un alto nivel de abstracci&oacute;n al programador que en lugar de tratar directamente con las transacciones, proporciona una forma para declarar dichas transacciones utilizando los <em>POJOs (Plain Old Java Objects)</em>, con lo que el programador se puede centrar en la implementaci&oacute;n de la l&oacute;gica de negocio.
+			</p>
+		
+</li>
+		
+<li>
+			
+<strong>Hibernate</strong>
+			
+<p>
+				
+<a class="external" href="https://www.hibernate.org/">Hibernate</a> es un framework de persistencia objeto-relacional y constituye la base de GORM. Es capaz de mapear complejas clases de dominio contra las tablas de una base de datos, as&iacute; como establecer las relaciones entre las distintas tablas.
+			</p>
+		
+</li>
+		
+<li>
+			
+<strong>SiteMesh</strong>
+			
+<p>
+				
+<a class="external" href="http://www.opensymphony.com/sitemesh/">SiteMesh</a> es un framework web para el renderizado de documentos HTML que implementa el patr&oacute;n de dise&ntilde;o <a class="external" href="http://es.wikipedia.org/wiki/Decorator_(patr%C3%B3n_de_dise%C3%B1o)">Decorator</a> con componentes como cabeceras, pies de p&aacute;ginas y sistemas de navegaci&oacute;n.
+			</p>
+		
+</li>
+		
+<li>
+			
+<strong>Frameworks AJAX</strong>
+			
+<p>
+				La creciente popularidad de la llamada Web 2.0, he hecho que se hayan introducido tres populares frameworks de AJAX en Grails. Estos frameworks son <a class="external" href="http://script.aculo.us/">script.aculo.us</a>, <a class="external" href="http://openrico.org/">Rico</a> y <a class="external" href="http://www.prototypejs.org/">Prototype</a>. Adem&aacute;s, algunos librer&iacute;as de etiquetas de Grails integran el uso de estos frameworks para hacer su uso m&aacute;s f&aacute;cil a los que trabajan por primera vez con AJAX.
+			</p>
+		
+</li>
+		
+<li>
+			
+<strong>Jetty y Tomcat</strong>
+			
+<p>
+				Como coment&aacute;bamos anteriormente, Grails es una plataforma completa, y esto es en parte gracias a la inclusi&oacute;n de un servidor web como <a class="external" href="http://www.mortbay.org/jetty/">Jetty</a> o <a class="external" href="http://tomcat.apache.org/">Tomcat</a>. Esto no significa que Grails solo funcione con estos dos servidores de aplicaciones y m&aacute;s adelante veremos como desplegar aplicaciones de Grails en otros servidores.
+			</p>
+		
+</li>
+		
+<li>
+			
+<strong>HSQLDB</strong>
+			
+<p>
+				Grails tambi&eacute;n incluye un gestor de bases de datos relacionales como <a class="external" href="http://hsqldb.org/">HSQLDB</a>. Podemos utilizar este gestor de base de datos en memoria o almacenando en disco su informaci&oacute;n. Esto tampoco quiere decir que nuestras aplicaciones desarrolladas en Grails s&oacute;lo funcionen con HSQLDB, sino que para desarrollar nuestra aplicaci&oacute;n no vamos a necesitar ning&uacute;n gestor de base de datos externo.
+			</p>
+		
+</li>
+		
+<li>
+			
+<strong>JUnit</strong>
+			
+<p>
+				Para los tests unitarios, el equipo de Grails se decidi&oacute; por un framework muy conocido en la comunidad Java como es <a class="external" href="http://www.junit.org/">JUnit</a>.
+			</p>
+		
+</li>
+		
+	
+</ul>
+</div>
+
+
+
+<a name="N1012B"></a><a name="Arquitectura"></a>
+<h2 class="underlined_10">Arquitectura</h2>
+<div class="section">
+<p>
+	Ahora que ya tenemos una idea de lo que es Grails y las ventajas que nos puede aportar a la hora de desarrollar nuestros proyectos web, veamos gr&aacute;ficamente su arquitectura. 
+</p>
+<p>
+	
+<img alt="Arquitectura" src="../images/sesion5/arquitectura.jpg">
+</p>
+<p>
+	Podemos decir que la arquitectura de Grails est&aacute; formada por cuatro capas claramente diferenciadas. La base de la arquitectura de Grails es la m&aacute;quina virtual de Java. Por encima de &eacute;sta se encuentran los lenguajes de programaci&oacute;n en lo que est&aacute; basado Grails, Java y Groovy. En la tercera capa tenemos el propio framework Grails, al cual le acompa&ntilde;an todos los frameworks de los que habl&aacute;bamos en la secci&oacute;n anterior, SiteMesh, Spring, GORM, etc. En esta capa tambi&eacute;n se ha a&ntilde;adido una opci&oacute;n abierta como es la posibilidad de incluir otras librer&iacute;as externas que no est&aacute;n incluidas en Grails. La &uacute;ltima capa est&aacute; formada por la aplicaci&oacute;n en si, siguiendo el patr&oacute;n modelo vista controlador. 
+</p>
+<p>
+	Por otro lado, Grails incluye una herramienta en l&iacute;nea de comandos para facilitarnos la escritura de c&oacute;digo y gestionar nuestros proyectos en Grails. Esta herramienta est&aacute; basada en <a class="external" href="http://gant.codehaus.org/">Gant</a>, un sistema de automatizaci&oacute;n de tareas basado en Apache Ant.
+</p>
+<p>
+	Desde el punto de vista de la ejecuci&oacute;n de un proyecto Grails, se podr&iacute;a esquematizar de la siguiente forma:
+</p>
+<p>
+	
+<img alt="Grails Runtime" src="../images/sesion5/grails_runtime.jpg">
+</p>
+<p>
+	De la imagen podemos concluir que una p&aacute;gina web realiza una petici&oacute;n al servidor web. Esta petici&oacute;n se pasa a un controlador, el cual podr&aacute; utilizar o no una clase de dominio (modelo). Esta clase de dominio puede ser a su vez estar persistida en una base de datos gracias a GORM. Una vez el controlador termina, pasa la petici&oacute;n al correspondiente GSP para que renderice la vista y sea enviada de nuevo al navegador en forma de p&aacute;gina HTML.
+</p>
+</div>
+
+
+<a name="N10153"></a><a name="Instalaci%C3%B3n+de+Grails"></a>
+<h2 class="underlined_10">Instalaci&oacute;n de Grails</h2>
+<div class="section">
+<p>
+	Si tenemos en cuenta lo que dec&iacute;amos anteriormente de que Grails es un completo framework con un servidor web, un gestor de base de datos y el resto de caracter&iacute;sticas ya comentadas, podr&iacute;amos pensar que su instalaci&oacute;n puede ser muy complicada. Sin embargo, la instalaci&oacute;n de Grails se convierte en un juego de ni&ntilde;os, ya que nos olvidamos de tener que buscar soluciones externas para cada uno de los aspectos relacionados con el desarrollo de una aplicaci&oacute;n web.
+</p>
+<p>
+	Estos son los pasos para instalar grails en nuestro ordenador:
+</p>
+<ol>
+		
+<li>Descargar la &uacute;ltima versi&oacute;n de Grails desde la web <a class="external" href="http://grails.org/Download">http://grails.org/Download</a>
+</li>
+		
+<li>Descomprime el archivo en el directorio que quieras</li>
+		
+<li>Crea la variable de entorno <em>GRAILS_HOME</em> para que apunte al directorio donde hayas descomprimido el archivo anterior</li>
+		
+<li>Agrega el directorio <em>GRAILS_HOME/bin</em> al <em>PATH</em>
+</li>
+	
+</ol>
+<p>
+	Una vez hayamos hecho esto, ya podremos ejecutar en l&iacute;nea de comando los comandos de Grails que veremos a partir de ahora.
+</p>
+<p>
+	El &uacute;nico prerrequisito de Grails es que debes tener instalado al menos el JDK 1.4 y tener configurada la variable de entorno <em>JAVA_HOME</em>. Con esto simplemente, ya tendr&iacute;amos configurado nuestro equipo para que puedas desarrollar tus proyectos con Grails.
+</p>
+</div>
+
+
+<a name="N10183"></a><a name="Scaffolding"></a>
+<h2 class="underlined_10">Scaffolding</h2>
+<div class="section">
+<p>
+	A lo largo de este curso, vamos a desarrollar un ejemplo de lo que ser&iacute;a el completo desarrollo de una aplicaci&oacute;n web referida a una biblioteca. Empezaremos desarrollando este ejemplo de aplicaci&oacute;n para explicar como Grails implementa el scaffolding. Pero, &iquest;qu&eacute; es el scaffolding?
+</p>
+<p>
+	El scaffolding es un t&eacute;rmino utilizado en programaci&oacute;n para designar la construcci&oacute;n autom&aacute;tica de aplicaciones a partir del esquema de la base de datos. Est&aacute; soportado por varios frameworks MVC y Grails no pod&iacute;a ser menos y el equipo de desarrollo decidi&oacute; incluirlo entre sus caracter&iacute;sticas m&aacute;s importantes. La idea del scaffolding es, partiendo del esquema de la base de datos, generar el c&oacute;digo necesario para implementar las cuatro operaciones b&aacute;sicas en cualquier aplicaci&oacute;n, que son: creaci&oacute;n, lectura, actualizaci&oacute;n y borrado. Este tipo de aplicaciones se las conoce como <em>CRUD (create, read, update y delete)</em>.
+</p>
+<p>
+	Vamos a ver un ejemplo de lo que es el scaffolding, desarrollando una parte reducida de la aplicaci&oacute;n ejemplo que veremos durante este curso. Veamos en que consiste esta aplicaci&oacute;n.
+</p>
+<a name="N10195"></a><a name="Descripci%C3%B3n+de+la+aplicaci%C3%B3n+ejemplo"></a>
+<h3 class="underlined_5">Descripci&oacute;n de la aplicaci&oacute;n ejemplo</h3>
+<p>
+	La aplicaci&oacute;n que vamos a desarrollar servir&aacute; para la gesti&oacute;n de una biblioteca de un instituto. B&aacute;sicamente, la aplicaci&oacute;n deber&aacute; gestionar los posibles usuarios (administrador, bibliotecario, profesor o socio). Los administradores ser&aacute;n los encargados de la creaci&oacute;n de los usuarios, mientras que los bibliotecarios ser&aacute;n los &uacute;nicos responsables de la gesti&oacute;n de los libros y los pr&eacute;stamos.
+</p>
+<p>
+	Los profesores y los socios podr&aacute;n realizar reservas, con la &uacute;nica diferencia de las caracter&iacute;sticas de las mismas, puesto que los profesores podr&aacute;n reservar m&aacute;s libros y durante m&aacute;s tiempo que los socios. Esta reserva la realizar&aacute; un bibliotecario que formalizar&aacute; el pr&eacute;stamo a nombre de un profesor o un socio. Cuando un usuario se retrase en la devoluci&oacute;n de un libro, se le impondr&aacute; una multa determinada con una fecha de inicio y una fecha fin. 
+</p>
+<p>
+	Veamos como quedar&iacute;a el diagrama conceptual de datos de nuestra aplicaci&oacute;n
+</p>
+<p>
+	
+<img alt="Modelo conceptual de datos" src="../images/sesion5/entidadrelacion.jpeg">
+</p>
+<p>
+	Para empezar, nosotros nos vamos a quedar con un esquema reducido de esta diagrama y simplemente utilizaremos las relaciones entre las tabla <em>Operacion</em>, <em>Usuario</em> y <em>Libro</em>. Pongamos manos a la obra.
+</p>
+<a name="N101B8"></a><a name="Creaci%C3%B3n+del+proyecto+Grails"></a>
+<h3 class="underlined_5">Creaci&oacute;n del proyecto Grails</h3>
+<p>
+	Si todo ha ido bien en la instalaci&oacute;n de Grails, podremos crear nuestra primera aplicaci&oacute;n en Grails gracias al comando <span class="codefrag">grails</span>. Este ser&aacute; el comando que utilizaremos a lo largo de todo el curso para crear todas las partes de nuestra aplicaci&oacute;n. Para ver un listado completo de las opciones del comando <span class="codefrag">grails</span>, podemos ejecutar <span class="codefrag">grails help</span>. Si echamos un primer vistazo a esta listado, descubriremos la opci&oacute;n <span class="codefrag">create-app</span>, la cual nos servir&aacute; para crear la estructura de directorios de la aplicaci&oacute;n. Ejecutamos <span class="codefrag">grails create-app biblioteca</span> y se nos generar&aacute; el directorio <em>biblioteca</em> con el siguiente contenido:
+</p>
+<p>
+	
+<img alt="Estructura de directorios" src="../images/sesion5/directoriosbiblioteca.gif">
+</p>
+<p>
+	Esta estructura de directorios generada autom&aacute;ticamente por Grails viene como consecuencia de lo que coment&aacute;bamos anteriormente como uno de los paradigmas en que se basa Grails, <em>convenci&oacute;n sobre configuraci&oacute;n</em>. De esta forma, Grails nos genera la estructura de directorios que albergar&aacute; todo nuestro proyecto para que nosotros lo vayamos <em>completando</em>. Veamos para que sirven los directorios m&aacute;s importantes generados dentro de nuestro proyecto <em>biblioteca</em>.
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	
+<tr>
+		
+<th colspan="1" rowspan="1">Directorio</th>
+		<th colspan="1" rowspan="1">Descripci&oacute;n</th>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">grails-app/conf</td>
+		<td colspan="1" rowspan="1">Ficheros de configuraci&oacute;n de la aplicaci&oacute;n</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">grails-app/conf/hibernate</td>
+		<td colspan="1" rowspan="1">Archivos de mapeado de Hibernate</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">grails-app/conf/spring</td>
+		<td colspan="1" rowspan="1">Archivos de mapeado de Spring</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">grails-app/controllers</td>
+		<td colspan="1" rowspan="1">Controladores de la aplicaci&oacute;n que gestionan las peticiones</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">grails-app/domain</td>
+		<td colspan="1" rowspan="1">Clases de dominio del modelo</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">grails-app/i18n</td>
+		<td colspan="1" rowspan="1">Mensajes para la internacionalizaci&oacute;n de la aplicaci&oacute;n</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">grails-app/services</td>
+		<td colspan="1" rowspan="1">Servicios</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">grails-app/taglib</td>
+		<td colspan="1" rowspan="1">Librer&iacute;as de etiquetas din&aacute;micas</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">grails-app/utils</td>
+		<td colspan="1" rowspan="1">Utilidades espec&iacute;ficas de Grails</td>
+	
+</tr>	
+	
+<tr>
+		
+<td colspan="1" rowspan="1">grails-app/views</td>
+		<td colspan="1" rowspan="1">Archivos GSP</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">grails-app/views/layout</td>
+		<td colspan="1" rowspan="1">Archivos de dise&ntilde;o de las p&aacute;ginas web</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">lib</td>
+		<td colspan="1" rowspan="1">Archivos JAR de terceras partes, tales como controladores de bases de datos</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">scripts</td>
+		<td colspan="1" rowspan="1">Scripts <em>GANT</em> para el automatizado de tareas</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">src/java</td>
+		<td colspan="1" rowspan="1">Archivos fuente adicionales en Java</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">src/groovy</td>
+		<td colspan="1" rowspan="1">Archivos fuente adicionales en Groovy</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">test/integration</td>
+		<td colspan="1" rowspan="1">Tests de integraci&oacute;n</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">test/unit</td>
+		<td colspan="1" rowspan="1">Tests unitarios</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">web-app</td>
+		<td colspan="1" rowspan="1">Artefactos web que finalmente ser&aacute;n comprimidos a un <em>WAR (Web Application Archive)</em></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">web-app/css</td>
+		<td colspan="1" rowspan="1">Hojas de estilo</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">web-app/images</td>
+		<td colspan="1" rowspan="1">Im&aacute;genes de la aplicaci&oacute;n</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">web-app/js</td>
+		<td colspan="1" rowspan="1">Javascript</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">web-app/WEB-INF</td>
+		<td colspan="1" rowspan="1">Archivos de configuraci&oacute;n para Spring o SiteMesh</td>
+	
+</tr>	
+
+</table>
+<p>
+	Ahora que ya tenemos una primera idea de lo que significa cada uno de los directorios generados por Grails al crear un proyecto, vamos a abrirlo con el editor NetBeans. Grails es capaz de crear tambi&eacute;n los archivos de configuraci&oacute;n necesarios para que podamos editar el proyecto con diferentes editores como Eclipse, Textmate y NetBeans, con lo que simplemente abrimos NetBeans y localizamos el proyecto <em>biblioteca</em>. Como vemos en la imagen, NetBeans ha cambiado la estructura de directorios por una m&aacute;s clara para el desarrollador.
+</p>
+<p>
+	
+<img alt="Proyecto con NetBeans" src="../images/sesion5/proyectonetbeans.gif">
+</p>
+<p>
+	Nuestro proyecto ya est&aacute; listo para ser ejecutado, aunque imaginar&aacute;s que por el momento no har&aacute; nada. Para ver la primera versi&oacute;n del proyecto <em>biblioteca</em> podemos ejecutar el comando <span class="codefrag">grails run-app</span>, que nos generar&aacute; una aplicaci&oacute;n en la direcci&oacute;n http://localhost:8080/biblioteca. El comando <span class="codefrag">grails run-app</span> lo que ha hecho es crear una instancia del servidor web Tomcat en el puerto 8080 y cargar en &eacute;l la aplicaci&oacute;n <em>biblioteca</em>. Por ahora esta aplicaci&oacute;n hace m&aacute;s bien poco y simplemente nos muestra un mensaje de bienvenida, pero vamos a ver lo sencillo que es generar su contenido.
+</p>
+<a name="N10336"></a><a name="Creaci%C3%B3n+de+clases+de+dominio"></a>
+<h3 class="underlined_5">Creaci&oacute;n de clases de dominio</h3>
+<p>
+	Al desarrollar una aplicaci&oacute;n de este tipo, lo normal es crear en primer lugar las clases de dominio necesarias para despu&eacute;s pasar a generar los controladores, as&iacute; que vamos a empezar creando la clase de dominio referente a los <em>Libros</em>. En Grails tenemos el comando <span class="codefrag">grails create-domain-class</span> para generar una determinada clase de dominio, con lo que si ejecutamos <span class="codefrag">grails create-domain-class libro</span>, grails nos crear&aacute; la estructura necesaria para los libros de nuestra biblioteca. En caso de no indicar el nombre de la clase, el sistema nos preguntar&aacute; por &eacute;l. 
+</p>
+<p>
+	Como podemos comprobar en nuestro proyecto con NetBeans, se nos ha creado una clase de dominio llamada <em>Libro</em>, que como ves empieza por may&uacute;scula a pesar de que nosotros introdujimos el nombre de la clase de dominio en min&uacute;sculas. Esto es debido a que Grails sigue una serie de convenios para el nombre de las clases. El contenido de <em>Libro.groovy</em> es el siguiente:
+</p>
+<pre class="code">package biblioteca
+	
+class Libro {
+	
+	static constraints = {
+	}
+}</pre>
+<p>
+	La clase de dominio <em>Libro</em> est&aacute; preparada para que le a&ntilde;adamos los campos necesarios, tales como nombre, isbn, autor, etc. Sin embargo, antes de esto, vamos a ver como generar algunos tests de integraci&oacute;n que comprobar&aacute;n la validez de nuestra nueva clase de dominio. Cuando en Grails creamos las clases de dominio, adicionalmente se crear&aacute; un test unitario para comprobar que la clase funciona tal y como esperamos. Sin embargo, estos tests unitarios no nos servir&aacute;n para comprobar que los datos se insertan correctamente en la base de datos, puesto que los tests unitarios no se relacionan de ninguna forma con GORM. Para poder comprobar que los datos se insertan correctamente en la base de datos, debemos generar un nuevo test de integraci&oacute;n con el comando <span class="codefrag">grails create-integration-test libro</span>. Si ahora abrimos con NetBeans los tests de integraci&oacute;n veremos como Grails ha creado un archivo llamado <em>LibroTests.groovy</em>, cuyo contenido es el siguiente:
+</p>
+<pre class="code">package biblioteca
+	
+import grails.test.*
+
+class LibroTests extends GroovyTestCase {
+    protected void setUp() {
+        super.setUp()
+    }
+
+    protected void tearDown() {
+        super.tearDown()
+    }
+
+    void testSomething() {
+
+    }
+}</pre>
+<p>
+	Como vemos, la clase <em>LibroTests</em> extiende la clase GroovyTestCase que a su vez extiende a la clase <em>JUnit</em> a&ntilde;adi&eacute;ndole algunos m&eacute;todos del tipo <span class="codefrag">assert()</span> para facilitarnos la comprobaci&oacute;n de nuestra clase. El m&eacute;todo <span class="codefrag">setUp()</span> se ejecuta antes que cualquier otro m&eacute;todo que empiece con la palabra <em>test</em> con lo que este m&eacute;todo nos permite dejar nuestros tests en un estado conocido. Por otro lado, el m&eacute;todo <span class="codefrag">tearDown()</span> se ejecuta una vez se han terminado todos los tests de la clase. Por &uacute;ltimo, el m&eacute;todo <span class="codefrag">testSomething()</span> es un m&eacute;todo ejemplo que Grails nos deja preparado para que escribamos las l&iacute;neas de c&oacute;digo necesarias para chequear nuestras clases de dominio. Vamos a rellenar nuestro test unitario, aun sabiendo que va a fallar puesto que todav&iacute;a no hemos definido nada en la clase de dominio <em>Libro</em>.
+</p>
+<pre class="code">package biblioteca
+
+import grails.test.*
+
+class LibroTests extends GroovyTestCase {
+    protected void setUp() {
+        Libro.list()*.delete()
+    }
+
+    protected void tearDown() {
+        super.tearDown()
+    }
+
+    void testPersiste() {
+        new Libro(titulo:'La colmena', anyo:1951, autor:'Camilo Jos&eacute; Cela Trulock', isbn:'843992688X', editorial:'Anaya', fecha:new Date(), descripcion:'').save()
+        new Libro(titulo:'La galatea', anyo:1585, autor:'Miguel de Cervantes Saavedra' ,isbn:'0936388110', editorial:'Anaya', fecha:new Date(), descripcion:'').save()
+        new Libro(titulo:'El ingenioso hidalgo don Quijote de la Mancha', anyo:1605, autor:'Miguel de Cervantes Saavedra', isbn:'0844273619', editorial:'Anaya', fecha:new Date(), descripcion:'').save()
+        new Libro(titulo:'La dorotea', anyo:1632, autor:'F&eacute;lix Lope de Vega y Carpio', isbn:'847039360X', editorial:'Anaya', fecha:new Date(), descripcion:'').save()
+        new Libro(titulo:'La dragontea', anyo:1602, autor:'F&eacute;lix Lope de Vega y Carpio', isbn:'8437624045', editorial:'Anaya', fecha:new Date(), descripcion:'').save()
+    
+        assert 5 == Libro.count()
+
+        def libro2 = Libro.get(2)
+
+        assertToString(libro2, 'La galatea')
+    }
+
+    void testToString(){
+        def libro = new Libro(titulo:'Groovy in action', anyo: 2007, autor:'Dierk K&ouml;nig', isbn:'1-932394-84-2')
+        assertToString(libro, 'Groovy in action')
+    }
+}
+</pre>
+<p>
+	Este test de integraci&oacute;n empieza dejando vac&iacute;a de datos la clase <em>Libro</em> gracias al m&eacute;todo <span class="codefrag">setUp()</span>. El m&eacute;todo <span class="codefrag">list()</span> ofrecido por GORM devuelve todos los elementos de clase <em>Libro</em> y al utilizar el operador <em>spread (*.)</em> le pasamos al m&eacute;todo <span class="codefrag">delete()</span> cada uno de los elementos de la lista devuelta, el cual elimina de la base de datos el objeto dado.
+</p>
+<p>
+	El m&eacute;todo <span class="codefrag">testPersiste()</span> inserta 5 libros en la base de datos gracias al m&eacute;todo <span class="codefrag">save()</span> y comprueba que todos se han insertado sin problemas. Por &uacute;ltimo, el m&eacute;todo <span class="codefrag">testToString()</span> comprueba que de la clase <em>Libro</em> se devuelve el t&iacute;tulo del mismo. Lo &uacute;nico a resaltar es que se ha utilizado el m&eacute;todo <span class="codefrag">assertToString()</span> que est&aacute; implementado en <em>GrailsUnitTestCase</em>.
+</p>
+<p>
+	Para ejecutar los tests que acabamos de crear debemos ejecutar el comando <span class="codefrag">grails test-app</span>. Al ejecutar este comando, Grails crea un directorio llamado <em>test-reports</em> bajo el directorio <em>target</em> con los resultados de los tests pasados, que como podemos imaginar, ambos han fallado. Ahora que ya tenemos implementados los tests, vamos a terminar de crear la clase de dominio <em>Libro</em>.
+</p>
+<p>
+	Tal y como ve&iacute;amos en el diagrama conceptual de datos, la informaci&oacute;n referente a los libros ser&aacute; el <em>isbn</em>, <em>t&iacute;tulo</em> y el <em>autor</em>, pero adem&aacute;s le vamos a a&ntilde;adir alg&uacute;n dato m&aacute;s como son la <em>editorial</em>, el <em>a&ntilde;o de edici&oacute;n</em> del libro, una peque&ntilde;a <em>descripci&oacute;n</em> del mismo y la <em>fecha</em> en la que se a&ntilde;adi&oacute; el libro a nuestro registro. Con estos datos, la clase de dominio <em>Libro</em> quedar&iacute;a as&iacute;:
+</p>
+<pre class="code">package biblioteca
+	
+class Libro {
+    String isbn
+    String titulo
+    String autor
+    String editorial
+    Integer anyo
+    String descripcion
+    Date fecha
+    
+    static constraints = {
+        isbn(blank:false)
+        titulo(blank:false)
+        autor(blank:false)
+        editorial()
+        anyo()
+        fecha(nullable:true)
+        descripcion(maxSize:1000,nullable:true)
+    }
+
+    String toString(){
+        titulo
+    }
+}</pre>
+<p>
+	Como puedes comprobar, en ning&uacute;n momento se ha indicado que la propiedad <em>isbn</em> es la clave primaria y esto es debido a que Grails a&ntilde;ade siempre las propiedades <em>id</em> y <em>version</em>, los cuales sirven respectivamente como clave primaria de la tabla en cuesti&oacute;n y para garantizar la integridad de los datos. La propiedad <em>version</em> es un mecanismo utilizado en <em>Hibernate</em> para el bloqueo de las tablas y que evita que se produzcan inconsistencias en los datos.
+</p>
+<p>
+	Por otro lado, la clase <em>Libro</em> no s&oacute;lo contiene propiedades sino que tambi&eacute;n se han a&ntilde;adido una serie de restricciones (<span class="codefrag">constraints</span>) que deben cumplir dichas propiedades para que un libro se pueda insertar en la base de datos. Por ejemplo, las propiedades <em>isbn</em>, <em>titulo</em> y <em>autor</em> no pueden dejarse en blanco, mientras que las propiedades <em>descripcion</em> y <em>fecha</em> pueden tener un valor <em>null</em>. Adem&aacute;s, la descripci&oacute;n no puede exceder de 1000 caracteres. En sesiones posteriores veremos todas las posibles restricciones que podemos a&ntilde;adir a las propiedades de nuestras clases.
+</p>
+<a name="N1040A"></a><a name="Creaci%C3%B3n+de+controladores"></a>
+<h3 class="underlined_5">Creaci&oacute;n de controladores</h3>
+<p>
+	Ahora que tenemos nuestra primera clase de dominio creada, necesitamos un controlador que gestione todas las peticiones que le lleguen a esta clase de dominio. El controlador es el encargado de gestionar la interacci&oacute;n entre la vista y las clases de dominio, con lo que podemos decir sin g&eacute;nero de dudas que es la parte m&aacute;s ardua del sistema. Sin embargo, gracias a que Grails nos permite utilizar <em>scaffolding</em> esto se convierte de nuevo en un juego para ni&ntilde;os.
+</p>
+<p>
+	Para crear un controlador en Grails, debemos ejecutar el comando <span class="codefrag">grails create-controller</span> y se generar&aacute; un nuevo controlador en el directorio <em>grails-app/controllers</em>, as&iacute; como un test unitario en el directorio <em>grails-app/views/&lt;nombre_del_controlador&gt;</em>. Antes de seguir vamos a crear el controlador de la clase <em>Libro</em> ejecutando <span class="codefrag">grails create-controller libro</span>, el cual crear&aacute; el archivo <em>grails-app/controllers/LibroController.groovy</em> con el siguiente contenido
+</p>
+<pre class="code">package biblioteca
+	
+class LibroController {
+
+    def index = { }
+}</pre>
+<p>
+	Para poder utilizar <em>scaffolding</em> de la clase <em>Libro</em> simplemente debemos cambiar la l&iacute;nea <span class="codefrag">def index = {}</span> por el siguiente c&oacute;digo <span class="codefrag">def scaffold = Libro</span>. Si actualizamos la web de la aplicaci&oacute;n veremos como nos aparece un nuevo enlace en el que podremos controlar los datos de los libros de nuestra aplicaci&oacute;n. El scaffolding de Grails ha creado por nosotros los cuatro m&eacute;todos necesarios para la gesti&oacute;n de los libros <em>creaci&oacute;n</em>, <em>lectura</em>, <em>edici&oacute;n</em> y <em>borrado</em>. En la siguiente imagen podemos ver el formulario para a&ntilde;adir un nuevo libro.
+</p>
+<p>
+	
+<img alt="A&ntilde;adir un libro" height="519" src="../images/sesion5/createlibro.gif" width="693">
+</p>
+<p>
+	Si nos fijamos bien, observaremos que el orden para el formulario de creaci&oacute;n de un nuevo libro sigue el mismo orden en el que aparecen definidas las restricciones para la validaci&oacute;n de los datos. Tambi&eacute;n es interesante ver como para la propiedad <em>descripci&oacute;n</em> ha creado un <em>textarea</em> en lugar de un campo <em>text</em> como ha hecho con el resto de propiedades de tipo <em>String</em>. Esto es porque para el campo <em>descripci&oacute;n</em> hemos establecido la restricci&oacute;n del tama&ntilde;o m&aacute;ximo. 
+</p>
+<p>
+	Probemos ahora a insertar libros que no cumplan alguna de las restricciones que le impusimos en la definici&oacute;n de la clase de dominio. Si por ejemplo intentamos insertar un nuevo libro sin especificar su <em>isbn</em> el sistema nos proporcionar&aacute; un error indicando que el campo en cuesti&oacute;n no puede estar vacio.
+</p>
+<p>
+	
+<img alt="Error de validaci&oacute;n" height="37" src="../images/sesion5/errorvalidacion.gif" width="402">
+</p>
+<p>
+	Si solucionamos este problema con el isbn, se insertar&aacute; un nuevo libro en la base de datos de nuestra aplicaci&oacute;n, que posteriormente podremos visualizar, editar y eliminar.
+</p>
+<p>
+	Antes de continuar implementando nuestra aplicaci&oacute;n, vamos a retomar los tests de integraci&oacute;n de los que hablamos anteriormente. Estos tests de integraci&oacute;n no funcionaban anteriormente, porque no hab&iacute;amos definido todav&iacute;a un controlador para gestionar las peticiones. Sin embargo, ahora que ya hemos creado el controlador correspondiente a la clase <em>Libro</em>, podemos volver a intentar ejecutar dichos tests con el comando <span class="codefrag">grails test-app</span> para comprobar que todo funciona tal y como esperamos. Ahora s&iacute;, estos tests se pasan correctamente como podemos comprobar en los informes generados en el directorio <em>target/test-reports</em>.
+</p>
+<p>
+	
+<img alt="Tests de integraci&oacute;n" height="318" src="../images/sesion5/integrationtests.gif" width="765">
+</p>
+<p>
+	Ahora que ya hemos comprobado la validez de nuestra clase <em>Libro</em> con ayuda de los tests de integraci&oacute;n, podemos continuar con nuestro peque&ntilde;o ejemplo de scaffolding, y para ello vamos a definir tambi&eacute;n las clases de dominio y los controladores para las <em>Operaciones</em> y los <em>Usuarios</em>. Empecemos creando las clases de dominio necesarias. Para ello ejecutamos los comandos <span class="codefrag">grails create-domain-class usuario</span> y <span class="codefrag">grails create-domain-class operacion</span>. De los usuarios, adem&aacute;s de los datos indicados en el diagrama conceptual de datos (login, nombre y password), necesitamos tambi&eacute;n una propiedad que nos indique el tipo de usuario (administrador, bibliotecario, profesor o socio).
+</p>
+<pre class="code">package biblioteca
+
+class Usuario {
+    String login
+    String password
+    String nombre
+    String apellidos
+    String tipo
+
+    static hasMany = [operaciones:Operacion]
+    
+    static constraints = {
+        login(size:6..20, blank:false, unique:true)
+        password(size:6..20, blank:false,password:true)
+        nombre(blank:false)
+        apellidos(blank:false)
+        tipo(inList:["administrador", "bibliotecario", "profesor", "socio"])
+    }
+
+    String toString(){
+        "$nombre $apellidos"
+    }
+}</pre>
+<p>
+	Lo novedoso en la definici&oacute;n de la clase <em>Usuario</em> es la aparici&oacute;n de nuevas restricciones. La restricci&oacute;n <em>size</em> indica un tama&ntilde;o m&iacute;nimo y uno m&aacute;ximo para la propiedad. Con <em>unique</em> se&ntilde;alamos que la propiedad debe ser &uacute;nica y no puede estar repetida. La restricci&oacute;n <em>password</em> marca la propiedad para que al introducirla en el formulario de entrada no se vean los caracteres introducidos. Por &uacute;ltimo, la restricci&oacute;n llamada <em>inList</em>, permite indicar un listado de valores v&aacute;lidos para una determinada propiedad. En nuestro caso la hemos utilizado para indicar que la propiedad <em>tipo</em> s&oacute;lo podr&aacute; ser <em>administrador</em>, <em>bibliotecario</em>, <em>profesor</em> o <em>socio</em>. En sesiones posteriores veremos m&aacute;s tipos de restricciones.
+</p>
+<p>
+	Para la clase <em>Operacion</em>, vamos a eliminar el campo <em>idOperacion</em>, puesto que Grails a&ntilde;ade un campo <em>id</em> con autoincremento, que ser&aacute; la clave primaria de la tabla. La clase de dominio <em>Operacion</em> quedar&iacute;a as&iacute;:
+</p>
+<pre class="code">package biblioteca
+	
+class Operacion {
+    String tipo
+    Boolean estado
+    Date fechaInicio
+    Date fechaFin
+    Usuario usuario
+    Libro libro
+
+    static belongsTo = [Usuario,Libro]
+    
+    static constraints = {
+        tipo(inList:["prestamo", "reserva"])
+        estado()
+        fechaInicio(nullable:false)
+        fechaFin(nullable:false)
+    }
+
+    String toString() {
+        "$tipo ($estado) [$fechaInicio - $fechaFin]"
+    }
+}</pre>
+<p>
+	En la clase <em>Operacion</em> hemos a&ntilde;adido un concepto nuevo que indica la relaci&oacute;n entre &eacute;sta y las clases <em>Usuario</em> y <em>Libro</em>. Para ello le indicamos las propiedades <em>usuario</em> y <em>libro</em> y adem&aacute;s, con <em>belongsTo</em> se&ntilde;alamos que cada operaci&oacute;n debe estar relacionada con una instancia de la clase <em>Libro</em> y con otra de la clase <em>Usuario</em>. 
+</p>
+<p>
+	Ahora s&oacute;lo nos faltar&iacute;a indicar la relaci&oacute;n que tienen las clases <em>Libro</em> y <em>Usuario</em> con la clase <em>Operacion</em>, y que en este caso debe indicar que una instancia de la clase <em>Libro</em> puede estar relacionada con muchas instancias de la clase <em>Operacion</em>, igual que suceder&iacute;a con la clase <em>Usuario</em>, en la que una instancia podr&iacute;a aparecer en varias instancias de la clase <em>Operacion</em>. 
+</p>
+<p>
+	Para indicar esto en las respectivas clases (<em>Libro</em> y <em>Usuario</em>) necesitamos a&ntilde;adir la propiedad <span class="codefrag">hasMany</span> de la siguiente forma <span class="codefrag">static hasMany = [operaciones: Operacion]</span>. Por otro lado, en la clase de dominio <em>Operacion</em> debemos indicar la propiedad <span class="codefrag">static belongsTo = [Usuario, Libro]</span>.
+</p>
+<p>
+	En sesiones posteriores veremos m&aacute;s en profundidad los diferentes tipos de relaciones entre las clases y la forma de expresarlas con Grails.
+</p>
+<p>
+	Una vez ya tenemos definidas las clases de dominio <em>Usuario</em> y <em>Operacion</em>, podemos crear los controladores e indicarles que queremos utilizar el scaffolding para gestionar su informaci&oacute;n. Para ello ejecutamos <span class="codefrag">grails create-controller usuario</span> y <span class="codefrag">grails create-controller operacion</span>.
+</p>
+<pre class="code">package biblioteca
+
+class UsuarioController {
+
+    def scaffold = Usuario
+}</pre>
+<pre class="code">package biblioteca
+
+class OperacionController {
+
+    def scaffold = Operacion
+}</pre>
+<p>
+	Ahora s&iacute;, nuestra aplicaci&oacute;n empieza a tomar forma de como debe ser la aplicaci&oacute;n final, aunque por supuesto todav&iacute;a quedan muchas cosas que iremos viendo a lo largo del curso. Ahora mismo, podemos empezar a probar la aplicaci&oacute;n insertando datos en cada una de las clases y comprobar que todo funciona correctamente. Sin embargo, la labor de introducci&oacute;n de los datos a mano en la aplicaci&oacute;n es algo muy repetitivo y aburrido, as&iacute; que vamos a ver como podemos convertir esta tarea en algo m&aacute;s sencillo y no tener que repetirla cada vez que probamos la aplicaci&oacute;n.
+</p>
+<p>
+	En el directorio de configuraci&oacute;n de nuestra aplicaci&oacute;n (<em>grails-app/conf</em>) tenemos un archivo llamado <em>BootStrap.groovy</em> cuya funcionalidad es posibilitar la realizaci&oacute;n de acciones al arrancar y al finalizar nuestra aplicaci&oacute;n. Como ya estar&eacute;is imaginando, vamos a aprovechar este fichero para introducir algunos datos en nuestra aplicaci&oacute;n para tener algo de informaci&oacute;n ya introducida en nuestra aplicaci&oacute;n. El siguiente ejemplo, inserta 5 usuarios de diferentes tipos y 5 libros.
+</p>
+<pre class="code">import biblioteca.*
+
+class BootStrap {
+
+	def init = { servletContext -&gt;
+		new Usuario(login:'frangarcia',
+			password:'mipassword',
+			nombre:'Francisco Jos&eacute;',
+			apellidos:'Garc&iacute;a Rico',
+			tipo:'administrador'
+		).save()
+		new Usuario(login:'pablomarmol',
+			password:'marmol',
+			nombre:'Pablo',
+			apellidos:'Mar Mol',
+			tipo:'bibliotecario'
+		).save()
+		new Usuario(login:'pedropp',
+			password:'picapiedra',
+			nombre:'Roberto',
+			apellidos:'Pica Piedra',
+			tipo:'profesor'
+		).save()
+		new Usuario(login:'wilmapp',
+			password:'picapiedra2',
+			nombre:'Wilma',
+			apellidos:'Pica Piedra',
+			tipo:'socio'
+		).save()
+		new Usuario(login:'bettymarmol',
+			password:'marmol2',
+			nombre:'Betty',
+			apellidos:'Mar Mol',
+			tipo:'socio'
+		).save()
+
+		new Libro(titulo:'La colmena', 
+			anyo:1951, 
+			autor:'Camilo Jos&eacute; Cela Trulock', 
+			isbn:'843992688X', 
+			editorial:'Anaya', 
+			fecha:new Date(), 
+			descripcion:''
+		).save()
+		new Libro(titulo:'La galatea', 
+			anyo:1585, 
+			autor:'Miguel de Cervantes Saavedra',
+			isbn:'0936388110', 
+			editorial:'Anaya', 
+			fecha:new Date(), 
+			descripcion:''
+		).save()
+		new Libro(titulo:'El ingenioso hidalgo don Quijote de la Mancha', 
+			anyo:1605, 
+			autor:'Miguel de Cervantes Saavedra', 
+			isbn:'0844273619', 
+			editorial:'Anaya', fecha:new Date(), descripcion:'').save()
+		new Libro(titulo:'La dorotea', 
+			anyo:1632, 
+			autor:'F&eacute;lix Lope de Vega y Carpio', 
+			isbn:'847039360X', 
+			editorial:'Anaya', 
+			fecha:new Date(), 
+			descripcion:''
+		).save()
+		new Libro(titulo:'La dragontea', 
+			anyo:1602, 
+			autor:'F&eacute;lix Lope de Vega y Carpio', 
+			isbn:'8437624045', 
+			editorial:'Anaya', 
+			fecha:new Date(), 
+			descripcion:''
+		).save()
+	}
+	def destroy = { }
+}</pre>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010-2011 Depto. Ciencia de la Computaci&oacute;n e IA</div>
+</div>
+<script type="text/javascript">
+     
+         SyntaxHighlighter.defaults['toolbar'] = false;
+         SyntaxHighlighter.autoloader(
+  		     'java                   skin/highlight/shBrushJava.js',
+  		     'xml xhtml xslt html    skin/highlight/shBrushXml.js',
+  		     'js jscript javascript  skin/highlight/shBrushJScript.js',
+  		     'groovy                 skin/highlight/shBrushGroovy.js',
+  		     'bash shell             skin/highlight/shBrushBash.js',
+  		     'php                    skin/highlight/shBrushPhp.js',
+  		     'css                    skin/highlight/shBrushCss.js',
+  		     'sql                    skin/highlight/shBrushSql.js',
+  		     'objc                   skin/highlight/shBrushObjC.js',
+  		     'cpp c                  skin/highlight/shBrushCpp.js',
+  		     'text plain             skin/highlight/shBrushPlain.js'
+         );
+         SyntaxHighlighter.all();
+     </script><a href="skin/highlight/shBrushJava.js"></a><a href="skin/highlight/shBrushXml.js"></a><a href="skin/highlight/shBrushJScript.js"></a><a href="skin/highlight/shBrushGroovy.js"></a><a href="skin/highlight/shBrushBash.js"></a><a href="skin/highlight/shBrushPhp.js"></a><a href="skin/highlight/shBrushCss.js"></a><a href="skin/highlight/shBrushSql.js"></a><a href="skin/highlight/shBrushObjC.js"></a><a href="skin/highlight/shBrushCpp.js"></a><a href="skin/highlight/shBrushPlain.js"></a>
+</body>
+</html>

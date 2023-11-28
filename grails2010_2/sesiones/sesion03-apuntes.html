@@ -1,0 +1,758 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Aspectos avanzados en Groovy</title>
+<link type="text/css" href="../skin/highlight/shCore.css" rel="stylesheet">
+<link type="text/css" href="../skin/highlight/shThemeEclipse.css" rel="stylesheet">
+<script src="../skin/highlight/shCore.js" type="text/javascript"></script><script src="../skin/highlight/shAutoloader.js" type="text/javascript"></script>
+<link type="text/css" href="../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../skin/profile.css" rel="stylesheet">
+<script src="../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="../images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Groovy&amp;Grails: desarrollo r&aacute;pido de aplicaciones" src="../images/baner_j2ee_der.gif" title="Groovy&amp;Grails: desarrollo r&aacute;pido de aplicaciones"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="../index.html">Home</a>
+</li>
+<li class="current">
+<a class="base-selected" href="../sesiones/index.html">Sesiones</a>
+</li>
+<li>
+<a class="base-not-selected" href="../ejercicios/index.html">Ejercicios</a>
+</li>
+<li>
+<a class="base-not-selected" href="../bibliografia/index.html">Bibliograf&iacute;a</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../sesiones/sesion01-apuntes.html" title="Introducci&oacute;n a Groovy">Sesi&oacute;n 1</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion02-apuntes.html" title="El lenguaje Groovy">Sesi&oacute;n 2</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesi&oacute;n 3</div>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion04-apuntes.html" title="Librer&iacute;as propias en Groovy">Sesi&oacute;n 4</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion05-apuntes.html" title="Introducci&oacute;n a Grails">Sesi&oacute;n 5</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion06-apuntes.html" title="Construir la interfaz de usuario (I)">Sesi&oacute;n 6</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion07-apuntes.html" title="Controladores">Sesi&oacute;n 7</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion08-apuntes.html" title="Construir la interfaz de usuario (II)">Sesi&oacute;n 8</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion09-apuntes.html" title="Dominios y servicios (I)">Sesi&oacute;n 9</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion10-apuntes.html" title="Dominios y servicios (II)">Sesi&oacute;n 10</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion11-apuntes.html" title="Seguridad">Sesi&oacute;n 11</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion12-apuntes.html" title="Despliegue de aplicaciones">Sesi&oacute;n 12</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion13-apuntes.html" title="Web 2.0">Sesi&oacute;n 13</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion14-apuntes.html" title="AJAX">Sesi&oacute;n 14</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion15-apuntes.html" title="Dos horas para crear twitter">Sesi&oacute;n 15</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion03-apuntes.pdf"><img alt="PDF -icon" src="../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Aspectos avanzados en Groovy</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Closures">Closures</a>
+<ul class="minitoc">
+<li>
+<a href="#Definici%C3%B3n+de+closure">Definici&oacute;n de closure</a>
+</li>
+<li>
+<a href="#Declarando+closures">Declarando closures</a>
+</li>
+<li>
+<a href="#Los+closures+como+objetos">Los closures como objetos</a>
+</li>
+<li>
+<a href="#Usos+de+los+closures">Usos de los closures</a>
+</li>
+<li>
+<a href="#M%C3%A1s+m%C3%A9todos+de+los+closures">M&aacute;s m&eacute;todos de los closures</a>
+</li>
+<li>
+<a href="#Valores+devueltos+en+los+closures">Valores devueltos en los closures</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Groovy+como+lenguaje+orientado+a+objetos">Groovy como lenguaje orientado a objetos</a>
+<ul class="minitoc">
+<li>
+<a href="#Clases+y+scripts">Clases y scripts</a>
+</li>
+<li>
+<a href="#Organizando+nuestras+clases+y+scripts">Organizando nuestras clases y scripts</a>
+</li>
+<li>
+<a href="#Caracter%C3%ADsticas+avanzadas+del+modelo+orientado+a+objetos">Caracter&iacute;sticas avanzadas del modelo orientado a objetos</a>
+</li>
+<li>
+<a href="#GroovyBeans">GroovyBeans</a>
+</li>
+<li>
+<a href="#Otros+caracter%C3%ADsticas+interesantes+de+Groovy">Otros caracter&iacute;sticas interesantes de Groovy</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<p>
+	En la sesi&oacute;n anterior hac&iacute;amos un repaso completo sobre los tipos de tipos de datos simples y algunas caracter&iacute;sticas. Posteriormente habl&aacute;bamos sobre colecciones y coment&aacute;bamos las excelencias de los rangos, una tipo de datos propio de Groovy, adem&aacute;s de los anteriormente conocidos listas y mapas.
+</p>
+
+<p>
+	Por &uacute;ltimo, ech&aacute;bamos un vistazo a las estructuras de control que pod&iacute;amos utilizar en Groovy y a la combinaci&oacute;n de &eacute;stas con los nuevos tipos de datos.
+</p>
+
+<p>
+	En la sesi&oacute;n 3 de este curso, veremos a fondo un nuevo concepto llamado <em>closure</em>. Ya hemos comentado algo sobre ellos en la sesi&oacute;n anterior, pero en esta veremos todas sus caracter&iacute;sticas.
+</p>
+
+<p>
+	Una vez vistos los closures, pasaremos a hablar sobre las caracter&iacute;sticas de Groovy como lenguaje orientado a objetos.
+</p>
+
+<a name="N1001B"></a><a name="Closures"></a>
+<h2 class="underlined_10">Closures</h2>
+<div class="section">
+<p>
+	Aunque en apartados anteriores ya hayamos visto algunos ejemplos de closures, es conveniente dedicarle m&aacute;s tiempo a su explicaci&oacute;n, ya que son una de las partes m&aacute;s importantes del lenguaje Groovy y m&aacute;s utilizados en Grails, y al mismo tiempo, puede ser un concepto dif&iacute;cil de entender, ya que no aparece en otros lenguajes de programaci&oacute;n. As&iacute; que volveremos a ver lo que son los closures, como se declaran y como pueden ser posteriormente referenciados.
+</p>
+<p>
+	M&aacute;s adelante, pasaremos a ver otros m&eacute;todos disponibles en los closures y el &aacute;mbito de aplicaci&oacute;n de los mismos, es decir, quien puede acceder a los mismos. Finalmente, definiremos varias tareas comunes que pueden ser realizadas con los closures, que hasta ahora se hacen de otras formas.
+</p>
+<a name="N10027"></a><a name="Definici%C3%B3n+de+closure"></a>
+<h3 class="underlined_5">Definici&oacute;n de closure</h3>
+<div class="frame note">
+<div class="label">Definici&oacute;n</div>
+<div class="content">
+		Un <em>closure</em> es un trozo de c&oacute;digo empaquetado como un objeto y definido entre llaves. Act&uacute;a como un m&eacute;todo, al cual se le pueden pasar par&aacute;metros y pueden devolver valores. Es un objeto normal y corriente al cual se pasa una referencia de la misma forma que se le pasa a cualquier otro objeto.
+	</div>
+</div>
+<p>
+		Posiblemente est&eacute;s pensando, que de momento los closures no te aportan nada que no puedas hacer nada con cualquier otro lenguaje de programaci&oacute;n y posiblemente sea cierto. Sin embargo, los closures nos aportan agilidad a la hora de programar, que es lo que en principio buscamos utilizando un lenguaje como Groovy.
+	</p>
+<a name="N10038"></a><a name="Declarando+closures"></a>
+<h3 class="underlined_5">Declarando closures</h3>
+<p>
+		Como coment&aacute;bamos anteriormente, los closures son bloques de c&oacute;digo encerrado entre llaves {}. Pues en primer lugar, vamos a definir un closure para imprimir nuestro nombre.
+	</p>
+<pre class="code">def nombre = 'Juan'
+def imprimeNombre = { println "Mi nombre es $nombre"}
+
+imprimeNombre()
+
+nombre = "Yolanda"
+imprimeNombre()</pre>
+<p>
+		Te habr&aacute;s dado cuenta de que el closure que acabamos de crear no est&aacute; parametrizado, con lo que si se cambiara el nombre de nuestra variable, el closure no se ejecutar&iacute;a correctamente. Para definir par&aacute;metros en nuestros closures, podemos hacerlo al inicio del mismo introduciendo el nombre de nuestros par&aacute;metros (separados por comas si hay m&aacute;s de uno) seguido de los caracteres -&gt;. El ejemplo anterior parametrizado quedar&iacute;a as&iacute;:
+	</p>
+<pre class="code">def imprimeNombre = { nombre -&gt; println "Mi nombre es ${nombre}"}
+
+imprimeNombre("Juan")
+imprimeNombre "Yolanda" //Los par&eacute;ntesis son opcionales
+
+//Con m&uacute;ltiples par&aacute;metros
+def quintetoInicial = { base, escolta, alero, alapivot, pivot -&gt; println "Quinteto inicial compuesto por: $base, $escolta, $alero, $alapivot y $pivot"}
+   
+quintetoInicial "Calder&oacute;n", "Navarro", "Jim&eacute;nez", "Garbajosa", "Pau Gasol"</pre>
+<p>
+		En aquellos closures que s&oacute;lo tienen un par&aacute;metro, es posible obviar su declaraci&oacute;n al inicio del closure, puesto que Groovy pone a nuestra disposici&oacute;n la variable <em>it</em>. El siguiente ejemplo es id&eacute;ntico al closure <em>imprimeNombre</em> anterior, pero sin declarar sus par&aacute;metros.
+	</p>
+<pre class="code">def imprimeNombre = { println "Mi nombre es $it" }
+
+imprimeNombre("Juan")
+imprimeNombre "Yolanda"</pre>
+<p>
+		Por &uacute;ltimo, existe otra forma de declarar un closure y es aprovechando un m&eacute;todo ya existente. Con el operador <em>referencia &amp;</em> podemos declarar un closure a partir de un m&eacute;todo de una clase ya creada. El siguiente ejemplo, tenemos la clase MetodoClosureEjemplo, en la que existe un m&eacute;todo para comprobar si la longitud de la cadena pasada por par&aacute;metro es superior a un l&iacute;mite. A partir de este m&eacute;todo, crearemos un closure sobre dos instancias de esta clase creadas con l&iacute;mites diferentes. Se puede comprobar como ejecutando el mismo m&eacute;todo, obtenemos resultado diferentes.
+	</p>
+<pre class="code">class MetodoClosureEjemplo {
+    int limite
+
+    MetodoClosureEjemplo (int limite){
+        this.limite = limite
+    }
+
+    boolean validar (String valor){
+        return valor.length() &lt;= limite
+    }
+}
+
+MetodoClosureEjemplo primero = new MetodoClosureEjemplo(8)
+MetodoClosureEjemplo segundo = new MetodoClosureEjemplo(5)
+
+Closure primerClosure = primero.&amp;validar
+
+def palabras = ["cadena larga", "mediana", "corta"]
+
+assert "mediana" == palabras.find(primerClosure)
+assert "corta" == palabras.find(segundo.&amp;validar)</pre>
+<p>
+		Con la variable <em>primero</em> estamos creando una instancia de la clase <em>MetodoClosureEjemplo</em> que validar&aacute; aquellas palabras que tengan como mucho 8 caracteres, mientras que la variable <em>segundo</em> validar&aacute; aquellas palabras con 5 caracteres o menos. Posteriormente, el closure <em>primerClosure</em> devolver&aacute; la primera palabra encontrada con 8 o menos caracteres y de la lista de palabras coincidir&iacute;a con la palabra "mediana". En el segundo closure, el que valida la palabras de 5 o menos caracteres, la palabra devuelta ser&iacute;a "corta".
+	</p>
+<p>
+		Otra caracter&iacute;stica interesante de los closures se refiere a la posibilidad de ejecutar diferentes m&eacute;todos en funci&oacute;n de los par&aacute;metros pasados y se conoce como <em>multim&eacute;todo</em>. La idea es crear una clase que sobrecarga un determinado m&eacute;todo y posteriormente crear un closure a partir de ese m&eacute;todo sobrecargado.
+	</p>
+<pre class="code">class MultimetodoClosureEjemplo{
+
+    int metodoSobrecargado(String cadena){
+        return cadena.length()
+    } 
+
+    int metodoSobrecargado(List lista){
+        return lista.size()
+    }
+
+    int metodoSobrecargado(int x, int y){
+        return x * y
+    }
+}
+
+MultimetodoClosureEjemplo instancia = new MultimetodoClosureEjemplo()
+Closure multiclosure = instancia.&amp;metodoSobrecargado
+
+assert 21 == multiclosure("una cadena cualquiera")
+assert 4 == multiclosure(['una','lista','de','valores'])
+assert 21 == multiclosure(7, 3)</pre>
+<a name="N1007D"></a><a name="Los+closures+como+objetos"></a>
+<h3 class="underlined_5">Los closures como objetos</h3>
+<p>
+		Anteriormente coment&aacute;bamos que los closures son objetos y que como tales, pueden ser pasados como par&aacute;metros a funciones. Un ejemplo de este caso que ya hemos visto con anterioridad es el m&eacute;todo <span class="codefrag">each()</span> de las listas, al cual se le puede pasar un closure para realizar una determinada operaci&oacute;n sobre cada elemento de la lista.
+	</p>
+<pre class="code">def quintetoInicial = ["Calder&oacute;n", "Navarro", "Jim&eacute;nez", "Garbajosa", "Pau Gasol"]
+
+salida = ''
+quintetoInicial.each {
+    salida += it +', '
+}
+assert salida == 'Calder&oacute;n, Navarro, Jim&eacute;nez, Garbajosa, Pau Gasol, '</pre>
+<a name="N1008E"></a><a name="Usos+de+los+closures"></a>
+<h3 class="underlined_5">Usos de los closures</h3>
+<p>
+		Ahora que ya sabemos como declarar los closures, vamos a ver como utilizarlos y como podemos invocarlos. Si tenemos definido un <em>Closure x</em>  y queremos llamarlo podemos hacerlo de dos formas:
+	</p>
+<ul>
+		
+<li>x.call()</li>
+		
+<li>x()</li>
+	
+</ul>
+<pre class="code">def suma = { x, y -&gt;
+	x + y
+}
+assert 10 == suma(7,3)
+assert 13 == suma.call(7,6)</pre>
+<p>
+		A continuaci&oacute;n, veremos un ejemplo sobre como pasar un closure como par&aacute;metro a un m&eacute;todo. El ejemplo nos permitir&aacute; tener un campo de pruebas para comprobar que c&oacute;digo es m&aacute;s r&aacute;pido.
+	</p>
+<pre class="code">def campodepruebas(repeticiones, Closure proceso){
+   inicio = System.currentTimeMillis()
+   repeticiones.times{proceso(it)}
+   fin = System.currentTimeMillis()
+   return fin - inicio
+}
+
+lento = campodepruebas(10000) { (int) it / 2 }
+rapido = campodepruebas(10000) { it.intdiv(2) }
+
+//El m&eacute;todo lento es al menos 10 m&aacute;s lento que el r&aacute;pido
+assert rapido * 10 &lt; lento</pre>
+<p>
+		Cuando ejecutamos <span class="codefrag">campodepruebas(10000)</span> le estamos pasando el primer par&aacute;metro, el que indica el n&uacute;mero de repeticiones del c&oacute;digo a ejecutar, mientras que el c&oacute;digo encerrado entre llaves se corresponde con el <em>Closure</em> pasado como segundo par&aacute;metro. Cuando definimos un m&eacute;todo que recibe como par&aacute;metro un closure, es obligatorio que &eacute;ste sea definido el &uacute;ltimo par&aacute;metro del m&eacute;todo.
+	</p>
+<p>
+		Hasta el momento, siempre que hemos creado un closure con par&aacute;metros, le hemos pasado tantas variables como par&aacute;metros ten&iacute;a el closure. Sin embargo, al igual que en los m&eacute;todos, es posible establecer un valor por defecto para los par&aacute;metros de un closure de la siguiente forma:
+	</p>
+<pre class="code">def suma = { x, y=3 -&gt;
+	suma = x + y
+}	
+assert 7 == suma(4,3)
+assert 7 == suma(4)</pre>
+<a name="N100BF"></a><a name="M%C3%A1s+m%C3%A9todos+de+los+closures"></a>
+<h3 class="underlined_5">M&aacute;s m&eacute;todos de los closures</h3>
+<p>
+		La clase <a class="external" href="http://groovy.codehaus.org/gapi/groovy/lang/Closure.html"><span class="codefrag">groovy.lang.Closure</span></a> es una clase como cualquier otra, aunque es cierto que con una potencia incre&iacute;ble. Hasta ahora, s&oacute;lo hemos visto la existencia del m&eacute;todo <span class="codefrag">call()</span>, pero existen muchos m&aacute;s, de los que vamos a ver los m&aacute;s importantes.
+	</p>
+<p>
+		Cuando en su momento hablamos sobre los mapas, vimos que pod&iacute;amos pasar al m&eacute;todo <span class="codefrag">each()</span>, tanto los elementos <em>clave</em> y <em>valor</em> como un valor <em>item</em> que conten&iacute;a ambos elementos (clave y valor). Para saber como actuar, el closure debe saber el n&uacute;mero de par&aacute;metros pasados y para ello, se dispone del m&eacute;todo <span class="codefrag">getParameterTypes()</span>.
+	</p>
+<pre class="code">def llamador (Closure closure){
+    closure.getParameterTypes().size()
+}
+
+assert llamador { uno -&gt; } == 1
+assert llamador { uno, dos -&gt; } == 2</pre>
+<p>
+		Existe una t&eacute;cnica en programaci&oacute;n llamada <em>currying</em> en honor a su creador Haskell Brooks Curry, que consiste en transformar una funci&oacute;n con m&uacute;ltiples par&aacute;metros en otra con menos par&aacute;metros. Un ejemplo puede ser la funci&oacute;n que suma dos valores. Si tenemos esta funci&oacute;n con dos par&aacute;metros, y queremos crear otra que acepte un s&oacute;lo par&aacute;metro, est&aacute; claro que debe ser perdiendo el segundo par&aacute;metro, lo que conlleva a sumar siempre el mismo valor en esta nueva funci&oacute;n. El m&eacute;todo <em>curry()</em> devuelve un clon de la funci&oacute;n principal, eliminando uno o m&aacute;s par&aacute;metros de la misma. 
+	</p>
+<pre class="code">def suma = { x, y -&gt; x + y }
+def sumaUno = suma.curry(1)
+
+assert suma(4,3) == 7
+assert sumaUno(5) == 6</pre>
+<p>
+		El nuevo closure <span class="codefrag">sumaUno</span> siempre toma como segundo par&aacute;metro el valor 1.
+	</p>
+<a name="N100FA"></a><a name="Valores+devueltos+en+los+closures"></a>
+<h3 class="underlined_5">Valores devueltos en los closures</h3>
+<p>
+		Los <em>closures</em> tienen dos formas de devolver valores:
+	</p>
+<ul>
+		
+<li>
+<em>De forma impl&iacute;cita</em>. El resultado de la &uacute;ltima expresi&oacute;n evaluada por el closure, es lo que &eacute;ste devuelve. Esto lo que hemos hecho hasta ahora.</li>
+		
+<li>
+<em>De forma expl&iacute;cita</em>. La palabra reservada <em>return</em> tambi&eacute;n nos servir&aacute; en los closures para devolver valores</li>
+	
+</ul>
+<p>
+		En el siguiente c&oacute;digo de ejemplo, ambos closures tienen el mismo efecto, que es la duplicaci&oacute;n de los valores de la lista.
+	</p>
+<pre class="code">[1,2,3].collect { it * 2 }
+[1,2,3].collect { return it * 2 }</pre>
+<p>
+		Si queremos salir de un closure de forma prematura, tambi&eacute;n podemos hacer uso del return. Por ejemplo, si en el ejemplo anterior s&oacute;lo queremos duplicar aquellos valores impares, deber&iacute;amos tener algo as&iacute;.
+	</p>
+<pre class="code">[1,2,3].collect {
+	if (it%2==1) return it * 2
+	return it
+}</pre>
+</div>
+
+
+<a name="N10126"></a><a name="Groovy+como+lenguaje+orientado+a+objetos"></a>
+<h2 class="underlined_10">Groovy como lenguaje orientado a objetos</h2>
+<div class="section">
+<p>
+	Un concepto err&oacute;neo que se suele decir de los lenguajes scripts, debido a su dejadez con el tipado de datos y determinadas estructuras de control, es que son lenguajes destinados m&aacute;s a los hackers que a los programadores serios. Esta reputaci&oacute;n viene de las primeras versiones del lenguaje Perl, donde la falta de encapsulaci&oacute;n y otras caracter&iacute;sticas t&iacute;picas del modelo orientado a objetos, provocaba un mala gesti&oacute;n del c&oacute;digo, con frecuentes trozos de c&oacute;digo duplicados e indescifrables fallos de programaci&oacute;n.
+</p>
+<p>
+	Sin embargo, este panorama ha cambiado dr&aacute;sticamente en los &uacute;ltimos a&ntilde;os, ya que lenguajes como el mismo Perl, Python y m&aacute;s recientemente, Ruby, han a&ntilde;adido caracter&iacute;sticas del modelo orientado a objetos, que los hacen incluso m&aacute;s productivos que lenguajes como Java o C++. Groovy tambi&eacute;n se ha subido al carro de estos lenguajes ofreciendo caracter&iacute;sticas similares, con lo que ha pasado de ser un lenguaje de script basado en Java, a ser un lenguaje que nos ofrece nuevas caracter&iacute;sticas del modelo orientado a objetos.
+</p>
+<p>
+	Hasta ahora hemos visto que Groovy nos ofrece tipos de datos referencia donde Java simplemente nos ofrec&iacute;a tipos de datos simples, tenemos rangos y closures, y muchas estructuras de control para trabajar de forma muy &aacute;gil y sencilla con colecciones de objetos. Pero esto es s&oacute;lo la punta del iceberg, y a partir de ahora veremos otras caracter&iacute;sticas, que hacen de Groovy un lenguaje con mucho futuro. Empezaremos repasando las clases y los scripts en Groovy, seguiremos por la organizaci&oacute;n de nuestras clases y terminaremos viendo caracter&iacute;sticas avanzadas del modelo orientado a objetos en Groovy.
+</p>
+<a name="N10135"></a><a name="Clases+y+scripts"></a>
+<h3 class="underlined_5">Clases y scripts</h3>
+<p>
+		La definici&oacute;n de clases en Groovy es pr&aacute;cticamente id&eacute;ntica a como se hace en Java. Las clases se declaran utilizando la palabra reservada <em>class</em> y una clase puede tener <em>campos</em>, <em>constructores</em>, <em>inicializadores</em> y <em>m&eacute;todos</em>. Los m&eacute;todos y los constructores pueden utilizar <em>variables locales</em>. Por otro lado tenemos los <em>scripts</em> que puede contener la definici&oacute;n de variables y m&eacute;todos, as&iacute; como la declaraci&oacute;n de clases. 
+	</p>
+<p>
+		La <strong>declaraci&oacute;n de variables</strong> debe realizarse antes de que se utilicen. Declarar una variable supone indicar un nombre a la misma y un tipo, aunque en Groovy esto es opcional. Los scripts pueden utilizar variables que no han sido declaradas previamente.
+	</p>
+<p>
+		Groovy utiliza los mismos modificadores que Java, que son: <em>private</em>, <em>protected</em> y <em>public</em> para modificar la visibilidad de las variables; <em>final</em> para evitar la modificaci&oacute;n de variables; y <em>static</em> para la declaraci&oacute;n de las variables de la clase.
+	</p>
+<p>
+		La definici&oacute;n del tipo de la variable es opcional en Groovy y cuando no se especifica, debemos introducir previamente al nombre de la variable, la palabra reserva <em>def</em>. Por &uacute;ltimo y aunque pueda resultar obvio, en Groovy es imposible asignar valores a variables que no coincidan en el tipo. Por ejemplo, un valor num&eacute;rico no puede ser asignado a una variable definida de tipo <em>String</em>. Como vimos anteriormente, Groovy se encarga de hacer el llamado <em>autoboxing</em> siempre y cuando sea posible.
+	</p>
+<p>
+		Otro aspecto interesante de Groovy es la asignaci&oacute;n de valores a las propiedades de las clases. Si hemos definido un campo en una clase en Groovy, podemos acceder al valor del mismo de la forma habitual <span class="codefrag">objeto.campo</span> o bien <span class="codefrag">objeto['campo']</span>. Esto nos permite una mayor facilidad para acceder a los campos de las clases de forma din&aacute;mica, tal y como se hace en el siguiente fragmento de c&oacute;digo.
+	</p>
+<pre class="code">class miClase {
+    public campo1, campo2, campo3, campo4 = 0
+}
+
+def miobjeto = new miClase()
+
+miobjeto.campo1 = 2
+assert miobjeto.campo1 == 2
+
+miobjeto['campo2'] = 3
+assert miobjeto.campo2 == 3
+
+for(i=1;i&lt;=4;i++)
+    miobjeto['campo'+i] = i - 1
+
+assert miobjeto.campo1 == 0
+assert miobjeto['campo2'] == 1
+assert miobjeto.campo3 == 2
+assert miobjeto['campo4'] == 3</pre>
+<p>
+		La <strong>declaraci&oacute;n de los m&eacute;todos</strong> sigue los mismos criterios que acabamos de ver con las variables. Se pueden utilizar los modificadores Java, es opcional devolver algo con la sentencia <em>return</em> y si no se utilizan modificadores ni queremos especificar el tipo de dato a devolver, debemos utilizar la palabra reservada <em>def</em> para declarar nuestros m&eacute;todos. Por defecto, la visibilidad de los m&eacute;todos en Groovy es <em>public</em>.
+	</p>
+<p>
+		Veamos una clase ejemplo y con ella, algunas diferencias con la misma clase en Java.
+	</p>
+<pre class="code">class MiClase{
+
+       static main(args){
+           def algo = new MiClase()
+           algo.metodoPublicoVacio()
+           assert "hola" == algo.metodoNoTipado()
+           assert 'adios' == algo.metodoTipado()
+           metodoCombinado()
+       }
+
+       void metodoPublicoVacio(){
+           ;
+       }
+
+       def metodoNoTipado(){
+           return 'hola'
+       }
+
+       String metodoTipado(){
+           return 'adios'
+       }
+
+       protected static final void metodoCombinado(){
+
+       }
+}</pre>
+<p>
+		En la primera sesi&oacute;n coment&aacute;bamos que el m&eacute;todo <em>main</em> t&iacute;pico de Java y C, ya no era necesario en Groovy, puesto que pod&iacute;amos ejecutar nuestro c&oacute;digo sin necesidad de incluirlo en dicho m&eacute;todo. Sin embargo, si queremos introducir par&aacute;metros a nuestro programa, tendremos que utilizarlo, tal y como aparece en el ejemplo. No obstante, este m&eacute;todo main es algo diferente al de Java, puesto que no es necesario indicarle que el m&eacute;todo es p&uacute;blico, ya que, por defecto y salvo que se diga que lo contrario, todo m&eacute;todo en Groovy es <em>public</em>. La segunda diferencia con Java es que los argumentos deb&iacute;an ser del tipo <span class="codefrag">String[]</span> mientras que en Groovy simplemente es un objeto y no es necesario especificarle el tipo. Puesto que en la funci&oacute;n main no se va a devolver nada, es posible obviar la etiqueta <em>void</em> en la declaraci&oacute;n del m&eacute;todo. Resumiendo, mientras que en Java tendr&iacute;amos esto <span class="codefrag">public static void main (String[] args)</span>, en Groovy quedar&iacute;a algo as&iacute; <span class="codefrag">static main (args)</span>.
+	</p>
+<p>
+		Groovy nos ahorra tambi&eacute;n bastante trabajo en cuanto a la comprobaci&oacute;n de errores. En este sentido, cuando intentamos llamar a un m&eacute;todo o un objeto cuya referencia es <em>null</em>, obtendremos una excepci&oacute;n del tipo <span class="codefrag">NullPointerException</span>, lo cual es muy &uacute;til para comprobar que nuestro c&oacute;digo funciona tal y como debe funcionar. Veamos un ejemplo:
+	</p>
+<pre class="code">def mapa = [a:[b:[c:1]]]
+
+assert mapa.a.b.c == 1
+
+//Protecci&oacute;n con cortocircuito
+if (mapa &amp;&amp; mapa.a &amp;&amp; mapa.a.x){
+    assert mapa.a.x.c == null
+}
+
+//Protecci&oacute;n con un bloque try/catch
+try{
+    assert mapa.a.x.c == null
+} catch (NullPointerException npe){}
+
+//Protecci&oacute;n con el operador ?.
+assert mapa?.a?.x?.c == null</pre>
+<p>
+		En el ejemplo, estamos intentando acceder a una propiedad que no existe como es <span class="codefrag">mapa.a.x</span>. Antes de acceder a dicha propiedad, protegemos el acceso para comprobar que no sea <span class="codefrag">null</span> y en caso de que no lo sea, acceder a su valor. Aparecen tres tipos de protecci&oacute;n de este tipo de errores. La comprobaci&oacute;n en cortocircuito con un bloque <span class="codefrag">if</span>, es decir, que cuando se detecte una condici&oacute;n de la expresi&oacute;n que sea falsa, nos salimos del if. En segundo lugar, intentamos proteger el acceso err&oacute;neo con un bloque <span class="codefrag">try/catch</span>. Y por &uacute;ltimo, con el operador <em>?.</em>, el cual no es en s&iacute; una comprobaci&oacute;n y es la opci&oacute;n que menos c&oacute;digo emplea.
+	</p>
+<p>
+		Por &uacute;ltimo, es necesario mencionar algo sobre los constructores en Groovy. Los constructores tienen la funci&oacute;n de inicializar los objetos de una determinada clase y en caso de que no se especifique ning&uacute;n constructor para la clase, &eacute;stos son creados directamente por el compilador. Nada que no se haga ya en Java. Sin embargo, era extra&ntilde;o que la gente de Groovy no hiciera algo m&aacute;s y as&iacute; es, hay m&aacute;s.
+	</p>
+<p>
+		Existen dos formas de llamar a los constructores de las clases creadas en Groovy. Por un lado, el m&eacute;todo tradicional pasando par&aacute;metros de forma posicional, donde el primer par&aacute;metro significa una cosa, el segundo otra y as&iacute; sucesivamente. Y por otro lado, tenemos tambi&eacute;n la posibilidad de pasar los par&aacute;metros a los constructores utilizando directamente los nombres de los campos. Esta caracter&iacute;stica surge debido a que pasar par&aacute;metros seg&uacute;n su posici&oacute;n tiene el inconveniente de aquellos constructores que tienen demasiados campos y no es sencillo recordar el orden de los mismos.
+	</p>
+<p>
+		Cuando creamos un objeto de una clase mediante su constructor, podemos pasarle los par&aacute;metros de tres formas diferentes en Groovy:
+	</p>
+<ul>
+		
+<li>Mediante la forma tradicional, pasando par&aacute;metros en orden</li>
+		
+<li>Mediante la palabra reservada <em>as</em> y una lista de par&aacute;metros</li>
+		
+<li>Mediante una lista de par&aacute;metros</li>				
+	
+</ul>
+<p>
+		Veamos un ejemplo:
+	</p>
+<pre class="code">class Libro{
+    String titulo, autor
+
+    Libro(titulo, autor){
+        this.titulo = titulo
+        this.autor = autor
+    }
+}
+
+//Forma tradicional
+def primero = new Libro('Groovy in action', 'Dierk K&ouml;nig')
+
+//Mediante la palabra reservada as y una lista de par&aacute;metros
+def segundo = ['Groovy in action','Dierk K&ouml;nig'] as Libro
+
+//Mediante una lista de par&aacute;metros
+Libro tercero = ['Groovy in action','Dierk K&ouml;nig']
+
+assert primero.getTitulo() == 'Groovy in action'
+assert segundo.getAutor() == 'Dierk K&ouml;nig'
+assert tercero.titulo == 'Groovy in action'</pre>
+<p>
+		Adem&aacute;s del motivo de tener que recordar el orden de los par&aacute;metros pasados al constructor de la clase, otra raz&oacute;n para utilizar este tipo de llamadas a los constructores es que podemos ahorrarnos la creaci&oacute;n de varios constructores. Imagina el caso en que tengamos dos campos de la clase, y ambos sean opcionales. Esto supone crear cuatro constructores: sin par&aacute;metros, con uno de los campos, con el otro campo y con los dos campos. Si utilizamos este tipo de llamadas a los constructores nos ahorraremos la creaci&oacute;n de estos cuatro constructores. Veamos el mismo caso que antes con la clase <em>Libro</em>. En el ejemplo, dejamos que Groovy cree por nosotros los constructores.
+	</p>
+<pre class="code">class Libro {
+	String titulo, autor    
+}
+
+def primero = new Libro()
+def segundo = new Libro(titulo: 'Groovy in action')
+def tercero = new Libro(autor: 'Dierk K&ouml;nig')
+def cuarto = new Libro(titulo: 'Groovy in action', autor: 'Dierk K&ouml;nig')
+
+assert primero.getTitulo() == null
+assert segundo.titulo == 'Groovy in action'
+assert tercero.getAutor() == 'Dierk K&ouml;nig'
+assert cuarto.autor == 'Dierk K&ouml;nig'</pre>
+<a name="N101F8"></a><a name="Organizando+nuestras+clases+y+scripts"></a>
+<h3 class="underlined_5">Organizando nuestras clases y scripts</h3>
+<p>
+		En este apartado, vamos a ver como podemos organizar nuestras clases y ficheros de la aplicaci&oacute;n, y la relaci&oacute;n entre ellos. Tambi&eacute;n veremos la utilizaci&oacute;n de paquetes (<em>packages</em>) y el alias de tipos. Comencemos por la relaci&oacute;n entre las clases y los ficheros fuentes.
+	</p>
+<p>
+		La relaci&oacute;n entre los ficheros fuente y las clases en Groovy no es tan estricta como en Java y los ficheros fuente en Groovy pueden contener tantas definiciones de clases como queramos, siguiente una serie de reglas:
+	</p>
+<ul>
+		
+<li>Si el fichero <em>.groovy</em> no tiene la declaraci&oacute;n de ninguna clase, &eacute;ste se trata como si fuera un <em>script</em> y autom&aacute;ticamente se genera una clase de tipo <em>Script</em> con el mismo nombre que el fichero <em>.groovy</em>.</li>
+		
+<li>Si el fichero <em>.groovy</em> contiene una sola clase definida con el mismo nombre que el fichero, la relaci&oacute;n es la misma que en Java, es decir, un fichero .class por cada fichero <em>.groovy</em>
+</li>
+		
+<li>Si el fichero <em>.groovy</em> contiene m&aacute;s de una clase definida, el compilador de groovy, <em>groovyc</em>, crear&aacute; tantos ficheros <em>.class</em> como sean necesarios para cada una de las clases definidas en el fichero <em>.groovy</em>. Si quisi&eacute;ramos llamar a nuestros scripts directamente a trav&eacute;s de la l&iacute;nea de comando, deber&iacute;amos a&ntilde;adir el m&eacute;todo <span class="codefrag">main()</span> a la primera de las clases definidas en el fichero <em>.groovy</em>.</li>
+		
+<li>Un fichero Groovy puede mezclar la definici&oacute;n de clases con el c&oacute;digo script. En este caso, el c&oacute;digo script se convierte en la clase principal a ejecutar, con lo que no se puede declarar una clase con el mismo nombre que el fichero fuente.</li>
+	
+</ul>
+<p>
+		Otro aspecto importante para la organizaci&oacute;n de los ficheros de nuestros proyectos en Groovy es la <strong>organizaci&oacute;n en paquetes</strong>. En este sentido, Groovy sigue el mismo convenio que Java y su organizaci&oacute;n jer&aacute;rquica. De esta forma, la estructura de paquetes se corresponde con los ficheros <em>.class</em> de la estructura de directorios. 
+	</p>
+<p>
+		Sin embargo, como ya se ha comentado en la primera sesi&oacute;n de este curso, no es necesario compilar nuestros archivos <em>.groovy</em>, con lo que se a&ntilde;ade un problema a la hora de ejecutar dichos archivos. Si no existen los archivos compilados <em>.class</em>, &iquest;d&oacute;nde los va a buscar? Groovy soluciona este <em>problema</em>, buscando tambi&eacute;n en los archivos <em>.groovy</em> aquellas clases necesarias. As&iacute;, que el <em>classpath</em> no s&oacute;lo nos va a servir para indicar los directorios donde debe buscar los archivos <em>.class</em>, sino tambi&eacute;n para decirle donde pueden estar los archivos <em>.groovy</em>, en caso de que los archivos <em>.class</em> no est&eacute;n. En el caso de que Groovy encuentre en el classpath, tanto ambos archivos, <em>.groovy</em> y <em>.class</em>, se quedar&aacute; con el m&aacute;s reciente, y as&iacute; se evitar&aacute;n los problemas producidos porque se nos haya olvidado compilar nuestro archivo <em>.groovy</em>.
+	</p>
+<p>
+		Al igual que en Java, las clases Groovy deben especificar su pertenencia a un paquete antes de su declaraci&oacute;n. El siguiente fragmento de c&oacute;digo muestra un ejemplo de un archivo con dos clases definidas que forman parte de un mismo paquete.
+	</p>
+<pre class="code">package negocio
+
+class Cliente {
+	String nombre, producto
+	Direccion direccion = new Direccion()
+}
+
+class Direccion {
+	String calle, ciudad, provincia, pais, codigopostal
+}</pre>
+<p>
+		Para poder utilizar las clases declaradas <em>Cliente</em> y <em>Direccion</em>, debemos <em>importar</em> el paquete correspondiente <em>negocio</em>, tal y como aparece en el siguiente ejemplo.
+	</p>
+<pre class="code">import negocio.*
+
+def clienteua = new Cliente()
+clienteua.nombre = 'Universidad de Alicante'
+clienteua.producto = 'Pizarras digitales'
+
+assert clienteua.getNombre == 'Universidad de Alicante'</pre>
+<p>
+		El &uacute;ltimo aspecto importante a comentar en cuanto a la organizaci&oacute;n de las clases y los archivos de nuestras aplicaciones, se refiere a la posibilidad de establecer alias a los paquetes importados. Imaginad el caso de tener dos paquetes procedentes de terceras partes que contengan una clase con el mismo nombre. En Groovy podemos solucionar este conflicto de nomenclatura utilizando los alias. Veamos como:
+	</p>
+<pre class="code">import agenteexterno1.OtraClase as OtraClase1
+import agenteexterno2.OtraClase as OtraClase2
+
+def otraClase1 = new OtraClase1()
+def otraClase2 = new OtraClase2()</pre>
+<a name="N10288"></a><a name="Caracter%C3%ADsticas+avanzadas+del+modelo+orientado+a+objetos"></a>
+<h3 class="underlined_5">Caracter&iacute;sticas avanzadas del modelo orientado a objetos</h3>
+<p>
+		Ahora que ya tenemos unos conocimientos b&aacute;sicos de lo que Groovy nos permite en cuanto al modelo orientado a objetos, pasemos a ver conceptos algo m&aacute;s avanzados de los vistos hasta ahora, como son la <em>herencia</em>, los <em>interfaces</em> y los <em>multim&eacute;todos</em>.
+	</p>
+<p>
+		Cuando hablamos de <strong>herencia</strong> en el modelo orientado a objetos, nos referimos a la posibilidad de a&ntilde;adir campos y m&eacute;todos a una clase a partir de una clase base. Groovy permite la herencia en los mismos t&eacute;rminos que lo hace Java. Es m&aacute;s, una clase Groovy puede extender una clase Java y viceversa.
+	</p>
+<p>
+		Groovy tambi&eacute;n soporta el modelo de <em>interfaces</em> de Java. En Java, un interface es una clase especial en la que todos sus m&eacute;todos son abstractos y p&uacute;blicos sin necesidad de declararlos. Sin embargo, estos m&eacute;todos no est&aacute;n implementados en la clase interface, sino que esa labor se deja para la clase que extienda esa interface. Los interfaces son lo m&aacute;s parecido a la herencia m&uacute;ltiple, ya que una clase puede implementar m&aacute;s de un interface pero s&oacute;lo puede extender una clase. 
+	</p>
+<p>
+		Por &uacute;ltimo, comentar que en Groovy el tipo de los datos se elige de manera din&aacute;mica cuando estos son pasados como par&aacute;metros a los m&eacute;todos de nuestras clases. Esta caracter&iacute;stica de Groovy se le conoce como <em>multim&eacute;todo</em> y lo mejor es que veamos un ejemplo.
+	</p>
+<pre class="code">def multimetodo(Object o) { return 'objeto' }
+def multimetodo(String o) { return 'string' }
+
+Object x = 1
+Object y = 'foo'
+
+assert 'objeto' == multimetodo(x)
+assert 'string' == multimetodo(y)//En Java, esta llamada hubiera devuelto la palabra 'objeto'</pre>
+<p>
+		En el ejemplo anterior, el tipo de datos est&aacute;tico de la variable <em>x</em> es <em>Object</em> mientras que su tipo din&aacute;mico es <em>Integer</em>, mientras que el tipo est&aacute;tico de <em>y</em> es <em>Object</em> mientras que su tipo din&aacute;mico es <em>String</em>. Debido a que Groovy intenta utilizar el tipo din&aacute;mico de las variables, en el segundo caso se ejecuta el m&eacute;todo que tiene como par&aacute;metro una variable de tipo String.
+	</p>
+<a name="N102C6"></a><a name="GroovyBeans"></a>
+<h3 class="underlined_5">GroovyBeans</h3>
+<p>
+		En Java, los JavaBeans se introdujeron en su momento para definir un modelo de componentes para la construcci&oacute;n de aplicaciones Java. B&aacute;sicamente el modelo consiste en una serie de convenciones en cuanto a los nombres que permiten a las clases Java comunicarse unas con otras. Groovy utiliza tambi&eacute;n el concepto inherente a los JavaBeans, pero lo transforma para dar paso a los GroovyBeans, con unas mejoras particulares, como facilitar el acceso a los m&eacute;todos. Vayamos paso a paso.
+	</p>
+<p>
+		Empecemos por la declaraci&oacute;n de los GroovyBeans. Imaginemos que tenemos de nuevo la clase Libro con tan solo la propiedad t&iacute;tulo. En Java tendr&iacute;amos el siguiente JavaBean:
+	</p>
+<pre class="code">public class Libro implements java.io.Serializable {
+    private String titulo;
+
+    public String getTitulo(){
+        return titulo;
+    }
+
+    public void setTitulo(String valor){
+        titulo = valor;
+    }
+}</pre>
+<p>
+	Mientras que en Groovy, simplemente necesitar&iacute;amos tener esto otro:
+	</p>
+<pre class="code">class Libro implements java.io.Serializable {
+	String titulo
+}</pre>
+<p>
+		Las diferencias son evidentes, &iquest;no crees? Pero no s&oacute;lo es una cuesti&oacute;n de ahorro en c&oacute;digo, sino tambi&eacute;n de eficiencia. Imagina simplemente que por cualquier motivo, tuvieras que cambiar el nombre al campo <em>titulo</em>, ese simple cambio en Java supondr&iacute;a cambiar el c&oacute;digo en tres lugares diferentes, sin embargo, en Groovy, simplemente cambiando el nombre de la propiedad lo tendr&iacute;amos todo. Adem&aacute;s, Groovy tambi&eacute;n nos ahorra tener que escribir los m&eacute;todos <em>setTitulo()</em> y <em>getTitulo()</em>. Esto lo hace &uacute;nicamente cuando no se han especificado dichos m&eacute;todos en el GroovyBean. Adem&aacute;s, Groovy sabe perfectamente cuando debe especificar un m&eacute;todo <em>set</em> para acceder a una propiedad. Por ejemplo, si establecemos que una propiedad de nuestro GroovyBean es <em>final</em>, esta propiedad solamente ser&aacute; de lectura, as&iacute; que Groovy no implementa su correspondiente m&eacute;todo <em>set</em>.
+	</p>
+<p>
+		De igual forma, Groovy tambi&eacute;n permite el acceso a las propiedades utilizando el operador ., como por ejemplo <span class="codefrag">libro.titulo = 'Groovy in action'</span>. Pero, como siempre, hay algo m&aacute;s. Observemos detenidamente el siguiente ejemplo.
+	</p>
+<pre class="code">class Persona {
+    String nombre, apellidos
+
+    String getNombreCompleto(){
+        return "$nombre $apellidos"
+    }
+}
+
+def juan = new Persona(nombre:"Juan")
+juan.apellidos = "Mart&iacute;nez"
+
+assert juan.nombreCompleto == "Juan Mart&iacute;nez"</pre>
+<p>
+		Tenemos un m&eacute;todo (<span class="codefrag">getNombreCompleto()</span>) para obtener el nombre completo de la persona en cuesti&oacute;n. Pues Groovy adem&aacute;s, crea al vuelo una propiedad equivalente al m&eacute;todo <span class="codefrag">get()</span>, en nuestro caso, <em>nombreCompleto</em>. 
+	</p>
+<p>
+		En ocasiones, los m&eacute;todos <span class="codefrag">get()</span> no tienen porque devolver el valor concreto del campo en cuesti&oacute;n, sino que es posible que hayan hecho alg&uacute;n tratamiento sobre dicho campo para modificar el valor devuelto. Imaginemos una clase que duplique el valor de su &uacute;nica propiedad cuando se invoca por los m&eacute;todos tradicionales (bien mediante el m&eacute;todo get o mediante el operador .).
+	</p>
+<pre class="code">class DobleValor {
+    def valor
+
+    void setValor(valor){
+        this.valor = valor
+    }
+
+    def getValor(){
+        valor * 2
+    }
+}
+
+def doble = new DobleValor(valor: 300)
+
+assert 600 == doble.getValor()
+assert 600 == doble.valor</pre>
+<p>
+		Por un lado tenemos que el valor devuelto por el m&eacute;todo <span class="codefrag">getValor()</span> es 600, pero en realidad el valor de la propiedad es 300. &iquest;C&oacute;mo podemos recuperar ese valor? Muy sencillo. Groovy introduce el operador <em>.@</em> para solucionarnos la papeleta en este tipo de casos. As&iacute; que al fragmento de c&oacute;digo anterior le podemos a&ntilde;adir <span class="codefrag">assert 300 == doble.@valor</span>.
+	</p>
+<a name="N1031F"></a><a name="Otros+caracter%C3%ADsticas+interesantes+de+Groovy"></a>
+<h3 class="underlined_5">Otros caracter&iacute;sticas interesantes de Groovy</h3>
+<p>
+		Groovy presenta adem&aacute;s, otra caracter&iacute;stica conocida como el operador <em>spread *</em>. Este operador permite pasar una lista a un m&eacute;todo que contiene una serie de par&aacute;metros. De esta forma, se consigue en cierta forma sobrecargar el m&eacute;todo en cuesti&oacute;n como si permitiese tambi&eacute;n la introducci&oacute;n de sus par&aacute;metros en forma de lista. Veamos un ejemplo. Imagina que tienes un m&eacute;todo que devuelve una lista de resultados, los cuales deben pasados uno por uno a otro m&eacute;todo.
+	</p>
+<pre class="code">def getLista(){
+    return [1,2,3,4,5]
+}
+
+def suma(a, b, c, d, e){
+    return a + b + c + d + e
+}
+
+assert 15 == suma(*lista)</pre>
+<p>
+		Sencillo, y sin tener que destripar la lista en varios par&aacute;metros.
+	</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010-2011 Depto. Ciencia de la Computaci&oacute;n e IA</div>
+</div>
+<script type="text/javascript">
+     
+         SyntaxHighlighter.defaults['toolbar'] = false;
+         SyntaxHighlighter.autoloader(
+  		     'java                   skin/highlight/shBrushJava.js',
+  		     'xml xhtml xslt html    skin/highlight/shBrushXml.js',
+  		     'js jscript javascript  skin/highlight/shBrushJScript.js',
+  		     'groovy                 skin/highlight/shBrushGroovy.js',
+  		     'bash shell             skin/highlight/shBrushBash.js',
+  		     'php                    skin/highlight/shBrushPhp.js',
+  		     'css                    skin/highlight/shBrushCss.js',
+  		     'sql                    skin/highlight/shBrushSql.js',
+  		     'objc                   skin/highlight/shBrushObjC.js',
+  		     'cpp c                  skin/highlight/shBrushCpp.js',
+  		     'text plain             skin/highlight/shBrushPlain.js'
+         );
+         SyntaxHighlighter.all();
+     </script><a href="skin/highlight/shBrushJava.js"></a><a href="skin/highlight/shBrushXml.js"></a><a href="skin/highlight/shBrushJScript.js"></a><a href="skin/highlight/shBrushGroovy.js"></a><a href="skin/highlight/shBrushBash.js"></a><a href="skin/highlight/shBrushPhp.js"></a><a href="skin/highlight/shBrushCss.js"></a><a href="skin/highlight/shBrushSql.js"></a><a href="skin/highlight/shBrushObjC.js"></a><a href="skin/highlight/shBrushCpp.js"></a><a href="skin/highlight/shBrushPlain.js"></a>
+</body>
+</html>

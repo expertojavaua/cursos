@@ -3,7 +3,7 @@ import os
 def change_encoding(root_dir, original_encoding='iso-8859-1', new_encoding='utf-8'):
     for subdir, dirs, files in os.walk(root_dir):
         for file in files:
-            if file.endswith('.htm'):
+            if file.endswith('.htm') or file.endswith('.html'):
                 filepath = os.path.join(subdir, file)
                 # Open the file in the original encoding and read the contents
                 with open(filepath, 'r', encoding=original_encoding) as f:

@@ -1,0 +1,862 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Dominios y servicios (I)</title>
+<link type="text/css" href="../skin/highlight/shCore.css" rel="stylesheet">
+<link type="text/css" href="../skin/highlight/shThemeEclipse.css" rel="stylesheet">
+<script src="../skin/highlight/shCore.js" type="text/javascript"></script><script src="../skin/highlight/shAutoloader.js" type="text/javascript"></script>
+<link type="text/css" href="../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../skin/profile.css" rel="stylesheet">
+<script src="../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="../images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Groovy&amp;Grails: desarrollo r&aacute;pido de aplicaciones" src="../images/baner_j2ee_der.gif" title="Groovy&amp;Grails: desarrollo r&aacute;pido de aplicaciones"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="../index.html">Home</a>
+</li>
+<li class="current">
+<a class="base-selected" href="../sesiones/index.html">Sesiones</a>
+</li>
+<li>
+<a class="base-not-selected" href="../ejercicios/index.html">Ejercicios</a>
+</li>
+<li>
+<a class="base-not-selected" href="../bibliografia/index.html">Bibliograf&iacute;a</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../sesiones/sesion01-apuntes.html" title="Introducci&oacute;n a Groovy">Sesi&oacute;n 1</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion02-apuntes.html" title="El lenguaje Groovy">Sesi&oacute;n 2</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion03-apuntes.html" title="Aspectos avanzados en Groovy">Sesi&oacute;n 3</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion04-apuntes.html" title="Librer&iacute;as propias en Groovy">Sesi&oacute;n 4</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion05-apuntes.html" title="Introducci&oacute;n a Grails">Sesi&oacute;n 5</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion06-apuntes.html" title="Construir la interfaz de usuario (I)">Sesi&oacute;n 6</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion07-apuntes.html" title="Controladores">Sesi&oacute;n 7</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion08-apuntes.html" title="Construir la interfaz de usuario (II)">Sesi&oacute;n 8</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesi&oacute;n 9</div>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion10-apuntes.html" title="Dominios y servicios (II)">Sesi&oacute;n 10</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion11-apuntes.html" title="Seguridad">Sesi&oacute;n 11</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion12-apuntes.html" title="Despliegue de aplicaciones">Sesi&oacute;n 12</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion13-apuntes.html" title="Web 2.0">Sesi&oacute;n 13</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion14-apuntes.html" title="AJAX">Sesi&oacute;n 14</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion15-apuntes.html" title="Dos horas para crear twitter">Sesi&oacute;n 15</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion09-apuntes.pdf"><img alt="PDF -icon" src="../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Dominios y servicios (I)</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#GORM">GORM</a>
+<ul class="minitoc">
+<li>
+<a href="#Creaci%C3%B3n+de+dominios">Creaci&oacute;n de dominios</a>
+</li>
+<li>
+<a href="#Relaciones+entre+clases+de+dominio">Relaciones entre clases de dominio</a>
+</li>
+<li>
+<a href="#Aspectos+avanzados+de+GORM">Aspectos avanzados de GORM</a>
+<ul class="minitoc">
+<li>
+<a href="#Ajustes+de+mapeado">Ajustes de mapeado</a>
+</li>
+<li>
+<a href="#Herencia+de+clases">Herencia de clases</a>
+</li>
+<li>
+<a href="#Habilitando+la+cach%C3%A9">Habilitando la cach&eacute;</a>
+</li>
+<li>
+<a href="#Propiedades+transitorias">Propiedades transitorias</a>
+</li>
+<li>
+<a href="#Eventos+GORM">Eventos GORM</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Validaci%C3%B3n">Validaci&oacute;n</a>
+<ul class="minitoc">
+<li>
+<a href="#Restricciones+predefinidas+en+GORM">Restricciones predefinidas en GORM</a>
+</li>
+<li>
+<a href="#Construir+tus+propias+restricciones">Construir tus propias restricciones</a>
+</li>
+<li>
+<a href="#Mensajes+de+error+de+las+restricciones">Mensajes de error de las restricciones</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+         
+
+<p>
+	Hasta ahora hemos visto como interact&uacute;a nuestra aplicaci&oacute;n con la base de datos, pero es cierto que no hemos entrado a fondo. En esta sesi&oacute;n, veremos como Grails implementa la comunicaci&oacute;n entre la aplicaci&oacute;n y la base de datos. En primer lugar, analizaremos como trabaja <em>GORM (Grails Object Relational Mapping)</em>, que permite mapear los objetos de nuestra aplicaci&oacute;n contra un sistema de base de datos. Posteriormente, seguiremos profundizando en la creaci&oacute;n de dominios para terminar viendo la validaci&oacute;n de datos de la aplicaci&oacute;n. 
+</p>
+
+
+<a name="N10012"></a><a name="GORM"></a>
+<h2 class="underlined_10">GORM</h2>
+<div class="section">
+<p>
+	En algunos frameworks de desarrollo, es posible que el t&eacute;rmino de <em>dominio</em> sea sustituido por el t&eacute;rmino <em>modelo</em> o <em>entidad</em>. Ambos t&eacute;rminos son sin&oacute;nimos y se refiere a la posibilidad de que los objetos de la aplicaci&oacute;n sean persistidos contra una base de datos. En este sentido, el equipo de desarrollo de Grails se decidi&oacute; por crear <em>GORM</em>. Bueno, en realidad no crearon GORM desde cero, ya que GORM utiliza por debajo <em>Hibernate 3</em>, una potente soluci&oacute;n para el mapeado de objeto relacionales y que adem&aacute;s es de c&oacute;digo abierto. GORM simplemente es una capa superior que facilita algo m&aacute;s el trabajo a los desarrolladores, sobre todo en t&eacute;rminos de usabilidad.
+</p>
+<a name="N1002A"></a><a name="Creaci%C3%B3n+de+dominios"></a>
+<h3 class="underlined_5">Creaci&oacute;n de dominios</h3>
+<p>
+	Como puedes imaginar, lo primero que se debe hacer con una clase de dominio es crearla. Como ya vimos en la sesi&oacute;n 5, el comando utilizado para generar una nueva clase de dominio es <span class="codefrag">grails create-domain-class</span> seguido del nombre de la nueva clase que queremos crear. Pero, &iquest;qu&eacute; pasa en la base de datos cuando generamos nuestras clases de dominio? Para ver exactamente que es lo que pasa en la base de datos cuando creamos una nueva clase de dominio, vamos a tomar como ejemplo la clase <em>Operacion</em>.
+</p>
+<pre class="code">class Operacion {
+    String tipo
+    Boolean estado
+    Date fechaInicio
+    Date fechaFin
+    Usuario usuario
+    Libro libro
+
+    static belongsTo = [Usuario, Libro]
+}</pre>
+<p>
+	Por el momento no vamos a ver las restricciones introducidas en su momento para la clase <em>Operacion</em> y simplemente vamos a examinar la definici&oacute;n de las propiedades. Pasemos a ver que tabla nos ha creado nuestra aplicaci&oacute;n en un gestor de base de datos como MySQL.
+</p>
+<p>
+	
+<img alt="Objeto mapeado contra MySQL" height="226" src="../images/sesion9/createdomainclass.jpg" width="624">
+</p>
+<p>
+	Si ahora comparamos la clase de dominio <em>Operacion</em> con la tabla de la base de datos <em>operacion</em> encontraremos las siguientes diferencias.
+</p>
+<p>
+	
+<strong>Nuevas columnas</strong>
+
+</p>
+<p>
+	La primera diferencia que encontramos es la existencia de dos nuevas columnas en la tabla correspondiente de la base de datos. La primera de ellas es la columna <em>id</em> que adem&aacute;s es la clave primaria de la tabla y autoincremental. Esto puede parecer que es algo en contra de Grails ya que no vamos a poder establecer la clave primaria que nosotros queremos, pero en la pr&aacute;ctica se ha demostrado que es la mejor forma a la hora de interactuar con la base de datos. La otra nueva columna que se ha generado en la tabla es el campo <em>version</em> y servir&aacute; para garantizar la integridad transaccional y el bloqueo eficiente de las tablas cuando se realizan operaciones de entrada.
+</p>
+<p>
+	
+<strong>Nombre de las columnas</strong>
+
+</p>
+<p>
+	El nombre de las propiedades que en la clase de dominio segu&iacute;an el convenio <em>CamelCase</em> (palabras sin espacios en blanco y con la primera letra de cada una de ellas en may&uacute;scula), en la tabla se han convertido al formato <em>snake_case</em> (todas las palabras en min&uacute;sculas y separadas por un subrayado bajo _).
+</p>
+<p>
+	
+<strong>Claves ajenas</strong>
+
+</p>
+<p>
+	GORM representa las claves ajenas en la tabla con el nombre de la clase/tabla referencia en min&uacute;sculas seguido de <em>_id</em>.
+</p>
+<p>
+	
+<strong>Tipos de datos</strong>
+
+</p>
+<p>
+	Dependiendo de la base de datos utilizada (en nuestro caso MySQL), GORM transformar&aacute; los tipos de datos de las propiedades de la clase de dominio en otros tipos de datos en la tabla. Por ejemplo, el tipo de dato <span class="codefrag">String</span> se sustituye en la base de datos por <span class="codefrag">varchar()</span>, mientras que el tipo de dato <span class="codefrag">Date</span> es reemplazado por <span class="codefrag">Datetime</span>. Todo esto depender&aacute; de la base de datos utilizada y es posible que var&iacute;e entre ellas.
+</p>
+<p>
+	
+<strong>Valores por defecto</strong>
+
+</p>
+<p>
+	Muchas aplicaciones tienen para alguno de los campos de la base de datos valores por defecto. En nuestro ejemplo no tenemos ninguno, pero si necesit&aacute;ramos disponer de uno de ellos, podr&iacute;amos tener algo as&iacute; <span class="codefrag">String tipo = "prestamo"</span>. En este caso, si el usuario no selecciona ning&uacute;n tipo de operaci&oacute;n al dar de alta una de ellas, se seleccionar&aacute; el tipo <em>pr&eacute;stamo</em> por defecto.
+</p>
+<p>
+	
+<strong>Ficheros</strong>
+
+</p>
+<p>
+	Aunque en la mayor&iacute;a de los casos, no es una buena pr&aacute;ctica almacenar ficheros en las tablas de una base de datos, esto se deja a elecci&oacute;n del desarrollador. Si necesitamos hacer esto en nuestra aplicaci&oacute;n, para por ejemplo almacenar una imagen de nuestros usuarios, debemos crear la propiedad de la clase de dominio con el tipo de dato <em>byte[]</em>. En la tabla correspondiente en la base de datos se crear&aacute; una columna del tipo de dato <em>tinyblob</em>.
+</p>
+<a name="N100B3"></a><a name="Relaciones+entre+clases+de+dominio"></a>
+<h3 class="underlined_5">Relaciones entre clases de dominio</h3>
+<p>
+	Cualquier aplicaci&oacute;n que vayamos a desarrollar, presentar&aacute; relaciones entre sus clases de dominio. En nuestro ejemplo de scaffolding ya definimos algunas relaciones entre ellas y ahora vamos a ver m&aacute;s en detalle esas relaciones. Las posibles relaciones entre las clases de dominio de una aplicaci&oacute;n son:
+</p>
+<ul>
+	
+<li>Uno a uno</li>
+	
+<li>Uno a muchos</li>
+	
+<li>Muchos a uno</li>
+	
+<li>Muchos a muchos</li>
+
+</ul>
+<p>
+	Si hacemos algo de memoria de la definici&oacute;n de nuestras clases de dominio, recordaremos que utiliz&aacute;bamos las palabras reservadas <em>hasMany</em> y <em>belongsTo</em> para establecer sus relaciones. Existe tambi&eacute;n la palabra reservada <em>hasOne</em> y a continuaci&oacute;n veremos en detalle cada una de las posibles relaciones y como especificarlas.
+</p>
+<p>
+	
+<strong>Uno a uno</strong>
+
+</p>
+<p>
+	Una relaci&oacute;n uno-a-uno se da cuando un objeto de la clase A est&aacute; &uacute;nicamente relacionado con un objeto de la clase B y viceversa. Por ejemplo, en el modelo conceptual de datos de nuestra aplicaci&oacute;n ve&iacute;amos que un <em>libro</em> s&oacute;lo pod&iacute;a tener una <em>operaci&oacute;n activa</em>. Esto se representar&iacute;a con una relaci&oacute;n <em>uno-a-uno</em> y podr&iacute;amos hacerlo de tres formas diferentes.
+</p>
+<p>
+	
+<em>Primera forma de establecer una relaci&oacute;n uno a uno</em>
+
+</p>
+<pre class="code">class Libro{
+	....
+	OperacionActiva operact
+	....
+}
+
+class OperacionActiva{
+	....
+	Libro libro
+	....
+}</pre>
+<p>
+	
+<em>Segunda forma de establecer una relaci&oacute;n uno a uno</em>
+
+</p>
+<pre class="code">class Libro{
+	....
+	OperacionActiva operact
+	....
+}
+
+class OperacionActiva{
+	....
+	static belongsTo = [operact:OperacionActiva]
+	....
+}</pre>
+<p>
+	En este caso, las inserciones y los borrados se realizan en cascada. Si por ejemplo hacemos <span class="codefrag">new Libro(operact:new OperacionActiva()).save()</span> en primer lugar se crear&aacute; una operaci&oacute;n activa y posteriormente se crear&aacute; el libro. De igual forma, si eliminamos el libro asociado a la operaci&oacute;n activa, &eacute;sta se eliminar&aacute; tambi&eacute;n de la base de datos.
+</p>
+<p>
+	
+<em>Tercera forma de establecer una relaci&oacute;n uno a uno</em>
+
+</p>
+<pre class="code">class Libro{
+	....
+	static hasOne = [operact:OperacionActiva]
+	....
+}
+
+class OperacionActiva{
+	....
+	Libro libro
+	....
+}</pre>
+<p>
+	En esta ocasi&oacute;n, se crear&aacute; una relaci&oacute;n bidireccional de uno a uno entre los libros y las operaciones activas y se crear&aacute; una columna de clave ajena en la tabla <span class="codefrag">operacion_activa</span> llamada <span class="codefrag">libro_id</span>.
+</p>
+<p>
+	
+<strong>Uno a muchos</strong>
+
+</p>
+<p>
+	Una relaci&oacute;n uno-a-muchos se da cuando un registro de la tabla A puede referenciar muchos registros de la tabla B, pero todos los registros de la tabla B s&oacute;lo pueden referenciar un registro de la tabla A. Por ejemplo, en nuestra aplicaci&oacute;n de ejemplo, una operaci&oacute;n s&oacute;lo puede estar asignada a un usuario, pero un usuario puede tener muchas operaciones. Esto se representar&iacute;a de la siguiente forma en la definici&oacute;n de las clases de dominio.
+</p>
+<pre class="code">class Usuario{
+	....
+	static hasMany [operaciones:Operacion]
+}
+
+class Operacion {
+	....
+	Usuario usuario
+}</pre>
+<p>
+	No hace falta decir que las relaciones muchos-a-uno son id&eacute;nticas a las relaciones uno-a-muchos.
+</p>
+<p>
+	
+<strong>Muchos a muchos</strong>
+
+</p>
+<p>
+	En una relaci&oacute;n muchos-a-muchos un registro de la tabla A puede referenciar muchos registros de la tabla B y un registro de la tabla B referenciar igualmente muchos registros de la tabla A. Lamentablemente, en nuestra aplicaci&oacute;n ejemplo no disponemos de ninguna relaci&oacute;n de este tipo, pero imaginemos el ejemplo de las relaciones que los alumnos universitarios tienen con las asignaturas de una carrera. Un alumno puede estar matriculado en muchas asignaturas y una asignatura puede tener muchos alumnos. Esto se representar&iacute;a con una relaci&oacute;n muchos-a-muchos de la siguiente forma.
+</p>
+<pre class="code">class Alumno{
+	....
+	static hasMany = [asignaturas:Asignatura]
+}
+
+class Asignatura{
+	....
+	static belongsTo = Alumno
+	static hasMany = [alumnos:Alumno]
+}</pre>
+<p>
+	En GORM, una relaci&oacute;n muchos-a-muchos se representa indicando en ambas clases la propiedad <em>hasMany</em> y en al menos una de ellas la propiedad <em>belongsTo</em>.
+</p>
+<a name="N1013D"></a><a name="Aspectos+avanzados+de+GORM"></a>
+<h3 class="underlined_5">Aspectos avanzados de GORM</h3>
+<p>
+	Ahora que ya hemos visto la parte b&aacute;sica a la hora de crear una clase de dominio (establecer sus propiedades y las relaciones entre ellas), vayamos un paso m&aacute;s adelante y veamos aspectos algo m&aacute;s avanzados de GORM
+</p>
+<a name="N10146"></a><a name="Ajustes+de+mapeado"></a>
+<h4>Ajustes de mapeado</h4>
+<p>
+	Hay ocasiones en que los administradores de las bases de datos quieren, por cualquier motivo, que las columnas de las tablas de <em>sus</em> bases de datos sean nombradas siguiendo un determinado patr&oacute;n. Estos motivos pueden ir desde cuestiones de facilidad en la lectura de los campos hasta argumentos como <em>"as&iacute; se ha hecho toda la vida y no se va a cambiar"</em>. El tema est&aacute; en que hay que conformarse con sus ordenes y acatarlas y encontrar la mejor forma para adaptarse a ellas.
+</p>
+<p>
+	Para solucionar este posible problema que se nos puede plantear en cualquier organizaci&oacute;n, GORM dispone de una forma r&aacute;pida y sencilla para ajustar estos nombres de las columnas de las tablas relacionadas. Para ello, GORM emplea una sintaxis de tipo DSL y exige crear un nuevo closure est&aacute;tico llamado <em>mapping</em> de la siguiente forma <span class="codefrag">static mapping = {//Todo el mapeado de la tabla aqu&iacute;}</span>. Veamos los posibles cambios que podemos hacer con GORM.
+</p>
+<p>
+	
+<strong>Nombres de las tablas y las columnas</strong>
+
+</p>
+<p>
+	Si necesit&aacute;ramos cambiar por ejemplo el nombre de la tabla <em>usuario</em> por <em>tbl_usuario</em>, deber&iacute;amos escribir dentro del closure <em>mapping</em> el siguiente c&oacute;digo <span class="codefrag">table 'tbl_usuario'</span>. Si ahora quisi&eacute;ramos cambiar los nombres de las columnas <em>login</em> y <em>password</em> por <em>username</em> y <em>passwd</em>, podr&iacute;amos hacer lo siguiente:
+</p>
+<pre class="code">static mapping = {
+	table 'tbl_usuario'
+	columns {
+		login column:'username'
+		password column:'passwd'
+	}
+}</pre>
+<p>
+	Con esto, ya tendr&iacute;amos cambiados los nombres de las tablas y de las columnas para adaptarlos al convenio que nosotros queramos seguir.
+</p>
+<p>
+	
+<strong>Deshabilitar el campo version</strong>
+
+</p>
+<p>
+	Por defecto, GORM utiliza un campo llamado <em>version</em> para garantizar la integridad de los datos y est&aacute; demostrado que es un buen m&eacute;todo. Sin embargo, por cualquier motivo es posible que no queramos tener este campo en nuestra tabla y para ello, simplemente debemos especificar en el mapeado de la clase lo siguiente: <span class="codefrag">version false</span>.
+</p>
+<p>
+	
+<strong>Carga perezosa de los datos</strong>
+
+</p>
+<p>
+	Por defecto, Grails realiza una carga perezosa de los datos de las propiedades. Esto es que no se cargar&aacute;n en memoria hasta que no sean solicitados por la operaci&oacute;n, lo cual nos previene de posibles p&eacute;rdidas de rendimiento al cargar demasiados datos innecesarios. Sin embargo, si queremos cambiar este comportamiento por defecto de Grails, podemos hacer lo siguiente: <span class="codefrag">operaciones lazy:false</span>.
+</p>
+<a name="N101A2"></a><a name="Herencia+de+clases"></a>
+<h4>Herencia de clases</h4>
+<p>
+	La herencia de clases es algo muy com&uacute;n y GORM lo implementa de una forma tan sencilla como es <em>extendiendo</em> la clase. Por ejemplo, si en el dise&ntilde;o de la clase usuario hubi&eacute;ramos optado por extender dicha clase con los cuatro tipos posibles de usuario, tendr&iacute;amos algo as&iacute;:
+</p>
+<pre class="code">class Usuario{
+	....
+}
+
+class Administrador extends Usuario{
+	....
+}
+
+class Bibliotecario extends Usuario{
+	....
+}
+
+class Profesor extends Usuario{
+	....
+}
+
+class Socio extends Usuario{
+	....
+}</pre>
+<p>
+	Pero, &iquest;c&oacute;mo se transformar&iacute;a esto en la base de datos? GORM habr&iacute;a almacenado todos los datos en una &uacute;nica tabla y adem&aacute;s, hubiera a&ntilde;adido un campo llamado <em>class</em> que permitir&iacute;a distinguir el tipo de instancia creada. No obstante, si opt&aacute;semos por tener una tabla por cada tipo de usuario, podr&iacute;amos tener lo siguiente:
+</p>
+<pre class="code">class Usuario{
+	....
+}
+
+class Administrador extends Usuario{
+	static mapping = {
+		table = 'administrador'
+	}
+}
+
+class Bibliotecario extends Usuario{
+	static mapping = {
+		table = 'bibliotecario'
+	}
+}
+
+class Profesor extends Usuario{
+	static mapping = {
+		table = 'profesor'
+	}
+}
+
+class Socio extends Usuario{
+	static mapping = {
+		table = 'socio'
+	}
+}</pre>
+<p>
+	Otra opci&oacute;n ser&iacute;a especificar en la clase padre la propiedad <em>tablePerHierarchy</em> a falso de la siguiente forma:
+</p>
+<pre class="code">class Usuario{
+	.....
+	static mapping = {
+		tablePerHierarchy false
+	}
+}</pre>
+<a name="N101C7"></a><a name="Habilitando+la+cach%C3%A9"></a>
+<h4>Habilitando la cach&eacute;</h4>
+<p>
+	Uno de las grandes ventajas de Hibernate es la posibilidad de utilizar una cach&eacute; de segundo nivel, que almacena los datos asociados a una clase de dominio. Para configurar esta cach&eacute; de segundo nivel, en primer lugar debemos modificar el archivo de configuraci&oacute;n <em>grails-app/conf/DataSource.groovy</em> y en segundo lugar, modificar la clase de dominio correspondiente. Empecemos por las modificaciones sobre el archivo <em>DataSource.groovy</em>. Estas son las modificaciones que debemos introducir.
+</p>
+<pre class="code">hibernate {
+    cache.use_second_level_cache=true
+    cache.use_query_cache=true
+    cache.provider_class='com.opensymphony.oscache.hibernate.OSCacheProvider'
+}</pre>
+<p>
+	Posteriormente, debemos indicar en cada clase de dominio que propiedades queremos cachear. Por ejemplo, si quisi&eacute;ramos cachear el nombre de nuestros usuarios podr&iacute;amos tener lo siguiente:
+</p>
+<pre class="code">class Usuario{
+	....
+	static mapping = {
+		nombre cache:true
+	}
+}</pre>
+<a name="N101E2"></a><a name="Propiedades+transitorias"></a>
+<h4>Propiedades transitorias</h4>
+<p>
+	Por defecto, con GORM todas las propiedades definidas en una clase de dominio son persistidas en la base de datos. Sin embargo, en ocasiones es posible que tengamos determinadas propiedades que no deseamos que sean almacenadas en la base de datos, tales como por ejemplo la confirmaci&oacute;n de una contrase&ntilde;a por parte de un usuario. Para ello, podemos a&ntilde;adir una nueva propiedad llamada <em>transients</em> a la clase de dominio correspondiente con la propiedad que no deseamos persistir en la base de datos.
+</p>
+<pre class="code">class Usuario {
+	static transients = ["confirmarPassword"]
+	
+	String login
+	String password
+	String confirmarPassword
+	String nombre
+	String apellidos
+}</pre>
+<a name="N101F3"></a><a name="Eventos+GORM"></a>
+<h4>Eventos GORM</h4>
+<p>
+	GORM dispone de dos m&eacute;todos que se llaman autom&aacute;ticamente antes y despu&eacute;s de insertar y actualizar las tablas de la base de datos. Estos m&eacute;todos son <span class="codefrag">beforeInsert()</span> y <span class="codefrag">beforeUpdate()</span>. Gracias a estos m&eacute;todos, vamos a poder realizar determinadas operaciones siempre antes de insertar o actualizar datos de nuestros registros. Por ejemplo, imagina el caso en el que tuvi&eacute;ramos que almacenar cuando se creo una operaci&oacute;n de nuestra aplicaci&oacute;n y la &uacute;ltima acci&oacute;n realizada sobre ella. Necesitar&iacute;amos por ejemplo un par de propiedades llamadas <em>fechaCreacion</em> y <em>fechaUltimaModificacion</em>. Para autom&aacute;ticamente actualizar esta informaci&oacute;n en nuestra clase de dominio, podr&iacute;amos utilizar los m&eacute;todos <span class="codefrag">beforeInsert()</span> y <span class="codefrag">beforeUpdate()</span> de la siguiente forma:
+</p>
+<pre class="code">def beforeInsert = {
+	fechaCreacion = new Date()
+	fechaUltimaModificacion = new Date()
+}
+
+def beforeUpdate = {
+	fechaUltimaModificacion = new Date()
+}</pre>
+<p>
+	Ahora, cuando se realice una nueva operaci&oacute;n, se almacenar&aacute; la fecha en la que se cre&oacute; y tambi&eacute;n la &uacute;ltima fecha en la que se modific&oacute;. Adem&aacute;s de estos dos m&eacute;todos comentados, GORM tambi&eacute;n dispone de los m&eacute;todos <span class="codefrag">beforeDelete()</span>, <span class="codefrag">afterInsert()</span>, <span class="codefrag">afterUpdate()</span>, <span class="codefrag">afterDelete()</span> y <span class="codefrag">onLoad()</span>.
+</p>
+</div>
+
+
+<a name="N10227"></a><a name="Validaci%C3%B3n"></a>
+<h2 class="underlined_10">Validaci&oacute;n</h2>
+<div class="section">
+<p>
+	Cuando en la quinta sesi&oacute;n desarrollamos nuestra aplicaci&oacute;n gracias al scaffolding, ya vimos como imponer determinadas restricciones a las propiedades de las clases, para que en caso de que estas restricciones no se cumplan, el objeto no sea persistido en la base de datos y se muestre un error al usuario indic&aacute;ndole el problema. Esto es debido a que el m&eacute;todo <span class="codefrag">save()</span> devuelve cierto o falso dependiendo de si los datos pueden ser persistidos o no en la base de datos.
+</p>
+<p>
+	La principal funcionalidad de las restricciones es validar los datos introducidos antes de que &eacute;stos sean guardados en la base de datos, pero tambi&eacute;n puede ser utilizadas para imponer determinadas caracter&iacute;sticas a las tablas de la base de datos. Por ejemplo, si establecemos como restricci&oacute;n de una propiedad de una clase de dominio que puede contener el valor <span class="codefrag">null</span>, &eacute;sta restricci&oacute;n se reflejar&aacute; directamente en las caracter&iacute;sticas de la tabla.
+</p>
+<a name="N10239"></a><a name="Restricciones+predefinidas+en+GORM"></a>
+<h3 class="underlined_5">Restricciones predefinidas en GORM</h3>
+<p>
+	Para controlar estas restricciones, GORM dispone de una serie de funciones comunes predefinidas para establecerlas. Adem&aacute;s, tambi&eacute;n nos permitir&aacute; crear nuestras propias restricciones. Hasta ahora, ya hemos visto algunas de estas restricciones como pueden ser <span class="codefrag">size</span>, <span class="codefrag">unique</span>, <span class="codefrag">blank</span> o <span class="codefrag">inList</span> entre otras. Recordamos que para establecer las restricciones de una clase de dominio debemos establecer la propiedad est&aacute;tica <em>constraints</em> como en el siguiente ejemplo.
+</p>
+<pre class="code">class Usuario {
+    String login
+    String password
+    String nombre
+    String apellidos
+    String tipo
+
+    static hasMany = [operaciones:Operacion]
+    
+    <strong>static constraints = {
+        login(size:6..20, blank:false, unique:true)
+        password(size:6..20, blank:false,password:true)
+        nombre(blank:false)
+        apellidos(blank:false)
+        tipo(inList:["administrador", "bibliotecario", "profesor", "socio"])
+    }</strong>
+
+    ....
+}</pre>
+<p>
+	A continuaci&oacute;n, vamos veremos las restricciones que podemos utilizar directamente con GORM.
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	
+<tr>
+		
+<th colspan="1" rowspan="1">Nombre</th>
+		<th colspan="1" rowspan="1">Descripci&oacute;n</th>
+		<th colspan="1" rowspan="1">Ejemplo</th>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">blank</td>
+		<td colspan="1" rowspan="1">Valida si la cadena puede quedar o no vac&iacute;a</td>
+		<td colspan="1" rowspan="1">login(blank:false)</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">creditCard</td>
+		<td colspan="1" rowspan="1">Valida si la cadena introducida es un n&uacute;mero de tarjeta correcto</td>
+		<td colspan="1" rowspan="1">tarjetaCredito(creditCard:true)</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">email</td>
+		<td colspan="1" rowspan="1">Valida si la cadena introducida es un correo electr&oacute;nico correcto</td>
+		<td colspan="1" rowspan="1">correoElectronico(email:true)</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">password</td>
+		<td colspan="1" rowspan="1">Indica si la propiedad es una contrase&ntilde;a, con lo que al introducirla no se mostrar&aacute; directamente</td>
+		<td colspan="1" rowspan="1">contrasenya(password:true)</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">inList</td>
+		<td colspan="1" rowspan="1">Valida que la propiedad contenga cualquiera de los valores pasados por par&aacute;metro</td>
+		<td colspan="1" rowspan="1">tipo(inList:["administrador", "bibliotecario", "profesor", "socio"])</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">matches</td>
+		<td colspan="1" rowspan="1">Valida la cadena introducida contra una expresi&oacute;n regular pasada por par&aacute;metro</td>
+		<td colspan="1" rowspan="1">login(matches:"[a-zA-Z]+")</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">max</td>
+		<td colspan="1" rowspan="1">Valida que el n&uacute;mero introducido no sea mayor que el n&uacute;mero pasado por par&aacute;metro</td>
+		<td colspan="1" rowspan="1">price(max:999F)</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">min</td>
+		<td colspan="1" rowspan="1">Valida que el n&uacute;mero introducido no sea menor que el n&uacute;mero pasado por par&aacute;metro</td>
+		<td colspan="1" rowspan="1">price(min:0F)</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">minSize</td>
+		<td colspan="1" rowspan="1">Valida que la longitud de la cadena introducida sea superior al n&uacute;mero pasado por par&aacute;metro</td>
+		<td colspan="1" rowspan="1">hijos(minSize:5)</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">maxSize</td>
+		<td colspan="1" rowspan="1">Valida que la longitud de la cadena introducida sea inferior al n&uacute;mero pasado por par&aacute;metro</td>
+		<td colspan="1" rowspan="1">hijos(maxSize:15)</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">notEqual</td>
+		<td colspan="1" rowspan="1">Valida que el objeto asignado a la propiedad no sea igual que el objeto pasado por par&aacute;metro</td>
+		<td colspan="1" rowspan="1">login(notEqual:"admin")</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">nullable</td>
+		<td colspan="1" rowspan="1">Valida si el objeto puede ser <span class="codefrag">null</span> o no</td>
+		<td colspan="1" rowspan="1">edad(nullable:true)</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">range</td>
+		<td colspan="1" rowspan="1">Valida que el objeto est&eacute; dentro del rango pasado por par&aacute;metro</td>
+		<td colspan="1" rowspan="1">edad(range:0..99)</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">scale</td>
+		<td colspan="1" rowspan="1">Indica el n&uacute;mero de decimales de la propiedad</td>
+		<td colspan="1" rowspan="1">salario(scale:2)</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">size</td>
+		<td colspan="1" rowspan="1">Valida que la longitud de la cadena est&eacute; dentro del rango pasado por par&aacute;metro</td>
+		<td colspan="1" rowspan="1">login(size:5..15)</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">unique</td>
+		<td colspan="1" rowspan="1">Especifica que la propiedad debe ser &uacute;nica y no se puede repetir ning&uacute;n objeto</td>
+		<td colspan="1" rowspan="1">login(unique:true)</td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">url</td>
+		<td colspan="1" rowspan="1">Valida que la cadena introducida sea una direcci&oacute;n URL correcta</td>
+		<td colspan="1" rowspan="1">website(url:true)</td>
+	
+</tr>
+
+</table>
+<a name="N103A6"></a><a name="Construir+tus+propias+restricciones"></a>
+<h3 class="underlined_5">Construir tus propias restricciones</h3>
+<p>
+	Pero ser&iacute;amos un tanto ilusos si pens&aacute;ramos que el equipo de desarrollo de Grails ha sido capaz de crear todas las posibles restricciones existentes en cualquier aplicaci&oacute;n. Ellos no lo han hecho, pero si han dejado la posibilidad de crear nuestras propias restricciones de una forma r&aacute;pida y sencilla.
+</p>
+<p>
+	Si echamos un vistazo a la clase de dominio <em>Operacion</em>, podemos detectar r&aacute;pidamente que una posible restricci&oacute;n que nos falta por a&ntilde;adir ser&iacute;a la comprobaci&oacute;n de que tanto la <em>fecha inicio</em> como la <em>fecha fin</em> no sea anterior a la fecha actual. Para esta restricci&oacute;n, Grails se ha olvidado de nosotros ya que si repasamos la lista de restricciones predefinidas, no encontramos ninguna que satisfaga dicha restricci&oacute;n. Para crear nuevas restricciones, tenemos el closure <em>validator</em>. Veamos como quedar&iacute;a la restricci&oacute;n que comprueba que la fecha inicio no sea anterior a la fecha actual.
+</p>
+<pre class="code">package biblioteca
+	
+class Operacion {
+    String tipo
+    Boolean estado
+    Date fechaInicio
+    Date fechaFin
+    Usuario usuario
+    Libro libro
+
+    static belongsTo = [Usuario, Libro]
+    
+    static constraints = {
+        tipo(inList:["prestamo", "reserva"])
+        estado()
+        <strong>fechaInicio(nullable:false,
+            validator: {
+                if (it?.compareTo(new Date()) &lt; 0)
+                    return false
+
+                return true
+            }
+        )</strong>
+        fechaFin(nullable:false)
+    }
+
+    String toString() {
+        "$tipo ($estado) [$fechaInicio - $fechaFin]"
+    }
+}
+</pre>
+<p>
+	El closure <em>validator</em> debe devolver <span class="codefrag">true</span> en caso de que la validaci&oacute;n se pase correctamente y <span class="codefrag">false</span> en caso contrario. Gracias a la variable <span class="codefrag">it</span> podemos acceder al valor introducido para analizarlo y comprobar que cumple los requisitos, en este caso, que la fecha no sea anterior a la actual.
+</p>
+<p>
+	Si seguimos pensando en m&aacute;s restricciones de la clase de dominio <em>Operacion</em>, podemos pensar tambi&eacute;n en que no tiene sentido que la <em>fecha fin</em> de una operaci&oacute;n sea anterior a su <em>fecha inicio</em>. Para ello, podemos a&ntilde;adir la siguiente restricci&oacute;n a la propiedad <em>fecha fin</em>.
+</p>
+<pre class="code">fechaFin(nullable:false,
+    validator: {
+        val, obj -&gt;
+            if (val != null){
+                return val.after(obj.fechaInicio)
+            }
+    }
+)</pre>
+<p>
+	B&aacute;sicamente, el c&oacute;digo del closure es muy similar al anterior, sin embargo en este se introduce el paso de las variables <span class="codefrag">val</span> y <span class="codefrag">obj</span>. La variable <span class="codefrag">val</span> se refiere al valor de la variable (en este caso fechaFin). En el anterior closure esta variable se llamaba <span class="codefrag">it</span>. Por otro lado, tenemos tambi&eacute;n la variable <span class="codefrag">obj</span> que se refiere al nuevo objeto que estamos creando (en este caso una <em>Operacion</em>). El dato que necesitamos comparar del objeto <span class="codefrag">obj</span> es la <em>fechaInicio</em> del mismo.
+</p>
+<p>
+	Sin duda, esta forma de crear nuevas restricciones para las propiedades de nuestras clases de dominio es muy sencilla, intuitiva y potente. Adem&aacute;s, este m&eacute;todo para crear nuevas restricciones permite incluso la utilizaci&oacute;n de consultas a la base de datos, para comprobar la existencia de datos duplicados en la base de datos. Por ejemplo, imagina que un usuario no puede tener m&aacute;s de un determinado n&uacute;mero de pr&eacute;stamos. De esta forma evitaremos que un usuario acumule una cantidad ingente de libros. Veamos como podr&iacute;amos hacer esto utilizando las restricciones.
+</p>
+<pre class="code">tipo(inList:["prestamo", "reserva"],
+    validator: {
+        val, obj -&gt;
+            if ((val=="prestamo") &amp;&amp; (Operacion.findAllByTipoAndUsuario(val,obj.usuario).size() &gt; 5))
+                return false
+
+            return true
+    }
+)</pre>
+<p>
+	Con esta restricci&oacute;n, estamos prohibiendo que los usuarios puedan tener en pr&eacute;stamos m&aacute;s de 5 libros.
+</p>
+<p>
+	Si queremos reutilizar determinadas restricciones, podemos implementarlas en el archivo de configuraci&oacute;n <em>Config.groovy</em>. De esta forma podr&iacute;amos definir una nueva restricci&oacute;n para por ejemplo definir aquellas caracter&iacute;sticas que deben cumplir los nombres de usuario de nuestra aplicaci&oacute;n.
+</p>
+<pre class="code">grails.gorm.default.constraints = {
+	username(nullable:false, blank:false, unique:true, size:6..20)
+}</pre>
+<p>
+	Posteriormente, en las clases de dominio afectadas por esta restricci&oacute;n, podr&iacute;amos hacer uso de la siguiente forma:
+</p>
+<pre class="code">login(shared:"username")</pre>
+<a name="N1041E"></a><a name="Mensajes+de+error+de+las+restricciones"></a>
+<h3 class="underlined_5">Mensajes de error de las restricciones</h3>
+<p>
+	Sin lugar a dudas, los mensajes que se generan cuando se produce un error en las restricciones de una clase de dominio, no es lo m&aacute;s deseable para un usuario final, as&iacute; que es necesario que entendamos el mecanismo que utiliza Grails para devolver estos mensajes cuando se producen estos errores.
+</p>
+<p>
+	Si recordamos la clase de dominio <em>Usuario</em>, tenemos que el nombre y los apellidos no pueden dejarse vac&iacute;os. Esto lo hac&iacute;amos utilizando la restricci&oacute;n <span class="codefrag">blank:false</span>. Al intentar crear un usuario sin escribir su nombre o sus apellidos, recibiremos un mensaje de error como el siguiente <em>La propiedad [nombre] de la clase [class Usuario] no puede ser vac&iacute;a</em>. Pero, &iquest;c&oacute;mo se encarga Grails de mostrar estos mensajes de error?
+</p>
+<p>
+	Grails implementa un sistema jer&aacute;rquico para los mensajes de error basado en diferentes aspectos como puede ser el nombre de la clase de dominio, la propiedad o el tipo de validaci&oacute;n. Para el caso del error producido al saltarnos la restricci&oacute;n de no dejar en blanco el campo <em>nombre</em> de la clase de dominio <em>Usuario</em>, dicha jerarqu&iacute;a ser&iacute;a la siguiente.
+</p>
+<pre class="code">usuario.nombre.blank.error.nombre
+usuario.nombre.blank.error.java.lang.String
+usuario.nombre.blank.error
+usuario.nombre.blank.nombre
+usuario.nombre.blank.java.lang.String
+usuario.nombre.blank
+blank.nombre
+blank.java.lang.String
+blank</pre>
+<p>
+	Este ser&iacute;a el orden en el que Grails buscar&iacute;a en nuestro archivo <em>message.properties</em> hasta encontrar cualquier propiedad y mostrar su mensaje. En caso de no encontrar ninguna de estas propiedades, se mostrar&iacute;a la cadena asociado a la propiedad <span class="codefrag">default.blank.message</span>, que es la que encontramos por defecto en el archivo <em>message.properties</em>.
+</p>
+<p>
+	De esta forma, ya podemos personalizar los mensajes de error generados al incumplir las restricciones de nuestras clases de dominio. Simplemente comentar que para las restricciones creadas por nosotros mismos, la jerarqu&iacute;a de los mensajes en el validador introducido en la clase de dominio <em>Operacion</em> empezar&iacute;a por <span class="codefrag">operacion.fechaInicio.validator.error.fechaInicio</span> y as&iacute; sucesivamente tal y como hemos visto anteriormente.
+</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010-2011 Depto. Ciencia de la Computaci&oacute;n e IA</div>
+</div>
+<script type="text/javascript">
+     
+         SyntaxHighlighter.defaults['toolbar'] = false;
+         SyntaxHighlighter.autoloader(
+  		     'java                   skin/highlight/shBrushJava.js',
+  		     'xml xhtml xslt html    skin/highlight/shBrushXml.js',
+  		     'js jscript javascript  skin/highlight/shBrushJScript.js',
+  		     'groovy                 skin/highlight/shBrushGroovy.js',
+  		     'bash shell             skin/highlight/shBrushBash.js',
+  		     'php                    skin/highlight/shBrushPhp.js',
+  		     'css                    skin/highlight/shBrushCss.js',
+  		     'sql                    skin/highlight/shBrushSql.js',
+  		     'objc                   skin/highlight/shBrushObjC.js',
+  		     'cpp c                  skin/highlight/shBrushCpp.js',
+  		     'text plain             skin/highlight/shBrushPlain.js'
+         );
+         SyntaxHighlighter.all();
+     </script><a href="skin/highlight/shBrushJava.js"></a><a href="skin/highlight/shBrushXml.js"></a><a href="skin/highlight/shBrushJScript.js"></a><a href="skin/highlight/shBrushGroovy.js"></a><a href="skin/highlight/shBrushBash.js"></a><a href="skin/highlight/shBrushPhp.js"></a><a href="skin/highlight/shBrushCss.js"></a><a href="skin/highlight/shBrushSql.js"></a><a href="skin/highlight/shBrushObjC.js"></a><a href="skin/highlight/shBrushCpp.js"></a><a href="skin/highlight/shBrushPlain.js"></a>
+</body>
+</html>
