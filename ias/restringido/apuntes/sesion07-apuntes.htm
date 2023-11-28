@@ -1,0 +1,684 @@
+<html>
+<head>
+<title>Tema 3: JSP</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>3. JSP</h1>
+
+<h2>3.1. JSP básico</h2>
+<p>JSP (<b>JavaServer Pages</b>) es una tecnolog&iacute;a que permite incluir 
+  c&oacute;digo Java en p&aacute;ginas web. El denominado <em>contenedor JSP</em> (que sería un componente del servidor web) es el encargado de 
+  tomar la p&aacute;gina, sustituir el c&oacute;digo Java que contiene por el 
+  resultado de su ejecuci&oacute;n, y enviarla al cliente. As&iacute;, se pueden 
+  dise&ntilde;ar f&aacute;cilmente p&aacute;ginas con partes fijas y partes variables. 
+  El siguiente es un ejemplo muy sencillo de p&aacute;gina JSP:</p>
+<pre class="codigo">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0 Transitional//EN&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Mi primera página JSP&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt; Hoy es: <b>&lt;%= new java.util.Date() %&gt; </b>&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>Para ejecutar la p&aacute;gina <i>primera.jsp</i> basta con colocarla en una aplicaci&oacute;n 
+  web (por ejemplo, en Tomcat, dentro de <code>webapps/ROOT</code>). No es necesario 
+  que sea en un directorio espec&iacute;fico como ocurre con los servlets, sino 
+  que puede ir en cualquier directorio en el que se colocar&iacute;a normalmente 
+  un HTML.</p>
+  
+<p> La &uacute;ltima versi&oacute;n de la especificación JSP es la 2.0, aunque 
+  es de reciente aparici&oacute;n (Tomcat 4.x implementa la versi&oacute;n anterior, 
+  la 1.2, misma que cubre este tema). Como se verá, es una especificación paralela 
+  al API de servlets, concretamente a la versión 2.3. Se puede encontrar más información 
+  sobre JSP en </p>
+  <center>
+   <a href="http://java.sun.com/products/jsp">http://java.sun.com/products/jsp </a>
+  </center>
+<p>Aunque JSP y servlets parecen a primera vista tecnolog&iacute;as distintas, 
+  en realidad el servidor web traduce internamente el JSP a un servlet, lo compila 
+  y finalmente lo ejecuta cada vez que el cliente solicita la p&aacute;gina JSP. 
+  Por ello, en principio, JSPs y servlets ofrecen la misma funcionalidad, aunque 
+  sus caracter&iacute;sticas los hacen apropiados para distinto tipo de tareas. 
+  Los JSP son mejores para generar p&aacute;ginas con gran parte de contenido 
+  est&aacute;tico. Un servlet que realice la misma funci&oacute;n debe incluir 
+  gran cantidad de sentencias del tipo <code>out.println()</code> para producir 
+  el HTML. Por el contrario, los servlets son mejores en tareas que generen poca 
+  salida, datos binarios o p&aacute;ginas con gran parte de contenido variable. 
+  En proyectos m&aacute;s complejos, lo recomendable es combinar ambas tecnolog&iacute;as: 
+  los servlets para el procesamiento de informaci&oacute;n y los JSP para presentar 
+  los datos al cliente.</p>
+<h3>3.1.1. Traducción de los JSP a servlets</h3>
+<p>Como se ha comentado, la primera vez que se solicita una página JSP, el servidor genera el servlet equivalente, lo compila y lo ejecuta. Para las siguientes solicitudes, solo es necesario ejecutar el código compilado. El servlet generado de manera automática tiene un método <code>_jspService</code> 	que es el equivalente al <code>service</code> de los servlets "generados manualmente". En este método es donde se genera el código HTML, mediante instrucciones <code>println</code> y donde se ejecuta el código Java insertado en la página. Por ejemplo, la página
+<i>primera.jsp</i> anterior podría generar un servlet con estructura similar al siguiente:</p>
+
+<pre class="codigo">
+public void _jspService(HttpServletRequest request, 
+                        HttpServletResponse  response)
+                        throws java.io.IOException, ServletException {
+   JspWriter out = null;
+   response.setContentType(&quot;text/html;ISO-8859-1&quot;);
+   out.println(&quot;&lt;!DOCTYPE HTML PUBLIC \&quot;-//W3C//DTD HTML 4.0        
+                Transitional//EN\&quot;&gt;);
+   out.println(&quot;&lt;html&gt;&quot;);
+   out.println(&quot;&lt;head&gt;&quot;);
+   out.println(&quot;&lt;title&gt;Mi primera pagina JSP&lt;/title&gt;&quot;);
+   out.println(&quot;&lt;/head&gt;&quot;);
+   out.println(&quot;&lt;body&gt;&quot;);
+   out.print(&quot;Hoy es &quot;);
+   out.println(new java.util.Date());
+   out.println(&quot;&lt;/body&gt;&quot;);
+   out.println(&quot;&lt;/html&gt;&quot;);
+}
+</pre>
+<p>
+El directorio donde se coloca el servlet generado, así como su nombre, dependen del servidor web. Por ejemplo, Tomcat utiliza su directorio <code>work/localhost/<var>aplicacion_web</var></code>. En caso de que la página esté en <code>ROOT</code>, el nombre de la aplicación se sustituye por un carácter de subrayado (<code>_</code>).
+</p>
+<h3>3.1.2. Elementos de JSP</h3>
+<p> 
+Existen tres tipos de elementos JSP que podemos insertar en una página web:
+</p>
+<ul>
+<li><b>Código</b>: podemos "incrustar" código Java de distintos tipos (declaraciones de variables y/o métodos, expresiones, sentencias) para que lo ejecute el contenedor JSP.</li>
+<li><b>Directivas</b>: permiten controlar distintos parámetros del servlet resultante de la traducción automática del JSP</li>
+<li><b>Acciones</b>: normalmente sirven para alterar el flujo normal de ejecución de la página (p.ej. redirecciones), aunque tienen usos variados.</li>
+</ul> 
+<p>
+Se pueden poner comentarios en una página JSP entre los símbolos <code><b>&lt;%--</b></code> y <code><b>--%&gt;</b></code>. El contenedor JSP ignorará todo lo contenido entre ambos. Dentro de los fragmentos de código Java también se pueden colocar comentarios siguiendo la sintaxis habitual del
+lenguaje Java.
+</p>
+<h3>3.1.3. Inserción de código en páginas JSP</h3>
+<p>
+Hay tres formas de insertar código Java en una página JSP:
+<ul>
+<li><b>Expresiones</b> de la forma <code>&lt;%= <var>expresión</var> %&gt;</code>: en este caso, la expresión se evalúa, su resultado se convierte a <code>String</code> y se inserta en la salida. </li>
+<li><b>Scriptlets</b> de la forma <code>&lt;% <var>código</var> %&gt;</code></li>: el código se ejecuta dentro del método <code>_jspService</code> del servlet generado.
+<li><b>Declaraciones</b> de la forma <code>&lt;%! <var>código</var> %&gt;</code>: se insertan en el cuerpo del servlet generado, fuera de sus métodos. </li>
+</ul>
+<p>
+<b>1. Expresiones</b>
+</p>
+<p>
+Como se ha visto, cualquier expresión se evalúa, su resultado se convierte a un <code>String</code> y se
+escribe en la salida (el objeto predefinido <code>out</code>). La forma de traducir una expresión a código de servlet es imprimiéndola en <code>out</code> (mediante una sentencia <code>out.write(<var>expresion</var>)</code>) o similar.
+</p>
+<p>
+<b>2. <i>Scriptlets</i></b>
+</p>
+<p>
+Permiten ejecutar código arbitrario, cuyo resultado no es necesario enviar a la salida. Si desde un <em>scriptlet</em> se desea escribir algo en ésta, bastará con utilizar el objeto predefinido <code>out</code>. Un uso común de los <em>scriptlets</em> es hacer que ciertas partes de código HTML aparezcan o no en función de una condición. Por ejemplo:
+</p>
+<pre class="codigo">
+<b>&lt;%
+  java.util.Calendar ahora = java.util.Calendar.getInstance();
+  int hora = ahora.get(java.util.Calendar.HOUR_OF_DAY);
+%&gt;</b>
+&lt;b&gt; Hola mundo, &lt;i&gt;
+<b>&lt;% if ((hora&gt;20)||(hora&lt;6)) { %&gt; </b>
+     buenas noches
+<b>&lt;% }  
+   else if ((hora&gt;=6)&amp;&amp;(hora&lt;=12)) { %&gt;</b>
+          buenos días
+<b>&lt;%      }
+	else { %&gt; </b>
+           buenas tardes
+<b>&lt;%      } %&gt;</b>
+&lt;/i&gt; &lt;/b&gt;
+</pre>
+<p>
+<b>3. Declaraciones</b>
+<p>
+Permiten definir variables o métodos que se insertarán dentro del cuerpo del servlet generado. Esto da la posibilidad de sobreescribir los métodos <code>jspInit</code> y <code>jspDestroy</code> que son el equivalente en JSP del <code>init</code> y <code>destroy</code> de los servlets. Las variables declaradas conservarán su valor entre sucesivas llamadas a la página, ya que son variables miembro del servlet y no locales al método <code>jspService</code>. Esto nos permite, por ejemplo, crear un contador de accesos a la página:
+<pre class="codigo">
+&lt;%! private int accesos = 0; %&gt;
+&lt;h1&gt; Visitas: &lt;%= ++accesos %&gt; &lt;/h1&gt;
+</pre>
+<p><b>4. Objetos implícitos de JSP</b>
+</p>
+<p>En cualquiera de estas tres formas, se puede hacer referencia a una serie de <em> objetos implícitos </em>, que se corresponden con objetos útiles del API de servlets (petición, respuesta, ...) y que en realidad son variables instanciadas de manera automática en el servlet generado a partir del JSP. Los objetos predefinidos en JSP se referencian en la tabla 1.
+</p>
+<center>
+<p>
+<table border="1" cellpadding="5">
+<tr>
+       <th>Objeto</th>
+       <th>Significado</th>
+</tr>
+<tr>
+       <td><b><code>request</code></b></td>
+       <td>el objeto <code>HttpServletRequest</code> asociado con la petición</td>
+</tr>
+<tr>
+       <td><b><code>response</code></b></td>
+       <td>el objeto <code>HttpServletResponse</code> asociado con la respuesta</td>
+</tr>
+<tr>
+       <td><b><code>out</code></b></td>
+       <td>el <code>Writer</code> empleado para enviar la salida al cliente. La salida de los JSP emplea un <em>buffer</em> que permite que se envíen cabeceras HTTP o códigos de estado aunque ya se haya empezado a escribir en la salida (<code>out</code> no es un <code>PrintWriter</code> sino un objeto de la clase especial <code>JspWriter</code>).</td>
+</tr>
+<tr>
+       <td><b><code>session</code></b></td>
+       <td>el objeto <code>HttpSession</code> asociado con la petición actual. En JSP, las sesiones se crean automáticamente, de modo que este objeto está instanciado aunque no se cree explícitamente una sesión.</td>
+</tr>
+<tr>
+       <td><b><code>application</code></b></td>
+       <td>el objeto <code>ServletContext</code>, común a todos los servlets de la aplicación web.</td>
+</tr>
+<tr>
+       <td><b><code>config</code></b></td>
+       <td>el objeto <code>ServletConfig</code>, empleado para leer parámetros de inicialización. </td>
+</tr>
+<tr>
+       <td><b><code>pageContext</code></b></td>
+       <td>permite acceder desde un único objeto a todos los demás objetos implícitos </td>
+</tr>
+<tr>
+       
+      <td height="82"><b><code>page</code></b></td>
+       
+      <td height="82">referencia al propio servlet generado (tiene el mismo valor 
+        que <code>this</code>).Como tal, en Java no tiene demasiado sentido utilizarla, 
+        pero está pensada para el caso en que se utilizara un lenguaje de programación 
+        distinto.</td>
+</tr>
+<tr>
+       
+      <td height="82"><b><code>exception</code></b></td>
+       
+      <td height="82">Representa un error producido en la aplicación. Solo es accesible si la página se ha designado como página de error (mediante la directiva <code>page isErrorPage</code>).</td>
+</tr>
+<caption> <b>Tabla 1: Objetos implícitos de JSP. </b></caption>
+</table>
+</center>
+<div align="left">
+  <center>
+  </center>
+<h3>3.1.4. Directivas de página</h3>
+  <p> Las <i>directivas</i> influyen en la estructura que tendrá el servlet generado 
+    a partir de la página JSP. Hay tres tipos de directivas: </p>
+  <ul>
+    <li><code>page</code>: tiene varios usos: importar clases de Java, fijar el 
+      tipo MIME de la respuesta, controlar el <i>buffer</i> de salida,...</li>
+    <li><code>include</code>: sirve para incluir c&oacute;digo en la p&aacute;gina 
+      <i>antes de que se realice la compilaci&oacute;n del JSP</i>.</li>
+    <li><code>taglib</code>: se emplea cuando el JSP hace uso de etiquetas definidas 
+      por el usuario.</li>
+  </ul>
+  <p>El formato gen&eacute;rico de una directiva es:</p>
+  <pre class="codigo">&lt;%@ directiva atributo=&quot;valor&quot; %&gt;</pre>
+  <p> algunas directivas admiten m&aacute;s de un atributo.</p>
+  <p><b>1. La directiva </b> <code><b>page</b></code></p>
+  <p>La tabla 2 recoge los distintos atributos que admite la directiva <code>page</code> 
+    y su significado.</p>
+  <table  border="1" cellpadding="5" width="100%">
+    <caption>
+    <b>Tabla 2: atributos de la directiva page</b>
+    </caption>
+    <tr> 
+      <th width="15%">Atributo</th>
+      <th width="38%">Significado</th>
+      <th width="47%">Ejemplo</th>
+    </tr>
+    <tr> 
+      <td width="15%"><code>import</code></td>
+      <td width="38%">el equivalente a una sentencia <code>import</code> de Java</td>
+      <td width="47%"><code>&lt;%@ page import=&quot;java.util.Date&quot; %&gt;</code></td>
+    </tr>
+    <tr> 
+      <td width="15%"><code>contentType</code></td>
+      <td width="38%">genera una cabecera HTTP <code>Content-Type</code></td>
+      <td width="47%"><code>&lt;%@ page contentType=&quot;text/plain&quot; %&gt;</code></td>
+    </tr>
+    <tr> 
+      <td width="15%"><code>isThreadSafe</code></td>
+      <td width="38%">si es <code>false</code>, el servlet generado implementar&aacute; 
+        el interface <code>SingleThreadModel</code> (&uacute;n &uacute;nico hilo 
+        para todas las peticiones). Por defecto, el valor es <code>true</code>.</td>
+      <td width="47%">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td width="15%"><code>session</code></td>
+      <td width="38%">Si es <code>false</code>, no se crear&aacute; un objeto 
+        <code>session</code> de manera autom&aacute;tica. Por defecto, es <code>true</code>.</td>
+      <td width="47%">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td width="15%"><code>buffer</code></td>
+      <td width="38%">Define el tama&ntilde;o del <i>buffer</i> para la salida 
+        (en kb), o <code>none</code> si no se desea <i>buffer</i>. Su existencia 
+        permite generar cabeceras HTTP o c&oacute;digos de estado aunque ya se 
+        haya comenzado a escribir la salida.</td>
+      <td width="47%"><code>&lt;%@ page buffer=&quot;64kb&quot; %&gt;</code></td>
+    </tr>
+    <tr> 
+      <td width="15%"><code>autoflush</code></td>
+      <td width="38%">Si es <code>true</code> (valor por defecto), el buffer se 
+        envía automáticamente a la salida al llenarse. Si es <code>false</code>, 
+        al llenarse el buffer se genera una excepción.</td>
+      <td width="47%">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td width="15%"><code>extends</code></td>
+      <td width="38%">Permite especificar de qué clase debe descender el servlet 
+        generado a partir de la página JSP. No es habitual cambiarlo.</td>
+      <td width="47%">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td width="15%"><code>info</code></td>
+      <td width="38%">define una cadena que puede obtenerse a través del método 
+        <code>getServletInfo</code></td>
+      <td width="47%"><code>&lt;%@ page info="carro de la compra" %&gt;</code></td>
+    </tr>
+    <tr> 
+      <td width="15%"><code>errorPage</code></td>
+      <td width="38%">especifica la página JSP que debe procesar los errores generados 
+        y no capturados en la actual.</td>
+      <td width="47%"><code>&lt;%@ page errorPage="error.jsp" %&gt;</code></td>
+    </tr>
+    <tr> 
+      <td width="15%"><code>isErrorPage</code></td>
+      <td width="38%">Si es <code>true</code>, indica que la página actúa como 
+        página de error para otro JSP. El valor por defecto es <code>false</code>.</td>
+      <td width="47%">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td width="15%"><code>language</code></td>
+      <td width="38%">Permite especificar el lenguaje de programación usado en 
+        el JSP. En la práctica, el lenguaje siempre es Java, por lo que esta directiva 
+        no se usa.</td>
+      <td width="47%">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td width="15%"><code>pageEncoding</code></td>
+      <td width="38%">define el juego de caracteres que usa la página. El valor 
+        por defecto es <code>ISO-8859-1</code>.</td>
+      <td width="47%">&nbsp;</td>
+    </tr>
+  </table>
+  <p><b>2. La directiva </b><code><b>include</b></code></p>
+  <p>Es el equivalente al <code>#include</code> del lenguaje C. su sintaxis es: 
+  </p>
+  <pre class="codigo">&lt;%@ include file=&quot;<var>fichero</var>&quot; %&gt;</pre>
+  <p> Como el código se incluye antes de la compilación, los fragmentos de código 
+    incluidos pueden tener efecto sobre la página actual. Así, se puede utilizar 
+    esta directiva para definir constantes, generar cabeceras HTTP... </p>
+  <p> El problema de esta directiva es que el estándar no exige que el contenedor 
+    JSP detecte de manera automática los cambios en los ficheros incluidos, de 
+    manera que si cambia uno de ellos puede ser necesario forzar la recompilación 
+    de las páginas JSP que los incluyan. </p>
+  <p> La especificación JSP recomienda que si la página incluida no es una página 
+    JSP válida por sí sola (por ejemplo, porque utiliza variables que se confía 
+    que se hayan declarado previamente) se utilice la extensión "estándar" <code>.jspf 
+    </code>(JSP fragment) y se coloque en un directorio no público del contenedor 
+    JSP (por ejemplo, WEB-INF, que no es accesible desde el cliente, pero sí desde 
+    la directiva). </p>
+  <p><b>3. La directiva </b><code><b>taglib</b></code></p>
+  <p>Como se ha comentado, la directiva <i>taglib </i>se emplea para emplear
+  etiquetas JSP definidas por el usuario. Se verá una introducción a las
+  taglibs más adelante.</p>
+  <h3>3.1.5. Acciones</h3>
+  <p>En JSP existen varios mecanismos para incluir elementos externos en la página 
+    actual o redirigir la petición hacia otra página</p>
+  <ul>
+    <li><b>La directiva <code>include</code></b> permite insertar código en la 
+      página antes de que ésta se transforme en un servlet. De este modo se pueden 
+      reutilizar fragmentos de código JSP o HTML. </li>
+    <li><b>La acción <code>&lt;jsp:include&gt;</code></b></li>
+    permite insertar la salida de otra página JSP. Nótese que se incluye la <em>salida</em> 
+    generada por el código JSP, no el código propiamente dicho. 
+    <li><b>La acción <code>&lt;jsp:plugin&gt;</code></b> permite incluir <em>applets</em> 
+      que hagan uso de Java 2. </li>
+    <li><b>La acción <code>&lt;jsp:forward&gt;</code></b> sirve para redirigir 
+      la petición a otra página JSP</li>
+  </ul>
+  <p> <b>1. La acción </b> <code><b>&lt;jsp:include&gt;</b></code> 
+  <p> Esta acción incluye en una página la salida generada por otra perteneciente 
+    a la misma aplicación web. La petición se redirige a la página incluida, y 
+    la respuesta que genera se incluye en la generada por la principal. Su sintaxis 
+    es: 
+  <pre class="codigo">
+&lt;jsp:include page=&quot;<var>URL relativa</var>&quot; flush=&quot;<var>true</var>|<var>false</var>&quot;/&gt;
+</pre>
+  <p> El atributo <code>flush</code> especifica si el flujo de salida de la página 
+    principal debería ser enviado al cliente antes de enviar el de la página incluida. 
+    En JSP 1.2 este atributo es optativo, y su valor por defecto es <code>false</code>. 
+    En JSP 1.1 es obligatorio y siempre debía valer <code>true</code> (el forzar 
+    el vaciado de buffer era problemático porque una vez que ha sucedido esto 
+    no se pueden hacer redirecciones ni ir a páginas de error, ya que ya se han 
+    terminado de escribir las cabeceras). </p>
+  <p> Esta acción presenta la ventaja sobre la directiva del mismo nombre de que 
+    cambios en la página incluida no obligan a recompilar la "principal". No obstante, 
+    la página incluida solo tiene acceso al <code>JspWriter</code> de la "principal" 
+    y no puede generar cabeceras (por ejemplo, no puede crear <em>cookies</em>). 
+  </p>
+  <p> Por defecto, la petición que se le pasa a la página incluida es la original, 
+    pero se le pueden agregar parámetros adicionales, mediante la etiqueta <code>jsp:param</code>. 
+    Por ejemplo: </p>
+  <pre class="codigo">
+&lt;jsp:include page=&quot;cabecera.jsp&quot;&gt;
+   &lt;jsp:param name=&quot;color&quot; value=&quot;YELLOW&quot; /&gt;
+&lt;/jsp:include&gt;
+</pre>
+  <p> <b>2. La acción </b><code><b>&lt;jsp:plugin&gt;</b></code> </p>
+  <p> Esta acción sirve para incluir, de manera portable e independiente del navegador, 
+    <em>applets</em> que utilicen alguna librería de Java 2 (Swing, colecciones, 
+    Java 2D, ...), ya que las máquinas virtuales Java distribuidas con algunos 
+    navegadores relativamente antiguos (Explorer 5.x, Netscape 4.x,...) son de 
+    una versión anterior a Java 2. </p>
+  <p> <b>3. La acción </b><code><b>&lt;jsp:forward&gt;</b></code> </p>
+  <p> Esta acción se utiliza para redirigir la petición hacia otra página JSP 
+    que esté en la misma aplicación web que la actual. Un ejemplo de su sintaxis 
+    básica es: 
+  <pre class="codigo">
+&lt;jsp:forward page=&quot;principal.jsp&quot;/&gt;
+</pre>
+  <p>La salida generada hasta el momento por la p&aacute;gina actual se descarta 
+    (se borra el buffer). En caso de que no se utilizara buffer de salida, se 
+    producir&iacute;a una excepci&oacute;n.</p>
+  <p>Al igual que en el caso de <code>&lt;jsp:include&gt;</code>, se pueden añadir 
+    parámetros a la petición original para que los reciba la nueva página JSP: 
+  </p>
+  <pre class="codigo">
+&lt;jsp:forward page=&quot;principal.jsp&quot;&gt;
+   &lt;jsp:param name=&quot;privilegios&quot; value=&quot;root&quot; /&gt;
+&lt;/jsp:forward&gt;</pre>
+</div>
+
+<h2> &nbsp; </h2>
+
+<h2> 3.2. JavaBeans </h2>
+<p>
+Un <b>JavaBean</b> (o, para abreviar, un <em>bean</em>) es un componente software reutilizable escrito en Java. En realidad un <em>bean</em> no es más que una clase Java escrita siguiendo unas ciertas convenciones. Estas convenciones hacen posible que herramientas automáticas puedan acceder a sus propiedades y manipularlas sin necesidad de modificar el código. Esto puede servir en el caso de un
+IDE, por ejemplo, para realizar "programación visual". En JSP el uso principal de los <em>beans</em> es manipular componentes Java sin necesidad de incluir código en la página, accediendo a sus propiedades mediante etiquetas. 
+</p>
+<p>
+El uso de <em>beans</em> en páginas JSP ofrece diversas ventajas con respecto al uso directo de código Java:
+<ul>
+<li>Se evita el uso de sintaxis Java, en su lugar se emplean etiquetas con sintaxis XML. Esto permite separar más fácilmente el trabajo de programadores y diseñadores web.</li>
+<li>Se simplifica la creación y uso de objetos compartidos entre varias páginas.</li>
+<li>Se simplifica la creación de objetos a partir de los parámetros de la petición </li>
+</ul>
+<h3>3.2.1. Características de un <i>bean</i></h3>
+<p>
+Como se ha comentado, un <em>bean</em> no es más que una clase Java en la que se observan ciertas convenciones. En lo que respecta a su uso con JSP, estas convenciones afectan al modo de definir  constructores, métodos y variables miembro:
+</p>
+<ol>
+<li>Un <em>bean</em> debe tener al menos un constructor sin argumentos. Este constructor será llamado cuando una página JSP cree una instancia del <em>bean</em>.</li>
+<li>Un <em>bean</em> no debe tener variables miembro de acceso público. El acceso a las variables y su modificación se debe hacer a través de métodos.</li>
+  <li>El nombre de los métodos de acceso y modificación de variables miembro debe 
+    seguir una norma: si la variable tiene el nombre <code><var>nombreVar</var></code>, 
+    entonces el método de acceso debe llamarse <code>getNombreVar</code> (obsérvese 
+    el cambio a mayúsculas de la "N", siguiendo las convenciones habituales de 
+    Java), y el método de cambio de valor (en caso de que exista) debe llamarse 
+    <code>setNombreVar</code>. En el caso especial de variables booleanas, el 
+    m&eacute;todo de acceso se debe denominar <code>isNombreVar</code>.</li>
+</ol>
+<p>
+Por ejemplo, supongamos que se desea definir un <em>bean</em> para almacenar información relativa a un usuario (nombre, número de visitas al sitio y fecha de la última visita), y compartirla entre varias páginas, una vez que se ha autentificado en la aplicación y sabemos quién es. Para ello podríamos utilizar un código similar al siguiente:
+
+<pre class="codigo">package beans;
+
+import java.util.Date;
+
+public class UsuarioBean 
+{  
+  <b>//variables miembro, privadas</b>
+  private String nombre;
+  private int visitas;
+  private Date ultimaVisita;
+  private boolean varon;
+
+  <b>//constructor sin argumentos</b>
+  public UsuarioBean() {
+     nombre = null;
+     visitas = 0; 
+     ultimaVisita = null;
+     varon = false; 
+  } 
+  
+  <b>//métodos de acceso: getXXX, isXXX</b> 
+  public String getNombre() { 
+     return nombre; 
+  }
+  
+  public int getVisitas() {
+     return visitas; 
+  }
+  
+  public Date getUltimaVisita() {
+     return ultimaVisita;
+  }
+  
+  public boolean isVaron() {
+     return varon;
+  }
+  
+  <b>//métodos de cambio de valor: setXXX</b> 
+  public void setNombre(String nom) {
+     nombre = nom; 
+  }
+  
+  public void setVisitas(int v) {
+     visitas = v; 
+  }
+  
+  public void setUltimaVisita(Date fecha) {
+     ultimaVisita = fecha; 
+  }
+  
+  public void setVaron(boolean valor) {
+     varon = valor; 
+  }
+}</pre>
+
+
+<h3>3.2.2. Uso de <i>beans</i> desde páginas JSP</h3>
+<p>
+Para interactuar con un <em>bean</em> desde una página JSP es necesario primero asignarle un nombre y especificar qué clase Java lo define. Una vez hecho esto, se puede acceder a sus propiedades y darles nuevos valores. 
+</p>
+<p>
+<b>1. Acceso al <i>bean</i></b>
+</p>
+<p>
+Para hacer accesible un <em>bean</em> a una página JSP se emplea la etiqueta <code>useBean</code>. En su forma más simple la sintaxis es:
+</p>
+<pre class="codigo">
+&lt;jsp:useBean id=&quot;<var>nombreBean</var>&quot; class=&quot;<var>paquete.Clase</var>&quot;/&gt;
+</pre>
+<p>
+En caso de que el <em>bean</em> referenciado no existiera previamente, esta etiqueta se puede ver como la creación de una variable en Java de nombre <code>nombreBean</code> y de tipo <code>paquete.Clase</code>. Así, para crear un <em>bean</em> de tipo
+<code>UsuarioBean</code> sería equivalente utilizar las siguientes expresiones:
+</p>
+<pre class="codigo">
+&lt;jsp:useBean id=&quot;usuario&quot; class=&quot;beans.UsuarioBean&quot; /&gt;
+</pre> 
+<p>
+
+</p>
+<pre class="codigo">
+&lt;% beans.UsuarioBean usuario = new beans.UsuarioBean() %&gt;
+</pre> 
+<p>
+La clase a la que pertenece el <em>bean</em> debería colocarse donde están habitualmente las clases Java que pertenecen a una aplicación web, es decir, en <code>WEB-INF/classes</code>. Para que el contenedor JSP pueda encontrar la clase del <em>bean</em>, es conveniente que éste pertenezca a un <em>package</em> (como en el ejemplo anterior). En caso contrario se asumiría que pertenece al mismo <em>package</em> que el servlet generado a partir del JSP, con el problema de que el nombre de este <em>package</em> es desconocido.
+</p>
+<p><b>2. Acceso a las propiedades del <i>bean</i></b>
+</p>
+<p>
+El acceso a una propiedad se realiza mediante la etiqueta <code>jsp:getProperty</code>. Su sintaxis es:
+</p>
+<pre class="codigo">
+&lt;jsp:getProperty name=&quot;<var>nombreBean</var>&quot; property=&quot;<var>nombrePropiedad</var>&quot;/&gt;
+</pre>
+<p> donde <code>nombreBean</code> debe corresponderse con el atributo <code>id</code> 
+  definido mediante alguna etiqueta anterior <code>jsp:useBean</code>. El acceso 
+  a la propiedad también se podría hacer llamando al método Java correspondiente. 
+  De este modo, el acceso a la propiedad <code>visitas</code> del <em>bean</em> 
+  <code>usuario</code> se puede hacer mediante las dos formas alternativas: </p>
+<pre class="codigo">
+&lt;jsp:getProperty name=&quot;usuario&quot; property=&quot;visitas&quot;/&gt;
+&lt;%= usuario.getVisitas() %&gt;
+</pre>
+<p>
+aunque se considera preferible la primera forma, ya que la sintaxis es más accesible a diseñadores web que no programen en Java.
+</p>
+<p><b>3. Asignación de valores a las propiedades del <i>bean</i></b>
+</p>
+<p>
+La asignación de valores se realiza mediante la etiqueta <code>jsp:setProperty</code>. Esta etiqueta requiere tres parámetros: <code>name</code> (el <code>id</code> del <em>bean</em>, definido anteriormente mediante alguna etiqueta <code>jsp:useBean</code>), <code>property</code> (el nombre de la propiedad) y <code>value</code> (el valor que se desea dar a la propiedad). Por ejemplo, para darle a la propiedad <code>visitas</code> del <em>bean</em> <code>usuario</code> el valor 1 se haría:
+</p>
+<pre class="codigo">
+&lt;jsp:setProperty name=&quot;usuario&quot; property=&quot;visitas&quot; value=&quot;1&quot;/&gt;
+</pre>
+Una forma alternativa en código Java sería llamar directamente al método, aunque normalmente es preferible el uso de la sintaxis anterior:
+<pre class="codigo">
+&lt;% usuario.setVisitas(1) %&gt;
+</pre>
+<p>
+Además de poder asignar a una propiedad un valor fijo, se pueden usar expresiones JSP:
+</p>
+<pre class="codigo">
+&lt;jsp:setProperty name=&quot;usuario&quot; property=&quot;ultimaVisita&quot; 
+                 value=&quot;<b>&lt;%= new java.util.Date() %&gt;</b>&quot;/&gt;
+
+</pre>
+<p>
+<b>4. Inicialización de un <i>bean</i></b>
+</p>
+<p>
+En algunos casos, puede ser necesario inicializar un bean antes de empezar a usarlo. Esto no se puede hacer directamente con la etiqueta <code>jsp:useBean</code>, ya que no admite parámetros. Para solucionar el problema, en el cuerpo de la etiqueta <code>jsp:useBean</code> (siguiendo sintaxis
+XML) se pueden introducir etiquetas <code>jsp:setProperty</code> que inicialicen las propiedades. Además se pueden colocar <em>scriptlets</em> y código
+HTML.
+</p>
+<pre class="codigo">
+&lt;jsp:useBean id=&quot;usuario&quot; class=&quot;beans.usuarioBean&quot;&gt;
+   &lt;b&gt; inicializando datos de usuario &lt;/b&gt;
+   &lt;jsp:setProperty name=&quot;usuario&quot; property=&quot;ultimaVisita&quot; 
+                    value=&quot;<b>&lt;%= new java.util.Date() %&gt;</b>&quot;/&gt;
+&lt;/jsp:useBean&gt;
+
+</pre>
+<p>
+Es importante destacar que el código de inicialización solo se ejecutará en caso de que el <em>bean</em> no existiera previamente (no sea un <em>bean</em> compartido con otras páginas o creado por ejemplo por un servlet).
+</p>
+<p><b>5. Utilizar los parámetros de la petición HTTP</b></p>
+
+<p> JSP incluye un mecanismo para asignar los valores de los parámetros de la 
+  petición a las propiedades de un <em>bean</em>. Para ello hay que utilizar el 
+  parámetro <code>param</code> de la etiqueta <code>jsp:setProperty</code>. Por 
+  ejemplo, supongamos que se ha definido el siguiente formulario, que toma el 
+  nombre del usuario y llama a la p&aacute;gina <b>main.jsp</b> con los datos 
+  introducidos por el usuario (nombre y sexo):</p>
+
+<pre class="codigo">&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;Entrada a la aplicación&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;form action=&quot;<b>main.jsp</b>&quot; method=&quot;get&quot;&gt;
+		Nombre <b>&lt;input type=&quot;text&quot; name=&quot;nombre&quot;&gt;</b>
+		&lt;br&gt;
+		Sexo: varon <b>&lt;input type=&quot;radio&quot; name=&quot;varon&quot; value=&quot;true&quot;&gt;</b>
+		      mujer: <b>&lt;input type=&quot;radio&quot; name=&quot;varon&quot; value=&quot;false&quot;&gt; </b>&lt;br&gt;
+		&lt;input type=&quot;submit&quot; value=&quot;entrar&quot;&gt;
+	&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+	 
+<p> En la página <b>main.jsp</b> se puede hacer uso de los par&aacute;metros para 
+  instanciar algunas propiedades del bean:</p>
+<pre class="codigo">
+
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;Untitled&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+   &lt;jsp:useBean id=&quot;usuario&quot; class=&quot;beans.UsuarioBean&quot;/&gt;
+   &lt;jsp:setProperty name=&quot;usuario&quot; property=&quot;nombre&quot; <b>param=&quot;nombre&quot;</b>/&gt;
+   &lt;jsp:setProperty name=&quot;usuario&quot; property=&quot;varon&quot; <b>param=&quot;varon&quot;</b>/&gt;
+   Buenos días, &lt;jsp:getProperty name=&quot;usuario&quot; property=&quot;nombre&quot;/&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+</pre>
+<p> Nótese que, aunque los par&aacute;metros HTTP son en realidad cadenas, el 
+  contenedor JSP es capaz de efectuar la conversi&oacute;n al tipo correspondiente, 
+  al menos para tipos primitivos (por ejemplo, se ha convertido de la cadena &quot;true&quot; 
+  al valor <code>true</code> que requiere el m&eacute;todo <code>setVaron</code>. 
+  Esta conversi&oacute;n de tipos no funciona en caso de tipos no primitivos. 
+  Por ejemplo, no se puede aplicar a la propiedad <code>ultimaVisita</code>, de 
+  tipo <code>java.util.Date</code>, ya que no se puede convertir autom&aacute;ticamente 
+  de cadena a <code>Date</code> (al menos el est&aacute;ndar JSP no lo exige).</p>
+<p>En caso de que las propiedades del <em>bean</em> tengan el mismo nombre que 
+  los par&aacute;metros HTTP, (como en el caso anterior) la asignaci&oacute;n 
+  de todos los par&aacute;metros se puede hacer mediante una &uacute;nica etiqueta 
+  <code>setProperty</code>, con el par&aacute;metro <code>property=&quot;*&quot;</code>:</p>
+<pre class="codigo">&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;Untitled&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+   &lt;jsp:useBean id=&quot;usuario&quot; class=&quot;beans.UsuarioBean&quot;/&gt;
+   &lt;jsp:setProperty name=&quot;usuario&quot; <b>property=&quot;*&quot;</b> /&gt;
+   Buenos días, &lt;jsp:getProperty name=&quot;usuario&quot; property=&quot;nombre&quot;/&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<h3>3.2.3. Compartir <i>beans</i></h3>
+<p>Hasta el momento, se han tratado los <em>beans</em> como si fueran objetos 
+  propios de la p&aacute;gina en la que se definen, y exclusivos de ella. Este 
+  es el comportamiento por defecto, pero podemos cambiar el <b>&aacute;mbito</b> 
+  de un <em>bean</em> para definir desde d&oacute;nde ser&aacute; accesible, lo 
+  que nos permite compartirlo entre varias p&aacute;ginas. El &aacute;mbito se 
+  controla con el atributo <code>scope</code> de la etiqueta <code>jsp:useBean</code>, 
+  y puede tomar cuatro valores distintos:</p>
+<ul>
+  <li><code><b>page</b></code>: es el valor por defecto. Indica que el bean
+    sólo es válido para la página actual.</li>
+  <li><b><code>application</code></b>: el bean ser&aacute; accesible a todas las 
+    p&aacute;ginas JSP de la aplicaci&oacute;n web, y compartido entre todos los 
+    usuarios. Los servlets pueden acceder a &eacute;l a trav&eacute;s del objeto 
+    <code>ServletContext</code>.</li>
+  <li><b><code>session</code></b>: el bean ser&aacute; accesible a todas las p&aacute;ginas 
+    JSP, pero cada usuario tendr&aacute; su propio objeto. Los servlets pueden 
+    acceder a &eacute;l a trav&eacute;s del objeto <code>HttpSession</code>, obteniendo 
+    su valor con el m&eacute;todo <code>getAttribute</code>.</li>
+  <li><b><code>request</code></b>: el bean ser&aacute; accesible durante la petici&oacute;n 
+    actual, lo que significa que podr&aacute;n acceder a &eacute;l las p&aacute;ginas 
+    a las que se desv&iacute;e la petici&oacute;n con un <code>&lt;jsp:include&gt;</code> 
+    o un <code>&lt;jsp:forward&gt;</code>. Los servlets pueden acceder a &eacute;l 
+    a trav&eacute;s del objeto <code>ServletRequest</code>, de donde se puede 
+    obtener su valor con <code>getAttribute</code>.</li>
+</ul>
+<h3>3.2.4. Introducción a la arquitectura MVC</h3>
+<p>La arquitectura MVC plantea un diseño de aplicaciones Web que separa la <em>generaci&oacute;n de contenido</em> de su <em>presentaci&oacute;n</em>. 
+  En la figura se muestra un esquema.</p>
+<p><center>
+<img src="imagenes/modelomvc.gif" width="543" height="254"> 
+<p class="caption">Figura 1: Modelo de arquitectura MVC</p></center>
+<p> En este modelo, los servlets son los responsables de la generaci&oacute;n 
+  de contenido, y las p&aacute;ginas JSP de la presentaci&oacute;n. Esto elimina 
+  gran parte del c&oacute;digo Java de las p&aacute;ginas JSP, lo que permite 
+  que se puedan dividir las tareas: los programadores Java implementan los servlets, 
+  mientras que los desarrolladores de p&aacute;ginas web se ocupan de los JSP, 
+  que tienen un m&iacute;nimo de c&oacute;digo Java o incluso ninguno si se utilizan 
+  beans y etiquetas propias.</p>
+<p> Los componentes de esta arquitectura 
+  son:</p>
+<ul>
+  <li><b>Modelo</b>: tiene dos partes</li>
+  <ul>
+    <li><b>Estado</b>: o sea, los datos. Se implementan mediante beans. </li>
+    <li><b>Acciones</b>: la &quot;l&oacute;gica de negocio&quot; necesaria para 
+      procesar los datos. En nuestro caso, utilizaremos beans y clases Java auxiliares.</li>
+  </ul>
+  <li><b>Vista</b>: es el interfaz de usuario, que muestra los datos del modelo. 
+    Para implementar las vistas, utilizaremos JSPs.</li>
+  <li><b>Controlador</b>: recibe las peticiones del usuario, desencadena las acciones 
+    adecuadas en el modelo y muestra la vista correspondiente. Los controladores
+    suelen implementarse mediante servlets.</li>
+</ul>
+</body>
+</html>

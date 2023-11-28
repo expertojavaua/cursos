@@ -1,0 +1,979 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+                                                            
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+                                                            
+  <meta name="Author" content="Nacho">
+                                                            
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+                                                        
+  <link rel="stylesheet" href="../apuntes.css" type="text/css">
+  <title>Tema 2: Programaci&oacute;n de servlets</title>
+</head>
+  <body>
+           
+      <b>      
+<h2>2.3. Cabeceras y códigos</h2>
+      </b>
+           
+      <p>Veremos a continuación cómo tratar las cabeceras HTTP de una
+      petición y de una respuesta, así como los códigos de estado que emite
+      un servidor Web ante una petición, y las variables CGI a las que podemos
+      acceder.&nbsp; </p>
+           
+      <h4>2.3.1. Cabeceras de petición</h4>
+           
+      <p> Cuando se envía una petición HTTP, se pueden enviar, entre otras
+      cosas, unas cabeceras con información sobre el navegador. Para leer estas cabeceras de una petición desde un servlet, se utiliza
+      el método <b>getHeader()</b> del objeto <b>HttpServletRequest</b>.&nbsp; </p>
+           
+      <pre class="codigo">String getHeader(String nombre)</pre>
+           
+      <p>El parámetro indica el nombre de la cabecera cuyo valor se quiere
+      obtener. Devuelve el valor de la cabecera, o <i>null</i> si la cabecera no
+      ha sido enviada en la petición. </p>
+           
+      <p>Se tienen otros métodos, como: </p>
+           
+      <pre class="codigo">String[] getHeaderNames()
+String[] getHeaders(String nombre)
+int getIntHeader(String nombre)
+...</pre>
+           
+      <p>Con <b>getHeaderNames()</b> obtendremos todos los nombres de las
+      cabeceras enviadas. Con <b>getHeaders()</b> obtendremos todos los valores de
+      la cabecera de nombre dado. También hay métodos como <b>getIntHeader()</b> que devuelve el
+      valor de una cabecera con un tipo de dato específico (entero, en este
+      caso). Los nombres de las cabeceras normalmente no distinguen mayúsculas
+      de minúsculas. </p>
+           
+      <p>Algunas cabeceras son de uso común, y tienen métodos específicos
+      para obtener sus valores, como: </p>
+           
+      <pre class="codigo">Cookie[] getCookies()
+String getContentLength()
+String getContentType()
+...</pre>
+           
+      <p>Con <b>getCookies()<i> </i></b>obtendremos todas las cookies de la
+      petición (veremos las cookies con más detalle más adelante). Con <b>getContentLength()</b>
+      obtenemos el valor de la cabecera <i>Content-Length</i>, y con <b>getContentType()</b>
+      el de la cabecera <i>Content-Type</i>. </p>
+           
+      <h4>2.3.2. Cabeceras de respuesta</h4>
+           
+      <p>En la respuesta de un servidor web a una petición también pueden
+      aparecer cabeceras que informan sobre el documento servido o sobre el
+      propio servidor. Podemos definir cabeceras de respuesta para
+      enviar cookies, indicar la fecha de modificación, etc. Estas cabeceras
+      deben establecerse ANTES de enviar cualquier documento, o antes de
+      obtener el <i>PrintWriter</i> si es el caso. </p>
+           
+      <p>Para enviar cabeceras, el método más general es <b>setHeader()</b> del objeto <b>HttpServletResponse</b>.&nbsp; </p>
+           
+      <pre class="codigo">void setHeader(String nombre, String valor)</pre>
+           
+      <p>Al que se le pasan el nombre de la cabecera y el valor. Hay
+      otros métodos útiles: </p>
+           
+      <pre class="codigo">void setIntHeader(String nombre, int valor)
+void addHeader(String nombre, String valor)
+void addIntHeader(String nombre, int valor)
+...</pre>
+           
+      <p> <b>setIntHeader()</b> o <b>setDateHeader()</b>
+      se utilizan para enviar cabeceras de tipo entero o fecha. Los métodos <b>add...()</b>
+      se emplean para añadir múltiples valores a una cabecera con el mismo nombre. </p>
+           
+      <p>Algunas cabeceras tienen métodos específicos de envío, como:</p>
+           
+      <pre class="codigo">void setContentType(String tipo)
+void setContentLength(int tamaño)
+void sendRedirect(String url)
+void addCookie(Cookie cookie)</pre>
+           
+      <p>Con <b>setContentType()</b> se establece la cabecera <i>Content-Type</i>
+      con el tipo MIME del documento. Con <b>setContentLength()</b> se indican
+      los bytes enviados. Con <b>sendRedirect()</b> se selecciona la cabecera <i>Location</i>.
+      Finalmente, con <b>addCookie()</b> se establecen cookies (esto último ya
+      lo veremos con más detalle más adelante). Es recomendable utilizar estos
+      métodos en lugar del método <i>setHeader()</i> para la cabecera en
+      cuestión.</p>
+           
+      <b>      
+           
+      <h4>2.3.3. Variables CGI</h4>
+           
+      </b><p> Las variables CGI son una forma de recoger información sobre una
+      petición. Algunas se derivan de la línea de petición HTTP y de las
+      cabeceras, otras del propio socket (como el nombre o la IP de quien
+      solicita la petición), y otras de los parámetros de instalación del
+      servidor (como el mapeo de URLs a los paths actuales). </p>
+           
+      <p>Mostramos a continuación una tabla con las variables CGI, y cómo
+      acceder a ellas desde servlets: </p>
+           
+      <table border="1" width="85%" height="550">
+        <tr>
+          <td width="28%" align="center" height="19"><b>VARIABLE CGI</b></td>
+          <td width="34%" align="center" height="19"><b>SIGNIFICADO</b></td>
+          <td width="38%" align="left" height="19">
+            <p align="center"><b>ACCESO DESDE SERVLETS</b></td>
+        </tr>
+        <tr>
+          <td width="28%" align="left" height="36">AUTH_TYPE</td>
+          <td width="34%" height="36">Tipo de cabecera Authorization (basic o
+            digest)</td>
+          <td width="38%" align="left" height="36"><i>request.getAuthType()</i></td>
+        </tr>
+        <tr>
+          <td width="28%" align="left" height="36">CONTENT_LENGTH</td>
+          <td width="34%" height="36">Número de bytes enviados en peticiones
+            POST</td>
+          <td width="38%" align="left" height="36"><i>request.getContentLength()</i></td>
+        </tr>
+        <tr>
+          <td width="28%" align="left" height="19">CONTENT_TYPE</td>
+          <td width="34%" height="19">Tipo MIME de los datos adjuntos</td>
+          <td width="38%" align="left" height="19"><i>request.getContentType()</i></td>
+        </tr>
+        <tr>
+          <td width="28%" align="left" height="19">DOCUMENT_ROOT</td>
+          <td width="34%" height="19">Path del directorio raíz del servidor web</td>
+          <td width="38%" align="left" height="19"><i>getServletContext().getRealPath(&quot;/&quot;)</i></td>
+        </tr>
+        <tr>
+          <td width="28%" align="left" height="19">HTTP_XXX_YYY</td>
+          <td width="34%" height="19">Acceso a cabeceras arbitrarias HTTP</td>
+          <td width="38%" align="left" height="19"><i>request.getHeader(&quot;Xxx-Yyy&quot;)</i></td>
+        </tr>
+        <tr>
+          <td width="28%" align="left" height="19">PATH_INFO</td>
+          <td width="34%" height="19">Información de path adjunto a la URL</td>
+          <td width="38%" align="left" height="19"><i>request.getPathInfo()</i></td>
+        </tr>
+        <tr>
+          <td width="28%" align="left" height="19">PATH_TRANSLATED</td>
+          <td width="34%" height="19">Path mapeado al path real del servidor</td>
+          <td width="38%" align="left" height="19"><i>request.getPathTranslated()</i></td>
+        </tr>
+        <tr>
+          <td width="28%" align="left" height="19">QUERY_STRING</td>
+          <td width="34%" height="19">Datos adjuntos para peticiones GET</td>
+          <td width="38%" align="left" height="19"><i>request.getQueryString()</i></td>
+        </tr>
+        <tr>
+          <td width="28%" align="left" height="19">REMOTE_ADDR</td>
+          <td width="34%" height="19">IP del cliente que hizo la petición</td>
+          <td width="38%" align="left" height="19"><i>request.getRemoteAddr()</i></td>
+        </tr>
+        <tr>
+          <td width="28%" align="left" height="54">REMOTE_HOST</td>
+          <td width="34%" height="54">Nombre del dominio del cliente que hizo la
+            petición (o IP si no se puede determinar)</td>
+          <td width="38%" align="left" height="54"><i>request.getRemoteHost()</i></td>
+        </tr>
+        <tr>
+          <td width="28%" align="left" height="36">REMOTE_USER</td>
+          <td width="34%" height="36">Parte del usuario en la cabecera
+            Authorization (si se suministró)</td>
+          <td width="38%" align="left" height="36"><i>request.getRemoteUser()</i></td>
+        </tr>
+        <tr>
+          <td width="28%" align="left" height="36">REQUEST_METHOD</td>
+          <td width="34%" height="36">Tipo de petición (GET, POST, PUT, DELETE,
+            HEAD, OPTIONS, TRACE)</td>
+          <td width="38%" align="left" height="36"><i>request.getMethod()</i></td>
+        </tr>
+        <tr>
+          <td width="28%" align="left" height="19">SCRIPT_NAME</td>
+          <td width="34%" height="19">Path del servlet</td>
+          <td width="38%" align="left" height="19"><i>request.getServletPath()</i></td>
+        </tr>
+        <tr>
+          <td width="28%" align="left" height="19">SERVER_NAME</td>
+          <td width="34%" height="19">Nombre del servidor web</td>
+          <td width="38%" align="left" height="19"><i>request.getServerName()</i></td>
+        </tr>
+        <tr>
+          <td width="28%" align="left" height="18">SERVER_PORT</td>
+          <td width="34%" height="18">Puerto por el que escucha el servidor</td>
+          <td width="38%" align="left" height="18"><i>request.getServerPort()</i></td>
+        </tr>
+        <tr>
+          <td width="28%" align="left" height="18">SERVER_PROTOCOL</td>
+          <td width="34%" height="18">Nombre y versión usada en la línea de
+            petición (HTTP/1.0, HTTP/1.1 ...)</td>
+          <td width="38%" align="left" height="18"><i>request.getServerProtocol()</i></td>
+        </tr>
+        <tr>
+          <td width="28%" align="left" height="18">SERVER_SOFTWARE</td>
+          <td width="34%" height="18">Información del servidor web</td>
+          <td width="38%" align="left" height="18"><i>getServletContext().getServerInfo()</i></td>
+        </tr>
+      </table>
+      <p><i>request</i> se asume que es un objeto de tipo <i>HttpServletRequest</i>.
+      Para obtener cualquiera de las variables antes mencionadas, sólo hay que
+      llamar al método apropiado desde <i>doGet()</i> o <i>doPost()</i>. </p>
+           
+      <h4>2.3.4. Códigos de estado HTTP</h4>
+           
+      <p> Cuando un servidor web responde a una petición, en la respuesta
+      aparece, entre otras cosas, un código de estado que indica el resultado
+      de la petición, y un mensaje corto descriptivo de dicho código. </p>
+           
+      <p> El envío de cabeceras de respuesta
+      normalmente se planifica junto con el envío de códigos de estado, ya que
+      muchos de los códigos de estado necesitan tener una cabecera definida. Podemos hacer varias cosas con los servlets manipulando las líneas de
+      estado y las cabeceras de respuesta, como por ejemplo reenviar al usuario
+      a otros lugares, indicar que se requiere un password para acceder a un
+      determinado sitio web, etc. </p>
+           
+      <p> Para enviar códigos de estado se emplea el método <b>setStatus()</b>
+      de <b>HttpServletResponse</b>: </p>
+           
+      <pre class="codigo">void setStatus(int estado)</pre>
+           
+      <p>Donde se le pasa como parámetro el código del estado. En la clase <i>HttpServletResponse
+      </i>tenemos una serie de constantes para referenciar a cada código de
+      estado. Por ejemplo, la constante: </p>
+           
+      <pre class="codigo">HttpServletResponse.SC_NOT_FOUND</pre>
+           
+      <p>se corresponde con el código 404, e indica que el documento solicitado
+      no se ha encontrado. </p>
+           
+      <p>Existen otros métodos para gestión de mensajes de error: </p>
+           
+      <pre class="codigo">void sendError(int codigo, String mensaje)
+void sendRedirect(String url)</pre>
+           
+      <p><b>sendError() </b> genera una página de error, con código de error
+      igual a <i>codigo</i>, y con mensaje de error igual a <i>mensaje</i>. Se
+      suele utilizar este método para códigos de error, y <i>setStatus()</i>
+      para códigos normales. </p>
+           
+      <p><b>sendRedirect()</b> genera un código de tipo 302 (redirección),
+      envía una cabecera <i>Location</i> y redirige a la página indicada en <i>url</i>.
+      Es mejor que enviar directamente el código, o hacer un <i>response.setHeader(&quot;Location&quot;,
+      &quot;http...&quot;)</i>, porque es más cómodo, y porque el servlet
+      genera así una página con el enlace a la nueva dirección, para
+      navegadores que no soporten redirección automática </p>
+           
+      <p> Si queremos enviar un código en la respuesta,
+      se tiene que especificar antes de obtener el objeto <i>PrintWriter</i>. </p>
+           
+      <h4>2.3.5. Ejemplos</h4>
+           
+      <p><b><a name="ej1"></a>1. Ejemplo de cabeceras de petición</b> </p>
+           
+        <p>El siguiente servlet muestra los valores de todas las cabeceras HTTP
+      enviadas en la petición. Recorre las cabeceras enviadas y muestra su nombre y valor: </p>
+           
+      <pre class="codigo">import java.io.*;
+import java.util.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ServletCabecerasPeticion 
+extends HttpServlet
+{
+   <b>// Metodo para GET
+</b>
+   public void doGet(HttpServletRequest request, 
+                     HttpServletResponse response) 
+   throws ServletException, IOException
+   {
+	PrintWriter out = response.getWriter();
+
+<b>	// Mostramos las cabeceras enviadas 
+	// en la peticion
+</b>
+	out.println (&quot;&lt;HTML&gt;&quot;);
+	out.println (&quot;&lt;BODY&gt;&quot;);	
+	out.println (&quot;&lt;H1&gt;Cabeceras&lt;/H1&gt;&quot;);
+	out.println (&quot;&lt;BR&gt;&quot;);
+
+<b>	Enumeration cabeceras = request.getHeaderNames();
+</b>
+	while (cabeceras.hasMoreElements())
+	{		
+		String nombre = (String)(cabeceras.nextElement());
+		out.println (&quot;Nombre: &quot; + nombre + 
+		   &quot;, Valor: &quot; + <b>request.getHeader(nombre)</b>);
+		out.println (&quot;&lt;BR&gt;&lt;BR&gt;&quot;);
+	}
+
+	out.println (&quot;&lt;/BODY&gt;&quot;);			
+	out.println (&quot;&lt;/HTML&gt;&quot;);
+   }	
+
+   <b>// Metodo para POST
+</b>	
+   public void doPost(HttpServletRequest request, 
+                      HttpServletResponse response) 
+   throws ServletException, IOException
+   {
+	doGet(request, response);
+   }	
+}</pre>
+           
+        <p>Se puede probar con este formulario, pinchando el botón:</p>
+           
+        <pre class="codigo">&lt;html&gt;
+&lt;body&gt;
+&lt;form action=
+ &quot;/ejemplocabeceras/servlet/ServletCabecerasPeticion&quot;&gt;
+	&lt;input type=&quot;submit&quot; value=&quot;Pulsa aqui&quot;&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+           
+        <p><b><a name="ej2"></a>2. Ejemplo de cabeceras de respuesta</b></p>
+           
+        <p>El siguiente servlet espera un parámetro <i>accion</i> que puede
+        tomar 4 valores: </p>
+           
+        <ul>
+          <li><b>primos</b>: El servlet tiene un hilo que está constantemente
+            calculando números primos. Al elegir esta opción se envía una
+            cabecera <i>Refresh</i> y recarga el servlet cada 10 segundos, mostrando el último número primo que ha encontrado.</li>
+          <li><b>redirect</b>: Utiliza un <i>sendRedirect()</i> para cargar la
+            página que se indique como parámetro</li>
+          <li><b>error</b>: Utiliza un <i>sendError()</i><b> </b>para mostrar
+            una página de error, con un mensaje de error definido por el
+            usuario, y un código de error a elegir de una lista.</li>
+          <li><b>codigo</b>: Envía un código de estado HTTP (con <i>setStatus()</i>),
+            a elegir de entre una lista.</li>
+        </ul>
+           
+      <pre class="codigo">import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ServletCabecerasRespuesta 
+extends HttpServlet implements Runnable
+{
+   <b>// Ultimo numero primo descubierto</b>
+   long primo = 1;			<b>
+   // Hilo para calcular numeros primos
+</b>   Thread t = new Thread(this);	
+	
+<b>   // Metodo de inicializacion
+</b>	
+   public void init()
+   {
+	t.start();
+   }
+	
+<b>   // Metodo para GET
+</b>	
+   public void doGet(HttpServletRequest request, 
+                     HttpServletResponse response) 
+   throws ServletException, IOException
+   {	
+	String accion = request.getParameter(&quot;accion&quot;);
+	
+<b>	if (accion.equals(&quot;primo&quot;))
+</b>	{
+<b>		// Buscar el ultimo numero 
+		// primo y enviarlo
+</b>
+		response.setContentType(&quot;text/html&quot;);
+<b>		response.setHeader(&quot;Refresh&quot;, &quot;10&quot;);
+</b>		PrintWriter out = response.getWriter();
+		out.println (&quot;&lt;HTML&gt;&lt;BODY&gt;&quot;);
+		out.println (&quot;Primo: &quot; + primo);
+		out.println (&quot;&lt;/BODY&gt;&lt;/HTML&gt;&quot;);	
+
+<b>	} else if (accion.equals(&quot;redirect&quot;)) {
+</b>
+<b>		// Redirigir a otra pagina
+</b>
+		String url = request.getParameter(&quot;url&quot;);
+		if (url == null)
+			url = &quot;http://www.ua.es&quot;;
+<b>		response.sendRedirect(url);
+</b>			
+<b>	} else if (accion.equals(&quot;error&quot;)) {	
+</b>				
+<b>		// Enviar error con sendError()
+</b>
+		int codigo = response.SC_NOT_FOUND;
+		try
+		{
+		   codigo = Integer.parseInt
+		      (request.getParameter(&quot;codigoMensaje&quot;));
+		} catch (Exception ex) {
+		   codigo = response.SC_NOT_FOUND;
+		}
+		String mensaje = request.getParameter(&quot;mensaje&quot;);
+		if (mensaje == null)
+		   mensaje = &quot;Error generado&quot;;
+<b>		response.sendError(codigo, mensaje);
+</b>
+<b>	} else if (accion.equals(&quot;codigo&quot;)) {
+</b>
+		<b>// Enviar un codigo de error
+</b>
+		int codigo = response.SC_NOT_FOUND;
+		try
+		{
+		   codigo = Integer.parseInt
+		      (request.getParameter(&quot;codigo&quot;));
+		} catch (Exception ex) {
+		   codigo = response.SC_NOT_FOUND;
+		}
+<b>		response.setStatus(codigo);
+</b>	}
+   }	
+
+<b>   // Metodo para POST
+</b>	
+   public void doPost(HttpServletRequest request, 
+                      HttpServletResponse response) 
+   throws ServletException, IOException
+   {
+	doGet(request, response);
+   }
+
+   ... el resto del codigo es para el hilo, 
+   para calcular numeros primos
+   Puede consultarse en el fichero fuente, 
+   aqui se quita por simplificar
+}</pre>
+           
+        <p>Se puede probar con este formulario, eligiendo la acción a realizar,
+        introduciendo los parámetros necesarios en el formulario y pinchando el
+        botón de Enviar Datos:</p>
+           
+      <pre class="codigo">&lt;html&gt;
+&lt;body&gt;
+&lt;form action=
+&quot;/ejemplocabeceras/servlet/ServletCabecerasRespuesta&quot;&gt;
+
+&lt;table border=&quot;0&quot;&gt;
+
+&lt;tr&gt;
+&lt;td&gt;
+&lt;input type=&quot;radio&quot; name=&quot;accion&quot; value=&quot;primo&quot; selected&gt;
+<b>Obtener ultimo numero primo
+</b>&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;
+&lt;input type=&quot;radio&quot; name=&quot;accion&quot; value=&quot;redirect&quot;&gt;
+<b>Redirigir a una pagina
+</b>&lt;/td&gt;
+&lt;td&gt;
+URL: 
+&lt;input type=&quot;text&quot; name=&quot;url&quot; value=&quot;http://www.ua.es&quot;&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;
+&lt;input type=&quot;radio&quot; name=&quot;accion&quot; value=&quot;error&quot;&gt;
+<b>Mostrar pagina de error
+</b>&lt;/td&gt;
+&lt;td&gt;
+Mensaje: 
+&lt;input type=&quot;text&quot; name=&quot;mensaje&quot; 
+value=&quot;Error generado por el usuario&quot;&gt;
+&lt;/td&gt;
+&lt;td&gt;
+Codigo:
+&lt;select name=&quot;codigoMensaje&quot;&gt;
+&lt;option name=&quot;codigoMensaje&quot; value=&quot;400&quot;&gt;400&lt;/option&gt;
+&lt;option name=&quot;codigoMensaje&quot; value=&quot;401&quot;&gt;401&lt;/option&gt;
+&lt;option name=&quot;codigoMensaje&quot; value=&quot;403&quot;&gt;403&lt;/option&gt;
+&lt;option name=&quot;codigoMensaje&quot; value=&quot;404&quot; selected&gt;404
+&lt;/option&gt;
+&lt;/select&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;
+&lt;input type=&quot;radio&quot; name=&quot;accion&quot; value=&quot;codigo&quot;&gt;
+<b>Enviar codigo de error
+</b>&lt;/td&gt;
+&lt;td&gt;
+Codigo:
+&lt;select name=&quot;codigo&quot;&gt;
+&lt;option name=&quot;codigo&quot; value=&quot;200&quot;&gt;200&lt;/option&gt;	
+&lt;option name=&quot;codigo&quot; value=&quot;204&quot;&gt;204&lt;/option&gt;
+&lt;option name=&quot;codigo&quot; value=&quot;404&quot; selected&gt;404&lt;/option&gt;
+&lt;/select&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;/table&gt;
+
+&lt;input type=&quot;submit&quot; value=&quot;Enviar Datos&quot;&gt;
+
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+           
+      <p> Aquí
+      tenéis el <a href="ejemplos/servlets/ejemplocabeceras.war">WAR</a> con los
+      ejemplos.
+      Copiadlo en el directorio <i>webapps</i>  y probad cada ejemplo,
+      respectivamente, con:</p>
+           
+      <pre class="codigo">http://localhost:8080/ejemplocabeceras/inicioCabecerasPeticion.html
+http://localhost:8080/ejemplocabeceras/inicioCabecerasRespuesta.html</pre>
+           
+      <b>      
+<h2>&nbsp;</h2>
+<h2>2.4. Cookies y sesiones</h2>
+      </b>
+           
+      <h4>2.4.1.Cookies</h4>
+           
+<p>Una <b>cookie</b> es un objeto de tipo:</p>
+<p align="center"><i>nombre = valor</i></p>
+<p>donde se asigna un <i>valor</i> determinado (una cadena de texto) a una
+variable del <i>nombre</i>  indicado. Dicho objeto es almacenado y recordado por
+el servidor web y el navegador durante un período de tiempo (indicado como un
+parámetro interno de la propia <i>cookie</i>). Así, se puede tener una lista
+de <i>cookies</i> con distintas variables y distintos valores, para almacenar
+información relevante para cada usuario (se tienen listas de cookies
+independientes para cada usuario).</p>
+<p>En Javascript, por ejemplo, el objeto <i> document.cookie</i> contiene como valor una
+lista de la forma:</p>
+<p align="center"><i>nombre1=valor1;nombre2=valor2;...;nombreN=valorN</i></p>
+<p>donde se almacenan así los valores de las cookies que se tengan definidas.</p>
+<p>Se pueden emplear <i>cookies</i>, entre otras cosas, para:</p>
+<ul>
+  <li><b>Identificar a un usuario durante una o varias sesiones</b>. Por
+    ejemplo, a la hora de realizar compras a través de una tienda web, se
+    almacena su identidad (login y password) como una cookie y se recuerda a lo
+    largo de diferentes visitas qué es lo que lleva almacenado en su cesta de
+    la compra cada usuario.</li>
+  <li><b>Personalizar un sitio web de acuerdo a las preferencias de cada usuario</b>:
+    definir el contenido, apariencia, etc, que queremos que tenga una
+    determinada página en función de las preferencias del usuario que la esté
+    visitando.</li>
+</ul>
+<p> Los navegadores que trabajen con cookies pueden
+soportar hasta 20 cookies por servidor, de al menos 4 KB cada una. Los servlets
+que se ejecutan en un mismo servidor comparten las cookies.</p>
+<p>A la hora de trabajar con cookies, debemos tener en cuenta que nuestro sitio
+web no debe depender de ellas, puesto que muchos navegadores y usuarios las
+deshabilitan para evitar problemas de privacidad y otras cuestiones.</p>
+<p>Veremos ahora cómo trabajar con cookies desde servlets.</p>
+
+<h3><i>Enviar una cookie</i></h3>
+<p>Para crear una nueva cookie y enviarla, se siguen los pasos:</p>
+<p><b>1. Crear la cookie</b></p>
+<p>Las cookies se manejan con la clase <b>Cookie</b>.<b> </b>Se tiene el
+constructor:</p>
+<pre class="codigo">public Cookie (String nombre, String valor)</pre>
+           
+<p>que crea una cookie de nombre <i>nombre</i>, dándole el valor <i>valor</i>.</p>
+<p><b>2. Establecer los atributos de la cookie</b></p>
+<p>Una vez creada la cookie, podemos establecer los atributos que queramos, con
+los métodos de la clase <i>Cookie</i>. Por ejemplo, se tienen:</p>
+
+<pre class="codigo">public void setComment(String comentario)
+public void setMaxAge(int edad)
+...</pre>
+           
+<p>El primero asigna una cadena descriptiva sobre la cookie. El segundo indica
+cuántos segundos de vida tiene. Si es un valor negativo, se borrará la cookie
+cuando se cierre el navegador. Si el valor es 0, se borra la cookie
+instantáneamente, y si es positivo, se borrará la cookie cuando pasen los
+segundos indicados (si cerramos y volvemos a abrir el navegador dentro de ese
+tiempo, la cookie todavía persistirá). Se tienen otros métodos para
+establecer atributos de la cookie.</p>
+
+<p><b>3. Enviar la cookie</b></p>
+
+<p>Las cookies se añaden a la cabecera de la respuesta, y se envían así al
+cliente, mediante el método de <i>HttpServletResponse</i>:</p>
+
+<pre class="codigo">public void addCookie (Cookie cookie)</pre>
+           
+<p><b>Ejemplo</b></p>
+
+<p>Vemos un ejemplo completo de envío de cookie:</p>
+
+<pre class="codigo">public class MiServlet extends HttpServlet 
+{ 
+	public void doGet (HttpServletRequest request, 
+	                   HttpServletResponse response) 
+	throws ServletException, IOException
+	{	
+		Cookie miCookie = new Cookie (&quot;nombre&quot;, &quot;Pepe&quot;);
+		miCookie.setMaxAge(120);
+		response.addCookie(miCookie);
+		PrintWriter out = response.getWriter();
+		...
+	}
+}</pre>
+           
+<p>Hay que tener en cuenta que las cookies son parte de la cabecera HTTP, con lo
+cual hay que enviarlas ANTES de escribir la respuesta (o antes de obtener el
+objeto <i>Writer</i> si lo queremos utilizar).</p>
+
+<h3><i> Obtener una cookie</i></h3>
+<p>Para obtener una cookie que envía el cliente se trabaja sobre la petición del cliente (<i>HttpServletRequest</i>),<i>
+</i>siguiendo los pasos:</p>
+<p><b>1. Obtener todas las cookies</b></p>
+<p>Obtenemos todas las cookies con el método <b>getCookies()</b> de la clase <i>HttpServletRequest</i>:</p>
+<pre class="codigo">public Cookie[] getCookies()</pre>
+           
+<p>Con esto se tiene un array con todas las cookies actuales para el usuario. Si
+no hay cookies el método devuelve <i>null</i>.</p>
+<p><b>2. Obtener el valor de una cookie</b></p>
+<p>Con lo anterior, para obtener el valor de una cookie simplemente recorremos
+el array de cookies buscando la que concuerde con el nombre que queramos. Pueden
+ser útiles los métodos de <i>Cookie</i>:</p>
+<pre class="codigo">public String getName()
+public String getValue()</pre>
+           
+<p>El primero obtiene el nombre de la cookie, y el segundo el valor.</p>
+<p><b>Ejemplo</b></p>
+<p>Un ejemplo de uso, para obtener el nombre del usuario, guardado en la cookie
+&quot;nombre&quot;:</p>
+<pre class="codigo">public void doGet (HttpServletRequest request, 
+                   HttpServletResponse response) 
+throws ServletException, IOException
+{	
+	Cookie[] cookies = request.getCookies();
+	String nombre;
+	for (int i = 0; i &lt; cookies.length; i++)
+		if (cookies[i].getName().equals(&quot;nombre&quot;))
+			nombre = cookies[i].getValue();
+}</pre>
+           
+<h3><a name="ej1"></a><i> Ejemplo</i></h3>
+<p>Aquí tenéis un <a href="ejemplos/servlets/ejemplocookies.war">WAR</a> con un ejemplo de uso de
+cookies. El servlet <i>ServletCookies</i>  cuenta el número de visitas a una
+página con una cookie que
+    dura 3 minutos.</p>
+
+<pre class="codigo">import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ServletCookies extends HttpServlet
+{
+   <b>// Metodo para GET
+</b>	
+   public void doGet(HttpServletRequest request, 
+                     HttpServletResponse response) 
+   throws ServletException, IOException
+   {
+	response.setContentType(&quot;text/html&quot;);
+	response.setHeader(&quot;Cache-Control&quot;, &quot;no-cache&quot;);
+		
+	Cookie[] cookies = request.getCookies();
+	Cookie contador = buscaCookie(&quot;contador&quot;, cookies);
+		
+	if (contador == null)
+	{
+<b>	   // Creamos la cookie con el contador
+</b>			
+	   Cookie cookie = new Cookie (&quot;contador&quot;, &quot;1&quot;);
+	   cookie.setMaxAge(180);
+	   response.addCookie(cookie);
+
+	<b>   // Mostramos el mensaje de primera visita
+</b>
+	   PrintWriter out = response.getWriter();
+	   out.println (&quot;&lt;HTML&gt;&quot;);			
+	   out.println (&quot;&lt;BODY&gt;&quot;);			
+	   out.println (&quot;Primera visita&quot;); 
+	   out.println (&quot;&lt;BR&gt;&quot;);
+	   out.println (&quot;&lt;/BODY&gt;&quot;);
+	   out.println (&quot;&lt;/HTML&gt;&quot;);
+
+	} else {
+		
+	<b>   // Obtenemos el valor actual del contador
+</b>			
+	   int cont = Integer.parseInt(contador.getValue());
+	   cont++;
+			
+	<b>   // Modificamos el valor de la cookie 
+	   // incrementando el contador
+</b>			
+	   Cookie cookie = new Cookie (&quot;contador&quot;, &quot;&quot; + cont);
+	   cookie.setMaxAge(180);
+	   response.addCookie(cookie);
+
+	<b>   // Mostramos el numero de visitas
+</b>
+	   PrintWriter out = response.getWriter();
+	   out.println (&quot;&lt;HTML&gt;&quot;);
+	   out.println (&quot;&lt;BODY&gt;&quot;);
+	   out.println (&quot;Visita numero &quot; + cont);
+	   out.println (&quot;&lt;BR&gt;&quot;);
+	   out.println (&quot;&lt;/BODY&gt;&quot;);
+	   out.println (&quot;&lt;/HTML&gt;&quot;);
+	}		
+   }	
+	
+   <b>// Busca la cookie 'nombre' 
+   // en el array de cookies indicado. 
+   // Devuelve null si no esta
+</b>	
+   private Cookie buscaCookie(String nombre, 
+                              Cookie[] cookies)
+   {
+	if (cookies == null)
+	   return null;
+		
+	for (int i = 0; i &lt; cookies.length; i++)
+	   if (cookies[i].getName().equals(nombre))
+		return cookies[i];
+		
+	return null;
+   }
+}</pre>
+           
+<p>Copiad el ejemplo en el directorio <i>webapps</i> de Tomcat, reiniciar el
+servidor y probadlo con:</p>
+
+<pre class="codigo">http://localhost:8080/ejemplocookies/servlet/ServletCookies </pre>
+           
+<h3>2.4.2. Seguimiento de sesiones</h3>
+<p>El seguimiento de sesiones es un mecanismo empleado por los servlets para
+gestionar un estado sobre las peticiones realizadas desde un mismo cliente (un
+mismo navegador) a lo largo de un período de tiempo determinado. Las sesiones
+se comparten por los servlets a los que accede un cliente (algo útil si
+queremos construir una aplicación basada en múltiples servlets).</p>
+<p>Para utilizar el seguimiento de sesiones se tienen los pasos:</p>
+<ul>
+  <li>Utilizar una sesión (objeto <b>HttpSession</b>) para un usuario</li>
+  <li>Almacenar u obtener datos del objeto <i>HttpSession</i></li>
+  <li>Opcionalmente, invalidar la sesión</li>
+</ul>
+<h3><i> Obtener una sesión</i></h3>
+<p>El método <b>getSession()</b> del objeto <b>HttpServletRequest </b>obtiene
+una sesión de usuario.</p>
+<pre class="codigo">public HttpSession getSession()
+public HttpSession getSession(boolean crear)</pre>
+           
+<p>El primer método obtiene la sesión actual, o crea una si no existe. Con el segundo método
+podemos establecer, mediante el flag booleano, si queremos crear una nueva si no
+existe (<i>true</i>) o no (<i>false</i>). Si la sesión es nueva, el método <b>isNew()</b> del <i>HttpSession</i>
+devuelve <i>true</i>, y la sesión no tiene ningún dato asociado. Deberemos ir
+añadiéndole datos tras crearla.</p>
+<p>Para mantener la sesión de forma adecuada, debemos llamar a <i>getSession()</i>
+antes de que se escriba nada en la respuesta <i>HttpServletResponse</i> (y si
+utilizamos un <i>Writer</i>, debemos obtenerla antes de obtener el <i>Writer</i>,
+no antes de escribir datos).</p>
+<p>Por ejemplo:</p>
+<pre class="codigo">public class MiServlet extends HttpServlet 
+{ 
+	public void doGet (HttpServletRequest request, 
+	                   HttpServletResponse response) 
+	throws ServletException, IOException
+	{	
+		HttpSession sesion = request.getSession(true);
+		...
+		PrintWriter out = response.getWriter();
+		...
+	}
+}</pre>
+           
+<h3><i> Guardar y obtener datos de la sesión</i></h3>
+<p>La interfaz <b>HttpSession </b>proporciona métodos que permiten almacenar y
+obtener datos de la sesión:</p>
+<ul>
+  <li>Propiedades de la sesión, como por ejemplo su identificador:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">public String getId()</pre>
+           
+</blockquote>
+<ul>
+  <li>Datos de la aplicación, que se almacenan y obtienen como pares
+    nombre-valor, donde el nombre es un <i>String</i> que identifica al dato, y
+    el valor es un <i>Object</i> con el valor asociado. Tendremos que tener
+    cuidado de no sobreescribir datos de un servlet desde otro accidentalmente.
+    Se tienen los métodos:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">public Object getAttribute(String nombre)
+public void   setAttribute(String nombre, Object valor)
+public void   removeAttribute(String nombre)</pre>
+           
+  <p>que obtienen / establecen / eliminan, respectivamente, valores de atributos. Estos
+  métodos eran <i>getValue()</i>, <i>putValue()</i>  y <i>removeValue()
+  </i>hasta la versión
+  2.2 de servlets. Se tienen además métodos como <i>getAttributeNames()</i>
+  para obtener los nombres de los atributos que se tienen almacenados para la
+  sesión, y otros métodos de utilidad en la clase <i>HttpSession</i>.</p>
+</blockquote>
+<p>Por ejemplo:</p>
+<pre class="codigo">public class MiServlet extends HttpServlet 
+{ 
+	public void doGet (HttpServletRequest request, 
+	                   HttpServletResponse response) 
+	throws ServletException, IOException
+	{	
+		HttpSession sesion = request.getSession(true);
+		String nombreUsuario = 
+		   (String)(sesion.getAttribute(&quot;nombre&quot;));
+		sesion.setAttribute(&quot;password&quot;, &quot;secreto&quot;);
+	}
+}</pre>
+           
+<p>El ejemplo lee el atributo &quot;nombre&quot; de la sesión, y establece el
+atributo &quot;password&quot; al valor &quot;secreto&quot;.</p>
+
+<h3><i> Invalidar la sesión</i></h3>
+<p>Una sesión de usuario puede invalidarse manualmente, o automáticamente
+(dependiendo de dónde esté ejecutando el servlet). Esto implica eliminar el
+objeto <i>HttpSession</i><b> </b>y sus valores de la memoria. Se tienen los
+métodos de <i>HttpSession</i>:</p>
+<pre class="codigo">public int getMaxInactiveInterval()
+public void setMaxInactiveInterval(int intervalo)
+public void invalidate()</pre>
+           
+<p>Para invalidarla automáticamente, la sesión expira cuando transcurre el
+tiempo indicado por el método <b>getMaxInactiveInterval()</b> entre dos accesos
+del cliente (en segundos). Se puede establecer dicho valor con <b>setMaxInactiveInterval(...)</b><i>.</i></p>
+<p>Para invalidar manualmente una sesión, se emplea el método <b>invalidate()</b>
+de la misma. Esto puede ser interesante por ejemplo en comercio electrónico:
+podemos mantener una sesión donde se vayan acumulando los productos que un
+usuario quiera comprar, e invalidar la sesión (borrarla) cuando el usuario
+compre los productos.</p>
+<p>Por ejemplo:</p>
+<pre class="codigo">public class MiServlet extends HttpServlet 
+{ 
+	public void doGet (HttpServletRequest request, 
+	                   HttpServletResponse response) 
+	throws ServletException, IOException
+	{	
+		HttpSession sesion = request.getSession(true);
+		...
+		sesion.invalidate();
+		...
+	}
+}</pre>
+           
+<h3><i> Compatibilidad con los navegadores</i></h3>
+<p>Una alternativa para el seguimiento de sesiones consiste en la <b>reescritura
+de URLs</b>. Con esta técnica, se añaden como parámetros de la URL los datos
+relativos a la sesión actual, de forma que se van conservando entre las
+páginas.</p>
+<p>El seguimiento de sesiones por defecto emplea cookies para almacenar el
+identificador de una sesión. Para poder utilizar seguimiento de sesiones con
+usuarios que accedan desde navegadores que no utilicen cookies, los servlets
+aplican automáticamente
+la reescritura de URLs cuando no se utilizan cookies.&nbsp;</p>
+<p>Para poder utilizar esto, debemos codificar todas las URLs que referenciemos.
+Para esto se emplean los métodos:</p>
+<pre class="codigo">public String encodeURL(String url)
+public String encodeRedirectURL(String url) </pre>
+           
+      <p>El primero se emplea para asociar identificadores con URLs, se utilizará
+cuando pongamos urls en el contenido de la página que generamos. El segundo se
+utiliza para
+asociar identificadores con redirecciones. Lo emplearemos cuando utilicemos
+métodos <i>sendRedirect()</i>, para codificar la URL que se le pasa. Ambos devuelven la URL sobreescrita
+si la sobreescritura ha sido necesaria, o la misma URL si no ha sido necesario
+      sobreescribir, dependiendo de si el navegador utiliza cookies (con lo que
+      no es necesario incluir información de sesión en la URL), o no las
+      utiliza (con lo que la información de sesión se introduce con estos
+      métodos en la URL).</p>
+<p>Por ejemplo:</p>
+<pre class="codigo">public class MiServlet extends HttpServlet 
+{ 
+	public void doGet (HttpServletRequest request, 
+	                   HttpServletResponse response) 
+	throws ServletException, IOException
+	{			
+		...
+		String url = response.encodeURL(
+		   &quot;http://localhost:8080/mipagina.html&quot;);
+		out.println (&quot;&lt;a href=\&quot;&quot; + url + &quot;\&quot;&gt;...&lt;/a&gt;&quot;);
+		...
+		String url2 = response.encodeRedirectURL(
+		   &quot;http://otrapagina.com&quot;);
+		response.sendRedirect(url2);
+	}
+}</pre>
+           
+      <h3><i>Ejemplo</i></h3>
+<p><a name="ej2"></a>Aquí tenéis un <a href="ejemplos/servlets/ejemplosesiones.war">WAR</a> con un ejemplo de uso de sesiones.
+El servlet <i>ServletSesiones</i> cuenta el número de visitas a una
+    página en una sola sesión (en una sola ventana de navegador).</p>
+
+<pre class="codigo">import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ServletSesiones extends HttpServlet
+{
+   <b>// Metodo para GET
+</b>	
+   public void doGet(HttpServletRequest request, 
+                     HttpServletResponse response) 
+   throws ServletException, IOException
+   {
+	response.setContentType(&quot;text/html&quot;);
+	response.setHeader(&quot;Cache-Control&quot;, &quot;no-cache&quot;);
+		
+	HttpSession sesion = request.getSession();
+	PrintWriter out = response.getWriter();
+
+	if (sesion.isNew())
+	{
+<b>	   // Mostramos un mensaje de primera visita
+</b>
+	   out.println (&quot;&lt;HTML&gt;&quot;);			
+	   out.println (&quot;&lt;BODY&gt;&quot;);			
+	   out.println (&quot;Primera visita a la pagina&quot;);
+	   out.println (&quot;&lt;BR&gt;&quot;);
+	   out.println (&quot;&lt;/BODY&gt;&quot;);			
+	   out.println (&quot;&lt;/HTML&gt;&quot;);			
+			
+	   sesion.setAttribute(&quot;contador&quot;, new Integer(1));
+			
+	} else {
+
+	<b>   // Mostramos el numero de visitas 
+	   // y actualizamos el contador
+</b>			
+	   int contador = ((Integer)
+	   (sesion.getAttribute(&quot;contador&quot;))).intValue();
+	   contador++;
+
+	   out.println (&quot;&lt;HTML&gt;&quot;);			
+	   out.println (&quot;&lt;BODY&gt;&quot;);			
+	   out.println (&quot;Visita numero &quot; + 
+			contador + 
+			&quot; a la pagina en esta sesion&quot;);
+	   out.println (&quot;&lt;BR&gt;&quot;);
+	   out.println (&quot;&lt;/BODY&gt;&quot;);
+	   out.println (&quot;&lt;/HTML&gt;&quot;);
+			
+	   sesion.setAttribute(&quot;contador&quot;, 
+		               new Integer(contador));
+	}		
+   }	
+}</pre>
+           
+<p>Copiad el ejemplo en el directorio <i>webapps</i> de Tomcat, reiniciar el
+servidor y probadlo con:</p>
+
+<pre class="codigo">http://localhost:8080/ejemplosesiones/servlet/ServletSesiones </pre>
+           
+<p>&nbsp;</p>
+
+        </body>
+        </html>

@@ -1,0 +1,1486 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+                                                            
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+                                                            
+  <meta name="Author" content="Nacho">
+                                                            
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+                                                        
+  <link rel="stylesheet" href="../apuntes.css" type="text/css">
+  <title>Tema 1: Introducci&oacute;n a las Aplicaciones y Servidores Web</title>
+</head>
+  <body>
+      <b>      
+<h1>1. Introducción a las Aplicaciones y Servidores Web</h1>
+<h2>1.1. Protocolo HTTP y aplicaciones Web</h2>
+</b>
+           
+      
+<h4>1.1.1. Protocolos y servicios de Internet</h4>
+           
+      
+<h4><i>Protocolo TCP/IP</i></h4>
+           
+      <p>Internet se construye sobre el protocolo de transmisión <b>TCP </b>(<i>Transmision
+      Control Protocol</i>), y sobre un sistema de identificación de los computadores que la forman basado en el protocolo <b>IP</b>: </p>
+           
+      <ul>
+        <li><b>TCP</b> realiza el empaquetamiento de los datos a transmitir y el
+          chequeo de errores de la transmisión y reenvío de paquetes
+          erróneos. UDP (<i>User Datagram Protocol</i>) es un protocolo más
+          simple que no realiza control de errores</li>
+        
+  <li><b>IP</b> define una dirección IP para cada ordenador de la red. Esta es 
+    un número de 32 bits, que se suele representar en decimal, separando los 4 
+    bytes por puntos (por ejemplo, <code>&quot;192.168.12.1&quot;</code>. Normalmente 
+    se utilizan nombres simbólicos para referirse a estas direcciones numéricas 
+    (como por ejemplo <code>&quot;www.ua.es&quot;</code>)</li>
+      </ul>
+      <p>La comunicación con TCP/IP se realiza mediante <i>sockets</i>,
+      conexiones entre un computador y otro a través de la que se envían
+      datos. Puede haber más de un socket entre dos mismos ordenadores, con lo
+      que para distinguirlos se emplea un identificador, llamado <i>puerto</i>.&nbsp; </p>
+           
+      
+<h4><i> Otros protocolos y servicios</i></h4>
+           
+      <p>Se han desarrollado una serie de servicios y protocolos basados en TCP/IP
+      y en la arquitectura cliente/servidor, donde una máquina (cliente)
+      solicita peticiones de servicio a otra en la que suelen estar los datos y
+      programas de aplicación (servidor). Algunos de los servicios y protocolos
+      desarrollados son: </p>
+           
+      <ul>
+        <li><b>FTP</b>: para transmisión de ficheros</li>
+        <li><b>TELNET</b>: para conexión remota</li>
+        <li><b>HTTP</b>: para solicitud de servicios vía Web (documentos u
+          otros archivos)</li>
+        <li><b>POP3</b>: consulta y descarga de mensajes de correo</li>
+        <li><b>SMTP</b>: envío de mensajes de correo</li>
+      </ul>
+      <p>Para identificar los recursos de Internet se introdujeron&nbsp; las URL
+      (<i>Uniform Resource Locator</i>), un esquema de nomenclatura de recursos
+      basado en especificar el protocolo utilizado, el servidor y el recurso al
+      que se accede: </p>
+           
+      <pre class="codigo">Protocolo Servidor [:Puerto] Fichero</pre>
+           
+      <p>El protocolo depende del servicio al que se quiera acceder, y el
+      fichero es la ruta del recurso, en el espacio de direcciones del servidor.
+      Los protocolos de esta nomenclatura corresponden con algunos de los
+      servicios mencionados: </p>
+           
+      <ul>
+        
+  <li><b><code>http</code></b>: protocolo HTTP para solicitar documentos</li>
+        
+  <li><b><code>https</code></b>: petición segura (encriptada) de documentos mediante 
+    HTTP</li>
+        
+  <li><b><code>ftp</code></b>: petición de ficheros utilizando FTP</li>
+        
+  <li><b><code>file</code></b>: acceso a ficheros locales</li>
+        
+  <li><b><code>news</code></b>: acceso a artículos de grupos de noticias</li>
+        
+  <li><b><code>mailto</code></b>: acceso al envío de correo electrónico</li>
+        
+  <li><b><code>telnet</code></b>: conexión con una máquina remota</li>
+      </ul>
+      <p>Ejemplos de URL serían: </p>
+           
+      <pre class="codigo">http://www.ua.es/index.htm
+ftp://ftp.dccia.ua.es/pub/winzip.exe
+mailto:pepe@yahoo.com</pre>
+           
+      
+<p>Los <b>navegadores</b> son clientes que permiten utilizar la mayoría de los 
+  protocolos anteriores. Traducen las URL en peticiones al servicio correspondiente.</p>
+           
+      <b>      
+           
+      
+<h4><i>El protocolo HTTP</i></h4>
+           
+      </b>
+           
+      <p>El protocolo HTTP especifica el modo de comunicación entre una
+      máquina cliente y una máquina servidor, de modo que el cliente solicita
+      vía Web un documento del espacio de direcciones del servidor, y éste se lo sirve. </p>
+           
+      <p>HTTP es un protocolo que no tiene estado: un cliente realiza una
+      petición al servidor, que contesta y la transacción acaba, con lo que en
+      la siguiente petición que pueda realizar el mismo cliente se deben
+      proporcionar de nuevo todos los datos necesarios para que el servidor
+      sirva correctamente la nueva petición, no habiendo ninguna relación
+      entre las peticiones. </p>
+           
+      
+<h4>1.1.2. Peticiones HTTP del cliente</h4>
+           
+      <p>En el protocolo HTTP el cliente realiza una <b>petición</b> que se
+      descompone en:</p>
+      <ul>
+        <li>Un comando HTTP, seguido de una dirección de documento o URI (<i>Uniform
+          Resource Identifier</i>), y un número de versión HTTP, de forma que
+          se tiene una línea con el formato:</li>
+      </ul>
+      <blockquote>
+        <pre class="codigo">Comando    URI    Protocolo</pre>
+           
+        <p>Por ejemplo:</p>
+           
+        <pre class="codigo">GET   /index.html  HTTP/1.1</pre>
+           
+      </blockquote>
+      <ul>
+        
+  <li>Tras la petición, el cliente puede enviar información adicional de <b>cabeceras 
+    </b>(<i>headers</i>) con las que se da al servidor más información sobre la 
+    petición (tipo de software que ejecuta el cliente, tipo de contenido (<code>content-type</code>) 
+    que entiende el cliente, etc). Esta información puede utilizarla el servidor 
+    para generar la respuesta apropiada. Las cabeceras se envían una por línea, 
+    donde cada una tiene el formato:</li>
+      </ul>
+      <blockquote>
+        <pre class="codigo">Clave: Valor</pre>
+           
+        <p>Por ejemplo:</p>
+           
+        <pre class="codigo">Accept-Encoding: gzip, deflate
+User-Agent: Mozilla/4.0 (compatible;MSIE5.0;Windows 98)</pre>
+           
+        
+  <p>Tras las cabeceras, el cliente envía una línea en blanco (<code>\r\n\r\n</code>) 
+    para indicar el final de la sección de cabeceras.</p>
+           
+      </blockquote>
+      <ul>
+        <li>Finalmente, de forma opcional, se pueden enviar <b> datos adicionales</b> si
+          el comando HTTP solicitado lo requiere (por ejemplo, el método POST
+          que veremos a continuación).</li>
+      </ul>
+           
+      <p><b>METODO GET</b></p>
+           
+      
+<p>El comando <code>GET</code> permitía al principio solicitar al servidor un 
+  documento estático, existente en su espacio de direcciones. Luego se vio que 
+  esto no era suficiente, y se introdujo la posibilidad de solicitar búsquedas 
+  al servidor, de forma que el documento no tuviera que ser necesariamente estático, 
+  sino que la búsqueda estuviera condicionada por unos determinados parámetros. 
+  Así, el comando <code>GET</code> tiene la forma:</p>
+           
+      <pre class="codigo">GET   direccion ? parametros   version HTTP</pre>
+           
+      <p>Por ejemplo:</p>
+           
+      <pre class="codigo">GET   /cgi-bin/pagina.cgi?IDIOMA=C&amp;MODELO=a+b  HTTP/1.1</pre>
+           
+      
+<p>Los parámetros se indican con pares <i>nombre=valor</i>, separados por <code>'&amp;'</code>, 
+  y reciben el nombre de <b>datos de formulario</b>. El URI no puede contener 
+  espacios ni algunos caracteres, por lo que se utilizan códigos especiales, como 
+  el '+' para indicar espacio en blanco, u otros códigos <code>%XX</code> para 
+  representar otros caracteres. Uno de los trabajos más duros de los programas 
+  CGI es procesar esta cadena de parámetros para extraer la información necesaria.</p>
+           
+      <p><b>OTROS METODOS</b></p>
+           
+      
+<p>En la versión 1.1 de HTTP se definen otros métodos además de <code>GET</code>:</p>
+           
+      <ul>
+        
+  <li><code>OPTIONS</code>: para consultar al servidor acerca de las funcionalidades 
+    que proporciona</li>
+        
+  <li><code>HEAD</code>: el servidor responde de forma idéntica a un comando <code>GET</code>, 
+    pero no devuelve el cuerpo del documento respuesta, sólo las cabeceras. Suele 
+    emplearse para comprobar características del documento.</li>
+  <li><code>POST</code>: es similar <code>GET</code><code>, </code>pero se emplea para enviar al servidor un bloque de datos 
+    en el cuerpo de la petición</li>
+        
+  <li><code>PUT</code>: solicita que el cuerpo de la petición que envía se almacene 
+    en el espacio de direcciones del servidor, con el identificador URI solicitado 
+    (guarda un documento en el servidor)</li>
+        
+  <li><code>DELETE</code>: solicita borrar un documento específico del servidor</li>
+        
+  <li><code>TRACE</code>: se utiliza para seguir el camino de la petición por 
+    múltiples servidores y proxies (útil para depurar problemas de red).</li>
+      </ul>
+           
+      <p><b>GET Y POST</b></p>
+           
+      
+<p>Los dos métodos más comúnmente usados son <code>GET</code> y <code>POST</code>. 
+  Veremos las diferencias entre uno y otro con un ejemplo:</p>
+           
+      <ul>
+        
+  <li>Un ejemplo de petición <code>GET</code> es:</li>
+      </ul>
+      <blockquote>
+        <pre class="codigo">GET  /dir/cargaPagina.php?id=21&amp;nombre=Pepe  HTTP/1.1
+&lt;cabeceras&gt;
+</pre>
+           
+      </blockquote>
+      <ul>
+        
+  <li>Este ejemplo, convertido a petición <code>POST</code> es:</li>
+      </ul>
+      <blockquote>
+        <pre class="codigo">POST  /dir/cargaPagina.php  HTTP/1.1
+&lt;cabeceras&gt;
+
+id=21&amp;nombre=Pepe</pre>
+           
+           
+        Vemos que los parámetros se pasan en el cuerpo de la petición, fuera
+        de la línea del comando. Es útil para ocultar los parámetros enviados
+        en la barra de direcciones del navegador.
+           
+           
+      </blockquote>
+           
+      
+<p>Comúnmente existen <b> 3 formas de enviar una petición <code>GET</code></b>:</p>
+           
+      <ul>
+        <li>Teclear la petición directamente en la barra del navegador:</li>
+      </ul>
+      <blockquote>
+        <pre class="codigo">http://www.xx.com/pag.html?id=123&amp;nombre=pepe</pre>
+           
+      </blockquote>
+      <ul>
+        <li>Colocar la petición en un enlace y pinchar el enlace para
+          realizarla:</li>
+      </ul>
+      <blockquote>
+        <pre class="codigo">&lt;a href=&quot;http://www.xx.com/pag.html?id=123&amp;nombre=pepe&quot;&gt;
+Pulsa Aqui
+&lt;/a&gt;</pre>
+           
+      </blockquote>
+      <ul>
+        
+  <li>Enviar la petición tras rellenar un formulario con <code>METHOD=GET</code> 
+    (o sin <code>METHOD</code>) con los dos parámetros a enviar:</li>
+      </ul>
+      <blockquote>
+        <pre class="codigo">&lt;html&gt;
+&lt;body&gt;
+&lt;form action=&quot;http://www.xx.com/pag.html&quot;&gt; 
+<b>	</b>&lt;input type=&quot;text&quot; name=&quot;id&quot; value=&quot;123&quot;&gt; 
+<b>	</b>&lt;input type=&quot;text&quot; name=&quot;nombre&quot; value=&quot;pepe&quot;&gt; 
+<b>	</b>&lt;input type=&quot;submit&quot; value=&quot;Enviar&quot;&gt; 
+&lt;/form&gt; 
+&lt;/body&gt; 
+&lt;/html&gt; </pre>
+           
+      </blockquote>
+      
+<p>Para <b> enviar una petición POST</b>, normalmente se utiliza un formulario con <code>METHOD=POST</code>:</p>
+      <pre class="codigo">&lt;html&gt;
+&lt;body&gt;
+&lt;form action=&quot;http://www.xx.com/pag.html&quot; METHOD=POST&gt; 
+<b>	</b>&lt;input type=&quot;text&quot; name=&quot;id&quot; value=&quot;123&quot;&gt; 
+<b>	</b>&lt;input type=&quot;text&quot; name=&quot;nombre&quot; value=&quot;pepe&quot;&gt; 
+<b>	</b>&lt;input type=&quot;submit&quot; value=&quot;Enviar&quot;&gt; 
+&lt;/form&gt; 
+&lt;/body&gt; 
+&lt;/html&gt; </pre>
+           
+      
+<h4>1.1.3. Respuestas HTTP del servidor</h4>
+           
+      <p>Las respuestas del servidor también tienen tres partes: </p>
+           
+      <ul>
+        <li>Una <b>línea de estado</b> con la versión del protocolo HTTP
+          utilizado en el servidor, un código de estado sobre la respuesta y una breve
+          descripción del mismo:</li>
+      </ul>
+      <blockquote>
+           
+      <pre class="codigo">HTTP/1.0  200  OK</pre>
+           
+      </blockquote>
+      <ul>
+        <li>Información de <b>cabeceras</b>, donde se envía al cliente
+          información sobre el servidor y sobre el documento solicitado. El
+          formato de estas cabeceras es el mismo que el visto para las
+          peticiones del cliente, terminando en una línea en blanco.</li>
+        <li>Finalmente, se envía el <b>documento solicitado</b>. Para marcar el
+          final del mismo se envía también otra línea en blanco.</li>
+      </ul>
+           
+      
+<h4>1.1.4. Cabeceras</h4>
+           
+      <p>Hemos visto que tanto en la petición HTTP como en la respuesta se
+      envía (o se puede enviar) información sobre cabeceras. En el caso de la
+      petición, dichas cabeceras suelen contener información sobre el cliente
+      que realiza la petición: tipo de contenido que admite, tipo de navegador,
+      etc. En el caso del servidor, suelen contener información sobre el
+      contenido que se envía: tipo de contenido enviado, tamaño, etc. También
+      se puede enviar otro tipo de información en las cabeceras tanto de
+      petición como de respuesta. </p>
+           
+      <p>Vamos a poder implementar programas que lean las cabeceras que envía
+      un cliente (un navegador, por ejemplo) y que modifiquen el documento
+      servido en función de dichas cabeceras (por ejemplo, enviar una página
+      en función del idioma que se especifique). Por otra parte, podremos
+      utilizar las cabeceras que envíe el servidor como respuesta para obligar
+      al navegador a hacer determinadas acciones, como saltar a otra URL. </p>
+           
+      <p>Veremos a continuación las cabeceras más comunes tanto en las
+      peticiones de los clientes como en las respuestas de los servidores. La <a href="#rfc">
+      RFC</a> donde se especifican estas cabeceras es la 2616. </p>
+           
+      <p><b>CABECERAS DE PETICION (HTTP/1.1)</b> </p>
+           
+      <table border="1" width="84%">
+        <tr>
+          <td width="27%" align="center"><b>NOMBRE</b></td>
+          <td width="73%" align="center"><b>DESCRIPCIÓN</b></td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Accept</font></td>
+          <td width="73%">Tipos <a href="#mime"> MIME</a> que puede manejar el cliente</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Accept-Charset</font></td>
+          <td width="73%">Conjunto de caracteres que el cliente puede manejar</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Accept-Encoding</font></td>
+          <td width="73%">Define si el navegador puede aceptar datos codificados</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Accept-Language</font></td>
+          <td width="73%">Idiomas aceptados</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Authorization</font></td>
+          <td width="73%">Para identificarse cuando se accede a páginas
+            protegidas</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Cache-Control</font></td>
+          <td width="73%">Opciones relacionadas con el servidor proxy. Esta
+            cabecera se llamaba <i>Pragma</i> en HTTP 1.0</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Connection</font></td>
+          <td width="73%">Define si el cliente es capaz de realizar conexiones
+            persistentes (<i>keep-alive</i>, valor por defecto), o no (<i>close</i>).
+            Nueva en HTTP 1.1</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Content-Length</font></td>
+          
+    <td width="73%">Longitud de los datos enviados. Aplicable a peticiones <code>POST</code></td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Content-Type</font></td>
+          
+    <td width="73%">Tipo <a href="#mime"> MIME</a> de los datos enviados. Aplicable 
+      a peticiones <code>POST</code></td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Cookie</font></td>
+          <td width="73%">Para las cookies que se manejen</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">From</font></td>
+          <td width="73%">Dirección de correo electrónico responsable de la
+            petición</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Host</font></td>
+          <td width="73%">Unica cabecera requerida por HTTP 1.1. Indica el host
+            y el puerto tal y como se especifica en la URL original.</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">If-Modified-Since</font></td>
+          <td width="73%">El cliente sólo desea el documento si ha sido
+            modificado después de la fecha indicada en esta cabecera.</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Referer</font></td>
+          <td width="73%">URL origen de la petición. Si estamos en la página 1
+            y pinchamos en un enlace a la página 2, la URL de la página 1 se
+            incluye en esta cabecera cuando se realiza la petición de la
+            página 2.</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">User-Agent</font></td>
+          <td width="73%">Cliente que está realizando la petición (normalmente
+            muestra datos del navegador, como nombre, etc).</td>
+        </tr>
+      </table>
+           
+      <p><b>CABECERAS DE RESPUESTA</b> </p>
+           
+      <table border="1" width="84%">
+        <tr>
+          <td width="27%" align="center"><b>NOMBRE</b></td>
+          <td width="73%" align="center"><b>DESCRIPCIÓN</b></td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Allow</font></td>
+          
+    <td width="73%">Métodos disponibles (<code>GET</code>, <code>POST</code>, 
+      etc) a los que puede responder el recurso que se está solicitando</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Cache-Control</font></td>
+          <td width="73%">Dice al cliente en qué circunstancias puede hacer una
+            caché del documento que está sirviendo:
+            <ul>
+              
+        <li><code>public</code>: el documento puede almacenarse en una caché</li>
+              
+        <li><code>private</code>: el documento es para un solo usuario y sólo 
+          puede almacenarse en una caché privada (no compartida)</li>
+              
+        <li><code>no-cache</code>: el documento nunca debe ser almacenado en caché</li>
+              
+        <li><code>no-store</code>: el documento no debe almacenarse en caché ni 
+          almacenarse localmente de forma temporal en el disco duro</li>
+              
+        <li><code>must-revalidate</code>: el cliente debe revalidar la copia del 
+          documento con el servidor original, no con servidores proxy intermedios, 
+          cada vez que se use</li>
+              
+        <li><code>max-age=xxx</code>: el documento debe considerarse caducado 
+          después de <i>xxx</i> segundos.</li>
+            </ul>
+            
+      <p>Esta cabecera se llamaba <code>Pragma</code> en HTTP 1.0</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Content-Encoding</font></td>
+          
+    <td width="73%">Tipo de compresión (<em>gzip</em>, etc) en que se devuelve 
+      el documento solicitado</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Content-Language</font></td>
+          <td width="73%">Idioma en que está escrito el documento. En la <a href="#rfc"> RFC</a>
+            1766 están los idiomas disponibles</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Content-Length</font></td>
+          <td width="73%">Número de bytes de la respuesta</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Content-MD5</font></td>
+          <td width="73%">Una forma de fijar el <i>checksum</i> (verificación
+            de integridad) del documento enviado</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Content-Type</font></td>
+          <td width="73%">Tipo <a href="#mime"> MIME</a> de la respuesta</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Date</font></td>
+          <td width="73%">Hora y fecha, en formato <a href="#gmt">GMT</a>, en que la respuesta ha
+            sido generada</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Expires</font></td>
+          <td width="73%">Hora y fecha, en formato <a href="#gmt">GMT</a>, en que la respuesta debe
+            considerarse caducada</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Last-Modified</font></td>
+          
+    <td width="73%">Fecha en que el documento servido se modificó por última vez. 
+      Con esto, el documento se sirve sólo si su <code>Last-Modified</code> es 
+      mayor que la fecha indicada en el <code>If-Modified-Since</code> de la cabecera 
+      del cliente.</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Location</font></td>
+          <td width="73%">Indica la nueva URL donde encontrar el documento. Debe
+            usarse con un código de estado de tipo 300. El navegador se
+            redirigirá automáticamente a la dirección indicada en esta
+            cabecera.</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Refresh</font></td>
+          <td width="73%">Indica al cliente que debe recargar la página
+            después de los segundos especificados. También puede indicarse la
+            dirección de la página a cargar después de los segundos
+            indicados:<pre class="codigo">Refresh: 5; URL=http://www.unapagina.com</pre>
+           
+          </td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">Set-Cookie</font></td>
+          <td width="73%">Especifica una cookie asociada a la página</td>
+        </tr>
+        <tr>
+          <td width="27%" align="center"><font face="Courier New">WWW-Authenticate</font></td>
+          
+    <td width="73%"> tipo de autorización y dominio que debería indicar el cliente 
+      en su cabecera <code>Authorization</code>.</td>
+        </tr>
+      </table>
+           
+      
+<p>Para colocar estas cabeceras en un documento se tienen varios métodos, dependiendo 
+  de cómo estemos tratando las páginas (mediante servlets, HTML, etc). Por ejemplo, 
+  con HTML podemos enviar cabeceras mediante etiquetas <code>META</code> en la 
+  cabecera (<code>&lt;HEAD&gt;</code>) de la página HTML: </p>
+           
+      <pre class="codigo">&lt;META HTTP-EQUIV=&quot;Cabecera&quot; CONTENT=&quot;Valor&quot;&gt;</pre>
+           
+      <p>Por ejemplo: </p>
+           
+      <pre class="codigo">&lt;META HTTP-EQUIV=&quot;Location&quot; CONTENT=&quot;http://www.unapagina.com&quot;&gt;</pre>
+           
+      
+<h4>1.1.5. Códigos de estado HTTP</h4>
+           
+      <p>El código de estado que un servidor devuelve a un cliente en una
+      petición indica el resultado de dicha petición. Se tiene una
+      descripción completa de los mismos en el <a href="#rfc"> RFC</a> 2616. Están agrupados en 5
+      categorías:</p>
+      <ul>
+        <li><b>100 - 199</b>: códigos de información, indicando que el cliente
+          debe responder con alguna otra acción.</li>
+        <li><b>200 - 299</b>: códigos de aceptación de petición. Por ejemplo:</li>
+      </ul>
+
+	  <blockquote>           
+      
+  <table border="1" width="80%" height="63">
+    <tr> 
+      <td width="16%" align="center" height="1"><code>200</code></td>
+      <td width="33%" align="left" height="1"><code>OK</code></td>
+      <td width="50%" height="1">Todo está bien</td>
+    </tr>
+    <tr> 
+      <td width="16%" align="center" height="19"><code>204</code></td>
+      <td width="33%" align="left" height="19"><code>No Content</code></td>
+      <td width="50%" height="19">No hay documento nuevo</td>
+    </tr>
+  </table>
+      </blockquote>
+      <ul>
+        <li><b>300 - 399</b>: códigos de redirección. Indican que el documento
+          solicitado ha sido movido a otra URL. Por ejemplo:</li>
+      </ul>
+      <blockquote>     
+      
+  <table border="1" width="80%" height="193">
+    <tr> 
+      <td width="16%" align="center" height="1"><code>301</code></td>
+      <td width="33%" align="left" height="1"><code>Moved Permanently</code></td>
+      <td width="50%" height="1">El documento está en otro lugar, indicado en 
+        la cabecera <i>Location</i></td>
+    </tr>
+    <tr> 
+      <td width="16%" align="center" height="36"><code>302</code></td>
+      <td width="33%" align="left" height="36"><code>Found</code></td>
+      <td width="50%" height="36">Como el anterior, pero la nueva URL es temporal, 
+        no permanente.</td>
+    </tr>
+    <tr> 
+      <td width="16%" align="center" height="19"><code>304</code></td>
+      <td width="33%" align="left" height="19"><code>Not Modified</code></td>
+      <td width="50%" height="19">El documento pedido no ha sufrido cambios con 
+        respecto al actual (para cabeceras <code>If-Modified-Since</code>)</td>
+    </tr>
+  </table>
+      </blockquote>
+      <ul>
+        <li><b>400 - 499</b>: códigos de error del cliente. Por ejemplo:</li>
+      </ul>
+
+      <blockquote>     
+      
+  <table border="1" width="80%" height="191">
+    <tr> 
+      <td width="16%" align="center" height="1"><code>400</code></td>
+      <td width="33%" align="left" height="1"><code>Bad Request</code></td>
+      <td width="50%" height="1">Mala sintaxis en la petición</td>
+    </tr>
+    <tr> 
+      <td width="16%" align="center" height="1"><code>401</code></td>
+      <td width="33%" align="left" height="1"><code>Unauthorized</code></td>
+      <td width="50%" height="1">El cliente no tiene permiso para acceder a la 
+        página. Se debería devolver una cabecera <code>WWW-Authenticate</code> 
+        para que el usuario introduzca login y password</td>
+    </tr>
+    <tr> 
+      <td width="16%" align="center" height="18"><code>403</code></td>
+      <td width="33%" align="left" height="18"><code>Forbidden</code></td>
+      <td width="50%" height="18">El recurso no está disponible</td>
+    </tr>
+    <tr> 
+      <td width="16%" align="center" height="18"><code>404</code></td>
+      <td width="33%" align="left" height="18"><code>Not Found</code></td>
+      <td width="50%" height="18">No se pudo encontrar el recurso</td>
+    </tr>
+    <tr> 
+      <td width="16%" align="center" height="18"><code>408</code></td>
+      <td width="33%" align="left" height="18"><code>Request Timeout</code></td>
+      <td width="50%" height="18">El cliente tarda demasiado en enviar la petición</td>
+    </tr>
+  </table>
+      </blockquote>
+      <ul>
+        <li><b>500 - 599</b>: códigos de error del servidor. Por ejemplo:</li>
+      </ul>
+
+      <blockquote>     
+      
+  <table border="1" width="81%" height="136">
+    <tr> 
+      <td width="16%" align="center" height="1"><code>500</code></td>
+      <td width="33%" align="left" height="1"><code>Internal Server Error</code></td>
+      <td width="50%" height="1">Error en el servidor</td>
+    </tr>
+    <tr> 
+      <td width="16%" align="center" height="18"><code>501</code></td>
+      <td width="33%" align="left" height="18"><code>Not Implemented</code></td>
+      <td width="50%" height="18">El servidor no soporta la petición realizada</td>
+    </tr>
+    <tr> 
+      <td width="16%" align="center" height="1"><code>504</code></td>
+      <td width="33%" align="left" height="1"><code>Gateway Timeout</code></td>
+      <td width="50%" height="1">Usado por servidores que actúan como proxies 
+        o gateways, indica que el servidor no obtuvo una respuesta a tiempo de 
+        un servidor remoto</td>
+    </tr>
+  </table>
+      </blockquote>
+           
+      
+<h4>1.1.6. Cookies</h4>
+           
+      <p>Las <b>cookies</b>  son un mecanismo general mediante el que los
+      programas de un servidor web pueden almacenar
+      información en la parte del cliente de la conexión. Es una forma de
+      añadir estado a las conexiones HTTP, aunque el manejo de cookies no es
+      parte del protocolo HTTP, pero es soportado por la mayoría de los
+      clientes.</p>
+      <p>Las cookies son objetos de tipo:</p>
+<p align="center"><i>nombre = valor</i></p>
+<p>donde se asigna un <i>valor</i> determinado (una cadena de texto) a una
+variable del <i>nombre</i>  indicado. Dicho objeto es almacenado y recordado por
+el servidor web y el navegador durante un período de tiempo (indicado como un
+parámetro interno de la propia <i>cookie</i>). Así, se puede tener una lista
+de <i>cookies</i> con distintas variables y distintos valores, para almacenar
+información relevante para cada usuario (se tienen listas de cookies
+independientes para cada usuario).</p>
+      
+<p>El funcionamiento es: el servidor, con la cabeceras <code>Set-Cookie</code>, 
+  envía al cliente información de estado que éste almacenará. Entre la información 
+  se encuentra la descripción de los rangos de URLs para los que este estado es 
+  válido, de forma que para cualquier petición HTTP a alguna de esas URLs el cliente 
+  incluirá esa información de estado, utilizando la cabecera <code>Cookie</code>.</p>
+      
+<p>La sintaxis de la cabecera <code>Set-Cookie</code> es:</p>
+           
+      <pre class="codigo">Set-Cookie: CLAVE1=VALOR1;...;CLAVEN=VALORN [OPCIONES]</pre>
+           
+      <p>donde podremos agrupar en una cabecera varias cookies, o definir una
+      cookie por cabecera. Las OPCIONES son una lista opcional, compartida por
+      todas las cookies de la cabecera, con cualquiera de estos atributos:</p>
+      <pre class="codigo">expires=FECHA;path=PATH;domain=DOMINIO;secure</pre>
+           
+      <ul>
+        <li>Las parejas de <i>CLAVE</i> y <i>VALOR</i> representan la
+          información almacenada en las cookies (cada pareja de valores define
+          una cookie)</li>
+        
+  <li>Los atributos <code>domain</code> y <code>path</code> definen las URL en 
+    las que el navegador mostrará las cookies. <code>domain</code> es por defecto 
+    el <i>hostname </i>del servidor. El navegador mostrará la cookie cuando acceda 
+    a una URL que se empareje correctamente con ambos atributos. Por ejemplo, 
+    un atributo <code>domain= &quot;eps.ua.es&quot;</code> hará que el navegador 
+    muestra la cookie cuando acceda a cualquier URL terminada en <code>&quot;eps.ua.es&quot;</code>. 
+    <code>path</code> funciona de forma similar, pero con la parte del path de 
+    la URL. Por ejemplo, el path <code>&quot;/foo&quot;</code> hará que el navegador 
+    muestre la cookie en todas las URLs que comiencen por <code>&quot;/foo&quot;</code>.</li>
+        
+  <li><code>expires</code> define la fecha a partir de la cual las cookies
+    caducan. 
+    La fecha se indica en formato <a href="#gmt">GMT</a>, separando los elementos 
+    de la fecha por guiones. Por ejemplo:</li>
+      </ul>
+      <blockquote>
+        <pre class="codigo">expires=Wed, 09-Nov-1999 23:12:40 GMT</pre>
+           
+      </blockquote>
+      <ul>
+        
+  <li><code>secure</code> hará que la cookie sólo se transmita si el canal de 
+    comunicación es seguro (tipo de conexión HTTPS).</li>
+        
+  <li>Se podrán definir varias cabeceras <code>Set-Cookie</code>, una por cada
+    cookie. E incluso dentro de una misma cabecera <code>Set-Cookie </code>se
+    podrán incluir varias cookies, todas ellas con los mismos atributos de <code>domain</code><code>,
+    path, expires...</code></li>
+      </ul>
+      <p>Por otra parte, cuando el cliente solicita una URL que empareja con el
+      dominio y path de algunas cookies, envía la cabecera:</p>
+      <pre class="codigo">Cookie: CLAVE1=VALOR1;CLAVE2=VALOR2;...;CLAVEN=VALORN</pre>
+           
+      <p>El número máximo de cookies que está garantizado que acepte
+      cualquier navegador es de 300, con un máximo de 20 por cada servidor o
+      dominio. El tamaño máximo de una cookie es de 4096 bytes.</p>
+           
+      
+<h4>1.1.7. Algunas definiciones</h4>
+           
+      
+<p><b><a name="rfc"></a>RFC</b>: los documentos RFC (<i>Request For Comment</i>) 
+  forman un conjunto de notas acerca de Internet. Tratan sobre diferentes aspectos 
+  de la comunicación entre computadores. Podemos encontrar información sobre todos 
+  los RFC en <code><a href="http://www.rfc-editor.org">http://www.rfc-editor.org</a></code>. 
+  Si conocemos el número de RFC, normalmente podemos encontrar el documento en 
+  <code>http://www.rfc-editor.org/rfc/rfcXXXX.txt </code>(sindo <i>XXXX</i> el 
+  número de RFC).</p>
+           
+      <p><b><a name="mime"></a>MIME</b>: MIME (<i>Multipurpose Internet Mail Extensions</i>) es un
+      estándar oficial de Internet que indica cómo se deben formatear los
+      mensajes para que puedan intercambiarse entre diferentes sistemas de
+      correo electrónico. Permite incluir cualquier tipo de dato (texto, audio,
+      video, imágenes, etc). Las RFC que definen los tipos MIME son la 2045,
+      2046, 2047, 2048 y 2049. Algunos tipos comunes son:</p>
+           
+      
+<ul>
+  <li><code>application/msword</code>: documento de Microsoft Word</li>
+  <li><code>application/pdf</code>: documento PDF</li>
+  <li><code>application/postscript</code>: fichero postscript</li>
+  <li><code>application/x-gzip</code>: fichero comprimido gzip</li>
+  <li><code>application/x-java-archive</code>: fichero JAR</li>
+  <li><code>audio/midi</code>: fichero de sonido MIDI</li>
+  <li><code>text/html</code>: documento HTML</li>
+  <li><code>text/plain</code>: fichero de texto plano</li>
+  <li><code>image/gif</code>: imagen GIF</li>
+  <li><code>image/jpeg</code>: imagen JPEG</li>
+  <li><code>image/png</code>: imagen PNG</li>
+  <li><code>video/mpeg</code>: película MPEG</li>
+</ul>
+           
+      <p><b><a name="gmt"></a>GMT</b>: el formato de fecha y hora GMT tiene la siguiente
+      estructura:</p>
+           
+      <pre class="codigo">Wdy, DD Mon YYYY HH:MM:SS GMT</pre>
+           
+      <p>donde:</p>
+           
+      <ul>
+        
+  <li><code>Wdy</code> es el identificador de 3 caracteres del día de la semana 
+    (<code>Sun</code>, <code>Sat</code>, etc)</li>
+  <li><code>DD</code> son los dos dígitos del día del mes (<code>01</code>, <code>23</code>, 
+    <code>12</code>, etc)</li>
+  <li><code>Mon</code> es el identificador de 3 caracteres del mes (<code>Feb</code>, 
+    <code>Mar</code>, etc)</li>
+  <li><code>YYYY</code>: son los 4 dígitos del año</li>
+        
+  <li><code>HH:MM:SS</code> indica la hora, minuto y segundo, en formato de 24 
+    horas (<code>01:02:33</code>, <code>21:15:58</code>, etc)</li>
+      </ul>
+      
+<p align="left">Esta representación está basada en las RFC 822, 1036 y 1123</p>
+      
+<p align="left">&nbsp;</p>
+<h2><b>1.2.HTML</b></h2>
+      <h4><b>1</b>.2.1. WWW y HTML</h4>
+<p>El servicio Web o <b>WWW</b> <i>(World Wide Web</i>)<i> </i>es una forma de 
+  representar la información en Internet basada en páginas. Una página WWW puede 
+  incluir tres tipos de información: texto, gráficos e hipertexto. Un <b>hipertexto</b> 
+  es texto resaltado que el usuario puede activar para cargar otra página WWW. 
+  La diferencia entre un documento de hipertexto y un documento normal consiste 
+  en que el hipertexto contiene, además de la información, una serie de enlaces 
+  o conexiones con otros&nbsp; documentos relacionados, de manera que el lector 
+  puede pasar de un tema a otro y volver al documento original en el momento en 
+  que le interese. De esta forma, se permite combinar texto y gráficos, y mediante 
+  hiperenlaces podremos cargar páginas de cualquier otro lugar de Internet. </p>
+<p><b>HTML</b> (<i>HyperText Markup Language</i>), es un lenguaje simple utilizado 
+  para crear documentos de hipertexto para WWW. No es un lenguaje de descripción 
+  de página: no permite definir de forma estricta la apariencia de una página, 
+  aunque a veces se utilice para ello, pero la presentación de la página es muy 
+  dependiente del navegador empleado. </p>
+<p>Por tanto, HTML se limita a describir la estructura y el contenido de un documento. 
+  Es un &quot;lenguaje de descripción de página&quot; independiente de la plataforma 
+  en que se utilice, y no es necesario utilizar un editor particular para crear 
+  un documento HTML (podemos trabajar con el editor de DOS o con el bloc de notas, 
+  por ejemplo)</p>
+<h4>1.2.2. Clientes, servidores y URLs</h4>
+<p>Para poder utilizar el servicio Web se necesitan dos partes. Por un lado, un 
+  lugar donde poner las páginas WWW que se requieran, a disposición del público 
+  en Internet. Es lo que se llama un <b>servidor</b> WWW. Por otro lado, el usuario 
+  que quiere acceder a dichas páginas tiene que utilizar un programa (<b>cliente</b> 
+  WWW) que lea las páginas WWW e interprete su significado. Ejemplos de estos 
+  programas son los navegadores Internet Explorer o Netscape.</p>
+<p>Interconectar documentos por todo el planeta implica tener algún método de 
+  identificar unívocamente un documento en la red. La dirección única de un documento 
+  en WWW se llama <b>URL</b> (<i>Uniform Resource Locator</i>) y se compone de 
+  los siguientes elementos:</p>
+<ul>
+  <li>El <b>protocolo</b> de intercambio de datos entre el cliente y el servidor. 
+    (<i>http</i>, <i>ftp</i>, etc) 
+  <li>La <b>dirección Internet del servidor</b> que difunde los documentos. Esta 
+    dirección, única en toda la red, es la dirección IP de la máquina (un código 
+    de 4 bytes, separando cada byte (en decimal) por puntos). Al ser estos números 
+    difíciles de memorizar, un servidor de nombres (DNS) resuelve generalmente 
+    la relación entre dirección numérica y nombre simbólico de la máquina y nombre 
+    del ámbito. Así, por ejemplo, <code>134.158.48.1</code> es la dirección de 
+    la máquina <code>sioux.in2p3.fr</code> en la que <code>sioux</code> representa 
+    el nombre de la máquina y <code>.in2p3.fr</code> el nombre del ámbito. 
+  <li>El <b>árbol de directorios</b> (camino) que conduce al documento, dentro 
+    del servidor. 
+  <li>El <b>nombre del documento</b>.</li>
+</ul>
+Menos frecuentemente esta dirección podrá completarse con otros elementos: 
+<ul>
+  <li>El puerto 
+  <li>Información de autentificación (login y password del usuario) 
+  <li>Parámetros adicionales.</li>
+</ul>
+La sintaxis generalmente utilizada para representar el URL de un documento es:
+<pre class="codigo">protocolo://nombre_servidor/arbol_directorios/documento</pre>
+<p>La sintaxis completa es:</p>
+<pre class="codigo">protocolo://usuario:password@nombre_servidor:puerto/
+arbol_directorios/documento?parametros</pre>
+Ejemplos de URL:
+<pre class="codigo">http://www.ua.es/index.htm
+http://www.unapagina.com?param1=valor1&amp;param2=valor2
+ftp://ftp.dccia.ua.es/pub/winzip.exe</pre>
+<h4>1.2.3. Componentes de un documento HTML</h4>
+<p>HTML define la estructura y contenido de los documentos insertando en el texto 
+  de los mismos una serie de <b>marcas</b> (<i>tags </i>o etiquetas), que delimitan 
+  elementos del documento como cabeceras, párrafos, etc y se usan para dar un 
+  tratamiento diferente al texto que se encuentre entre ellas. Son fragmentos 
+  de texto encerrados entre los signos <code>&quot;&lt;&quot;</code> y <code>&quot;&gt;&quot;</code> 
+  (teniendo por tanto el formato &quot;<code>&lt;marca&gt;</code>&quot;). </p>
+<p>Las marcas funcionan muchas veces por parejas, una para indicar el inicio de 
+  acción de la marca, y otra para indicar el final. La marca de inicio consiste 
+  en una letra o una palabra, y la marca de final es la misma letra o palabra 
+  precedida por <code>&quot;/&quot;</code>. Existen, no obstante, algunas marcas 
+  que no requieren su pareja de cierre, como <code>&lt;BR&gt;</code> (que fuerza 
+  un salto de línea). Es importante señalar que las marcas, en general pueden 
+  estar indistintamente en mayúsculas o en minúsculas.</p>
+<pre class="codigo">texto normal <b>&lt;marca&gt;</b> texto afectado por la marca <b>&lt;/marca&gt;</b> 
+resto del texto</pre>
+<p>Hay que indicar que, para las etiquetas que se abren y se cierran, tendremos 
+  que cerrar una etiqueta DESPUES de haber cerrado las que se han abierto después 
+  (es decir, se cierran en orden inverso al que se abren). Un texto está
+afectado por todas las marcas que se han abierto antes que él, sin haberse
+cerrado.
+<pre class="codigo">texto normal <b>&lt;marca1&gt;</b> texto afectado por la marca <b>
+&lt;marca2&gt;</b> texto de marca1 y marca2 <b>&lt;/marca2&gt;</b> 
+otra vez texto de marca1<b>&lt;/marca1&gt;</b> resto del texto</pre>
+<p>Algunas marcas pueden admitir <b>atributos</b>, pudiendo tener cada uno de 
+  estos atributos un valor. Este valor ira entre comillas (<code>&quot;</code>) 
+  si es alfanumérico: 
+<pre class="codigo">&lt;marca atributo1=numerico atributo2=&quot;alfanumerico&quot;&gt;</pre>
+<p>Ejemplos:</p>
+<pre class="codigo">&lt;pre width=50&gt;
+&lt;a href=&quot;/home/default.html&quot;&gt;</pre>
+<h4>1.2.4. Esquema básico de un documento HTML</h4>
+<p>Una página HTML tiene en general el formato: </p>
+<pre class="codigo">&lt;html&gt;
+&lt;head&gt;
+	... Lineas de cabecera
+&lt;/head&gt;
+&lt;body&gt;
+	... Cuerpo del documento
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p><b>CABECERA </b></p>
+<p>La cabecera de un documento HTML está limitada por las marcas <code>HEAD</code>, 
+  y en ella se introduce información acerca del documento, como por ejemplo: </p>
+<ul>
+  <li>El título del mismo:</li>
+</ul>
+<blockquote> 
+  <pre class="codigo">&lt;title&gt;El titulo del documento&lt;/title&gt;</pre>
+</blockquote>
+<ul>
+  <li>Cabeceras HTTP:</li>
+</ul>
+<blockquote> 
+  <pre class="codigo">&lt;META HTTP-EQUIV=&quot;Cabecera&quot; CONTENT=&quot;Valor&quot;&gt;</pre>
+</blockquote>
+<p><b>CUERPO</b></p>
+<p>El contenido del documento se indica en el cuerpo del mismo, delimitado por 
+  las marcas <code>BODY</code>. Veremos en los siguientes apartados algunos de 
+  los elementos más comunes utilizados en esta parte.</p>
+<p><b>COMENTARIOS</b></p>
+<p>Podemos colocar comentarios en el documento (comentarios que ignorará el navegador), 
+  con:</p>
+<pre class="codigo">&lt;!-- ... comentario ... --&gt;</pre>
+<h4>1.2.5. Encabezados</h4>
+<p>Podemos colocar títulos de mayor o menor tamaño en el documento, y dividirlos 
+  así en secciones. Los títulos o encabezados están contenidos dentro de etiquetas 
+  <code>H#</code>, siendo <code>#</code> un número del 1 al 6 que indica el tamaño 
+  de la fuente del encabezado (1 para el mayor tamaño, 6 para el menor): </p>
+<center>
+  <table border="1">
+    <tr> 
+      <td> <pre class="codigo">&lt;h1&gt;Encabezado de letra grande&lt;/h1&gt;
+&lt;h6&gt;Encabezado de letra pequeña&lt;/h6&gt;</pre> </td>
+    </tr>
+    <tr> 
+      <td> <h1>Encabezado de letra grande</h1>
+        <h6>Encabezado de letra pequeña</h6></td>
+    </tr>
+  </table>
+</center>
+<h4>1.2.6. Bloques</h4>
+<p>Para definir y separar bloques de texto se emplean una serie de marcas que 
+  definen párrafos, texto preformateado, etc. Algunas marcas de bloques son: 
+<ul>
+  <li><b><code>&lt;P&gt;...&lt;/P&gt;</code> </b>se utiliza para delimitar párrafos.</li>
+</ul>
+<ul>
+  <li><b><code>&lt;PRE&gt;...&lt;/PRE&gt;</code> </b>se utiliza para visualizar 
+    el texto que contiene respetando el formato en que fue escrito.</li>
+</ul>
+<ul>
+  <li><b><code>&lt;BLOCKQUOTE&gt;...&lt;/BLOCKQUOTE&gt;</code> </b>se utiliza 
+    para tabular a la derecha (cuando se abre la marca) y a la izquierda (cuando 
+    se cierra).</li>
+</ul>
+<ul>
+  <li><b><code>&lt;BR&gt;</code> </b>indica un salto de línea.</li>
+</ul>
+<ul>
+  <li><b><code>&lt;HR&gt;</code> </b>se emplea para representar una línea horizontal.</li>
+</ul>
+<center>
+  <table border="1">
+    <tr> 
+      <td> <pre class="codigo">&lt;p&gt;Esto esta dentro de un parrafo&lt;/p&gt;
+Un texto
+&lt;br&gt;
+Otro texto
+&lt;hr&gt;</pre> </td>
+    </tr>
+    <tr> 
+      <td> <p>Esto esta dentro de un parrafo</p>
+        Un texto <br>
+        Otro texto 
+        <hr> </td>
+    </tr>
+  </table>
+</center>
+<h4>1.2.7. Apariencia</h4>
+<p>Algunas marcas HTML permiten controlar la apariencia del texto. Por ejemplo: 
+</p>
+<ul>
+  <li><b><code>&lt;FONT&gt;...&lt;/FONT&gt;</code> </b>establece las características 
+    de la fuente para el texto que encierra.</li>
+</ul>
+<ul>
+  <li><b><code>&lt;B&gt;...&lt;/B&gt;</code>  o </b><b><code>&lt;STRONG&gt;...&lt;/STRONG&gt;
+    </code></b>pone en negrita el texto que 
+    encierra.</li>
+</ul>
+<ul>
+  <li><b><code>&lt;I&gt;...&lt;/I&gt;</code>  o </b><b><code>&lt;EM&gt;...&lt;/EM&gt;
+    </code></b>pone en cursiva el texto que 
+    encierra.</li>
+</ul>
+<ul>
+  <li><b><code>&lt;U&gt;...&lt;/U&gt;</code> </b>pone en subrayado el texto que 
+    encierra.</li>
+</ul>
+<center>
+  <table border="1">
+    <tr> 
+      <td> <pre class="codigo">&lt;font size=&quot;5&quot; color=&quot;blue&quot;&gt;Fuente azul tamaño 5&lt;/font&gt;
+&lt;br&gt;
+&lt;b&gt;Letra negrita&lt;/b&gt;
+&lt;br&gt;
+&lt;b&gt;&lt;i&gt;&lt;u&gt;Letra negrita, cursiva y subrayado&lt;/u&gt;&lt;/i&gt;&lt;/b&gt;</pre> 
+      </td>
+    </tr>
+    <tr> 
+      <td> <font size="5" color="blue">Fuente azul tamaño 5</font> <br> <b>Letra 
+        negrita</b> <br> <b><i><u>Letra negrita, cursiva y subrayado</u></i></b> 
+      </td>
+    </tr>
+  </table>
+</center>
+<h4>1.2.8. Listas</h4>
+<p>Para definir las listas, utilizamos dos etiquetas: </p>
+<ul>
+  <li><b><code>&lt;UL&gt;...&lt;/UL&gt;</code> </b>para definir listas no ordenadas</li>
+</ul>
+<ul>
+  <li><b><code>&lt;OL&gt;...&lt;/OL&gt;</code> </b>para definir listas ordenadas</li>
+</ul>
+<p>Dentro de estas dos marcas, se utilizan marcas: </p>
+<ul>
+  <li><b><code>&lt;LI&gt;...&lt;/LI&gt;</code> </b>para definir los elementos 
+    de la lista</li>
+</ul>
+<center>
+  <table border="1" width="442">
+    <tr> 
+      <td width="432"> <pre class="codigo">&lt;ul&gt;
+	&lt;li&gt;Elemento 1 de lista&lt;/li&gt;
+	&lt;li&gt;Elemento 2 de lista&lt;/li&gt;
+&lt;ul&gt;
+&lt;ol&gt;
+	&lt;li&gt;Elemento 1 de lista&lt;/li&gt;
+	&lt;li&gt;Elemento 2 de lista&lt;/li&gt;
+&lt;/ol&gt;</pre> 
+      </td>
+    </tr>
+    <tr> 
+      <td width="432"> <ul>
+          <li>Elemento 1 de lista</li>
+          <li>Elemento 2 de lista</li>
+        </ul>
+        <ol>
+          <li>Elemento 1 de lista</li>
+          <li>Elemento 2 de lista</li>
+        </ol></td>
+    </tr>
+  </table>
+</center>
+<h4>1.2.9. Imágenes</h4>
+<p><b><code>&lt;IMG&gt;</code> </b>es la marca que permite incluir una imagen. 
+  Esta marca irá siempre completada por el atributo &quot;<code>src</code>&quot; 
+  que permite dar la dirección del fichero gráfico que contiene la imagen: 
+<pre class="codigo">&lt;img src=&quot;/imagenes/unaimagen.gif&quot;&gt;</pre>
+<p>El valor del atributo <code>src</code> permite especificar la ruta de la imagen 
+  como URL también. Para navegadores que no puedan cargar la imagen, podemos poner 
+  en el atributo <code>alt</code> el texto alternativo que se verá si no se ve 
+  la imagen:</p>
+<pre class="codigo">&lt;img src=&quot;/imagenes/unaimagen.gif&quot; alt=&quot;Imagen de ejemplo&quot;&gt;</pre>
+<p>Podemos alinear la imagen con el texto mediante el atributo <code>align</code>, 
+  indicando dónde va la imagen con respecto al texto de su línea:</p>
+<pre class="codigo">&lt;img align=&quot;right&quot; src=&quot;/imagenes/unaimagen.gif&quot;&gt;</pre>
+<h4>1.2.10. Hiperenlaces</h4>
+<p>El lector explora un documento HTML haciendo clic sobre las zonas activas para 
+  así acceder a nuevos documentos. En HTML definimos una zona activa (que puede 
+  ser un texto o una imagen) que se asocia a la URL a la que se quiere acceder, 
+  y haciendo clic sobre esa zona se accederá a dicha URL. Para definir el hiperenlace 
+  se utiliza la marca <b><code>&lt;A&gt;</code> </b>con la sintaxis: </p>
+<pre class="codigo">&lt;a href=&quot;URL&quot;&gt;Texto o imagen a mostrar&lt;/a&gt;</pre>
+<p>Podremos hacer enlaces: </p>
+<ul>
+  <li>A <b>otras páginas</b>:</li>
+</ul>
+<blockquote> 
+  <pre class="codigo">&lt;a href=&quot;http://www.ua.es&quot;&gt;Universidad de Alicante&lt;/a&gt;</pre>
+  <blockquote> <a href="http://www.ua.es">Universidad de Alicante</a> </blockquote>
+  <pre class="codigo">&lt;a href=&quot;http://www.ua.es&quot;&gt;&lt;img src=&quot;dccia.gif&quot;&gt;&lt;/a&gt;</pre>
+  <p>El atributo <code>href</code> permite indicar la dirección a la que salta 
+    el enlace al pinchar sobre él. Notar que entre las marcas <code>&lt;A&gt;</code> 
+    y <code>&lt;/A&gt; </code>podemos colocar tanto texto como una imagen.</p>
+</blockquote>
+<ul>
+  <li>A otras <b>zonas de la misma página </b>(o a zonas concretas de una página). 
+    Para ello se utilizan las &quot;anclas&quot;.&nbsp; 
+    <ul>
+      <li>En la zona a la que se quiera acceder con el enlace se le asigna una 
+        marca <code>&lt;A&gt;</code> con un atributo <i>name</i>, con el nombre 
+        con el que queramos identificar la zona:</li>
+    </ul>
+  </li>
+</ul>
+<blockquote> 
+  <blockquote> 
+    <pre class="codigo">&lt;a name=&quot;ancla1&quot;&gt;...&lt;/a&gt;</pre>
+  </blockquote>
+  <ul type="circle">
+    <li>Luego en la zona donde coloquemos el enlace, en el <code>href </code>hacemos 
+      referencia a la marca anterior, precedida por <code>'#'</code>:</li>
+  </ul>
+  <blockquote> 
+    <pre class="codigo">&lt;a href=&quot;#ancla1&quot;&gt;Enlace hacia ancla1&lt;/a&gt;</pre>
+    <pre class="codigo">&lt;a href=&quot;pagina.htlm#ancla1&quot;&gt;
+Enlace hacia ancla1 de otra pagina
+&lt;/a&gt;</pre>
+    <p>Al hacer click sobre el enlace &quot;Enlace hacia ancla1&quot; iremos a 
+      la zona de código etiquetada con <code>&lt;a name=&quot;ancla1&quot;&gt;</code> 
+      de nuestro documento (en el primer caso) o de la página <code>pagina.html</code> 
+      (en el segundo caso).</p>
+  </blockquote>
+</blockquote>
+<h4>1.2.11. Tablas</h4>
+<p>Para crear tablas, encerramos la tabla entre las marcas <b><code>&lt;TABLE&gt;...&lt;/TABLE&gt;</code></b>. 
+  Podemos pasarle como atributo <code>border</code> el grosor del borde de la 
+  tabla, y en el atributo <code>width</code> la anchura (en porcentaje o en píxeles) 
+</p>
+<pre class="codigo">&lt;table border=&quot;0&quot; width=&quot;50%&quot;&gt;
+...
+&lt;/table&gt;</pre>
+<p>Dentro de la tabla, utilizamos las siguientes marcas:</p>
+<ul>
+  <li><b><code>&lt;TH&gt;...&lt;/TH&gt;</code> </b>para definir las cabeceras 
+    de la tabla</li>
+</ul>
+<ul>
+  <li><b><code>&lt;TR&gt;...&lt;/TR&gt;</code> </b>para definir las filas de la 
+    tabla</li>
+</ul>
+<ul>
+  <li><b><code>&lt;TD&gt;...&lt;/TD&gt;</code> </b>para definir cada una de las 
+    columnas dentro de cada fila&nbsp;</li>
+</ul>
+<p>Por ejemplo:</p>
+<pre class="codigo">&lt;table border=&quot;2&quot;&gt;
+&lt;th&gt;Cabecera 1&lt;/th&gt;&lt;th&gt;Cabecera 2&lt;/th&gt;
+&lt;tr&gt;
+	&lt;td&gt;Columna 1.1&lt;/td&gt;
+	&lt;td&gt;Columna 1.2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+	&lt;td&gt;Columna 2.1&lt;/td&gt;
+	&lt;td&gt;Columna 2.2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</pre>
+<center>
+  <table border="2">
+    <th>Cabecera 1</th>
+    <th>Cabecera 2</th>
+    <tr> 
+      <td>Columna 1.1</td>
+      <td>Columna 1.2</td>
+    </tr>
+    <tr> 
+      <td>Columna 2.1</td>
+      <td>Columna 2.2</td>
+    </tr>
+  </table>
+</center>
+<p>Las marcas <code>td</code> pueden tener atributos, como<code> width</code> 
+  para indicar sus características (anchura, color, fuente, etc). </p>
+<h4>1.2.12. Formularios</h4>
+<p>Un formulario es una plantilla para representar un conjunto de datos y generar 
+  en la pantalla cuadros de diálogo. Se podrán tener zonas en las que se introducirá 
+  un texto, casillas de verificación, listas de selección, etc. El usuario rellenará 
+  zonas en el formulario que se identifican con un nombre simbólico. Cuando el 
+  formulario se envía al programa que lo va ha tratar, éste recibe el identificador 
+  de cada zona y el valor introducido. </p>
+<p>La marca <b><code>&lt;FORM&gt; ... &lt;/FORM&gt;</code></b> define un formulario 
+  y dentro de ella se situarán todas las marcas que generan los diversos elementos 
+  que componen el formulario. Esta marca debe ir acompañada por 
+  dos atributos: </p>
+<ul>
+  <li><code>METHOD</code>: define el modo de transferencia de los datos del formulario 
+    (<code>GET</code> o <code>POST</code>). Por defecto es GET</li>
+  <li><code>ACTION</code>: URL del programa que tratará los datos del formulario 
+    cuando se envíe</li>
+</ul>
+<pre class="codigo">&lt;form method=&quot;post&quot; action=&quot;mipagina.jsp&quot;&gt;
+...
+&lt;/form&gt;</pre>
+<p>Los elementos que se coloquen dentro del formulario tienen los siguientes <b>atributos 
+  comunes</b>: </p>
+<ul>
+  <li><code>NAME</code>: nombre del elemento.&nbsp;</li>
+  <li><code>VALUE</code>: valor del elemento. Para un campo de texto es el texto 
+    que aparece en el cuadro, para un botón es la etiqueta del botón, y para un 
+    <i>checkbox</i> es el valor asociado a la casilla cuando está pulsada.</li>
+</ul>
+<p>Podemos tener varios elementos iguales con el mismo nombre, considerando así 
+  un mismo elemento con múltiples valores.&nbsp; </p>
+<p>Entre los <b>elementos</b> que podemos colocar dentro de un formulario, destacamos: 
+</p>
+<ul>
+  <li><b>Campos de entrada</b>: con marcas <b><code>&lt;INPUT&gt;</code></b> indicamos 
+    distintas formas de introducir datos por el usuario. Distinguimos cada una 
+    de estas formas mediante el atributo <code>type</code> de dicha marca. Tenemos, 
+    por ejemplo: 
+    <ul>
+      <li><b>Campos de texto</b>: los campos de texto no tienen atributo <code>type</code>, 
+        o podemos poner <code>type=&quot;text&quot;</code>: 
+        <pre class="codigo">&lt;input name=&quot;texto1&quot; value=&quot;&quot;&gt;</pre>
+      </li>
+    </ul>
+  </li>
+</ul>
+<blockquote> 
+  <ul type="circle">
+    <li><b>Botones SUBMIT</b>: al pulsar este botón se enviará el formulario a 
+      la URL indicada en el <code>action</code> del mismo: 
+      <pre class="codigo">&lt;input type=&quot;submit&quot; name=&quot;botonS&quot; value=&quot;Pulsame&quot;&gt;</pre>
+    </li>
+  </ul>
+  <ul type="circle">
+    <li><b>Botones RESET</b>: al pulsar este botón se borrarán los datos de los 
+      campos del formulario:
+      <pre class="codigo">&lt;input type=&quot;reset&quot; name=&quot;botonR&quot; value=&quot;Borrar&quot;&gt;</pre>
+    </li>
+  </ul>
+</blockquote>
+<blockquote> 
+  <ul type="circle">
+    <li><b>Checkboxes y botones de radio</b>: casillas que se marcan y 
+      se desmarcan al pulsar sobre ellas:
+      <pre class="codigo">&lt;input type=&quot;checkbox&quot; name=&quot;casillas&quot; 
+ value=&quot;casilla1&quot; checked&gt;
+
+&lt;input type=&quot;checkbox&quot; name=&quot;casillas&quot; 
+ value=&quot;casilla2&quot;&gt;</pre>
+    </li>
+  </ul>
+  <blockquote> 
+    <p>La casilla que tiene un atributo <i>checked</i> aparece marcada. Para los 
+      botones de radio, el <code>type</code> es <code>radio</code>, y la diferencia 
+      con los <i>checkboxes</i> es que sólo puede haber una casilla marcada.</p>
+  </blockquote>
+  <ul type="circle">
+    <li><b>Campos ocultos</b>: campos donde guardamos una información que no queremos 
+      mostrar:
+      <pre class="codigo">&lt;input type=&quot;hidden&quot; name=&quot;oculto&quot; value=&quot;Datos&quot;&gt;</pre>
+    </li>
+  </ul>
+</blockquote>
+<ul>
+  <li><b>Listas</b>: con marcas <b><code>&lt;SELECT&gt;...&lt;/SELECT&gt;</code></b> 
+    indicamos listas de elementos. Cada uno de los elementos se pone dentro de 
+    la marca entre etiquetas <b><code>&lt;OPTION&gt;...&lt;/OPTION&gt;</code></b>. 
+    Si la marca <code>&lt;SELECT&gt;</code> tiene el atributo <code>multiple</code>, 
+    es una lista fija, y si no, es una lista desplegable. Para listas fijas, en 
+    su atributo <code>size</code> indicamos cuántos elementos están visibles (el 
+    resto se puede ver con barras de desplazamiento).</li>
+</ul>
+<blockquote> 
+  <pre class="codigo">&lt;select name=&quot;lista1&quot;&gt;
+	&lt;option&gt;Opcion 1&lt;/option&gt;
+	&lt;option&gt;Opcion 2&lt;/option&gt;
+&lt;/select&gt;
+&lt;select multiple name=&quot;lista2&quot; size=&quot;3&quot;&gt;
+	&lt;option&gt;Opcion 1&lt;/option&gt;
+	&lt;option&gt;Opcion 2&lt;/option&gt;
+&lt;/select&gt;	</pre>
+</blockquote>
+<ul>
+  <li><b>Areas de texto</b>: con marcas <b><code>&lt;TEXTAREA&gt;...&lt;/TEXTAREA&gt;</code></b> 
+    indicamos areas de texto de varias líneas. El atributo <code>rows</code> indica 
+    el número de filas visibles del área, y <code>cols</code> el número de columnas 
+    visibles (se verán las filas y columnas que se indiquen en estos atributos, 
+    aunque se pueden tener más, viéndolas todas con las barras de desplazamiento):</li>
+</ul>
+<blockquote> 
+  <pre class="codigo">&lt;textarea name=&quot;texto1&quot; rows=5 cols=40&gt;
+El texto del area
+&lt;/textarea&gt;</pre>
+</blockquote>
+<p>Un <b>ejemplo de formulario</b>:</p>
+<blockquote> 
+  <center>
+    <table border="1">
+      <tr> 
+        <td> <pre class="codigo">&lt;form action=&quot;unapagina.php&quot; method=&quot;post&quot;&gt;
+Nombre: &lt;input name=&quot;nombre&quot; value=&quot;Pepe&quot;&gt;
+&lt;br&gt;
+Validado: 
+&lt;input type=&quot;checkbox&quot; value=&quot;validado&quot; checked&gt;
+&lt;br&gt;
+Comentarios: 
+&lt;textarea name=&quot;comentarios&quot; rows=5 cols=50&gt;
+&lt;/textarea&gt;
+&lt;br&gt;
+&lt;input type=&quot;submit&quot; value=&quot;Enviar&quot;&gt;
+&lt;/form&gt;</pre> 
+        </td>
+      </tr>
+      <td> <form action="unapagina.php" method="post">
+          Nombre: 
+          <input name="nombre" value="Pepe">
+          <br>
+          Validado: 
+          <input name="checkbox" type="checkbox" value="validado" checked>
+          <br>
+          Comentarios: 
+          <textarea name="comentarios" rows=5 cols=50></textarea>
+          <br>
+          <input name="submit" type="submit" value="Enviar">
+        </form></td>
+    </table>
+  </center>
+</blockquote>
+<h4>1.2.13. Símbolos</h4>
+<p>Algunos símbolos (como por ejemplo <code>'&lt;'</code>, <code>'á'</code>, <code>'é'</code>, 
+  etc) no pueden representarse bien directamente en código HTML, y para representarlos 
+  se utilizan otros símbolos que los sustituyen: </p>
+<center>
+  <table border="1" width="41%">
+    <tr> 
+      <td width="54%" align="center">&lt;</td>
+      <td width="46%" align="center"><code>&amp;lt;</code></td>
+    </tr>
+    <tr> 
+      <td width="54%" align="center">&gt;</td>
+      <td width="46%" align="center"><code>&amp;gt;</code></td>
+    </tr>
+    <tr> 
+      <td width="54%" align="center">&amp;</td>
+      <td width="46%" align="center"><code>&amp;amp;</code></td>
+    </tr>
+    <tr> 
+      <td width="54%" align="center">(espacio en blanco)</td>
+      <td width="46%" align="center"><code>&amp;nbsp;</code></td>
+    </tr>
+    <tr> 
+      <td width="54%" align="center">&quot;</td>
+      <td width="46%" align="center"><code>&amp;quot;</code></td>
+    </tr>
+    <tr> 
+      <td width="54%" align="center">ñ</td>
+      <td width="46%" align="center"><code>&amp;ntilde;</code></td>
+    </tr>
+    <tr> 
+      <td width="54%" align="center">á</td>
+      <td width="46%" align="center"><code>&amp;aacute;</code></td>
+    </tr>
+    <tr> 
+      <td width="54%" align="center">é</td>
+      <td width="46%" align="center"><code>&amp;eacute;</code></td>
+    </tr>
+    <tr> 
+      <td width="54%" align="center">í</td>
+      <td width="46%" align="center"><code>&amp;iacute;</code></td>
+    </tr>
+    <tr> 
+      <td width="54%" align="center">ó</td>
+      <td width="46%" align="center"><code>&amp;oacute;</code></td>
+    </tr>
+    <tr> 
+      <td width="54%" align="center">ú</td>
+      <td width="46%" align="center"><code>&amp;uacute;</code></td>
+    </tr>
+    <tr> 
+      <td width="54%" align="center">Á</td>
+      <td width="46%" align="center"><code>&amp;Aacute;</code></td>
+    </tr>
+    <tr> 
+      <td width="54%" align="center">É</td>
+      <td width="46%" align="center"><code>&amp;Eacute;</code></td>
+    </tr>
+    <tr> 
+      <td width="54%" align="center">...</td>
+      <td width="46%" align="center"><code>...</code></td>
+    </tr>
+  </table>
+</center>
+<p>Por ejemplo:</p>
+<pre class="codigo">&amp;quot;Hola&amp;quot; Esto es un texto con may&amp;uacute;sculas 
+y &amp;lt; menor que y m&amp;Aacute;s may&amp;uacute;sculas</pre>
+<p>Resultaría:</p>
+<pre class="codigo">&quot;Hola&quot; Esto es un texto con mayúsculas 
+y &lt; menor que y mÁs mayúsculas</pre>
+      
+<p align="left">&nbsp;</p>
+           
+      <blockquote>
+        
+      </blockquote>
+<b></b><b> 
+<h2>1.3. Introducción a Tomcat</h2>
+</b> 
+<p>Tomcat es un servidor HTTP especializado en servlets y JSP. Realizado por el 
+  equipo de desarrollo del servidor Apache, es un servidor <i>open source </i>y 
+  de libre distribución. Se puede encontrar información detallada sobre Tomcat, 
+  Apache, y todo el llamado &quot;proyecto Jakarta&quot; en: </p>
+<blockquote>
+  <p align="center"><a href="http://jakarta.apache.org"><code> http://jakarta.apache.org</code></a> 
+  </p>
+</blockquote>
+<h4>1.3.1. Instalación de Tomcat</h4>
+<p>Para poder instalar Tomcat tenemos que tener instalada previamente la versión 
+  1.2 o posterior de JDK. Una vez hecho esto, deberemos tener una variable de 
+  entorno <code>JAVA_HOME</code> que apunte al directorio donde se ha instalado 
+  JDK (algunas versiones de Tomcat ya la establecen automáticamente). </p>
+<p>Una vez tengamos JDK instalado, ya podemos instalar Tomcat: </p>
+<ul>
+  <li>Para <b>Windows</b>, se tiene un programa autoinstalable, que al ejecutarlo 
+    pide dónde queremos instalar Tomcat.</li>
+  <li>Para <b>Unix</b>, si se dispone de una distribución binaria, se debe descomprimir 
+    en el directorio donde queramos que esté Tomcat.&nbsp;</li>
+</ul>
+<p>Tomcat necesita además otra variable de entorno, llamada <code>CATALINA_HOME</code>, 
+  que apunte al directorio donde está instalado Tomcat. Si no se autoestablece 
+  deberemos asignarla nosotros. </p>
+<h4>1.3.2. Ejecución de Tomcat</h4>
+<p>Una vez tenemos instalado Tomcat, dentro del subdirectorio <code>bin</code> 
+  tenemos, entre otros, dos ejecutables (ficheros <code>.bat</code> para <i>Windows</i> 
+  y <code>.sh </code>para <i>Unix</i>): </p>
+<ul>
+  <li><b><code>startup</code></b>: al ejecutar este comando se <b> arranca el 
+    servidor</b>.&nbsp;</li>
+</ul>
+<ul>
+  <li><b><code>shutdown</code></b>: al ejecutar este comando se <b> detiene el 
+    servidor</b>.</li>
+</ul>
+      <p>Si al ejecutar estos programas desde MS-DOS nos aparece un error del tipo &quot;<i>Sin 
+  espacio en entorno</i>&quot;, vamos a la opción de <i>Propiedades </i>dentro 
+  de esa ventana de MS-DOS, y en la pestaña <i>Memoria </i>colocamos un valor 
+  para <i>Entorno inicial </i>de 4096. Luego cerramos las ventanas de MS-DOS que 
+  tengamos y volvemos a abrir una, que ya tendrá dicha configuración. </p>
+<p>Dependiendo de la versión de Tomcat (normalmente, a partir de la versión
+4), en Windows se crea una carpeta en el menú de Programas en el botón de
+Inicio. Ahí tendremos accesos directos para lanzar y detener el servidor.</p>
+<p>Una vez tengamos el servidor arrancado podemos probarlo con la dirección raíz:</p>
+<pre class="codigo">http://localhost:8080/</pre>
+<p>Que debería mostrar una página como:</p>
+<div align="center"> <img border="0" src="imagenes/tomcatini.jpg" width="380" height="255"> 
+</div>
+<p class="caption">Figura 1. P&aacute;gina de inicio de Tomcat</p>
+<p>NOTA: las pruebas que hagamos, generalmente las haremos sobre nuestra propia 
+  máquina, con lo que las direcciones que tecleemos tendrán la forma: </p>
+<pre class="codigo">http://localhost:8080/...</pre>
+<p>donde luego la dirección <code>localhost</code> y el puerto <code>8080</code> 
+  se sustituyen en la realidad por la dirección donde coloquemos el servidor y 
+  el puerto por el que establezcamos que atienda peticiones.</p>
+<p>Con algunos tipos de cambios que hagamos en las aplicaciones web que tengamos 
+  en Tomcat habrá que detener el servidor y volverlo a lanzar, para que Tomcat 
+  recoja dichas actualizaciones. Más adelante también se explicará alguna
+forma de instalar las aplicaciones y realizar cambios sin necesidad de detener
+por completo el servidor. </p>
+<h4>1.3.3. Algunos directorios relevantes</h4>
+      <p>Dentro de Tomcat, nos pueden interesar especialmente algunos de los
+      siguientes directorios:</p>
+      <ul>
+        <li><b>bin</b>: ejecutables para lanzar y detener el servidor, entre
+          otros</li>
+        <li><b>common</b>: aquí colocaremos las clases y ficheros JAR que sean
+          comunes a cualquier aplicación Web que ejecutemos en Tomcat. En la
+          subcarpeta <i>common/lib</i> se tienen ficheros JAR para poder
+          compilar servlets y páginas JSP.</li>
+        <li><b>conf</b>: carpeta con ficheros de configuración, tanto del
+          servidor (<i>server.xml</i>), como de usuarios autorizados a acceder a
+          cierto tipo de aplicaciones Web (<i>tomcat-users.xml</i>), entre
+          otros.</li>
+        <li><b>work</b>: carpeta donde se crean copias de cache para las
+          aplicaciones y páginas que vayamos visitando. Si en alguna ocasión
+          tenemos algún problema de recarga de páginas, puede que sea porque
+          la caché que hay almacenada sea más reciente que los ficheros de la
+          aplicación. En este caso deberemos eliminar el rastro de caché que
+          pueda haber en alguna de las subcarpetas de este directorio</li>
+        <li><b>webapps</b>: aquí colocaremos cada una de las aplicaciones Web
+          que definamos, cada una en su carpeta. Se verá más adelante la
+          configuración que debe tener una carpeta de aplicación Web. Sin
+          embargo, si queremos poner páginas sueltas que no formen una
+          aplicación, podemos colocarlas en <b>webapps/ROOT</b>.</li>
+      </ul>
+</body>
+        </html>

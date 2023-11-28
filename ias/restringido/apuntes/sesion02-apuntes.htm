@@ -1,0 +1,1089 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+                                                            
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+                                                            
+  <meta name="Author" content="Nacho">
+                                                            
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+                                                        
+  <link rel="stylesheet" href="../apuntes.css" type="text/css">
+  <title>Tema 1: Introducci&oacute;n a las Aplicaciones Web</title>
+</head>
+  <body>
+<h2>1.4. Aplicaciones Web</h2>
+<p>Una aplicaci&oacute;n web es una aplicaci&oacute;n a la que accedemos mediante 
+  protocolo HTTP utilizando un navegador web. Hemos visto el protocolo HTTP, pero 
+  no cómo utilizarlo para implementar una aplicación. </p>
+<strong>Aplicaciones en el lado del servidor</strong>
+<p>En el lado del servidor, tenemos que conseguir que nuestro servidor HTTP sea 
+  capaz de ejecutar programas de aplicación que recojan los parámetros de peticiones 
+  del cliente, los procesen y devuelvan al servidor un documento que éste pasará 
+  a su vez al cliente.</p>
+<p>Así, para el cliente el servidor no habrá hecho nada distinto a lo estipulado 
+  en el protocolo HTTP, pero el servidor podrá valerse de herramientas externas 
+  para procesar y servir la petición solicitada, pudiendo así no limitarse a servir 
+  páginas estáticas, sino utilizar otras aplicaciones (servlets, JSP, PHP, etc) 
+  para servir documentos con contenido dinámico.</p>
+<p>Los programas de aplicación son típicamente programas que realizan consultas 
+  a bases de datos, procesan la información resultante y devuelven la salida al 
+  servidor, entre otras tareas.</p>
+<p>Vamos a centrarnos en las aplicaciones web J2EE, en las que los componentes 
+  din&aacute;micos que recibir&aacute;n las peticiones HTTP en el servidor ser&aacute;n 
+  los servlets y JSPs. Estos componentes podr&aacute;n analizar esta petici&oacute;n 
+  y utilizar otros componentes Java para realizar las acciones necesarias (beans, 
+  EJBs, etc).</p>
+<strong>Aplicaciones en el lado del cliente</strong> 
+<p>Se tienen muchas tecnologías relacionadas con extensiones del lado del cliente 
+  (entendiendo cliente como un navegador que interpreta código HTML). El código 
+  HTML es un código estático que sólo permite formatear la apariencia de una página 
+  y definir enlaces a otras páginas o URLs. Esto no es suficiente si queremos 
+  que el navegador realice funciones más complicadas: validar entradas de formularios, 
+  mostrar la evolución del precio de unas acciones, etc.</p>
+<p>Para ampliar las funcionalidades del navegador (respetando el protocolo HTTP), 
+  se utilizan tecnologías como JavaScript, Applets, Flash, etc. Estas se basan 
+  en hacer que el navegador ejecute código que le pasa el servidor, bien embebido 
+  en documentos HTML (como es el caso de JavaScript), o bien mediante ficheros 
+  compilados multiplataforma (como es el caso de los Applets Java o los ficheros 
+  Flash).<b> </b></p>
+<h2>1.5. Aplicaciones web J2EE</h2>
+<p>J2EE es una especificaci&oacute;n que abarca un conjunto de tecnolog&iacute;as 
+  basadas en lenguaje Java que podremos utilizar para implementar aplicaciones 
+  web. Entre estas tecnolog&iacute;as destacamos:</p>
+<ul>
+  <li><strong>Servlets</strong>: Componentes Java que encapsulan el mecanismo 
+    petici&oacute;n/respuesta del servidor (normalmente HTTP). Se trata de una 
+    clase escrita en Java cuyos m&eacute;todos se invocar&aacute;n cuando se realice 
+    una determinada petici&oacute;n HTTP al servidor, y deber&aacute;n componer 
+    la respuesta que ser&aacute; enviada al cliente. Los servlets tendr&aacute;n 
+    la siguiente forma:</li>
+</ul>
+<pre class="codigo">import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+
+public class ClaseServletHTML <strong>extends HttpServlet</strong> {
+<br>  public void <strong>doGet</strong>(HttpServletRequest request, 
+                    HttpServletResponse response) 
+                    throws ServletException, IOException {
+<br>    response.setContentType(&quot;text/html&quot;);
+<br>    PrintWriter out = response.getWriter();
+    out.println (&quot;&lt;!DOCTYPE HTML PUBLIC \&quot;&quot;+
+                 &quot;-//W3C//DTD HTML 4.0 &quot; + 
+                 &quot;Transitional//EN\&quot;&gt;&quot;);
+<br>    out.println (&quot;&lt;HTML&gt;&quot;);
+    out.println (&quot;&lt;BODY&gt;&quot;);
+    out.println (&quot;&lt;h1&gt;Titulo&lt;/h1&gt;&quot;);
+    out.println (&quot;&lt;p&gt;Hola &quot; + 
+                 request.getParameter(&quot;nombre&quot;) +
+				 &quot;&lt;/p&gt;&quot;);
+    out.println (&quot;&lt;/BODY&gt;&quot;);
+    out.println (&quot;&lt;/HTML&gt;&quot;);
+  }
+}</pre>
+<ul>
+  <li><strong>JSPs</strong>: Los JSPs (Java Server Pages) son equivalentes a los 
+    servlets, pero se escriben de forma distinta. En lugar de ser una clase Java 
+    que genera c&oacute;digo HTML, son un documento HTML que tiene incrustado 
+    c&oacute;digo Java. Un JSP equivalente al servlet anterior ser&iacute;a el 
+    siguiente:</li>
+</ul>
+<pre class="codigo">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0 Transitional//EN&quot;&gt;<br>&lt;HTML&gt;<br>&lt;BODY&gt;<br>&lt;h1&gt;Titulo&lt;/h1&gt;<br>&lt;p&gt;Hola <strong>&lt;% out.print(request.getParameter(&quot;nombre&quot;)); %&gt;</strong>&lt;/p&gt;<br>&lt;/BODY&gt;<br>&lt;/HTML&gt;</pre>
+<blockquote> 
+  <p>En este caso cuando el cliente solicite el JSP el servidor ejecutar&aacute; 
+    el c&oacute;digo Java que contiene y devolver&aacute; al cliente el documento 
+    generado. </p>
+  <p>Podemos hacer las mismas cosas con servlets y JSPs, pero cada una de estas 
+    dos tecnolog&iacute;as ser&aacute; m&aacute;s adecuada para una determinada 
+    tarea. Si bien los servlets son convenientes en los casos que haya que hacer 
+    mucho procesamiento de informaci&oacute;n (mucho c&oacute;digo Java), los 
+    JSPs ser&aacute;n preferibles cuando predomina la parte de presentaci&oacute;n. 
+    Ambas tecnolog&iacute;as pueden ser combinadas de forma que el servlet realice 
+    la parte de procesamiento de datos, y el JSP se encargue de presentar los 
+    resultados producidos. </p>
+</blockquote>
+<ul>
+  <li><strong>EJBs</strong>: Los EJBs (Enterprise Java Beans) son componentes 
+    que implementan la l&oacute;gica de negocio en el servidor. De esta forma 
+    se separa la l&oacute;gica de negocio (EJBs) de la de presentaci&oacute;n 
+    (Servlets y JSPs). Cuando se realiza un petici&oacute;n al servidor, un servlet 
+    interceptar&aacute; esta petici&oacute;n, e invocar&aacute; el EJB adecuado 
+    para realizar la acci&oacute;n requerida por el cliente. Una vez el EJB haya 
+    finalizado, se podr&aacute; utilizar un JSP para presentar los resultados 
+    producidos al cliente.<br>
+  </li>
+  <li><strong>JDBC</strong>: Se trata de una API est&aacute;ndar para acceder 
+    a bases de datos desde Java.<br>
+  </li>
+  <li><strong>RMI</strong>: La API RMI nos permitir&aacute; invocar m&eacute;todos 
+    en objetos remotos, que pueden estar distribuidos por la red.<br>
+  </li>
+  <li><strong>JNDI</strong>: Se trata de un directorio de nombres dentro del cual 
+    podremos localizar distintos componentes del servidor, como por ejemplo fuentes 
+    de datos JDBC, objetos remotos, etc.</li>
+</ul>
+<p>Las aplicaciones J2EE se arquitecturan en las siguientes capas:</p>
+<div align="center"><img src="imagenes/introduccion/capas.gif" width="388" height="272" align="middle"> 
+</div>
+<p class="caption">Figura 1. Capas de J2EE</p>
+<p>Los servidores de aplicaciones J2EE son servidores que implementan la especificaci&oacute;n 
+  de J2EE dando soporte a este tipo de aplicaciones. De esta forma, si realizamos 
+  una aplicaci&oacute;n seg&uacute;n el est&aacute;ndar de J2EE, podremos desplegarla 
+  en cualquier servidor de aplicaciones J2EE para de esta forma ponerla en funcionamiento. 
+</p>
+<p>El despliegue de una aplicaci&oacute;n consiste en la asignaci&oacute;n de 
+  elementos f&iacute;sicos a los componentes l&oacute;gicos de nuestra aplicaci&oacute;n, 
+  es decir, a la instalaci&oacute;n de la aplicaci&oacute;n en el directorio de 
+  aplicaciones del servidor de aplicaciones, de forma que este servidor empiece 
+  a servirla a los clientes que se conecten.</p>
+<p>Podemos encontrar un gran n&uacute;mero de servidores de aplicaciones J2EE, 
+  en los que podremos desplegar las aplicaciones que realicemos, siempre que cumplan 
+  el est&aacute;ndar J2EE. Entre ellos destacamos:</p>
+<ul>
+  <li>Bea Weblogic</li>
+  <li>IBM Websphere</li>
+  <li>Oracle iAS</li>
+</ul>
+<p>Vamos a centrarnos en el servidor de aplicaciones Tomcat, del que hemos de 
+  destacar que <strong>NO</strong> es un servidor de aplicaciones J2EE. Esto es 
+  as&iacute; porque no cumple toda la especificaci&oacute;n de J2EE, s&oacute;lo 
+  una parte. Por esta raz&oacute;n se habla de Tomcat como contenedor de Servlets 
+  y JSPs, ya que soporta aplicaciones web con estos componentes, pero no soporta 
+  otros componentes como los EJBs. Las aplicaciones de Tomcat siguen el est&aacute;ndar 
+  de J2EE, pero no lo implementan al completo, por lo que nos centraremos en el 
+  estudio de las caracter&iacute;sticas que podemos utilizar en este servidor.</p>
+<h3>1.5.1. Estructura de directorios de la aplicación web</h3> 
+<p> Una aplicación web J2EE que utilice servlets o páginas JSP debe tener una 
+  estructura de ficheros y directorios determinada: </p>
+           
+      
+<ul>
+  <li>En el directorio raíz de la aplicación se colocan las páginas HTML o JSP 
+    (podemos dividirlas también en directorios si queremos)</li>
+  <li>Colgando del directorio inicial de la aplicación, se tiene un directorio 
+    <code><strong>WEB-INF</strong></code>, que contiene la información Web relevante 
+    para la aplicación. Esta información se divide en: 
+    <ul>
+      <li>Fichero <b>descriptor de despliegue</b> de la aplicación: es el fichero 
+        descriptor de la aplicación web. Es un fichero XML (llamado <code>web.xml</code>) 
+        que contiene información genérica sobre la aplicación. Lo veremos con 
+        más detalle más adelante</li>
+      <li>Subdirectorio <code><strong>classes</strong></code>: en él irán todas 
+        las clases Java utilizadas en la aplicación (ficheros <code>.class</code>), 
+        es decir, clases externas a la API de Java que se utilicen en las páginas 
+        JSP, servlets, etc. Las clases deberán mantener la estructura de paquetes, 
+        es decir, si queremos colocar la clase <code>paquete1.subpaquete1.MiClase</code> 
+        dentro de <code>classes</code>, se quedará almacenada en el directorio 
+        <code>classes/paquete1/subpaquete1/MiClase</code>.</li>
+      <li>Subdirectorio <b><code>lib</code></b>: aquí colocaremos las clases Java 
+        que estén empaquetadas en ficheros JAR (es decir, colocaremos los ficheros 
+        JAR de nuestra aplicación Web, y las librerías ajenas a la API de JDK 
+        o de servlets y JSP que se necesiten)</li>
+      <li>El resto de elementos de la aplicación (imágenes, etc), podemos estructurarlos 
+        como nos convenga.</li>
+    </ul>
+  </li>
+  <li>El contenido del directorio <strong><code>WEB-INF</code></strong> servir&aacute; 
+    s&oacute;lo para la configuraci&oacute;n interna de la aplicaci&oacute;n en 
+    el servidor, y nunca podremos acceder a este directorio directamente desde 
+    la web. El resto de elementos de la aplicación (imágenes, etc), podemos estructurarlos 
+    como nos convenga, creando la estructura de directorios que queramos a partir 
+    del directorio ra&iacute;z de nuestra aplicaci&oacute;n. Todos estos directorios 
+    si que ser&aacute;n accesibles desde la web.</li>
+</ul>
+      
+<p>Notar que se separan los ficheros <code>.class</code> de los ficheros JAR, 
+  colocando los primeros en el directorio <code>classes</code> y los segundos 
+  en <code>lib</code>.</p>
+      
+<p>Esta estructura estará contenida dentro de algún directorio, que será el directorio 
+  correspondiente a la aplicación Web, y que podremos, si lo hacemos convenientemente, 
+  copiar en el servidor que nos convenga. Es decir, cualquier servidor Web J2EE 
+  soporta esta estructura en una aplicación Web, sólo tendremos que copiarla en 
+  el directorio adecuado de cada servidor.</p>
+<p>Cada aplicaci&oacute;n web J2EE es un contexto, una unidad que comprende un 
+  conjunto de recursos, clases Java y su configuraci&oacute;n. Cuando hablemos 
+  de contexto, nos estaremos refiriendo a la aplicaci&oacute;n web en conjunto. 
+  Por ello utilizaremos indistintamente los t&eacute;rminos aplicaci&oacute;n 
+  web y contexto.</p>
+<p>Ejemplo: <a href="ejemplos/introduccion/hola.zip">Aplicaci&oacute;n web sencilla</a></p>
+           
+      
+<strong>Rutas relativas al contexto</strong> 
+<p>Cada contexto (aplicaci&oacute;n web) instalado en el servidor tendr&aacute; 
+  asociado una ruta para acceder a &eacute;l desde la web. Por ejemplo, podemos 
+  asociar nuestro contexto la ruta <code>/aplic</code>, de forma que accediendo 
+  a la siguiente URL:</p>
+<pre class="codigo">http://localhost:8080/aplic/index.htm</pre>
+<p>Estaremos leyendo el recurso <code>/index.htm</code> de nuestro contexto. </p>
+<p>Supongamos que tenemos alguna imagen o recurso al que queremos acceder desde 
+  otro, en nuestra aplicaci&oacute;n Web. Por ejemplo, supongamos que colgando 
+  del directorio raíz de la aplicación tenemos la imagen <code>miImagen.jpg</code> 
+  dentro de la carpeta <code>imagenes </code>(es decir, <code>imagenes/miImagen.jpg</code>).</p>
+      <p>Podemos acceder a esta imagen de varias formas, aunque a veces podemos
+      tener problemas con alguna, porque luego el contenedor Web tome la ruta
+      relativa al lugar desde donde queremos cargar la imagen (o recurso, en
+      general). Este problema lo podemos tener accediendo a elementos desde
+      servlets, sobre todo.</p>
+      
+<p>Una solución para evitar esto es acceder a todos los elementos de la aplicación 
+  a partir de la ruta del contexto. Por ejemplo, si nuestro contexto tiene la 
+  ruta <code>/aplic</code> asociada, para acceder a la imagen desde una página 
+  HTML, pondríamos:</p>
+<pre class="codigo">&lt;img src=&quot;/aplic/imagenes/miImagen.jpg&quot;&gt;<b>      </b></pre>
+<b> 
+<h3>1.5.2. El descriptor de despliegue de la aplicación</h3>
+</b> 
+<p>Como hemos dicho anteriormente, el directorio <code>WEB-INF</code> de una aplicación 
+  web con servlets y/o páginas JSP, debe haber un fichero descriptor de despliegue 
+  (llamado <b><code>web.xml</code></b>) que contenga la información relativa a 
+  la aplicación.</p>
+      
+<p>Es un fichero XML, que comienza con una cabecera XML que indica la versión 
+  y la codificación de caracteres, y un <code>DOCTYPE</code> que indica el tipo 
+  de documento, y la especificación de servlets que se sigue. La etiqueta raíz 
+  del documento XML es <b><code>web-app</code></b>. Así, un ejemplo de fichero 
+  podría ser:</p>
+      
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;<br><br>&lt;!DOCTYPE web-app 
+  PUBLIC &quot;-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN&quot; <br>  &quot;http://java.sun.com/dtd/web-app_2_3.dtd&quot;&gt;<br><br>&lt;<strong>web-app</strong>&gt;<br>  &lt;<strong>display-name</strong>&gt;Mi Aplicacion Web&lt;/<strong>display-name</strong>&gt;<br>  &lt;<strong>description</strong>&gt;
+    Esta es una aplicacion web sencilla a modo de ejemplo<br>  &lt;/<strong>description</strong>&gt;<br>&lt;/<strong>web-app</strong>&gt;</pre>
+<p>En este caso se utiliza la especificación 2.3 de servlets o anteriores (para 
+  utilizar versiones posteriores habría que cambiar la especificación en la línea 
+  de <code>DOCTYPE</code>). Algunos servidores permiten omitir la cabecera <code>xml</code> 
+  y el <code>DOCTYPE</code>, pero sí es una buena costumbre el ponerlas. </p>
+           
+      
+<p>Dentro de la etiqueta raíz <code>&lt;web-app&gt;</code> podemos colocar otros 
+  elementos que ayuden a establecer la configuración de nuestra aplicación web. 
+  Dichos elementos deben seguir un orden: podemos omitir los que no se necesiten, 
+  pero los que pongamos deben tener una colocación adecuada en el documento. Veremos 
+  a continuación algunos de ellos, en el orden en que deben aparecer si aparecen 
+  (existen otras etiquetas que no veremos aquí, y que debéis consultar el orden 
+  en que ponerlas). En algunos elementos profundizaremos un poco más, por tratarse 
+  de elementos genéricos de una aplicación web (variables globales, etc). En otros 
+  (servlets, filtros, etc), simplemente se indicará qué elementos se tratan, pero 
+  su configuración se explicará en temas más específicos. </p>
+           
+      
+<h4>1.5.2.1. Orden en las etiquetas del fichero descriptor</h4>
+           
+      <blockquote>
+        
+  <h4>1.5.2.1.1. Información general de la aplicación</h4>
+           
+        <p>Primero tenemos etiquetas con información general: </p>
+           
+      <ul>
+        
+    <li><b><code>&lt;display-name&gt;</code></b>: nombre con que deben utilizar 
+      las aplicaciones gráficas para referenciar a la aplicación</li>
+        
+    <li><b><code>&lt;description&gt;</code></b>: texto descriptivo de la aplicación</li>
+      </ul>
+        <blockquote>
+          
+    <h4>1.5.2.1.1.1. Variables globales</h4>
+           
+          <p>Podemos tener varias etiquetas: </p>
+           
+          <ul>
+            
+      <li><b><code>&lt;context-param&gt;</code></b>: para declarar las variables 
+        globales a toda la aplicación web, y sus valores. Dentro tiene dos subetiquetas: 
+        <ul>
+                
+          <li><b><code>&lt;param-name&gt;</code></b>: nombre de la variable o 
+            parámetro</li>
+                
+          <li><b><code>&lt;param-value&gt;</code></b>: valor de la variable o 
+            parámetro</li>
+              </ul>
+            </li>
+          </ul>
+          <p>Un ejemplo:</p>
+          <pre class="codigo">&lt;context-param&gt;
+	&lt;param-name&gt;param1&lt;/param-name&gt;
+	&lt;param-value&gt;valor1&lt;/param-value&gt;
+&lt;/context-param&gt;</pre>
+           
+          
+    <p>Estos parámetros pueden leerse desde servlets con el método <b><code>getInitParameter</code></b> 
+      del objeto <code>ServletContext</code>.</p>
+        </blockquote>
+        
+  <h4>1.5.2.1.2. Filtros</h4>
+           
+        <p>Para el tratamiento de filtros se tienen las etiquetas: </p>
+           
+        <ul>
+          
+    <li><b><code>&lt;filter&gt;</code></b>: para asociar un nombre identificativo 
+      con la clase que implementa el filtro</li>
+          
+    <li><b><code>&lt;filter-mapping&gt;</code></b>: para asociar un nombre identificativo 
+      de filtro con una URL o patrón de URL</li>
+        </ul>
+        <p>Se pueden tener varias de estas etiquetas, cada una para un filtro.</p>
+        
+  <h4>1.5.2.1.3. Oyentes</h4>
+           
+        <p>Se tiene la etiqueta: </p>
+           
+        <ul>
+          
+    <li><b><code>&lt;listener&gt;</code></b>: para definir una clase oyente que 
+      responde ante eventos en sesiones y contextos (al iniciar, al cerrar, al 
+      modificar).</li>
+        </ul>
+      </blockquote>
+      <blockquote>
+        
+  <h4>1.5.2.1.4 Servlets</h4>
+           
+        Para definir los servlets en nuestro fichero de configuración, se
+        tienen las etiquetas:
+           
+      <ul>
+        
+    <li><b><code>&lt;servlet&gt;</code></b>: asocia un nombre identificativo con 
+      una clase Java que implementa un servlet</li>
+        
+    <li><b><code>&lt;servlet-mapping&gt;</code></b>: asocia un nombre identificativo 
+      de servlet con una URL o patrón de URL.</li>
+      </ul>
+        <p>Se pueden tener varias de estas etiquetas, cada una para un servlet.</p>
+        
+  <h4>1.5.2.1.5 Configuración de sesión</h4>
+           
+        <p>Se tiene la etiqueta: </p>
+           
+        <ul>
+          
+    <li><b><code>&lt;session-config&gt;</code></b>: para indicar parámetros de 
+      configuración de las sesiones.</li>
+        </ul>
+        <p>Por ejemplo, podemos indicar el tiempo (en minutos) que le damos a
+        una sesión de usuario antes de que el servidor la finalice:</p>
+        <pre class="codigo">&lt;session-config&gt;
+	&lt;session-timeout&gt;30&lt;/session-timeout&gt;
+&lt;/session-config&gt;</pre>
+           
+        
+  <h4>1.5.2.1.6 Páginas de inicio</h4>
+           
+        <p>Se tiene la etiqueta: </p>
+           
+        <ul>
+          
+    <li><b><code>&lt;welcome-file-list&gt;</code></b>: para indicar qué páginas 
+      debe buscar Tomcat como páginas de inicio en el caso de que en la URL se 
+      indique el directorio, pero no la página, como por ejemplo:</li>
+        </ul>
+        <blockquote>
+          <pre class="codigo">http://localhost:8080/unadireccion/dir/</pre>
+           
+          
+    <p>Para ello, esta etiqueta tiene una o varias subetiquetas <b><code>&lt;welcome-file&gt;</code> 
+      </b>para indicar cada una de las posibles páginas</p>
+        </blockquote>
+        
+  <p>Por ejemplo, podemos indicar que las páginas por defecto sean <code>index.html 
+    </code> o <code>index.jsp </code>con:</p>
+        <pre class="codigo">&lt;welcome-file-list&gt;
+	&lt;welcome-file&gt;index.html&lt;/welcome-file&gt;
+	&lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;
+&lt;/welcome-file-list&gt;</pre>
+           
+        <p>Las páginas se buscan en el orden en que se especifican en esta
+        etiqueta.</p>
+           
+        
+  <h4>1.5.2.1.7 Librerías de tags</h4>
+           
+        <p>Se tiene la etiqueta: </p>
+           
+      <ul>
+        
+    <li><b><code>taglib</code></b>: para cargar una librería de tags para utilizar 
+      en páginas JSP. Podemos tener una o varias de estas etiquetas.</li>
+      </ul>
+        
+  <h4>1.5.2.1.8 Seguridad</h4>
+           
+        <p>Para gestionar la seguridad en las aplicaciones Web se tienen las
+        etiquetas: </p>
+           
+      <ul>
+        
+    <li><b><code>security-constraint</code></b>: permite especificar qué URLs 
+      de la aplicación deben protegerse</li>
+        
+    <li><b><code>login-config</code></b>: indica cómo debe autorizar el servidor 
+      a los usuarios que quieran acceder a las URLs protegidas (indicadas con 
+      <code>security-constraint</code>)</li>
+    <li><b><code>security-role</code></b>: da una lista de roles en los que se 
+      encuadrarán los usuarios que intenten acceder a recursos protegidos.&nbsp;</li>
+      </ul>
+        
+  <p>Existen otras etiquetas internas, relacionadas con la seguridad, que no se 
+    encuentran detalladas aquí.</p>
+           
+        </blockquote>
+           
+      
+<h3>1.5.3. Ficheros WAR</h3>
+           
+      
+<p>Una forma alternativa de distribuir aplicaciones Web es empaquetar toda la 
+  aplicación (a partir de su directorio inicial) dentro de un fichero WAR (de 
+  forma parecida a como se hace con un TAR o un JAR), y distribuir dicho fichero. 
+  Podemos crear un fichero WAR de la misma forma que creamos un JAR, utilizando 
+  la herramienta JAR.&nbsp;</p>
+<p>Estos ficheros WAR son un est&aacute;ndar de J2EE, por lo que podremos utilizarlos 
+  en los diferentes servidores de aplicaciones J2EE existentes. </p>
+           
+      
+<p>Por ejemplo, si tenemos en el directorio <code>C:/web/ejemplo</code> los siguientes 
+  ficheros:</p>
+           
+      <pre class="codigo">C:/web/ejemplo/
+		index.html
+		WEB-INF/
+			web.xml
+			classes/
+				ClaseServlet.class</pre>
+           
+      
+<p>Para crear el WAR nos colocamos en dicho directorio <code>C:/web/ejemplo</code> 
+  y escribimos:</p>
+           
+      
+<pre class="codigo">jar cMvf ejemplo.war *</pre>
+<p>Las opciones <code>c</code>, <code>v</code> y <code>f</code> son para crear 
+  el WAR como un JAR comprimido normal. La opción <code>M</code> (mayúscula) es 
+  para que no se añada el fichero <code>MANIFEST</code>.&nbsp;</p>
+<p>También es IMPORTANTE destacar que no debe haber subdirectorios desde la raíz 
+  de la aplicación, es decir, la estructura del fichero WAR debe ser:</p>
+<pre class="codigo">index.html
+WEB-INF/
+	web.xml
+	classes/
+		ClaseServlet.class</pre>
+<p>sin ningún subdirectorio previo (ni <code>ejemplo/</code> ni <code>web/ejemplo/</code> 
+  ni nada por el estilo).</p>
+<h2><b>1.6. Despliegue de la aplicaci&oacute;n</b></h2>
+<p>Una vez hemos construido la aplicaci&oacute;n deberemos <strong>desplegarla</strong> 
+  en el servidor de aplicaciones para que dicha aplicaci&oacute;n est&eacute; 
+  disponible al acceder al servidor desde la web. Este proceso es conocido como 
+  despliegue o <em>deployment</em>. Cada servidor de aplicaciones tiene sus propios 
+  m&eacute;todos para desplegar las aplicaciones. Por ejemplo, casi siempre tenemos 
+  disponible una interfaz web a trav&eacute;s de la cual podemos subir y desplegar 
+  una aplicaci&oacute;n en el servidor.</p>
+<p>Vamos a ver las posibles formas en las que el servidor web Tomcat nos permite 
+  desplegar las aplicaciones, pero antes veremos d&oacute;nde se almacenan las 
+  aplicaciones desplegadas en Tomcat. </p>
+<p>Tomcat tiene un directorio <code>webapps</code> (<code>${tomcat.home}/webapps</code>) 
+  donde est&aacute;n todas las aplicaciones web instaladas en el servidor. Cada 
+  aplicaci&oacute;n web est&aacute; contenida dentro de un subdirectorio de <code>webapps</code>, 
+  y este subdirectorio contendr&aacute; toda la estructura de directorios y ficheros 
+  correspondiente a la aplicaci&oacute;n web. Por ejemplo, podremos tener:</p>
+<p><code>${tomcat.home}/webapps/aplic/<br>
+  ${tomcat.home}/webapps/aplic/index.htm<br>
+  ${tomcat.home}/webapps/aplic/WEB-INF/<br>
+  ${tomcat.home}/webapps/aplic/WEB-INF/web.xml<br>
+  ${tomcat.home}/webapps/aplic/WEB-INF/classes/<br>
+  ${tomcat.home}/webapps/aplic/WEB-INF/lib/</code></p>
+<p>De esta forma tendremos un contexto (aplicaci&oacute;n web) <code>aplic</code> 
+  instalado en Tomcat. Por defecto Tomcat asigna como ruta de cada contexto el 
+  mismo nombre del directorio del mismo, por lo que para acceder a esta aplicaci&oacute;n 
+  <code>aplic</code> anterior deberemos introducir la siguiente URL:</p>
+<pre class="codigo">http://localhost:8080/aplic/index.htm</pre>
+<p>Considerando que tenemos Tomcat instalado en nuestra m&aacute;quina local y 
+  atendiendo en el puerto <code>8080</code> (es el puerto por defecto de Tomcat). 
+</p>
+<p>Tambi&eacute;n podremos configurar Tomcat para asignar a cada contexto la ruta 
+  que queramos. Al instalar Tomcat encontramos una aplicaci&oacute;n instalada 
+  por defecto en un directorio <code>ROOT</code> (<code>${tomcat.home}/webapps/ROOT</code>). 
+  Esta aplicaci&oacute;n tiene asignada la ruta <code>/</code>, por lo que cuando 
+  accedamos a la URL:</p>
+<pre class="codigo">http://localhost:8080/</pre>
+<p>Ser&aacute; esta la aplicaci&oacute;n a la que se estar&aacute; accediendo, 
+  que nos muestra la p&aacute;gina de bienvenida de Tomcat y enlaces a documentaci&oacute;n 
+  y a la aplicaci&oacute;n de gesti&oacute;n del servidor. </p>
+<p>Si copiamos recursos a este directorio <code>ROOT</code>, podremos acceder 
+  a ellos a partir de esta URL ra&iacute;z del servidor. Por ejemplo, si copiamos 
+  la siguiente p&aacute;gina HTML:</p>
+<p><code>${tomcat.home}/webapps/ROOT/pagina.htm</code></p>
+<p>Podremos acceder a ella utilizando la siguiente URL:</p>
+<pre class="codigo">http://localhost:8080/pagina.htm</pre>
+<p>Tambi&eacute;n podremos configurar Tomcat para que sea cualquier otra de las 
+  aplicaciones instaladas la que tenga asignada esta ruta ra&iacute;z, simplemente 
+  cambiando la ruta asignada a cada contexto.</p>
+<p>Una vez hemos visto como se almacenan las aplicaciones desplegadas en Tomcat, 
+  vamos a ver como desplegarlas. Una forma sencilla de hacerlo es simplemente 
+  crear el directorio de la aplicaci&oacute;n en <code>webapps</code> y copiar 
+  ah&iacute; todo su contenido. Esto a veces nos fuerza a reiniciar el servidor 
+  para que la nueva aplicaci&oacute;n sea reconocida correctamente por Tomcat. 
+  Por esta raz&oacute;n, existen otras formas de despliegue de forma din&aacute;mica, 
+  sin necesidad de reiniciar Tomcat, a trav&eacute;s de una aplicaci&oacute;n 
+  instalada en Tomcat llamada <em>manager</em>. Tendremos disponible una interfaz 
+  HTML del <em>manager</em>, con la que podremos desplegar aplicaciones desde 
+  un navegador. </p>
+<h3>1.6.1. Copiar al directorio de aplicaciones</h3>
+<p>Esta forma de despliegue es la m&aacute;s sencilla. Simplemente copiamos el 
+  contenido de nuestra aplicaci&oacute;n, que habremos generado en el directorio 
+  <code>build</code> de nuestro directorio de desarrollo, al directorio <code>webapps</code> 
+  de Tomcat. </p>
+<p>Tambi&eacute;n podremos copiar directamente el fichero WAR con la aplicaci&oacute;n 
+  al directorio <code>webapps</code> de Tomcat. En este caso, cuando reiniciemos 
+  Tomcat, &eacute;ste desempaquetar&aacute; el fichero WAR creando la estructura 
+  de directorios de la aplicaci&oacute;n bajo <code>webapps</code>. Esto es el 
+  comportamiento por defecto, pero podremos configurar Tomcat para que no desempaquete 
+  los WAR, sino que acceda a la aplicaci&oacute;n usando directamente el fichero 
+  WAR.</p>
+<p>Este m&eacute;todo tiene el inconveniente de que deberemos reiniciar el servidor 
+  para que Tomcat reconozca las nuevas aplicaciones que hayamos instalado. En 
+  las &uacute;ltima versiones de Tomcat se suelen reconocer correctamente las 
+  aplicaciones que se instalan en tiempo de ejecuci&oacute;n, sin necesidad de 
+  reiniciar el servidor, pero en algunos casos ser&aacute; necesario reiniciarlo 
+  para asegurarnos de que ha actualizado correctamente la informaci&oacute;n sobre 
+  las aplicaciones instaladas.</p>
+<p>Para evitar tener que reiniciar el servidor, tenemos una aplicaci&oacute;n 
+  instalada en Tomcat llamada <code>manager</code>, que nos permitir&aacute; desplegar 
+  y gestionar las aplicaciones web instaladas en el servidor en tiempo de ejecuci&oacute;n. 
+  Con el <em>manager</em> podremos subir y desplegar una aplicaci&oacute;n, ver 
+  la lista de aplicaciones desplegadas, y detener, recargar, reanudar o desinstalar 
+  estas aplicaciones.</p>
+<h3>1.6.2. Utilizar la interfaz HTML del manager</h3>
+<p>El manager de Tomcat cuenta con una interfaz HTML desde la cual podremos desplegar 
+  aplicaciones y gestionar las aplicaciones instaladas. Para acceder a esta interfaz 
+  HTML del manager introduciremos la siguiente URL en cualquier navegador:</p>
+<pre class="codigo">http://localhost:8080/manager/html</pre>
+<p>Para poder acceder al manager necesitaremos contar con un usuario con rol <code>manager</code> 
+  registrado en Tomcat. Si no tenemos ning&uacute;n usuario con estos permisos 
+  deberemos crear uno. Para ello editaremos el fichero <code>${tomcat.home}/conf/tomcat-users.xml</code> 
+  e introduciremos las siguientes l&iacute;neas:</p>
+<pre class="codigo">&lt;role rolename=&quot;<strong>manager</strong>&quot;/&gt;
+&lt;user username=&quot;<strong>admin</strong>&quot; password=&quot;<strong>j2ee</strong>&quot; roles=&quot;<strong>manager</strong>&quot;/&gt;</pre>
+<p>Con esto ya podremos acceder al manager con nuestro usuario. En este caso el 
+  usuario tendr&aacute; el nombre <code>admin</code> y el password <code>j2ee</code>.</p>
+<p>Una vez accedamos al manager veremos una p&aacute;gina como la que se muestra 
+  a continuaci&oacute;n:</p>
+<div align="center"><img src="imagenes/introduccion/manager1.gif" width="500" height="353"> 
+</div>
+<p>Aqu&iacute; podemos ver las aplicaciones instaladas en el servidor y podemos 
+  gestionarlas. Podemos detener (<em>Stop</em>) las aplicaciones para que dejen 
+  de estar disponibles, pero sin borrarlas del servidor, y posteriormente reanudar 
+  su ejecuci&oacute;n con <em>Start</em>. Tambi&eacute;n podemos recargar las 
+  aplicaciones con <em>Reload</em>. Esto ser&aacute; &uacute;til cuando hayamos 
+  modificado la aplicaci&oacute;n y queramos que Tomcat reconozca estos cambios, 
+  por ejemplo si hemos cambiado la configuraci&oacute;n de la aplicaci&oacute;n 
+  (<code>web.xml</code>) o hemos a&ntilde;adido o modificado clases Java. Por 
+  &uacute;ltimo, con <em>Remove</em> podremos desinstalar la aplicaci&oacute;n 
+  del servidor. Al hacer esto se eliminar&aacute;n todos los ficheros de la aplicaci&oacute;n 
+  y ya no podr&aacute; reanudarse.</p>
+<p>En la parte inferior de esta p&aacute;gina encontramos los siguientes formularios:</p>
+<div align="center"><img src="imagenes/introduccion/manager2.gif" width="500" height="216"> 
+</div>
+<p>Desde aqu&iacute; podremos desplegar aplicaciones web en el servidor. Con el 
+  formulario superior podremos desplegar una aplicaci&oacute;n que ya se encuentre 
+  en un directorio de la m&aacute;quina en la que est&aacute; el servidor. </p>
+<p>Con el formulario inferior ser&aacute; muy sencillo desplegar una aplicaci&oacute;n 
+  web. Simplemente necesitamos tener el fichero WAR de la aplicaci&oacute;n en 
+  nuestra m&aacute;quina. Pulsamos sobre <em>Examinar...</em> para buscar y seleccionar 
+  este fichero WAR, y una vez seleccionado pulsaremos sobre <em>Install</em> para 
+  que suba y despliegue la aplicaci&oacute;n al servidor web. </p>
+<h2>1.7. Construcci&oacute;n de la aplicaci&oacute;n</h2>
+<p>Hemos visto la estructura y componentes que debe tener una aplicaci&oacute;n 
+  web, y como desplegarla en el servidor Tomcat para ponerla en marcha. Cuando 
+  tenemos una aplicaci&oacute;n web sencilla podemos construir la estructura y 
+  los elementos de la aplicaci&oacute;n manualmente. Sin embargo, conforme vaya 
+  haci&eacute;ndose m&aacute;s compleja la aplicaci&oacute;n ser&aacute; conveniente 
+  realizar un proceso de desarrollo m&aacute;s organizado. Vamos a ver a continuaci&oacute;n 
+  como organizar nuestro directorio de desarrollo de forma que se nos facilite 
+  el proceso de construcci&oacute;n de nuestra aplicaci&oacute;n.</p>
+<p>Cuando iniciamos Tomcat, automáticamente carga en el <code>CLASSPATH</code> 
+  del servidor lo necesario para trabajar con servlets y páginas JSP, y también 
+  carga las clases que haya en los directorios <code>WEB-INF/classes</code> y 
+  <code>WEB-INF/lib</code> de las aplicaciones, para que sepan dónde encontrarlas. 
+</p>
+<p>Sin embargo, para poder construir una aplicación (implementar y compilar los 
+  servlets y otras clases que la componen), necesitaremos también tener estos 
+  datos configurados, pues de lo contrario no conseguiremos compilar. Veremos 
+  ahora qué pasos hay que seguir para esto. </p>
+<h3><b>1.7.1. Directorio de trabajo</b> </h3>
+<p>Primero debemos crear un directorio de trabajo donde colocar nuestras aplicaciones 
+  Web. Es recomendable que dicho directorio quede fuera del directorio de instalación 
+  del servidor. </p>
+<p>Para que la aplicaci&oacute;n est&eacute; disponible tendremos que instalarla 
+  dentro del servidor de aplicaciones, por lo que tendremos que copiar la aplicaci&oacute;n 
+  de nuestro directorio de desarrollo al directorio del servidor web, es decir, 
+  una vez construida la aplicaci&oacute;n tendremos que desplegarla para poder 
+  utilizarla. </p>
+<p>A la hora de construir la aplicaci&oacute;n podemos distinguir los recursos 
+  que la componen en dos tipos, seg&uacute;n si necesitan ser compilados por nosotros 
+  de forma previa al despliegue o no:</p>
+<ul>
+  <li><strong>Recursos que necesitan ser compilados</strong>: Clases Java, como 
+    los Servlets y las clases de apoyo que utilicen. En la aplicaci&oacute;n que 
+    despleguemos deberemos incluir estas clases ya compiladas (ficheros <code>.class</code>) 
+    en el directorio <code>WEB-INF/classes</code> de la misma.</li>
+  <li><strong>Recursos que no necesitan ser compilados</strong>: El resto de recursos 
+    de la aplicaci&oacute;n no necesitar&aacute;n ser compilados por nosotros. 
+    En este grupo tendremos todo el contenido est&aacute;tico de la web (HTML, 
+    im&aacute;genes, etc), ficheros de configuraci&oacute;n de nuestra aplicaci&oacute;n 
+    como el descriptor de despliegue (<code>web.xml</code>) y librer&iacute;as 
+    JAR incluidas en <code>WEB-INF/lib</code>. Adem&aacute;s, en este grupo tambi&eacute;n 
+    se incluye el contenido din&aacute;mico en forma de p&aacute;ginas JSP. Estas 
+    p&aacute;ginas no deber&aacute;n ser compiladas por nosotros, sino que ser&aacute;n 
+    compiladas autom&aacute;ticamente por el servidor de aplicaciones la primera 
+    vez que se ejecute la aplicaci&oacute;n, pero eso ser&aacute; transparente 
+    para nosotros por lo que no deberemos preocuparnos por ello.</li>
+</ul>
+<p>A continuaci&oacute;n vamos a proponer una posible estructura de nuestro directorio 
+  de trabajo que nos facilite el desarrollo de aplicaciones web.</p>
+<p>Durante el desarrollo crearemos los distintos componentes de nuestra aplicaci&oacute;n 
+  en los siguientes directorios:</p>
+<table width="90%" border="0">
+  <tr> 
+    <td width="10%" valign="top"><code>src</code></td>
+    <td width="90%">C&oacute;digo fuente (servlets y otras clases) que necesita 
+      ser compilado</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>web</code></td>
+    <td>Elementos que no necesitan ser compilados (recursos est&aacute;ticos, 
+      JSPs, <code>WEB-INF/web.xml</code>, librer&iacute;as). En este directorio 
+      tendremos la estructura completa de nuestra aplicaci&oacute;n, a excepci&oacute;n 
+      del contenido del directorio <code>WEB-INF/classes</code>.</td>
+  </tr>
+</table>
+<p>De esta forma separamos las clases Java de nuestra aplicaci&oacute;n, que deben 
+  ser compiladas antes de desplegar la aplicaci&oacute;n, del resto de elementos 
+  de la aplicaci&oacute;n.</p>
+<p>Una vez desarrollados todos los componentes de la aplicaci&oacute;n, la construiremos 
+  en los siguientes directorios:</p>
+<table width="90%" border="0">
+  <tr> 
+    <td valign="top"><code>bin</code></td>
+    <td>Clases de la aplicaci&oacute;n compiladas. Se utiliza como directorio 
+      temporal donde compilamos el c&oacute;digo fuente de <code>src</code>. Estas 
+      clases compiladas deber&aacute;n ser incorporadas posteriormente al directorio 
+      <code>WEB-INF/classes</code> de nuestra aplicaci&oacute;n web.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>build</code></td>
+    <td>Aplicaci&oacute;n completa tal como se instalar&aacute; en el servidor. 
+      Tendr&aacute; la estructura del directorio <code>web</code> y adem&aacute;s 
+      las clases compiladas de <code>bin</code>.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>dist</code></td>
+    <td>Aplicaci&oacute;n empaquetada (fichero WAR). Contenido del directorio 
+      <code>build</code> empaquetado en un fichero WAR.</td>
+  </tr>
+</table>
+<h3><b>1.7.2. Establecer el CLASSPATH</b> </h3>
+<p>Para poder compilar las clases Java con nuestros servlets tenemos que añadir 
+  al <code>CLASSPATH</code> el lugar donde se encuentran las APIs de servlets 
+  y JSP. Cada servidor proporciona mediante unos ficheros JAR estas librerías, 
+  que deberemos añadir. En el caso de Tomcat, tenemos los ficheros <b><code>servlet.jar</code></b> 
+  (para servlets), <b><code>jsp.jar</code></b>, <b><code>jspengine.jar</code></b> 
+  y <b><code>jasper.jar</code></b> (para JSP). Todos estos ficheros se encuentran 
+  localizados en el directorio <b><code>common/lib</code></b>. Normalmente sólo 
+  necesitamos añadir el fichero <code>servlet.jar</code>, puesto que las páginas 
+  JSP las compila automáticamente el servidor si no lo están, y él ya encuentra 
+  solo los JAR. </p>
+<p>También deberemos añadir los directorios y ficheros JAR de otras clases que 
+  necesitemos y no formen parte de la API de Java (incluyendo librerías del directorio 
+  <code>WEB-INF/classes</code> o <code>WEB-INF/lib</code> de la aplicación). </p>
+<h3>1.7.3. Construcci&oacute;n de la aplicaci&oacute;n</h3>
+<p>Deberemos escribir todo el c&oacute;digo fuente de las clases Java de nuestra 
+  aplicaci&oacute;n en el subdirectorio <code>src</code> del directorio de desarrollo, 
+  y generar el resto de recursos en el subdirectorio <code>web</code> (siempre 
+  ser&aacute; necesario tener al menos el descriptor de despliegue <code>/WEB-INF/web.xml</code> 
+  para que la aplicaci&oacute;n funcione). </p>
+<p>Una vez hemos desarrollado los componentes de nuestra aplicaci&oacute;n, deberemos 
+  construir la aplicaci&oacute;n. Para ello deberemos realizar los siguientes 
+  pasos:</p>
+<blockquote> 
+  <p>1. Compilar las clases de la aplicaci&oacute;n. Generaremos las clases compiladas 
+    (ficheros <code>.class</code>) en el subdirectorio <code>bin</code> de nuestro 
+    directorio de desarrollo.</p>
+  <p>2. Juntar todos los elementos de la aplicaci&oacute;n. En el subdirectorio 
+    <code>build</code> generaremos la aplicaci&oacute;n web completa, juntando 
+    la estructura creada en el directorio <code>web</code> a las clases compiladas 
+    de <code>bin</code>. Para ello copiaremos a este directorio <code>build</code> 
+    todo el contenido de <code>web</code>, y el contenido de <code>bin</code> 
+    lo copiaremos a <code>build/WEB-INF/classes</code>.</p>
+  <p>3. De forma opcional podemos empaquetar la aplicaci&oacute;n en un fichero 
+    WAR. Para ello empaquetaremos todo el contenido del directorio <code>build</code>, 
+    donde tenemos nuestra aplicaci&oacute;n web completa, en un fichero WAR que 
+    guardaremos en el subdirectorio <code>dist</code> de nuestro directorio de 
+    trabajo.</p>
+</blockquote>
+<p>Con esto tendremos la aplicaci&oacute;n lista para ser desplegada en nuestro 
+  servidor de aplicaciones, tal como vimos en el punto anterior.</p>
+<h2>1.8. Entorno de desarrollo Eclipse</h2>
+<p>Eclipse es una herramienta que permite integrar diferentes tipos de <b>aplicaciones</b>. 
+  La aplicación principal es el JDT (<i>Java Development Tooling</i>), un IDE 
+  para crear programas en Java. Otras aplicaciones, que no vienen con la distribución 
+  estándar de Eclipse, se añaden al mismo en forma de <b><i>plugins</i></b>, y 
+  son reconocidos automáticamente por la plataforma.</p>
+<p>Además, Eclipse tiene su propio mecanismo de gestión de <b>recursos</b>. Los 
+  recursos son ficheros en el disco duro, que se encuentran alojados en un espacio 
+  de trabajo (<i>workspace</i>), un directorio especial en el sistema. Así, si 
+  una aplicación de Eclipse modifica un recurso, dicho cambio es notificado al 
+  resto de aplicaciones de Eclipse, para que lo tengan en cuenta.</p>
+<h3>1.8.1. Instalación y ejecución</h3>
+<p>Para instalar Eclipse se <b>requiere</b>:</p>
+<ul>
+  <li>Sistema operativo Windows, Linux, Solaris, QNX o Mac OS/X, con 256 MB de 
+    RAM preferiblemente.</li>
+  <li>JDK o JRE versión 1.3 o posterior. Se recomienda al menos la versión 1.4.1.</li>
+  <li>Los archivos de eclipse para instalar (en un archivo ZIP, o como vengan 
+    distribuidos)</li>
+</ul>
+<p>Para la <b>instalación</b>, se siguen los pasos:</p>
+<ul>
+  <li>Instalar JRE o JDK</li>
+  <li>Descomprimir los archivos de Eclipse al lugar deseado del disco duro (p. 
+    ej, a <i>C:\eclipse</i>). El directorio en que se instale lo identificaremos 
+    de ahora en adelante como <i>ECLIPSE_HOME</i>. En Windows Eclipse detecta 
+    automáticamente un JRE o JDK instalado, aunque también se lo podemos proporcionar 
+    copiando el directorio <i>jre</i> en <i>ECLIPSE_HOME</i>. Otra opción es proporcionar, 
+    al ejecutar Eclipse, la ruta hacia JRE o JDK, mediante una opción <i>vm</i>:</li>
+</ul>
+<blockquote> 
+  <pre class="codigo">eclipse vm ruta_jdk_jre</pre>
+</blockquote>
+<p>Para arrancar Eclipse se tiene el ejecutable <i>eclipse.exe</i> o <i>eclipse.sh</i> 
+  en <i>ECLIPSE_HOME</i>. La pantalla inicial de Eclipse aparecerá tras unos segundos:</p>
+<p> 
+  <center>
+    <img src="imagenes/introduccion/eclipse_inicial.jpg" width="400" height="300"> 
+  </center>
+<p class="caption">Figura 1. Pantalla inicial de Eclipse</p>
+<p>Veremos las opciones principales con detalle más adelante. De los menús, entre 
+  otros, pueden resultar interesantes:</p>
+<ul>
+  <li><b>File</b>: 
+    <ul>
+      <li><b>New</b>: para crear nuevos proyectos, paquetes, clases Java, etc.</li>
+      <li><b>Import / Export</b>: para importar o exportar recursos con un determinado 
+        formato (por ejemplo, exportar un proyecto como un fichero JAR).</li>
+    </ul>
+  </li>
+  <li><b>Project</b>: 
+    <ul>
+      <li><b>Open / Close Project</b>: para abrir o cerrar el proyecto actual</li>
+      <li><b>Rebuild Project</b>: recompila el proyecto actual</li>
+      <li><b>Rebuild All</b>: recompila todos los proyectos</li>
+      <li><b>Generate Javadoc</b>: genera el <i>javadoc</i> para las clases del 
+        proyecto</li>
+    </ul>
+  </li>
+  <li><b>Run</b>:&nbsp; 
+    <ul>
+      <li><b>Run As</b>: permite indicar cómo queremos ejecutar un proyecto (por 
+        ejemplo, como una aplicación Java normal, como un applet, como un test 
+        de JUnit, etc).</li>
+      <li><b>Run</b>: ejecuta el proyecto de la forma que hayamos indicado en 
+        <i>Run As</i>. Permite seleccionar la clase principal a ejecutar, los 
+        parámetros del <i>main(...)</i>, etc</li>
+    </ul>
+  </li>
+  <li><b>Window</b>: 
+    <ul>
+      <li><b>Open Perspective</b>: para abrir una determinada perspectiva (por 
+        ejemplo, la perspectiva <i>Java</i>, que será la que nos interese normalmente).</li>
+      <li><b>Show View</b>: permite añadir/quitar vistas a la perspectiva actual. 
+        Lo veremos también más adelante.</li>
+      <li><b>Preferences</b>: opciones de configuración general. Algunas de ellas 
+        se explicarán con detalle más adelante.</li>
+    </ul>
+  </li>
+</ul>
+<h3>1.8.2. Configuraci&oacute;n visual</h3>
+<p>Podemos cambiar la configuraci&oacute;n visual del entorno Eclipse seg&uacute;n 
+  el tipo de aplicaciones que vayamos a desarrollar. Como vamos a trabajar con 
+  aplicaciones en Java cambiaremos a la perspectiva Java. Para ello seleccionaremos 
+  la opci&oacute;n del men&uacute; <em>Window &gt; Open Perspective &gt; Java</em> 
+  tal como se muestra a continuaci&oacute;n:</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_vista.jpg" width="400" height="300"> 
+</div>
+<h3>1.8.3. Crear un proyecto</h3>
+<p>Lo primero que debemos hacer para empezar a desarrollar una nueva aplicaci&oacute;n 
+  es crear un proyecto Java en Eclipse. Para ello seleccionamos la opci&oacute;n 
+  del men&uacute; <em>File &gt; New &gt; Project ...</em></p>
+<div align="center"><img src="imagenes/introduccion/eclipse_proy_1.jpg" width="400" height="300"> 
+</div>
+<p>Dentro de la ventana de nuevo proyecto, seleccionamos <em>Java Project </em>y 
+  pulsamos <em>Next</em>. </p>
+<div align="center"><img src="imagenes/introduccion/eclipse_proy_2.jpg" width="250" height="250"> 
+</div>
+<p>En la siguiente pantalla deberemos dar un nombre al proyecto para identificarlo 
+  dentro de Eclipse. Este nombre es interno de Eclipse, y no tiene porque corresponderse 
+  con el nombre de nuestra aplicaci&oacute;n web en Tomcat. Por defecto crear&aacute; 
+  el directorio para este proyecto dentro del espacio de trabajo de Eclipse. Si 
+  queremos crearlo en otro directorio desmarcaremos la casilla <em>Use default</em>. 
+</p>
+<p>Cuando hayamos introducido esta informaci&oacute;n pulsamos sobre <em>Next</em>.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_proy_3.jpg" width="250" height="253"> 
+</div>
+<p>En la siguiente pantalla configuraremos la estructura de nuestro directorio 
+  de desarrollo y las librer&iacute;as externas utilizadas. </p>
+<p>Lo primero que vamos a hacer es configurar el directorio de fuentes, para que 
+  los guarde en <code>src</code>. Pulsaremos sobre<em> Add folder...</em> para 
+  a&ntilde;adir este directorio.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_proy_4.jpg" width="250" height="254"> 
+</div>
+<p>Aparecer&aacute; la siguiente ventana. Como todav&iacute;a no existe el directorio 
+  <code>src</code>, deberemos crearlo pulsando sobre <em>Create New Folder...</em></p>
+<div align="center"><img src="imagenes/introduccion/eclipse_proy_5.jpg" width="174" height="215"> 
+</div>
+<p>En la siguiente ventana introduciremos el nombre del directorio a crear (<code>src</code>), 
+  y pulsamos sobre <em>OK</em> para que lo cree.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_proy_6.jpg" width="155" height="86"> 
+</div>
+<p>De esta forma volver&aacute; a la pantalla anterior donde tendremos ya el directorio 
+  <code>src</code> creado. Seleccionamos este directorio y pulsamos sobre <em>OK</em> 
+  para a&ntilde;adirlo como directorio de fuentes.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_proy_7.jpg" width="174" height="215"> 
+</div>
+<p>Nos preguntar&aacute; si queremos eliminar el directorio ra&iacute;z del proyecto 
+  como directorio de fuentes y utilizar s&oacute;lo <code>src</code> para tal 
+  fin, y generar las clases compiladas en el directorio <code>bin</code>. Pulsaremos 
+  sobre <em>Yes</em>.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_proy_8.jpg" width="221" height="73"> 
+</div>
+<p>De esta forma veremos en la pantalla de configuraci&oacute;n del proyecto el 
+  directorio <code>src</code> como &uacute;nico directorio de fuentes de la aplicaci&oacute;n, 
+  y <code>bin</code> como directorio de salida. Ahora vamos a cambiar a la pesta&ntilde;a 
+  <em>Libraries</em> para configurar las librer&iacute;as externas que vamos a 
+  necesitar tener en el <em>classpath</em> para nuestro proyecto.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_proy_9.jpg" width="250" height="254"> 
+</div>
+<p>En esta pesta&ntilde;a a&ntilde;adiremos librer&iacute;as JAR al <em>classpath</em> 
+  pulsando sobre <em>Add External JARs ...</em></p>
+<div align="center"><img src="imagenes/introduccion/eclipse_proy_10.jpg" width="250" height="254"> 
+</div>
+<p>Deberemos seleccionar los ficheros JAR que queremos a&ntilde;adir al <em>classpath</em>. 
+  Los ficheros de Tomcat que necesitaremos a&ntilde;adir para compilar nuestras 
+  aplicaciones se encuentran en el directorio <code>${tomcat.home}/common/lib</code>. 
+  Podemos a&ntilde;adir todos los ficheros JAR de este directorio al <em>classpath</em>, 
+  pero para las aplicaciones que vamos a desarrollar bastar&aacute; con incluir 
+  el fichero <code>servlet.jar</code> &uacute;nicamente.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_proy_11.jpg" width="281" height="210"> 
+</div>
+<p>Una vez tengamos esta librer&iacute;a incluida se mostrar&aacute; en la lista 
+  como se puede ver a continuaci&oacute;n. Ahora ya podemos pulsar sobre <em>Finish</em> 
+  para que se cree el proyecto con los datos que hemos introducido.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_proy_12.jpg" width="250" height="253"> 
+</div>
+<h3>1.8.4. Crear directorios y ficheros</h3>
+<p>Una vez creado el proyecto, podremos crear directorios y ficheros dentro de 
+  nuestro directorio de desarrollo. De esta forma, podremos crear la estructura 
+  de nuestra aplicaci&oacute;n web y los recursos que no necesitan ser compilados 
+  dentro del directorio <code>web</code>.</p>
+<p>Pulsando con el bot&oacute;n derecho sobre nuestro proyecto en el explorador 
+  de paquetes se abrir&aacute; un men&uacute; contextual con el que podremos crear 
+  un nuevo directorio. Para ello pulsaremos sobre la opci&oacute;n <em>New &gt; 
+  Folder</em>.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_dir_1.jpg" width="400" height="300"> 
+</div>
+<p>Aparecer&aacute; la siguiente pantalla donde deberemos introducir el nombre 
+  del directorio que vamos a crear. Por ejemplo podemos crear de esta forma el 
+  directorio <code>web</code> donde introduciremos toda la estructura y recursos 
+  de nuestra aplicaci&oacute;n web, a excepci&oacute;n de los recursos que necesitan 
+  ser compilados (clases Java).</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_dir_2.jpg" width="219" height="289"> 
+</div>
+<p>A su vez, podremos crear subdirectorios dentro de <code>web</code> para de 
+  esta forma crear el directorio <code>WEB-INF</code>, y dentro de &eacute;ste 
+  los directorios <code>classes</code> y <code>lib</code>. De la misma forma podremos 
+  crear cualquier otro directorio que queramos tener en nuestra aplicaci&oacute;n 
+  web.</p>
+<p>Una vez tengamos la estructura de directorios necesaria, podemos crear ficheros 
+  gen&eacute;ricos de texto. De esta forma podremos crear el descriptor de despliegue 
+  (<code>web.xml</code>) y cualquier fichero JSP o HTML que queramos a&ntilde;adir 
+  a la aplicaci&oacute;n. Para crear un fichero gen&eacute;rico de texto pulsaremos 
+  sobre la opci&oacute;n <em>New &gt; File </em>del men&uacute; contextual como 
+  se muestra a continuaci&oacute;n:</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_fich_1.jpg" width="400" height="300"> 
+</div>
+<p>En la siguiente ventana introduciremos el nombre del fichero a crear. Por ejemplo, 
+  para crear el descriptor de despliegue utilizaremos el nombre <code>web.xml</code>, 
+  lo crearemos dentro del directorio <code>WEB-INF</code>.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_fich_2.jpg" width="219" height="289"> 
+</div>
+<p>Una vez creado el fichero, podremos abrirlo en el editor de texto de Eclipse 
+  para escribir su contenido. Introduciremos en este editor el contenido del descriptor 
+  de despliegue y grabaremos el fichero pulsando sobre el icono <em>Guardar</em>.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_fich_3.jpg" width="400" height="300"> 
+</div>
+<p>De la misma forma podemos crear cualquier otro fichero de texto para nuestra 
+  aplicaci&oacute;n que no necesite ser compilado, como p&aacute;ginas HTML y 
+  JSP. </p>
+<h3>1.8.5. Crear una nueva clase</h3>
+<p>Adem&aacute;s de los recursos est&aacute;ticos de la aplicaci&oacute;n y p&aacute;ginas 
+  JSP, que no necesitan ser compilados, una aplicaci&oacute;n web tambi&eacute;n 
+  puede tener clases Java (Servlets y otras clases auxiliares). Para crear una 
+  nueva clase en nuestra aplicaci&oacute;n pulsaremos sobre <em>New &gt; Class</em>.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_class_1.jpg" width="400" height="279"> 
+</div>
+<p>Se mostrar&aacute; la siguiente pantalla donde introduciremos los datos de 
+  la nueva clase a crear. Deberemos introducir el paquete y el nombre de la clase. 
+  Adem&aacute;s, en el caso de que se trate de un Servlet, deberemos poner como 
+  superclase la clase <code>HttpServlet</code>. Para seleccionar est&aacute; superclase 
+  podemos pulsar sobre el bot&oacute;n <em>Browse ...</em> junto al campo <em>Superclass</em>.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_class_2.jpg" width="247" height="277"> 
+</div>
+<p>Se mostrar&aacute; la siguiente ventana para explorar las clases. Introduciendo 
+  en el campo de texto superior una parte del nombre de la clase que buscamos, 
+  por ejemplo <em>'HttpServlet'</em>, nos mostrar&aacute; la lista de todas las 
+  clases que coincidan con ese nombre. Seleccionaremos de la lista la clase que 
+  buscamos (<code>HttpServlet</code>) y pulsamos <em>OK</em>.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_class_3.jpg" width="150" height="240"> 
+</div>
+<p>Entonces aparecer&aacute; el nombre completo de la clase seleccionada en el 
+  campo <em>Superclass</em> de la ventana anterior. Ya podremos pulsar sobre <em>Finish</em> 
+  para crear la clase.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_class_4.jpg" width="247" height="278"> 
+</div>
+<p>Eclipse crear&aacute; autom&aacute;ticamente el esqueleto de esta clase y podremos 
+  modificarlo en el editor. Este editor nos ofrecer&aacute; facilidades como autocompletar 
+  los nombres de los m&eacute;todos, y revisar la sintaxis del c&oacute;digo conforme 
+  lo escribimos. </p>
+<p>En el caso de que estemos implementando un Servlet, deberemos sobrescribir 
+  el m&eacute;todo <code>doGet</code> de esta clase. Para sobrescribir m&eacute;todos 
+  de clases de las que heredamos abriremos el men&uacute; contextual sobre el 
+  &aacute;rea de edici&oacute;n de c&oacute;digo, y seleccionamos la opci&oacute;n 
+  <em>Source &gt; Override/Implement Methods ...</em></p>
+<div align="center"><img src="imagenes/introduccion/eclipse_class_5.jpg" width="400" height="300"> 
+</div>
+<p>Entonces podremos seleccionar el m&eacute;todo <code>doGet</code> que es el 
+  que nos interesa en este caso y pulsar <em>OK</em>.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_class_6.jpg" width="174" height="231"> 
+</div>
+<p>Esto nos crear&aacute; el esqueleto de este m&eacute;todo, dentro del cual 
+  tendremos que a&ntilde;adir el c&oacute;digo necesario. Podemos copiar el c&oacute;digo 
+  que hemos visto para el servlet de ejemplo anterior.</p>
+<p>Nos mostrar&aacute; subrayados con rojo los errores en el c&oacute;digo. Posiblemente 
+  haya errores del tipo <em>&quot;PrintWriter cannot be resolved&quot;</em> debidos 
+  a no haber importado el paquete necesario donde se encuentra esta clase. Para 
+  solucionarlos podemos abrir un men&uacute; contextual pulsando con el bot&oacute;n 
+  derecho sobre el elemento que da este error, y seleccionar la opci&oacute;n 
+  <em>Source &gt; Add Import.</em> De esta forma Eclipse a&ntilde;adir&aacute; 
+  autom&aacute;ticamente el <code>import</code> para este elemento a nuestra clase, 
+  sin tener nosotros que buscar el paquete en el que se encontraba.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_class_7.jpg" width="400" height="300"> 
+</div>
+<p>Otra opci&oacute;n interesante de este men&uacute; contextual del editor de 
+  c&oacute;digo es la opci&oacute;n <em>Source &gt; Format</em>, que dar&aacute; 
+  formato autom&aacute;ticamente al c&oacute;digo a&ntilde;adiendo las sangr&iacute;as 
+  necesarias para cada l&iacute;nea de c&oacute;digo, permiti&eacute;ndonos de 
+  esta forma &quot;limpiar&quot; el c&oacute;digo de forma r&aacute;pida.</p>
+<h2>1.9. Construir y desplegar con Ant</h2>
+<p><em>Ant</em> es una herramienta basada en Java, similar a la herramienta <em>make</em>, 
+  pero m&aacute;s adecuada para el desarrollo de aplicaciones Java. <em>Make</em> 
+  tiene el inconveniente de ser dependiente del <em>shell</em> que utilicemos, 
+  ya que ejecuta comandos de &eacute;ste, lo cual complicar&iacute;a la portabilidad 
+  de nuestras aplicaciones a distintas plataformas. Uno de los objetivos que se 
+  han buscado desde el principio con las tecnolog&iacute;as Java es la independencia 
+  de la plataforma, por lo que ser&aacute; conveniente contar con un sistema de 
+  construcci&oacute;n de aplicaciones que cumpla este objetivo para que la portabilidad 
+  no se vea da&ntilde;ada.</p>
+<p><em>Ant</em> utiliza ficheros de configuraci&oacute;n basados en XML, donde 
+  definiremos las tareas a realizar. Para realizar estas tareas se utilizar&aacute;n 
+  clases Java, en lugar de comandos del <em>shell</em>, lo cual lo har&aacute; 
+  independiente de la plataforma. Podremos realizar un gran n&uacute;mero de diferentes 
+  tareas con esta herramienta, de las que veremos las principales, y adem&aacute;s 
+  es extensible, permiti&eacute;ndonos a&ntilde;adir nuestras propias tareas que 
+  podremos implementar utilizando clases Java.</p>
+<p>El fichero de configuraci&oacute;n, llamado <code>build.xml</code>, es bastante 
+  m&aacute;s complejo que un <code>Makefile</code>, pero podremos parametrizarlo, 
+  permiti&eacute;ndonos reutilizar una misma plantilla gen&eacute;rica para distintas 
+  aplicaciones. Adem&aacute;s, este fichero <code>build.xml</code> al utilizar 
+  una gram&aacute;tica de m&aacute;s alto nivel no tendr&aacute; el inconveniente 
+  de los tabuladores que encontramos en los <code>Makefile</code> (si en lugar 
+  de tabuladores usamos espacios no funcionan correctamente).</p>
+<p>La herramienta <em>ant</em> se encuentra integrada dentro del entorno Eclipse, 
+  de forma que podremos utilizar ficheros de <em>ant</em> para automatizar las 
+  tareas de compilaci&oacute;n y despliegue de nuestras aplicaciones web desde 
+  dentro del mismo entorno.</p>
+<p>NOTA: En algunas ocasiones la versi&oacute;n de ant dentro de Eclipse puede 
+  fallar si no tiene configurado el fichero <code>${java.home}/lib/tools.jar</code> 
+  en su <em>classpath</em>. Conviene asegurarnos yendo a <em>Window &gt; Preferences</em> 
+  e y a la secci&oacute;n <em>Ant &gt; Runtime</em>. Deberemos tener este fichero 
+  incluido en el <em>classpath</em> de <em>ant</em> tal como se muestra a continuaci&oacute;n:</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_ant.jpg" width="400" height="296"> 
+</div>
+<p>Vamos a ver paso a paso como utilizar <em>ant</em> desde Eclipse.</p>
+<p>1. Creamos un fichero <code>build.xml</code> en el directorio ra&iacute;z de 
+  nuestro proyecto y escribimos su contenido. Veremos el fichero reci&eacute;n 
+  creado en el explorador de paquetes como un fichero de tipo <em>ant</em>.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_ant_1.jpg" width="400" height="279"> 
+</div>
+<p>Como contenido de este fichero podemos utilizar la siguiente plantilla que 
+  nos servir&aacute; para aplicaciones con la estructura de directorios que hemos 
+  definido en puntos anteriores.</p>
+<pre class="codigo">&lt;project name=&quot;<strong>Prueba</strong>&quot; default=&quot;prepare&quot; basedir=&quot;.&quot;&gt;<br><br>&lt;!-- Propiedades --&gt;<br><br>&lt;property name=&quot;<strong>catalina.home</strong>&quot; <br>          value=&quot;<strong>c:\\Archivos de programa\\Apache Group\\Tomcat 4.1</strong>&quot;/&gt;<br>&lt;property name=&quot;<strong>app.name</strong>&quot; value=&quot;<strong>aplic</strong>&quot;/&gt;<br><br>&lt;property name=&quot;app.home&quot; value=&quot;${catalina.home}/webapps/${app.name}&quot;/&gt;<br>&lt;property name=&quot;war.name&quot; value=&quot;${app.name}.war&quot;/&gt;<br><br>&lt;property name=&quot;bin.home&quot; value=&quot;${basedir}/bin&quot;/&gt;<br>&lt;property name=&quot;build.home&quot; value=&quot;${basedir}/build&quot;/&gt;<br>&lt;property name=&quot;dist.home&quot; value=&quot;${basedir}/dist&quot;/&gt;<br>&lt;property name=&quot;src.home&quot; value=&quot;${basedir}/src&quot;/&gt;<br>&lt;property name=&quot;web.home&quot; value=&quot;${basedir}/web&quot;/&gt;<br><br>&lt;property name=&quot;compile.debug&quot; value=&quot;true&quot;/&gt;<br>&lt;property name=&quot;compile.deprecation&quot; value=&quot;false&quot;/&gt;<br>&lt;property name=&quot;compile.optimize&quot; value=&quot;true&quot;/&gt;<br><br>&lt;!-- Classpath --&gt;<br>&lt;path id=&quot;compile.classpath&quot;&gt;<br>  &lt;pathelement location=&quot;${catalina.home}/common/classes&quot;/&gt;<br>  &lt;fileset dir=&quot;${catalina.home}/common/endorsed&quot;&gt;<br>    &lt;include name=&quot;*.jar&quot;/&gt;<br>  &lt;/fileset&gt;<br>  &lt;fileset dir=&quot;${catalina.home}/common/lib&quot;&gt;<br>    &lt;include name=&quot;*.jar&quot;/&gt;<br>  &lt;/fileset&gt;<br>  &lt;pathelement location=&quot;${catalina.home}/shared/classes&quot;/&gt;<br>  &lt;fileset dir=&quot;${catalina.home}/shared/lib&quot;&gt;<br>    &lt;include name=&quot;*.jar&quot;/&gt;<br>  &lt;/fileset&gt;<br>  &lt;fileset dir=&quot;${web.home}/WEB-INF/lib&quot;&gt;<br>    &lt;include name=&quot;*.jar&quot;/&gt;<br>  &lt;/fileset&gt;<br>&lt;/path&gt;<br><br>&lt;!-- Objetivos --&gt;<br>&lt;target name=&quot;<strong>all</strong>&quot; depends=&quot;clean,dist&quot;<br>                   description=&quot;Compila todo&quot;/&gt;<br><br>&lt;target name=&quot;<strong>clean</strong>&quot;<br>        description=&quot;Borra directorios build y dist&quot;&gt;<br>  &lt;delete dir=&quot;${build.home}&quot;/&gt;<br>  &lt;delete dir=&quot;${dist.home}&quot;/&gt;<br>&lt;/target&gt;<br><br>&lt;target name=&quot;<strong>compile</strong>&quot;
+        description=&quot;Compila los fuentes Java&quot;&gt;<br>  &lt;javac srcdir=&quot;${src.home}&quot;<br>         destdir=&quot;${bin.home}&quot;
+         debug=&quot;${compile.debug}&quot;
+         deprecation=&quot;${compile.deprecation}&quot;
+         optimize=&quot;${compile.optimize}&quot;&gt;<br>    &lt;classpath refid=&quot;compile.classpath&quot;/&gt;<br>  &lt;/javac&gt;<br>&lt;/target&gt;<br><br>&lt;target name=&quot;<strong>prepare</strong>&quot; depends=&quot;compile&quot;&gt;<br>  &lt;mkdir dir=&quot;${build.home}&quot;/&gt;<br>  &lt;mkdir dir=&quot;${build.home}/WEB-INF&quot;/&gt;<br>  &lt;mkdir dir=&quot;${build.home}/WEB-INF/classes&quot;/&gt;<br>  &lt;mkdir dir=&quot;${build.home}/WEB-INF/lib&quot;/&gt;<br>  &lt;copy todir=&quot;${build.home}&quot;&gt;<br>    &lt;fileset dir=&quot;${web.home}&quot;/&gt;<br>  &lt;/copy&gt;<br>  &lt;copy todir=&quot;${build.home}/WEB-INF/classes&quot;&gt;<br>    &lt;fileset dir=&quot;${bin.home}&quot;/&gt;<br>  &lt;/copy&gt;<br>&lt;/target&gt;<br><br>&lt;target name=&quot;<strong>dist</strong>&quot; depends=&quot;prepare&quot;<br>        description=&quot;Crea el fichero WAR de la aplicacion&quot;&gt;<br>  &lt;mkdir dir=&quot;${dist.home}&quot;/&gt;<br>  &lt;jar jarfile=&quot;${dist.home}/${war.name}&quot;<br>       basedir=&quot;${build.home}&quot;/&gt;<br>&lt;/target&gt;<br><br>&lt;target name=&quot;<strong>deploy</strong>&quot; depends=&quot;prepare&quot;
+        description=&quot;Despliega copiando al webapps&quot;&gt;<br>  &lt;mkdir dir=&quot;${app.home}&quot;/&gt;<br>  &lt;copy todir=&quot;${app.home}&quot;&gt;<br>    &lt;fileset dir=&quot;${build.home}&quot;/&gt;<br>  &lt;/copy&gt;<br>&lt;/target&gt;<br><br>&lt;/project&gt;</pre>
+<p>Al comienzo de este fichero se muestran en negrita las propiedades que deberemos 
+  editar para adaptar esta plantilla a nuestra aplicaciones. Deberemos cambiar 
+  el nombre de la aplicaci&oacute;n, y el directorio donde tenemos instalado Tomcat.</p>
+<p>2. Para utilizar este fichero de <em>ant</em> desde Eclipse deberemos mostrar 
+  la vista de <em>ant</em>. Para ello iremos a <em>Window &gt; Show View &gt; 
+  Ant</em> como se muestra a continuaci&oacute;n: </p>
+<div align="center"><img src="imagenes/introduccion/eclipse_ant_2.jpg" width="400" height="299"> 
+</div>
+<p>3. Veremos la ventana de <em>ant</em> a la derecha de la ventana de Eclipse. 
+  Ahora deberemos a&ntilde;adir nuestro fichero de <em>ant</em> a esta ventana 
+  pulsando sobre el bot&oacute;n se&ntilde;alado en la siguiente imagen:</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_ant_3.jpg" width="400" height="299"> 
+</div>
+<p>Seleccionamos el fichero <code>build.xml</code> que hemos creado en el directorio 
+  ra&iacute;z de nuestro proyecto. Si en la siguiente ventana no vemos este fichero, 
+  se puede deber a tener seleccionado otro proyecto, o a haber creado el fichero 
+  en otro directorio. </p>
+<div align="center"><img src="imagenes/introduccion/eclipse_ant_4.jpg" width="237" height="227"> 
+</div>
+<p>4. Una vez hecho esto, si el fichero es correcto deberemos ver en la ventana 
+  de <em>ant</em> los objetivos definidos en &eacute;l.</p>
+<div align="center"><img src="imagenes/introduccion/eclipse_ant_5.jpg" width="400" height="279"> 
+</div>
+<p>Haciendo doble click sobre cualquiera de los objetivos lo ejecutaremos, realiz&aacute;ndose 
+  de esta forma las tareas correspondientes. Los objetivos definidos en la plantilla 
+  de ejemplo son:</p>
+<p><code><strong>clean</strong></code>: Elimina las clases compiladas para volver 
+  a compilar el sistema desde cero la pr&oacute;xima vez.</p>
+<p><code><strong>compile</strong></code>: Compila las clases de nuestra aplicaci&oacute;n, 
+  cuyos fuentes est&aacute;n ubicados en el directorio <code>src</code>, produciendo 
+  las clases compiladas en el directorio <code>bin</code>. </p>
+<p><code><strong>prepare</strong></code>: Construye en el directorio <code>build</code> 
+  la aplicaci&oacute;n completa, juntando el contenido que no necesita ser compilado 
+  de <code>web</code> con las clases compiladas de <code>bin</code>. Una vez hecho 
+  esto en <code>build</code> tendremos la aplicaci&oacute;n lista para ser desplegada.</p>
+<p><code><strong>dist</strong></code>: Genera un fichero WAR con nuestra aplicaci&oacute;n 
+  en el directorio <code>dist</code>. Podremos utilizar este fichero para desplegar 
+  la aplicaci&oacute;n en nuestro servidor.</p>
+<p><code><strong>all</strong></code>: Elimina las clases compiladas anteriormente 
+  y vuelve a construir el sistema entero, realizando todas las tareas anteriores.</p>
+<p><code><strong>deploy</strong></code>: Despliega la aplicaci&oacute;n autom&aacute;ticamente 
+  copiando el contenido del directorio <code>build</code> al directorio <code>webapps</code> 
+  de Tomcat. Posiblemente Tomcat deba ser reiniciado para que reconozca las aplicaciones 
+  desplegadas de esta forma.</p>
+<p>De esta forma podemos automatizar todo el proceso de construcci&oacute;n y 
+  despliegue de aplicaciones web que vimos anteriormente, de forma que simplemente 
+  pulsando sobre un objetivo realice todas las acciones necesarias de forma autom&aacute;tica.</p>
+</body>
+        </html>

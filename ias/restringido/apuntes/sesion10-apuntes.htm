@@ -1,0 +1,400 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>Tema 4: Servicios Web</title>
+                                    
+  <meta content="text/html; charset=iso-8859-1"
+ http-equiv="Content-Type">
+                   
+  <link href="../apuntes.css" rel="stylesheet" type="text/css">
+                     
+  <meta content="Microsoft FrontPage 4.0" name="GENERATOR">
+<link href="../../apuntes.css" rel="stylesheet" type="text/css">
+</head>
+  <body bgcolor="#ffffff" text="#000000">
+<h2>4.3. Invocaci&oacute;n de Servicios Web</h2>
+<p>Vamos a ver ahora c&oacute;mo invocar Servicios Web orientados a RPC desde 
+  Java. Para ello contamos con la API JAX-RPC, que se apoya en la API SAAJ para 
+  gestionar los mensajes SOAP orientados a RPC.</p>
+<p>Con JAX-RPC podremos ejecutar procedimientos de forma remota, simplemente haciendo 
+  una llamada a dicho procedimiento, sin tener que introducir apenas c&oacute;digo 
+  adicional. Ser&aacute; JAX-RPC quien se encargue de gestionar internamente la 
+  conexi&oacute;n con el servicio y el manejo de los mensajes SOAP de llamada 
+  al procedimiento y de respuesta.</p>
+<p>Podemos encontrar las clases de la API de JAX-RPC dentro del paquete<strong> 
+  javax.xml.rpc</strong> y en subpaquetes de &eacute;ste.</p>
+<p>Nuestro cliente Java realizado con JAX-RPC ser&aacute; interoperable con pr&aacute;cticamente 
+  todos los servicios creados desde otras plataformas. Se pueden ver los resultados 
+  de los <em>tests</em> de interoperabilidad de JAX-RPC en la direcci&oacute;n:</p>
+<p> <em>http://java.sun.com/wsinterop/sb/index.html</em></p>
+<h3>4.3.1 Tipos de acceso</h3>
+<p>Tenemos varias posibilidades para acceder a un Servicio Web utilizando JAX-RPC:</p>
+<ul>
+  <li><strong>Creaci&oacute;n de un stub est&aacute;tico</strong>: Consiste en 
+    generar una capa de <em>stub</em> por debajo del cliente de forma autom&aacute;tica. 
+    Dicho <em>stub</em> implementar&aacute; la misma interfaz que el servicio, 
+    lo cu&aacute;l nos permitir&aacute; desde nuestro cliente acceder al Servicio 
+    Web a trav&eacute;s del <em>stub</em> tal y como si estuvi&eacute;ramos accediendo 
+    directamente al servicio. 
+    <p>Para utilizar este mecanismo es recomendable contar con alguna herramienta 
+      dentro de nuestra plataforma que nos permita generar dicho <em>stub</em>, 
+      para no tener que encargarnos nosotros de realizar esta tarea manualmente.</p>
+  </li>
+  <li><strong>Acceso mediante proxy din&aacute;mico</strong>: Nos permite acceder 
+    al servicio generando el <em>stub</em> de forma din&aacute;mica, justo en 
+    el momento que queramos conectarnos al servicio, en lugar de tener el <em>stub</em> 
+    ya generado de forma est&aacute;tica como en el caso anterior. 
+    <p>Para poder hacer esto deberemos proporcionar la interfaz que deber&aacute; 
+      implementar dicho <em>stub</em>, que deber&aacute; ajustarse a la interfaz 
+      del Servicio Web (deber&aacute; tener m&eacute;todos con el mismo nombre 
+      y los mismos tipos de par&aacute;metros).</p>
+  </li>
+  <li><strong>Utilizaci&oacute;n de la Interfaz de Invocaci&oacute;n Din&aacute;mica 
+    (DII)</strong>: Esta forma de acceso nos permitir&aacute; hacer llamadas a 
+    procedimientos de nuestro Servicio Web de forma din&aacute;mica, sin crear 
+    un <em>stub</em> para ello. Utilizaremos este tipo de invocaci&oacute;n cuando 
+    no conozcamos la interfaz del servicio <em>a priori</em>, para invocarlo deberemos 
+    proporcionar &uacute;nicamente los nombres de los m&eacute;todos a utilizar 
+    mediante una cadena de texto. 
+    <p>Podremos utilizar esta interfaz din&aacute;mica, aunque no contemos con 
+      un documento WSDL que nos indique la interfaz y datos de nuestro servicio. 
+      En este caso, deberemos proporcionar manualmente esta informaci&oacute;n, 
+      de forma que sea capaz de acceder al servicio correctamente.</p>
+  </li>
+</ul>
+<h3>4.3.2 Invocaci&oacute;n mediante stub est&aacute;tico</h3>
+<p>Est&aacute; ser&aacute; la forma m&aacute;s sencilla de acceder siempre que 
+  contemos con una herramienta que genera el <em>stub</em> de forma autom&aacute;tica. 
+</p>
+<p>De esta forma, una vez generado el <em>stub</em>, s&oacute;lo tendremos que 
+  utilizar este <em>stub</em> como si se tratase de nuestro servicio directamente. 
+  En el <em>stub</em> podremos hacer las mismas llamadas a m&eacute;todos que 
+  har&iacute;amos directamente en la clase que implemente nuestro servicio, ya 
+  que ambos implementar&aacute;n la misma interfaz. El <em>stub</em> generado 
+  implementar&aacute; la interfaz <strong>Stub</strong>, adem&aacute;s de la interfaz 
+  de nuestro servicio. </p>
+<p>En WSDP podemos crear nuestro <em>stub</em> de forma sencilla a partir de la 
+  interfaz Java (RMI) de nuestro servicio, o bien del documento WSDL si no contamos 
+  con la interfaz Java. Para ello utilizaremos la herramienta <strong>xrpcc</strong>, 
+  o <strong>wscompile</strong> en las &uacute;ltimas versiones, para generar la 
+  parte del cliente.</p>
+<p>Vamos a ver c&oacute;mo se crear&iacute;a mediante el ejemplo del servicio 
+  <strong>Conversion</strong> que vimos en el tema anterior, que ofrece m&eacute;todos 
+  para convertir de <em>euros</em> a <em>ptas</em> y viceversa. </p>
+<p><strong>A partir de la interfaz Java</strong></p>
+<p>Supongamos que tenemos la interfaz de nuestro servicio definida en el fichero 
+  <em>ConversionIF.java</em> de la siguiente forma:</p>
+<pre class="codigo">package utils;
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface <strong>ConversionIF</strong> extends Remote {
+  public int <strong>euro2ptas</strong>(double euro) throws RemoteException;
+  public double <strong>ptas2euro</strong>(int ptas) throws RemoteException;
+}</pre>
+<p>Necesitaremos adem&aacute;s un fichero <strong>config.xml</strong> que defina 
+  la configuraci&oacute;n del Servicio Web como el que se muestra a continuaci&oacute;n:</p>
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; 
+&lt;configuration 
+  xmlns=&quot;http://java.sun.com/xml/ns/jax-rpc/ri/config&quot;&gt;    
+  &lt;service name=&quot;<strong>Conversion</strong>&quot; 
+    targetNamespace=&quot;<strong>http://j2ee.ua.es/wsdl</strong>&quot; 
+    typeNamespace=&quot;<strong>http://j2ee.ua.es/types</strong>&quot; 
+    packageName=&quot;<strong>utils</strong>&quot;&gt; 
+    &lt;interface name=&quot;<strong>utils.ConversionIF</strong>&quot; 
+      servantName=&quot;<strong>utils.ConversionImpl</strong>&quot;/&gt; 
+  &lt;/service&gt; 
+&lt;/configuration&gt; </pre>
+<p>En este fichero especificamos el nombre de nuestro Servicio Web, los espacios 
+  de nombres utilizados, el paquete donde guardaremos las clases del servicio, 
+  y el nombre de la interfaz del servicio y de la clase que implementa este servicio 
+  (<em>servantName</em>). </p>
+<p>Una vez tenemos estos ficheros podemos generar las clases necesarias autom&aacute;ticamente 
+  mediante la herramienta <strong>xrpcc</strong> introduciendo el siguiente comando:</p>
+<pre class="codigo">xrpcc.sh config.xml -<strong>client</strong> -classpath .  LINUX
+xrpcc config.xml -<strong>client</strong> -classpath .     WINDOWS</pre>
+<p>En las nuevas versiones de WSDP esta herramienta se ha sustituido por la herramienta 
+  <strong>wscompile</strong>, aunque <strong>xrpcc</strong> todav&iacute;a se 
+  mantenga por cuestiones de compatibilidad. Por ello ser&aacute; recomendable 
+  utilizar la nueva herramienta, que es similar a la anterior:</p>
+<pre class="codigo">wscompile.sh config.xml -<strong>gen:client</strong> -classpath .  LINUX
+wscompile config.xml -<strong>gen:client</strong> -classpath .     WINDOWS</pre>
+<p>NOTA: Si no especificamos el <em>classpath</em> expl&iacute;citamente en la 
+  l&iacute;nea de comando es posible que no consiga localizar las clases necesarias. 
+</p>
+<p><strong>A partir de la descripci&oacute;n WSDL</strong></p>
+<p>Si nosotros no hemos desarrollado el Servicio Web que queremos usar, lo normal 
+  ser&aacute; que no tengamos la interfaz Java de dicho servicio. Es m&aacute;s, 
+  puede ocurrir que el Servicio Web ni siquiera est&eacute; implementado en Java. 
+  En este caso deberemos recurrir al fichero WSDL que describa el servicio para 
+  generar nuestro cliente.</p>
+<p>En este caso utilizaremos la herramienta <strong>xrpcc</strong> o <strong>wscompile</strong> 
+  al igual que en el caso anterior. Tendremos un fichero de configuraci&oacute;n 
+  <em>config.xml</em> en el que deberemos indicar la direcci&oacute;n donde se 
+  encuentra la descripci&oacute;n WSDL del servicio, as&iacute; como el paquete 
+  en el que se guardar&aacute;n las clases generadas para el <em>stub</em>:</p>
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; 
+&lt;configuration 
+  xmlns=&quot;http://java.sun.com/xml/ns/jax-rpc/ri/config&quot;&gt; 
+  &lt;wsdl location=&quot;<strong>http://localhost:8080/conv/Conversion.wsdl</strong>&quot;    
+    packageName=&quot;<strong>utils</strong>&quot;&gt; 
+  &lt;/wsdl&gt; 
+&lt;/configuration&gt;</pre>
+<p>Para generar el <em>stub</em> deberemos introducir el siguiente comando con 
+  la antigua herramienta <strong>xrpcc</strong>:</p>
+<pre class="codigo">xrpcc.sh config.xml -<strong>client</strong>  LINUX
+xrpcc config.xml -<strong>client     </strong>WINDOWS</pre>
+<p>O utilizar la nueva herramienta <strong>wscompile</strong>, cosa que ser&aacute; 
+  recomendable ya que <strong>xrpcc</strong> podr&iacute;a desaparecer en pr&oacute;ximas 
+  versiones:</p>
+<pre class="codigo">wscompile.sh config.xml -<strong>gen:client</strong>		LINUX
+wscompile config.xml -<strong>gen:client</strong>		WINDOWS</pre>
+<p>Esto nos generar&aacute; la interfaz RMI del servicio dentro del paquete que 
+  hayamos indicado. Adem&aacute;s habr&aacute; creado las clases auxiliares necesarias 
+  para invocar el servicio mediante JAX-RPC. La interfaz del servicio que podremos 
+  utilizar desde nuestro programas se habr&aacute; generado en una clase cuyo 
+  nombre ser&aacute; el nombre del tipo de puerto al que vayamos a acceder. Si 
+  utilizamos la opci&oacute;n <em>-keep</em> de <strong>wscompile</strong>, para 
+  que no elimine los fuentes, podremos consultar esta interfaz para conocer los 
+  m&eacute;todos que podremos invocar sobre ella. </p>
+<p>Tendremos que obtener un objeto <strong>Stub</strong> que implemente dicha 
+  interfaz, y que ser&aacute; quien nos d&eacute; acceso al servicio. Para ello 
+  nos habr&aacute; generado un fichero con el sufijo <strong><em>&lt;Nombre_del_servicio&gt;</em>_Impl</strong> 
+  que podremos instanciar desde nuestro cliente mediante un constructor vac&iacute;o, 
+  y a partir de &eacute;l obtener el <strong>Stub</strong> para acceder a nuestro 
+  servicio. Para ello tendr&aacute; definido un m&eacute;todo <strong>get<em>&lt;Nombre_del_tipo_de_puerto&gt;</em>()</strong> 
+  que nos devolver&aacute; el objeto <strong>Stub</strong> correspondiente al 
+  puerto para acceder al servicio, que podremos referenciar mediante la interfaz 
+  <strong><em>&lt;Nombre_del_tipo_de_puerto&gt;</em></strong>.</p>
+<p>En el pr&oacute;ximo punto veremos con m&aacute;s detalle como utilizar estos 
+  objetos en nuestro cliente para obtener el objeto <strong>Stub</strong> y acceder 
+  al servicio.</p>
+<p><strong>Implementaci&oacute;n del cliente</strong></p>
+<p>Con cualquiera de estos dos m&eacute;todos anteriores habremos generado una 
+  serie de clases necesarias para invocar el servicio. Entre ellas, tendremos 
+  una clase llamada <strong><em>&lt;Nombre_del_servicio&gt;</em>_Impl </strong>que 
+  ser&aacute; la que deberemos utilizar dentro de nuestra aplicaci&oacute;n cliente 
+  para obtener un <em>stub</em>. Esta clase tendr&aacute; un m&eacute;todo <strong>get<em>&lt;Nombre_del_tipo_de_puerto&gt;</em>()</strong> 
+  que nos devolver&aacute; el <em>stub</em> que buscamos. </p>
+<pre class="codigo">Stub stub = (Stub)(new <strong>Conversion_Impl</strong>().<strong>getConversionIFPort</strong>()); </pre>
+<p>Deberemos indicar al <em>stub</em> al menos cual es la direcci&oacute;n donde 
+  se encuentra atendiendo el servicio (su <em>endpoint</em>). Esto lo estableceremos 
+  como una propiedad del objeto <strong>Stub</strong> obtenido:</p>
+<pre class="codigo">stub.<strong>_setProperty</strong>(javax.xml.rpc.Stub.<strong>ENDPOINT_ADDRESS_PROPERTY</strong>, 
+   endpoint);  </pre>
+<p>Para finalizar, tendremos que hacer una conversi&oacute;n <em>cast</em> del 
+  <em>stub</em> obtenido a la interfaz de nuestro servicio, para poder invocar 
+  de esta forma los m&eacute;todos de nuestro servicio.</p>
+<p>En el caso del ejemplo anterior podremos acceder al <em>stub</em> (o <em>proxy</em>) 
+  generado de la siguiente forma:</p>
+<pre class="codigo">private static ConversionIF <strong>creaProxy</strong>(String endpoint) {
+  Stub stub = (Stub)(new Conversion_Impl().getConversionIFPort());
+  stub._setProperty(javax.xml.rpc.Stub.ENDPOINT_ADDRESS_PROPERTY, 
+    endpoint);
+  return (<strong>ConversionIF</strong>)stub;
+}</pre>
+<p>Este ser&aacute; el &uacute;nico c&oacute;digo adicional que debamos insertar 
+  para acceder a nuestro servicio. Una vez obtenido este <em>stub</em> podremos 
+  invocar los m&eacute;todos del servicio como si se tratase de un objeto local:</p>
+<pre class="codigo">public static void main(String[] args) {
+  try {
+    ConversionIF conv = <strong>creaProxy</strong>(args[0]);
+    int ptas = conv.<strong>euro2ptas</strong>(Double.parseDouble(args[1]));
+    System.out.println(args[1] + &quot; euros son &quot; + ptas + &quot; ptas&quot;);
+  } catch (Exception e) {
+    e.printStackTrace();
+  }
+} </pre>
+<p><strong>Crear el cliente con Tomcat</strong></p>
+<p>En lugar de tener que utilizar las herramientas en l&iacute;nea de comandos, 
+  podremos utilizar <em>ant</em> para automatizar la creaci&oacute;n de capas 
+  del cliente. A continuaci&oacute;n se muestra un ejemplo de <em>buildfile</em> 
+  para realizar esta tarea:</p>
+<pre class="codigo">&lt;project name=&quot;<strong>Conversion</strong>&quot; default=&quot;client&quot; basedir=&quot;.&quot;&gt;
+<br>&lt;!-- Propiedades --&gt;
+
+&lt;property name=&quot;jwsdp.home&quot; value=&quot;<strong>c:\\jwsdp-1.3</strong>&quot;/&gt;<br>&lt;property name=&quot;main.class&quot; value=&quot;<strong>Cliente</strong>&quot;/&gt;<br><br>&lt;property name=&quot;bin.home&quot; value=&quot;${basedir}/bin&quot;/&gt;<br>&lt;property name=&quot;src.home&quot; value=&quot;${basedir}/src&quot;/&gt;<br><br>&lt;property name=&quot;compile.debug&quot; value=&quot;true&quot;/&gt;<br>&lt;property name=&quot;compile.deprecation&quot; value=&quot;false&quot;/&gt;<br>&lt;property name=&quot;compile.optimize&quot; value=&quot;true&quot;/&gt;<br><br>&lt;property name=&quot;config.file&quot; value=&quot;${basedir}/etc/config.xml&quot;/&gt;<br><br>&lt;!-- Classpath --&gt;<br><br>&lt;path id=&quot;compile.classpath&quot;&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/jwsdp-shared/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/jaxp/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/jaxp/lib/endorsed&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/jaxrpc/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/saaj/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/apache-ant/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+&lt;/path&gt;<br>
+&lt;!-- Definicion de tareas --&gt;
+<br>&lt;taskdef name=&quot;wscompile&quot; <br>         classname=&quot;com.sun.xml.rpc.tools.ant.Wscompile&quot;&gt;
+  &lt;classpath refid=&quot;compile.classpath&quot;/&gt;
+&lt;/taskdef&gt;
+&lt;taskdef name=&quot;wsdeploy&quot; <br>         classname=&quot;com.sun.xml.rpc.tools.ant.Wsdeploy&quot;&gt;
+  &lt;classpath refid=&quot;compile.classpath&quot;/&gt;
+&lt;/taskdef&gt;
+   
+&lt;!-- Objetivos --&gt;<br><br>&lt;target name=&quot;client&quot;<br>        description=&quot;Genera las capas del cliente&quot;&gt;<br>  &lt;wscompile keep=&quot;true&quot;<br>             client=&quot;true&quot;<br>             base=&quot;${bin.home}&quot;<br>             sourcebase=&quot;${src.home}&quot;         <br>             xPrintStackTrace=&quot;true&quot;<br>             verbose=&quot;true&quot;<br>             config=&quot;${config.file}&quot;&gt;<br>    &lt;classpath&gt;<br>      &lt;path refid=&quot;compile.classpath&quot;/&gt;<br>    &lt;/classpath&gt;<br>  &lt;/wscompile&gt;<br>&lt;/target&gt;<br><br>&lt;target name=&quot;compile&quot; depends=&quot;client&quot;<br>        description=&quot;Compila el cliente&quot;&gt;<br>  &lt;javac srcdir=&quot;${src.home}&quot;
+         destdir=&quot;${bin.home}&quot;<br>         debug=&quot;${compile.debug}&quot;<br>         deprecation=&quot;${compile.deprecation}&quot;<br>         optimize=&quot;${compile.optimize}&quot;&gt;<br>    &lt;classpath refid=&quot;compile.classpath&quot;/&gt;<br>  &lt;/javac&gt;<br>&lt;/target&gt;<br><br>&lt;target name=&quot;run&quot; depends=&quot;compile&quot;<br>        description=&quot;Ejecuta el cliente&quot;&gt; <br>  &lt;java classname=&quot;${main.class}&quot;<br>        fork=&quot;true&quot;&gt;<br>    &lt;classpath&gt;<br>      &lt;path refid=&quot;compile.classpath&quot;/&gt;<br>      &lt;pathelement location=&quot;${bin.home}&quot;/&gt;<br>    &lt;/classpath&gt;<br>  &lt;/java&gt;<br>&lt;/target&gt;<br><br>&lt;/project&gt;
+</pre>
+<p>Para utilizar este <em>buildfile</em> deberemos tener nuestro directorio de 
+  desarrollo estructurado de la siguiente forma:</p>
+<table width="100%" border="0">
+  <tr> 
+    <td width="7%" valign="top"><code>src</code></td>
+    <td width="93%">C&oacute;digo fuente del cliente</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>etc</code></td>
+    <td>Contendr&aacute; el fichero de configuraci&oacute;n <code>config.xml</code>.</td>
+  </tr>
+</table>
+<p>Tendremos disponibles las siguientes tareas de <em>ant</em>:</p>
+<p><code><strong>client</strong></code>: Crea las capas necesarias para acceder 
+  al servicio desde el cliente (<em>stub</em>). Generar&aacute; en <code>src</code> 
+  los fuentes que implementan estas capas, y en <code>bin</code> estas mismas 
+  clases compiladas. Esto ser&aacute; lo primero que deberemos hacer, ya que para 
+  implementar el cliente deberemos contar con el <em>stub</em> para acceder al 
+  servicio. Despu&eacute;s de generar el <em>stub</em>, escribiremos el c&oacute;digo 
+  de nuestro cliente que utilice este <em>stub</em> para acceder al servicio. 
+  Una vez tengamos implementado el cliente deberemos compilarlo con el siguiente 
+  objetivo.</p>
+<p><code><strong>compile</strong></code>: Compila las clases de nuestra aplicaci&oacute;n, 
+  cuyos fuentes est&aacute;n ubicados en el directorio <code>src</code>, produciendo 
+  las clases compiladas en el directorio <code>bin</code>.</p>
+<p><code><strong>run</strong></code>: Ejecuta la clase principal de nuestro cliente.</p>
+<h3>4.3.3 Invocaci&oacute;n mediante proxy din&aacute;mico</h3>
+<p>Con este m&eacute;todo no tendremos que haber generado previamente de forma 
+  est&aacute;tica el <em>stub</em> para nuestro servicio, sino que &eacute;ste 
+  ser&aacute; generado de forma din&aacute;mica en tiempo de ejecuci&oacute;n.</p>
+<p>Para hacer esto, deberemos proporcionar la descripci&oacute;n WSDL del Servicio 
+  Web, adem&aacute;s de una interfaz Java que implemente los m&eacute;todos de 
+  dicho servicio. </p>
+<p>Ahora ya no necesitamos ninguna herramienta para generar las clases del cliente, 
+  ya que no vamos a generar ninguna clase. Pasaremos directamente a introducir 
+  el c&oacute;digo de nuestro cliente.</p>
+<p>Deberemos introducir en nuestro programa los nombres que se le ha dado al servicio 
+  y a los puertos dentro del XML. Estos nombres normalmente constar&aacute;n de 
+  su nombre local y del espacio de nombres al que pertenezcan, aunque pueden venir 
+  dados &uacute;nicamente por un nombre local. Para representar estos nombres 
+  (<em>qualified names</em>) tenemos el objeto <strong>QName</strong> en java, 
+  que se puede construir de dos formas distintas, seg&uacute;n si pertenece a 
+  un espacio de nombres o no:</p>
+<pre class="codigo"><strong>QName</strong> nombre = new <strong>QName</strong>(namespace, nombre_local);
+<strong>QName</strong> nombre = new <strong>QName</strong>(nombre_local);</pre>
+<p>Lo primero que deberemos hacer es obtener un objeto <strong>Service</strong> 
+  correspondiente al servicio que queremos utilizar. Para ello necesitamos previamente 
+  un <strong>ServiceFactory</strong> que nos permita construir objetos <strong>Service</strong>:</p>
+<pre class="codigo"> <strong>ServiceFactory</strong> sf = <strong>ServiceFactory</strong>.newInstance();</pre>
+<p>Ahora podremos crear nuestro objeto <strong>Service</strong> indicando la direcci&oacute;n 
+  donde se encuentra el documento WSDL, y el nombre del servicio al que queremos 
+  acceder:</p>
+<pre class="codigo"><strong>Service</strong> serv = sf.<strong>createService</strong>(
+  new URL(&quot;http://localhost:8080/conversion/Conversion.wsdl&quot;), 
+  new QName(&quot;http://j2ee.ua.es/wsdl&quot;, &quot;Conversion&quot;));</pre>
+<p>Una vez tenemos el servicio, ya s&oacute;lo nos queda acceder al puerto concreto 
+  que vayamos a utilizar del servicio. Tendremos que indicar el nombre del puerto, 
+  y la clase de una interfaz que se ajuste al puerto que queremos utilizar. En 
+  el caso del servicio de <em>Conversion</em>, podemos utilizar la interfaz que 
+  hemos definido anteriormente (<strong>ConversionIF</strong>):</p>
+<pre class="codigo">ConversionIF conv = (ConversionIF) serv.<strong>getPort</strong>(
+  new QName(&quot;http://j2ee.ua.es/wsdl&quot;, &quot;ConversionIFPort&quot;), 
+  utils.ConversionIF.class); </pre>
+<p>Una vez hecho esto podremos acceder al servicio a trav&eacute;s de dicho objeto, 
+  de la misma forma que si accedi&eacute;semos directamente al servicio, ya que 
+  implementar&aacute; la misma interfaz:</p>
+<pre class="codigo">int ptas = conv.euro2ptas(Double.parseDouble(args[1]));
+System.out.println(args[1] + &quot; euros son &quot; + ptas + &quot; ptas&quot;);</pre>
+<p>Este m&eacute;todo nos obliga a introducir m&aacute;s c&oacute;digo en el cliente 
+  para conectar con el servicio, pero tiene la ventaja de no necesitar utilizar 
+  herramientas adicionales, y si introducimos alg&uacute;n cambio en el servicio, 
+  no tendremos que volver a generar las clases del cliente.</p>
+<h3>4.3.4 Interfaz de invocaci&oacute;n din&aacute;mica (DII)</h3>
+<p>Mediante esta interfaz, ya no utilizaremos un <em>stub</em> para invocar los 
+  m&eacute;todos del servicio, sino que nos permitir&aacute; invocar los m&eacute;todos 
+  de forma din&aacute;mica, indicando simplemente el nombre del m&eacute;todo 
+  que queremos invocar como una cadena de texto, y sus par&aacute;metros como 
+  un <em>array</em> de objetos.</p>
+<p>Esto nos permitir&aacute; utilizar servicios que no conocemos previamente. 
+  De esta forma podremos implementar por ejemplo un <em>broker</em> de servicios. 
+  Un <em>broker</em> es un servicio intermediario, al que podemos solicitar alguna 
+  tarea que necesitemos. Entonces el <em>broker</em> intentar&aacute; localizar 
+  el servicio m&aacute;s apropiado para dicha tarea en un registro de servicios, 
+  y lo invocar&aacute; por nosotros. Una vez haya conseguido la informaci&oacute;n 
+  que requerimos, nos la devolver&aacute;. De esta forma la localizaci&oacute;n 
+  de servicios se hace totalmente transparente para nosotros.</p>
+<p>Podremos acceder con esta interfaz tanto si contamos con un documento WSDL 
+  como si no contamos con &eacute;l, pero en el caso de que no tengamos el WSDL 
+  deberemos especificar en el c&oacute;digo todos los datos incluidos en estos 
+  documentos que necesitemos y de los que en este caso no disponemos (<em>endpoint</em>, 
+  par&aacute;metros y tipos, etc).</p>
+<p><strong>A partir de un documento WSDL</strong></p>
+<p>Vamos a ver el caso en el que contamos con el documento WSDL que describe el 
+  servicio. El primer paso ser&aacute; conseguir el objeto <strong>Service</strong> 
+  igual que hicimos en el caso anterior:</p>
+<pre class="codigo"><span class="codigo">ServiceFactory sf = ServiceFactory.newInstance();</span> 
+Service serv = sf.createService(
+  new URL(&quot;http://localhost:8080/conversion/Conversion.wsdl&quot;), 
+  new QName(&quot;http://j2ee.ua.es/wsdl&quot;, &quot;Conversion&quot;));</pre>
+<p>Utilizaremos el objeto <strong>Call</strong> para hacer las llamadas din&aacute;micas 
+  a los m&eacute;todos del servicio. Deberemos crear un objeto <strong>Call</strong> 
+  correspondiente a un determinado puerto y operaci&oacute;n de nuestro servicio:</p>
+<pre class="codigo"><strong>Call</strong> call = serv.<strong>createCall</strong>(
+  new QName(&quot;http://j2ee.ua.es/wsdl&quot;, &quot;ConversionIFPort&quot;),
+  new QName(&quot;http://j2ee.ua.es/wsdl&quot;, &quot;euro2ptas&quot;));</pre>
+<p>El &uacute;ltimo paso ser&aacute; invocar la llamada que hemos creado:</p>
+<pre class="codigo">Integer result = (Integer) call.<strong>invoke</strong>(
+                 new Object[] { new Double(30.0) });</pre>
+<p>A este m&eacute;todo le debemos proporcionar un <em>array</em> de objetos como 
+  par&aacute;metro, ya que debe poder utilizarse para cualquier operaci&oacute;n, 
+  con diferente n&uacute;mero y tipo de par&aacute;metros. Como tampoco se conoce<em> 
+  a priori</em> el valor devuelto por la llamada, deberemos hacer una conversi&oacute;n 
+  <em>cast</em> al tipo que corresponda, ya que nos devuelve un <strong>Object</strong> 
+  gen&eacute;rico.</p>
+<p><strong>Sin un documento WSDL</strong></p>
+<p>Si no contamos con el WSDL del servicio, crearemos un objeto <strong>Service</strong> 
+  proporcionando &uacute;nicamente el nombre del servicio:</p>
+<pre class="codigo"><span class="codigo">ServiceFactory sf = ServiceFactory.newInstance();</span> 
+Service serv = sf.createService( 
+  new QName(&quot;http://j2ee.ua.es/wsdl&quot;, &quot;Conversion&quot;));</pre>
+<p>A partir de este objeto podremos obtener un objeto <strong>Call</strong> para 
+  realizar una llamada al servicio de la misma forma que vimos en el caso anterior:</p>
+<pre class="codigo"><strong>Call</strong> call = serv.<strong>createCall</strong>(
+  new QName(&quot;http://j2ee.ua.es/wsdl&quot;, &quot;ConversionIFPort&quot;),
+  new QName(&quot;http://j2ee.ua.es/wsdl&quot;, &quot;euro2ptas&quot;));</pre>
+<p>En este caso el objeto <strong>Call</strong> no tendr&aacute; ninguna informaci&oacute;n 
+  sobre las caracter&iacute;sticas del servicio, ya que no tiene acceso al documento 
+  WSDL que lo describe, por lo que deberemos proporcion&aacute;rselas nosotros 
+  expl&iacute;citamente.</p>
+<p>En primer lugar, deberemos especificar el <em>endpoint</em> del servicio, para 
+  que sepa a qu&eacute; direcci&oacute;n debe conectarse para acceder a dicho 
+  servicio:</p>
+<pre class="codigo">call.<strong>setTargetEndpointAddress</strong>(endpoint);
+</pre>
+<p>Una vez especificada esta informaci&oacute;n, deberemos indicar el tipo de 
+  datos que nos devuelve la llamada a la operaci&oacute;n que vamos a invocar 
+  (en nuestro ejemplo <em>euro2ptas</em>):</p>
+<pre class="codigo">QName t_int = 
+  new QName(&quot;http://www.w3.org/2001/XMLSchema&quot;, &quot;int&quot;);
+call.<strong>setReturnType</strong>(t_int);
+</pre>
+<p>Por &uacute;ltimo, indicaremos los par&aacute;metros de entrada que toma la 
+  operaci&oacute;n y sus tipos:</p>
+<pre class="codigo">QName t_double = 
+  new QName(&quot;http://www.w3.org/2001/XMLSchema&quot;, &quot;double&quot;);
+call.<strong>addParameter</strong>(&quot;double_1&quot;, t_double, ParameterMode.IN);</pre>
+<p>Una vez hecho esto, podremos invocar dicha operaci&oacute;n igual que en el 
+  caso anterior:</p>
+<pre class="codigo">Integer result = (Integer) call.<strong>invoke</strong>(
+                 new Object[] { new Double(30.0) });</pre>
+<h2>&nbsp;</h2>
+</body>
+</html>

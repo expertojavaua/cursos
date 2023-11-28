@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Ejercicios de JSP</title>
+	<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+
+<body>
+
+<h1> JSP&nbsp;</h1>
+<p>Los ejercicios de JSP trabajan sobre la aplicación Web <b>conversor</b>.
+<p><b>1.</b> <b>Conversor JSP.</b>   Esta aplicación pretende convertir una
+cantidad en pesetas introducida en un formulario, a euros. Para ello, se pide crear una página JSP
+<code>conversor.jsp</code> a la que:
+<ul>
+<li>Si se le llama sin que exista un parametro HTTP <code>numero</code>, mostrará
+el formulario para introducir la cantidad de pesetas. Dicho formulario deberá
+  tener un campo de texto llamado <code>numero </code>con la cantidad a
+  convertir, y un botón <i>submit</i> que envíe a esta misma página.</li>
+<li>Si se la llama con un parámetro  HTTP <code>numero</code> tomará el valor del
+parámetro, realizará la conversión a euros de dicho parámetro y mostrará el
+  resultado en pantalla.
+</ul>
+NOTAS sobre cómo poder implementarla:
+<ul>
+  <li>Para comprobar si existe o no parámetro, podéis comprobar con <code>request.getParameter(String)</code>
+    si existe un parámetro <code>numero </code>(si no existe el método
+    devolverá <code>null</code>)</li>
+  <li>Si existe, habrá que convertirlo a entero y después a euros. Podéis
+    utilizar el método <code>Integer.parseInt(String)</code><pre class="codigo">&lt;%
+if (request.getParameter(&quot;numero&quot;) != null)
+{
+	int numero = Integer.parseInt(request.getParameter(&quot;numero&quot;));
+	double euros =  ... convertir a euros ...
+%&gt;
+...
+Mostrar euros
+...</pre>
+           
+  </li>
+  <li>Para controlar el número de decimales, podéis utilizar la clase <code>java.text.NumberFormat</code><i>,
+    </i>indicándole cuántos decimales queréis mostrar<pre class="codigo">&lt;%
+	...
+	java.text.NumberFormat nf = java.text.NumberFormat.getInstance();
+	nf.setMinimumFractionDigits(2);
+	nf.setMaximumFractionDigits(2);
+%&gt;
+...
+&lt;%= nf.format(euros) %&gt;
+...</pre>
+           
+  </li>
+</ul>
+<p><b>2. Conversor JSP</b>. Sobre la aplicación anterior, una vez realizada la parte básica, añadirle tratamiento de errores, de manera
+que si se produce una excepción en la página <code>conversor.jsp</code> se salte a la
+página de error, <code>error.jsp</code> (que también debéis crear).&nbsp;</p>
+<ul>
+  <li>La página <code>conversor.jsp</code>  deberá tener una directiva <code>page</code>
+    que indique la página de error a la que se salta (con <code>errorPage</code>):<pre class="codigo">&lt;%@ page errorPage=&quot;error.jsp&quot; %&gt;</pre>
+           
+  </li>
+  <li>La página <code>error.jsp</code>  deberá tener una directiva <code>page</code>
+    que indique que es una página de error (con <code>isErrorPage</code>):<pre class="codigo">&lt;%@ page isErrorPage=&quot;true&quot; %&gt;</pre>
+           
+  </li>
+  <li>En <code>conversor.jsp, </code>si la cantidad que
+representa el parámetro <code>numero</code>  es negativa, lanzar una excepción
+con el mensaje de error deseado (<code>throw new Exception("La cantidad no es correcta")</code>).</li>
+</ul>
+<blockquote>
+  <pre class="codigo">&lt;%
+...
+	int numero = Integer.parseInt(request.getParameter(&quot;numero&quot;));
+	if (numero &lt; 0)
+		throw new Exception (&quot;...texto del error...&quot;);
+%&gt;
+...
+&lt;%= euros %&gt;
+...</pre>
+           
+</blockquote>
+<ul>
+  <li>&nbsp;Imprimir dicho mensaje desde la página de error (utilizando el
+    objeto <code>exception </code>de JSP, y llamado a su método <code>getMessage()</code>)</li>
+</ul>
+
+<p>
+<b>3. (OPTATIVO) Contador de visitas.</b> crear un fragmento de código JSP que sirva 
+como contador de visitas. El objetivo es poder incluir este código 
+en otras páginas JSP, por lo que no es necesario (ni conveniente) 
+que sea una página web completa, sino solo el texto del contador. Este
+debe aparecer con texto HTML en negrita similar al siguiente
+<p>
+<b> Esta página ha sido visitada X veces </b>
+</p>
+<p>Para el contador, empleamos una variable declarada en la forma <code>&lt;%!
+variable %&gt;. </code>Esto nos permitirá dejarla definida en el método <code>init()</code>&nbsp;
+del servlet. Después, simplemente mostramos su valor en pantalla cada vez que
+se llame a la página, e incrementamos el contador.
+</p>
+<p>
+Valorar si sería más conveniente emplear la directiva <code>include</code> 
+o la acción del mismo nombre. El código debe poder incluirse en distintas páginas de
+forma que cada una tenga un contador propio.
+</p>
+<p>
+Como ejemplo, incluirlo en la aplicación <i>conversor</i> del ejercicio
+anterior.
+</p>
+Una vez se tenga funcionando el contador básico, mejorarlo haciendo que 
+    el número de visitas se conserve, aunque el servidor se apague o se descargue 
+    el JSP de la memoria. Para ello, tener en cuenta que el n&uacute;mero de visitas se puede guardar en un fichero con el nombre 
+      de la p&aacute;gina (y con extensión <i>txt</i>, por ejemplo). Para simplificar, se puede suponer que en la página principal
+	  se define una variable "nombrePag" de tipo String con el nombre del fichero.
+	  No obstante, este se podría obtener a partir del m&eacute;todo <code>getRequestURI()</code> 
+      del objeto impl&iacute;cito <code>request</code> (este m&eacute;todo devuelve 
+      la URI completa de la p&aacute;gina actual, de la que habr&aacute; que extraer 
+      el nombre del fichero).<h1>JavaBeans</h1>
+<p>Los ejercicios de beans trabajan sobre la aplicación <b>appbeans</b>.
+<p> <b> 1.</b>  Implementar la clase <b>beans.</b><strong>CronoBean</strong> 
+para que sirva 
+  como &quot;cron&oacute;metro&quot;. Cuando el <em>bean</em> se inicialice, debe 
+  guardar internamente el momento de su creaci&oacute;n. El <em>bean</em> tendr&aacute; 
+  una propiedad <tt>segundos</tt>, que devolver&aacute; el n&uacute;mero de segundos 
+  transcurridos desde su creaci&oacute;n. Para calcular tiempos, se puede usar 
+  el m&eacute;todo <tt>System.currentTimeMillis()</tt>, que devuelve el n&uacute;mero 
+  de milisegundos transcurridos entre el instante actual y el 1/1/1970.<p>Probar el bean en una p&aacute;gina llamada <strong>cronoini.jsp</strong> que 
+  lo inicialice (mostrando un mensaje HTML que indique que se est&aacute; inicializando) 
+  y muestre el n&uacute;mero de segundos transcurridos. Acceder al <em>bean</em> 
+  desde otra p&aacute;gina <strong>crono2.jsp</strong> que muestre el mismo temporizador.
+&iquest;Qu&eacute; &aacute;mbito 
+  debe tener el <em>bean</em> para funcionar correctamente?<p><b>2. (OPTATIVO) </b>Implementar
+la clase <b>beans.FechasBean, </b>con &aacute;mbito de sesi&oacute;n 
+  que almacene, por un lado, la fecha y hora actuales, y por otro, la fecha y
+hora en que se creó.&nbsp;<p>NOTA: considerad para almacenar la fecha y hora de
+creación y actuales 4 variables String: dos <i>fechaCreacion</i> y <i>horaCreacion</i>
+con la fecha y hora de creación del bean, y otras dos <i>fechaActual </i>y <i>horaActual
+</i>con la fecha y hora actuales. Para obtener la fecha y hora en un momento
+determinado (bien sea cuando se crea el bean o cuando se llame en un momento
+determinado), podemos utilizar la clase <i>java.util.Calendar</i>, y concatenar
+las partes que pueda ir devolviendo para formar la fecha y la hora:<pre class="codigo">Calendar c = Calendar.getInstance();
+<b>// Fecha actual</b>
+return &quot;&quot; + c.get(Calendar.DAY_OF_MONTH) + &quot;/&quot; + 
+       (c.get(Calendar.MONTH) + 1) + &quot;/&quot; + 
+       c.get(Calendar.YEAR);
+<b>// Hora actual</b>
+return &quot;&quot; + c.get(Calendar.HOUR) + &quot;:&quot; + 
+       c.get(Calendar.MINUTE) + &quot;:&quot; + 
+       c.get(Calendar.SECOND);</pre>
+           
+<p>Llamar al bean desde una página <b>ahora.jsp</b>, que se
+recargue automáticamente cada 10 segundos actualizando la fecha y hora, tanto actuales como de
+creación del bean. Probad a abrir dos navegadores diferentes (netscape y
+explorer, por ejemplo), y cargar la página desde los dos. ¿Os pone la misma
+fecha de creación en los dos navegadores? ¿Por qué?<p>Abridlo desde 2
+ventanas diferentes de un mismo navegador (que no sea Explorer). ¿Qué ocurre ahora con la fecha de creación?
+¿Por qué?<p>Cambiad el ámbito del bean a aplicación y probad qué ocurre con
+las fechas en los dos casos anteriores. ¿Por qué?<p><b>3. (OPTATIVO)</b>
+Partiendo del ejercicio 3 de JSP del contador, sustituir la forma de
+implementarlo por otra que utilice un bean <b>ContadorBean</b>, que almacene el
+número de visitas. Deberemos decidir qué ámbito dar al bean, y gestionar
+desde el mismo el almacenamiento permanente de las visitas en un fichero, por si
+el servidor o las páginas se cierran.
+</body>
+</html>

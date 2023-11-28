@@ -1,0 +1,86 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+                                                            
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+                                                            
+                                                       
+  <link rel="stylesheet" href="../apuntes.css" type="text/css">
+  <title>Ejercicios de introducci&oacute;n a los servlets</title>
+  <style>
+    tt,code,var  {font-size:105%}	
+  </style>
+</head>
+  <body>
+           
+<h1>Ejercicios de introducci&oacute;n a los servlets</h1>
+<p><strong>1</strong>. Completar el servlet <b>FechaServlet</b><i> </i>de la
+aplicación <b>appserv1</b> para que, tanto por GET como por POST, muestre una
+página HTML con la fecha y hora actuales en una cabecera &lt;H3&gt;, y en el
+&lt;TITLE&gt; de la página. Para ello podéis utilizar la clase <tt>java.util.Date</tt>,
+y sacar por la salida del servlet la hora en formato cadena: </p>
+<pre class="codigo">public void doGet(...) throws ...
+{
+	String fecha = &quot;&quot; + new java.util.Date();
+	response.setContentType(...);
+	out = response.getWriter();
+	out.println(&quot;&lt;HTML&gt;&quot;);
+	... // sacar la fecha tanto en el TITLE como en una cabecera H3
+}</pre>
+           
+<p>Una vez hecho, configurad el descriptor de la aplicación para que, además
+de poder llamar al servlet con su nombre por el alias <i>servlet</i>, lo podamos
+llamar con la URL:</p>
+<pre class="codigo">http://localhost:8080/appserv1/fechaHora</pre>
+           
+<p><strong>2. (OPTATIVO) </strong>Implementar en el servlet <b>ParamIniServlet</b><i>
+</i>de la aplicación <b>appserv1</b><i> </i>un servlet que muestre en una tabla
+el nombre y el valor de todos los parámetros de inicio que se tengan
+configurados para ese servlet en el fichero descriptor (<i>web.xml</i>). La
+tabla tendrá dos columnas: una con el nombre del parámetro y otra con el
+valor.</p>
+<p>Una vez hecho, probadlo añadiéndole en el fichero <i>web.xml </i>3
+parámetros de inicio con nombres <i>param1, param2 </i>y <i>param3 </i>y
+valores <i>val1, val2 </i>y <i>val3</i>. Para ello deberéis dar un nombre al
+servlet (el nombre es arbitrario).</p>
+<p>NOTA: para recorrer todos los parámetros de inicio, deberéis utilizar el
+método <i>init(...)</i> que tiene un parámetro <i>ServletConfig</i>, y
+utilizar dicho parámetro para obtener los nombres de los parámetros, y
+recorrerlos uno a uno para obtener su valor:</p>
+<pre class="codigo">ServletConfig sc;
+
+public void init(ServletConfig s) throws ServletException
+{
+<b>	super.init(conf);
+	</b>sc = s;
+}
+
+public void doGet(...) throws...
+{
+	java.util.Enumeration nombres = <b>sc.getInitParameterNames();
+	</b>while (nombres.hasMoreElements())
+	{
+		String nombre = (String)(nombres.nextElement());
+		String valor = sc.getInitParameter(nombre);
+		<b>... // Mostrar nombre y valor en una tabla</b>
+	}
+}</pre>
+           
+<p>&nbsp;</p>
+<p><strong>3. </strong>La aplicaci&oacute;n <b>appforms </b>contiene un
+formulario <b>form_datos.html </b>con una serie de campos (tipo texto, listas,
+checkboxes...). Se pide que dicho formulario, en su action, llame al servlet <b>DatosServlet
+</b>que deberéis implementar. El servlet recogerá todos los parámetros del
+formulario y los mostrará en una tabla de dos columnas (una con el nombre del
+parámetro y otra con el valor).</p>
+<p><b>4. </b>Sobre la aplicación anterior, hacer que el servlet <b>DatosServlet</b>
+redirija a una página <b>index.html</b> (que deberéis implementar en el
+directorio raíz de la aplicación) con un
+mensaje de bienvenida, si los datos introducidos en el formulario son correctos,
+y a la misma página <b>form_datos.html</b> si hay algún dato incorrecto.
+Entenderemos por dato incorrecto que alguno de los campos de texto se quede
+vacío. Utilizad el método <i>sendRedirect</i> de la respuesta para las
+redirecciones.</p>
+</body>
+        </html>

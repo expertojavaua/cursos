@@ -1,0 +1,997 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>Tema 4: Servicios Web</title>
+                             
+  <meta content="text/html; charset=iso-8859-1"
+ http-equiv="Content-Type">
+               
+  <link href="../apuntes.css" rel="stylesheet" type="text/css">
+                 
+  <meta content="Microsoft FrontPage 4.0" name="GENERATOR">
+</head>
+  <body bgcolor="#ffffff" text="#000000">
+<h1>4.Servicios web</h1>
+<h2>4.1. Introducci&oacute;n a los Servicios Web</h2>
+<p>El dise&ntilde;o del software tiende a ser cada vez m&aacute;s modular. Las 
+  aplicaciones se componen de una serie de componentes (servicios) reutilizables, 
+  que pueden encontrarse distribuidos a lo largo de una serie de m&aacute;quinas 
+  conectadas en red.</p>
+<p>Los Servicios Web nos permitir&aacute;n distribuir nuestra aplicaci&oacute;n 
+  a trav&eacute;s de Internet, pudiendo una aplicaci&oacute;n utilizar los servicios 
+  ofrecidos por cualquier servidor conectado a Internet.</p>
+<h3>4.1.1 &iquest;Qu&eacute; es un Servicio Web?</h3>
+<p>Un Servicio Web es un componente al que podemos acceder mediante protocolos 
+  Web est&aacute;ndar, utilizando XML para el intercambio de informaci&oacute;n.</p>
+<p>Normalmente nos referimos con Servicio Web a una colecci&oacute;n de procedimientos 
+  (m&eacute;todos) a los que podemos llamar desde cualquier lugar de Internet 
+  o de nuestra intranet, siendo este mecanismo de invocaci&oacute;n totalmente 
+  independiente de la plataforma que utilicemos y del lenguaje de programaci&oacute;n 
+  en el que se haya implementado internamente el servicio.</p>
+<p>Cuando conectamos a un servidor web desde nuestro navegador, el servidor nos 
+  devuelve la p&aacute;gina web solicitada, que es un documento que se mostrar&aacute; 
+  en el navegador para que lo visualice el usuario, pero es dif&iacute;cilmente 
+  entendible por una m&aacute;quina. Podemos ver esto como web para humanos. En 
+  contraposici&oacute;n, los Servicios Web ofrecen informaci&oacute;n con un formato 
+  est&aacute;ndar que puede ser entendido f&aacute;cilmente por una aplicaci&oacute;n. 
+  En este caso estar&iacute;amos ante una web para m&aacute;quinas. </p>
+<h3>4.1.2 Caracter&iacute;sticas de los Servicios Web</h3>
+<p>Las caracter&iacute;sticas deseables de un Servicio Web son:</p>
+<ul>
+  <li>Un servicio debe poder ser <strong>accesible a trav&eacute;s de la Web</strong>. 
+    Para ello debe utilizar protocolos de transporte est&aacute;ndares como HTTP, 
+    y codificar los mensajes en un lenguaje est&aacute;ndar que pueda conocer 
+    cualquier cliente que quiera utilizar el servicio.</li>
+  <li>Un servicio debe contener una <strong>descripci&oacute;n de s&iacute; mismo</strong>. 
+    De esta forma, una aplicaci&oacute;n podr&aacute; saber cu&aacute;l es la 
+    funci&oacute;n de un determinado Servicio Web, y cu&aacute;l es su interfaz, 
+    de manera que pueda ser utilizado de forma autom&aacute;tica por cualquier 
+    aplicaci&oacute;n, sin la intervenci&oacute;n del usuario.</li>
+  <li>Debe poder <strong>ser localizado</strong>. Deberemos tener alg&uacute;n 
+    mecanismo que nos permita encontrar un Servicio Web que realice una determinada 
+    funci&oacute;n. De esta forma tendremos la posibilidad de que una aplicaci&oacute;n 
+    localice el servicio que necesite de forma autom&aacute;tica, sin tener que 
+    conocerlo previamente el usuario.</li>
+</ul>
+<h3>4.1.3 Arquitectura de los Servicios Web</h3>
+<p>Podemos ver la arquitectura de los Servicios Web desde dos puntos de vista. 
+  En el primero de ellos estudiaremos la funci&oacute;n de cada agente en el mecanismo 
+  de localizaci&oacute;n e invocaci&oacute;n de Servicios Web, mientras que en 
+  el segundo abstraeremos una serie de capas en las que se organizan los protocolos 
+  que se utilizan para realizar estas funciones </p>
+<p><strong>Arquitectura funcional</strong></p>
+<p>Podemos distinguir tres agentes con diferentes funciones:</p>
+<table width="101%" border="0">
+  <tr> 
+    <td width="33%"><strong>Proveedor de servicio</strong> </td>
+    <td width="67%">Implementa unas determinadas operaciones (servicio). Un cliente 
+      podr&aacute; solicitar uno de estos servicios a este proveedor. </td>
+  </tr>
+  <tr> 
+    <td><strong>Cliente del servicio</strong></td>
+    <td>Invoca a un proveedor de servicio para la realizaci&oacute;n de alguna 
+      de los operaciones que proporciona.</td>
+  </tr>
+  <tr> 
+    <td><strong>Registro de servicios</strong></td>
+    <td>Mantiene una lista de proveedores de servicios disponibles, junto a sus 
+      descripciones.</td>
+  </tr>
+</table>
+<p>El mecanismo b&aacute;sico de invocaci&oacute;n de servicios consistir&aacute; 
+  en que un cliente solicitar&aacute; un determinado servicio a un proveedor, 
+  efectuando el proveedor dicho servicio. El servidor devolver&aacute; una respuesta 
+  al cliente como resultado del servicio invocado.</p>
+<p>Esto podremos hacerlo as&iacute; si el cliente conoce de antemano el proveedor 
+  del cual va a obtener el servicio. Pero hemos de pensar que en Internet encontraremos 
+  una gran cantidad de Servicios Web dispersos, lo cual har&aacute; dif&iacute;cil 
+  localizar el que busquemos. Adem&aacute;s, si hemos localizado uno que realiza 
+  la funci&oacute;n que necesitamos, si dicho servicio no est&aacute; mantenido 
+  por nosotros puede ocurrir que en alg&uacute;n momento este servicio cambie 
+  de lugar, de interfaz o simplemente desaparezca, por lo que no podremos confiar 
+  en que vayamos a poder utilizar siempre este mismo servicio.</p>
+<p>Los registros de servicios nos permiten automatizar la localizaci&oacute;n 
+  de Servicios Web. Un proveedor puede <em>anunciarse </em>en un determinado registro, 
+  de forma que figurar&aacute; en dicho registro la localizaci&oacute;n de este 
+  servicio junto a una descripci&oacute;n de su funcionalidad y de su interfaz, 
+  que podr&aacute; ser entendida por una aplicaci&oacute;n.</p>
+<p>Cuando un cliente necesite un determinado servicio, puede acudir directamente 
+  a un registro y solicitar el tipo de servicio que necesita. Para ello es importante 
+  establecer un determinada sem&aacute;ntica sobre las posibles descripciones 
+  de funcionalidades de servicios, evitando las posibles ambig&uuml;edades.</p>
+<p>El registro devolver&aacute; entonces una lista de servicios que realicen la 
+  funci&oacute;n deseada, de los cuales el cliente podr&aacute; elegir el m&aacute;s 
+  apropiado, analizar su interfaz, e invocarlo.</p>
+<p><strong>Arquitectura de capas de protocolos</strong></p>
+<p>Los protocolos utilizados en los Servicios Web se organizan en una serie de 
+  capas:</p>
+<table width="100%" border="0">
+  <tr> 
+    <td width="33%"><strong>Capa</strong></td>
+    <td width="67%"><strong>Descripci&oacute;n</strong></td>
+  </tr>
+  <tr> 
+    <td><em>Transporte de servicios</em></td>
+    <td>Es la capa que se encarga de transportar los mensajes entre aplicaciones. 
+      Normalmente se utiliza el protocolo <strong>HTTP</strong> para este transporte, 
+      aunque los servicios web pueden viajar mediante otros protocolos de transferencia 
+      de hipertexto como SMTP, FTP o BEEP.</td>
+  </tr>
+  <tr> 
+    <td><em>Mensajer&iacute;a XML</em></td>
+    <td>Es la capa responsable de codificar los mensajes en XML de forma que puedan 
+      ser entendidos por cualquier aplicaci&oacute;n. Puede implementar los protocolos 
+      XML-RPC o<strong> SOAP</strong>.</td>
+  </tr>
+  <tr> 
+    <td><em>Descripci&oacute;n de servicios</em></td>
+    <td>Se encarga de definir la interfaz p&uacute;blica de un determinado servicio. 
+      Est&aacute; definici&oacute;n se realiza mediante <strong>WSDL</strong>.</td>
+  </tr>
+  <tr> 
+    <td><em>Localizaci&oacute;n de servicios</em></td>
+    <td>Se encarga del registro centralizado de servicios, permitiendo que estos 
+      sean anunciados y localizados. Para ello se utiliza el protocolo <strong>UDDI</strong>.</td>
+  </tr>
+</table>
+<p>M&aacute;s adelante describiremos cada una de las tecnolog&iacute;as para Servicios 
+  Web vistas en las distintas capas.</p>
+<h3>4.1.4 Tecnolog&iacute;as b&aacute;sicas</h3>
+<p>Tenemos una serie de tecnolog&iacute;as, todas ellas basadas en XML, que son 
+  fundamentales para el desarrollo de Servicios Web. Estas tecnolog&iacute;as 
+  son independientes tanto del SO como del lenguaje de programaci&oacute;n utilizado 
+  para implementar dichos servicios. Por lo tanto, ser&aacute;n utilizadas para 
+  cualquier Servicio Web, independientemente de la plataforma sobre la que construyamos 
+  dichos servicios (como puede ser J2EE o .NET). </p>
+<p><strong>SOAP</strong></p>
+<p>Se trata de un protocolo derivado de XML que nos sirve para intercambiar informaci&oacute;n 
+  entre aplicaciones.</p>
+<p>Normalmente utilizaremos SOAP para conectarnos a un servicio e invocar m&eacute;todos 
+  remotos, aunque puede ser utilizado de forma m&aacute;s gen&eacute;rica para 
+  enviar cualquier tipo de contenido. Podemos distinguir dos tipos de mensajes 
+  seg&uacute;n su contenido:</p>
+<ul>
+  <li><strong>Mensajes orientados al documento</strong>: Contienen cualquier tipo 
+    de contenido que queramos enviar entre aplicaciones.</li>
+  <li><strong>Mensajes orientados a RPC</strong>: Este tipo de mensajes servir&aacute; 
+    para invocar procedimientos de forma remota (<em>Remote Procedure Calls</em>). 
+    Podemos verlo como un tipo m&aacute;s concreto dentro del tipo anterior, ya 
+    que en este caso como contenido del mensaje especificaremos el m&eacute;todo 
+    que queremos invocar junto a los par&aacute;metros que le pasamos, y el servidor 
+    nos deber&aacute; devolver como respuesta un mensaje SOAP con el resultado 
+    de invocar el m&eacute;todo.</li>
+</ul>
+<p>Cuando hablamos de Servicios Web normalmente nos referimos a RPC, por lo que 
+  nos centraremos en este tipo de mensajes. </p>
+<p>Puede ser utilizado sobre varios protocolos de transporte, aunque est&aacute; 
+  especialmente dise&ntilde;ado para trabajar sobre HTTP.</p>
+<p>Dentro del mensaje SOAP podemos distinguir los siguientes elementos:</p>
+<center>
+  <img src="imagenes/sw/soap.gif" width="203" height="225">
+</center>
+<ul>
+  <li>Un sobre (<strong>Envelope</strong>), que describe el mensaje, a quien va 
+    dirigido, y c&oacute;mo debe ser procesado. El sobre incluye las definiciones 
+    de tipos que se usar&aacute;n en el documento. Contiene una cabecera de forma 
+    opcional, y el cuerpo del mensaje.</li>
+  <li>Una cabecera (<strong>Header</strong>) opcional, donde podemos incluir informaci&oacute;n 
+    sobre el mensaje. Por ejemplo, podemos especificar si el mensaje es obligatorio 
+    (debe ser entendido de forma obligatoria por el destinatario), e indicar los 
+    actores (lugares por donde ha pasado el mensaje).</li>
+  <li>El cuerpo del mensaje (<strong>Body</strong>), que contiene el mensaje en 
+    si. En el caso de los mensajes RPC se define una convenci&oacute;n sobre como 
+    debe ser este contenido, en el que se especificar&aacute; el m&eacute;todo 
+    al que se invoca y los valores que se pasan como par&aacute;metros. Puede 
+    contener un error de forma opcional.</li>
+  <li>Un error (<strong>Fault</strong>) en el cuerpo del mensaje de forma opcional. 
+    Nos servir&aacute; para indicar en una respuesta SOAP que ha habido un error 
+    en el procesamiento del mensaje de petici&oacute;n que mandamos.</li>
+</ul>
+<p>Hemos visto como los mensajes SOAP nos sirven para intercambiar cualquier documento 
+  XML entre aplicaciones. Pero puede ocurrir que necesitemos enviar en el mensaje 
+  datos que no son XML, como puede ser una imagen. En ese caso tendremos que recurrir 
+  a la especificaci&oacute;n de mensajes SOAP con anexos.</p>
+<p>Los mensajes SOAP con anexos a&ntilde;aden un elemento m&aacute;s al mensaje:</p>
+<center>
+  <img src="imagenes/sw/swa.gif" width="203" height="269">
+</center>
+<ul>
+  <li>El anexo (<strong>Attachment</strong>), puede contener cualquier tipo de 
+    contenido (incluido el XML). De esta forma podremos enviar cualquier tipo 
+    de contenido junto a un mensaje SOAP.</li>
+</ul>
+<p>Nuestro mensaje podr&aacute; contener tantos anexos como queramos.</p>
+<p>Un ejemplo de mensaje SOAP es el siguiente:</p>
+<pre class="codigo">&lt;SOAP-ENV:Envelope 
+ xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;    
+ SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;    
+	&lt;SOAP-ENV:Body&gt; 
+		&lt;ns:getTemperatura xmlns:ns=&quot;http://j2ee.ua.es/ns&quot;&gt;    
+			&lt;area&gt;Alicante&lt;/area&gt; 
+		&lt;/ns:getTemperatura&gt; 
+	&lt;/SOAP-ENV:Body&gt;
+&lt;/SOAP-ENV:Envelope&gt;</pre>
+<p>En &eacute;l estamos llamando a nuestro m&eacute;todo <em>getTemperatura</em> 
+  para obtener informaci&oacute;n meteorol&oacute;gica, proporcionando como par&aacute;metro 
+  el &aacute;rea de la que queremos obtener la temperatura.</p>
+<p>Podemos encontrar la especificaci&oacute;n de SOAP y SOAP con anexos publicada 
+  en la p&aacute;gina del W3C, en las direcciones <em>http://www.w3.org/TR/SOAP/</em> 
+  y <em>http://www.w3.org/TR/SOAP-attachments</em> respectivamente.</p>
+<p><strong> WSDL</strong></p>
+<p>Es otro lenguaje derivado de XML, que se utiliza para describir los Servicios 
+  Web, de forma que una aplicaci&oacute;n pueda conocer de forma autom&aacute;tica 
+  la funci&oacute;n de un Servicio Web, as&iacute; como la forma de uso de dicho 
+  Servicio Web.</p>
+<p>El fichero WSDL describir&aacute; la interfaz del Servicio Web, con los m&eacute;todos 
+  a los que podemos invocar, los par&aacute;metros que debemos proporcionarles 
+  y los tipos de datos de dichos par&aacute;metros.</p>
+<p>Si desarrollamos un Servicio Web, y queremos que otras personas sean capaces 
+  de utilizar nuestro servicio para sus aplicaciones, podremos proporcionar un 
+  documento WSDL describiendo nuestro servicio. De esta forma, a partir de este 
+  documento otros usuarios podr&aacute;n generar aplicaciones clientes en cualquier 
+  plataforma (ya que WSDL se define como un est&aacute;ndar) que se ajusten a 
+  nuestro servicio.</p>
+<p>El elemento ra&iacute;z dentro de este fichero es <strong>definitions</strong>, 
+  donde se especifican los espacios de nombres que utilizamos en nuestro servicio. 
+  Dentro de este elemento ra&iacute;z encontramos los siguientes elementos:</p>
+<ul>
+  <li><strong>types</strong>: Se utiliza para definir los tipos de datos que se 
+    intercambiar&aacute;n en el mensaje.</li>
+  <li><strong>message</strong>: Define los distintos mensajes que se intercambiaran 
+    durante el proceso de invocaci&oacute;n del servicio. Se deber&aacute;n definir 
+    los mensajes de entrada y salida para cada operaci&oacute;n que ofrezca el 
+    servicio. En el caso de mensajes RPC, en el mensaje de entrada se definir&aacute;n 
+    los tipos de par&aacute;metros que se proporcionan, y en el de salida el tipo 
+    del valor devuelto.</li>
+  <li><strong>portType</strong>: Define las operaciones que ofrece el servicio. 
+    De cada operaci&oacute;n indica cuales son los mensajes de entrada y salida, 
+    de entre los mensajes definidos en el apartado anterior.</li>
+  <li><strong>binding</strong>: Indica el protocolo y el formato de los datos 
+    para cada mensaje de los definidos anteriormente. Este formato puede ser orientado 
+    al documento u orientado a RPC. Si es orientado al documento tanto el mensaje 
+    de entrada como el de salida contendr&aacute;n un documento XML. Si es orientado 
+    a RPC el mensaje de entrada contendr&aacute; el m&eacute;todo invocado y sus 
+    par&aacute;metros, y el de salida el resultado de invocar dicho m&eacute;todo.</li>
+  <li><strong>service</strong>: Define el servicio como una colecci&oacute;n de 
+    puertos a los que se puede acceder. Un puerto es la direcci&oacute;n (URL) 
+    donde el servicio act&uacute;a. Esta ser&aacute; la direcci&oacute;n a la 
+    que las aplicaciones deber&aacute;n conectarse para acceder al servicio. Adem&aacute;s 
+    contiene la documentaci&oacute;n en lenguaje natural del servicio.</li>
+</ul>
+<p>Un documento WSDL de ejemplo es el siguiente:</p>
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt; 
+  &lt;<strong>definitions</strong> xmlns:s=&quot;http://www.w3.org/2001/XMLSchema&quot;
+	 xmlns:http=&quot;http://schemas.xmlsoap.org/wsdl/http/&quot;    
+	 xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot; 
+	 xmlns:soapenc=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+     xmlns:tns=&quot;http://j2ee.ua.es/wsdl&quot;
+     xmlns:mime=&quot;http://schemas.xmlsoap.org/wsdl/mime/&quot; 
+	 targetNamespace=&quot;http://j2ee.ua.es/wsdl&quot;
+     xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot;&gt;
+   &lt;<strong>message</strong> name=&quot;getTempRequest&quot;&gt;
+	   &lt;part name=&quot;string_1&quot; 
+			xmlns:partns=&quot;http://www.w3.org/2001/XMLSchema&quot;
+		    type=&quot;partns:string&quot; /&gt; 
+   &lt;/<strong>message</strong>&gt;
+   &lt;<strong>message</strong> name=&quot;getTempResponse&quot;&gt;
+	   &lt;part name=&quot;double_1&quot; 
+			xmlns:partns=&quot;http://www.w3.org/2001/XMLSchema&quot;
+		    type=&quot;partns:double&quot; /&gt; 
+   &lt;/<strong>message</strong>&gt;
+   &lt;<strong>portType</strong> name=&quot;TempPortType&quot;&gt;
+	   &lt;operation name=&quot;getTemp&quot;&gt;
+		   &lt;input message=&quot;tns:getTempRequest&quot; /&gt; 
+		   &lt;output message=&quot;tns:getTempResponse&quot; /&gt; 
+	   &lt;/operation&gt;
+   &lt;/<strong>portType</strong>&gt;
+   &lt;<strong>binding</strong> name=&quot;TempPortSoapBinding&quot; type=&quot;tns:TempPortType&quot;&gt;
+	   &lt;soap:binding style=&quot;rpc&quot; 
+		transport=&quot;http://schemas.xmlsoap.org/soap/http&quot; /&gt; 
+       &lt;operation name=&quot;getTemp&quot;&gt;
+			&lt;soap:operation soapAction=&quot;&quot; style=&quot;rpc&quot; /&gt; 
+			&lt;input&gt;
+				&lt;soap:body use=&quot;encoded&quot; 
+				namespace=&quot;http://j2ee.ua.es/wsdl&quot; 
+				encodingStyle=
+					&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; /&gt; 
+			&lt;/input&gt;
+			&lt;output&gt;
+				&lt;soap:body use=&quot;encoded&quot; 
+				namespace=&quot;http://j2ee.ua.es/wsdl&quot;    
+				encodingStyle=
+					&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; /&gt; 
+			   &lt;/output&gt;
+		&lt;/operation&gt;
+   &lt;/<strong>binding</strong>&gt;
+   &lt;<strong>service</strong> name=&quot;Temp&quot;&gt;
+	   &lt;documentation&gt;Documentacion&lt;/documentation&gt;    
+	   &lt;port name=&quot;TempPort&quot; binding=&quot;tns:TempPortSoapBinding&quot;&gt;
+		   &lt;soap:address 
+				location=&quot;http://localhost:7001/sw_temp/Temp&quot; /&gt; 
+	   &lt;/port&gt;
+   &lt;/<strong>service</strong>&gt;
+&lt;/<strong>definitions</strong>&gt;</pre>
+<p>En el que se define un servicio que proporciona el m&eacute;todo <em>getTemp</em>, 
+  que toma como par&aacute;metro una cadena con el nombre del &aacute;rea que 
+  queremos consultar, y nos devuelve un valor real. </p>
+<p>En los elementos <strong>message</strong> vemos que tenemos dos mensajes: los 
+  mensajes de entrada y salida de la operaci&oacute;n <em>getTemp</em> de nuestro 
+  servicio. El mensaje de entrada contiene un dato de tipo <em>string</em> (el 
+  par&aacute;metro del m&eacute;todo), y el de salida es de tipo <em>double</em> 
+  (la temperatura que devuelve el servicio).</p>
+<p>El elemento <strong>portType</strong> define la operaci&oacute;n <em>getTemp</em> 
+  a partir de los mensajes de entrada y salida que la componen, y en <strong>binding</strong> 
+  se establece esta operaci&oacute;n como de tipo RPC y se indica la codificaci&oacute;n 
+  de estos mensajes.</p>
+<p>Por &uacute;ltimo en el apartado <strong>service</strong> se especifica el 
+  puerto al que podemos conectar para usar el servicio, dando la URL a la que 
+  nuestro cliente deber&aacute; acceder. </p>
+<p>Podemos encontrar la especificaci&oacute;n de WSDL publicada en la p&aacute;gina 
+  del W3C, en la direcci&oacute;n <em>http://www.w3.org/TR/wsdl</em>.</p>
+<p><strong> UDDI</strong></p>
+<p>UDDI nos permite localizar Servicios Web. UDDI define la especificaci&oacute;n 
+  para construir un directorio distribuido de Servicios Web, donde los datos se 
+  almacenan en XML.</p>
+<p>Adem&aacute;s, UDDI define una API para trabajar con dicho registro, que nos 
+  permitir&aacute; buscar datos almacenados en &eacute;l, y publicar datos nuevos. 
+</p>
+<p>De esta forma, una aplicaci&oacute;n podr&aacute; anunciar sus servicios en 
+  un registro UDDI, o bien localizar servicios que necesitemos mediante este registro.</p>
+<p>Esta capacidad de localizar servicios en tiempo de ejecuci&oacute;n, y de que 
+  una aplicaci&oacute;n pueda saber c&oacute;mo utilizarlo inmediatamente gracias 
+  a la descripci&oacute;n del servicio, nos permitir&aacute; realizar una integraci&oacute;n 
+  d&eacute;bilmente acoplada de nuestra aplicaci&oacute;n.</p>
+<p>La interfaz de UDDI est&aacute; basada en SOAP. Para acceder al registro se 
+  utilizar&aacute;n mensajes SOAP, que son transportados mediante protocolo HTTP.</p>
+<p>Podemos encontrar la especificaci&oacute;n de UDDI, documentaci&oacute;n, y 
+  m&aacute;s informaci&oacute;n en la direcci&oacute;n <em>http://www.uddi.org/</em>.</p>
+<h3>4.1.5. Tecnolog&iacute;as J2EE para Servicios Web</h3>
+<p>Hemos visto las tecnolog&iacute;as en las que se basan los Servicios Web, y 
+  que los hacen independientes de la plataforma y del lenguaje de programaci&oacute;n 
+  utilizado. Sin embargo, escribir manualmente los mensajes SOAP desde nuestras 
+  aplicaciones puede ser una tarea tediosa. Por ello, las distintas plataformas 
+  existentes incorporan librer&iacute;as y utilidades que se encargan de realizar 
+  esta tarea por nosotros.</p>
+<p>En este tema veremos las librer&iacute;as que incorpora J2EE para la generaci&oacute;n 
+  y el procesamiento de c&oacute;digo XML, que nos servir&aacute;n para implementar 
+  y utilizar Servicios Web.</p>
+<p><strong> JAXP</strong></p>
+<p>La API JAXP nos permite procesar cualquier documento XML desde lenguaje Java. 
+  Tiene en cuenta los espacios de nombres, lo cual nos permite trabajar con DTDs 
+  que podr&iacute;an tener conflictos de nombres si estos no estuviesen soportados. 
+  Adem&aacute;s, soporta XSLT, lo cual nos permitir&aacute; convertir un documento 
+  XML a otro formato, como por ejemplo HTML.</p>
+<p>Esta es una librer&iacute;a gen&eacute;rica, para procesar cualquier documento 
+  XML. A continuaci&oacute;n veremos una serie de librer&iacute;as, para tareas 
+  m&aacute;s especificas, que se apoyan en JAXP para realizar el procesado de 
+  diferentes lenguajes como SOAP, WSDL y UDDI, todos ellos derivados de XML. Por 
+  lo tanto, todas estas librer&iacute;as depender&aacute;n de JAXP para su correcto 
+  funcionamiento.</p>
+<p><strong> JAXM</strong></p>
+<p>La API JAXM implementa la mensajer&iacute;a XML en Java orientada al documento. 
+  Nos permitir&aacute; de forma sencilla crear mensajes XML, insertando el contenido 
+  que queramos en ellos, y enviarlos a cualquier destinatario, as&iacute; como 
+  extraer el contenido de los mensajes que recibamos. Permite enviar y recibir 
+  los mensajes de forma s&iacute;ncrona (modelo petici&oacute;n-respuesta) o as&iacute;ncrona 
+  (env&iacute;o de mensaje sin esperar respuesta).</p>
+<p>Los mensajes XML con los que trabaja JAXM siguen la especificaci&oacute;n SOAP 
+  y SOAP con anexos. Dentro de JAXM encontramos dos APIs:</p>
+<ul>
+  <li>SAAJ (<em>SOAP with Attachmets API for Java</em>) es la API que se utiliza 
+    para construir mensajes SOAP y para extraer la informaci&oacute;n que contienen. 
+    Esta API es independiente, y suficiente para enviar mensajes de tipo petici&oacute;n-respuesta 
+    (s&iacute;ncronos).</li>
+  <li>JAXM proporciona un proveedor de mensajer&iacute;a XML, con el que podremos 
+    enviar y recibir mensajes de forma as&iacute;ncrona, sin necesidad de esperar 
+    una respuesta de la otra parte. Esta API depender&aacute; de SAAJ para funcionar, 
+    ya que SAAJ es la que se encargar&aacute; de crear y manipular los mensajes.</li>
+</ul>
+<p><strong> JAX-RPC</strong></p>
+<p>La API JAX-RPC implementa la infraestructura para realizar llamadas a procedimiento 
+  remoto (RPC) mediante XML. En este caso se enviar&aacute; un mensaje SOAP con 
+  el m&eacute;todo que queremos invocar junto a los par&aacute;metros que le pasamos, 
+  y nos devolver&aacute; de forma s&iacute;ncrona una respuesta SOAP con el valor 
+  devuelto por el m&eacute;todo tras su ejecuci&oacute;n. </p>
+<p>Por lo tanto, JAX-RPC depender&aacute; de SAAJ para construir los mensajes 
+  SOAP, para enviarlos, y para extraer la informaci&oacute;n del mensaje SOAP 
+  que nos devuelve como resultado.</p>
+<p>Esta API nos permitir&aacute;, de forma sencilla, invocar Servicios Web de 
+  tipo RPC, as&iacute; como crear nuestros propios Servicios Web RPC a partir 
+  de clases Java que tengamos implementadas. Cuando hablamos de Servicios Web, 
+  normalmente nos referimos a este tipo de Servicios Web.</p>
+<p><strong> JAXR</strong></p>
+<p>La API JAXR nos permitir&aacute; acceder a registros XML a trav&eacute;s de 
+  una API est&aacute;ndar Java. Esta API pretende proporcionar una interfaz &uacute;nica 
+  para acceder a distintos tipos de registros, cada uno de los cuales tiene un 
+  protocolo distinto.</p>
+<p>Actualmente JAXR es capaz de trabajar con registros UDDI y ebXML. Podremos 
+  realizar dos tipos de tareas distintas cuando accedamos a un registro mediante 
+  JAXR:</p>
+<ul>
+  <li>Consultar el registro, para localizar los servicios que necesitemos.</li>
+  <li>Publicar un servicio en el registro, para que otros clientes sean capaces 
+    de localizarlo cuando lo necesiten, as&iacute; como modificar o eliminar los 
+    servicios publicados que sean de nuestra propiedad.</li>
+</ul>
+<p><strong> JAXB</strong></p>
+<p>La API de JAXB (<em>Java API for Binding</em>) nos permite asociar esquemas 
+  XML y c&oacute;digo Java. A partir de un esquema XML, podremos generar una clase 
+  Java que represente dicho esquema. </p>
+<p>De esta forma podremos convertir un documento XML a una serie de objetos Java 
+  que contendr&aacute;n la informaci&oacute;n de dicho documento (<em>unmarshalling</em>). 
+  Podremos entonces trabajar desde nuestra aplicaci&oacute;n con estos objetos, 
+  accediendo y modificando sus valores. Finalmente, podremos volver a obtener 
+  un documento XML a partir de los objetos Java (<em>marshalling</em>).</p>
+<p>Esto nos va a simplificar la tarea de utilizar tipos de datos propios en llamadas 
+  a Servicios Web, ya que utilizando JAXB podremos realizar de forma sencilla 
+  la conversi&oacute;n entre nuestra clase Java y un documento XML con la informaci&oacute;n 
+  de dicha clase.</p>
+<h2>4.2. Creaci&oacute;n de Servicios Web</h2>
+<p>Vamos a crear nuestros propios Servicios Web, que ofrecer&aacute;n una serie 
+  de m&eacute;todos a los que se podr&aacute; llamar mediante RPC desde cualquier 
+  lugar de Internet mediante protocolos est&aacute;ndar (mensajes SOAP).</p>
+<p>Deberemos por lo tanto ser capaces de interpretar en nuestras aplicaciones 
+  los mensajes SOAP entrantes de petici&oacute;n para la invocaci&oacute;n de 
+  un m&eacute;todo. Posteriormente, invocaremos el m&eacute;todo solicitado, y 
+  con el resultado que nos devuelva deberemos construir un mensaje SOAP de respuesta 
+  y devolv&eacute;rselo al cliente.</p>
+<p>Si tuvi&eacute;semos que introducir nosotros el c&oacute;digo para interpretar 
+  este mensaje de entrada, y generar manualmente el mensaje de respuesta, el desarrollo 
+  de Servicios Web ser&iacute;a una tarea altamente costosa.</p>
+<p>Es m&aacute;s, si se forzase al programador a componer el mensaje SOAP manualmente 
+  cada vez que desarrolle un Servicio Web, es muy probable que cometa alg&uacute;n 
+  error y no respete exactamente el est&aacute;ndar SOAP. Esto ser&iacute;a un 
+  grave problema para la interoperabilidad de los Servicios Web, que es una de 
+  las caracter&iacute;sticas que perseguimos con esta tecnolog&iacute;a.</p>
+<p>Para evitar estos problemas, utilizaremos librer&iacute;as que nos permitan 
+  leer o generar mensajes SOAP para la invocaci&oacute;n de m&eacute;todos remotos 
+  (RPC), como es el caso de la API JAX-RPC. </p>
+<p>Adem&aacute;s, para facilitar a&uacute;n m&aacute;s la tarea de desarrollar 
+  Servicios Web, normalmente contaremos con herramientas que a partir de las clases 
+  que implementan nuestro servicio generen autom&aacute;ticamente todo el c&oacute;digo 
+  necesario para leer el mensaje SOAP de entrada, invocar el m&eacute;todo, escribir 
+  el mensaje SOAP de salida, y devolverlo al cliente.</p>
+<p>Por lo tanto, nosotros deberemos centrarnos &uacute;nicamente en la tarea de 
+  programar la funcionalidad que implementan nuestros servicios, olvid&aacute;ndonos 
+  del mecanismo de invocaci&oacute;n de &eacute;stos.</p>
+<h3>4.2.1 Arquitectura de los Servicios Web orientados a RPC</h3>
+<p>En las aplicaciones basadas en JAX-RPC encontramos los siguientes elementos:</p>
+<ul>
+  <li><strong>Servicio</strong>: Elemento del servidor que implementa la funcionalidad 
+    de nuestro servicio. Normalmente utilizaremos una clase Java o un EJB.</li>
+  <li><strong>Cliente</strong>: Aplicaci&oacute;n cliente que invoca los m&eacute;todos 
+    del servicio remoto. La localizaci&oacute;n del servicio ser&aacute; transparente 
+    para el desarrollador de esta aplicaci&oacute;n, que invocar&aacute; los m&eacute;todos 
+    del servicio de la misma forma que si &eacute;ste fuese local.</li>
+  <li><strong>Stub</strong>: Capa en el cliente que implementa la interfaz del 
+    servicio, y utiliza internamente JAX-RPC para construir los mensajes SOAP 
+    necesarios para invocar cada m&eacute;todo de la interfaz, y para leer el 
+    mensaje de respuesta que recibamos. Este <em>stub</em> ser&aacute; el sustituto 
+    del servicio en el lado del cliente, la aplicaci&oacute;n cliente ejecutar&aacute; 
+    en &eacute;l los m&eacute;todos que ofrece el servicio, haciendo de esta forma 
+    transparente la localizaci&oacute;n del servicio para ella.</li>
+  <li><strong>Tie</strong>: Capa en el servidor que decodificar&aacute; los mensajes 
+    SOAP entrantes con destino a nuestro servicio, y leer&aacute; de ellos el 
+    m&eacute;todo que se quiere invocar y los par&aacute;metros de entrada que 
+    se proporcionan. Esta capa acceder&aacute; al componente (clase Java o EJB) 
+    que implementa nuestro servicio, ejecutando dicho m&eacute;todo en &eacute;l. 
+    Una vez obtenido el resultado, generar&aacute; un mensaje SOAP de respuesta 
+    y lo devolver&aacute; al cliente. </li>
+  <li><strong>JAX-RPC</strong>: Librer&iacute;a que nos permitir&aacute; analizar 
+    y componer mensajes SOAP orientados a RPC, y enviarlos a trav&eacute;s de 
+    protocolo HTTP. Adem&aacute;s proporciona <em>listeners</em> y <em>servlets</em> 
+    que permanecer&aacute;n a la escucha en el servidor para recibir mensajes 
+    entrantes de peticiones a los servicios. Una vez recibida una petici&oacute;n, 
+    utilizar&aacute; la capa <strong>Tie</strong> del servicio correspondiente 
+    para invocarlo, proporcion&aacute;ndole a esta capa el mensaje SOAP entrante. 
+    A diferencia de las capas anteriores, que son espec&iacute;ficas para un servicio 
+    concreto, la librer&iacute;a JAX-RPC es gen&eacute;rica, nos servir&aacute; 
+    para cualquier servicio orientado a RPC.</li>
+</ul>
+<center>
+  <img src="imagenes/sw/jaxrpc.gif" width="259" height="115"> 
+</center>
+<p class="caption">Figura 1. Arquitectura de JAX-RPC</p>
+<p>Las &uacute;nicas capas que debemos implementar nosotros son el <strong>Cliente</strong> 
+  y el <strong>Servicio</strong>. En la implementaci&oacute;n de estos componentes 
+  el uso de la librer&iacute;a JAX-RPC ser&aacute; totalmente transparente para 
+  nosotros. No har&aacute; falta que introduzcamos c&oacute;digo JAX-RPC dentro 
+  de ellas. En el servicio simplemente implementaremos los m&eacute;todos que 
+  queremos que ofrezca nuestro servicio, como si se tratase de cualquier clase 
+  Java, y en el cliente podremos invocar los m&eacute;todos de este servicio como 
+  si invoc&aacute;semos directamente los m&eacute;todos de la clase Java.</p>
+<p>Las capas <strong>Stub</strong> y <strong>Tie</strong>, son capas construidas 
+  a medida para la interfaz de nuestro servicio. Est&aacute;s son las capas que 
+  utilizar&aacute;n JAX-RPC para generar y leer los mensajes SOAP que vamos a 
+  utilizar para invocar el servicio, y devolver la respuesta al cliente. Generar&aacute;n 
+  o ser&aacute;n capaces de leer los mensajes apropiados para el caso concreto 
+  de los m&eacute;todos que definimos en nuestro servicio, por lo que deberemos 
+  generar estas capas para cada servicio que desarrollemos. Afortunadamente, normalmente 
+  contaremos con herramientas que generen de forma autom&aacute;tica estas capas 
+  a partir de la interfaz de nuestro servicio, por lo que no ser&aacute; necesario 
+  que el desarrollador de servicios trate directamente con JAX-RPC en ning&uacute;n 
+  momento.</p>
+<h3>4.2.2 Tipos de datos compatibles</h3>
+<p>Vamos a ver los tipos de datos que podemos utilizar cuando trabajamos con JAX-RPC 
+  como tipo de los par&aacute;metros y del valor devuelto por los m&eacute;todos 
+  de nuestro servicio.</p>
+<p>Podremos utilizar cualquiera de los tipos b&aacute;sicos de Java:</p>
+<pre class="codigo">boolean
+byte
+double
+float
+int
+long
+short
+char</pre>
+<p>Adem&aacute;s, tambi&eacute;n podremos utilizar cualquiera de los <em>wrappers</em> 
+  de estos tipos b&aacute;sicos:</p>
+<pre class="codigo">java.lang.Boolean
+java.lang.Byte
+java.lang.Double
+java.lang.Float
+java.lang.Integer
+java.lang.Long
+java.lang.Short
+java.lang.Character</pre>
+<p>Las siguientes clases de Java tambi&eacute;n son aceptadas como tipos v&aacute;lidos 
+  por JAX-RPC:</p>
+<pre class="codigo">java.lang.String
+java.math.BigDecimal
+java.math.BigInteger
+java.util.Calendar
+java.util.Date </pre>
+<p>Podremos utilizar tambi&eacute;n gran parte de las clases pertenecientes al 
+  marco de colecciones de Java:</p>
+<pre class="codigo"><strong>Listas: List</strong> 
+ArrayList 
+LinkedList 
+Stack 
+Vector 
+<strong>Mapas: Map</strong> 
+HashMap 
+Hashtable 
+Properties 
+TreeMap 
+<strong>Conjuntos: Set</strong> 
+HashSet 
+TreeSet 
+</pre>
+<p>Adem&aacute;s de estos datos, se permitir&aacute; el uso de <em>arrays</em>, 
+  tanto unidimensionales como multidimensionales, cuyos elementos podr&aacute;n 
+  ser de cualquiera de los tipos admitidos.</p>
+<p>Las clases desarrolladas por nosotros tambi&eacute;n podr&aacute;n ser usadas 
+  si cumplen ciertas condiciones:</p>
+<ul>
+  <li>Debe tener un constructor <em>void</em> p&uacute;blico (sin par&aacute;metros).</li>
+  <li>No debe implementar la interfaz RMI <em>javax.rmi.Remote</em>.</li>
+  <li>Todos sus campos deben ser tipos soportados por JAX-RPC. Estos campos pueden 
+    ser p&uacute;blicos, protegidos o privados. Para que JAX-RPC sea capaz de 
+    leer o establecer los valores de estos campos deber&aacute; cumplirse que: 
+    <ul>
+      <li>Los campos p&uacute;blicos no deben ser ni <em>final</em> ni <em>transient</em>.</li>
+      <li>Los campos no p&uacute;blicos deben tener sus correspondientes m&eacute;todos 
+        <em>get*</em> y <em>set*</em>. </li>
+    </ul>
+  </li>
+</ul>
+<p>Si nuestros tipos de datos no cumplen estas caracter&iacute;sticas, o bien 
+  estamos trabajando con herramientas que no soportan estos tipos, deberemos construir 
+  manualmente serializadores y deserializadores para nuestras clases. Su funci&oacute;n 
+  ser&aacute; realizar la conversi&oacute;n entre nuestra clase Java y su correspondiente 
+  formato como documento XML.</p>
+<h3>4.2.3 Creaci&oacute;n de servicios con WSDP</h3>
+<p>Vamos a crear paso a paso un Servicio Web utilizando las herramientas que nos 
+  ofrece Java Web Services Developer Pack 1.1. </p>
+<p><strong> Implementaci&oacute;n del servicio</strong></p>
+<p>El primer paso ser&aacute; implementar nuestro servicio. Primero deberemos 
+  definir la interfaz de nuestro servicio. Utilizaremos para ello una interfaz 
+  remota (RMI) en la que se definen todos los m&eacute;todos que va a ofrecer 
+  nuestro servicio:</p>
+<pre class="codigo">package utils;
+
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+
+public interface <strong>ConversionIF</strong> extends Remote {
+  public int <strong>euro2ptas</strong>(double euro) throws RemoteException;
+  public double <strong>ptas2euro</strong>(int ptas) throws RemoteException;
+}</pre>
+<p>Una vez hecho esto, definiremos una clase Java que implemente dicha interfaz, 
+  con un constructor <em>void</em> (si no se especifica constructor, por defecto 
+  se crear&aacute; un constructor <em>void</em>), y con la implementaci&oacute;n 
+  de todos los m&eacute;todos p&uacute;blicos definidos en la interfaz:</p>
+<pre class="codigo">package utils;
+
+
+public class <strong>ConversionImpl</strong> implements <strong>ConversionIF</strong> {
+
+  public int <strong>euro2ptas</strong>(double euro) {
+    return (int) (euro * 166.386);
+  }
+
+  public double <strong>ptas2euro</strong>(int ptas) {
+    return ((double) ptas) / 166.386;
+  }
+}</pre>
+<p>Con esto ya habremos implementado el servicio. Ahora deberemos compilar estas 
+  clases de la misma forma que compilamos cualquier clase Java.</p>
+<p><strong> Crear el contexto</strong></p>
+<p>Una vez implementadas nuestras clases del servicio deberemos crear la estructura 
+  de directorios adecuada para Tomcat. Crearemos un directorio <em>WEB-INF</em>, 
+  y copiaremos las clases generadas al directorio <em>WEB-INF/classes</em>. En 
+  nuestro caso tendremos:</p>
+<pre class="codigo">WEB-INF/classes/utils/ConversionImpl.java
+WEB-INF/classes/utils/ConversionIF.java</pre>
+<p>Adem&aacute;s deberemos definir el descriptor de despliegue <em>WEB-INF/web.xml</em> 
+  de la misma forma que lo hac&iacute;amos para cualquier Aplicaci&oacute;n Web:</p>
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+&lt;!DOCTYPE web-app
+  PUBLIC &quot;-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN&quot;
+  &quot;http://java.sun.com/dtd/web-app_2_3.dtd&quot;&gt;
+&lt;web-app&gt;
+  &lt;display-name&gt;Servicio Web de conversion&lt;/display-name&gt;
+  &lt;description&gt;
+    Servicio web para la conversion de Euros a Ptas
+  &lt;/description&gt;
+&lt;/web-app&gt;</pre>
+<p>Adem&aacute;s de este descriptor de despliegue perteneciente a la especificaci&oacute;n 
+  est&aacute;ndar de J2EE, deberemos generar un fichero de configuraci&oacute;n 
+  de nuestro Servicio Web perteneciente a nuestra implementaci&oacute;n concreta 
+  de las herramientas para la generaci&oacute;n de servicios. Este fichero no 
+  est&aacute;ndar es <em>WEB-INF/jaxrpc-ri.xml</em>, y tendr&aacute; la siguiente 
+  forma:</p>
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;webServices
+  xmlns=&quot;http://java.sun.com/xml/ns/jax-rpc/ri/dd&quot;
+  version=&quot;1.0&quot;
+  targetNamespaceBase=&quot;http://j2ee.ua.es/wsdl&quot;
+  typeNamespaceBase=&quot;http://j2ee.ua.es/types&quot;
+  urlPatternBase=&quot;/ws&quot;&gt;
+
+<span class="codigo">  &lt;endpoint
+<strong>    name</strong>=&quot;Conversion&quot;
+<strong>    displayName</strong>=&quot;Conversion Euro-Ptas&quot;
+<strong>    description</strong>=&quot;Servicio Web de conversion entre Euros y Ptas&quot; 
+<strong>    interface</strong>=&quot;utils.ConversionIF&quot; 
+<strong>    implementation</strong>=&quot;utils.ConversionImpl&quot;/&gt; 
+   
+  &lt;endpointMapping
+<strong>    endpointName</strong>=&quot;Conversion&quot;
+<strong>    urlPattern</strong>=&quot;/conversion&quot;/&gt;
+
+</span>&lt;/webServices&gt;</pre>
+<p>Dentro de la etiqueta <em>endpoint</em> especificaremos la informaci&oacute;n 
+  del servicio. Le podemos dar un nombre que lo identifique, un nombre para mostrar 
+  al usuario, una descripci&oacute;n detallada, y deberemos especificar tanto 
+  la interfaz del servicio como la clase que lo implementa.</p>
+<p>En la etiqueta <em>endpointMapping</em> le diremos a que URL mapear un determinado 
+  <em>endpoint</em> de los definidos anteriormente. Le diremos el nombre del <em>endpoint</em> 
+  (servicio), y la direcci&oacute;n a la que queremos mapearlo. En este caso le 
+  decimos que lo mapee a la ruta <em>/conversion</em>, por lo que para acceder 
+  a &eacute;l tendremos que especificar esta ruta dentro del contexto donde lo 
+  hayamos desplegado.</p>
+<p>Una vez hemos creado la estructura de directorios correcta y los ficheros necesarios, 
+  empaquetaremos este servicio en un fichero WAR:</p>
+<pre class="codigo">jar cvf conv.war *</pre>
+<p><strong> Generar la capa Tie y la descripci&oacute;n WSDL</strong></p>
+<p>En este fichero WAR que hemos creado, tenemos la implementaci&oacute;n de nuestro 
+  servicio, y un fichero <em>WEB-INF/jaxrpc-ri.xml</em> que describe dicho servicio, 
+  pero faltan componentes para que este servicio pueda funcionar. </p>
+<p>Necesitaremos una capa <strong>Tie</strong> que se encargue de invocar el servicio 
+  cuando llegue una petici&oacute;n SOAP al servidor, y que posteriormente genere 
+  una respuesta y la env&iacute;e de vuelta al cliente. Esta capa se generar&aacute; 
+  con la herramienta <em>wsdeploy</em>, que utilizar&aacute; el fichero de configuraci&oacute;n 
+  <em>WEB-INF/jaxrpc-ri.xml</em> para conocer los datos de nuestro servicio. Utilizaremos 
+  esta herramienta de la siguiente forma:</p>
+<pre class="codigo"><strong>wsdeploy</strong> -o conv-deploy.war conv.war</pre>
+<p>Con ello generaremos un nuevo fichero WAR, especificado mediante la opci&oacute;n 
+  <em>-o</em>, que ya estar&aacute; listo para desplegar, con todas las capas 
+  necesarias para invocar nuestro servicio. Adem&aacute;s, habr&aacute; generado 
+  un documento WSDL que podremos utilizar para invocar nuestro servicio desde 
+  otras plataformas. Podemos ver todo el contenido generado si desempaquetamos 
+  este nuevo WAR.</p>
+<p><strong> Despliegue del servicio</strong></p>
+<p>Una vez tenemos el fichero WAR con todos los componentes necesarios, podemos 
+  desplegarlo en Tomcat de la misma forma que cualquier otra Aplicaci&oacute;n 
+  Web. Podemos simplemente copiar el fichero WAR en el directorio de aplicaciones 
+  de Tomcat, que ser&aacute; <em>{jwsdp.home}/webapps</em>. Si el fichero WAR 
+  que hemos copiado se llama <em>conv-deploy.war</em>, entonces podremos acceder 
+  a informaci&oacute;n sobre nuestro servicio escribiendo la siguiente direcci&oacute;n 
+  en el navegador:</p>
+<pre class="codigo">http://localhost:8080/conv-deploy/<strong>conversion</strong></pre>
+<p>Desde esta p&aacute;gina podremos ver informaci&oacute;n sobre el <em>endpoint</em> 
+  y el puerto al que conectarnos, adem&aacute;s de proporcionarse un enlace al 
+  fichero WSDL que describe el servicio. A partir de este fichero otros desarrolladores 
+  podr&aacute;n construir aplicaciones sobre cualquier plataforma que utilicen 
+  nuestro servicio.</p>
+<p><strong> Elementos generados por wsdeploy</strong></p>
+<p>Con el paso anterior habremos terminado de desplegar nuestro servicio, pero 
+  podemos estar interesados en conocer qu&eacute; es lo que ha generado <em>wsdeploy</em> 
+  de forma transparente. Podemos ver esto si desempaquetamos el WAR, y vemos el 
+  contenido que tiene nuestro servicio, o bien en la invocaci&oacute;n de <em>wsdeploy</em> 
+  especificar las siguientes opciones:</p>
+<pre class="codigo">wsdeploy -o conv-deploy.war conv.war -<strong>tmpdir</strong> generado -<strong>keep</strong></pre>
+<p>De esta forma le estamos diciendo con <em>-tmpdir</em> que use como directorio 
+  temporal para guardar los elementos generados el directorio especificado, y 
+  con <em>-keep</em> le decimos que no borre este material una vez haya terminado.</p>
+<p>Si accedemos al directorio donde ha generado el c&oacute;digo vemos los siguientes 
+  elementos:</p>
+<ul>
+  <li><strong>Fichero WSDL</strong>: Fichero WSDL con una descripci&oacute;n independiente 
+    de la plataforma de nuestro servicio. En este fichero no se incluye la URL 
+    del <em>endpoint</em> de nuestro servicio, ya que esta informaci&oacute;n 
+    no se conocer&aacute; hasta que no se haya desplegado. Una vez desplegado, 
+    si lo consultamos desde la web si que aparecer&aacute; esta direcci&oacute;n, 
+    gener&aacute;ndola din&aacute;micamente el servidor.</li>
+</ul>
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+<span class="codigo">&lt;definitions name=&quot;Conversion&quot; 
+  targetNamespace=&quot;http://j2ee.ua.es/wsdl/Conversion&quot;    
+  xmlns:tns=&quot;http://j2ee.ua.es/wsdl/Conversion&quot; 
+  xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot;    
+  xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; 
+  xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;&gt;
+&lt;types/&gt;
+&lt;message name=&quot;ConversionIF_euro2ptas&quot;&gt;
+  &lt;part name=&quot;double_1&quot; type=&quot;xsd:double&quot;/&gt;&lt;/message&gt;
+&lt;message name=&quot;ConversionIF_euro2ptasResponse&quot;&gt;
+  &lt;part name=&quot;result&quot; type=&quot;xsd:int&quot;/&gt;&lt;/message&gt;
+&lt;message name=&quot;ConversionIF_ptas2euro&quot;&gt;
+  &lt;part name=&quot;int_1&quot; type=&quot;xsd:int&quot;/&gt;&lt;/message&gt;
+&lt;message name=&quot;ConversionIF_ptas2euroResponse&quot;&gt;
+  &lt;part name=&quot;result&quot; type=&quot;xsd:double&quot;/&gt;&lt;/message&gt;
+&lt;portType name=&quot;ConversionIF&quot;&gt;
+  &lt;operation name=&quot;euro2ptas&quot; parameterOrder=&quot;double_1&quot;&gt;
+    &lt;input message=&quot;tns:ConversionIF_euro2ptas&quot;/&gt;
+    &lt;output message=&quot;tns:ConversionIF_euro2ptasResponse&quot;/&gt;
+  &lt;/operation&gt;
+  &lt;operation name=&quot;ptas2euro&quot; parameterOrder=&quot;int_1&quot;&gt;
+    &lt;input message=&quot;tns:ConversionIF_ptas2euro&quot;/&gt;
+    &lt;output message=&quot;tns:ConversionIF_ptas2euroResponse&quot;/&gt;
+  &lt;/operation&gt;
+&lt;/portType&gt;
+&lt;binding name=&quot;ConversionIFBinding&quot; type=&quot;tns:ConversionIF&quot;&gt;
+  &lt;operation name=&quot;euro2ptas&quot;&gt;
+    &lt;input&gt;
+      &lt;soap:body 
+      encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;    
+      use=&quot;encoded&quot; namespace=&quot;http://j2ee.ua.es/wsdl/Conversion&quot;/&gt;
+    &lt;/input&gt;
+    &lt;output&gt;
+      &lt;soap:body 
+      encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;    
+      use=&quot;encoded&quot; namespace=&quot;http://j2ee.ua.es/wsdl/Conversion&quot;/&gt;
+    &lt;/output&gt;
+    &lt;soap:operation soapAction=&quot;&quot;/&gt;
+  &lt;/operation&gt;
+  &lt;operation name=&quot;ptas2euro&quot;&gt;
+    &lt;input&gt;
+      &lt;soap:body 
+      encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+      use=&quot;encoded&quot; namespace=&quot;http://j2ee.ua.es/wsdl/Conversion&quot;/&gt;
+    &lt;/input&gt;
+    &lt;output&gt;
+    &lt;soap:body 
+      encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;    
+      use=&quot;encoded&quot; namespace=&quot;http://j2ee.ua.es/wsdl/Conversion&quot;/&gt;
+    &lt;/output&gt;
+    &lt;soap:operation soapAction=&quot;&quot;/&gt;
+  &lt;/operation&gt;
+  &lt;soap:binding 
+    transport=&quot;http://schemas.xmlsoap.org/soap/http&quot; style=&quot;rpc&quot;/&gt;
+  &lt;/binding&gt;
+&lt;service name=&quot;Conversion&quot;&gt;
+  &lt;port name=&quot;ConversionIFPort&quot; binding=&quot;tns:ConversionIFBinding&quot;&gt;
+    &lt;soap:address location=&quot;REPLACE_WITH_ACTUAL_URL&quot;/&gt;
+  &lt;/port&gt;
+&lt;/service&gt;
+&lt;/definitions&gt;</span></pre>
+<ul>
+  <li><strong>Nuevo descriptor de despliegue</strong>: Se habr&aacute;n hecho 
+    cambios dentro del fichero <em>web.xml</em>. En &eacute;l se a&ntilde;ade 
+    un <em>listener</em> de contexto y un <em>servlet</em> que forman parte de 
+    las clases de JAX-RPC Runtime. Este <em>servlet</em> actuar&aacute; como <em>endpoint</em> 
+    de nuestro servicio, al que le llegar&aacute; el mensaje SOAP de petici&oacute;n 
+    de servicio. Cuando le llegue un mensaje entrante, este <em>servlet</em> utilizar&aacute; 
+    la capa <strong>Tie</strong> generada para invocar el servicio. Tambi&eacute;n 
+    ser&aacute; el encargado de mostrar la p&aacute;gina con informaci&oacute;n 
+    sobre el servicio y un enlace al documento WSDL cuando accedamos a esta URL 
+    desde un navegador. Podemos ver que est&aacute; mapeado a la direcci&oacute;n 
+    que hab&iacute;amos especificado como <em>endpoint</em>, de forma que al acceder 
+    a dicha direcci&oacute;n se acceda a &eacute;l. Este <em>servlet</em> leer&aacute; 
+    la configuraci&oacute;n del fichero <em>jaxrpc-ri-runtime.xml </em>para conocer 
+    los datos del servicio que debe invocar.</li>
+</ul>
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE web-app PUBLIC &quot;-//Sun Microsystems, Inc.//
+    DTD Web Application    2.3//EN&quot;
+    &quot;http://java.sun.com/dtd/web-app_2_3.dtd&quot;&gt;
+&lt;web-app&gt;
+  &lt;display-name&gt;Servicio Web de conversion&lt;/display-name&gt;
+  &lt;description&gt;
+    Servicio web para la conversion de Euros a Ptas
+  &lt;/description&gt;
+  &lt;listener&gt;
+    &lt;listener-class&gt;
+      <strong>com.sun.xml.rpc.server.http.JAXRPCContextListener</strong>
+    &lt;/listener-class&gt;
+  &lt;/listener&gt;
+  &lt;servlet&gt;
+    &lt;servlet-name&gt;<strong>Conversion</strong>&lt;/servlet-name&gt;
+    &lt;display-name&gt;Conversion&lt;/display-name&gt;
+    &lt;description&gt;JAX-RPC endpoint - Conversion&lt;/description&gt;
+    &lt;servlet-class&gt;
+      <strong>com.sun.xml.rpc.server.http.JAXRPCServlet</strong>
+    &lt;/servlet-class&gt;
+    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+  &lt;/servlet&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;<strong>Conversion</strong>&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;<strong>/conversion</strong>&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;</pre>
+<ul>
+  <li><strong>Fichero de configuraci&oacute;n del servicio</strong>: Se habr&aacute; 
+    generado un nuevo fichero<em> jaxrpc-ri-runtime.xml </em>donde tendremos la 
+    configuraci&oacute;n de nuestro servicio. En &eacute;l, adem&aacute;s de la 
+    informaci&oacute;n que especificamos en el fichero <em>jaxrpc-ri.xml</em>, 
+    tendremos informaci&oacute;n sobre la clase que implementa la capa <strong>Tie</strong> 
+    del servicio, la localizaci&oacute;n del documento WSDL, y el nombre y puerto 
+    de nuestro servicio.</li>
+</ul>
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;endpoints 
+  xmlns='http://java.sun.com/xml/ns/jax-rpc/ri/runtime' 
+  version='1.0'&gt;
+  &lt;endpoint
+    <strong>name</strong>='Conversion'
+    <strong>interface</strong>='utils.ConversionIF'
+    <strong>implementation</strong>='utils.ConversionImpl'
+    <strong>tie</strong>='utils.ConversionIF_Tie'
+    <strong>model</strong>='/WEB-INF/Conversion_model.xml.gz'
+    <strong>wsdl</strong>='/WEB-INF/Conversion.wsdl'
+    <strong>service</strong>='{http://j2ee.ua.es/wsdl/Conversion}Conversion'
+    <strong>port</strong>='{http://j2ee.ua.es/wsdl/Conversion}ConversionIFPort'
+    <strong>urlpattern</strong>='/conversion'/&gt;
+&lt;/endpoints&gt;</pre>
+<ul>
+  <li><strong>Capa Tie</strong>: En el directorio <em>classes</em> se habr&aacute;n 
+    generado una serie de clases que implementan la capa <strong>Tie</strong> 
+    que se encarga de invocar a nuestro servicio cuando llega una petici&oacute;n 
+    SOAP. De esta forma, en nuestro caso encontraremos una clase <em>ConversionIF_Tie</em>. 
+    Adem&aacute;s, podremos ver una serie de clases auxiliares utilizadas para 
+    encapsular los distintos mensajes que se utilizan en las invocaciones a nuestro 
+    servicio.</li>
+</ul>
+<p><strong> Trabajar con ant</strong></p>
+<p>Todo lo que hemos visto anteriormente, podemos automatizarlo utilizando la 
+  herramienta <em>ant</em>. A continuaci&oacute;n se muestra un ejemplo de <em>buildfile</em> 
+  de <em>ant</em> para generar un servicio web:</p>
+<pre class="codigo">&lt;project name=&quot;<strong>Conversion</strong>&quot; default=&quot;service&quot; basedir=&quot;.&quot;&gt;
+<br>&lt;!-- Propiedades --&gt;
+
+&lt;property name=&quot;jwsdp.home&quot; value=&quot;<strong>c:\\jwsdp-1.3</strong>&quot;/&gt;
+&lt;property name=&quot;app.name&quot; value=&quot;<strong>Conversion</strong>&quot;/&gt;<br><br>&lt;property name=&quot;app.home&quot; value=&quot;${jwsdp.home}/webapps&quot;/&gt;
+&lt;property name=&quot;war.temp.name&quot; value=&quot;${app.name}-temp.war&quot;/&gt;
+&lt;property name=&quot;war.name&quot; value=&quot;${app.name}.war&quot;/&gt;<br><br>&lt;property name=&quot;bin.home&quot; value=&quot;${basedir}/bin&quot;/&gt;
+&lt;property name=&quot;build.home&quot; value=&quot;${basedir}/build&quot;/&gt;
+&lt;property name=&quot;dist.home&quot; value=&quot;${basedir}/dist&quot;/&gt;
+&lt;property name=&quot;src.home&quot; value=&quot;${basedir}/src&quot;/&gt;
+&lt;property name=&quot;web.home&quot; value=&quot;${basedir}/web&quot;/&gt;<br><br>&lt;property name=&quot;compile.debug&quot; value=&quot;true&quot;/&gt;
+&lt;property name=&quot;compile.deprecation&quot; value=&quot;false&quot;/&gt;
+&lt;property name=&quot;compile.optimize&quot; value=&quot;true&quot;/&gt;<br><br>&lt;!-- Classpath --&gt;<br><br>&lt;path id=&quot;compile.classpath&quot;&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/jwsdp-shared/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/jaxp/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/jaxp/lib/endorsed&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/jaxrpc/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/saaj/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/apache-ant/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+&lt;/path&gt;<br>
+&lt;!-- Definicion de tareas --&gt;
+<br>&lt;taskdef name=&quot;wscompile&quot; <br>         classname=&quot;com.sun.xml.rpc.tools.ant.Wscompile&quot;&gt;
+  &lt;classpath refid=&quot;compile.classpath&quot;/&gt;
+&lt;/taskdef&gt;
+&lt;taskdef name=&quot;wsdeploy&quot; <br>         classname=&quot;com.sun.xml.rpc.tools.ant.Wsdeploy&quot;&gt;
+  &lt;classpath refid=&quot;compile.classpath&quot;/&gt;
+&lt;/taskdef&gt;
+   
+&lt;!-- Objetivos --&gt;<br>
+&lt;target name=&quot;all&quot; depends=&quot;clean,dist&quot;
+        description=&quot;Compila todo&quot;/&gt;
+   
+&lt;target name=&quot;clean&quot;
+        description=&quot;Borra directorios build y dist&quot;&gt;
+  &lt;delete dir=&quot;${build.home}&quot;/&gt;
+  &lt;delete dir=&quot;${dist.home}&quot;/&gt;
+&lt;/target&gt;<br><br>&lt;target name=&quot;compile&quot;
+        description=&quot;Compila los fuentes Java&quot;&gt;
+  &lt;javac srcdir=&quot;${src.home}&quot;
+         destdir=&quot;${bin.home}&quot;
+         debug=&quot;${compile.debug}&quot;
+         deprecation=&quot;${compile.deprecation}&quot;
+         optimize=&quot;${compile.optimize}&quot;&gt;
+    &lt;classpath refid=&quot;compile.classpath&quot;/&gt;
+  &lt;/javac&gt;
+&lt;/target&gt;<br><br>&lt;target name=&quot;prepare&quot; depends=&quot;compile&quot;<br>        description=&quot;Prepara el directorio build&quot;&gt;
+  &lt;mkdir dir=&quot;${build.home}&quot;/&gt;
+  &lt;mkdir dir=&quot;${build.home}/WEB-INF&quot;/&gt;
+  &lt;mkdir dir=&quot;${build.home}/WEB-INF/classes&quot;/&gt;
+  &lt;mkdir dir=&quot;${build.home}/WEB-INF/lib&quot;/&gt;
+  &lt;copy todir=&quot;${build.home}&quot;&gt;
+    &lt;fileset dir=&quot;${web.home}&quot;/&gt;
+  &lt;/copy&gt;
+  &lt;copy todir=&quot;${build.home}/WEB-INF/classes&quot;&gt;
+    &lt;fileset dir=&quot;${bin.home}&quot;/&gt;
+  &lt;/copy&gt;
+&lt;/target&gt;<br><br>&lt;target name=&quot;dist&quot; depends=&quot;prepare&quot;
+        description=&quot;Crea el fichero WAR de la aplicacion&quot;&gt;
+  &lt;mkdir dir=&quot;${dist.home}&quot;/&gt;
+  &lt;jar jarfile=&quot;${dist.home}/${war.temp.name}&quot;
+       basedir=&quot;${build.home}&quot;/&gt;
+&lt;/target&gt;<br><br>&lt;target name=&quot;service&quot; depends=&quot;dist&quot;
+        description=&quot;Genera capas para el servicio&quot;&gt;
+  &lt;wsdeploy keep=&quot;true&quot;
+            inWarFile=&quot;${dist.home}/${war.temp.name}&quot;
+            outWarFile=&quot;${dist.home}/${war.name}&quot;
+            verbose=&quot;true&quot;&gt;
+    &lt;classpath refid=&quot;compile.classpath&quot;/&gt;
+  &lt;/wsdeploy&gt;
+&lt;/target&gt;<br><br>&lt;target name=&quot;deploy&quot; depends=&quot;service&quot;
+        description=&quot;Despliega copiando al webapps&quot;&gt;
+  &lt;copy file=&quot;${dist.home}/${war.name}&quot; todir=&quot;${app.home}&quot;/&gt;
+&lt;/target&gt;
+   
+&lt;/project&gt;
+</pre>
+<p>Para utilizar este <em>buildfile</em> deberemos tener nuestro directorio de 
+  desarrollo estructurado de la siguiente forma:</p>
+<table width="100%" border="0">
+  <tr> 
+    <td width="7%" valign="top"><code>src</code></td>
+    <td width="93%">C&oacute;digo fuente del servicio web</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>web</code></td>
+    <td>Estructura de la aplicaci&oacute;n web. Debe contener un directorio <code>WEB-INF</code> 
+      con un fichero <code>web.xml</code> decriptor de la aplicaci&oacute;n y 
+      el fichero <code>jaxrpc-ri.xml</code> con la descripci&oacute;n del servicio.</td>
+  </tr>
+</table>
+<p>Tendremos disponibles las siguientes tareas de <em>ant</em>:</p>
+<p><code><strong>clean</strong></code>: Elimina las clases compiladas para volver 
+  a compilar el sistema desde cero la pr&oacute;xima vez.</p>
+<p><code><strong>compile</strong></code>: Compila las clases de nuestra aplicaci&oacute;n, 
+  cuyos fuentes est&aacute;n ubicados en el directorio <code>src</code>, produciendo 
+  las clases compiladas en el directorio <code>bin</code>.</p>
+<p><code><strong>prepare</strong></code>: Construye en el directorio <code>build</code> 
+  la aplicaci&oacute;n completa, juntando la configuraci&oacute;n del servicio 
+  de <code>web</code> con las clases del servicio compiladas de <code>bin</code>.</p>
+<p><code><strong>dist</strong></code>: Genera un fichero WAR con el contenido 
+  de <code>build</code> en el directorio <code>dist</code>. </p>
+<p><code><strong>all</strong></code>: Elimina las clases compiladas anteriormente 
+  y vuelve a construir el sistema entero, realizando todas las tareas anteriores.</p>
+<p><code><strong>service</strong></code>: Genera las capas necesarias para desplegar 
+  nuestro servicio. Se generar&aacute; un nuevo fichero WAR en el directorio <code>dist</code> 
+  en el que tendremos nuestro servicio web con todas las capas necesarias listo 
+  para ser desplegado.</p>
+<p><code><strong>deploy</strong></code>: Despliega el servicio autom&aacute;ticamente 
+  copiando el fichero WAR generado con la tarea anterior al directorio <code>webapps</code> 
+  de Tomcat. Posiblemente Tomcat deba ser reiniciado para que reconozca el servicio 
+  desplegado de esta forma.</p>
+</body>
+</html>

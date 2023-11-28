@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios de Contexto de Servlets</title>
+                                           
+  <meta content="text/html; charset=iso-8859-1"
+ http-equiv="Content-Type">
+                       
+  <link href="../apuntes.css" rel="stylesheet" type="text/css">
+                         
+  <meta content="Microsoft FrontPage 4.0" name="GENERATOR">
+</head>
+  <body bgcolor="#ffffff" text="#000000">
+ 
+<h1>Ejercicios de Contexto de Servlets</h1>
+ 
+<p><strong>1. </strong>Vamos a probar la aplicaci&oacute;n <strong>contexto</strong> 
+  incluida en las plantillas de la sesi&oacute;n. Descomprimir el fichero de plantillas 
+  en nuestro directorio de trabajo, e importar la aplicaci&oacute;n 
+  <strong>contexto</strong> desde Eclipse. </p>
+ 
+<blockquote>   
+  <p>a) Compilar y desplegar la aplicaci&oacute;n web. A continuaci&oacute;n iniciaremos 
+    el servidor Tomcat, y si en un navegador accedemos a la direcci&oacute;n:</p>
+   
+  <pre class="codigo">http://localhost:8080/contexto</pre>
+   
+  <p>Veremos la aplicaci&oacute;n web ya en marcha.</p>
+   
+  <p>b) La aplicaci&oacute;n web nos permite visualizar los atributos de contexto 
+    definidos y sus valores, y a&ntilde;adir nuevos atributos. A parte de los 
+    atributos que nosotros a&ntilde;adimos manualmente, &iquest;hay m&aacute;s 
+    atributos de contexto definidos?</p>
+   
+  <p>c) Podemos a&ntilde;adir nuevos atributos de contexto. Daremos un nombre 
+    del atributo, y un texto que contendr&aacute; como valor. Adem&aacute;s como 
+    valor tambi&eacute;n se introducir&aacute; el identificador de sesi&oacute;n 
+    del navegador que haya creado dicho atributo. Abrir varios navegadores (por 
+    ejemplo konqueror y mozilla) y a&ntilde;adir atributos de contexto desde cada 
+    uno. Comprobar que en cada navegador vemos tanto los atributos creados en 
+    su sesi&oacute;n, como lo atributos creados creados en las sesiones de otros 
+    navegadores (el identificador de sesi&oacute;n ser&aacute; distinto).</p>
+   
+  <p>d) Si nos fijamos en el descriptor de despligue, <code>web.xml</code>, veremos 
+    que se ha a&ntilde;adido un listener sobre los atributos del contexto. Este 
+    listener imprime mensajes en el <em>log</em> indicando cuando se a&ntilde;ade, 
+    elimina o reemplaza un atributo de contexto. Comprobar en el fichero de logs 
+    correspondiente:</p>
+   
+  <pre class="codigo"> $CATALINA_HOME/logs/<strong>localhost_log</strong>&lt;fecha&gt;.txt</pre>
+   
+  <p> que se han registrado los cambios en los atributos que hayamos hecho.</p>
+ </blockquote>
+ 
+<h1>Ejercicio final de Servlets</h1>
+
+<p><strong>1.</strong> Vamos a realizar una aplicaci&oacute;n 
+  de chat utilizando servlets. La aplicaci&oacute;n deber&aacute; tener las siguientes 
+  p&aacute;ginas:</p>
+<ul>
+  <li><strong>P&aacute;gina de login</strong>, en la que el usuario deber&aacute; 
+    introducir su <em>nick</em> con el que se le identificar&aacute; en el chat. 
+    Lo &uacute;nico que se debe comprobar del <em>nick</em> es que no est&eacute; 
+    vac&iacute;o, se permitir&aacute; que haya <em>nicks</em> repetidos. Si el 
+    <em>nick</em> introducido es v&aacute;lido, nos llevar&aacute; a la p&aacute;gina 
+    del chat, si no, volveremos al formulario para introducir un <em>nick</em> 
+    correcto.</li>
+  <li><strong>P&aacute;gina de chat</strong>. Una vez introducido el <em>nick</em>, 
+    se nos llevar&aacute; a la p&aacute;gina del chat donde veremos los &uacute;ltimos 
+    mensajes enviados por otros usuarios y donde tambi&eacute;n podremos enviar 
+    mensajes nosotros. En esta p&aacute;gina tendremos dos elementos: la lista 
+    de los &uacute;ltimos mensajes publicados en el chat, y un formulario con 
+    un campo de texto para poder enviar un nuevo mensaje.</li>
+</ul>
+<p>La lista de mensajes de la p&aacute;gina del chat deber&aacute;:</p>
+<ul>
+  <li>Recargarse cada 5 segundos para de esta manera actualizar la lista de mensajes 
+    y ver en todo momento los &uacute;ltimos mensajes enviados por todos los usuarios. 
+  </li>
+  <li>Mostrar los &uacute;ltimos <em>N</em> mensajes que se hayan enviado al servidor 
+    tanto por nosotros como por cualquier otro usuario conectado al servidor. 
+    Por ejemplo, podemos tomar <em>N=20</em> para mostrar siempre los &uacute;ltimos 
+    20 mensajes que hayan llegado, y de esta forma no hacer una lista demasiado 
+    larga. Los mensajes m&aacute;s antiguos ir&aacute;n desapareciendo.</li>
+  <li>Para cada mensaje, mostrar el <em>nick</em> del usuario que lo envi&oacute; 
+    junto al mensaje de la siguiente forma: </li>
+  <blockquote>
+    <p><code>&lt;pedro&gt; Hola<br>
+      &lt;miguel&gt; Hola, q tal?</code></p>
+  </blockquote>
+  <li>Mostrar los mensajes enviados por el usuario actual en negrita, y el resto 
+    de mensajes de forma normal.</li>
+</ul>
+<p>Contestar a las siguientes preguntas:</p>
+<blockquote>
+  <p>a) &iquest;En qu&eacute; &aacute;mbito (petici&oacute;n, sesi&oacute;n o 
+    contexto) introducir&iacute;as el <em>nick</em> del usuario? &iquest;Por qu&eacute;?</p>
+  <p>b) &iquest;En qu&eacute; &aacute;mbito introducir&iacute;as la lista de mensajes 
+    del chat? &iquest;Por qu&eacute;?</p>
+  <p>c) La lista de mensajes deber&aacute; ser inicializada una &uacute;nica vez 
+    antes de que el primer cliente se conecte al chat. &iquest;Cu&aacute;l ser&aacute; 
+    el lugar m&aacute;s apropiado para hacer esta inicializaci&oacute;n?</p>
+</blockquote>
+<p>Implementar la aplicaci&oacute;n web con servlets, para ser desplegada en el 
+  servidor Tomcat. Puedes seguir la siguiente gu&iacute;a de implementaci&oacute;n 
+  como ayuda:</p>
+<blockquote> 
+  <p><u>Contenido est&aacute;tico</u></p>
+  <p>La p&aacute;gina del chat se puede hacer utilizando marcos (frames), de forma 
+    que tendremos los siguientes dos marcos:</p>
+  <ul>
+    <li><strong>P&aacute;gina de env&iacute;o de mensajes</strong>. P&aacute;gina 
+      con el formulario para enviar un mensaje al chat.</li>
+    <li><strong>P&aacute;gina de mensajes</strong>. Contendr&aacute; la lista 
+      de mensajes publicados en el servidor por todos los usuarios. Esta p&aacute;gina 
+      deber&aacute; recargarse cada 5 minutos para comprobar si hay nuevos mensajes.</li>
+  </ul>
+  <p>En las plantillas de la sesi&oacute;n puedes encontrar un ejemplo en HTML 
+    del aspecto que podr&iacute;a tener esta p&aacute;gina de marcos.</p>
+  <p>La p&aacute;gina de mensajes deber&aacute; generarla din&aacute;micamente 
+    el servidor. El resto de p&aacute;ginas ser&aacute;n est&aacute;ticas:</p>
+</blockquote>
+<table width="80%" border="0" align="center">
+  <tbody>
+    <tr> 
+      <td height="39" valign="top"><code>/index.html</code></td>
+      <td>P&aacute;gina de login. Contendr&aacute; el formulario donde se introducir&aacute; 
+        el <em>nick</em> del usuario. </td>
+    </tr>
+    <tr> 
+      <td width="30%" height="39" valign="top"> 
+        <pre>/chat/frames.html</pre></td>
+      <td width="70%">P&aacute;gina principal de los frames (marcos) de la aplicaci&oacute;n 
+        de chat. Mostrar&aacute; un frame con el formulario para enviar mensajes, 
+        y otro con la lista de mensajes enviados.</td>
+    </tr>
+    <tr> 
+      <td valign="top"> 
+        <pre>/chat/envia.html</pre></td>
+      <td>Formulario para enviar mensajes al chat.</td>
+    </tr>
+  </tbody>
+</table>
+<blockquote>
+  <p><u>Servlets</u></p>
+  <p>Para acceder a las funcionalidades de la aplicaci&oacute;n necesitaremos 
+    implementar una serie de servlets:</p>
+</blockquote>
+<table width="80%" border="0" align="center">
+  <tr> 
+    <td width="24%" valign="top"><code>LoginUsuario</code></td>
+    <td width="76%" bordercolor="0">Recoger&aacute; el <em>nick</em> que el usuario ha introducido 
+      en el formulario de login e introducir&aacute; esta informaci&oacute;n en 
+      la sesi&oacute;n. Si el <em>nick</em> es correcto nos redirigir&aacute; 
+      (utilizando <code>sendRedirect</code>) a la p&aacute;gina de marcos 
+      del chat (<code>/chat/frames.html</code>), si no volver&aacute; a mostrarnos 
+      el formulario de login (<code>/index.html</code>).</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>EnviaMensaje</code></td>
+    <td>Publica un nuevo mensaje en la lista de mensajes del chat. Para ello recoge 
+      el mensaje introducido en el formulario de env&iacute;o de mensajes y lo 
+      insertar&aacute; en la cola de mensajes junto al <em>nick</em> del usuario 
+      actual, que deber&aacute; extraer de la sesi&oacute;n. Una vez registrado 
+      el mensaje, mostraremos en la salida el contenido de <code>/chat/envia.html</code>, 
+      mediante un objeto <code>RequestDispatcher</code>.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>ListaMensajes</code></td>
+    <td><p>Mostrar&aacute; los mensajes enviados al chat junto al <em>nick</em> 
+        de quien los envi&oacute;. Leer&aacute; la cola de mensajes e ir&aacute; 
+        gener&aacute;ndo una p&aacute;gina HTML que muestre estos mensajes, anteponiendo 
+        a cada uno el <em>nick</em> del remitente. </p>
+      <p>Para que la lista de mensajes se actualice periodicamente en el cliente, 
+        haremos que se <strong>recargue</strong> cada 5 segundos. Para esto a&ntilde;adiremos 
+        la cabecera HTTP correspondiente a la respuesta para que esto ocurra (cabecera 
+        &quot;<em>Refresh</em>&quot; con valor &quot;<em>5</em>&quot;). </p>
+      <p>Los mensajes enviados por el usuario actual se mostrar&aacute;n en negrita. 
+        Obtendremos el nick del usuario actual de la sesi&oacute;n y escribiremos 
+        en negrita los mensajes cuyo <em>nick</em> sea igual al <em>nick</em> 
+        del usuario.</p></td>
+  </tr>
+</table>
+<blockquote> 
+  <p><u>Clases auxiliares</u></p>
+  <p>Necesitaremos clases de apoyo para almacenar la lista de mensajes del chat:</p>
+  <table width="80%" border="0" align="center">
+    <tr> 
+      <td width="24%" valign="top"><code>ColaMensajes</code></td>
+      <td width="76%">Lista que almecena los &uacute;ltimos N mensajes (por ejemplo, N=20). 
+        Podremos insertar mensajes en la cola de mensajes, y obtener la lista 
+        de los mensajes ya insertados. Si el n&uacute;mero de mensajes insertados 
+        supera N, se eliminar&aacute; el mensaje m&aacute;s antiguo para que nunca 
+        haya m&aacute;s de N mensajes en la lista. </td>
+    </tr>
+    <tr> 
+      <td valign="top"><code>Mensaje</code></td>
+      <td>Clase que encapsula cada mensaje. Deber&aacute; contener informaci&oacute;n 
+        acerca del <em>nick</em> del remitente y del texto del mensaje. </td>
+    </tr>
+  </table>
+  <p>La cola de mensajes ser&aacute; el objeto com&uacute;n al que acceden los 
+    servlets para el envio y la consulta de estos mensajes. Por lo tanto el objeto 
+    deber&aacute; a&ntilde;adirse como atributo del contexto. Esto lo tendremos 
+    que hacer antes de que cualquier servlet se haya ejecutado. Para ello debemos 
+    crear un objeto <code>ServletContextListener</code> que en la creaci&oacute;n 
+    del contexto inicialice la cola de mensajes (<code>ColaMensajes</code>) y 
+    la introduzca como atributo en el contexto global.</p>
+  <blockquote>
+    <p>&nbsp;</p>
+  </blockquote>
+</blockquote>
+</body>
+</html>

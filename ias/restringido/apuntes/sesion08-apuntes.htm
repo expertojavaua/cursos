@@ -1,0 +1,531 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+                                                            
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+                                                            
+  <meta name="Author" content="Nacho">
+                                                            
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+                                                        
+  <link rel="stylesheet" href="../apuntes.css" type="text/css">
+<title>Tema 3: JSP</title>
+</head>
+  <body>
+      <b>      
+<h2>3.3. Introducción a las librerías de tags</h2>
+      </b><p><b><br>
+      </b> Las <b>librerías de tags</b> (<i>taglibs</i>) son conjuntos de
+      etiquetas HTML personalizadas que permiten encapsular determinadas
+      acciones, mediante un código Java subyacente. Es decir, se define lo que
+      va a ejecutar la etiqueta mediante código Java, y luego se le da un
+      nombre a la etiqueta para llamarla desde las páginas JSP, estableciendo
+      la relación entre el nombre de la etiqueta y el código Java que la
+      implementa.&nbsp; </p>
+           
+      <p>Por ejemplo, una página JSP que hace uso de librerías de tags podría
+      tener este aspecto: </p>
+           
+      <pre class="codigo">&lt;%@ taglib uri=&quot;ejemplo&quot; prefix=&quot;ej&quot; %&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;h1&gt;Ejemplo de librerias de tags&lt;/h1&gt;
+&lt;ej:mitag&gt;Hola a todos&lt;/ej:mitag&gt;
+&lt;br&gt;
+&lt;ej:otrotag/&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+           
+      <p>donde se utiliza una librería llamada <i>ejemplo</i>, que se
+      simplifica con el prefijo <i>ej</i>, de forma que todos los tags de dicha
+      librería se referencian con dicho prefijo y dos puntos, teniendo la forma
+      <i>ej:tag</i>. Se utilizan así los tags <i>mitag</i> y <i>otrotag</i>. </p>
+           
+      <p>Para poder utilizar las taglibs necesitamos tener una versión de JSP
+      1.1 o superior. Veremos a continuación aspectos generales sobre las librerías de
+      tags,
+      para pasar después a ver dos ejemplos concretos de librerías ya hechas.
+      Más adelante veremos cómo crear nuestras propias librerías de tags.&nbsp; </p>
+           
+      <h4>3.3.1. El gestor de tags</h4>
+           
+      <p>Cuando escribimos un tag (etiqueta) de una librería en una página JSP,
+      un gestor
+      de tags se pone en funcionamiento en el servidor para interactuar entre la
+      página JSP y los objetos relacionados con dicho tag y su librería.&nbsp; </p>
+           
+      <p>Dicho gestor de tags no es más que una clase Java que implementa uno
+      de los dos interfaces principales que describen un gestor de tags, en el
+      paquete <b>javax.servlet.jsp.tagext</b>: </p>
+           
+      <ul>
+        <li><b>Tag</b>: para tags simples, que no manejan el contenido de los
+          mismos</li>
+        <li><b>BodyTag</b>: una extensión del anterior que permite manipular el
+          contenido (cuerpo) de los tags</li>
+      </ul>
+      <p>La clase contendrá, en los métodos pertinentes, el código que
+      queremos que se ejecute cuando coloquemos el tag. Para utilizar los
+      gestores de tags en las páginas JSP de nuestra aplicación, deberemos
+      colocarlos en el <b>directorio
+      <i>WEB-INF/classes</i> o <i>WEB-INF/lib</i></b> (dependiendo de si son ficheros <i>.class</i> sueltos o están
+      empaquetados en ficheros JAR). </p>
+           
+      <p>Normalmente, una librería de tags se compone de varios tags, cada uno
+      con su gestor. Por lo tanto, los gestores de las librerías de tags que
+      utilicemos, los encontraremos empaquetados en un fichero JAR </p>
+           
+      <h4>3.3.2. El descriptor de la librería de tags</h4>
+           
+      <p>El <b>descriptor de la librería de tags (TLD)</b> es un fichero XML
+      (normalmente con extensión <i>.tld</i>) utilizado para interpretar páginas que incluyan dicha librería. Contiene
+      directivas que describen la librería, para poderla utilizar, y mapea las
+      llamadas a los tags en páginas JSP con las clases (gestores de tags) que
+      ejecutan el código. </p>
+           
+      <p><b>1. Definición del fichero TLD en el descriptor de despliegue (web.xml)</b> </p>
+           
+      <p>Para encontrar y utilizar este fichero TLD, se utiliza una etiqueta de
+      tipo <i>taglib</i> en el fichero descriptor de despliegue (<i>web.xml</i>) de nuestra aplicación.
+      Así, para cada librería que se emplee en la aplicación se tendrá un grupo
+      de texto de este tipo en dicho fichero: </p>
+           
+      <pre class="codigo">&lt;taglib&gt;
+	&lt;taglib-uri&gt;identificador&lt;/taglib-uri&gt;
+	&lt;taglib-location&gt;fichero.tld&lt;/taglib-location&gt;
+&lt;/taglib&gt;</pre>
+           
+      <ul>
+        <li><b>taglib-uri</b> es un nombre identificativo de la librería</li>
+        <li><b>taglib-location</b> indica dónde se encuentra el fichero TLD
+          (por ejemplo, en <i>/WEB-INF/fichero.tld</i>)</li>
+      </ul>
+      <p><b>2. Contenido del fichero TLD</b> </p>
+           
+      <p>Por otra parte, el fichero TLD de la librería tiene un contenido como: </p>
+           
+      <pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot; ?&gt;
+&lt;!DOCTYPE taglib PUBLIC &quot;-//Sun Microsystems, 
+ Inc.//DTD JSP Tag Library 1.1//EN&quot; 
+ &quot;http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd&quot;&gt; 
+
+&lt;taglib&gt; 
+
+	&lt;tlibversion&gt;1.0&lt;/tlibversion&gt; 
+	&lt;jspversion&gt;1.1&lt;/jspversion&gt;
+	&lt;shortname&gt;pt&lt;/shortname&gt;
+	&lt;uri&gt;pruebatags&lt;/uri&gt;
+	&lt;info&gt;Librería de prueba&lt;/info&gt; 
+
+	&lt;tag&gt; 
+		&lt;name&gt;prueba&lt;/name&gt; 
+		&lt;tagclass&gt;Prueba&lt;/tagclass&gt;
+		&lt;bodycontent&gt;empty&lt;/bodycontent&gt;
+		&lt;info&gt;Tag de prueba&lt;/info&gt;
+		&lt;attribute&gt; 
+			&lt;name&gt;nombre&lt;/name&gt;
+			&lt;required&gt;false&lt;/required&gt;
+			&lt;rtexprvalue&gt;false&lt;/rtexprvalue&gt;
+		&lt;/attribute&gt; 	
+	&lt;/tag&gt;
+&lt;/taglib&gt;</pre>
+           
+      <p>Se especifica al principio que es un fichero XML, y el DOCTYPE del
+      mismo. La etiqueta raíz del documento es <i>taglib</i>, y dentro
+      contiene, al principio, etiquetas descriptivas (<i>tlibversion, jspversion,
+      shortname</i>, etc). Después tendrá una etiqueta <i>tag</i> por cada tag
+      de la librería, indicando las características del mismo (clase que lo
+      implementa, atributos que puede tener, etc). </p>
+           
+      <h4>3.3.3. Carga de taglibs en ficheros JSP</h4>
+           
+      <p>Para poder utilizar taglibs en ficheros JSP, se colocan al principio del
+      fichero (antes de cualquier acción) directivas del tipo: </p>
+           
+      <pre class="codigo">&lt;%@ taglib uri=&quot;identificador&quot; prefix=&quot;prefijo&quot; %&gt;</pre>
+           
+      <p>donde: </p>
+           
+      <ul>
+        <li><b>uri</b> es el identificador de la librería (indicado también en
+          el fichero descriptor de despliegue (<i>web.xml</i>))</li>
+        <li><b>prefix</b><i> </i>es un prefijo para llamar a los tags de la
+          librería</li>
+      </ul>
+           
+      <h4>3.3.4. Ejemplo genérico</h4>
+           
+      <p>Veremos ahora cómo utilizar una librería de tags. Supongamos que
+      tenemos una librería llamada <i>prueba</i>, de forma que los ficheros
+      Java que la implementan (los gestores de tags) están en un fichero <i>prueba.jar</i>, y el
+      fichero descriptor es <i>prueba.tld</i>. Supongamos que el identificador
+      (el <i>uri</i>) de la librería es <i>prueba</i>,<i> </i>y<i> </i>supongamos
+      que la librería tiene un tag, llamado <i>hola</i>, sin cuerpo, que saca
+      por pantalla el texto &quot;hola a todos&quot;. </p>
+           
+      <p>Para utilizar esta librería en una aplicación web, seguimos los
+      pasos: </p>
+           
+      <ul>
+        <li>
+          <p align="left">Copiar el fichero JAR en el directorio <i>WEB-INF/lib</i>
+      de la aplicación</li>
+        <li>
+          <p align="left">Copiar el fichero TLD en el directorio <i>WEB-INF</i> de
+      la aplicación</li>
+        <li>
+          <p align="left">Añadir en el descriptor de despliegue (<i>web.xml</i>)
+          el bloque <i>&lt;taglib&gt;</i> correspondiente para la librería:</li>
+      </ul>
+      <blockquote>
+        <pre class="codigo">&lt;taglib&gt;
+	&lt;taglib-uri&gt;prueba&lt;/taglib-uri&gt;
+	&lt;taglib-location&gt;
+		/WEB-INF/prueba.tld
+	&lt;/taglib-location&gt;
+&lt;/taglib&gt;</pre>
+           
+      </blockquote>
+           
+      <ul>
+        <li>
+          <p align="left">Añadir al principio de cada página JSP donde vayamos a
+      utilizar la librería la línea:</li>
+      </ul>
+      <blockquote>
+           
+      <pre class="codigo">&lt;%@ taglib uri=&quot;prueba&quot; prefix=&quot;pr&quot; %&gt;</pre>
+           
+      </blockquote>
+           
+      <p>donde el <i>prefix</i> puede ser el que queramos. Con esto, por
+      ejemplo, podemos utilizar la librería así: </p>
+           
+      <pre class="codigo">&lt;%@ taglib uri=&quot;prueba&quot; prefix=&quot;pr&quot; %&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;pr:hola/&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+           
+      <p>Vemos que el prefijo se utiliza para anteponerlo al nombre de cada tag
+      de la librería, en la forma <b>prefijo:tag</b>. </p>
+           
+      <b>      
+           
+      <h4>3.3.5. Ejemplo de librería: request</h4>
+           
+      </b><p> La librería <b>request</b> es una librería desarrollada en el
+      proyecto Jakarta (los autores de los servidores Apache y Tomcat), y que
+      permite acceder a la información acerca de una petición HTTP realizada.
+      De esta forma podremos acceder a los parámetros de entrada de una
+      petición GET o POST, a las cabeceras HTTP, cookies, etc. </p>
+           
+      <p>Se tiene información detallada sobre esta librería en: </p>
+           
+      <p align="center"><a href="http://jakarta.apache.org/taglibs/doc/request-doc/intro.html">http://jakarta.apache.org/taglibs/doc/request-doc/intro.html</a> </p>
+           
+      <p><b>1. Uso de la librería</b> </p>
+           
+      <p>Para utilizar la librería <i>request</i> en una aplicación web,
+      seguimos los pasos: </p>
+           
+      <ul>
+        <li>Copiar el fichero <b>TLD</b> (<i>request.tld</i>) en el directorio <i>WEB-INF</i>
+          de la aplicación</li>
+        <li>Copiar el fichero <b>JAR</b> con la implementación de los tags (<i>request.jar</i>)
+          en el directorio <i>WEB-INF/lib</i> de la aplicación</li>
+        <li>Añadir al descriptor de despliegue de la aplicación (<i>web.xml</i>)
+          una marca <i>taglib</i>
+          con información sobre la librería:&nbsp;</li>
+      </ul>
+      <blockquote>
+        <pre class="codigo">&lt;taglib&gt;
+	&lt;taglib-uri&gt;
+	http://jakarta.apache.org/taglibs/request-1.0
+	&lt;/taglib-uri&gt;
+	&lt;taglib-location&gt;
+	/WEB-INF/request.tld
+	&lt;/taglib-location&gt;
+&lt;/taglib&gt;</pre>
+           
+      </blockquote>
+      <ul>
+        <li>Finalmente, en las páginas JSP donde vayamos a utilizar la
+          librería, se añade al principio la línea:</li>
+      </ul>
+      <blockquote>
+        <pre class="codigo">&lt;%@ taglib 
+uri=&quot;http://jakarta.apache.org/taglibs/request-1.0&quot; 
+prefix=&quot;req&quot; %&gt;</pre>
+           
+      <p>donde el prefijo puede ser el que queramos</p>
+           
+      </blockquote>
+           
+      <p><b>2. Algunos tags de la librería</b> </p>
+           
+      <p>Veremos ahora algunos de los tags con los que cuenta esta librería.
+      Para los ejemplos que se verán, suponemos que se ha indicado un prefijo (<i>prefix</i>)
+      &quot;req&quot;: </p>
+           
+      <blockquote>
+        <b>parameter</b>
+        <blockquote>
+          <p>Obtiene el valor de un parámetro determinado. No
+          tiene cuerpo.</p>
+           
+        <p><b>ATRIBUTOS</b> </p>
+           
+        <ul>
+          <li><b>name</b>: nombre del parámetro del que
+        se quiere su valor.&nbsp;</li>
+        </ul>
+           
+        <p><b>EJEMPLO</b> </p>
+           
+        <pre class="codigo">&lt;req:parameter name=&quot;param1&quot;/&gt;</pre>
+           
+        </blockquote>
+        <p><b>parameters</b>&nbsp;</p>
+        <blockquote>
+          <p>Recorre toda la lista de parámetros</p>
+           
+        <p><b>ATRIBUTOS</b> </p>
+           
+        <ul>
+          <li><b>name</b>: para buscar los valores para un parámetro de nombre
+            determinado. Este atributo es opcional.</li>
+          <li><b>id</b>: permite luego obtener
+        los datos de la petición con el mismo <i>id</i>. Los datos de la
+        petición se obtienen mediante tags <i>jsp:getProperty</i> donde:</li>
+        </ul>
+        <blockquote>
+          <ul type="disc">
+            <li>
+        como parámetro <i>name</i>  se pasa el <i>id</i>  asignado al tag</li>
+            <li> como
+        parámetro <i>property </i>se pasa la propiedad que se quiere obtener,
+              que pueden ser:</li>
+          </ul>
+          <blockquote>
+          <ul>
+            <li><i>name</i>: obtiene el nombre del parámetro</li>
+            <li><i>value</i>: obtiene el valor del parámetro</li>
+          </ul>
+          </blockquote>
+        </blockquote>
+           
+        <p><b>EJEMPLO</b> </p>
+           
+        <pre class="codigo">&lt;req:parameters id=&quot;id1&quot;&gt;
+	Nombre: 
+	&lt;jsp:getProperty name=&quot;id1&quot; 
+	 property=&quot;name&quot;/&gt;
+	&lt;br&gt;
+	Valor: 
+	&lt;jsp:getProperty name=&quot;id1&quot; 
+	 property=&quot;value&quot;/&gt;
+	&lt;br&gt;
+&lt;/req:parameters&gt;</pre>
+           
+        <pre class="codigo">&lt;req:parameters id=&quot;id1&quot; name=&quot;param1&quot;&gt;
+	Valor: 
+	&lt;jsp:getProperty name=&quot;id1&quot; 
+	 property=&quot;value&quot;/&gt;
+	&lt;br&gt;
+&lt;/req:parameters&gt;</pre>
+           
+        </blockquote>
+        <b>parameterValues</b>&nbsp;
+        <blockquote>
+          <p align="left">Recorre la lista de valores para un
+          parámetro con múltiples valores. Debe estar incluido dentro de un
+          tag <i>parameters</i>, recorriendo así los valores del parámetro que
+          se esté explorando.</p>
+           
+        <p><b>ATRIBUTOS</b> </p>
+           
+        <ul>
+          <li><b>id</b>: permite luego obtener
+        los datos de la petición con el mismo <i>id</i>. Los datos de la
+        petición se obtienen mediante tags <i>jsp:getProperty</i> donde:</li>
+        </ul>
+        <blockquote>
+          <ul>
+            <li>
+        como parámetro <i>name</i>  se pasa el <i>id</i>  asignado al tag</li>
+            <li> como
+        parámetro <i>property </i>se pasa <i>value</i>, que obtiene el valor
+              del parámetro</li>
+          </ul>
+        </blockquote>
+           
+        <p><b>EJEMPLO</b> </p>
+           
+          <pre class="codigo">&lt;req parameters id=&quot;id1&quot; name=&quot;param1&quot;&gt;
+	&lt;req:parameterValues id=&quot;id2&quot;&gt;
+		Valor: 
+		&lt;jsp:getProperty name=&quot;id2&quot; 
+		 property=&quot;value&quot;/&gt;
+		&lt;br&gt;
+	&lt;/req:parameterValues&gt;
+&lt;/req:parameters&gt;</pre>
+           
+        </blockquote>
+        <b>equalsParameter</b>
+        <blockquote>
+          <p>Comprueba si el valor del parámetro
+          coincide con un determinado valor</p>
+           
+        <p><b>ATRIBUTOS</b> </p>
+           
+        <ul>
+          <li><b>name</b>: nombre del parámetro que se compara</li>
+          <li><b>match</b>: <i> </i> cadena con la que tiene que coincidir</li>
+          <li><b>value</b> indica si deben coincidir (<i>true</i>) o
+        no (<i>false</i>) (por defecto es <i>true</i>). Este parámetro es
+            opcional.</li>
+          <li><b>ignoreCase</b>: <i> </i>si deben coincidir
+        mayúsculas y minúsculas (<i>false</i>, valor por defecto) o no (<i>true</i>).
+            Este parámetro es opcional.</li>
+        </ul>
+           
+        <p><b>EJEMPLO</b> </p>
+           
+        <pre class="codigo">&lt;req:equalsParameter name=&quot;param1&quot; 
+ match=&quot;hola&quot; value=&quot;false&quot;&gt;
+	El parametro no coincide
+&lt;/req:equalsParameter&gt;
+&lt;req:equalsParameter name=&quot;param1&quot; 
+ match=&quot;hola&quot;&gt;
+	El parametro si coincide
+&lt;/req:equalsParameter&gt;</pre>
+           
+        </blockquote>
+        <b>existsParameter</b>&nbsp;
+        <blockquote>
+          <p>Comprueba si existe un determinado
+          parámetro&nbsp;</p>
+           
+        <p><b>ATRIBUTOS</b> </p>
+           
+        <ul>
+          <li><b>name</b>: nombre del parámetro que se busca</li>
+          <li><b>value</b>: indica si debe existir (<i>true</i>) o no (<i>false</i>)
+        (por defecto es <i>true</i>).&nbsp;Este parámetro es opcional</li>
+        </ul>
+           
+        <p><b>EJEMPLO</b> </p>
+           
+        <pre class="codigo">&lt;req:existsParameter name=&quot;param1&quot; 
+ value=&quot;false&quot;&gt;
+	El parametro no existe
+&lt;/req:existsParameter&gt;</pre>
+           
+        </blockquote>
+      </blockquote>
+      <p><b>3. Ejemplo de uso</b></p>
+           
+      <p>Dado el siguiente formulario <i>index.html</i>:</p>
+           
+      <pre class="codigo">&lt;html&gt;
+&lt;body&gt;
+	&lt;form action=&quot;request.jsp&quot;&gt;
+		Nombre: 
+		&lt;input type=&quot;text&quot; name=&quot;nombre&quot;&gt;
+		&lt;br&gt;
+		Descripcion: 
+		&lt;input type=&quot;text&quot; name=&quot;descripcion&quot;&gt;
+		&lt;br&gt;
+		&lt;input type=&quot;submit&quot; value=&quot;Enviar&quot;&gt;
+	&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+           
+      <p>Al validarlo cargamos la página <i>request.jsp</i>, donde tenemos un
+      ejemplo de cómo obtener los valores de los parámetros del formulario:</p>
+           
+      <pre class="codigo">&lt;%@ taglib 
+uri=&quot;http://jakarta.apache.org/taglibs/request-1.0&quot; 
+prefix=&quot;req&quot; %&gt;
+
+&lt;html&gt;
+&lt;body&gt;
+	Nombre: 
+	&lt;req:parameter name=&quot;nombre&quot;/&gt;
+	&lt;br&gt;
+	Descripcion: 
+	&lt;req:parameter name=&quot;descripcion&quot;/&gt;
+	&lt;br&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+           
+      <p>Aquí tenéis un fichero <a href="ejemplos/jsp/ejemplorequest.war">WAR</a> con el ejemplo
+      completo. Utiliza los ficheros TLD y JAR de la librería <i>request</i>,
+      copiados ya en <i>WEB-INF </i>y <i>WEB-INF/lib</i>, respectivamente.<i> </i>Copiad
+      el ejemplo en el directorio <i>webapps</i> de Tomcat, y probadlo con:</p>
+      <pre class="codigo">http://localhost:8080/ejemplorequest/index.html</pre>
+           
+      <b>      
+<h4>3.3.6. Otras librerías de tags</h4>
+           
+      </b><p>Existen muchas librerías de tags definidas. Podemos encontrar
+      algunas de ellas en:</p>
+      <p><a href="http://jakarta.apache.org/taglibs/">http://jakarta.apache.org/taglibs/</a></p>
+      <p>Otro ejemplo de librería util en esa página es <b>dbtags</b>, que
+      permite conectar con una base de datos y realizar operaciones sobre ella.</p>
+      <p><b>JSTL</b></p>
+      <p>Se tiene también una librería de tags considerada estándar, y por
+      tanto implementada y optimizada por muchos servidores web. Dicha librería
+      es <b>JSTL</b> (<i>JavaServer Pages Standard Tag Library</i>). Encapsula
+      muchas funcionalidades comunes en aplicaciones JSP, mediante cuatro sub-librerías
+      que tratan 4 ramas concretas:</p>
+      <ul>
+        <li>La librería <b>core</b>, utilizada para funciones de propósito
+          general (manejo de expresiones, control de flujo, etc)</li>
+        <li>La librería <b>XML</b> se emplea para el procesamiento de ficheros
+          XML (parseo, procesamiento con XSL, etc)</li>
+        <li>La librería de <b>internacionalización</b> se usa para dar soporte
+          a páginas multilenguaje, y a multiformatos de números, monedas,
+          horas, etc, en función de la región en que se tenga la aplicación</li>
+        <li>Finalmente, la librería <b>SQL</b> se utiliza para comunicación y
+          realización de operaciones contra bases de datos.</li>
+      </ul>
+      <p>Se puede encontrar información sober JSTL en:</p>
+      <p><a href="http://java.sun.com/products/jsp/jstl">http://java.sun.com/products/jsp/jstl</a></p>
+           
+      <b>      
+<h4>3.3.7. Otras consideraciones acerca de las librerías de tags</h4>
+           
+      </b>
+           
+      <p><b>1. Uso de los tags</b> </p>
+           
+      <p>Se pueden colocar tags en varios lugares de nuestra página JSP.
+      Podemos por ejemplo establecer un enlace en función de un parámetro: </p>
+           
+      <pre class="codigo">&lt;a href=&quot;http://&lt;req:parameter name=&quot;url&quot;/&gt;&quot;&gt;Enlace dinamico&lt;/a&gt;</pre>
+           
+      <p><b>2. Comunicación entre JSP y las taglibs</b> </p>
+           
+      <p>En ocasiones nos puede interesar comunicar código JSP con código de
+      taglibs: obtener dentro de JSP el valor de una taglib, o al revés, por
+      ejemplo.&nbsp; </p>
+           
+      <p>Si queremos utilizar código JSP en una taglib, podemos hacerlo sin
+      problemas (siempre que el tag lo permita). Por ejemplo, el siguiente código obtiene un parámetro cuyo
+      nombre se guarda en una variable Java: </p>
+           
+      <pre class="codigo">&lt;% String nombreParam = &quot;nombre&quot;; %&gt;
+&lt;req:parameter name=&quot;&lt;%= nombreParam %&gt;&quot;/&gt;</pre>
+           
+      <p>El caso contrario, obtener valores de taglibs dentro de código JSP, es
+      más complejo de tratar. Algunas etiquetas instancian código Java que es
+      directamente accesible desde JSP, con el nombre que se les da en la
+      etiqueta. En otros casos la comunicación no es tan directa, y hay que ver en la
+      documentación del tag en cuestión cómo podemos acceder a su valor. </p>
+           
+        </body>
+        </html>

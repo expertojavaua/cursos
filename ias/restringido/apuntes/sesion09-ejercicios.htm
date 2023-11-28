@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios de introducci&oacute;n a los Servicios Web</title>
+                                                                        
+     
+  <meta content="text/html; charset=iso-8859-1"
+ http-equiv="Content-Type">
+                                           
+  <link href="../apuntes.css" rel="stylesheet" type="text/css">
+                                             
+  <meta content="Microsoft FrontPage 4.0" name="GENERATOR">
+<link href="../../apuntes.css" rel="stylesheet" type="text/css">
+</head>
+  <body bgcolor="#ffffff" text="#000000">
+<h1>Ejercicios de Introducci&oacute;n a los Servicios Web</h1>
+<p><strong>1.</strong> La p&aacute;gina <em>http://www.xmethods.net</em> contiene 
+  una serie de Servicios Web de demostraci&oacute;n. En la secci&oacute;n <em>XMethods 
+  Demo Services</em>, en la parte inferior de la p&aacute;gina, tenemos una lista 
+  de servicios que podremos integrar en nuestras aplicaciones. </p>
+<p>a) Pulsar sobre el servicio <em>Currency Exchange Rate</em> para obtener informaci&oacute;n 
+  sobre &eacute;l. Esto nos llevar&aacute; a una p&aacute;gina con documentaci&oacute;n 
+  sobre este servicio, adem&aacute;s de un enlace al documento WSDL que lo describe.</p>
+<ul>
+  <li>Leer la documentaci&oacute;n del servicio. &iquest;Qu&eacute; funci&oacute;n 
+    realiza?</li>
+</ul>
+<ul>
+  <li>Descargar el documento WSDL y editarlo. &iquest;Qu&eacute; operaciones nos 
+    ofrece el servicio? &iquest;Qu&eacute; par&aacute;metros toman y que nos devuelven?</li>
+</ul>
+<ul>
+  <li> Si pulsamos sobre el link <em>Analyze WSDL</em>, junto al link al documento 
+    WSDL, podremos ver los datos que aporta este documento de forma desglosada. 
+    Podemos ver el nombre del servicio, el puerto, las operaciones y los par&aacute;metros 
+    de entrada y datos devueltos por cada una de ellas.</li>
+</ul>
+<p>b) Si queremos convertir la divisa europea (euro) a la de EEUU (d&oacute;lar), 
+  &iquest;qu&eacute; operaci&oacute;n y qu&eacute; par&aacute;metros debemos proporcionar?</p>
+<p>c) Vamos a invocar el servicio mediante la aplicaci&oacute;n Web Services Explorer 
+  (WSE) que podr&aacute;s encontrar en la secci&oacute;n de recursos<em></em>. 
+  Deberemos proporcionar la direcci&oacute;n del documento WSDL que describe el 
+  servicio y nos mostrar&aacute; las operaciones que nos ofrece, pudiendo invocarlas 
+  desde la misma aplicaci&oacute;n.</p>
+<p>Para instalar WSE debemos:</p>
+<ul>
+  <li>Descargar la aplicaci&oacute;n de la secci&oacute;n de recursos.</li>
+  <li>Descomprimir la aplicaci&oacute;n en cualquier directorio.</li>
+  <li>Compilaremos la aplicaci&oacute;n invocando desde el directorio de WSE el 
+    siguiente comando:</li>
+</ul>
+<pre class="codigo">ant compile</pre>
+<ul>
+  <li>Una vez compilada, podremos ejecutarla con: </li>
+</ul>
+<pre class="codigo">ant run</pre>
+<p>Una vez hemos ejecutado la aplicaci&oacute;n, para invocar la operaci&oacute;n 
+  de cambio de moneda haremos lo siguiente:</p>
+<ul>
+  <li>Introducimos en la barra de direcci&oacute;n la URL en la que se encuentra 
+    el documento WSDL del servicio. </li>
+  <li>En la parte izquierda nos aparecer&aacute; un &aacute;rbol desplegable con 
+    las distintas operaciones que tenemos disponibles. Seleccionamos la operaci&oacute;n 
+    oportuna.</li>
+  <li>En la parte central nos aparecer&aacute;n una serie de cuadros de texto 
+    donde deberemos introducir los par&aacute;metros con los que invocamos la 
+    operaci&oacute;n. Introducir los par&aacute;metros adecuados para la conversi&oacute;n 
+    de euro a d&oacute;lar.</li>
+  <li>Pulsar el bot&oacute;n <em>Invoke</em> para invocar el servicio. En el cuadro 
+    <em>Results</em> deberemos ver el valor actual del cambio entre ambas monedas, 
+    y debajo de este cuadro veremos los mensajes SOAP de petici&oacute;n y respuesta 
+    que se han utilizado en la invocaci&oacute;n.</li>
+</ul>
+<p>d) Consultar los mensajes SOAP de petici&oacute;n y respuesta utilizados. &iquest;Qu&eacute; 
+  datos encontramos en cada uno de ellos?</p>
+<p><strong>2.</strong> B&uacute;squeda de Servicios Web. En este ejercicio vamos 
+  a acceder a un registro UDDI para buscar un servicio.</p>
+<p><em>Amazon</em> ofrece Servicios Web para obtener informaci&oacute;n sobre 
+  los productos que venden. Vamos a buscar estos servicios en un registro UDDI, 
+  para posteriormente poder integrarlo en nuestras aplicaciones.</p>
+<p>a) Acceder a un registro UDDI mediante su interfaz web y buscar el archivo 
+  WSDL que describa los servicios de <em>Amazon.com</em>.</p>
+<ul>
+  <li> Podemos acceder al registro de IBM en la direcci&oacute;n: </li>
+  <pre class="codigo">http://www-3.ibm.com/services/uddi/</pre>
+  <li>Para acceder al registro pulsaremos sobre <em>UDDI V2 Business Registry</em>. 
+    Para hacer consultas no hace falta registrarnos, pero si queremos publicar 
+    nuestros servicios entonces si que deberemos hacerlo. <br>
+  </li>
+  <li>En el men&uacute; de la izquierda pulsaremos sobre la opci&oacute;n <em>Find</em> 
+    para buscar servicios.<br>
+  </li>
+  <li>Vamos a realizar una b&uacute;squeda por compa&ntilde;&iacute;a (<em>business</em>), 
+    ya que buscamos los servicios que ofrece la compa&ntilde;ia <em>Amazon</em>. 
+    En el campo <em>Search</em> for a seleccionamos <em>Business</em>. En el campo 
+    <em>Starts with</em> introduciremos el nombre de la compa&ntilde;&iacute;a 
+    buscada, es decir, <em>Amazon</em>. <br>
+  </li>
+  <li>Pulsamos sobre <em>Find</em>. Nos mostrar&aacute; los resultados de la b&uacute;squeda. 
+    De los resultados obtenidos, nos interesar&aacute; obtener informaci&oacute;n 
+    sobre los servicios que ofrece <em>Amazon.com</em>. <br>
+  </li>
+  <li>Pulsamos sobre el link <em>Services</em>. Se nos mostrar&aacute; una lista 
+    con los servicios que ofrece. Pulsaremos sobre el nombre del servicio para 
+    obtener informaci&oacute;n sobre como acceder a &eacute;l.<br>
+  </li>
+  <li>Aqu&iacute; podremos ver una descripci&oacute;n del servicio, y un enlace 
+    al documento WSDL que lo describe.</li>
+</ul>
+<p>b) Abrir el documento WSDL del servicio que ofrece <em>Amazon</em>. </p>
+<ul>
+  <li>&iquest;Cu&aacute;l es el <em>endpoint</em> del servicio?<br>
+  </li>
+  <li>&iquest;Qu&eacute; operaciones ofrece el servicio?<br>
+  </li>
+  <li>Para la operaci&oacute;n <em>DirectorSearchRequest</em>, &iquest;que par&aacute;metros 
+    toma, y que datos devuelve como resultado?<br>
+  </li>
+  <li>&iquest;De que se compone el tipo <em>DirectorRequest</em>?</li>
+</ul>
+<p>c) En el directorio <em>AmazonCliente</em>, tenemos un cliente que utiliza 
+  dicho servicio para hacer una b&uacute;squeda de DVDs teniendo como criterio 
+  de b&uacute;squeda el nombre del director. </p>
+<ul>
+  <li>Generar la clases necesarias para el cliente con:</li>
+  <pre class="codigo">ant client</pre>
+  <li> Compilar la aplicaci&oacute;n cliente con:</li>
+</ul>
+<blockquote> 
+  <pre class="codigo">ant compile</pre>
+</blockquote>
+<ul>
+  <li>Una vez compilado, podremos hacer una b&uacute;squeda por director con:</li>
+</ul>
+<blockquote> 
+  <pre class="codigo">ant run -Ddirector=nombre_director
+</pre>
+  <p>Por ejemplo, podr&iacute;amos buscar las pel&iacute;culas en DVD de David 
+    Lynch, o de Stanley Kubrick:</p>
+  <pre class="codigo">ant run -Ddirector=lynch
+<span class="codigo">ant run -Ddirector=kubrick</span></pre>
+  <p>Con esto veremos los t&iacute;tulos de las pel&iacute;culas encontradas en 
+    <em>Amazon</em>. </p>
+</blockquote>
+<ul>
+  <li> Podemos ver los mensajes SOAP que est&aacute; enviando y recibiendo nuestro 
+    programa internamente utilizando el comando: </li>
+  <pre class="codigo">ant run-debug -Ddirector=nombre_director
+</pre>
+  <li>Podemos redireccionar los mensajes a un fichero, para poder visualizarlos 
+    en cualquier editor:</li>
+</ul>
+<blockquote> 
+  <pre class="codigo">ant run-debug -Ddirector=lynch &gt; log
+</pre>
+</blockquote>
+<ul>
+  <li> Observar el mensaje de la petici&oacute;n SOAP. 
+    <ul>
+      <li>&iquest;Qu&eacute; operaci&oacute;n se invoca?</li>
+      <li>&iquest;Qu&eacute; par&aacute;metros se proporcionan?</li>
+      <li>&iquest;De que informaci&oacute;n se compone el par&aacute;metro suministrado?<br>
+      </li>
+    </ul>
+  </li>
+  <li> Ahora observar el mensaje de respuesta. &iquest;Qu&eacute; informaci&oacute;n 
+    nos devuelve el servicio?</li>
+</ul>
+<h1>Ejercicios de Creaci&oacute;n de Servicios Web</h1>
+<p><strong>1.</strong> Vamos a ver como ejemplo la creaci&oacute;n de un servicio 
+  <em>HolaMundo</em>. En el directorio <code>HolaMundoSW</code> tenemos ya implementado 
+  este servicio como ejemplo.</p>
+<p>a) Para crear este servicio deber&iacute;amos seguir los siguientes pasos:</p>
+<ul>
+  <li>Implementar la interfaz del servicio, <strong>HolaMundoIF</strong>, que 
+    tendr&aacute; un m&eacute;todo p&uacute;blico <em>saluda</em> que ser&aacute; 
+    la operaci&oacute;n que ofrecer&aacute; nuestro servicio. Esta interfaz ya 
+    la encontraremos implementada en este ejemplo, abrirla y observar su c&oacute;digo 
+    fuente. 
+    <pre class="codigo">public String saluda(String nombre);</pre>
+  </li>
+  <li> Implementar una clase <strong>HolaMundoImpl</strong> que implemente la 
+    interfaz definida en el paso anterior, implementando de esta forma la funcionalidad 
+    de la operaci&oacute;n <em>saluda</em> de nuestro servicio. Esta operaci&oacute;n 
+    tomar&aacute; como datos de entrada nuestro nombre, generando como salida 
+    un saludo con el nombre especificado. Por ejemplo, si proporcionamos como 
+    entrada &quot;<em>Miguel</em>&quot;, deber&aacute; devolvernos el mensaje 
+    &quot;<em>Hola Miguel!</em>&quot;. Esta clase ya la encontraremos implementada 
+    en este ejemplo, abrirla y observar su c&oacute;digo fuente.<br>
+  </li>
+  <li> Compilar la clase que implementa nuestro servicio. Podemos utilizar el 
+    objetivo <code>compile</code> de <em>ant</em>, aunque si estamos utilizando 
+    Eclipse normalmente las clases se habr&aacute;n compilado autom&aacute;ticamente.</li>
+</ul>
+<ul>
+  <li>Implementar el descriptor de despliegue (<code>web.xml</code>) y el fichero 
+    de configuraci&oacute;n de servicios web (<code>jaxrpc-ri.xml</code>), ubicados 
+    en el directorio <code>WEB-INF</code>, con la configuraci&oacute;n apropiada 
+    para nuestro servicio. Encontraremos estos ficheros ya implementados para 
+    este servicio, abrirlos y observar su contenido.</li>
+</ul>
+<ul>
+  <li>Empaquetar los elementos anteriores en un fichero WAR con la estructura 
+    oportuna. Podemos utilizar para ello el objetivo <code>dist</code> de <em>ant</em>.</li>
+</ul>
+<ul>
+  <li>Utilizar <em>wsdeploy</em> con este fichero WAR para generar las capas necesarias 
+    del servidor para nuestro servicio. Para realizar esto podemos utilizar el 
+    objetivo <code>service</code> de <em>ant</em>. </li>
+</ul>
+<ul>
+  <li>Desplegar el fichero WAR obtenido en Tomcat y acceder mediante un navegador 
+    al <em>endpoint</em> del servicio para comprobar que es accesible. Podemos 
+    utilizar el objetivo <code>deploy</code> de <em>ant</em> para copiar el fichero 
+    WAR al directorio de despliegue del servidor.</li>
+</ul>
+<p>b) Acceder al documento WSDL del servicio desplegado mediante un navegador 
+  web. Si el servicio ha sido desplegado correctamente, podremos obtener informaci&oacute;n 
+  sobre el mismo accediendo a la siguiente direcci&oacute;n:</p>
+<pre class="codigo">http://localhost:8080/HolaMundo/hola</pre>
+<p>En esta p&aacute;gina podemos encontrar un enlace al documento WSDL que describe 
+  el servicio, al que tambi&eacute;n podemos acceder directamente a trav&eacute;s 
+  de la siguiente URL:</p>
+<pre class="codigo">http://localhost:8080/HolaMundo/hola?WSDL</pre>
+<p>Consulta el documento WSDL del servicio e identifica los elementos que ves 
+  en &eacute;l.</p>
+<p>c) Utilizar la herramienta WSE (<em>Web Service Explorer</em>) para invocar 
+  el servicio web desplegado, y comprobar que su funcionamiento es correcto.</p>
+<p> <strong>2.</strong> Vamos a implementar un Servicio Web sencillo que realice 
+  la conversi&oacute;n de <em>euros</em> a <em>ptas</em> y de <em>ptas</em> a 
+  <em>euros</em>. Para ello proporcionaremos dos operaciones:</p>
+<pre class="codigo">double <strong>ptas2euro</strong>(int ptas)
+int <strong>euro2ptas</strong>(double euros)
+</pre>
+<p>El nombre del servicio en este caso ser&aacute; <em>Conversion</em>.<br>
+  <br>
+  a) Implementar el servicio. Como ayuda puedes seguir los pasos del ejercicio 
+  anterior, cambiando los datos que sean necesarios. En este caso tendremos que 
+  implementar nosotros las clases con la interfaz y la implementaci&oacute;n del 
+  servicio, adem&aacute;s del descriptor de despliegue y el fichero de configuraci&oacute;n 
+  de JAX-RPC.</p>
+<p>Vamos a desplegar el servicio en el contexto <em>Conversion</em>, y la ruta 
+  para acceder a &eacute;l ser&aacute;<em> /conv</em>. Una vez hayamos finalizado, 
+  deberemos poder ser capaces de acceder al servicio en la direcci&oacute;n:</p>
+<pre class="codigo">http://localhost:8080/Conversion/conv
+</pre>
+<p> b) Acceder al documento WSDL del servicio desplegado mediante un navegador 
+  web. Identifica los elementos que ves en &eacute;l.</p>
+<p>c) Utilizar la herramienta WSE (<em>Web Service Explorer</em>) para invocar 
+  el servicio web desplegado, y comprobar que su funcionamiento es correcto.</p>
+<p><strong>3.</strong> (OPTATIVO) Vamos a implementar un foro mediante servicios 
+  web. El foro deber&aacute; ofrecer dos operaciones:</p>
+<pre class="codigo">public void <strong>publicarMensaje</strong>(String nick, String mensaje);
+public Mensaje [] <strong>listaMensajes</strong>();</pre>
+<p>a) Implementar el servicio. Deberemos crear una clase <strong>Mensaje</strong> 
+  en la que se guardar&aacute; el texto del mensaje y el <em>nick</em> de quien 
+  lo envi&oacute;. AYUDA: Para guardar la lista de mensajes se puede utilizar 
+  una clase est&aacute;tica.</p>
+<p>b) Acceder al documento WSDL del servicio desplegado mediante un navegador 
+  web. Identifica los elementos que ves en &eacute;l.</p>
+<p>c) Utilizar la herramienta WSE (<em>Web Service Explorer</em>) para invocar 
+  el servicio web desplegado, y comprobar que su funcionamiento es correcto.</p>
+<p><br>
+</p>
+</body>
+</html>

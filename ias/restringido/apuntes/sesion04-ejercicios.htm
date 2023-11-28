@@ -1,0 +1,134 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+                                                            
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+                                                            
+                                                       
+  <link rel="stylesheet" href="../apuntes.css" type="text/css">
+  <title>Ejercicios de cabeceras y sesiones</title>
+  <style>
+    tt,code,var  {font-size:105%}	
+  </style>
+</head>
+  <body>
+           
+<h1>Ejercicios de cabeceras y sesiones</h1>
+<p><strong>1</strong>. Los navegadores a menudo tienen sus propias
+interpretaciones y sintaxis para el código JavaScript. Un ejemplo claro lo
+tenemos en las diferencias existentes entre Explorer y Netscape. Como prueba de
+ello, completar el servlet <b>NavServlet</b><i> </i>de la
+aplicación <b>appcab1</b> para que identifique si el cliente accede desde un
+tipo de navegador u otro. Para ello leemos la cabecera <i>User-Agent</i> con el
+método <i>getHeader(...)</i> de la petición, y comprobamos su valor. Mostrad
+la cadena en una página para observar las diferencias entre uno y otro
+navegador. Una vez tengáis una parte de texto que los diferencia (por ejemplo,
+imaginemos que en Explorer el <i>User-Agent </i>tiene la cadena
+&quot;Explorer&quot; (que no la tiene)). En ese caso, distinguiríamos Explorer
+de Netscape con algo como: </p>
+<pre class="codigo">public void doGet(HttpServletRequest req, ...) throws ...
+{
+	String nav = req.getHeader(&quot;User-Agent&quot;);
+	if (nav.indexOf(&quot;Explorer&quot;) != -1)     <b>// Cambiar &quot;Explorer&quot; por el texto que sea</b>
+		... // Internet Explorer
+	else
+		... // Netscape
+	...
+}</pre>
+           
+<p>Una vez distinguido el navegador, vamos a probar a generar una página con
+JavaScript que sólo va a funcionar bien en uno de los dos. Por ejemplo, vamos a
+probar a cambiar una imagen que se muestra en la página desde JavaScript.
+Supongamos que una página muestra la imagen &quot;a.gif&quot;, y en JavaScript
+la cambiamos a &quot;b.gif&quot;. En Explorer el código de dicha página
+sería:</p>
+<pre class="codigo">&lt;html&gt;
+&lt;body&gt;
+
+&lt;img src=&quot;a.gif&quot; id=&quot;miImg&quot;&gt;
+&lt;script language=&quot;JavaScript&quot;&gt;
+<b>	document.all.miImg.src=&quot;b.gif&quot;
+</b>&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+           
+<p>Mientras que en Netscape es:</p>
+<pre class="codigo">&lt;html&gt;
+&lt;body&gt;
+
+&lt;img src=&quot;a.gif&quot; id=&quot;miImg&quot;&gt;
+&lt;script language=&quot;JavaScript&quot;&gt;
+<b>	document.miImg.src=&quot;b.gif&quot;
+</b>&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+           
+<p>Las imágenes <i>a.gif</i> y <i>b.gif</i> están en el directorio raíz de la
+aplicación. Se pide que el servlet genere una u otra página en función del
+navegador detectado.</p>
+<p><strong>2. </strong>El formulario <b>form_datos.html</b> de la aplicación <b>appcab1
+</b>se envía al servlet <b>CompruebaServlet</b>. Se pide implementar dicho
+servlet para comprobar que los datos sean correctos (que no haya ningún campo
+de texto vacío). En el caso de que no haya errores el servlet simplemente
+mostrará un mensaje indicando que todo ha ido bien. Si hay algún error, el
+servlet debe redirigir al servlet <b>ErrorCompruebaServlet</b>, que deberéis
+completar para que muestre un mensaje con el error producido, y a los 5 segundos
+redirija al formulario anterior (utilizando una cabecera de respuesta <i>Refresh</i>).
+</p>
+           
+<p><strong>3. </strong>Una de las utilidades que se le dan a las cookies es la
+de personalizar sitios Web. La aplicación <b>appcookies</b> contiene un
+formulario <b>form_pers.html</b> que le indica al usuario que introduzca su
+nombre, y elija un color de fondo. Dicho formulario llama después al servlet <b>PersonalizaServlet</b>.
+La página también tiene un enlace <i>Ir a página principal</i>, que
+internamente llama al servlet <b>PrincipalServlet</b>. Se pide:
+</p>
+           
+<ul>
+  <li>Que el servlet <b>PersonalizaServlet</b> se guarde en dos cookies el
+    nombre del usuario y el valor del color seleccionado. Después, redirigirá
+    a <b>form_pers.html</b> de nuevo.</li>
+  <li>Que el servlet <b>PrincipalServlet</b> tome las cookies que le envíe el
+    usuario, y genere una página de bienvenida con el color de fondo que haya
+    en la cookie con el color, y con un mensaje de saludo al nombre que haya en
+    la cookie con el nombre. Para establecer el color de fondo, en el <i>body</i>
+    podemos tener un atributo <i>bgcolor</i>, y ahí le colocaremos el valor que
+    tenga la cookie.<pre class="codigo">&lt;body bgcolor=&quot;red&quot;&gt;
+...</pre>
+           
+  </li>
+</ul>
+<p><strong>4. </strong>La aplicación <b>appsesiones</b> contiene una página <b>form_carro.html</b>
+que tiene una lista de artículos para comprar. Para comprarlos, basta con
+pulsar el botón de &quot;Añadir al carro&quot; correspondiente. Dicho
+formulario llama al servlet <b>CarroServlet</b>. Se pide que dicho servlet
+almacene como objetos de sesión los objetos que se vayan comprando, y genere
+una página dinámica con:
+</p>
+           
+<ul>
+  <li>Cada uno de los objetos que se llevan comprados hasta ahora en la sesión,
+    indicando cantidad y precio total.</li>
+  <li>Precio total de la compra</li>
+  <li>Un enlace al formulario <b>form_carro.html</b> para seguir comprando.</li>
+</ul>
+<p><b>NOTA</b>: para almacenar los objetos podemos utilizar cualquier estructura
+de datos que queramos (<i>Vector</i>, <i>Hashtable</i>, <i>ArrayList</i>, etc),
+y la guardaremos como un atributo de la sesión. Guardaremos, para cada nombre
+de artículo, qué cantidad lleva comprada el usuario, y el precio unitario o
+total, para luego mostrar estos dos datos en la página que se genere. Para
+tomar el nombre del artículo y el valor, notar que cada artículo tiene
+asociado en la página un formulario con dos campos ocultos <i>articulo</i> y <i>precio</i>,
+con estos elementos.</p>
+<p><b>5. (OPTATIVO)</b> Sobre el ejercicio anterior:</p>
+<p><b>a) </b>Añadid un enlace u opción para invalidar la sesión al llamar a <b>CarroServlet</b>.
+Comprobad que al pincharlo, y luego comprar un artículo, el carro aparecerá
+sólo con ese artículo. </p>
+<p><b>b) </b>Si quisiéramos aplicar reescritura de URLs en el ejercicio
+anterior para prevenir que las cookies estén deshabilitadas, ¿qué cambios
+tendríamos que hacer?</p>
+</body>
+        </html>

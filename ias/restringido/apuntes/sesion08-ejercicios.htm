@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Ejercicios de JSP</title>
+	<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+
+<body>
+
+<h1> Taglibs&nbsp;</h1>
+<p><b>1.</b> En la aplicación <i>apptags </i>se tiene el formulario <i>form.html</i>,
+que simula una inscripción para participar en un concurso. El supuesto
+concursante debe dar sus datos (nombre, dirección y email), y datos de su
+acompañante (nombre, y relación entre ambos, a elegir de una lista de
+opciones). Se pide completar la página <i>param.jsp </i>para que:
+<ul>
+<li>Utilizando los tags de la librería <i>request</i> (por ejemplo, el tag <i>parameter</i>),
+  se muestren en una tabla todos los datos introducidos (la primera columna
+  mostrará el nombre de cada campo, y la segunda su valor), salvo el último
+  (relación entre los concursantes)</li>
+<li>Para el último campo (relación entre los concursantes), utilizad un tag <i>equalsParameter</i>
+  para comparar su valor con cada uno de los posibles valores que pueda tomar de
+  la lista.&nbsp;
+  <ul>
+    <li>Si vale &quot;casado&quot; se añadirá a la tabla anterior una fila que
+      diga &quot;Los concursantes están casados&quot;</li>
+    <li>Si vale &quot;hermano&quot; se añadirá a la tabla anterior una fila
+      que diga &quot;Los concursantes son hermanos&quot;</li>
+    <li>Si vale &quot;otro&quot; se añadirá a la tabla anterior una fila que
+      diga &quot;Los concursantes son amigos&quot;</li>
+  </ul>
+</ul>
+<h1>Ejercicio Final de JSP</h1>
+<p>Como ejercicio final de JSP vamos a realizar un concurso online, con
+preguntas al estilo Trivial, dentro de la aplicación <b>concurso</b>. Para ello necesitaremos:<p><b>Clases
+Java</b>
+<ul>
+  <li>Implementaremos un bean <b>beans.</b><b>UsuarioBean</b> que almacene los datos de un usuario que entre
+    al concurso, como serán:
+    <ul>
+      <li>Su <b>nombre</b></li>
+      <li>Número de preguntas <b>acertadas</b></li>
+      <li>Número de preguntas <b>falladas</b></li>
+    </ul>
+    <p>Para ello el bean tendrá 3 campos, uno para cada dato a almacenar:</p>
+    <pre class="codigo">package beans;
+
+public class UsuarioBean
+{
+	String nombre;
+	int aciertos;
+	int fallos;
+	...</pre>
+           
+  </li>
+</ul>
+<blockquote>
+  <p>Además, deberemos añadir los métodos <b>getXXX() </b>y <b>setXXX()</b>
+  para cada campo de la clase.</p>
+</blockquote>
+<p><b>Ficheros JSP</b></p>
+<p>Por otra parte, la aplicación tendrá las siguientes páginas JSP:
+<ul>
+  <li>Una página <b>index.jsp</b> donde habrá un formulario para que el
+    usuario introduzca su <i>nombre</i> y acceda al concurso (no se pedirá
+    password, simplemente un nombre para identificarle). Dicho formulario
+    enviará a la página <b>altausu.jsp</b>.</li>
+  <li>Una página <b>altausu.jsp</b> que tome dicho parámetro <i>nombre</i> del
+    formulario anterior, y cree con él un bean llamado <b>usuario</b>, de tipo <b>beans.UsuarioBean</b>.&nbsp;<pre class="codigo">&lt;jsp:useBean id=&quot;usuario&quot; class=&quot;beans.UsuarioBean&quot; scope=&quot;...&quot;&gt;
+	&lt;jsp:setProperty name=&quot;usuario&quot; property=&quot;nombre&quot; value=&quot;...&quot;/&gt;
+	&lt;jsp:setProperty name=&quot;usuario&quot; property=&quot;aciertos&quot; value=&quot;0&quot;/&gt;
+	&lt;jsp:setProperty name=&quot;usuario&quot; property=&quot;fallos&quot; value=&quot;0&quot;/&gt;
+&lt;/jsp:useBean&gt;</pre>
+           
+  </li>
+</ul>
+<blockquote>
+  <p>
+    Valorar el ámbito que debe tener dicho bean para que sólo lo pueda ver el
+    usuario que entra, mientras esté utilizando la aplicación. Después,
+    redirigirá a <b>concurso.jsp</b>.</p>
+</blockquote>
+<ul>
+  <li>Una página <b>concurso.jsp</b> que tomará un número de pregunta al azar de
+    una lista de preguntas predefinida,
+        y la mostrará en pantalla en un formulario. Dicho formulario, una vez
+        el usuario indique la respuesta a la pregunta, nos enviará a <b>result.jsp</b>
+  </li>
+  <li>Una página <b>result.jsp</b>  que:&nbsp;
+    <ul>
+      <li>Tomará un bean llamado <b>usuario</b> de la sesión, con los datos
+        del usuario que entra. Dicho bean será del tipo <b>beans.UsuarioBean</b>,
+        creado por la página <b>altausu.jsp</b> anterior.</li>
+      <li>Tome los datos de la pregunta
+    contestada, compruebe si son correctos o no, y actualice el bean <b>usuario</b>,
+    incrementando los errores o los aciertos, según corresponda. Esta página
+    mostrará una tabla con el número de aciertos y fallos que lleva el usuario
+    acumulados. Tendrá también un enlace para volver a <b>concurso.jsp</b>.</li>
+    </ul>
+  </li>
+</ul>
+<p><b>Consideraciones sobre la implementación</b></p>
+<ul>
+  <li>Para <b>gestionar las preguntas</b>, una buena idea sería crear una
+    subcarpeta <b>preguntas</b> en la raíz de la aplicación web, y dentro un
+    fichero <b>pregunta_i.jsp</b> por cada pregunta que se tenga (el sufijo
+    &quot;i&quot; variará, indicando el número de cada pregunta, <i>pregunta_0.jsp,
+    pregunta_1.jsp</i>, etc). Cada uno de dichos ficheros JSP contendrá
+    únicamente un formulario con los datos de la pregunta: <pre class="codigo">&lt;html&gt;
+&lt;body&gt;
+¿De qué color era el caballo blanco de Santiago?
+&lt;br&gt;
+&lt;form action=&quot;...&quot;&gt;
+	&lt;input type=&quot;hidden&quot; name=&quot;correcta&quot; value=&quot;Blanco&quot;&gt;
+	&lt;input type=&quot;radio&quot; name=&quot;respuesta&quot; value=&quot;Rojo&quot;&gt;Rojo
+	&lt;br&gt;
+	&lt;input type=&quot;radio&quot; name=&quot;respuesta&quot; value=&quot;Azul&quot;&gt;Azul
+	&lt;br&gt;
+	&lt;input type=&quot;radio&quot; name=&quot;respuesta&quot; value=&quot;Blanco&quot;&gt;Blanco
+	&lt;br&gt;
+	&lt;input type=&quot;submit&quot; value=&quot;Enviar&quot;&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+           
+  </li>
+</ul>
+<blockquote>
+  <p>NOTA: observad cómo, aparte de las opciones a contestar en la pregunta, se
+  incluye un campo oculto con la respuesta correcta. Luego, desde <b>result.jsp</b>,
+  basta comparar la respuesta que ha dado el usuario con dicho campo, e
+  incrementar los aciertos o los fallos.</p>
+  <p>Después, se redirigirá al fichero que se quiera desde la página <b>concurso.jsp</b>,
+  con algo como:</p>
+  <pre class="codigo">...
+&lt;% response.sendRedirect(&quot;preguntas/pregunta_i.jsp&quot;); %&gt;
+...</pre>
+           
+</blockquote>
+<ul>
+  <li>Para tomar una <b>pregunta aleatoria</b> de las que existan, supongamos
+    que tenemos la cantidad de preguntas en una constante <i>NUM_PREGUNTAS</i>
+    dentro de <b>concurso.jsp</b>:<pre class="codigo">...
+&lt;% int NUM_PREGUNTAS = 20; %&gt;
+...</pre>
+           
+  </li>
+</ul>
+<blockquote>
+  <p>Podemos utilizar la clase <b>java.util.Random</b>:</p>
+  <pre class="codigo">...
+&lt;% 
+java.util.Random r = new java.util.Random();
+int num = r.nextInt(NUM_PREGUNTAS);
+%&gt;
+...</pre>
+           
+  <p>que devolvería un número entre 0 y <i>NUM_PREGUNTAS </i>-1. Luego al
+  hacer el <i>redirect</i>, podemos colocar dicha variable como sufijo del
+  fichero al que redireccionar.</p>
+</blockquote>
+<ul>
+  <li>Para <b>incrementar el número de aciertos o fallos</b>, al ser
+    propiedades del bean, necesitaremos hacer un <b>jsp:setProperty</b> e
+    incrementar la propiedad concreta, pero... para poderla incrementar,
+    necesitamos conocer su valor previo. No podemos hacer algo como:<pre class="codigo">...
+&lt;jsp:setProperty name=&quot;usuario&quot; property=&quot;aciertos&quot; 
+ value=&quot;&lt;jsp:getProperty name=&quot;usuario&quot; property=&quot;aciertos&quot;/&gt; + 1&quot; /&gt;
+...</pre>
+           
+  </li>
+</ul>
+<blockquote>
+  <p>Pero debemos tener en cuenta que todo bean se guarda como un campo más del
+  servlet, con lo que podremos hacer:</p>
+  <pre class="codigo">...
+&lt;jsp:setProperty name=&quot;usuario&quot; property=&quot;aciertos&quot; 
+ value=&quot;&lt;%=usuario.getAciertos() + 1&quot; /&gt;
+...</pre>
+           
+</blockquote>
+<p><b>(OPTATIVO)</b></p>
+<p>Se proponen los siguientes elementos optativos sobre la aplicación:</p>
+<ul>
+  <li>Controlar en todo momento que quien accede a una página ha recorrido
+    previamente las que se requieran. Por ejemplo, no se puede acceder la
+    primera vez a <b>concurso.jsp</b> sin haber pasado por <b>index.jsp</b> y <b>altausu.jsp</b>.
+    Tampoco se puede acceder a <b>result.jsp</b> sin haber sido enviado desde <b>concurso.jsp</b>,
+    contestando a la pregunta que se haga.</li>
+  <li>En la página <b>result.jsp</b>, mostrar algún gráfico sobre los
+    aciertos y los fallos del usuario. Una posible solución fácil sería
+    mostrar un texto con un fondo de un color para los aciertos, y otro para los
+    fallos. Por ejemplo, escribir un espacio en blanco con fondo rojo para cada
+    fallo, y con fondo azul para cada acierto.</li>
+  <li>Valorad la posibilidad de tomar los parámetros de los formularios
+    utilizando la librería de tags <b>request</b>. ¿Qué limitaciones
+    tendríamos?</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+                                                            
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+                                                            
+                                                       
+  <link rel="stylesheet" href="../apuntes.css" type="text/css">
+  <title>Ejercicios de seguridad en aplicaciones Web</title>
+  <style>
+    tt,code,var  {font-size:105%}	
+  </style>
+</head>
+  <body>
+           
+<h1>Ejercicios de seguridad en aplicaciones Web</h1>
+<p><strong>1</strong>. Incluir seguridad declarativa en la aplicaci&oacute;n <b>appseg1</b>
+para que sólo puedan tener acceso a la carpeta <i>/prueba</i> y al servlet <i>ServletProtegido
+</i>aquellos usuarios 
+  que tengan rol <tt>conversor</tt>. </p>
+<ul>
+  <li>Modificar el fichero <tt>tomcat-users.xml</tt> para crear alg&uacute;n usuario 
+    con este rol</li>
+  <li> Configurar la seguridad declarativa utilizando autentificaci&oacute;n
+    básica (BASIC).</li>
+  
+  <li> Considerad que al servlet se puede acceder de 3 formas diferentes:<pre class="codigo">http://locahost:8080/appseg1/servlet/ServletProtegido
+http://locahost:8080/appseg1/servlet/sprot
+http://locahost:8080/appseg1/serProt</pre>
+           
+  </li>
+  
+</ul>
+<blockquote>
+  <p>Se pide que se aplique la seguridad sólo a la tercera URL. Como parte
+  OPTATIVA, se pide proteger cualquiera de los tres posibles accesos al servlet
+  (deshabilitando el alias <i>servlet</i> y redirigiendo a un servlet de error
+  que deberéis implementar).</p>
+</blockquote>
+<p><strong>2. </strong>Incluir seguridad declarativa en la aplicaci&oacute;n <b>appseg2</b><strong>,
+</strong> repitiendo los pasos que consideremos necesarios del ejercicio anterior,
+pero utilizando en este caso autentificación basada en formularios (FORM) en lugar de
+la básica. Como páginas de formulario y error, podéis rellenar las
+    páginas <i>login.html</i> y <i>error.html</i>  de la aplicación con el código HTML
+    necesario.</p>
+<p>Probad a entrar con un usuario válido en ambos ejercicios, y después probad
+a cargar de nuevo la aplicación. ¿Qué diferencias notáis entre las dos
+formas de autentificación en cuanto a recarga de la aplicación?</p>
+<p><strong>3. </strong>La aplicaci&oacute;n <b>appseg3 </b>es similar a las
+anteriores, salvo que no hay directorio <i>prueba</i>, y tampoco se quiere que
+haya configuración de seguridad en el fichero descriptor (<i>web.xml</i>). Se
+pide que añadamos al servlet <i>ServletProtegido</i> el código necesario para
+implementar la seguridad programada para acceder a él, utilizando un
+decodificador Base64 como se ha visto en la parte teórica. Podéis guardar los
+usuarios en un objeto <i>Properties </i>en el propio servlet. En caso de que el
+usuario se autentifique correctamente, el servlet mostrará su contenido, en
+caso contrario, volverá a pedir autentificación al usuario.</p>
+<p><b>4. (OPTATIVO)</b> Partiendo de la aplicación <b>appseg3</b>, cambiar la
+gestión de usuarios mediante un objeto <i>Properties</i> por la gestión a
+través de un fichero de texto donde se guarden los logins y passwords en el
+formato <i>login:password</i>, uno por línea.</p>
+<p>Una vez tengamos la gestión a través del fichero, implementad un servlet
+(protegido, al que sólo podrán acceder usuarios con rol <tt>conversor</tt>),
+llamado <i>ServletAltaUsu</i>, que permita añadir o quitar usuarios a dicho
+fichero, recibiendo el login y password como parámetros de petición, y un
+tercer parámetro que indique si el usuario se añade o quita. Podéis llamar a
+dicho servlet y pasarle los parámetros desde un formulario HTML <i>formAltaUsu.html
+</i>para altas, o <i>formBajaUsu.html</i> para las bajas (dichos formularios
+también deberán estar protegidos, y accesibles sólo a usuarios con rol <tt>conversor</tt>).</p>
+</body>
+        </html>

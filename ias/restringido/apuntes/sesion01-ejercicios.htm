@@ -1,0 +1,243 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+                                                            
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+                                                            
+  <meta name="Author" content="Nacho">
+                                                            
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+                                                        
+  <link rel="stylesheet" href="../apuntes.css" type="text/css">
+  <title>Ejercicios de Protocolo HTTP</title>
+</head>
+  <body>
+<b> 
+<h1>Protocolo HTTP. HTML. Tomcat</h1>
+</b> 
+<p><strong>1.</strong> En las plantillas de la sesi&oacute;n puedes encontrar 
+  la aplicaci&oacute;n <b>WebClient</b>. Se trata de una herramienta que simula un cliente 
+  HTTP (el servidor al que conectar será cualquier servidor que se tenga disponible: 
+  el de nuestra máquina, o uno remoto). </p>
+<p>Se ejecuta con: </p>
+<pre class="codigo">java -jar WebClient.jar</pre>
+<p>Aparece luego una ventana como esta: </p>
+<div align="center"> <img border="0" src="imagenes/webclient.jpg" width="506" height="446"> 
+</div>
+<p class="caption">Figura 1. WebClient</p>
+<p>En ella pondremos: </p>
+<ul>
+  <li><i>Host: </i>El servidor al que conectarnos (por ejemplo, <code>www.ua.es</code>)</li>
+  <li><i>Port: </i>El puerto por el que escucha el servidor (por defecto, <code>80</code>)</li>
+  <li><i>Request Line: </i>El comando que se le envía. Por ejemplo:</li>
+</ul>
+<blockquote> 
+  <pre class="codigo">GET / HTTP/1.1</pre>
+</blockquote>
+<ul>
+  <li><i>Request Headers: </i>Las cabeceras e información adicional después del comando.&nbsp;</li>
+</ul>
+<blockquote> 
+  <pre class="codigo">Host:www.ua.es</pre>
+</blockquote>
+<p>Tras enviar los datos de la petición, nos aparece abajo la respuesta del servidor 
+  (la misma que con la aplicación anterior): </p>
+<pre class="codigo">HTTP/1.1 200 OK
+Age:965
+Date: Thu,24 Oct 2002 20:52:13 GMT
+Content-Length:2657
+Content-Type=text/html
+...
+
+&lt;!DOCTYPE...&gt;
+...</pre>
+Se pide: 
+<blockquote>
+  <p><em>a)</em> Solicitar un recurso est&aacute;tico a un servidor p&uacute;blico 
+    de Internet. Realizar la petici&oacute;n que realizar&iacute;a un navegador 
+    al introducir la siguiente URL:</p>
+  <pre class="codigo">http://www.ua.es/index.htm</pre>
+  <p><em>b)</em> Comprobar fecha de &uacute;ltima modificaci&oacute;n del documento 
+    devuelto (cabecera <code>Last-Modified</code> de la respuesta)</p>
+  <p><em>c)</em> Utilizar la cabecera <code>If-Modified-Since</code> en la petici&oacute;n 
+    con una fecha anterior a la obtenida. Por ejemplo podemos poner como cabecera:</p>
+  <pre class="codigo">If-Modified-Since: Wed, 21 May 2003 08:01:16 GMT</pre>
+  <p>Probar ahora con una fecha posterior a la fecha de &uacute;ltima modificaci&oacute;n. 
+    &iquest;Qu&eacute; respuesta obtenemos en este caso?</p>
+</blockquote>
+<p><strong>2.</strong> Vamos a utilizar un servidor web esp&iacute;a que muestra 
+  todo el contenido de las peticiones recibidas en la consola. Tenemos este servidor 
+  en las plantillas de la sesi&oacute;n, podemos ejecutarlo con:</p>
+<pre class="codigo">java Espia 80</pre>
+<p>Para que escuche en el puerto <code>80</code> de nuestra m&aacute;quina. Se 
+  pide</p>
+<blockquote>
+  <p><em>a)</em> Utilizar un navegador para hacer un petici&oacute;n HTTP a nuestro 
+    servidor de prueba. Podemos poner una URL como la siguiente:</p>
+  <pre class="codigo">http://localhost:80/index.htm</pre>
+  <p>Observar en el servidor esp&iacute;a la petici&oacute;n que ha hecho el navegador. 
+    &iquest;Qu&eacute; informaci&oacute;n ha enviado el navegador en esta petici&oacute;n?</p>
+  <p><em>b)</em> Abrir la p&aacute;gina HTML <code>form_get.htm</code> con cualquier 
+    navegador web. Introducir datos en el formulario y enviar una petici&oacute;n. 
+    Esta petici&oacute;n se estar&aacute; realizando al servidor esp&iacute;a 
+    instalado. Observar en este servidor la petici&oacute;n realizada. &iquest;C&oacute;mo 
+    se han enviado los datos del formulario? </p>
+  <p><em>c)</em> Vamos a hacer lo mismo que en el apartado anterior, pero con 
+    la p&aacute;gina <code>form_post.htm</code>. &iquest;Qu&eacute; diferencia 
+    hay entre esta petici&oacute;n y la realizada en el caso anterior? &iquest;C&oacute;mo 
+    se env&iacute;an los datos introducidos en el formulario?</p>
+</blockquote>
+<p>NOTA: El servidor recibirá más de una línea en la petición, normalmente.
+Esto está indicado por el símbolo [+] al final de cada línea, indicando que
+viene más información en líneas siguientes. Para verla, basta con pulsar <i>Intro</i>
+cada vez.</p>
+<p><strong>3.</strong>  <b> (OPTATIVO)</b> Vamos a acceder al mismo servidor esp&iacute;a 
+  anterior, pero esta vez desde una aplicaci&oacute;n Java. Para ello vamos a 
+  realizar una aplicaci&oacute;n Java&nbsp; (una clase llamada <i>Conexion</i>,
+por ejemplo) que abra una conexi&oacute;n a la URL de 
+  este servidor esp&iacute;a, utilizando un objeto <code>UrlConnection</code>.
+Dicho objeto establece un flujo que permite enviar peticiones a un servidor, y
+obtener los datos de respuesta del mismo.</p>
+<blockquote>
+  <p><em>a)</em> Realizar la petici&oacute;n sencilla de un recurso. Para ello
+  seguimos los pasos:</p>
+  <blockquote>
+    <ul>
+      <li>Crear la URL a la que conectar:<pre class="codigo">URL url = new URL(&quot;http://localhost:80/prueba&quot;);</pre>
+      </li>
+      <li>Crear la 
+    conexi&oacute;n a dicha URL (a <code>http://localhost:80/index.htm</code>).
+        Una vez hecha la conexión, abrir el 
+    flujo de entrada (<code>getInputStream</code>) para que efect&uacute;e la 
+    conexi&oacute;n. Hay que destacar que hasta que no se abre ese flujo de entrada 
+    no se enviar&aacute; el mensaje de petici&oacute;n al servidor. Observar la 
+    petici&oacute;n en el servidor esp&iacute;a.<pre class="codigo">URLConnection con = url.openConnection();
+con.getInputStream();</pre>
+      </li>
+      <li>Hay que tener en cuenta que algunos de estos métodos pueden provocar
+        excepciones, por lo que deberemos encerrarlo todo en un bloque <i>try...catch</i>:<pre class="codigo">import java.io.*;
+import java.net.*;
+
+public class Conexion
+{
+	public static void main(String[] args)
+	{
+		try
+		{
+			URL url = ...;
+			URLConnection con = ...;
+			con.getInputStream();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}</pre>
+      </li>
+    </ul>
+  </blockquote>
+  <p><em>b)</em> Vamos a a&ntilde;adir cabeceras a la petici&oacute;n (<code>setRequestProperty</code>). 
+    Se puede a&ntilde;adir cualquier cabecera, tanto est&aacute;ndar de HTTP como 
+    cabeceras propias que definamos nosotros para nuestra aplicaci&oacute;n. Hay 
+    que destacar que estas cabeceras deben a&ntilde;adirse antes de abrir el flujo 
+    de entrada, ya que en ese momento ya se habr&aacute; realizado el env&iacute;o 
+    de la petici&oacute;n. Comprobar que estas cabeceras aparecen en el mensaje 
+    de petici&oacute;n que nos muestra el servidor esp&iacute;a. Añadir, por
+  ejemplo:</p>
+  <pre class="codigo">con.setRequestProperty(&quot;prop1&quot;, &quot;valor1&quot;);
+con.setRequestProperty(&quot;Content-Type&quot;, &quot;text/plain&quot;);</pre>
+  <p><em>c)</em> Activar la salida (<code>setDoOutput</code>) para escribir en 
+    la URL y prepararla así para poder enviar datos de salida (por defecto la
+  conexión ya está preparada para recibir datos de entrada). Enviar contenido escribiendo en el flujo de salida de la conexi&oacute;n 
+    (<code>getOutputStream</code>), también antes de obtener el flujo de
+  entrada. Observar la petici&oacute;n en el servidor 
+    esp&iacute;a. &iquest;Qu&eacute; ha cambiado en ella? </p>
+  <pre class="codigo">con.setDoOutput(true);
+PrintStream out = new PrintStream(con.getOutputStream());
+out.println(&quot;linea1&quot;);
+out.println(&quot;linea2=hola&quot;);</pre>
+</blockquote>
+<p><b>4. </b>Cread en la carpeta <i>webapps/ROOT</i> de Tomcat una página <b>suscripcion.html</b>
+que tendrá un formulario de suscripción a un supuesto sitio Web. El formulario
+tendrá los siguientes campos:</p>
+<ul>
+  <li>Un campo de texto llamado <i>nombre</i> donde colocar vuestro nombre</li>
+  <li>Un campo de texto llamado <i>apellidos</i> donde colocar vuestros
+    apellidos</li>
+  <li>Un campo de texto llamado <i>email</i> donde colocar el email</li>
+  <li>Una lista desplegable llamada <i>sexo</i> con dos opciones: HOMBRE y MUJER</li>
+  <li>Una casilla checkbox llamada <i>publicidad</i> con el texto &quot;Deseo
+    recibir publicidad en mi e-mail&quot;</li>
+  <li>Haced que el <i>action</i> del formulario envíe la petición al servidor <i>Espia</i>
+    del ejercicio 2:<pre class="codigo">&lt;form action=&quot;http://localhost:80/enviar&quot; method=&quot;POST&quot;&gt;</pre>
+  </li>
+</ul>
+<p>Observad que esta página por sí misma no nos sirve de mucho. Y con lo que
+hemos visto hasta ahora tampoco sabemos darle utilidad. Es necesario alguna
+técnica de generación o procesamiento dinámico de contenidos para poder hacer
+algo con los datos de este formulario (por ejemplo, guardarlo en una base de
+datos, crear una página que notifique al usuario por e-mail que su suscripción
+ha sido correcta, etc).</p>
+<p>Una vez tengamos la página hecha (comprobamos que el formulario se abre
+bien), poned en marcha el servidor <i>Espia</i> del ejercicio 2, y abrid la
+página <i>suscripcion.html </i>desde un navegador (no hace falta que tengamos
+Tomcat iniciado). Rellenad los datos del formulario y enviar la petición.
+Comprobad en el <i>Espia</i> qué datos se envían y cómo.</p>
+<p><strong>5.</strong> Instalad (si no está bien instalado) y ejecutad el
+servidor Web Tomcat. Comprobad que se ha inicializado bien cargando la página
+de inicio, conectando al servidor local en la ruta raíz por el puerto 8080:</p>
+<pre class="codigo">http://localhost:8080</pre>
+<p>Una vez inicializado, construid una página <b>personal.html</b>, que tenga: </p>
+<ul>
+  <li>Una cabecera &lt;h1&gt; con el texto &quot;Datos personales de &quot; y
+    vuestro nombre</li>
+  <li>Una tabla de 5 filas y 2 columnas. Las 4 primeras filas tendrán los
+    datos:<br>
+    <table border="1" width="64%">
+      <tr>
+        <td width="34%" align="center">Apellidos</td>
+        <td width="66%" align="center"><i>Vuestros apellidos</i></td>
+      </tr>
+      <tr>
+        <td width="34%" align="center">Nombre</td>
+        <td width="66%" align="center"><i>Vuestro nombre</i></td>
+      </tr>
+      <tr>
+        <td width="34%" align="center">DNI</td>
+        <td width="66%" align="center"><i>Vuestro DNI</i></td>
+      </tr>
+      <tr>
+        <td width="34%" align="center">E-mail</td>
+        <td width="66%" align="center"><i>Vuestro e-mail</i></td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<blockquote>
+  <p>La quinta fila tendrá en la columna de la izquierda el texto
+  &quot;Foto&quot;, y en la derecha podéis colocar cualquier imagen que
+  tengáis disponible. </p>
+</blockquote>
+<ul>
+  <li>A continuación, la página tendrá una lista no ordenada que llamaremos
+    &quot;Aficiones&quot;, donde podéis colocar al menos dos de vuestras
+    aficiones (como por ejemplo, ir al cine, leer, ver la tele...)</li>
+  <li>Colocad la página <i>personal.html</i> y los recursos externos que
+    hayáis utilizado (como por ejemplo la imagen) en el directorio <i>webapps/ROOT</i>
+    de Tomcat. Probad a cargarla para ver que funciona bien.</li>
+  <li>Finalmente, cread un enlace que apunte al formulario del ejercicio
+    anterior (<i>suscripcion.html</i>).</li>
+  <li>Cargad la página <i>personal.html</i>. ¿Qué URL habéis escrito para
+    cargarla? ¿Qué URL habéis puesto en el enlace a la página <i>suscripcion.html</i>?
+    Comprobad que funciona dicho enlace.</li>
+</ul>
+<p><strong>6. (OPTATIVO)</strong> Cread en la carpeta <i>webapps/ROOT</i> de
+Tomcat una página <i>cabeceras.html</i>, y probad en ella algunas cabeceras
+HTTP de respuesta vistas. Colocad una cabecera <i>Refresh</i>
+que redirija a los 5 segundos a la página del ejercicio anterior, o a otra
+página que elijáis. También podéis probar alguna cabecera de caché o de
+fechas de modificación, y ver qué respuestas da el servidor y el cliente en
+cada caso. </p>
+</body>
+        </html>

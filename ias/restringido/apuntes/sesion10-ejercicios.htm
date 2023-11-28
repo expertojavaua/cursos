@@ -1,0 +1,254 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios de invocaci&oacute;n de Servicios Web</title>
+                                                                        
+     
+  <meta content="text/html; charset=iso-8859-1"
+ http-equiv="Content-Type">
+                                           
+  <link href="../apuntes.css" rel="stylesheet" type="text/css">
+                                             
+  <meta content="Microsoft FrontPage 4.0" name="GENERATOR">
+<link href="../../apuntes.css" rel="stylesheet" type="text/css">
+</head>
+  <body bgcolor="#ffffff" text="#000000">
+       
+<h1>Ejercicios de Invocaci&oacute;n de Servicios Web</h1>
+           
+<p><br>
+  <strong>1.</strong> Vamos a ver c&oacute;mo implementar un cliente para el servicio 
+  <em>HolaMundo</em> paso a paso. Vamos a crear un <em>stub</em> est&aacute;tico 
+  para nuestro cliente. El cliente se puede encontrar implementado en el directorio 
+  <code>HolaMundoCliente</code> de las plantillas de la sesi&oacute;n. A continuaci&oacute;n 
+  se muestran los pasos que ser&iacute;an necesarios para la creaci&oacute;n del 
+  cliente:</p>
+   
+<ul>
+  <li>Obtenemos la URL del documento WSDL del servicio desde la direcci&oacute;n 
+    donde hemos desplegado este servicio.</li>
+</ul>
+<ul>
+  <li>Ahora debemos crear el fichero <code>config.xml</code> en el que indicaremos 
+    la direcci&oacute;n anterior. Como ya tenemos implementado en el ejemplo este 
+    fichero, abrirlo y consultar su contenido.</li>
+</ul>
+<ul>
+  <li>Generamos con <em>wscompile</em> la capa <em>stub</em> del cliente. Para 
+    esto se puede utilizar el objetivo <code>client</code> de <em>ant</em>.</li>
+</ul>
+<ul>
+  <li>Escribimos el c&oacute;digo fuente de nuestra aplicaci&oacute;n cliente, 
+    que utilice el <em>stub</em> anterior para acceder al servicio. Ya tenemos 
+    esta clase implementada en el ejemplo, abrirla y consultar el c&oacute;digo 
+    fuente:</li>
+</ul>
+<pre class="codigo">import es.ua.j2ee.sw.hola.*;<br><br>public class Cliente {<br>
+  public static void main(String[] args) {
+    if (args.length != 1) {<br>      System.err.println(&quot;Uso: ant run -Dnombre=&lt;nombre&gt;&quot;);<br>      System.exit(-1);<br>    }<br><br>    try {
+      HolaMundoIF hola = creaProxy();
+      System.out.println(hola.<strong>saluda</strong>(args[0]));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  } <br><br>  private static HolaMundoIF creaProxy() {
+    return (HolaMundoIF)(new HolaMundo_Impl().getHolaMundoIFPort());
+  }
+}</pre>
+<blockquote> 
+  <p>La funci&oacute;n <em>creaProxy() </em>es la que se encarga de obtener el 
+    <em>stub</em> para acceder al servicio. El resto del c&oacute;digo lo &uacute;nico 
+    que hace es acceder al servicio mediante el <em>stub</em>, de igual forma 
+    que si estuviese accediendo a un m&eacute;todo de una clase Java de forma 
+    ordinaria</p>
+</blockquote>
+<ul>
+  <li>Compilamos la aplicaci&oacute;n. Se puede utilizar el objetivo <code>compile</code> 
+    de <em>ant</em>.</li>
+</ul>
+<ul>
+  <li>Ejecutamos el cliente para comprobar que funciona correctamente. Para ejecutar 
+    la aplicaci&oacute;n cliente podemos utilizar el objetivo <code>run</code> 
+    de <em>ant</em>.</li>
+</ul>
+<p><strong>2.</strong> Realizar un cliente para el servicio de conversi&oacute;n 
+  <em>euro-ptas</em>. Seguir lo mismos pasos que en el ejercicio anterior, esta 
+  vez para desarrollar un cliente para el servicio de conversi&oacute;n entre 
+  <em>euros</em> y <em>ptas</em> desarrollado en la sesi&oacute;n anterior.</p>
+   
+<p>El cliente deber&aacute; tomar como par&aacute;metro un valor num&eacute;rico 
+  en <em>euros</em>. Como resultado nos deber&aacute; mostrar a cu&aacute;ntas 
+  <em>ptas</em> corresponde dicha cantidad utilizando nuestro Servicio Web.</p>
+<p><strong>3.</strong> (OPTATIVO) Crear un cliente para el servicio del foro creado 
+  en la sesi&oacute;n anterior. La aplicaci&oacute;n cliente nos deber&aacute; 
+  permitir publicar nuevos mensajes en el foro y consultar la lista de todos los 
+  mensajes publicados.</p>
+     
+<p><strong>4.</strong> Vamos a desarrollar clientes para varios servicios de demostraci&oacute;n 
+  ofrecidos por <em>XMethods</em>. Para ello deberemos acceder a:</p>
+   
+<pre class="codigo">http://www.xmethods.net
+</pre>
+   
+<p>Para consultar la informaci&oacute;n sobre los servicios que ofrece y obtener 
+  el documento WSDL que necesitamos para crear nuestros clientes.</p>
+   
+<p>a) Cliente para el servicio de cambio de moneda (<em>Currency Exchange Rate</em>). 
+  Tenemos los ficheros correspondientes a este cliente ya implementado en el directorio 
+  <em>CambioMonedaCliente</em> de los ejercicios de la sesi&oacute;n. Para construirlo 
+  hemos seguido los siguientes pasos:</p>
+   
+<ul>
+  <li>Obtenemos la URL del documento WSDL del servicio desde la p&aacute;gina 
+    de <em>XMethods</em>, y descargamos dicho documento.</li>
+</ul>
+<ul>
+  <li>Creamos el fichero <code>config.xml</code> en el que indicaremos la direcci&oacute;n 
+    anterior.</li>
+</ul>
+<ul>
+  <li>Generamos con <em>wscompile</em> la capa <em>stub</em> del cliente.</li>
+</ul>
+<ul>
+  <li>Escribimos el c&oacute;digo fuente de nuestra aplicaci&oacute;n cliente, 
+    que utilice el <em>stub</em> anterior para acceder al servicio. Si nos fijamos 
+    en el documento WSDL o en las clases generadas<strong></strong>, veremos que 
+    el servicio tiene de nombre <em>CurrencyExchangeService</em> y el tipo de 
+    puerto al que vamos a acceder se llama <em>CurrencyExchangePortType</em>. 
+    Con esta informaci&oacute;n creamos una funci&oacute;n <em>creaProxy()</em> 
+    donde se obtiene el <em>stub</em> para acceder al servicio.<br>
+    <p>Por otro lado, si consultamos la documentaci&oacute;n del servicio, el 
+      documento WSDL, o las clases generadas, veremos que tiene una operaci&oacute;n 
+      <em>getRate()</em> que toma dos par&aacute;metros: el pa&iacute;s de origen 
+      y el de destino. Nosotros invocaremos este m&eacute;todo desde el <em>stub</em>. 
+      En la p&aacute;gina de informaci&oacute;n sobre el servicio que nos proporciona 
+      <em>XMethods</em>, podremos consultar los posibles nombres de pa&iacute;ses 
+      que podemos especificar, como por ejemplo <em>"euro" </em>o <em>"usa"</em>.</p>
+  </li>
+</ul>
+<pre class="codigo">import es.ua.j2ee.sw.exchange.*;
+   
+public class Cliente {
+  public static void main(String[] args) {
+<br>    if(args.length &lt; 2) {
+      System.out.println(<br>        &quot;Uso: ant run -Dorigen=&lt;pais_origen&gt; -Ddestino=&lt;pais_destino&gt;&quot;);<br>      System.exit(-1);<br>    }
+   
+    try {
+      CurrencyExchangePortType serv = creaProxy();
+<br>      float divisa = serv.<strong>getRate</strong>(args[0], args[1]);
+      System.out.println("Cambio de " + args[0] + " a " + 
+                          args[1] + " = " + divisa);
+   
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+   
+  private static CurrencyExchangePortType creaProxy() {
+    return (CurrencyExchangePortType)(new <br>       CurrencyExchangeService_Impl().getCurrencyExchangePort());
+  }
+}</pre>
+<ul>
+  <li>Compilamos la aplicaci&oacute;n.</li>
+</ul>
+<ul>
+  <li>Ejecutamos el cliente. Nos devolver&aacute; algo similar a:</li>
+</ul>
+<pre class="codigo">Cambio de usa a euro = 0.9424
+</pre>
+<p>b) Consulta de la temperatura en EEUU, a partir del c&oacute;digo postal (<em>Weather 
+  - Temperature</em>). Seguir los pasos del punto anterior para desarrollar este 
+  cliente. Como par&aacute;metro deber&aacute; tomar el c&oacute;digo postal del 
+  &aacute;rea de la cual queremos obtener la temperatura. </p>
+<p>Nos deber&iacute;a devolver algo como:</p>
+   
+<pre class="codigo">La temperatura en 54124 es 60.0
+</pre>
+<p><strong>5.</strong> (OPTATIVO) Crear un cliente para el servicio web de Google. 
+  Para poder acceder al servicio de Google deber&aacute;s registrarte previamente 
+  y obtener una clave, que deber&aacute;s proporcionar al invocar el servicio. 
+  Puede obtener esta clave gratuitamente en la siguiente direcci&oacute;n:</p>
+<pre class="codigo">http://www.google.com/apis/</pre>
+<p>Desde esta p&aacute;gina tambi&eacute;n puedes obtener documentaci&oacute;n, 
+  ejemplos y librer&iacute;as para utilizar estos servicios web. </p>
+<p>a) Crear el cliente del servicio de Google generando el <em>stub</em> a partir 
+  de su documento WSDL:</p>
+<pre class="codigo">http://api.google.com/GoogleSearch.wsdl</pre>
+<p>b) Ejecutar el cliente para realizar una b&uacute;squeda en Google. Los par&aacute;metros 
+  que debemos especificar en la llamada al servicio son los siguientes:</p>
+<pre class="codigo">doGoogleSearch(clave, cadBusqueda, 0, 10, true, <br>               &quot;&quot;, false, &quot;&quot;, &quot;UTF8&quot;, &quot;UTF8&quot;);</pre>
+<p>Comprobar que el cliente funciona correctamente.</p>
+<h1>Ejercicio final de Servicios Web</h1>
+<p><strong>1.</strong> Tienda de DVDs. Nuestro negocio consiste en una tienda 
+  que vende pel&iacute;culas en DVD a trav&eacute;s de Internet. Para dar una 
+  mayor difusi&oacute;n a nuestro cat&aacute;logo de pel&iacute;culas, decidimos 
+  implantar una serie de Servicios Web para acceder a informaci&oacute;n sobre 
+  las pel&iacute;culas que vendemos. <br>
+  <br>
+  De cada pel&iacute;cula ofreceremos informaci&oacute;n sobre su t&iacute;tulo, 
+  su director y su precio. Esta informaci&oacute;n podemos codificarla en una 
+  clase <strong>DatosPelicula</strong> como la siguiente:</p>
+<pre class="codigo">public class <strong>DatosPelicula</strong> {
+  public String titulo;
+  public String director;
+  public float precio;
+   
+  public DatosPelicula() {}
+   
+  public DatosPelicula(String titulo, String director, float precio) {
+    this.titulo = titulo;
+    this.director = director;
+    this.precio = precio;
+  }
+
+  public String toString() {<br>    return titulo + &quot;, &quot; + director + &quot;, &quot; + precio + &quot; euros.&quot;;
+  }
+}
+</pre>
+<p>Vamos a permitir que se busquen pel&iacute;culas proporcionando el nombre de 
+  su director. Por lo tanto, el servicio ofrecer&aacute; una operaci&oacute;n 
+  como la siguiente:</p>
+<pre class="codigo">DatosPelicula [] <strong>buscaPorDirector</strong>(String director)
+</pre>
+<p>Proporcionaremos el nombre del director, y nos devolver&aacute; la lista de 
+  pel&iacute;culas disponibles dirigidas por este director.</p>
+<p>En un principio, podemos crear una lista est&aacute;tica de pel&iacute;culas 
+  dentro del c&oacute;digo de nuestro servicio, como por ejemplo:</p>
+<pre class="codigo">DatosPelicula [] peliculas = { 
+  new DatosPelicula("Mulholland Drive", "David Lynch", 26.96f),    
+  new DatosPelicula("Carretera perdida", "David Lynch", 18.95f),    
+  new DatosPelicula("Twin Peaks", "David Lynch", 46.95f), 
+  new DatosPelicula("Telefono rojo", "Stanley Kubrick", 15.95f),    
+  new DatosPelicula("Barry Lyndon", "Stanley Kubrick", 24.95f),    
+  new DatosPelicula("La naranja mec&aacute;nica", "Stanley Kubrick", 22.95f)
+};
+</pre>
+<p>Se pide:<br>
+  <br>
+  a) Implementar el servicio. <br>
+  <br>
+  Para construir una lista con las pel&iacute;culas cuyo director coincida con 
+  el nombre del director que se ha solicitado, podemos utilizar un c&oacute;digo 
+  similar al siguiente, donde se ha proporcionado un par&aacute;metro <em>director</em>:</p>
+<pre class="codigo">director = director.toLowerCase();
+   
+ArrayList list = new ArrayList();
+   
+for(int i=0;i&lt;peliculas.length;i++)    {
+  if(peliculas[i].director.toLowerCase().indexOf(director) != -1) {
+    list.add(peliculas[i]);
+  }
+}
+   
+DatosPelicula [] result = new DatosPelicula[list.size()];
+list.toArray(result);
+   
+return result;
+</pre>
+<p> b) Crear un cliente para este servicio. El cliente debe tomar como argumento 
+  el nombre del director por el cual queremos realizar la b&uacute;squeda, y nos 
+  mostrar&aacute; una lista de las pel&iacute;culas de dicho director, indicando 
+  el t&iacute;tulo y el precio de cada una de ellas, accediendo al servicio web 
+  para obtener la informaci&oacute;n.</p>
+</body>
+</html>

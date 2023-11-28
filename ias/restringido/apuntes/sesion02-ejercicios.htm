@@ -1,0 +1,247 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+                                                            
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+                                                            
+  <meta name="Author" content="Nacho">
+                                                            
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+                                                        
+  <link rel="stylesheet" href="../apuntes.css" type="text/css">
+  <title>Ejercicios de Aplicaciones web</title>
+</head>
+  <body>
+<b> 
+<h1>Aplicaciones web</h1>
+</b> 
+<p><strong>1.</strong> Vamos a probar el servidor web Tomcat y a subir recursos 
+  est&aacute;ticos a &eacute;l.</p>
+<blockquote>
+  <p><em>a)</em> Instalar y poner en marcha el servidor web Tomcat. Comprobar 
+    que est&aacute; activo accediendo a la siguiente URL desde cualquier navegador:</p>
+  <pre class="codigo">http://localhost:8080/</pre>
+  <p><em>b)</em> Crear un fichero <code>pagina.htm</code> en la aplicaci&oacute;n 
+    ra&iacute;z (<code>ROOT</code>) instalada por defecto en Tomcat. El contenido 
+    de este fichero puede ser el siguiente:</p>
+  <pre class="codigo">&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Pagina principal&lt;/title&gt;
+  &lt;/head&gt;
+<br>  &lt;body&gt;
+    &lt;h1&gt;Pagina principal&lt;/h1&gt;
+    &lt;p&gt;Esta es una p&aacute;gina de prueba sencilla <br>       para probar el servidor web.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+  <p>Comprobar que se puede acceder correctamente a este recurso introduciendo 
+    la siguiente URL:</p>
+  <pre class="codigo">http://localhost:8080/pagina.htm</pre>
+</blockquote>
+<p><strong>2.</strong> En este caso vamos a crear un nuevo contexto (aplicaci&oacute;n 
+  web) en Tomcat, que contendr&aacute; &uacute;nicamente recursos est&aacute;ticos 
+  (HTML). Vamos a dejar el servidor Tomcat en marcha mientras construimos la aplicaci&oacute;n.</p>
+<blockquote>
+  <p><em>a)</em> Crear un nuevo subdirectorio en <code>${tomcat.home}/webapps</code> 
+    para nuestra nueva aplicaci&oacute;n. Llamaremos <code>prueba</code> a este 
+    directorio.</p>
+  <p><em>b)</em> Crear la estructura de directorios necesaria dentro del directorio 
+    de la nueva aplicaci&oacute;n. Introducir el fichero <code>pagina.htm</code> 
+    del ejercicio anterior y crear un descriptor de despliegue (<code>web.xml</code>) 
+    b&aacute;sico, como el del ejemplo que se muestra en los apuntes, situando 
+    cada uno de estos ficheros en el directorio que corresponda.</p>
+  <p><em>c)</em> Comprobar si este nuevo contexto se carga correctamente. Para 
+    comprobar su correcto funcionamiento podemos acceder a la URL</p>
+  <pre class="codigo">http://localhost:8080/prueba/pagina.htm</pre>
+  <p>Si no carga correctamente detendremos Tomcat y lo volveremos a arrancar. 
+    Comprobar ahora si la aplicaci&oacute;n carga correctamente. </p>
+  <p><em>d)</em> Empaquetar la aplicaci&oacute;n web en un fichero WAR de nombre 
+    <code>prueba.war</code>. </p>
+  <p><em>e)</em> Eliminar la aplicaci&oacute;n <code>prueba</code> de <code>webapps</code> 
+    y reiniciar Tomcat. Con el servidor encendido, copiar el fichero <code>prueba.war</code> 
+    al directorio <code>webapps</code> de Tomcat y comprobar que podemos acceder 
+    correctamente a la aplicaci&oacute;n utilizando la URL anterior. NOTA: Si 
+    hace falta, esperar unos segundos para dar tiempo a que Tomcat cargue la aplicaci&oacute;n 
+    autom&aacute;ticamente. Si esto no funciona, reiniciar Tomcat y volver a probar.</p>
+  <p><em>f)</em> Mirar el contenido del directorio <code>webapps</code> de Tomcat. 
+    &iquest;Qu&eacute; ha hecho el servidor con la aplicaci&oacute;n web <code>prueba</code>? 
+  </p>
+  <p><em>g)</em> (OPTATIVO) Abrir el fichero de configuraci&oacute;n del servidor 
+    Tomcat que se encuentra en <code>${tomcat.home}/conf/server.xml</code>. Buscamos 
+    dentro de este fichero una etiqueta <code>Host</code> que tiene como atributo<code> 
+    unpackWARs</code>, que por defecto toma valor <code>true</code>. Cambiar el 
+    valor de <code>unpackWARs</code> a <code>false</code> y repetir los apartados 
+    <em>(e)</em> y <em>(f)</em> con esta nueva configuraci&oacute;n. Probar que 
+    la aplicaci&oacute;n funciona correctamente accediendo a su URL. Comprobar 
+    el contenido del directorio <code>webapps</code>, &iquest;qu&eacute; diferencia 
+    hay con el caso anterior?</p>
+  <p><em>h)</em> Copiar el WAR a otro directorio y eliminar la aplicaci&oacute;n 
+    web <code>prueba</code> utilizando el manager de Tomcat. Comprobar que en 
+    el directorio <code>webapps</code> ya no est&aacute; nuestra aplicaci&oacute;n 
+    <code>prueba</code>. Poner en marcha Tomcat y desplegar el WAR utilizando 
+    el <em>manager</em>.&iquest;Qu&eacute; ventajas encuentras a desplegar la 
+    aplicaci&oacute;n utilizando el <em>manager</em> de Tomcat?</p>
+</blockquote>
+<p><strong>3.</strong> Vamos a probar una aplicaci&oacute;n web sencilla con elementos 
+  din&aacute;micos (<em>servlets</em>), que deber&aacute;n ser compilados previamente. 
+  En este caso no trabajaremos directamente en el directorio de Tomcat, sino que 
+  trabajaremos en un directorio de desarrollo y una vez construida la aplicaci&oacute;n 
+  la desplegaremos en Tomcat. Se pide:</p>
+<blockquote>
+  <p><em>a)</em> Descargar el fichero de plantillas de la sesi&oacute;n y descomprimir 
+    su contenido en cualquier directorio. Veremos que crea un directorio <code>HolaMundo</code> 
+    que contiene un proyecto de Eclipse con la aplicaci&oacute;n a probar. </p>
+  <p><em>b)</em> Importar el proyecto desde Eclipse, mediante la opci&oacute;n 
+    del men&uacute; <em>File &gt; Import ...</em>. De esta forma veremos dentro 
+    del proyecto de Eclipse todo el contenido de la aplicaci&oacute;n. </p>
+  <ul>
+    <li>En <code>src</code> podemos ver el c&oacute;digo fuente del servlet <code>HolaMundo</code>.</li>
+    <li>En el directorio <code>web</code> tenemos la estructura de la aplicaci&oacute;n, 
+      los recursos est&aacute;ticos (<code>index.htm</code>) y el descriptor de 
+      despliegue (<code>web.xml</code>)</li>
+    <li>En el directorio ra&iacute;z del proyecto encontramos el fichero de <em>ant</em> 
+      <code>build.xml</code>.</li>
+  </ul>
+  <p>Abrir estos ficheros para visualizarlos en el editor de c&oacute;digo de 
+    Eclipse. Comprobar que estamos utilizando perspectiva Java en Eclipse. </p>
+  <p><em>c)</em> Abrir la ventana de <em>ant</em> de Eclipse y cargar el fichero 
+    <code>build.xml</code> de la aplicaci&oacute;n. Deberemos ver en esta ventana 
+    la lista de objetivos definidos en este fichero.</p>
+  <p><em>d)</em> Ejecutar el objetivo <code>dist</code> de <em>ant</em> y comprobar 
+    que se ha generado el fichero WAR de nuestra aplicaci&oacute;n en el subdirectorio 
+    <code>dist</code> de nuestro directorio de desarrollo.</p>
+  <p><em>e)</em> Desplegar este fichero WAR utilizando el manager de Tomcat. Una 
+    vez desplegado comprobar que podemos acceder correctamente a la aplicaci&oacute;n 
+    conect&aacute;ndonos a la siguiente URL:</p>
+  <pre class="codigo">http://localhost:8080/hola/index.htm</pre>
+  <p>Probar deteniendo y reanudando la aplicaci&oacute;n desde el <em>manager</em>, 
+    y comprobar que mientras est&aacute; detenida no podemos acceder a ella.</p>
+  <p><em>f)</em> Eliminar la aplicaci&oacute;n del servidor utilizando el <em>manager</em>. 
+    Volver a desplegar, esta vez utilizando el objetivo <code>deploy</code> de 
+    <em>ant</em> desde Eclipse. Comprobar si la aplicaci&oacute;n funciona correctamente. 
+    Si no es as&iacute;, reiniciar el servidor Tomcat y volver a probar.</p>
+</blockquote>
+<p><strong>4.</strong> Vamos a crear un aplicaci&oacute;n web desde cero utilizando 
+  el entorno de desarrollo Eclipse. La aplicaci&oacute;n consistir&aacute; en 
+  un conversor web de euros a ptas. Se pide:</p>
+<blockquote>
+  <p><em>a)</em> Crear un nuevo proyecto con Eclipse para nuestra aplicaci&oacute;n. 
+    Durante la creaci&oacute;n del nuevo proyecto deberemos:</p>
+  <ul>
+    <li>Especificar como directorio de fuentes el subdirectorio <code>src</code> 
+      del directorio del proyecto</li>
+    <li>Las clases compiladas deber&aacute;n generarse en <code>bin</code></li>
+    <li>Adem&aacute;s de la librer&iacute;a de clases de J2SE, deberemos a&ntilde;adir 
+      la librer&iacute;a <code>${tomcat.home}/common/lib/servlet.jar</code> para 
+      poder trabajar con <em>servlets</em>.</li>
+  </ul>
+  <p><em>b)</em> Una vez creado el proyecto a&ntilde;adiremos una clase con un 
+    servlet llamado <code>Conversor</code>, en el paquete <code>es.ua.j2ee.web</code>, 
+    cuyo c&oacute;digo fuente ser&aacute; el que se muestra a continuaci&oacute;n:</p>
+  <pre class="codigo">package es.ua.j2ee.web;<br><br>import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;<br><br>public class Conversor extends HttpServlet {<br><br>  public void doGet(HttpServletRequest req, <br>                    HttpServletResponse res) 
+                  throws ServletException, IOException {<br><br>    boolean correcto = false;
+    float euros = 0.0f;
+    int ptas = 0;<br><br>    String snum = req.getParameter(&quot;numero&quot;);
+    try {
+      euros = Float.parseFloat(snum);
+      ptas = (int)(euros * 166.386);
+      correcto = true; 
+    } catch(NumberFormatException e) {
+      correcto = false;
+    }<br><br>    res.setContentType(&quot;text/html&quot;);<br>
+    PrintStream out = new PrintStream(res.getOutputStream());<br>    out.println(&quot;&lt;HTML&gt;&quot;);
+    out.println(&quot;&lt;HEAD&gt;&quot;);
+    out.println(&quot;&lt;TITLE&gt;Resultado&lt;/TITLE&gt;&quot;);
+    out.println(&quot;&lt;/HEAD&gt;&quot;);
+    out.println(&quot;&lt;BODY&gt;&quot;);<br><br>    if(correcto) {
+      out.println(&quot;&lt;H1&gt;Resultado&lt;/H1&gt;&quot;);
+      out.println(&quot;&lt;P&gt;&quot; + euros + &quot; euros son &lt;B&gt;&quot;<br>                  + ptas + &quot;&lt;/B&gt; Ptas&lt;/P&gt;&quot;);
+      out.println(&quot;&lt;A HREF=\&quot;&quot; + req.getContextPath()<br>                  + &quot;/index.htm\&quot;&gt;Calcular otra cantidad&lt;/A&gt;&quot;);
+    } else {
+      out.println(&quot;&lt;H1&gt;Error&lt;/H1&gt;&quot;);
+      out.println(&quot;&lt;P&gt;Debe introducir un numero&lt;/P&gt;&quot;); 
+      out.println(&quot;&lt;A HREF=\&quot;&quot; + req.getContextPath() <br>                  + &quot;/index.htm\&quot;&gt;Volver atras&lt;/A&gt;&quot;);
+    }<br><br>    out.println(&quot;&lt;/BODY&gt;&quot;);
+    out.println(&quot;&lt;/HTML&gt;&quot;);
+    out.close();
+  }<br><br>  public void doPost(HttpServletRequest req, <br>                     HttpServletResponse res)
+                   throws ServletException, IOException {
+    this.doGet(req, res);
+  }
+}
+</pre>
+  <p><em>c)</em> Crearemos un directorio <code>web</code> donde construiremos 
+    la estructura de directorios de la aplicaci&oacute;n web (<code>WEB-INF</code>, 
+    <code>WEB-INF/lib</code> y <code>WEB-INF/classes</code>). Crearemos el descriptor 
+    de despliegue (<code>web.xml</code>) en el directorio que corresponda, con 
+    el siguiente contenido:</p>
+  <pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;<br><br>&lt;!DOCTYPE web-app 
+ PUBLIC &quot;-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN&quot;<br> &quot;http://java.sun.com/dtd/web-app_2_3.dtd&quot;&gt;<br><br>&lt;web-app&gt;<br>  &lt;display-name&gt;Mi Aplicacion Web&lt;/display-name&gt;
+  &lt;description&gt;
+    Esta es una aplicacion web sencilla a modo de ejemplo
+  &lt;/description&gt;<br><br>  &lt;servlet&gt;
+    &lt;servlet-name&gt;Conversor&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;es.ua.j2ee.web.Conversor&lt;/servlet-class&gt;
+  &lt;/servlet&gt;
+     
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;Conversor&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/servlet/Conversor&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;</pre>
+  <p>Introduciremos como recurso est&aacute;tico de la web un fichero <code>index.htm</code> 
+    con el siguiente contenido:</p>
+  <pre class="codigo">&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Conversor euros-ptas&lt;/title&gt;
+  &lt;/head&gt;
+     
+  &lt;body&gt;
+    &lt;h1&gt;Conversor&lt;/h1&gt;
+    &lt;p&gt;Introduzca la cantidad en euros:&lt;/p&gt;
+    &lt;form action=&quot;servlet/Conversor&quot; method=&quot;GET&quot;&gt;
+      &lt;input type=&quot;text&quot; name=&quot;numero&quot; value=&quot;0.0&quot;&gt;euros
+      &lt;input type=&quot;submit&quot; value=&quot;Calcular&quot;&gt;
+    &lt;/form&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+  <p><em>d)</em> Crear un fichero <code>build.xml</code> de <em>ant</em> siguiendo 
+    la plantilla de los apuntes, cambiando los valores de las propiedades necesarias 
+    para adaptarlo a nuestra aplicaci&oacute;n, de forma que el contexto se llame 
+    <code>euro</code>.</p>
+  <p><em>e)</em> Utilizar el objetivo <code>dist</code> de este fichero de <em>ant</em> 
+    para crear en <code>dist</code> el fichero WAR con nuestra aplicaci&oacute;n.</p>
+  <p><em>f)</em> Desplegar la aplicaci&oacute;n web mediante el <em>manager</em> 
+    de Tomcat, subiendo el fichero WAR generado en el punto anterior. Comprobar 
+    que la aplicaci&oacute;n funciona correctamente accediendo a la URL:</p>
+  <pre class="codigo">http://localhost:8080/euro/index.htm</pre>
+  <p><em>g)</em> Utilizar el <em>manager</em> de Tomcat para eliminar la aplicaci&oacute;n. 
+    Desplegar ahora otra vez la aplicaci&oacute;n desde Eclipse utilizando el 
+    objetivo <code>deploy</code> de <em>ant</em>. Comprobar que la aplicaci&oacute;n 
+    funciona correctamente utilizando la misma URL que en el punto anterior. Si 
+    el servidor no reconoce correctamente la aplicaci&oacute;n, reiniciar Tomcat 
+    y volver a probar.</p>
+  <p><em>h)</em> Vamos a modificar el c&oacute;digo fuente de nuestro servlet 
+    <code>Conversion.java</code>. Vamos a cambiar la l&iacute;nea donde generamos 
+    el t&iacute;tulo del documento resultante, donde ten&iacute;amos</p>
+  <pre class="codigo">out.println(&quot;&lt;TITLE&gt;<strong>Resultado</strong>&lt;/TITLE&gt;&quot;); </pre>
+  <p>Pondremos:</p>
+  <pre class="codigo">out.println(&quot;&lt;TITLE&gt;<strong>Resultado de la conversi&oacute;n</strong>&lt;/TITLE&gt;&quot;);    </pre>
+  <p>Guardamos los cambios en Eclipse, y pulsamos sobre el objetivo <code>deploy</code> 
+    de <em>ant</em> para volver a desplegar la aplicaci&oacute;n sin eliminar 
+    la que ten&iacute;amos anteriormente desplegada. De esta forma estaremos actualizando 
+    el contenido de la aplicaci&oacute;n en el servidor web.</p>
+  <p>Probaremos otra vez la aplicaci&oacute;n. &iquest;Ha cambiado el t&iacute;tulo 
+    de la p&aacute;gina con el resultado? Si no vemos los cambios, deberemos ir 
+    al manager de Tomcat y pulsar sobre <em>Reload</em> en nuestra aplicaci&oacute;n. 
+    Volvemos a probarla, para asegurarnos de que ahora los cambios se reflejan 
+    correctamente en la aplicaci&oacute;n.</p>
+  <p>Con esto podemos ver que conforme vayamos actualizando la aplicaci&oacute;n 
+    durante el desarrollo de la misma, conviene recargarla cada vez que la actualicemos 
+    en el servidor para asegurarnos de que se hayan reconocido los &uacute;ltimos 
+    cambios, y no estemos probando la versi&oacute;n anterior.</p>
+</blockquote>
+</body>
+        </html>

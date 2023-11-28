@@ -1,0 +1,702 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <style>
+    tt,code,var  {font-size:105%}	
+  </style>
+                                                            
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+                                                            
+                                                       
+  <link rel="stylesheet" href="../apuntes.css" type="text/css">
+  <title>Tema 2: Programaci&oacute;n de servlets</title>
+</head>
+  <body>
+
+<h2>2.5 Seguridad en aplicaciones Web</h2>
+<p>Podemos tener básicamente dos motivos para proteger una aplicación web: </p>
+<ul>
+  <li>Evitar que usuarios no autorizados accedan a determinados recursos.</li>
+  <li>Prevenir que se acceda a los datos que se intercambian en una transferencia 
+    a lo largo de la red.</li>
+</ul>
+<p>Para cubrir estos agujeros, un sistema de seguridad se apoya en tres aspectos 
+  importantes: </p>
+<ul>
+  <li><b>Autentificación</b>: medios para identificar a los elementos que intervienen 
+    en el acceso a recursos. </li>
+  <li><b>Confidencialidad</b>: asegurar que sólo los elementos que intervienen 
+    entienden el proceso de comunicación establecido.</li>
+  <li><b>Integridad</b>: verificar que el contenido de la comunicación no se modifica 
+    durante la transmisión.</li>
+</ul>
+<h3>2.5.1 Control de la seguridad</h3>
+<p>Desde el punto de vista de qui&eacute;n controla la seguridad en una aplicaci&oacute;n 
+  web, existen dos formas de implantaci&oacute;n: </p>
+<p><b> Seguridad declarativa</b> </p>
+<p>Aquella estructura de seguridad sobre una aplicación&nbsp; que es externa a 
+  dicha aplicación. Con ella, no tendremos que preocuparnos de gestionar la seguridad 
+  en ningún servlet, página JSP, etc, de nuestra aplicación, sino que el propio 
+  servidor Web se encarga de todo. Así, ante cada petición, comprueba si el usuario 
+  se ha autentificado ya, y si no le pide login y password para ver si puede acceder 
+  al recurso solicitado. Todo esto se realiza de forma transparente al usuario. 
+  Mediante el descriptor de la aplicación principalmente (fichero <i>web.xml </i>en 
+  Tomcat), comprueba la configuración de seguridad que queremos dar a cada
+aplicación.</p>
+<p><b> Seguridad programada</b>&nbsp;</p>
+<p>Mediante la seguridad programada, son los servlets y páginas JSP quienes, al 
+  menos parcialmente, controlan la seguridad de la aplicación.</p>
+<p>En esta sección se explicarán principalmente algunas técnicas de seguridad declarativa, que es la que puede configurar 
+  el administrador del servidor web.</p>
+<h3>2.5.2 Autentificaciones</h3>
+           
+      
+<p>Veremos ahora algunos mecanismos que pueden emplearse con HTTP para
+      autentificar (validar) al usuario que intenta acceder a un determinado
+      recurso. </p>
+           
+        
+      <p><b>1. Autentificaciones elementales</b> </p>
+           
+      <p>El protocolo HTTP incorpora un mecanismo
+      de autentificación básico (<b>basic</b>)<b> </b>basado en cabeceras de autentificación para
+      solicitar datos del usuario (el servidor) y para enviar los datos del
+      usuario (el cliente), de forma que comprobando la exactitud de los datos
+      se permitirá o no al usuario acceder a los recursos. Esta autentificación no proporciona
+      confidencialidad ni integridad, sólo se emplea una codificación Base64. </p>
+           
+      <p>Una variante de esto es la autentificación <b>digest</b>, donde, en
+      lugar de transmitir el password por la red, se emplea un password
+      codificado. Dicha codificación se realiza tomando el login, password, URI,
+      método HTTP y un valor generado aleatoriamente, y todo ello se combina
+      utilizando el método de encriptado MD5, muy seguro. De este modo, ambas
+      partes de la comunicación conocen el password, y a partir de él pueden
+      comprobar si los datos enviados son correctos. Sin embargo, algunos
+      servidores no soportan este tipo de autentificación. </p>
+           
+        
+      <p>Finalmente, tenemos la autentificación <b>basada en formularios</b>. Con este tipo de autentificación, el usuario introduce su login y password 
+  mediante un formulario HTML (y no con un cuadro de diálogo, como las anteriores). 
+  El fichero descriptor contiene para ello entradas que indican la página con 
+  el formulario de autentificación y una página de error. Tiene el mismo inconveniente 
+  que la autentificación <i>basic</i>: el password se codifica con un mecanismo 
+  muy pobre. </p>
+           
+        
+      <p><b>2. Certificados digitales y SSL</b> </p>
+           
+      <p>Las aplicaciones reales pueden requerir un nivel de seguridad mayor que
+      el proporcionado por las autentificaciones <i>basic</i> o <i>digest</i>.
+      También pueden requerir confidencialidad e integridad aseguradas. Todo
+      esto se consigue mediante los <b>certificados digitales</b>. </p>
+           
+      <blockquote>
+        
+  <p><b>2.1. Criptografía de clave pública</b> </p>
+           
+        <p>La clave de los certificados digitales reside en la <b>criptografía de clave pública</b>, mediante
+      la cual cada participante en el proceso tiene dos claves, que le permiten
+      encriptar y desencriptar la información. Una es la clave pública, que se
+      distribuye libremente. La otra es la clave privada, que se mantiene
+      secreta. Este par de claves es asimétrico, es decir, una clave sirve para
+        desencriptar algo codificado con la otra. Por ejemplo, supongamos que A quiere enviar datos encriptados a
+      B. Para ello, hay dos posibilidades: </p>
+           
+        <ul>
+          <li>A toma la clave pública de B, codifica con ella los datos y
+      se los envía. Luego B utiliza su clave privada (que sólo él conoce)
+            para desencriptar los datos.</li>
+          <li>A toma su clave privada, codifica los datos y se los envía a B,
+            que toma la clave pública de A para descodificarlos. Con esto, B
+            sabe que A es el remitente de los datos.</li>
+        </ul>
+        <p>El encriptado con clave pública se basa normalmente en el algoritmo
+        RSA, que emplea números primos grandes para obtener un par de claves
+      asimétricas. Las claves pueden darse con varias longitudes; así, son comunes claves de
+      1024 o 2048 bits.&nbsp; </p>
+           
+        
+  <p><b>2.2. Certificados digitales</b> </p>
+           
+        <p> Lógicamente, no es práctico teclear las claves del sistema de
+        clave pública, pues son muy largas. Lo que se hace en su lugar es almacenar estas claves en
+      disco en forma de <b>certificados digitales</b>. Estos certificados pueden cargarse por muchas
+      aplicaciones (servidores web, navegadores, gestores de correo, etc). </p>
+           
+        <p>Notar que con este sistema se garantiza la <b>confidencialidad</b>
+      (porque los datos van encriptados), y la <b>integridad</b> (porque si los
+      datos se desencriptan bien, indica que son correctos). Sin embargo, no
+      proporciona <b>autentificación</b> (B no sabe que los datos se los ha
+      enviado A), a menos que A utilice su clave privada para encriptar los datos,
+      y luego B utilice la clave pública de A para desencriptarlos. Si el proceso tiene éxito, los datos se sabe que han sido
+      enviados por A, porque sólo A conoce su clave privada. </p>
+           
+        
+  <p><b>2.3. SSL</b> </p>
+           
+      <p><b>SSL</b> (<i>Secure Socket Layer</i>) es una capa situada entre el
+      protocolo a nivel de aplicación (HTTP, en este caso) y el protocolo a
+      nivel de transporte (TCP/IP). Se encarga de gestionar la seguridad
+      mediante criptografía de clave pública que encripta la comunicación
+      entre cliente y servidor. La versión 2.0 de SSL (la primera mundialmente
+      aceptada), proporciona autentificación en la parte del servidor,
+      confidencialidad e integridad. Funciona como sigue: </p>
+           
+      <ul>
+        
+    <li>Un cliente se conecta a un lugar seguro utilizando el protocolo HTTPS 
+      (HTTP + SSL). Podemos detectar estos sitios porque las URLs comienzan con 
+      <code>https://</code></li>
+        <li>El servidor envía su clave pública al cliente.</li>
+        <li>El navegador comprueba si la clave está firmada por un certificado
+          de confianza. Si no es así, pregunta al cliente si quiere confiar en
+          la clave proporcionada.</li>
+      </ul>
+           
+      
+  <p>SSL 3.0 proporciona también soporte para certificados y autentificación del 
+    cliente. Funcionan de la misma forma que los explicados para el servidor, 
+    pero residiendo en el cliente.</p>
+           
+      
+      </blockquote>
+           
+      
+<h3>2.5.3 Autentificación basada en formularios</h3>
+
+<p>Veremos ahora con más profundidad la autentificación basada en formularios 
+  comentada anteriormente. Esta es la forma más comúnmente usada para imponer 
+  seguridad en una aplicación, puesto que se emplean <b>formularios HTML</b>. 
+</p>
+<p>El programador emplea el descriptor de despliegue para identificar los recursos 
+  a proteger, e indicar la página con el formulario a mostrar, y la página con 
+  el error a mostrar en caso de autentificación incorrecta. Así, un usuario que 
+  intente acceder a la parte restringida es redirigido automáticamente a la página 
+  del formulario, si no ha sido autentificado previamente. Si se autentifica correctamente 
+  accede al recurso, y si no se le muestra la página de error. Todo este proceso 
+  lo controla el servidor automáticamente. </p>
+<p>Este tipo de autentificación no se garantiza que funcione cuando se emplea 
+  reescritura de URLs en el seguimiento de sesiones. También podemos incorporar 
+  SSL a este proceso, de forma que no se vea modificado el funcionamiento aparente 
+  del mismo. </p>
+<p>Para utilizar la autentificación basada en formularios, se siguen los pasos 
+  que veremos a continuación. Sólo el primero es dependiente del servidor que 
+  se utilice. </p>
+<p><b>1. Establecer los logins, passwords y roles</b> </p>
+           
+      <p>Aquí se establece una lista de usuarios, con su password y uno o
+      varios roles a los que pueden pertenecer. </p>
+           
+      <p>Tomcat permite especificar la forma de gestionar estos datos (mediante
+      base de datos, fichero de passwords, etc). Sin embargo, también propone
+      una forma alternativa de tratar esta información, almacenando logins,
+      passwords y roles en el fichero <b>conf/tomcat-users.xml</b>.&nbsp; </p>
+           
+      <p>Este fichero contiene una cabecera XML, seguida de una etiqueta raíz <b>&lt;tomcat-users&gt;</b>,
+      que a su vez contiene una serie de etiquetas <b>&lt;user&gt;</b>, una por
+      cada usuario que se defina. Cada una de estas etiquetas <i>&lt;user&gt;</i>
+      contiene 3 atributos: </p>
+           
+      <ul>
+        <li><b>name</b>: nombre (login) del usuario</li>
+        <li><b>password</b>: password del usuario</li>
+        <li><b>roles</b>: rol / roles a los que pertenece el usuario, separados
+          por comas</li>
+      </ul>
+      <p>Un ejemplo de fichero sería:</p>
+      <pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot; ?&gt;
+&lt;tomcat-users&gt;
+	&lt;user name=&quot;pepe&quot; password=&quot;pepepw&quot; roles=&quot;usuario&quot;/&gt;
+	&lt;user name=&quot;manuel&quot; password=&quot;manolo&quot; roles=&quot;admin&quot;/&gt;
+	&lt;user name=&quot;toni&quot; password=&quot;toni&quot; roles=&quot;usuario, admin&quot;/&gt;
+&lt;/tomcat-users&gt;</pre>
+           
+      <p>Así, por ejemplo, para un recurso (URL) al que sólo puedan acceder
+      roles de tipo <i>admin</i>, podrían acceder los usuarios <i>manuel</i> y <i>toni</i>.
+      Notar también que los passwords están visibles en un fichero de texto
+      fácilmente accesible por casi cualquiera, con lo que no es una buena
+      forma de gestionar los passwords para una aplicación profesional. </p>
+           
+<p><b>2. Indicar al servlet que se empleará autentificación basada en
+formularios, e indicar las páginas de formulario y error</b> </p>
+<p>Se coloca para ello una etiqueta <tt>&lt;login-config&gt;</tt> en el descriptor 
+  de despliegue. Dentro, se emplean las subetiquetas: </p>
+<ul>
+  <li> <tt>&lt;auth-method&gt;</tt> que en general puede valer: 
+    <ul>
+      <li> <tt>FORM</tt>: para autentificación basada en formularios (como es 
+        el caso)</li>
+      <li><tt>BASIC</tt>: para autentificación BASIC</li>
+      <li><tt>DIGEST</tt>: para autentificación DIGEST</li>
+      <li><tt>CLIENT-CERT</tt>: para SSL</li>
+    </ul>
+  </li>
+  <li> <tt>&lt;form-login-config&gt;</tt> que indica las dos páginas HTML (la 
+    del formulario y la de error) con las etiquetas: 
+    <ul>
+      <li> <tt>&lt;form-login-page&gt;</tt> (para la de autentificación)&nbsp;</li>
+      <li><tt>&lt;form-error-page&gt;</tt> (para la página de error).</li>
+    </ul>
+  </li>
+</ul>
+<p>Por ejemplo, podemos tener las siguientes líneas en el descriptor de despliegue: 
+</p>
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+&lt;!DOCTYPE web-app PUBLIC 
+ &quot;-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN&quot;
+ &quot;http://java.sun.com/j2ee/dtds/web-app_2_2.dtd&quot;&gt;
+
+&lt;web-app&gt;
+	...
+<b>	&lt;login-config&gt;
+		&lt;auth-method&gt;FORM&lt;/auth-method&gt;
+		&lt;form-login-config&gt;
+			&lt;form-login-page&gt;
+				/login.jsp
+			&lt;/form-login-page&gt;
+			&lt;form-error-page&gt;
+				/error.html
+			&lt;/form-error-page&gt;
+		&lt;/form-login-config&gt;
+	&lt;/login-config&gt;
+</b>	...
+&lt;/web-app&gt;</pre>
+<p><b><a name="login"></a></b><b>3. Crear la página de login</b> </p>
+<p>El formulario de esta página debe contener campos para introducir el login 
+  y el password, que deben llamarse <i>j_username </i>y <i>j_password</i>. La 
+  acción del formulario debe ser <i>j_security_check</i>, y el METHOD = POST (para 
+  no mostrar los datos de identificación en la barra del explorador). Por ejemplo, 
+  podríamos tener la página: </p>
+<pre class="codigo">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0 Transitional//EN&quot;&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;form action=&quot;j_security_check&quot; METHOD=&quot;POST&quot;&gt;
+	&lt;table&gt;
+		&lt;tr&gt;&lt;td&gt;
+			Login:
+			&lt;input type=&quot;text&quot; name=&quot;j_username&quot;&gt;
+		&lt;/td&gt;&lt;/tr&gt;
+		&lt;tr&gt;&lt;td&gt;
+			Password:
+			&lt;input type=&quot;text&quot; name=&quot;j_password&quot;&gt;
+		&lt;/td&gt;&lt;/tr&gt;
+		&lt;tr&gt;&lt;td&gt;
+			&lt;input type=&quot;submit&quot; value=&quot;Enviar&quot;&gt;
+		&lt;/td&gt;&lt;/tr&gt;
+	&lt;/table&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p><b><a name="error"></a></b><b>4. Crear la página de error</b> </p>
+<p>La página puede tener el mensaje de error que se quiera. Ante fallos de autentificación, 
+  se redirigirá a esta página con un código 401. Un ejemplo de página sería: </p>
+<pre class="codigo">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0 Transitional//EN&quot;&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;h1&gt;ERROR AL AUTENTIFICAR USUARIO&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p><b>5. Indicar qué direcciones deben protegerse con autentificación</b> </p>
+<p>Para ello utilizamos etiquetas &lt;security-constraint&gt; en el descriptor 
+  de despliegue. Dichos elementos debe ir inmediatamente antes de <i>&lt;login-config&gt;</i>, 
+  y utilizan las subetiquetas: </p>
+<ul>
+  <li><tt>&lt;display-name&gt;</tt> para dar un nombre identificativo a emplear 
+    (opcional)</li>
+  <li><tt>&lt;web-resource-collection&gt;</tt> para especificar los patrones de 
+    URL que se protegen (requerido). Se permiten varias entradas de este tipo 
+    para especificar recursos de varios lugares. Cada uno contiene: 
+    <ul>
+      <li>Una etiqueta <tt>&lt;web-resource-name&gt;</tt> que da un nombre identificativo 
+        arbitrario al recurso o recursos</li>
+      <li>Una etiqueta <tt>&lt;url-pattern&gt;</tt><strong> </strong>que indica 
+        las URLs que deben protegerse</li>
+      <li>Una etiqueta <tt>&lt;http-method&gt;</tt> que indica el método o métodos 
+        HTTP a los que se aplicará la restricción (opcional)</li>
+      <li>Una etiqueta <tt>&lt;description&gt;</tt> con documentación sobre el 
+        conjunto de recursos a proteger (opcional)</li>
+    </ul>
+  </li>
+</ul>
+<blockquote> 
+  <p><strong>NOTA</strong>: este modo de restricción se aplica sólo cuando se 
+    accede al recurso directamente, no a través de arquitecturas MVC (Modelo-Vista-Controlador), 
+    con un <i>RequestDispatcher</i>. Es decir, si por ejemplo un servlet accede 
+    a una página JSP protegida, este mecanismo no tiene efecto, pero sí cuando 
+    se intenta a acceder a la página JSP directamente.</p>
+</blockquote>
+<ul>
+  <li><tt>&lt;auth-constraint&gt;</tt> indica los roles de usuario que pueden 
+    acceder a los recursos indicados (opcional) Contiene: 
+    <ul>
+      <li>Uno o varios subelementos <tt>&lt;role-name&gt;</tt> indicando cada 
+        rol que tiene permiso de acceso. Si queremos dar permiso a todos los roles, 
+        utilizamos una etiqueta <i><tt>&lt;role-name&gt;*&lt;/role-name&gt;</tt></i>.</li>
+      <li>Una etiqueta <tt>&lt;description&gt;</tt> indicando la descripción de 
+        los mismos.</li>
+    </ul>
+    <p>En teoría esta etiqueta es opcional, pero omitiéndola indicamos que ningún 
+      rol tiene permiso de acceso. Aunque esto puede parecer absurdo, recordar 
+      que este sistema sólo se aplica al acceso directo a las URLs (no a través 
+      de un modelo MVC), con lo que puede tener su utilidad.</li>
+</ul>
+<p>Añadimos alguna dirección protegida al fichero que vamos construyendo:</p>
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+&lt;!DOCTYPE web-app PUBLIC 
+ &quot;-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN&quot;
+ &quot;http://java.sun.com/j2ee/dtds/web-app_2_2.dtd&quot;&gt;
+
+&lt;web-app&gt;
+<b>	&lt;security-constraint&gt;
+		&lt;web-resource-collection&gt;
+			&lt;web-resource-name&gt;
+				Prueba
+			&lt;/web-resource-name&gt;
+			&lt;url-pattern&gt;
+				/prueba/*
+			&lt;/url-pattern&gt;
+		&lt;/web-resource-collection&gt;
+		&lt;auth-constraint&gt;
+			&lt;role-name&gt;admin&lt;/role-name&gt;
+			&lt;role-name&gt;subadmin&lt;/role-name&gt;
+		&lt;/auth-constraint&gt;
+	&lt;/security-constraint&gt;
+</b>	&lt;login-config&gt;
+	...
+&lt;/web-app&gt;</pre>
+<p>En este caso protegemos todas las URLs de la forma <i><tt>http//host/ruta_aplicacion/prueba/*</tt></i>, 
+  de forma que sólo los usuarios que tengan roles de <i>admin</i> o de <i>subadmin</i> 
+  podrán acceder a ellas.</p>
+<p><b>6. Desactivar los servlets</b></p>
+<p>Hay que tener en cuenta que al proteger URLs, seguimos dejando libre una vía 
+  de acceso para los servlets, puesto que podemos llamarlos utilizando el alias 
+  <i>servlet</i>. Por ejemplo, supongamos que mapeamos el servlet <i>paqueteservlets.UnServlet</i> 
+  con la dirección <i><tt>/pruebas/Prueba</tt></i>. Supongamos también que protegemos 
+  la URL <i><tt>/pruebas/Prueba</tt></i>. De esta forma, si llamamos al servlet 
+  con</p>
+<pre class="codigo">http://&lt;ruta&gt;/pruebas/Prueba</pre>
+<p>no podremos hacerlo a no ser que tengamos los permisos adecuados. Pero nadie 
+  ha prohibido llamar al servlet con:</p>
+<pre class="codigo">http://&lt;ruta&gt;/servlet/paqueteservlets.UnServlet</pre>
+<p>Hay que desactivar, por tanto, esta forma de llamar a los servlets implicados 
+  en el proceso de seguridad. En los conceptos iniciales de servlets vistos anteriormente 
+  vimos cómo podría hacerse eso. Una forma muy común es redirigir las direcciones 
+  <i><tt>/servlet/*</tt></i> hacia un mismo servlet que muestre una página de 
+  error:</p>
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+&lt;!DOCTYPE web-app PUBLIC 
+ &quot;-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN&quot;
+ &quot;http://java.sun.com/j2ee/dtds/web-app_2_2.dtd&quot;&gt;
+
+&lt;web-app&gt;
+<b>	&lt;servlet&gt;
+		&lt;servlet-name&gt;Error&lt;/servlet-name&gt;
+		&lt;servlet-class&gt;ErrorServlet&lt;/servlet-class&gt;
+	&lt;/servlet&gt;
+
+	&lt;servlet-mapping&gt;
+		&lt;servlet-name&gt;Error&lt;/servlet-name&gt;
+		&lt;url-pattern&gt;/servlet/*&lt;/url-pattern&gt;
+	&lt;/servlet-mapping&gt;	
+
+</b>	&lt;security-constraint&gt;
+	...
+&lt;/web-app&gt;</pre>
+<p>El servlet <i>ErrorServlet</i> puede simplemente mostrar un texto de error. 
+</p>
+           
+      <p><b>EJEMPLO</b> </p>
+           
+      <p>Juntando todos los pasos previos, tenemos aquí un fichero <a href="ejemplos/servlets/ejemploseguridadform.war"> WAR</a>
+      disponible con los ficheros implicados. El ejemplo tiene la siguiente
+      estructura de directorios y archivos: </p>
+           
+      <ul>
+        <li><b>/WEB-INF/web.xml</b>: fichero descriptor, que finalmente queda
+          con <a href="ejemplos/servlets/web1.txt">esta</a> apariencia.</li>
+        <li><b>/WEB-INF/classes/ErrorServlet</b>: servlet de error para evitar accesos mediante <i>/servlet/...</i></li>
+        <li><b>/WEB-INF/classes/PruebaServlet</b> es un servlet al que no
+          debería poderse acceder (porque no está mapeado, y no se puede
+          utilizar el acceso <i>/servlet/</i>).</li>
+        <li><b>/login.jsp</b>: <a href="#login">página</a> que muestra el
+          formulario de autentificación</li>
+        <li><b>/error.html</b>: <a href="#error">página</a> que muestra error
+          ante autentificaciones incorrectas</li>
+        <li><b>/prueba/</b>: directorio que se quiere proteger. Dentro hay una
+          página <b>index.html</b> de prueba para intentar acceder a ella.</li>
+      </ul>
+      <p>Para probar el ejemplo, debemos colocar en el fichero <b>tomcat-users.xml</b>
+      los valores de usuarios y passwords vistos antes en el ejemplo (u otros
+      valores, si queremos). Se proporciona un fichero <i>tomcat-users.xml</i>
+      en el WAR, para copiarlo directamente en el directorio <i>conf</i> de
+      Tomcat (deberíamos copiar previamente el <i>tomcat-users.xml</i>
+      original, para no perderlo). Luego copiamos el fichero WAR en el directorio <i>webapps</i>
+      de Tomcat. Intentamos acceder a las direcciones: </p>
+           
+      <pre class="codigo">http://localhost:8080/ejemploseguridadform/prueba/index.html</pre>
+           
+      <pre class="codigo">http://localhost:8080/ejemploseguridadform/servlet/PruebaServlet</pre>
+           
+      <p>En el primero caso, probamos a introducir logins y passwords válidos e
+      inválidos, para comprobar qué páginas se muestran en cada caso. En el
+      segundo caso, nos mostrará la página que genera el servlet <i>ErrorServlet.</i> </p>
+           
+<h3>2.5.4 Autentificación <i>basic</i></h3>
+<p>El método de autentificación basada en formularios tiene algunos inconvenientes: 
+  si el navegador no soporta cookies, el proceso tiene que hacerse mediante reescritura 
+  de URLs, con lo que no se garantiza el funcionamiento. </p>
+<p>Por ello, una alternativa es utilizar el modelo de autentificación <i>basic</i> 
+  de HTTP, donde se emplea un cuadro de diálogo para que el usuario introduzca 
+  su login y password, y se emplea la cabecera <i>Authorization</i> de petición 
+  para recordar qué usuarios han sido autorizados y cuáles no. Una diferencia 
+  con respecto al método anterior es que es difícil entrar como un usuario distinto 
+  una vez que hemos entrado como un determinado usuario (habría que cerrar el 
+  navegador y volverlo a abrir). </p>
+<p>Al igual que en el caso anterior, podemos utilizar SSL sin ver modificado el 
+  resto del esquema del proceso. </p>
+<p>El método de autentificación <i>basic</i> consta de los siguientes pasos: </p>
+<p><b>1. Establecer los logins, passwords y roles</b> </p>
+<p>Este paso es exactamente igual que el visto para la autentificación basada 
+  en formularios. </p>
+<p><b>2. Indicar al servlet que se empleará autentificación BASIC, y designar
+los dominios</b> </p>
+<p>Se utiliza la misma etiqueta <tt>&lt;login-config&gt;</tt> vista antes, pero 
+  ahora una etiqueta <tt>&lt;auth-method&gt;</tt> con valor BASIC. Se emplea una 
+  subetiqueta <tt>&lt;realm-name&gt;</tt> para indicar qué dominio se empleará 
+  en la autorización. Por ejemplo:&nbsp; </p>
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+&lt;!DOCTYPE web-app PUBLIC 
+ &quot;-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN&quot;
+ &quot;http://java.sun.com/j2ee/dtds/web-app_2_2.dtd&quot;&gt;
+
+&lt;web-app&gt;
+	...
+<b>	&lt;login-config&gt;
+		&lt;auth-method&gt;BASIC&lt;/auth-method&gt;
+		&lt;realm-name&gt;dominio&lt;/realm-name&gt;
+	&lt;/login-config&gt;
+</b>	...
+&lt;/web-app&gt;</pre>
+<p><b>3. Indicar qué direcciones deben protegerse con autentificación</b> 
+</p>
+<p>Este paso también es idéntico al visto en la autentificación basada en formularios. 
+</p>
+<p><b>4. Desactivar los servlets</b></p>
+<p>Este paso también es igual al visto en la autentificación basada en formularios.</p>
+           
+      <p><b>EJEMPLO</b> </p>
+           
+      <p>Juntando todos los pasos previos, tenemos aquí un fichero <a href="ejemplos/servlets/ejemploseguridadbasic.war"> WAR</a>
+      disponible con los ficheros implicados. El ejemplo tiene la misma
+      estructura de directorios que el visto para autentificación con
+      formularios (quitando las páginas de login y error, que ya no son
+      necesarias). El fichero descriptor queda ahora con <a href="ejemplos/servlets/web2.txt">esta</a>
+      apariencia. </p>
+           
+      <p>Para probar el ejemplo, seguimos también los mismos pasos que para el
+      ejemplo anterior, pero accediendo a las direcciones: </p>
+           
+<pre class="codigo">http://localhost:8080/ejemploseguridadbasic/prueba/index.html</pre>
+           
+<pre class="codigo">http://localhost:8080/ejemploseguridadbasic/servlet/PruebaServlet</pre>
+           
+<h3><b><a name="autHTTP"></a></b>2.5.5 Seguridad programada</h3>
+           
+      <p>La seguridad declarativa vista hasta ahora es la más comúnmente usada
+      en las aplicaciones Web. Pero, ¿cómo hacer que nuestros servlets sean
+      independientes de determinadas configuraciones del servidor, como la
+      gestión de logins y passwords de usuarios, o la gestión de roles? Aquí
+      entra en juego la seguridad programada, y con ella, dejamos que los
+      servlets y páginas JSP controlen parcial o totalmente los aspectos de
+      seguridad. </p>
+           
+<p>En algunos casos puede interesar mantener parte de las ventajas que
+        ofrece la seguridad declarativa (como la gestión automática de
+        usuarios y passwords), y añadir sobre eso las configuraciones
+        particulares que podemos alcanzar con la seguridad programada. Así, no
+        tenemos que renunciar a los elementos <i>&lt;login-config&gt;</i>, la
+        autentificación <i>basic</i> o la basada en formularios, los elementos <i>&lt;security-constraint&gt;</i>,
+        etc. Simplemente añadimos un tratamiento adicional a estas
+autentificaciones, mediante métodos de <i>HttpServletRequest</i>. </p>
+           
+<p>En otros casos interesa dejar que el servlet o la página JSP controle
+totalmente la seguridad, convirtiendose ésta en algo
+        completamente programado. Para implementar una seguridad <b> completamente programada</b> utilizando un
+        método <i>basic</i> (el método <i>digest</i> no lo veremos por no
+        estar demasiado difundido), los pasos son: </p>
+           
+        <p><b>1. Comprobar si hay una cabecera &quot;Authorization&quot;</b> </p>
+           
+        <p>Si no la hay, vamos al paso 5 </p>
+           
+        <p><b>2. Obtener el login y password codificados de dicha cabecera</b> </p>
+           
+        <p>Si hay cabecera <i>Authorization</i> tendrá el siguiente formato: </p>
+           
+        <pre class="codigo">Authorization: Basic datos_codificados</pre>
+           
+        <p>Saltándonos los 6 primeros caracteres (&quot;Basic &quot;)
+        obtendremos los datos codificados que deberemos descodificar. </p>
+           
+        <p><b>3. Descodificar el login y password con Base64</b> </p>
+           
+        <p>Se utiliza para ello un objeto <i>Base64Decoder </i>(que viene con
+        JDK, en el paquete <i>sun.misc</i>), y llamando a su método <i>decodeBuffer()</i>,
+        que devuelve una cadena con el formato: </p>
+           
+        <pre class="codigo">usuario:password</pre>
+           
+        <p>Podemos luego separar login y password procesando esta cadena. Hay
+        que tener en cuenta también que, al estar en el paquete <i>sun.misc</i>,
+        no se garantiza la portabilidad del descodificador entre sistemas
+        distintos. </p>
+           
+        <p><b>4. Comprobar si login y password son correctos</b> </p>
+           
+        <p>Para ello se pueden tener los login y passwords guardados en una base
+        de datos, o en un objeto <i>Properties</i> en el servlet, o cualquier
+        otra posibilidad. Se trata de buscar el password que hay en la base de
+        datos para el usuario que ha entrado y compararlo con el que ha
+        introducido. </p>
+           
+        <p><b>5. Si no hay autentificación, o falla, enviar la respuesta
+        apropiada</b> </p>
+           
+        <p>Se envía un código 401, y una cabecera <i>WWW-Authenticate</i> para
+        que el navegador muestre un diálogo y que el usuario se autentifique. </p>
+           
+        <p><b>EJEMPLO</b> </p>
+           
+        <p>El siguiente servlet emplea las cabeceras de autentificación:
+        envía una cabecera de autentificación si no ha recibido ninguna, o si
+        la que ha recibido no está dentro de un conjunto de <i>Properties </i>predefinido,
+        con logins y passwords válidos. En el caso de introducir un login o
+        password válidos, muestra un mensaje de bienvenida.&nbsp; </p>
+           
+        <p>Los logins y passwords están en un objeto <i>Properties</i>,
+        definido en el método<i>  init()</i>. Podríamos leer estos datos de un
+        fichero, aunque por simplicidad aquí se definen como constantes de
+        cadena. </p>
+           
+        <p>Los datos de autentificación se envían codificados, y se emplea un
+        objeto <i>sun.misc.BASE64Decoder</i> para descodificarlos y sacar el
+        login y password. </p>
+           
+      <pre class="codigo">import java.io.*;
+import java.util.*;
+import sun.misc.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ServletPassword extends HttpServlet
+{
+   <b>// Conjunto de logins y passwords permitidos</b>
+   Properties datos = new Properties();	<b>
+</b>	
+   <b>// Metodo de inicializacion
+</b>	
+   public void init()
+   {
+	datos.setProperty(&quot;usuario1&quot;, &quot;password1&quot;);
+	datos.setProperty(&quot;usuario2&quot;, &quot;password2&quot;);
+   }
+	
+   <b>// Metodo para GET
+</b>	
+   public void doGet(HttpServletRequest request, 
+		     HttpServletResponse response) 
+   throws ServletException, IOException
+   {		
+	response.setContentType(&quot;text/html&quot;);
+
+	<b>// Comprobamos si hay cabecera 
+	// de autorizacion
+</b>		
+	String autorizacion = request.getHeader(&quot;Authorization&quot;);
+		
+	if (autorizacion == null)
+	{
+		<b>// Enviamos el codigo 401 y 
+		// la cabecera para autentificacion
+</b>			
+		response.setStatus(response.SC_UNAUTHORIZED);
+		response.setHeader(&quot;WWW-Authenticate&quot;, 
+		   &quot;BASIC realm=\&quot;privileged-few\&quot;&quot;);
+	}
+	else
+	{
+		<b>// Obtenemos los datos del usuario 
+		// y comparamos con los almacenados
+</b>		
+		<b>// Quitamos los 6 primeros caracteres 
+		// que indican tipo de autentificación 
+		// (BASIC)
+
+</b>		String datosUsuario = 
+	 	   autorizacion.substring(6).trim();
+
+		BASE64Decoder dec = new BASE64Decoder();
+
+		String usuarioPassword = new String
+		   (dec.decodeBuffer(datosUsuario));
+
+		int indice = usuarioPassword.indexOf(&quot;:&quot;);
+
+		String usuario = 
+		   usuarioPassword.substring(0, indice);
+
+		String password = 
+		   usuarioPassword.substring(indice + 1);
+
+		String passwordReal = 
+		   datos.getProperty(usuario);
+		
+		if (passwordReal != null &amp;&amp; 
+		    passwordReal.equals(password))
+		{
+			<b>// Mensaje de bienvenida
+</b>				
+			PrintWriter out = response.getWriter();
+			out.println (&quot;&lt;HTML&gt;&lt;BODY&gt;&quot;);
+			out.println (&quot;OK&quot;);
+			out.println (&quot;&lt;/BODY&gt;&lt;/HTML&gt;&quot;);	
+		} else {
+				
+			<b>// Pedir autentificacion
+</b>
+			response.setStatus 
+			   (response.SC_UNAUTHORIZED);
+			response.setHeader
+			   (&quot;WWW-Authenticate&quot;, 
+			   &quot;BASIC realm=\&quot;privileged-few\&quot;&quot;);
+		}
+	}
+   }	
+
+   <b>// Metodo para POST
+</b>	
+   public void doPost(HttpServletRequest request, 
+		      HttpServletResponse response) 
+   throws ServletException, IOException
+   {
+	doGet(request, response);
+   }
+}</pre>
+           
+<p> Aquí
+      tenéis el <a href="ejemplos/servlets/ejemplocabeceras.war">WAR</a> con
+el ejemplo.
+      Copiadlo en el directorio <i>webapps</i>  y probadlo con:</p>
+           
+<pre class="codigo">http://localhost:8080/ejemplocabeceras/servlet/ServletPassword</pre>
+           
+      <p>Un ejemplo de login y password válidos para el ejemplo es:
+      login=<i>usuario1</i>, password=<i>password1</i>.&nbsp; </p>
+           
+<p>&nbsp;</p>
+<b>
+<h2>&nbsp;</h2>
+</b> 
+</body>
+        </html>
