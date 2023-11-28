@@ -1,0 +1,1559 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>El lenguaje Groovy</title>
+<link type="text/css" href="../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../skin/profile.css" rel="stylesheet">
+<script src="../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="../images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Groovy&amp;Grails: desarrollo r&aacute;pido de aplicaciones" src="../images/baner_j2ee_der.gif" title="Groovy&amp;Grails: desarrollo r&aacute;pido de aplicaciones"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="../index.html">Home</a>
+</li>
+<li class="current">
+<a class="base-selected" href="../sesiones/index.html">Sesiones</a>
+</li>
+<li>
+<a class="base-not-selected" href="../ejercicios/index.html">Ejercicios</a>
+</li>
+<li>
+<a class="base-not-selected" href="../bibliografia/index.html">Bibliograf&iacute;a</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../sesiones/sesion01-apuntes.html" title="Introducci&oacute;n a Groovy">Sesi&oacute;n 1</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesi&oacute;n 2</div>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion03-apuntes.html" title="Aspectos avanzados en Groovy">Sesi&oacute;n 3</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion04-apuntes.html" title="Librer&iacute;as propias en Groovy">Sesi&oacute;n 4</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion05-apuntes.html" title="Introducci&oacute;n a Grails">Sesi&oacute;n 5</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion06-apuntes.html" title="Construir la interfaz de usuario (I)">Sesi&oacute;n 6</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion07-apuntes.html" title="Controladores">Sesi&oacute;n 7</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion08-apuntes.html" title="Construir la interfaz de usuario (II)">Sesi&oacute;n 8</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion09-apuntes.html" title="Dominios y servicios (I)">Sesi&oacute;n 9</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion10-apuntes.html" title="Dominios y servicios (II)">Sesi&oacute;n 10</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion11-apuntes.html" title="Seguridad">Sesi&oacute;n 11</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion12-apuntes.html" title="Despliegue de aplicaciones">Sesi&oacute;n 12</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion13-apuntes.html" title="Web 2.0">Sesi&oacute;n 13</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion14-apuntes.html" title="AJAX">Sesi&oacute;n 14</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion15-apuntes.html" title="Dos horas para crear twitter">Sesi&oacute;n 15</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion02-apuntes.pdf"><img alt="PDF -icon" src="../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>El lenguaje Groovy</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Tipos+de+datos+simples">Tipos de datos simples</a>
+<ul class="minitoc">
+<li>
+<a href="#Tipos+primitivos+y+referencias">Tipos primitivos y referencias</a>
+</li>
+<li>
+<a href="#Boxing%2C+unboxing+y+autoboxing">Boxing, unboxing y autoboxing</a>
+</li>
+<li>
+<a href="#Tipado+din%C3%A1mico">Tipado din&aacute;mico</a>
+</li>
+<li>
+<a href="#Sobrecarga+de+operadores">Sobrecarga de operadores</a>
+</li>
+<li>
+<a href="#Trabajo+con+cadenas">Trabajo con cadenas</a>
+</li>
+<li>
+<a href="#La+librer%C3%ADa+GString">La librer&iacute;a GString</a>
+</li>
+<li>
+<a href="#Expresiones+regulares">Expresiones regulares</a>
+</li>
+<li>
+<a href="#N%C3%BAmeros">N&uacute;meros</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Colecciones">Colecciones</a>
+<ul class="minitoc">
+<li>
+<a href="#Rangos">Rangos</a>
+</li>
+<li>
+<a href="#Listas">Listas</a>
+</li>
+<li>
+<a href="#Mapas">Mapas</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Estructuras+de+control">Estructuras de control</a>
+<ul class="minitoc">
+<li>
+<a href="#La+sentencia+if">La sentencia if</a>
+</li>
+<li>
+<a href="#El+operador+ternario+%3F%3A">El operador ternario ?:</a>
+</li>
+<li>
+<a href="#La+sentencia+switch">La sentencia switch</a>
+</li>
+<li>
+<a href="#El+bucle+while">El bucle while</a>
+</li>
+<li>
+<a href="#El+bucle+for">El bucle for</a>
+</li>
+<li>
+<a href="#La+sentencia+return">La sentencia return</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+         
+
+<p>En est&aacute; segunda sesi&oacute;n, vamos a tratar en profundidad los aspectos m&aacute;s importantes del lenguaje Groovy, tales como los tipos de datos simples y las colecciones, para terminar viendo las estructuras de control, tanto las heredadas de Groovy como las propias y comprobaremos lo ameno que puede ser programar en Groovy.
+</p>
+
+
+<a name="N1000F"></a><a name="Tipos+de+datos+simples"></a>
+<h2 class="underlined_10">Tipos de datos simples</h2>
+<div class="section">
+<a name="N10015"></a><a name="Tipos+primitivos+y+referencias"></a>
+<h3 class="underlined_5">Tipos primitivos y referencias</h3>
+<p>
+		En Java, existen los tipos de datos primitivos (<span class="codefrag">int, double, float, char</span>, etc) y las referencias (<span class="codefrag">Object, String</span>, etc), Los tipos de datos primitivos son aquellos que tienen valor por si mismos, bien sea un entero, un car&aacute;cter o un n&uacute;mero en coma flotante y es imposible crear nuevos tipos de datos primitivos.
+	</p>
+<p>
+		Mientras que las referencias son identificadores de instancias de clases Java y, como su nombre indica, simplemente es una referencia a un objeto. En los tipos de datos primitivos es imposible realizar llamadas a m&eacute;todos y &eacute;stos no pueden ser utilizados en aquellos lugares donde se espera la presencia de un tipo <em>java.lang.Object</em>. Esto hace que determinados fragmentos de c&oacute;digo de nuestros programas, se compliquen demasiado, como puede ser el siguiente ejemplo que realiza la suma posici&oacute;n por posici&oacute;n de un par de vectores de enteros.
+	</p>
+<pre class="code">ArrayList resultados = new ArrayList();
+for (int i=0; i &lt; listaUno.size(); i++){
+    Integer primero = (Integer)listaUno.get(i);
+    Integer segundo = (Integer)listaDos.get(i);
+
+    int suma = primero.intValue() + segundo.intValue();
+    resultados.add(new Integer(suma));
+}</pre>
+<p>
+		Todo parece indicar que en un futuro cercano, Java mejorar&aacute; esta aproximaci&oacute;n, pero mientras tanto Groovy ya ha dado su soluci&oacute;n para no tener que realizar la conversi&oacute;n de datos para realizar simples sumas. En Groovy, todo es un objeto y una soluci&oacute;n al ejemplo anterior podr&iacute;a ser utilizando el m&eacute;todo <span class="codefrag">plus()</span> que Groovy a&ntilde;ade al tipo Integer: <span class="codefrag">resultados.add(primero.plus(segundo))</span>.
+	</p>
+<p>
+		Sin embargo, esta soluci&oacute;n tambi&eacute;n se podr&iacute;a conseguir en Java si se a&ntilde;adiera el m&eacute;todo plus a la clase Integer. As&iacute; que Groovy decide ir un poco m&aacute;s lejos y permite la utilizaci&oacute;n de operadores entre objetos, con lo que la soluci&oacute;n en Groovy ser&iacute;a <span class="codefrag">resultados.add (primero + segundo)</span>. De esta forma, lo que en Groovy puede parecer una variable de tipo de datos primitivos, en realidad es una referencia a una clase Java, tal y como se muestra en la siguiente tabla.
+	</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+		
+<tr>
+			
+<th colspan="1" rowspan="1">Tipo primitivo</th>
+			<th colspan="1" rowspan="1">Clase utilizada</th>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">byte</td>
+			<td colspan="1" rowspan="1">java.lang.Byte</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">short</td>
+			<td colspan="1" rowspan="1">java.lang.Short</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">int</td>
+			<td colspan="1" rowspan="1">java.lang.Integer</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">long</td>
+			<td colspan="1" rowspan="1">java.lang.Long</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">float</td>
+			<td colspan="1" rowspan="1">java.lang.Float</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">double</td>
+			<td colspan="1" rowspan="1">java.lang.Double</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">char</td>
+			<td colspan="1" rowspan="1">java.lang.Character</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">boolean</td>
+			<td colspan="1" rowspan="1">java.lang.Boolean</td>
+		
+</tr>			
+	
+</table>
+<p>
+		As&iacute; que cada vez que utilices un tipo de datos primitivo en tus programas en Groovy, en realidad est&aacute;s utilizando la correspondiente clase indicada en la tabla anterior,  con lo que, puedes ahorrarte el uso de tipos primitivos en Groovy, porque por detr&aacute;s se est&aacute; haciendo una conversi&oacute;n a un tipo de dato referencia.
+	</p>
+<a name="N100B9"></a><a name="Boxing%2C+unboxing+y+autoboxing"></a>
+<h3 class="underlined_5">Boxing, unboxing y autoboxing</h3>
+<p>
+		La conversi&oacute;n de un tipo de dato primitivo a un tipo de dato referencia se conoce en Java como <em>boxing</em>, mientras que la conversi&oacute;n de un tipo de dato referencia a un tipo de dato primitivo se conoce <em>unboxing</em>. Groovy automatiza estas operaciones en lo que se conoce como <em>autoboxing</em>. 
+	</p>
+<p>
+		Pero, si Groovy convierte todo a un tipo de dato referencia, &iquest;qu&eacute; pasa con aquellos m&eacute;todos de Java que esperan un par&aacute;metro de tipo de dato primitivo?	No hay de que preocuparse, el autoboxing de Groovy se encarga de eso. Por ejemplo, en el m&eacute;todo <em>indexOf</em> de la clase <em>java.lang.String</em> se espera como par&aacute;metro un entero que indica el car&aacute;cter buscado en la cadena, devolviendo tambi&eacute;n un entero indicando la posici&oacute;n en la que se ha encontrado el caracter. Si probamos el siguiente ejemplo, veremos como todo funciona correctamente, ya que Groovy se encarga de realizar el autoboxing all&iacute; donde considere oportuno, en este caso, en el paso del par&aacute;metro a la funci&oacute;n <em>indexOf</em>. El siguiente c&oacute;digo trata de obtener la posici&oacute;n de la primera 'o' de la cadena.
+	</p>
+<pre class="code">'Hola Mundo'.indexOf(111)</pre>
+<p>
+		En un principio Groovy, deber&iacute;a convertir el tipo de datos <span class="codefrag">int</span> del valor 111 a <span class="codefrag">Integer</span>, sin embargo, la funci&oacute;n <span class="codefrag">indexOf()</span> requiere un par&aacute;metro de tipo <span class="codefrag">int</span>, con lo que el autoboxing de Groovy funciona de tal forma para convertir el par&aacute;metro al tipo de dato requerido, en este caso, <span class="codefrag">int</span>.
+	</p>
+<p>
+		Otro aspecto interesante del autoboxing de Groovy es que no siempre se ejecuta el autoboxing para la realizaci&oacute;n de determinadas operaciones. Por ejemplo, en la operaci&oacute;n <span class="codefrag">1 + 2</span>, podemos pensar que los valores 1 y 2 son del tipo referencia <em>Integer</em>, lo cual es cierto y que para poder realizarse la operaci&oacute;n, &eacute;stos deben ser convertidos a tipo <em>int</em>, lo cual no es cierto. De Groovy se dice que es incluso m&aacute;s orientado a objetos que Java y se dice por cuestiones como esta. En la operaci&oacute;n <span class="codefrag">1 + 2</span>, lo que Groovy est&aacute; realmente ejecutando es <span class="codefrag">1.plus(2)</span>, con lo que no es necesaria ninguna conversi&oacute;n para realizar esta operaci&oacute;n.
+	</p>
+<a name="N10100"></a><a name="Tipado+din%C3%A1mico"></a>
+<h3 class="underlined_5">Tipado din&aacute;mico</h3>
+<p>
+		Hasta el momento, en pr&aacute;cticamente todos los ejemplos que hemos visto en Groovy, hemos obviado especificar los tipos de datos utilizados, dejando que Groovy lo haga por nosotros. Esto es lo que se conoce como tipado din&aacute;mico y en este punto, vamos a ver los pros y los contras de su uso. La siguiente tabla, muestra un ejemplo con definiciones de variables y como act&uacute;a Groovy en cada caso.
+	</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+		
+<tr>
+			
+<th colspan="1" rowspan="1">Sentencia</th>
+			<th colspan="1" rowspan="1">Tipo de variable</th>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">def a = 2</td>
+			<td colspan="1" rowspan="1">java.lang.Integer</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">def b = 0.4f</td>
+			<td colspan="1" rowspan="1">java.lang.Float</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">int c = 3</td>
+			<td colspan="1" rowspan="1">java.lang.Integer</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">float d = 4</td>
+			<td colspan="1" rowspan="1">java.lang.Float</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">Integer e = 6</td>
+			<td colspan="1" rowspan="1">java.lang.Integer</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">String f = '1'</td>
+			<td colspan="1" rowspan="1">java.lang.String</td>
+		
+</tr>			
+	
+</table>
+<p>
+		La palabra reservada <span class="codefrag">def</span> se utiliza cuando no queremos especificar ning&uacute;n tipo de dato en especial y dejamos que Groovy decida por nosotros, tal y como aparece en los dos primeros ejemplos. En los dos ejemplos siguientes, podemos ver como independientemente de declarar una variable como tipo de dato primitivo, &eacute;sta acabar&aacute; siendo un tipo de dato referencia. Los dos &uacute;ltimos ejemplos, servir&aacute;n a la persona que est&eacute; leyendo el c&oacute;digo para entender que esa variable es un objeto.
+	</p>
+<p>
+		Aqu&iacute; es importante resaltar que Groovy es un lenguaje de tipado seguro, lo que quiere decir, que Groovy no nos va a permitir realizar operaciones de una determinada clase a un objeto definido de forma diferente. Por ejemplo, en el &uacute;ltimo ejemplo <span class="codefrag">String f = '1'</span>, la variable f nunca va a poder ser utilizada para realizar operaciones matem&aacute;ticas como si fuera de la clase <span class="codefrag">java.lang.Number</span> salvo que hagamos la correspondiente conversi&oacute;n. 
+	</p>
+<p>
+		Poder elegir si utilizamos tipado din&aacute;mico o est&aacute;tico, es una de las mejores cosas que tiene Groovy. En Internet existen muchos foros de discusi&oacute;n creados a partir de este debate donde se exponen los pros y los contras de cada m&eacute;todo. El <em>tipado est&aacute;tico</em> nos proporciona m&aacute;s informaci&oacute;n para la optimizaci&oacute;n de nuestros programas y revelan informaci&oacute;n adicional sobre el significado de la variable o del par&aacute;metro utilizado en un m&eacute;todo determinado.
+	</p>
+<p>
+		Por otro lado, el <em>tipado din&aacute;mico</em> no s&oacute;lo es el m&eacute;todo utilizado por los programadores vagos que no quieren estar definiendo los tipos de las variables, sino que tambi&eacute;n se utiliza cuando la salida de un m&eacute;todo es utilizado como entrada de otro sin tener que hacer ning&uacute;n trabajo extra por nuestra parte. De esta forma, el programador deja a Groovy que se encargue de la conversi&oacute;n de los datos en caso de que sea necesario y factible.
+	</p>
+<p>
+		Otro uso interesante del tipado din&aacute;mico, es lo que se conoce como el <em>duck typing</em> (tipado de patos) y es que, si hay algo que camina como un pato y habla como un pato, lo m&aacute;s probable es que sea un pato. El tipado de patos es interesante utilizarlo cuando se desconoce a ciencia cierto el tipo de datos de una determinada variable o par&aacute;metro. Esto nos proporciona un gran nivel de reutilizaci&oacute;n de nuestro c&oacute;digo, as&iacute; como la posibilidad de implementar funciones gen&eacute;ricas.
+	</p>
+<a name="N10189"></a><a name="Sobrecarga+de+operadores"></a>
+<h3 class="underlined_5">Sobrecarga de operadores</h3>
+<p>
+		La sobrecarga de operadores es un concepto de la programaci&oacute;n orientada a objetos que se refiere a la posibilidad de tener un m&eacute;todo de una clase con un determinado comportamiento y disponer tambi&eacute;n de uno m&aacute;s espec&iacute;fico para un subtipo de esta clase. Como ve&iacute;amos en el ejemplo, cuando ejecutamos <span class="codefrag">1 + 2</span>, lo que realmente se est&aacute; ejecutando es <span class="codefrag">1.plus(2)</span>. La siguiente tabla muestra una completa referencia de esta caracter&iacute;stica de Groovy.
+	</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+		
+<tr>
+			
+<th colspan="1" rowspan="1">Operador</th>
+			<th colspan="1" rowspan="1">Nombre</th>
+			<th colspan="1" rowspan="1">M&eacute;todo</th>
+			<th colspan="1" rowspan="1">Funciona con</th>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a + b</td>
+			<td colspan="1" rowspan="1">Suma</td>
+			<td colspan="1" rowspan="1">a.plus(b)</td>
+			<td colspan="1" rowspan="1">N&uacute;meros, cadenas, colecciones</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a - b</td>
+			<td colspan="1" rowspan="1">Resta</td>
+			<td colspan="1" rowspan="1">a.minus(b)</td>
+			<td colspan="1" rowspan="1">N&uacute;meros, cadenas, colecciones</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a * b</td>
+			<td colspan="1" rowspan="1">Multiplicaci&oacute;n</td>
+			<td colspan="1" rowspan="1">a.multiply(b)</td>
+			<td colspan="1" rowspan="1">N&uacute;meros, cadenas, colecciones</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a / b</td>
+			<td colspan="1" rowspan="1">Divisi&oacute;n</td>
+			<td colspan="1" rowspan="1">a.div(b)</td>
+			<td colspan="1" rowspan="1">N&uacute;meros</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a % b</td>
+			<td colspan="1" rowspan="1">M&oacute;dulo</td>
+			<td colspan="1" rowspan="1">a.mod(b)</td>
+			<td colspan="1" rowspan="1">N&uacute;mero enteros</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a++, ++a</td>
+			<td colspan="1" rowspan="1">Post-incremento, pre-incremento</td>
+			<td colspan="1" rowspan="1">a.next()</td>
+			<td colspan="1" rowspan="1">N&uacute;meros, cadenas, rangos</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a--, --a</td>
+			<td colspan="1" rowspan="1">Post-decremento, pre-decremento</td>
+			<td colspan="1" rowspan="1">a.previous()</td>
+			<td colspan="1" rowspan="1">N&uacute;meros, cadenas, rangos</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a**b</td>
+			<td colspan="1" rowspan="1">Potencia</td>
+			<td colspan="1" rowspan="1">a.power(b)</td>
+			<td colspan="1" rowspan="1">N&uacute;meros</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a | b</td>
+			<td colspan="1" rowspan="1">Operaci&oacute;n or</td>
+			<td colspan="1" rowspan="1">a.or(b)</td>
+			<td colspan="1" rowspan="1">N&uacute;meros enteros</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a &amp; b</td>
+			<td colspan="1" rowspan="1">Operaci&oacute;n and</td>
+			<td colspan="1" rowspan="1">a.and(b)</td>
+			<td colspan="1" rowspan="1">N&uacute;meros enteros</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a ^ b</td>
+			<td colspan="1" rowspan="1">Operaci&oacute;n xor</td>
+			<td colspan="1" rowspan="1">a.xor(b)</td>
+			<td colspan="1" rowspan="1">N&uacute;meros enteros</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">-a</td>
+			<td colspan="1" rowspan="1">Negaci&oacute;n</td>
+			<td colspan="1" rowspan="1">a.negate()</td>
+			<td colspan="1" rowspan="1">N&uacute;meros enteros y cadenas</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a[b]</td>
+			<td colspan="1" rowspan="1">Elemento de array</td>
+			<td colspan="1" rowspan="1">a.getAt(b)</td>
+			<td colspan="1" rowspan="1">Objetos, listas, mapas, String, Array</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a[b] = c</td>
+			<td colspan="1" rowspan="1">Asignaci&oacute;n a un elemento de array</td>
+			<td colspan="1" rowspan="1">a.putAt(b,c)</td>
+			<td colspan="1" rowspan="1">Objetos, listas, mapas, StringBuffer, Array</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">switch (a){ case b:}</td>
+			<td colspan="1" rowspan="1">Clasificaci&oacute;n</td>
+			<td colspan="1" rowspan="1">b.isCase(a)</td>
+			<td colspan="1" rowspan="1">Objetos, rangos, listas, colecciones, patrones, closures</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a == b</td>
+			<td colspan="1" rowspan="1">Igualdad</td>
+			<td colspan="1" rowspan="1">a.equals(b)</td>
+			<td colspan="1" rowspan="1">Objetos</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a != b</td>
+			<td colspan="1" rowspan="1">No igualdad</td>
+			<td colspan="1" rowspan="1">! a.equals(b)</td>
+			<td colspan="1" rowspan="1">Objetos</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a &lt;=&gt; b</td>
+			<td colspan="1" rowspan="1">Comparaci&oacute;n</td>
+			<td colspan="1" rowspan="1">a.compareTo(b)</td>
+			<td colspan="1" rowspan="1">java.lang.Comparable</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a &gt; b</td>
+			<td colspan="1" rowspan="1">Mayor que</td>
+			<td colspan="1" rowspan="1">a.compareTo(b) &gt; 0</td>
+			<td colspan="1" rowspan="1"></td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a &gt;= b</td>
+			<td colspan="1" rowspan="1">Mayor o igual que</td>
+			<td colspan="1" rowspan="1">a.compareTo(b) &gt;= 0</td>
+			<td colspan="1" rowspan="1"></td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a &lt; b</td>
+			<td colspan="1" rowspan="1">Menor que</td>
+			<td colspan="1" rowspan="1">a.compareTo(b) &lt; 0</td>
+			<td colspan="1" rowspan="1"></td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">a &lt;= b</td>
+			<td colspan="1" rowspan="1">a.compareTo(b) &lt;= 0</td>
+			<td colspan="1" rowspan="1">Menor o igual que</td>
+			<td colspan="1" rowspan="1"></td>
+		
+</tr>			
+	
+</table>
+<p>
+		Pero pasemos a la acci&oacute;n en cuanto a la sobrecarga de operadores con un ejemplo. Imaginemos que tenemos una clase <em>Dinero</em> y que necesitamos implementar dos m&eacute;todos para comprobar la igualdad y la suma de cantidades monetarias. Una forma de hacerlo ser&iacute;a sobrecargando los m&eacute;todos <span class="codefrag">equals ==</span> y <span class="codefrag">plus +</span>. Por supuesto, la suma s&oacute;lo se podr&aacute; efectuar cuando las dos cantidades a sumar utilicen la misma moneda, al igual que dos cantidades no ser&iacute;an iguales si no se refiriese a la misma moneda.
+	</p>
+<pre class="code">class Dinero {
+    private int cantidad
+    private String moneda
+    
+    Dinero (cantidadValor, monedaValor){
+        cantidad = cantidadValor
+        moneda = monedaValor
+    }
+    
+    boolean equals (Object otro){
+        if (null == otro)
+            return false
+        if (! (otro instanceof Dinero))
+            return false
+        if (moneda != otro.moneda)
+            return false
+        if (cantidad != otro.cantidad)
+            return false
+        return true
+    }
+    
+    int hashCode(){
+        cantidad.hashCode() + moneda.hashCode()
+    }
+    
+    Dinero plus (Dinero otro){
+        if (null == otro)
+            return null
+        if (otro.moneda != moneda){
+            throw new IllegalArgumentException(
+                "no puedes sumar $otro.moneda a $moneda")
+        }
+        return new Dinero(cantidad + otro.cantidad, moneda)
+    }
+}
+
+def uneuro = new Dinero(1,'EURO')
+assert uneuro == new Dinero(1,'EURO')
+assert uneuro + uneuro == new Dinero(2,'EURO')
+assert uneuro == new Dinero(2,'EURO') : "un euro no son dos euros"</pre>
+<a name="N103B9"></a><a name="Trabajo+con+cadenas"></a>
+<h3 class="underlined_5">Trabajo con cadenas</h3>
+<p>
+		Groovy nos facilita el trabajo con las cadenas de texto en mayor medida que lo hace Java, a&ntilde;adiendo su propia librer&iacute;a GString, con lo que adem&aacute;s de los m&eacute;todos ofrecidos por la clase <span class="codefrag">java.lang.String</span>, Groovy cuenta con m&aacute;s metodos ofrecidos por <span class="codefrag">groovy.lang.GString</span>. Una caracter&iacute;stica de como trabaja Groovy con las cadenas de texto es que nos permite introducir variables en las cadenas sin tener que utilizar caracteres de escape como por ejemplo <span class="codefrag">"hola $minombre"</span>, donde en la misma cadena se introduce el valor de una variable. Esto es t&iacute;pico de algunos lenguajes de programaci&oacute;n como PHP y facilita la lectura de nuestro c&oacute;digo.
+	</p>
+<p>
+		La siguiente tabla muestra las diferentes formas que hay en Groovy para crear una cadena de texto:
+	</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+		
+<tr>
+			
+<th colspan="1" rowspan="1">Caracteres utilizados</th>
+			<th colspan="1" rowspan="1">Ejemplo</th>
+			<th colspan="1" rowspan="1">Soporte GString</th>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">Comillas simples</td>
+			<td colspan="1" rowspan="1">'hola Juan'</td>
+			<td colspan="1" rowspan="1">No</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">Comillas dobles</td>
+			<td colspan="1" rowspan="1">"hola $nombre"</td>
+			<td colspan="1" rowspan="1">S&iacute;</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">3 comillas simples</td>
+			<td colspan="1" rowspan="1">'''-------------<br>Total:0.02<br>-------------'''</td>
+			<td colspan="1" rowspan="1">No</td>
+		
+</tr>		
+		
+<tr>
+			
+<td colspan="1" rowspan="1">3 comillas dobles</td>
+			<td colspan="1" rowspan="1">"""-------------<br>Total:$total<br>-------------"""</td>
+			<td colspan="1" rowspan="1">S&iacute;</td>
+		
+</tr>		
+		
+<tr>
+			
+<td colspan="1" rowspan="1">S&iacute;mbolo /</td>
+			<td colspan="1" rowspan="1">/x(\d*)y/</td>
+			<td colspan="1" rowspan="1">S&iacute;</td>
+		
+</tr>
+	
+</table>
+<p>
+		La diferencia entre las comillas simples y las dobles es b&aacute;sicamente que las dobles son tratadas como cadenas de tipo GString y la posibilidad de incluir variables precedidas del s&iacute;mbolo $ para mostrar su valor. Las cadenas introducidas con el s&iacute;mbolo / son utilizadas con expresiones regulares, como veremos m&aacute;s adelante.
+	</p>
+<a name="N10449"></a><a name="La+librer%C3%ADa+GString"></a>
+<h3 class="underlined_5">La librer&iacute;a GString</h3>
+<p>
+		La librer&iacute;a GString (<span class="codefrag">groovy.lang.GString</span>) a&ntilde;ade determinados m&eacute;todos para facilitarnos el trabajo con cadenas de texto, las cuales normalmente se crean utilizando comillas dobles. B&aacute;sicamente, una cadena de tipo GString nos va a permitir introducir variables precedidas del s&iacute;mbolo $. Tambi&eacute;n es posible introducir expresiones entre llaves (<span class="codefrag">${expresion}</span>), tal y como si estuvi&eacute;ramos escribiendo un <em>closure</em>. Veamos algunos ejemplos:
+	</p>
+<pre class="code">nombre = 'Fran'
+apellidos = 'Garc&iacute;a'
+salida = "Apellidos, nombre: $apellidos, $nombre"
+
+fecha = new Date(0)
+salida = "A&ntilde;o $fecha.year, Mes $fecha.month, D&iacute;a $fecha.date"
+
+salida = "La fecha es ${fecha.toGMTString()}"
+
+sentenciasql = """
+SELECT nombre, apellidos
+FROM usuarios
+WHERE anyo_nacimiento=$fecha.year
+"""</pre>
+<p>
+	Ahora que ya podemos declarar variables de texto, vamos a ver algunos m&eacute;todos que podemos utilizar en Groovy:
+	</p>
+<pre class="code">saludo = 'Hola Juan'
+
+assert saludo.startsWith('Hola')
+
+assert saludo.getAt(3) == 'a'
+assert saludo[3] == 'a'
+
+assert saludo.indexOf('Juan') == 5
+assert saludo.contains('Juan')
+
+assert saludo[5..8] == 'Juan'
+
+assert 'Buenos d&iacute;as' + saludo - 'Hola' == 'Buenos d&iacute;as Juan'
+
+assert saludo.count('a') == 2
+
+assert 'b'.padLeft(3) == '  b'
+assert 'b'.padRight(3,'_') == 'b__'
+assert 'b'.center(3) == ' b '
+assert 'b' * 3 == 'bbb'</pre>
+<a name="N10467"></a><a name="Expresiones+regulares"></a>
+<h3 class="underlined_5">Expresiones regulares</h3>
+<p>
+		Las expresiones regulares nos permiten especificar un patr&oacute;n y buscar si &eacute;ste aparece en un fragmento de texto determinado. Groovy deje que sea Java la encargada del tratamiento de las expresiones regulares, pero adem&aacute;s, a&ntilde;ade tres m&eacute;todos para facilitarnos este trabajo:
+	</p>
+<ul>
+		
+<li>El operador =~: <em>find</em>
+</li>
+		
+<li>El operador ==~: <em>match</em>
+</li>
+		
+<li>El operador ~String: <em>pattern</em>
+</li> 
+	
+</ul>
+<p>
+		Con los patrones de las expresiones regulares, realmente estamos indicando que estamos buscando exactamente. Veamos algunos ejemplos:
+	</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+		
+<tr>
+			
+<th colspan="1" rowspan="1">Patr&oacute;n</th>
+			<th colspan="1" rowspan="1">Significado</th>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">algo de texto</td>
+			<td colspan="1" rowspan="1">simplemente encontrar&aacute; la frase "algo de texto"</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">algo de\s+texto</td>
+			<td colspan="1" rowspan="1">encontrar&aacute; frases que empiecen con "algo de", vayan seguidos por uno o m&aacute;s caracteres y terminen con la palabra texto</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">\d\d/\d\d/\d\d\d\d</td>
+			<td colspan="1" rowspan="1">detectar&aacute; fechas como por ejemplo 28/06/2008</td>
+		
+</tr>			
+	
+</table>
+<p>
+		El punto clave de los patrones de las expresiones regulares, son los s&iacute;mbolos, que los podemos sustituir por determinados fragmentos de texto. La siguiente tabla presenta estos s&iacute;mbolos:
+	</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+		
+<tr>
+			
+<th colspan="1" rowspan="1">S&iacute;mbolo</th>
+			<th colspan="1" rowspan="1">Significado</th>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">.</td>
+			<td colspan="1" rowspan="1">Cualquier car&aacute;cter</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">^</td>
+			<td colspan="1" rowspan="1">El inicio de una l&iacute;nea</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">$</td>
+			<td colspan="1" rowspan="1">El final de una l&iacute;nea</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">\d</td>
+			<td colspan="1" rowspan="1">Un d&iacute;gito</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">\D</td>
+			<td colspan="1" rowspan="1">Cualquier cosa excepto un d&iacute;gito</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">\s</td>
+			<td colspan="1" rowspan="1">Un espacio en blanco</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">\S</td>
+			<td colspan="1" rowspan="1">Cualquier cosa excepto un espacio en blanco</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">\w</td>
+			<td colspan="1" rowspan="1">Un car&aacute;cter de texto</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">\W</td>
+			<td colspan="1" rowspan="1">Cualquier car&aacute;cter excepto los de texto</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">\b</td>
+			<td colspan="1" rowspan="1">L&iacute;mite de palabras</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">()</td>
+			<td colspan="1" rowspan="1">Agrupaci&oacute;n</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">(x|y)</td>
+			<td colspan="1" rowspan="1">O x o y</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">x*</td>
+			<td colspan="1" rowspan="1">Cero o m&aacute;s ocurrencias de x</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">x+</td>
+			<td colspan="1" rowspan="1">Una o m&aacute;s ocurrencias de x</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">x?</td>
+			<td colspan="1" rowspan="1">Cero o una ocurrencia de x</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">x{m,n}</td>
+			<td colspan="1" rowspan="1">Entre m y n ocurrencias de x</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">x{m}</td>
+			<td colspan="1" rowspan="1">Exactamente m ocurrencias de x</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">[a-d]</td>
+			<td colspan="1" rowspan="1">Incluye los caracteres a, b, c y d</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">[^a]</td>
+			<td colspan="1" rowspan="1">Cualquier car&aacute;cter excepto la letra a</td>
+		
+</tr>
+	
+</table>
+<p>
+		Las expresiones regulares nos ayudar&aacute;n en Groovy a:
+	</p>
+<ul>
+		
+<li>Indicarnos si un determinado patr&oacute;n encaja completamente con un texto</li>
+		
+<li>Si existe alguna ocurrencia de un patr&oacute;n en una cadena</li>
+		
+<li>Contar el n&uacute;mero de ocurrencias</li>
+		
+<li>Hacer algo con una determinada ocurrencia</li>
+		
+<li>Reemplazar todas las ocurrencias con un determinado texto</li>
+		
+<li>Separar una cadena en m&uacute;ltiples cadenas a partir de las ocurrencias que aparezcan en la misma</li>
+	
+</ul>
+<p>
+		El siguiente fragmento de c&oacute;digo muestra el funcionamiento b&aacute;sico de las expresiones regulares.
+	</p>
+<pre class="code">refran = "tres tristes tigres tigraban en un tigral"
+
+//Compruebo que hay al menos un fragmento de c&oacute;digo que empieza por t, 
+//le siga cualquier caracter y posteriormente haya una g
+assert refran =~ /t.g/
+
+//Compruebo que el refr&aacute;n est&eacute; compuesto s&oacute;lo 
+//por palabras seguidas de un espacio
+assert refran ==~ /(\w+ \w+)*/
+
+//Compruebo que el valor por una operaci&oacute;n de tipo match es un booleano
+assert (refran ==~ /(\w+ \w+)*/) instanceof java.lang.Boolean
+
+//A diferencia que una operaci&oacute;n de tipo find, 
+//las operaciones match se eval&uacute;an por completo contra una cadena
+assert (refran ==~ /t.g/) == false
+
+//Sustituyo las palabras por el caracter x
+assert (refran.replaceAll(/\w+/,'x')) == 'x x x x x x x'
+
+//Devuelve un array con todas las palabras del refr&aacute;n
+palabras = refran.split(/ /)
+assert palabras.size() == 7
+assert palabras[2] == 'tigres'
+assert palabras.getAt(3) == 'tigraban'</pre>
+<p>
+		Es importante resaltar la diferencia entre el operador <em>find</em> y el operador <em>match</em>. El operador <em>match</em> es m&aacute;s restrictivo puesto que intenta hacer coincidir un patr&oacute;n con la cadena entera, mientras que el operador <em>find</em>, s&oacute;lo pretende encontrar una ocurrencia del patr&oacute;n en la cadena.
+	</p>
+<p>
+		Ya sabemos como localizar fragmentos de texto en cadenas, pero &iquest;y si queremos hacer algo con estas cadenas encontradas? Groovy no vuelve a facilitar esta tarea y pone a nuestra disposici&oacute;n un par de formas para recorrer las ocurrencias encontradas: <em>each</em> y <em>eachMatch</em>. Por un lado, el m&eacute;todo <em>eachMatch</em> se le pasa una cadena con un patr&oacute;n de expresi&oacute;n regular como par&aacute;metro: <span class="codefrag">String.eachMatch(patron)</span>, mientras que al m&eacute;todo <em>each</em> se le pasa directamente el resultado de una operaci&oacute;n de tipo <span class="codefrag">find()</span> o <span class="codefrag">match()</span>: <span class="codefrag">Matcher.each()</span>. Ve&aacute;mos ambos m&eacute;todos en funcionamiento. 
+	</p>
+<pre class="code">refran = "tres tristes tigres tigraban en un tigral"
+
+//Busco todas las palabras que acaben en 'es'
+rima = /\b\w*es\b/
+resultado = ''
+refran.eachMatch(rima) { match -&gt; 
+    resultado += match + ' '
+}
+
+assert resultado == 'tres tristes tigres '
+
+//Hago lo mismo con el m&eacute;todo each
+resultado = ''
+(refran =~ rima).each { match -&gt;
+    resultado += match + ' '
+}
+
+assert resultado == 'tres tristes tigres '
+
+//Sustituyo todas las rimas por guiones bajos
+assert (refran.replaceAll(rima){ it-'es'+'__'} == 'tr__ trist__ tigr__ tigraban en un tigral')</pre>
+<a name="N10614"></a><a name="N%C3%BAmeros"></a>
+<h3 class="underlined_5">N&uacute;meros</h3>
+<p>
+		El GDK de Groovy introduce algunos m&eacute;todos interesantes en cuanto al tratamiento de n&uacute;mero. Estos m&eacute;todos funcionan como los closures y son:
+	</p>
+<ul>
+		
+<li>
+<em>times</em>, se utiliza para realizar repeticiones</li>
+		
+<li>
+<em>upto</em>, utilizado para realizar una secuencia de acciones de forma creciente</li>
+		
+<li>
+<em>downto</em>, igual que el anterior pero de forma decreciente</li>
+		
+<li>
+<em>step</em>, es el m&eacute;todo general para realizar una secuencia paso a paso</li>
+	
+</ul>
+<p>
+		Pero como siempre, veamos varios ejemplos.
+	</p>
+<pre class="code">def cadena = ''
+10.times {
+    cadena += 'g'
+}
+assert cadena == 'gggggggggg'
+
+cadena = ''
+1.upto(5) { numero -&gt;
+    cadena += numero
+}
+
+assert cadena == '12345'
+
+cadena = ''
+2.downto(-2) { numero -&gt;
+    cadena += numero + ' '
+}
+
+assert cadena == '2 1 0 -1 -2 '
+
+cadena = ''
+0.step(0.5, 0.1) { numero -&gt; 
+    cadena += numero + ' '
+}
+
+assert cadena == '0 0.1 0.2 0.3 0.4 '</pre>
+</div>
+
+
+<a name="N1063D"></a><a name="Colecciones"></a>
+<h2 class="underlined_10">Colecciones</h2>
+<div class="section">
+<p>
+	Ahora que ya hemos introducido los tipos de datos simples, llega el turno de hablar de las colecciones presentes en Groovy. En este apartado vamos a ver tres tipos de datos. Por un lado, las <em>listas</em> y los <em>mapas</em>, que tienen pr&aacute;cticamente las mismas connotaciones que en Java, con alguna nueva caracter&iacute;stica que a&ntilde;ade Groovy, y por otro, los <em>rangos</em>, un concepto que no existe en Java. 
+</p>
+<a name="N1064F"></a><a name="Rangos"></a>
+<h3 class="underlined_5">Rangos</h3>
+<p>
+		Cuantas veces no nos habremos encontrado con un bloque de c&oacute;digo similar al siguiente
+	</p>
+<pre class="code">
+for (int i=0;i&lt;10;i++){
+	//hacer algo con la variable i
+}
+</pre>
+<p>
+		El anterior fragmento de c&oacute;digo se ejecutar&aacute; empezando en un l&iacute;mite inferior (0) y terminar&aacute; de ejecutarse cuando la variable <em>i</em> llegue al valor 10. Uno de los objetivos de Groovy consiste en facilitar al programador la lectura y la comprensi&oacute;n del c&oacute;digo, as&iacute; que los creadores de Groovy pensaron que ser&iacute;a &uacute;til introducir el concepto de rango, el cual tendr&iacute;a por definici&oacute;n un l&iacute;mite inferior y uno superior.
+	</p>
+<p>
+		Para especificar un rango, simplemente se escribe el l&iacute;mite inferior seguido de dos puntos y el l&iacute;mite superior, <span class="codefrag">limiteInferior..limiteSuperior</span>. Este rango indicar&iacute;a que ambos valores establecidos est&aacute;n dentro del rango, as&iacute; que si queremos indicarle que el l&iacute;mite superior no est&aacute; dentro del rango, debemos utilizar el operador ..&lt;, <span class="codefrag">limiteInferior..&lt;limiteSuperior</span>. Tambi&eacute;n existen los <em>rangos inversos</em>, en los que el l&iacute;mite inferior es mayor que el l&iacute;mite superior. Veamos algunos ejemplos: 
+	</p>
+<pre class="code">//Rangos inclusivos
+assert (0..10).contains(5)
+assert (0..10).contains(10)
+
+//Rangos medio-exclusivos
+assert (0..&lt;10).contains(9)
+assert (0..&lt;10).contains(10) == false
+
+//Comprobaci&oacute;n de tipos
+def a = 0..10
+assert a instanceof Range
+
+//Definici&oacute;n expl&iacute;cita
+a = new IntRange(0,10)
+assert a.contains(4)
+
+//Rangos para fechas
+def hoy = new Date()
+def ayer = hoy - 1
+assert (ayer..hoy).size() == 2
+
+//Rangos para caracteres
+assert ('a'..'f').contains('e')
+
+//El bucle for con rangos
+def salida = ''
+for (elemento in 1..5){
+    salida += elemento
+}
+assert salida == '12345'
+
+//El bucle for con rangos inversos
+salida = ''
+for (elemento in 5..1){
+    salida += elemento
+}
+assert salida == '54321'
+
+//Simulaci&oacute;n del bucle for con rangos inversos 
+//y el m&eacute;todo each con un closure
+salida = ''
+(5..&lt;1).each { elemento -&gt;
+    salida += elemento
+}
+assert salida == '5432'</pre>
+<p>
+		Los rangos son objetos y como tales, pueden ser pasados como par&aacute;metros a funciones o bien ejecutar sus propios m&eacute;todos. Un uso interesante de los rangos es el filtrado de datos. Tambi&eacute;n es interesante verlos como clasificador de grupos y su utilidad se puede comprobar en los bloques de c&oacute;digo <em>switch</em>.
+	</p>
+<pre class="code">//Rangos como clasificador de grupos
+edad = 31
+switch (edad){
+    case 16..20: interesAplicado = 0.25; break
+    case 21..50: interesAplicado = 0.30; break
+    case 51..65: interesAplicado = 0.35; break
+}
+assert interesAplicado == 0.30
+
+//Rangos para el filtrado de datos
+edades = [16,29,34,42,55]
+joven = 16..30
+assert edades.grep(joven) == [16,29]</pre>
+<p>
+		Como se ha podido comprobar, podemos especificar rangos para fechas e incluso para cadenas. En realidad, cualquier tipo de dato puede ser utilizado en un rango, siempre que:
+	</p>
+<ul>
+		
+<li>El tipo implemente los m&eacute;todos <span class="codefrag">next()</span> y <span class="codefrag">previous()</span>, que sobrecargan los operadores <span class="codefrag">++</span> y <span class="codefrag">--</span>
+</li>
+		
+<li>El tipo implemente <span class="codefrag">java.lang.Comparable</span>, implementando el m&eacute;todo <span class="codefrag">compareTo()</span> que sobrecargar el operador <span class="codefrag">&lt;=&gt;</span>
+</li>
+	
+</ul>
+<p>
+		El siguiente fragmento de c&oacute;digo se refiere a la clase <em>DiasDeLaSemana</em> y vamos a conseguir que se pueda utilizar en rangos, con los requisitos comentados.
+	</p>
+<pre class="code">class DiasDeLaSemana implements Comparable {
+       static final DIAS = ['Lun','Mar','Mie','Jue','Vie','Sab','Dom']
+       private int index = 0
+
+       DiasDeLaSemana(String dia){
+           index = DIAS.indexOf(dia)
+       }
+
+       DiasDeLaSemana next(){
+           return new DiasDeLaSemana(DIAS[(index+1) % DIAS.size()])
+       }
+
+       DiasDeLaSemana previous(){
+           return new DiasDeLaSemana(DIAS[(index-1)])
+       }
+
+       int compareTo(Object otro){
+           return this.index &lt;=&gt; otro.index
+       }
+
+       String toString(){
+           return DIAS[index]
+       }
+}
+
+def lunes = new DiasDeLaSemana('Lun')
+def viernes = new DiasDeLaSemana('Vie')
+
+def diasLaborables = ''
+for (dia in lunes..viernes){
+    diasLaborables += dia.toString() + ' '
+}
+
+assert diasLaborables == 'Lun Mar Mie Jue Vie '</pre>
+<p>
+		Comprobemos los requisitos para poder utilizar una clase en un rango:
+	</p>
+<ul>
+		
+<li>La clase DiasDeLaSemana se han sobrecargado los m&eacute;todos <span class="codefrag">next()</span> y <em>previous</em>
+</li>
+		
+<li>La clase DiasDeLaSemana implementa la clase <span class="codefrag">java.lang.Comparable</span>
+</li>
+		
+<li>La clase DiasDeLaSemana sobrecarga el m&eacute;todo <span class="codefrag">compareTo()</span>
+</li>
+	
+</ul>
+<p>
+		Con esto, como se puede comprobar en la parte final del c&oacute;digo, nuestra nueva clase puede ser incluida en la definici&oacute;n de rangos.
+	</p>
+<a name="N106C1"></a><a name="Listas"></a>
+<h3 class="underlined_5">Listas</h3>
+<p>
+		En Java, agregar un nuevo elemento a un array no tiene una soluci&oacute;n trivial. Una soluci&oacute;n es convertir el array a una lista del tipo <span class="codefrag">java.util.List</span>, a&ntilde;adir el nuevo elemento y volver a convertir la lista en un array. Otra soluci&oacute;n pasa por construir un nuevo array del tama&ntilde;o del array original m&aacute;s uno, copiar los viejos valores y el nuevo elemento. Eso es la parte negativa de los arrays en Java. La parte positiva es que nos permite trabajar con &iacute;ndices en los arrays para recuperar su informaci&oacute;n, as&iacute; como modificar su valor, como por ejemplo, <span class="codefrag">miarray[indice] = nuevoelemento</span>. Groovy se aprovecha de la parte positiva de Java en este sentido, y a&ntilde;ade nuevas caracter&iacute;sticas para mejorar su parte negativa.
+	</p>
+<p>
+		La definici&oacute;n de una lista en Groovy se consigue utilizando los corchetes [] y especificando los valores de la lista. Si no especificamos ning&uacute;n valor entre los corchetes, declararemos una lista vac&iacute;a. Por defecto, las listas en Groovy son del tipo <span class="codefrag">java.util.ArrayList</span>. Podemos rellenar f&aacute;cilmente las listas a partir de otras con el m&eacute;todo <span class="codefrag">addAll()</span>. Tambi&eacute;n se pueden definir listas a partir de otras con el constructor de la clase <em>LinkedList</em>.
+	</p>
+<pre class="code">miLista = [1,2,3]
+
+assert miLista.size() == 3
+assert miLista[2] == 3
+assert miLista instanceof ArrayList
+
+listaVacia = []
+assert listaVacia.size() == 0
+
+listaLarga = (0..1000).toList()
+assert listaLarga[324] == 324
+
+listaExplicita = new ArrayList()
+listaExplicita.addAll(miLista)
+assert listaExplicita.size == 3
+listaExplicita[2] = 4
+assert listaExplicita[2] == 4
+
+listaExplicita = new LinkedList(miLista)
+assert listaExplicita.size == 3
+listaExplicita[2] = 4
+assert listaExplicita[2] == 4</pre>
+<p>
+		En el fragmento de c&oacute;digo anterior, hemos visto como se puede especificar un valor a un elemento de la lista. Pero, &iquest;qu&eacute; pasa si queremos especificar un mismo valor a toda la lista o un trozo de la misma? Los creadores de Groovy ya han pensado en ese problema y podemos utilizar rangos y colecciones en las listas.
+	</p>
+<pre class="code">miLista = ['a','b','c','d','e','f']
+
+assert miLista[0..2] == ['a','b','c']//Acceso con Rangos 
+assert miLista[0,2,4] == ['a','c','e']//Acceso con colecci&oacute;n de &iacute;ndices
+
+//Modificar elementos
+miLista[0..2] = ['x','y','z']
+assert miLista == ['x','y','z','d','e','f']
+
+//Eliminar elementos de la lista
+miLista[3..5] = []
+assert miLista == ['x','y','z']
+
+//A&ntilde;adir elementos a la lista
+miLista[1..1] = ['y','1','2']
+assert miLista == ['x','y','1','2','z']
+
+miLista = []
+
+//A&ntilde;ado objetos a la lista con el operador +
+miLista += 'a'
+assert miLista == ['a']
+
+//A&ntilde;ado colecciones a la lista con el operador +
+miLista += ['b','c']
+assert miLista == ['a','b','c']
+
+miLista = []
+miLista &lt;&lt; 'a' &lt;&lt; 'b'
+assert miLista == ['a','b']
+
+assert miLista - ['b'] == ['a']
+
+assert miLista * 2 == ['a','b','a','b']</pre>
+<p>
+		En ocasiones las listas son utilizadas juntos a estructuras de control para controlar el flujo de nuestro programa.
+	</p>
+<pre class="code">miLista = ['a','b','c']
+
+//Listas como clasificador de grupos
+letra = 'a'
+switch (letra){
+    case miLista: assert true; break;
+    default: assert false
+}
+
+//Listas como filtrado de datos
+assert ['x','y','a'].grep(miLista) == ['a']
+
+//Bucle for con lista
+salida = ''
+for (i in miLista){
+    salida += i
+}
+assert salida == 'abc'</pre>
+<p>
+		Las listas tienen una larga lista de m&eacute;todos disponibles en el API de Java en la interfaz <span class="codefrag">java.util.List</span> para por ejemplo ordenar, unir e intersectar listas. En la siguiente sesi&oacute;n veremos algunos ejemplos de closures con listas como par&aacute;metros.
+	</p>
+<a name="N106F5"></a><a name="Mapas"></a>
+<h3 class="underlined_5">Mapas</h3>
+<p>
+		Un mapa es pr&aacute;cticamente igual que una lista, con la salvedad de que los elementos est&aacute;n referenciados a partir de una clave &uacute;nica (sin caracteres extra&ntilde;os ni palabras reservadas por Groovy), <span class="codefrag">miMapa['clave'] = valor</span>. Podemos especificar un mapa al igual que lo hac&iacute;amos con las listas utilizando los corchetes, pero ahora debemos a&ntilde;adir la clave a cada valor introducido, como por ejemplo <span class="codefrag">miMapa = [a:1, b:2, c:3]</span>. Los mapas creados impl&iacute;citamente son del tipo <span class="codefrag">java.util.HashMap</span>. Ve&aacute;moslo con ejemplos:
+	</p>
+<pre class="code">def miMapa = [a:1, b:2, c:3]
+
+assert miMapa instanceof HashMap
+assert miMapa.size() == 3
+assert miMapa['a'] == 1
+
+//Definimos un mapa vacio
+def mapaVacio = [:]
+assert mapaVacio.size() == 0
+
+//Definimos un mapa de la clase TreeMap
+def mapaExplicito = new TreeMap()
+mapaExplicito.putAll(miMapa)
+assert mapaExplicito['c'] == 3</pre>
+<p>
+		Las operaciones m&aacute;s comunes con los mapas se refieren a la recuperaci&oacute;n y almacenamiento de datos a partir de la clave. Veamos algunos m&eacute;todos de acceso y modificaci&oacute;n de los elementos de un mapa:
+	</p>
+<pre class="code">def miMapa = [a:1, b:2, c:3]
+
+//Varias formas de obtener los valores de un mapa
+assert miMapa['a'] == 1
+assert miMapa.a == 1
+assert miMapa.get('a') == 1
+//Si no existe la clave, devuelve un valor por defecto, en este caso 0
+assert miMapa.get('a',0) == 1 
+
+//Asignaci&oacute;n de valores
+miMapa['d'] = 4
+assert miMapa.d == 4
+miMapa.e = 5
+assert miMapa.e == 5</pre>
+<p>
+		Los mapas en Groovy utilizan los mismos m&eacute;todos que los mapas en Java y &eacute;stos est&aacute;n en el API de Java referente a <span class="codefrag">java.util.Map</span>, pero adem&aacute;s, Groovy a&ntilde;ade un par de m&eacute;todos llamados <span class="codefrag">any()</span> y <span class="codefrag">every()</span>, los cuales, utilizados como closures, permite evaluar si todos (every) o al menos uno (any) de los elementos del mapa cumplen una determinada condici&oacute;n. Adem&aacute;s, en el siguiente fragmento de c&oacute;digo, vamos a ver como iterar sobre los mapas.
+	</p>
+<pre class="code">def miMapa = [a:1, b:2, c:3]
+
+def resultado = ''
+miMapa.each { item -&gt;
+    resultado += item.key + ':'
+    resultado += item.value + ', '
+}
+assert resultado == 'a:1, b:2, c:3, ' 
+
+resultado = ''
+miMapa.each { key, value -&gt; 
+    resultado += key + ':'
+    resultado += value + ', '
+}
+assert resultado == 'a:1, b:2, c:3, '
+
+resultado = ''
+for (key in miMapa.keySet()){
+    resultado += key + ':'
+    resultado += miMapa[key] + ', '
+}
+assert resultado == 'a:1, b:2, c:3, '
+
+resultado = ''
+for (value in miMapa.values()){
+    resultado += value + ' '
+}
+assert resultado == '1 2 3 '</pre>
+<p>
+		Y para terminar con los mapas, vamos a ver otros m&eacute;todos a&ntilde;adidos por Groovy para el manejo de los mapas, que nos permitir&aacute;n:
+	</p>
+<ul>
+		
+<li>Crear un submapa de un mapa dado a partir de algunas claves: <span class="codefrag">subMap()</span>
+</li>
+		
+<li>Encontrar todos los elementos de un mapa que cumplen una determinada condici&oacute;n: <span class="codefrag">findAll()</span>
+</li>
+		
+<li>Encontrar un elemento de un mapa que cumpla una determinada condici&oacute;n: <span class="codefrag">find()</span>
+</li>
+		
+<li>Realizar operaciones sobre los elementos de un mapa: <span class="codefrag">collect()</span>
+</li>
+	
+</ul>
+<pre class="code">def miMapa = [a:1, b:2, c:3]
+def miSubmapa = miMapa.subMap(['a','b'])
+assert miSubmapa.size() == 2
+
+def miOtromapa = miMapa.findAll { entry -&gt; entry.value &gt; 1 }
+assert miOtromapa.size() == 2
+assert miOtromapa.c == 3
+
+def encontrado = miMapa.find { entry -&gt; entry.value &lt; 3}
+assert encontrado.key == 'a'
+assert encontrado.value == 1
+
+def miMapaDoble = miMapa.collect { entry -&gt; entry.value *= 2}
+//Todos los elementos son pares
+assert miMapaDoble.every { item -&gt; item % 2 == 0 }</pre>
+</div>
+
+
+<a name="N10742"></a><a name="Estructuras+de+control"></a>
+<h2 class="underlined_10">Estructuras de control</h2>
+<div class="section">
+<p>
+	Aunque a medida que hemos avanzado, hemos estado viendo diferentes estructuras de control sin necesidad de comentarlas, ha llegado el momento de ver un resumen de las mismas.
+</p>
+<a name="N1074B"></a><a name="La+sentencia+if"></a>
+<h3 class="underlined_5">La sentencia if</h3>
+<p>
+		La sentencia <span class="codefrag">if</span> es id&eacute;ntica a la misma sentencia en Java, as&iacute; que no vamos a entrar en m&aacute;s detalle. Simplemente recordar que en los bloques con una s&oacute;lo l&iacute;nea, no es necesario utilizar las llaves {}.
+	</p>
+<pre class="code">if (true)
+	assert true
+else
+	assert false
+
+if (0)
+	assert false
+else if ([])
+	assert false
+else
+	assert true </pre>
+<p>
+		Groovy nos permite utilizar diferentes tipos de datos a evaluar en la condici&oacute;n, tal y como se muestra en la siguiente tabla:
+	</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+		
+<tr>
+			
+<th colspan="1" rowspan="1">Tipo</th>
+			<th colspan="1" rowspan="1">Criterio de evaluaci&oacute;n</th>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">Boolean</td>
+			<td colspan="1" rowspan="1">True o false</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">Matcher</td>
+			<td colspan="1" rowspan="1">La instancia de Matcher tiene un match</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">Collection</td>
+			<td colspan="1" rowspan="1">La coleci&oacute;n no est&aacute; vac&iacute;a</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">Map</td>
+			<td colspan="1" rowspan="1">El mapa no est&aacute; vac&iacute;o</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">String.GString</td>
+			<td colspan="1" rowspan="1">La cadena no est&aacute; vac&iacute;a</td>
+		
+</tr>
+		
+<tr>
+			
+<td colspan="1" rowspan="1">Number, Character</td>
+			<td colspan="1" rowspan="1">El valor es distinto de cero</td>
+		
+</tr>			
+		
+<tr>
+			
+<td colspan="1" rowspan="1">Ninguno de los anteriores</td>
+			<td colspan="1" rowspan="1">La referencia al objeto no es nulo</td>
+		
+</tr>
+	
+</table>
+<a name="N107CA"></a><a name="El+operador+ternario+%3F%3A"></a>
+<h3 class="underlined_5">El operador ternario ?:</h3>
+<p>
+		Groovy soporta el uso del operador ternario <span class="codefrag">?:</span> para realizar peque&ntilde;as comprobaciones en una &uacute;nica l&iacute;nea. Este operador, ejecuta la segunda expresi&oacute;n, en caso de que la primera expresi&oacute;n sea cierta y en caso contrario, se ejecutar&aacute; la tercera expresi&oacute;n.
+	</p>
+<pre class="code">def resultado = (1==1) ? 'OK' : 'Mal'
+assert resultado == 'OK'
+
+resultado = (1==2) ? 'OK' : 'Mal'
+assert resultado == 'Mal'</pre>
+<a name="N107DB"></a><a name="La+sentencia+switch"></a>
+<h3 class="underlined_5">La sentencia switch</h3>
+<p>
+		En Java, la sentencia <span class="codefrag">switch</span> es demasiado restrictiva y s&oacute;lo se permite su uso con los tipos de datos <span class="codefrag">int</span>, <span class="codefrag">byte</span>, <span class="codefrag">char</span> y <span class="codefrag">short</span>. Sin embargo, Groovy permite un amplio abanico de tipos de datos a utilizar con la sentencia switch. A lo largo de esta sesi&oacute;n hemos visto que estos datos pueden ser listas y rangos, pero ahora veremos que tambi&eacute;n podremos utilizar comprobaciones de tipos de datos con closures o incluso expresiones regulares.
+	</p>
+<pre class="code">switch (14){
+    case 0://10 no es 0
+            assert false; break 
+    case 0..13://10 no est&aacute; en el rango
+            assert false; break 
+    case [1,4,12]://10 no est&aacute; en la lista
+            assert false; break
+    case Float://10 no es de tipo Float
+            assert false; break 
+    case { it%3 == 0}://Comprobamos con un closure que no es m&uacute;ltiplo de 10
+            assert false; break 
+    case ~/../://10 tiene dos caracteres
+            assert true; break  
+    default:
+            assert false; break
+}</pre>
+<a name="N107F8"></a><a name="El+bucle+while"></a>
+<h3 class="underlined_5">El bucle while</h3>
+<p>
+		El bucle <span class="codefrag">while</span> en Groovy es similar al mismo bucle en Java, simplemente tiene algunas diferencias con la evaluaci&oacute;n de la expresi&oacute;n booleana, que coinciden con las vistas anteriormente en la sentencia <em>if</em>.
+	</p>
+<pre class="code">def lista = [1,2,3]
+while (lista){
+    lista.remove(0)
+}   
+assert lista == []</pre>
+<a name="N1080C"></a><a name="El+bucle+for"></a>
+<h3 class="underlined_5">El bucle for</h3>
+<p>
+		Posiblemente, el bucle <span class="codefrag">for</span> es el m&aacute;s com&uacute;nmente utilizado por todos los programadores en sus programas. En Groovy se puede utilizar la estructura del bucle for que conocemos todos <span class="codefrag">for (int i=0;i&lt;10;i++)    print i</span>, sin embargo, sus creadores pensaron que era posible mejorar esta forma de iterar para hacerlo m&aacute;s intuitivo y crearon la siguiente estructura <span class="codefrag">for (variable in iterable) {cuerpo}</span>, donde la <em>variable</em> tendr&aacute; el valor en cada iteraci&oacute;n, mientras que el tipo de datos de <em>iterable</em> suele ser <em>rangos</em>, <em>colecciones</em>, <em>mapas</em>, <em>arrays</em>, <em>iteradores</em> y <em>enumeradores</em>.
+	</p>
+<pre class="code">def resultado = ''
+for (String i in 'a'..'d')    resultado += i
+assert resultado == 'abcd'
+
+resultado = ''
+for (i in ['a','b','c','d'])    resultado += i
+assert resultado == 'abcd'</pre>
+<a name="N1083B"></a><a name="La+sentencia+return"></a>
+<h3 class="underlined_5">La sentencia return</h3>
+<p>
+		La sentencia <em>return</em> en Groovy tiene pr&aacute;cticamente las mismas connotaciones que en Java, con la diferencia de que su utilizaci&oacute;n en los m&eacute;todos es opcional y en caso de que no se utilice, se devolver&aacute; el resultado de la &uacute;ltima expresi&oacute;n ejecutada en el m&eacute;todo.
+	</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2008-2009 Depto. CCIA</div>
+</div>
+</body>
+</html>

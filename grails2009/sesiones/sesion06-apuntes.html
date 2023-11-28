@@ -1,0 +1,1049 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Construir la interfaz de usuario (I)</title>
+<link type="text/css" href="../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../skin/profile.css" rel="stylesheet">
+<script src="../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="../images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Groovy&amp;Grails: desarrollo r&aacute;pido de aplicaciones" src="../images/baner_j2ee_der.gif" title="Groovy&amp;Grails: desarrollo r&aacute;pido de aplicaciones"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="../index.html">Home</a>
+</li>
+<li class="current">
+<a class="base-selected" href="../sesiones/index.html">Sesiones</a>
+</li>
+<li>
+<a class="base-not-selected" href="../ejercicios/index.html">Ejercicios</a>
+</li>
+<li>
+<a class="base-not-selected" href="../bibliografia/index.html">Bibliograf&iacute;a</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../sesiones/sesion01-apuntes.html" title="Introducci&oacute;n a Groovy">Sesi&oacute;n 1</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion02-apuntes.html" title="El lenguaje Groovy">Sesi&oacute;n 2</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion03-apuntes.html" title="Aspectos avanzados en Groovy">Sesi&oacute;n 3</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion04-apuntes.html" title="Librer&iacute;as propias en Groovy">Sesi&oacute;n 4</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion05-apuntes.html" title="Introducci&oacute;n a Grails">Sesi&oacute;n 5</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesi&oacute;n 6</div>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion07-apuntes.html" title="Controladores">Sesi&oacute;n 7</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion08-apuntes.html" title="Construir la interfaz de usuario (II)">Sesi&oacute;n 8</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion09-apuntes.html" title="Dominios y servicios (I)">Sesi&oacute;n 9</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion10-apuntes.html" title="Dominios y servicios (II)">Sesi&oacute;n 10</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion11-apuntes.html" title="Seguridad">Sesi&oacute;n 11</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion12-apuntes.html" title="Despliegue de aplicaciones">Sesi&oacute;n 12</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion13-apuntes.html" title="Web 2.0">Sesi&oacute;n 13</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion14-apuntes.html" title="AJAX">Sesi&oacute;n 14</a>
+</div>
+<div class="menuitem">
+<a href="../sesiones/sesion15-apuntes.html" title="Dos horas para crear twitter">Sesi&oacute;n 15</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion06-apuntes.pdf"><img alt="PDF -icon" src="../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Construir la interfaz de usuario (I)</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Plantillas">Plantillas</a>
+<ul class="minitoc">
+<li>
+<a href="#Nuestra+primera+plantilla%3A+el+pie+de+p%C3%A1gina">Nuestra primera plantilla: el pie de p&aacute;gina</a>
+</li>
+<li>
+<a href="#Otra+plantilla+algo+m%C3%A1s+complicada%3A+el+encabezado">Otra plantilla algo m&aacute;s complicada: el encabezado</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Etiquetas">Etiquetas</a>
+<ul class="minitoc">
+<li>
+<a href="#Etiquetas+l%C3%B3gicas">Etiquetas l&oacute;gicas</a>
+</li>
+<li>
+<a href="#Etiquetas+de+iteraci%C3%B3n">Etiquetas de iteraci&oacute;n</a>
+</li>
+<li>
+<a href="#Etiquetas+de+asignaci%C3%B3n">Etiquetas de asignaci&oacute;n</a>
+</li>
+<li>
+<a href="#Etiquetas+de+enlaces">Etiquetas de enlaces</a>
+</li>
+<li>
+<a href="#Etiquetas+AJAX">Etiquetas AJAX</a>
+</li>
+<li>
+<a href="#Etiquetas+de+formularios">Etiquetas de formularios</a>
+</li>
+<li>
+<a href="#Etiquetas+de+interfaz+de+usuario">Etiquetas de interfaz de usuario</a>
+</li>
+<li>
+<a href="#Etiquetas+de+renderizado">Etiquetas de renderizado</a>
+</li>
+<li>
+<a href="#Etiquetas+de+validaci%C3%B3n">Etiquetas de validaci&oacute;n</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Primer+contacto+con+los+controladores">Primer contacto con los controladores</a>
+</li>
+</ul>
+</div>
+         
+
+<p>
+	En la sesi&oacute;n anterior vimos como, gracias al scaffolding de Grails, pudimos construir una aplicaci&oacute;n con unos requisitos m&iacute;nimos. En esta sesi&oacute;n, vamos a ver una primera parte que tratar&aacute; sobre como mejorar la aplicaci&oacute;n desde el punto de vista del usuario final. B&aacute;sicamente, veremos como funcionan las plantillas en Grails y que etiquetas podemos utilizar en dichas plantillas. Para practicar con las plantillas y las etiquetas, seguiremos desarrollando nuestra aplicaci&oacute;n y le a&ntilde;adiremos la posibilidad de que nuestros usuarios se identifiquen en el sistema.  
+</p>
+
+
+<a name="N1000F"></a><a name="Plantillas"></a>
+<h2 class="underlined_10">Plantillas</h2>
+<div class="section">
+<p>
+	La siguiente imagen es un boceto de la estructura que tendr&aacute; nuestra aplicaci&oacute;n web de cara al usuario final. En la parte superior tendremos una barra (<em>Encabezado</em>) donde nos aparecer&aacute; el t&iacute;pico enlace de muchas aplicaciones web para identificarnos en el sistema. Debajo de esta barra, tendremos un apartado que nos mostrar&aacute; el t&iacute;tulo de nuestra aplicaci&oacute;n, para seguidamente disponer de una zona donde poder trabajar con nuestra aplicaci&oacute;n y realizar todas las operaciones posibles. Por &uacute;ltimo, en la parte inferior podemos ver el t&iacute;pico pie de p&aacute;gina donde se indicar&aacute;n unos datos relativos a la aplicaci&oacute;n y los derechos de la misma.
+</p>
+<p>
+	
+<img alt="Dise&ntilde;o de la interfaz de la aplicaci&oacute;n" height="411" src="../images/sesion6/wireframe.jpg" width="643">
+</p>
+<p>
+	Si comparamos nuestra aplicaci&oacute;n con el boceto que acabamos de presentar, quedan algunos flecos que vamos a solventar. 
+</p>
+<p>
+	Como la mayor&iacute;a de los frameworks existentes en el mercado para el desarrollo de aplicaciones, Grails dispone de un sistema de plantillas el cual permite el renderizado de las p&aacute;ginas web de la aplicaci&oacute;n. En Grails las plantillas se ubican en el directorio <em>grails-app/views</em> y su nombre siempre empieza por un subrayado bajo. No olvides uno de los lemas en que se basa Grails, <em>Convenci&oacute;n sobre Configuraci&oacute;n</em> y este subrayado no es m&aacute;s que otra convenci&oacute;n utilizada para indicarle al sistema que ese archivo es una plantilla. Adem&aacute;s, las buenas pr&aacute;cticas de programaci&oacute;n indican que cualquier plantilla relacionada con una clase de dominio deben estar alojadas todas en un directorio, como por ejemplo <em>grails-app/views/usuario/_miplantilla.gsp</em>. De igual forma, aquellas plantillas que vayan a ser utilizadas de una forma m&aacute;s gen&eacute;rica en varias clases de dominio, deben alojarse en un lugar com&uacute;n, por ejemplo en <em>grails-app/views/common</em>. Las plantillas tendr&aacute;n extensi&oacute;n <strong>GSP</strong> que significa <em>Groovy Server Pages</em> y son el equivalente a los <em>JSP</em> de Java. 
+</p>
+<p>
+	Si echamos un vistazo a nuestra aplicaci&oacute;n, podemos detectar al menos un par de plantillas comunes a lo largo de toda la aplicaci&oacute;n que ser&aacute;n las correspondientes al <em>encabezado</em> y al <em>pie de p&aacute;gina</em>. Recuerda que estas plantillas ir&aacute;n alojadas en el directorio <em>common</em>. Para ir entrando en calor, vamos a empezar creando con NetBeans la plantilla que nos mostrar&aacute; el pie de p&aacute;gina de nuestra aplicaci&oacute;n.
+</p>
+<a name="N1004B"></a><a name="Nuestra+primera+plantilla%3A+el+pie+de+p%C3%A1gina"></a>
+<h3 class="underlined_5">Nuestra primera plantilla: el pie de p&aacute;gina</h3>
+<p>
+	En primer lugar hay que comentar, que las plantillas en Grails tendr&aacute;n extensi&oacute;n GSP, que son las siglas GSP correspondientes a <em>Groovy Server Pages</em> y son los archivos an&aacute;logos a los <em>JSP</em> de Java. Los archivos GSP permiten controlar la vista de las aplicaciones desarrolladas en Grails y tienen una sintaxis especial que veremos en profundidad m&aacute;s adelante.
+</p>
+<p>
+	La primera plantilla que vamos a crear en Grails se va a llamar <em>_footer.gsp</em> y puesto que es una plantilla que se utilizar&aacute; a lo largo de toda la aplicaci&oacute;n, la ubicaremos en el directorio <em>grails-app/views/common</em>. Esta plantilla contendr&aacute; informaci&oacute;n sobre nosotros, el curso que estamos haciendo y el nombre de la aplicaci&oacute;n. Podr&iacute;a quedar algo as&iacute;:
+</p>
+<pre class="code">&lt;span class="copyright"&gt;
+	&copy; 2009 Groovy&amp;Grails: desarrollo r&aacute;pido de aplicaciones&lt;br/&gt;
+	Aplicaci&oacute;n Biblioteca creada por Fran Garc&iacute;a
+&lt;/span&gt;</pre>
+<p>
+	Ya hemos creado nuestra primera plantilla y ahora simplemente nos queda a&ntilde;adir la informaci&oacute;n necesaria para que aparezca en la parte inferior de nuestra aplicaci&oacute;n. Para ello, debemos editar el archivo que define las diferentes capas de la aplicaci&oacute;n y que est&aacute; alojado en el directorio <em>grails-app/views/layout/main.gsp</em>. Si editamos este archivo, veremos algo parecido a esto:
+</p>
+<pre class="code">&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;&lt;g:layoutTitle default="Grails" /&gt;&lt;/title&gt;
+		&lt;link rel="stylesheet" href="${createLinkTo(dir:'css',file:'main.css')}" /&gt;
+		&lt;link rel="shortcut icon" href="${createLinkTo(dir:'images',file:'favicon.ico')}" type="image/x-icon" /&gt;
+		&lt;g:layoutHead /&gt;
+		&lt;g:javascript library="application" /&gt;				
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;div id="spinner" class="spinner" style="display:none;"&gt;
+			&lt;img src="${createLinkTo(dir:'images',file:'spinner.gif')}" alt="Spinner" /&gt;
+		&lt;/div&gt;	
+		&lt;div class="logo"&gt;&lt;img src="${createLinkTo(dir:'images',file:'grails_logo.jpg')}" alt="Grails" /&gt;&lt;/div&gt;
+		&lt;g:layoutBody /&gt;
+	&lt;/body&gt;	
+&lt;/html&gt;</pre>
+<p>
+	Echando un primer vistazo a este archivo, podremos distinguir las diferentes partes de las que hasta el momento consta nuestra aplicaci&oacute;n. Lo que vamos a hacer ahora es a&ntilde;adir la plantilla correspondiente al pie de p&aacute;gina (_piedepagina.gsp). Para conseguir esto, Grails dispone de la etiqueta <span class="codefrag">&lt;g:render&gt;</span>, a la que podemos pasarle un par&aacute;metro indic&aacute;ndole que plantilla queremos renderizar. Si despu&eacute;s de la l&iacute;nea <span class="codefrag">&lt;g:layoutBody&gt;</span> a&ntilde;adimos <span class="codefrag">&lt;g:render template="/common/footer"/&gt;</span>, podemos comprobar como ahora nuestra aplicaci&oacute;n ya muestra un pie de p&aacute;gina con nuestra informaci&oacute;n. El contenido de nuestro pie de p&aacute;gina lo hemos <em>envuelto</em> en un <em>div</em> para clarificar un poco el c&oacute;digo del archivo <em>main.gsp</em>. Habr&aacute;s podido comprobar como no es necesario poner ni el subrayado bajo ni la extensi&oacute;n gsp en el par&aacute;metro <em>template</em>, puesto que Grails ya lo hace por nosotros.
+</p>
+<pre class="code">&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;&lt;g:layoutTitle default="Grails" /&gt;&lt;/title&gt;
+		&lt;link rel="stylesheet" href="${createLinkTo(dir:'css',file:'main.css')}" /&gt;
+		&lt;link rel="shortcut icon" href="${createLinkTo(dir:'images',file:'favicon.ico')}" type="image/x-icon" /&gt;
+		&lt;g:layoutHead /&gt;
+		&lt;g:javascript library="application" /&gt;				
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;div id="spinner" class="spinner" style="display:none;"&gt;
+			&lt;img src="${createLinkTo(dir:'images',file:'spinner.gif')}" alt="Spinner" /&gt;
+		&lt;/div&gt;	
+		&lt;div class="logo"&gt;&lt;img src="${createLinkTo(dir:'images',file:'grails_logo.jpg')}" alt="Grails" /&gt;&lt;/div&gt;
+		&lt;g:layoutBody /&gt;
+		<strong>&lt;div id="piedepagina"&gt;
+			&lt;g:render template="/common/footer"/&gt;
+		&lt;/div&gt;</strong>
+	&lt;/body&gt;	
+&lt;/html&gt;</pre>
+<p>
+	Nuestra aplicaci&oacute;n ya dispone de un pie de p&aacute;gina con la informaci&oacute;n sobre los creadores de la aplicaci&oacute;n. Sin embargo, la apariencia de este pie de p&aacute;gina dista bastante de lo que deber&iacute;a ser, puesto que se encuentra demasiado cerca de la zona donde se mostrar&aacute; el contenido de nuestra aplicaci&oacute;n, as&iacute; que vamos a modificar algunas cosas para que al menos haya una barra separadora y que el texto se encuentre centrado. Esto lo conseguiremos editando la informaci&oacute;n relativa a los estilos de la p&aacute;gina (CSS). La hoja de estilos est&aacute; ubicada en el directorio <em>web-app/css/main.css</em> y lo que vamos a hacer a continuaci&oacute;n es crear una nueva entrada para definir el estilo correspondiente al pie de p&aacute;gina. Abrimos la hoja de estilos con NetBeans y al final a&ntilde;adimos este trozo de c&oacute;digo que define la apariencia del pie de p&aacute;gina.
+</p>
+<pre class="code">#piedepagina {
+    clear:both;
+    text-align:center;
+    padding:3px;
+    border-top:1px solid #333;
+}</pre>
+<a name="N1009B"></a><a name="Otra+plantilla+algo+m%C3%A1s+complicada%3A+el+encabezado"></a>
+<h3 class="underlined_5">Otra plantilla algo m&aacute;s complicada: el encabezado</h3>
+<p>
+	La primera plantilla que hemos creado no nos ha supuesto mucha complicaci&oacute;n y era muy sencilla de implementar, pero al menos nos ha servido como introducci&oacute;n al sistema de plantillas de Grails y a comprender como se renderizan estas plantillas en el sistema. La segunda plantilla que vamos a implementar nos va a complicar algo m&aacute;s la vida. Esta plantilla ser&aacute; la que se refiere al <em>encabezado</em> de nuestra aplicaci&oacute;n, que deber&aacute; mostrar un enlace indicando la palabra <em>login</em> para que cuando los usuarios hagan clic sobre ella, aparecer&aacute; un formulario donde el usuario podr&aacute; identificarse en el sistema. Ahora bien, &iquest;qu&eacute; pasa si el usuario ya se ha identificado? Pues lo que se hace habitualmente es modificar esa primera l&iacute;nea para que en lugar de mostrar un enlace con la palabra <em>login</em>, se muestre una l&iacute;nea con el nombre completo del usuario en cuesti&oacute;n y un enlace para que abandone el sistema de forma segura. Eso es lo que vamos a hacer con esta segunda plantilla.
+</p>
+<p>
+	En primer lugar, vamos a modificar el archivo <em>grails-app/views/layout/main.gsp</em> para que en la parte superior de la aplicaci&oacute;n, aparezca un encabezado que definiremos posteriormente. El archivo <em>main.gsp</em> quedar&iacute;a as&iacute;:
+</p>
+<pre class="code">.....
+&lt;div id="spinner" class="spinner" style="display:none;"&gt;
+    &lt;img src="${createLinkTo(dir:'images',file:'spinner.gif')}" alt="Spinner" /&gt;
+&lt;/div&gt;
+<strong>&lt;div id="encabezado"&gt;
+    &lt;g:render template="/common/header"/&gt;
+&lt;/div&gt;</strong>
+&lt;div class="logo"&gt;&lt;img src="${createLinkTo(dir:'images',file:'grails_logo.jpg')}" alt="Grails" /&gt;&lt;/div&gt;
+.....</pre>
+<p>
+	Si intentas actualizar ahora la aplicaci&oacute;n, ver&aacute;s como Grails nos devuelve un error y esto es debido a que todav&iacute;a no hemos creado la correspondiente plantilla <em>_header.gsp</em>, as&iacute; que antes de continuar vamos a crearla en el directorio <em>grails-app/views/common/</em>, puesto que es una plantilla que se utilizar&aacute; a lo largo de toda la aplicaci&oacute;n independientemente de la clase que estemos utilizando en cada momento. Vamos a ver el contenido de esta nueva plantilla y luego lo comentamos m&aacute;s ampliamente.
+</p>
+<pre class="code">&lt;div id="menu"&gt;
+    &lt;nobr&gt;
+        &lt;g:if test="${session.usuario}"&gt;
+            &lt;b&gt;${session.usuario?.nombre}&nbsp;${session.usuario?.apellidos}&lt;/b&gt; |
+            &lt;g:link controller="usuario" action="logout"&gt;Logout&lt;/g:link&gt;
+        &lt;/g:if&gt;
+        &lt;g:else&gt;
+            &lt;g:link controller="usuario" action="login"&gt;Login&lt;/g:link&gt;
+        &lt;/g:else&gt;
+    &lt;/nobr&gt;
+&lt;/div&gt;</pre>
+<p>
+	Si actualizamos ahora la aplicaci&oacute;n en el navegador, veremos como el enlace con la palabra <em>Login</em> queda a la izquierda, lo que no es lo habitual en las aplicaciones web, donde suele aparecer casi siempre en la parte superior derecha de la pantalla. Para solucionar esto, volvemos a editar los estilos de nuestra aplicaci&oacute;n y le a&ntilde;adimos las siguientes entradas:
+</p>
+<pre class="code">#encabezado {
+    text-align:left;
+    width:778px;
+    margin: 0px auto;
+    padding: 5px 0;
+}
+
+#encabezado #menu{
+    float: right;
+    width: 240px;
+    text-align:right;
+    font-size:10px;
+}</pre>
+<p>
+	Ya tenemos alineado a la derecha el texto con la palabra <em>Login</em>, que adem&aacute;s, aparecer&aacute; en cualquier p&aacute;gina de la aplicaci&oacute;n. Antes de continuar, vamos a explicar el contenido del archivo <em>grails-app/views/common/_header.gsp</em>. Podemos comprobar como se hace una comprobaci&oacute;n para saber si el usuario actual se ha identificado o no en nuestro sistema. Para realizar esta comprobaci&oacute;n utilizamos la etiqueta <span class="codefrag">&lt;g: if&gt;</span>, a la que se le pasa el par&aacute;metro <em>test</em> con la variable <span class="codefrag">${session.usuario}</span>. En caso de que esta variable est&eacute; ya definida (el usuario ya se ha identificado en el sistema), se mostrar&aacute; su nombre y apellidos seguido de un enlace para que abandone la aplicaci&oacute;n de forma segura. En caso contrario, se le mostrar&aacute; un enlace con la palabra <em>Login</em> para que se identifique. En ambos casos, se utiliza la etiqueta <span class="codefrag">&lt;g:link&gt;</span> que permite crear enlaces que apunten a una determinada acci&oacute;n de un controlador, tal y como veremos en la pr&oacute;xima sesi&oacute;n.
+</p>
+<p>
+	Si ahora hacemos clic sobre <em>Login</em>, veremos como Grails nos devuelve un error del tipo 404, puesto que no hemos definido nada para que la aplicaci&oacute;n act&uacute;e en consecuencia. As&iacute; que vamos a seguir modificando nuestra aplicaci&oacute;n para que tenga la estructura que definimos al principio de la sesi&oacute;n. De ese boceto que especificamos al inicio de la sesi&oacute;n s&oacute;lo nos queda por definir el encabezado con el nombre de la p&aacute;gina web y los m&aacute;rgenes de la misma. El archivo <em>grails-app/views/layout/main.gsp</em> quedar&iacute;a as&iacute;:
+</p>
+<pre class="code">&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;&lt;g:layoutTitle default="Biblioteca" /&gt;&lt;/title&gt;
+        &lt;link rel="stylesheet" href="${createLinkTo(dir:'css',file:'main.css')}" /&gt;
+        &lt;link rel="shortcut icon" href="${createLinkTo(dir:'images',file:'favicon.ico')}" type="image/x-icon" /&gt;
+        &lt;g:layoutHead /&gt;
+        &lt;g:javascript library="application" /&gt;				
+    &lt;/head&gt;
+    &lt;body&gt;
+        <strong>&lt;div id="pagina"&gt;</strong>
+            &lt;div id="spinner" class="spinner" style="display:none;"&gt;
+                &lt;img src="${createLinkTo(dir:'images',file:'spinner.gif')}" alt="Spinner" /&gt;
+            &lt;/div&gt;
+            &lt;div id="encabezado"&gt;
+                &lt;g:render template="/common/encabezado"/&gt;
+            &lt;/div&gt;
+            <strong>&lt;div id="cabecera"&gt;
+                &lt;h1&gt;Biblioteca&lt;/h1&gt;
+            &lt;/div&gt;</strong>
+            <strong>&lt;div id="contenido"&gt;</strong>
+                &lt;g:layoutBody /&gt;
+            <strong>&lt;/div&gt;</strong>
+            &lt;div id="piedepagina"&gt;
+                &lt;g:render template="/common/piedepagina"/&gt;
+            &lt;/div&gt;
+        <strong>&lt;/div&gt;</strong>
+    &lt;/body&gt;	
+&lt;/html&gt;</pre>
+<p>
+	Como vemos en el c&oacute;digo fuente de <em>main.gsp</em>, tenemos bastante diferenciada cada una de las partes de las p&aacute;ginas web de nuestra aplicaci&oacute;n. Ahora debemos a&ntilde;adir los nuevos elementos a la hoja de estilos <em>main.css</em>.
+</p>
+<pre class="code">#cabecera {
+    width: 778px;
+    background: #FFFFFF url(../images/background-cabecera.jpg) repeat-y;
+    height: 70px;
+    margin: 0px auto;
+}
+
+#cabecera h1 {
+    font-family: Arial, sans-serif;
+    color: White;
+    padding: 20px 0 0 6px;
+    font-size: 1.6em;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: normal;
+    font-size-adjust: none;
+    font-stretch: normal;
+    color: #333333;
+}
+
+#pagina {
+    width: 778px;
+    margin: 0px auto;
+    padding: 4px 0;
+    text-align: left;
+}
+
+#contenido {
+    float: left;
+    color: #000;
+}</pre>
+<p>
+	Nuestra aplicaci&oacute;n empieza a tener algo m&aacute;s de sentido y orden, sin embargo, todav&iacute;a sigue apareciendo algo que hace referencia al origen de la aplicaci&oacute;n, el mensaje de <em>Bienvenida a Grails</em> y el texto que lo acompa&ntilde;a. Para modificar este texto, editamos el archivo <em>grails-app/views/index.gsp</em> y modificaremos dicho texto por uno que explique las caracter&iacute;sticas de nuestra aplicaci&oacute;n.
+</p>
+<p>
+	
+<img alt="Interfaz gr&aacute;fica de la aplicaci&oacute;n" height="400" src="../images/sesion6/interfazbiblioteca.jpg" width="894">
+</p>
+</div>
+
+
+<a name="N10129"></a><a name="Etiquetas"></a>
+<h2 class="underlined_10">Etiquetas</h2>
+<div class="section">
+<p>
+	En el apartado anterior, hemos visto algunas de las etiquetas m&aacute;s utilizadas en Grails. Sin embargo, son muchas m&aacute;s las disponibles y a continuaci&oacute;n vamos a verlas. El listado que se mostrar&aacute; a continuaci&oacute;n, es s&oacute;lo un listado de las etiquetas m&aacute;s importantes. El n&uacute;mero de etiquetas de Grails crece continuamente gracias al aporte de la cada vez mayor comunidad de usuarios con sus plugins. En sesiones posteriores veremos como instalar y utilizar alg&uacute;n plugin, pero de momento, con estas etiquetas tenemos una primera introducci&oacute;n.
+</p>
+<a name="N10132"></a><a name="Etiquetas+l%C3%B3gicas"></a>
+<h3 class="underlined_5">Etiquetas l&oacute;gicas</h3>
+<p>
+	Estas etiquetas nos permitir&aacute;n realizar comprobaciones del tipo <span class="codefrag">si-entonces-sino</span>.
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	
+<tr>
+		
+<th colspan="1" rowspan="1">Etiqueta</th>
+		<th colspan="1" rowspan="1">Descripci&oacute;n</th>
+		<th colspan="1" rowspan="1">API</th>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:if&gt;</td>
+		<td colspan="1" rowspan="1">Eval&uacute;a una expresi&oacute;n y act&uacute;a en consecuencia</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+if">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:else&gt;</td>
+		<td colspan="1" rowspan="1">La parte <em>else</em> del bloque <em>if</em></td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+else">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:elseif&gt;</td>
+		<td colspan="1" rowspan="1">La parte <em>elseif</em> del bloque <em>if</em></td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+elseif">API</a></td>
+	
+</tr>	
+
+</table>
+<a name="N1019A"></a><a name="Etiquetas+de+iteraci%C3%B3n"></a>
+<h3 class="underlined_5">Etiquetas de iteraci&oacute;n</h3>
+<p>
+	Son utilizadas para iterar a trav&eacute;s de colecciones de datos o hasta que una determinada condici&oacute;n se eval&uacute;e a falso. 
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	
+<tr>
+		
+<th colspan="1" rowspan="1">Etiqueta</th>
+		<th colspan="1" rowspan="1">Descripci&oacute;n</th>
+		<th colspan="1" rowspan="1">API</th>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:while&gt;</td>
+		<td colspan="1" rowspan="1">Ejecuta un bloque de c&oacute;digo mientras una condici&oacute;n se eval&uacute;e a cierto</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+while">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:each&gt;</td>
+		<td colspan="1" rowspan="1">Itera sobre una colecci&oacute;n de objetos</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+each">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:collect&gt;</td>
+		<td colspan="1" rowspan="1">Itera sobre una colecci&oacute;n y transforma los resultados tal y como se defina en el par&aacute;metro <em>expr</em></td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+collect">API</a></td>
+	
+</tr>	
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:findAll&gt;</td>
+		<td colspan="1" rowspan="1">Itera sobre una colecci&oacute;n donde los elementos se corresponden con la expresi&oacute;n GPath definida en el par&aacute;metro <em>expr</em></td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+findAll">API</a></td>
+	
+</tr>	
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:grep&gt;</td>
+		<td colspan="1" rowspan="1">Itera sobre una colecci&oacute;n donde los elementos se corresponden con el filtro definido en el par&aacute;metro <em>expr</em></td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+grep">API</a></td>
+	
+</tr>		
+
+</table>
+<a name="N10223"></a><a name="Etiquetas+de+asignaci%C3%B3n"></a>
+<h3 class="underlined_5">Etiquetas de asignaci&oacute;n</h3>
+<p>
+	Nos servir&aacute;n para asignar valores a variables.
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	
+<tr>
+		
+<th colspan="1" rowspan="1">Etiqueta</th>
+		<th colspan="1" rowspan="1">Descripci&oacute;n</th>
+		<th colspan="1" rowspan="1">API</th>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;def&gt;</td>
+		<td colspan="1" rowspan="1">Define una variable para que pueda ser utilizada en el &aacute;mbito de una p&aacute;gina GSP. Esta etiqueta ya no se utiliza y se debe sustituir por la etiqueta &lt;set&gt;</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+def">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;set&gt;</td>
+		<td colspan="1" rowspan="1">Establece el valor de una variable utilizada en una p&aacute;gina GSP</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+set">API</a></td>
+	
+</tr>	
+
+</table>
+<a name="N1026A"></a><a name="Etiquetas+de+enlaces"></a>
+<h3 class="underlined_5">Etiquetas de enlaces</h3>
+<p>
+	Crean enlaces a partir de los par&aacute;metros pasados.
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	
+<tr>
+		
+<th colspan="1" rowspan="1">Etiqueta</th>
+		<th colspan="1" rowspan="1">Descripci&oacute;n</th>
+		<th colspan="1" rowspan="1">API</th>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:link&gt;</td>
+		<td colspan="1" rowspan="1">Crea un enlace HTML utilizando los par&aacute;metros pasados</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+link">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:createLink&gt;</td>
+		<td colspan="1" rowspan="1">Crea un enlace HTML que puede ser utilizado dentro de otras etiquetas</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+createLink">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:createLinkTo&gt;</td>
+		<td colspan="1" rowspan="1">Crea un enlace a un directorio o un fichero</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+createLinkTo">API</a></td>
+	
+</tr>	
+
+</table>
+<a name="N102C5"></a><a name="Etiquetas+AJAX"></a>
+<h3 class="underlined_5">Etiquetas AJAX</h3>
+<p>
+	Son las etiquetas empleadas para el uso de recursos AJAX en nuestras aplicaciones.
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	
+<tr>
+		
+<th colspan="1" rowspan="1">Etiqueta</th>
+		<th colspan="1" rowspan="1">Descripci&oacute;n</th>
+		<th colspan="1" rowspan="1">API</th>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:remoteField&gt;</td>
+		<td colspan="1" rowspan="1">Crea un campo de texto que invoca un enlace cuando se modifica el contenido de este campo</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+remoteField">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:remoteFunction&gt;</td>
+		<td colspan="1" rowspan="1">Crea una funci&oacute;n remota que se invoca con un evento del DOM</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+remoteFunction">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:remoteLink&gt;</td>
+		<td colspan="1" rowspan="1">Crea un enlace que llama a una funci&oacute;n remota</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+remoteLink">API</a></td>
+	
+</tr>	
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:formRemote&gt;</td>
+		<td colspan="1" rowspan="1">Crea una etiqueta de formulario que ejecuta una llamada a un procedimiento AJAX para serializar los elementos del formulario</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+formRemote">API</a></td>
+	
+</tr>	
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:javascript&gt;</td>
+		<td colspan="1" rowspan="1">Incluye librer&iacute;as de Javascript y scripts</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+javascript">API</a></td>
+	
+</tr>	
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:submitToRemote&gt;</td>
+		<td colspan="1" rowspan="1">Crea un bot&oacute;n que ejecuta una llamada a un procedimiento AJAX para serializar los elementos del formulario</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+submitToRemote">API</a></td>
+	
+</tr>	
+
+</table>
+<a name="N1035C"></a><a name="Etiquetas+de+formularios"></a>
+<h3 class="underlined_5">Etiquetas de formularios</h3>
+<p>
+	Las utilizaremos para crear nuestros propios formularios HTML.
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	
+<tr>
+		
+<th colspan="1" rowspan="1">Etiqueta</th>
+		<th colspan="1" rowspan="1">Descripci&oacute;n</th>
+		<th colspan="1" rowspan="1">API</th>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:actionSubmit&gt;</td>
+		<td colspan="1" rowspan="1">Crea un bot&oacute;n de tipo <em>submit</em></td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+actionSubmit">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:actionSubmitImage&gt;</td>
+		<td colspan="1" rowspan="1">Crea un bot&oacute;n de tipo <em>submit</em> con una imagen</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+actionSubmitImage">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:checkBox&gt;</td>
+		<td colspan="1" rowspan="1">Crea un elemento de formulario de tipo checkbox</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+checkBox">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:currencySelect&gt;</td>
+		<td colspan="1" rowspan="1">Crea un campo de tipo <em>select</em> con un listado de monedas</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+currencySelect">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:datePicker&gt;</td>
+		<td colspan="1" rowspan="1">Crea un elemento de formulario para seleccionar una fecha con d&iacute;a, mes, a&ntilde;o, hora, minutos y segundos</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+datePicker">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:form&gt;</td>
+		<td colspan="1" rowspan="1">Crea un formulario</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+form">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:hiddenField&gt;</td>
+		<td colspan="1" rowspan="1">Crea un campo oculto</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+hiddenField">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:localeSelect&gt;</td>
+		<td colspan="1" rowspan="1">Crea un elemento de formulario de tipo <em>select</em> con un listado de posibles localizaciones</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+localeSelect">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:radio&gt;</td>
+		<td colspan="1" rowspan="1">Crea un elemento de formulario de tipo radio</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+radio">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:radioGroup&gt;</td>
+		<td colspan="1" rowspan="1">Crea un grupo de elementos de formulario de tipo radio</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+radioGroup">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:select&gt;</td>
+		<td colspan="1" rowspan="1">Crea un elemento de formulario de tipo <em>select combo box</em></td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+select">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:textField&gt;</td>
+		<td colspan="1" rowspan="1">Crea un elemento de formulario de tipo <em>text</em></td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+textField">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:textArea&gt;</td>
+		<td colspan="1" rowspan="1">Crea un elemento de formulario de tipo <em>textarea</em></td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+textArea">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:timeZoneSelect&gt;</td>
+		<td colspan="1" rowspan="1">Crea un elemento de formulario de tipo <em>select</em> con un listado de zonas horarias</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+timeZoneSelect">API</a></td>
+	
+</tr>	
+
+</table>
+<a name="N104A7"></a><a name="Etiquetas+de+interfaz+de+usuario"></a>
+<h3 class="underlined_5">Etiquetas de interfaz de usuario</h3>
+<p>
+	Etiquetas que mejorar la interfaz de usuario.
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	
+<tr>
+		
+<th colspan="1" rowspan="1">Etiqueta</th>
+		<th colspan="1" rowspan="1">Descripci&oacute;n</th>
+		<th colspan="1" rowspan="1">API</th>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:richTextEditor&gt;</td>
+		<td colspan="1" rowspan="1">Crea un elemento de formulario de tipo <em>textarea</em> para la introducci&oacute;n de texto con formato enriquecido. Por defecto, el editor utilizado es el <em>fckeditor</em></td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+richTextEditor">API</a></td>
+	
+</tr>	
+
+</table>
+<a name="N104DF"></a><a name="Etiquetas+de+renderizado"></a>
+<h3 class="underlined_5">Etiquetas de renderizado</h3>
+<p>
+	Permite renderizar las p&aacute;ginas web de nuestras aplicaciones utilizando las plantillas.
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	
+<tr>
+		
+<th colspan="1" rowspan="1">Etiqueta</th>
+		<th colspan="1" rowspan="1">Descripci&oacute;n</th>
+		<th colspan="1" rowspan="1">API</th>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:applyLayout&gt;</td>
+		<td colspan="1" rowspan="1">Aplica un determinado dise&ntilde;o a una p&aacute;gina o una plantilla</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+applyLayout">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:encodeAs&gt;</td>
+		<td colspan="1" rowspan="1">Aplica una codificaci&oacute;n din&aacute;mica a un bloque de c&oacute;digo HTML</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+encodeAs">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:formatDate&gt;</td>
+		<td colspan="1" rowspan="1">Aplica el formato <em>SimpleDateFormat</em> a una fecha</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+formatDate">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:formatNumber&gt;</td>
+		<td colspan="1" rowspan="1">Aplica el formato <em>DecimalFormat</em> a un n&uacute;mero</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+formatNumber">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:layoutHead&gt;</td>
+		<td colspan="1" rowspan="1">Muestra una determinada cabecera para una p&aacute;gina</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+layoutHead">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:layoutBody&gt;</td>
+		<td colspan="1" rowspan="1">Muestra un determinado contenido para una p&aacute;gina</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+layoutBody">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:layoutTitle&gt;</td>
+		<td colspan="1" rowspan="1">Muestra un determinado t&iacute;tulo para una p&aacute;gina</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+layoutTitle">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:meta&gt;</td>
+		<td colspan="1" rowspan="1">Muestra las propiedades <em>meta</em> de una p&aacute;gina web</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+meta">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:render&gt;</td>
+		<td colspan="1" rowspan="1">Muestra un modelo utilizando una plantilla</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+render">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:renderErrors&gt;</td>
+		<td colspan="1" rowspan="1">Muestra los errores producidos en una p&aacute;gina</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+renderErrors">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:pageProperty&gt;</td>
+		<td colspan="1" rowspan="1">Muestra una propiedad de una p&aacute;gina</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+pageProperty">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:paginate&gt;</td>
+		<td colspan="1" rowspan="1">Muestra los t&iacute;picos botones <em>Anterior</em> y <em>Siguiente</em> y las <em>migas de pan</em> cuando se devuelven muchos resultados</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+paginate">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:sortableColumn&gt;</td>
+		<td colspan="1" rowspan="1">Muestra una columna de una tabla con la posibilidad de ordenarla</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/GSP+Tag+-+sortableColumn">API</a></td>
+	
+</tr>	
+
+</table>
+<a name="N10614"></a><a name="Etiquetas+de+validaci%C3%B3n"></a>
+<h3 class="underlined_5">Etiquetas de validaci&oacute;n</h3>
+<p>
+	Se utilizan para mostrar errores y mensajes de advertencia.
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	
+<tr>
+		
+<th colspan="1" rowspan="1">Etiqueta</th>
+		<th colspan="1" rowspan="1">Descripci&oacute;n</th>
+		<th colspan="1" rowspan="1">API</th>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:eachError&gt;</td>
+		<td colspan="1" rowspan="1">Itera a trav&eacute;s de los errores producidos en una p&aacute;gina</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+eachError">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:hasErrors&gt;</td>
+		<td colspan="1" rowspan="1">Comprueba si se ha producido alg&uacute;n error</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+hasErrors">API</a></td>
+	
+</tr>
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:message&gt;</td>
+		<td colspan="1" rowspan="1">Muestra un mensaje</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+message">API</a></td>
+	
+</tr>	
+	
+<tr>
+		
+<td colspan="1" rowspan="1">&lt;g:fieldValue&gt;</td>
+		<td colspan="1" rowspan="1">Muestra el valor de un elemento de un formulario</td>
+		<td colspan="1" rowspan="1"><a class="external" href="http://www.grails.org/Tag+-+fieldValue">API</a></td>
+	
+</tr>	
+
+</table>
+</div>
+
+<a name="N10684"></a><a name="Primer+contacto+con+los+controladores"></a>
+<h2 class="underlined_10">Primer contacto con los controladores</h2>
+<div class="section">
+<p>
+	Ahora que ya tenemos dise&ntilde;ada la interfaz de nuestra aplicaci&oacute;n y que ya conocemos algunas de las etiquetas m&aacute;s importantes de Grails, vamos a pasar a a&ntilde;adir algo de funcionalidad. Si recordamos como dejamos nuestra aplicaci&oacute;n, al hacer clic sobre <em>Login</em> el sistema nos devolv&iacute;a un error puesto que no hab&iacute;amos definido ninguna acci&oacute;n para el controlador, mientras que el comportamiento de la aplicaci&oacute;n deber&iacute;a ser mostrarnos una pantalla para que nos identifiquemos en el sistema. Una vez estemos identificados, nos debe aparecer nuestro nombre completo seguido de un enlace con la palabra <em>Logout</em> para que abandonemos el sistema de forma segura. Veamos como hacer esto.
+</p>
+<p>
+	En principio, nuestro sistema de identificaci&oacute;n no va a ser muy complicado, ya que simplemente le pediremos al usuario que seleccione que usuario es de todos los disponibles y no comprobaremos su contrase&ntilde;a. Esto lo dejamos para m&aacute;s tarde.
+</p>
+<p>
+	Si nos fijamos en el c&oacute;digo utilizado para crear el enlace de la palabra <em>Login</em>, <span class="codefrag">&lt;g:link controller="usuario" action="login"&gt;Login&lt;/g:link&gt;</span>, detectaremos que se necesitar&aacute; la acci&oacute;n <span class="codefrag">login()</span> en el controlador de la clase <em>usuario</em>, que se dejar&aacute; vac&iacute;a puesto que autom&aacute;ticamente se renderizar&aacute; la vista de la clase usuario <em>login.gsp</em> con lo que el m&eacute;todo <span class="codefrag">login()</span> quedar&iacute;a as&iacute;: <span class="codefrag">def login = {}</span>. Pero antes de hacer esto, vamos a crear la vista para la p&aacute;gina <em>login.gsp</em>, que deber&aacute; ubicarse por convenio en el directorio <em>grails-app/views/usuario</em>. La p&aacute;gina <em>login.gsp</em> podr&iacute;a quedar as&iacute;:
+</p>
+<pre class="code">&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/&gt;
+    &lt;meta name="layout" content="main"/&gt;
+    &lt;title&gt;Login&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class="body"&gt;
+        &lt;g:if test="${flash.message}"&gt;
+            &lt;div class="message"&gt;
+                ${flash.message}
+            &lt;/div&gt;
+        &lt;/g:if&gt;
+        &lt;p&gt;
+            Bienvenido a la aplicaci&oacute;n Biblioteca. Por favor, identif&iacute;cate.
+        &lt;/p&gt;
+        &lt;form&gt;
+            &lt;span class="nameClear"&gt;
+                &lt;label for="login"&gt;
+                    Selecciona el usuario:
+                &lt;/label&gt;
+            &lt;/span&gt;
+            &lt;g:select name="login" from="${Usuario.list()}" optionKey="login" optionValue="login"&gt;&lt;/g:select&gt;
+            &lt;br/&gt;
+            &lt;div class="buttons"&gt;
+                &lt;span class="button"&gt;&lt;g:actionSubmit value="Login" action="handleLogin"/&gt;&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>
+	Si analizamos el c&oacute;digo fuente de <em>login.gsp</em>, con la l&iacute;nea <span class="codefrag">&lt;meta name="layout" content="main"/&gt;</span> estamos diciendo que el archivo <em>main.gsp</em> act&uacute;a como contenedor para el archivo <em>login.gsp</em>. Echando un vistazo al c&oacute;digo fuente del archivo <em>main.gsp</em>, veremos la etiqueta <span class="codefrag">&lt;g:layoutBody&gt;</span>. En ese punto ser&aacute; donde se inserte el contenido de la p&aacute;gina <em>login.gsp</em>, eliminando las cabeceras innecesarias. Podemos probar a eliminar esa l&iacute;nea para ver sus efectos.
+</p>
+<p>
+	Seguidamente a la definici&oacute;n del <em>div</em> con la clase <em>body</em>, se comprueba que no haya ning&uacute;n mensaje a mostrar en esta p&aacute;gina y en caso de que lo hubiera, se mostrar&iacute;a seguidamente. Este tipo de mensajes llamados <em>Flash</em> los veremos en la sesi&oacute;n 8 en la que ampliaremos toda la informaci&oacute;n referente a la interfaz de usuario.
+</p>
+<p>
+	A continuaci&oacute;n definimos el formulario que servir&aacute; para seleccionar al usuario en cuesti&oacute;n. Aqu&iacute; encontramos aspectos que ya hemos utilizado anteriormente como puede ser el uso del m&eacute;todo <span class="codefrag">list()</span> para obtener todos los usuarios del sistema y mostrarlos en el elemento de formulario de tipo <em>select</em>. Este elemento de formulario recibe adem&aacute;s otros tres par&aacute;metros que son <em>name</em>, que especifica el nombre del elemento de formulario, <em>optionKey</em>, de donde se coge el valor de cada uno de los elementos del <em>select</em> y por &uacute;ltimo, el par&aacute;metro <em>optionValue</em>, que nos servir&aacute; para mostrar al usuario la propiedad <em>login</em> de todos los usuarios. Si queremos modificar este par&aacute;metro para que en lugar de mostrar la propiedad <em>login</em> nos muestre el nombre y apellidos de cada uno de los alumnos, deber&iacute;amos escribir <span class="codefrag">optionValue={nombre} {apellidos}</span>.
+</p>
+<p>
+	Y por &uacute;ltimo, tenemos la definici&oacute;n del bot&oacute;n de tipo <em>submit</em> que nos llevar&aacute; al lugar indicado para que se procese la petici&oacute;n de identificaci&oacute;n por parte del usuario, en este caso al m&eacute;todo <span class="codefrag">handleLogin()</span>, que todav&iacute;a no hemos definido y que es lo siguiente que vamos a hacer.
+</p>
+<p>
+	Necesitamos a&ntilde;adir un nuevo m&eacute;todo al controlador de la clase <em>Usuario</em> que gestione la petici&oacute;n de identificaci&oacute;n por parte de los usuarios. Este m&eacute;todo se llamar&aacute; <span class="codefrag">handleLogin()</span> y tendr&aacute; el siguiente contenido:
+</p>
+<pre class="code">def handleLogin = {
+    def usuario = Usuario.findByLogin(params.login)
+    if (!usuario) {
+        flash.message = "El usuario ${params.login} no existe"
+        redirect(controller: 'usuario', action:'login')
+        return
+    }
+    else {
+        session.usuario = usuario
+        redirect(controller:'operacion')
+    }
+}</pre>
+<p>
+	Analicemos este m&eacute;todo paso a paso. En primer lugar, se busca que exista alg&uacute;n <em>usuario</em> que coincida con la propiedad <em>login</em> pasada por par&aacute;metro gracias al m&eacute;todo GORM <span class="codefrag">findByLogin()</span>. Recuerda que no hemos tenido que definir ning&uacute;n m&eacute;todo llamado <em>findByLogin()</em> y que ha sido GORM quien ha implementado este m&eacute;todo din&aacute;micamente por nosotros. En caso de que exista alg&uacute;n usuario con el <em>login</em> pasado (que en estos momentos siempre se cumplir&aacute; debido a que lo estamos seleccionando directamente de un <em>select</em>), se almacenar&aacute; en la variable <em>session</em> los datos correspondientes al usuario y se redireccionar&aacute; la aplicaci&oacute;n para que se empiecen a realizar operaciones. En caso de que no exista dicho usuario, se cargar&aacute; un mensaje flash de error indicando que este usuario no existe y se redireccionar&aacute; de nuevo a la p&aacute;gina de <em>login</em> para que vuelva a intentarlo. Quiz&aacute;s ahora si podamos entender las l&iacute;neas referentes al mensaje flash de la p&aacute;gina <em>login.gsp</em>. En el m&eacute;todo <span class="codefrag">handleLogin()</span> se ha completado un mensaje flash con un texto indicando el error producido, que posteriormente ser&aacute; mostrado en la siguiente p&aacute;gina mostrada, en este caso <em>login.gsp</em>.
+</p>
+<p>
+	Antes de terminar, vamos a definir tambi&eacute;n el m&eacute;todo que nos permitir&aacute; abandonar la sesi&oacute;n de forma segura, el m&eacute;todo <span class="codefrag">logout()</span>. Este m&eacute;todo es muy sencillo y simplemente constar&aacute; de la destrucci&oacute;n de los datos de la variable sesi&oacute;n que contiene la informaci&oacute;n del usuario actual. Para ello, apuntamos esta variable a <span class="codefrag">null</span>. Por &uacute;ltimo, redireccionamos la aplicaci&oacute;n para que nos vuelva a mostrar la p&aacute;gina de <em>login</em>.
+</p>
+<pre class="code">def logout = {
+    if (session.usuario){
+        session.usuario = null
+        redirect(controller: 'usuario', action:'login')
+    }
+}</pre>
+<p>
+	Con esto, nuestra aplicaci&oacute;n cuenta con un sistema de autenticaci&oacute;n (que mejoraremos en posteriores sesiones), necesario en cualquier aplicaci&oacute;n en la que los usuarios deben estar registrados para realizar operaciones y que adem&aacute;s tienen diferentes tipos de permisos.
+</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2008-2009 Depto. CCIA</div>
+</div>
+</body>
+</html>
