@@ -1,0 +1,50 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Ejercicios de RMS</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2> A.9. RMS</h2>
+             
+<p><strong>9.1.</strong> Vamos a implementar un almac&eacute;n de notas. En el 
+  directorio <code>Notas</code> tenemos la base de esta aplicaci&oacute;n. Cada 
+  nota ser&aacute; un objeto de la clase <code>Mensaje</code>, que tendr&aacute; 
+  un asunto y un texto. Adem&aacute;s incorpora m&eacute;todos de serializaci&oacute;n 
+  y deserializaci&oacute;n.</p>
+<p>Vamos a almacenar estos mensajes de forma persistente utilizando RMS. Para 
+  ello vamos a utilizar el patr&oacute;n de dise&ntilde;o adaptador, completando 
+  el c&oacute;digo de la clase <code>AdaptadorRMS</code> de la siguiente forma:</p>
+<p><em>a) </em>En el constructor se debe abrir el almac&eacute;n de registros 
+  de nombre <code>RS_DATOS</code> (cre&aacute;ndolo si es necesario). En el m&eacute;todo 
+  <code>cerrar</code> cerraremos el almac&eacute;n de registros abierto.</p>
+<p><em>b)</em> En <code>listaMensajes</code> utilizaremos un objeto <code>RecordEnumeration</code> 
+  para obtener todos los mensajes almacenados. Podemos utilizar la deserializaci&oacute;n 
+  definida en el objeto <code>Mensaje</code> para leerlos. Conforme leamos los 
+  mensajes los a&ntilde;adiremos a un vector<code></code>. </p>
+<p>El &iacute;ndice de cada registro en el almac&eacute;n nos servir&aacute; para 
+  luego poder modificar o eliminar dicho mensaje. Por esta raz&oacute;n deberemos 
+  guardarnos este valor en alguna parte. Podemos utilizar para ello el campo <code>rmsID</code> 
+  de cada objeto <code>Mensaje</code> creado.</p>
+<p>En <code>getMensaje</code> deberemos introducir el c&oacute;digo para obtener 
+  un mensaje dado su identificador de RMS.</p>
+<p><em>c)</em> En <code>addMensaje</code> deberemos introducir el c&oacute;digo 
+  necesario para insertar un mensaje en el almac&eacute;n. Con esto ya podremos 
+  probar la aplicaci&oacute;n, a&ntilde;adiendo mensajes y comprobando que se 
+  han a&ntilde;adido correctamente. Probar a cerrar el emulador y volverlo a abrir 
+  para comprobar que los datos se han guardado de forma persistente.</p>
+<p><em>d)</em> En <code>removeMensaje</code> deberemos eliminar un mensaje del 
+  almac&eacute;n dado su identificador. </p>
+<p><em>e)</em> En <code>updateMensaje</code> modificaremos un mensaje del almac&eacute;n 
+  sobrescribi&eacute;ndolo con el nuevo mensaje proporcionado. Para ello obtendremos 
+  el identificador correspondiente a al mensaje antiguo de su campo <code>rmsID</code>.</p>
+<p><strong>9.2. </strong>Obtener la informaci&oacute;n de la cantidad de memoria 
+  ocupada y disponible a partir del objeto <code>RecordStore</code>. Deberemos 
+  hacer que los m&eacute;todos <code>getLibre</code> y <code>getOcupado</code> 
+  de la clase <code>AdaptadorRMS</code> devuelvan esta informaci&oacute;n.</p>
+</body>
+</html>

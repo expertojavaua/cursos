@@ -1,0 +1,61 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Proyecto: Aplicaci&oacute;n b&aacute;sica</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2> A.4. Proyecto: Aplicaci&oacute;n b&aacute;sica</h2>
+             
+<p><strong>4.1.</strong> Vamos a implementar un juego consistente en adivinar 
+  un n&uacute;mero del 1 a 100. Como para previo, vamos a crear el men&uacute; 
+  principal de nuestro juego, en el que deberemos tener las opciones <em>Nuevo 
+  juego</em> y <em>Salir</em>. </p>
+<p><em>a)</em> &iquest;Qu&eacute; tipo de <em>displayable</em> utilizaremos para 
+  realizar este men&uacute;?</p>
+<p><em>b)</em> Implementar esta pantalla encapsulando todo su contenido en una 
+  misma clase.</p>
+<p><em>c)</em> A&ntilde;adir un comando que nos permita seleccionar la opci&oacute;n 
+  marcada del men&uacute;. </p>
+<p><em>d)</em> Incorporar un <em>listener</em> de comandos para dar respuesta 
+  a este comando de selecci&oacute;n de opciones. Por ahora lo que haremos ser&aacute; 
+  mostrar una alerta que diga <em>&quot;Opcion no implementada todavia&quot;</em>.</p>
+<p><strong>4.2.</strong> Implementar el juego de adivinar un n&uacute;mero del 
+  1 al 100. Para ello partiremos de la base realizada en el ejercicio anterior. 
+</p>
+<p>El juego pensar&aacute; un n&uacute;mero aleatorio de 1 a 100, y se mostrar&aacute; 
+  al usuario un cuadro de texto donde deber&aacute; introducir el n&uacute;mero 
+  del que piensa que se trata. Una vez introducido, pulsar&aacute; OK y entonces 
+  la aplicaci&oacute;n le dir&aacute; si el n&uacute;mero de demasiado alto, si 
+  es demasiado bajo o si ha acertado. En caso de que el n&uacute;mero sea muy 
+  alto o muy bajo, volveremos al mismo cuadro de texto para volver a probar. Si 
+  ha acertado el juego finalizar&aacute;, mostrando el n&uacute;mero de intentos 
+  que ha necesitado y volviendo al men&uacute; principal.</p>
+<div align="center"><img src="imagenes/ejercicios/adivina.gif" width="365" height="230"> 
+</div>
+<p>Para implementar esta aplicaci&oacute;n crearemos una nueva pantalla encapsulada 
+  en una clase de nombre <code>EntradaTexto</code> que ser&aacute; de tipo <code>TextBox</code>, 
+  donde el usuario introducir&aacute; el n&uacute;mero. Al construir esta pantalla 
+  se deber&aacute; determinar un n&uacute;mero aleatorio de 1 a 100, cosa que 
+  podemos hacer de la siguiente forma:</p>
+<pre class="codigo">Random rand = new Random();
+this.numero = Math.abs(rand.nextInt()) % 100 + 1;</pre>
+<p>Deberemos a&ntilde;adir un comando para que el usuario notifique que ha introducido 
+  el n&uacute;mero. Como respuesta a este comando deberemos obtener el n&uacute;mero 
+  que ha introducido el usuario y compararlo con el n&uacute;mero aleatorio. Seg&uacute;n 
+  si el n&uacute;mero es menor, mayor o igual mostraremos una alerta con el mensaje 
+  correspondiente, y volveremos a la pantalla actual o al men&uacute; principal 
+  seg&uacute;n si el usuario ha fallado o acertado respectivamente.</p>
+<p><strong>4.3.</strong> Como parte optativa, se propone a&ntilde;adir un <em>ranking</em> 
+  con las mejores puntuaciones obtenidas. Para ello, deberemos a&ntilde;adir una 
+  opci&oacute;n adicional al men&uacute; principal para consultar dicho <em>ranking</em>. 
+  Adem&aacute;s, cuando consigamos adivinar el n&uacute;mero en un n&uacute;mero 
+  record de intentos, la aplicaci&oacute;n nos pedir&aacute; nuestro nombre en 
+  un cuadro de texto y nos a&ntilde;adir&aacute; al <em>ranking</em> de mejores 
+  puntuaciones, junto con el n&uacute;mero de intentos que hemos necesitado.</p>
+</body>
+</html>

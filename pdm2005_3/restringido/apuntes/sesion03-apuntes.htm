@@ -1,0 +1,786 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 3: Interfaz gr&aacute;fica</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1> 5. Interfaz de usuario</h1>
+             
+<p>Vamos a ver ahora como crear la interfaz de las aplicaciones MIDP. En la reducida 
+  pantalla de los m&oacute;viles no tendremos una consola en la que imprimir utilizando 
+  la salida est&aacute;ndar, por lo que toda la salida la tendremos que mostrar 
+  utilizando una API propia que nos permita crear componentes adecuados para ser 
+  mostrados en este tipo de pantallas.</p>
+<p>Esta API propia para crear la interfaz gr&aacute;fica de usuario de los MIDlets 
+  se denomina LCDUI (<em>Limited Connected Devices User Interface</em>), y se 
+  encuentra en el paquete <code>javax.microedition.lcdui</code>. </p>
+<h2>5.1. Acceso al visor</h2>
+<p>El visor del dispositivo est&aacute; representado por un objeto <code>Display</code>. 
+  Este objeto nos permitir&aacute; acceder a este visor y a los dispositivos de 
+  entrada (normalmente el teclado) del m&oacute;vil. </p>
+<p>Tendremos asociado un &uacute;nico <em>display</em> a cada aplicaci&oacute;n 
+  (MIDlet). Para obtener el <em>display</em> asociado a nuestro MIDlet deberemos 
+  utilizar el siguiente m&eacute;todo est&aacute;tico:</p>
+<pre class="codigo">Display mi_display = Display.<strong>getDisplay</strong>(mi_midlet);</pre>
+<p>Donde <em>mi_midlet</em> ser&aacute; una referencia al MIDlet del cual queremos 
+  obtener el <code>Display</code>. Podremos acceder a este <em>display</em> desde 
+  el momento en que <code>startApp</code> es invocado por primera vez (no podremos 
+  hacerlo en el constructor del MIDlet), y una vez se haya terminado de ejecutar 
+  <code>destroyApp</code> ya no podremos volver a acceder al <em>display</em> 
+  del MIDlet.</p>
+<p>Cada MIDlet tiene un <em>display</em> y s&oacute;lo uno. Si el MIDlet ha pasado 
+  a segundo plano (pausado), seguir&aacute; asociado al mismo <em>display</em>, 
+  pero en ese momento no se mostrar&aacute; su contenido en la pantalla del dispositivo 
+  ni ser&aacute; capaz de leer las teclas que pulse el usuario.</p>
+<p>Podemos utilizar este objeto para obtener propiedades del visor como el n&uacute;mero 
+  de colores que soporta:</p>
+<pre class="codigo">boolean color = mi_display.<strong>isColor</strong>();
+int num_color = mi_display.<strong>numColors</strong>();</pre>
+<h2>5.2. Componentes disponibles</h2>
+<p>Una vez hemos accedido al <em>display</em>, deberemos mostrar algo en &eacute;l. 
+  Tenemos una serie de elementos que podemos mostrar en el <em>display</em>, estos 
+  son conocidos como elementos <em>displayables</em>.</p>
+<p>En el <em>display</em> podremos mostrar a lo sumo un elemento <em>displayable</em>. 
+  Para obtener el elemento que se est&aacute; mostrando actualmente en el visor 
+  utilizaremos el siguiente m&eacute;todo:</p>
+<pre class="codigo">Displayable elemento = mi_display.<strong>getCurrent</strong>();</pre>
+<p>Nos devolver&aacute; el objeto <code>Displayable</code> correspondiente al 
+  objeto que se est&aacute; mostrando en la pantalla, o <code>null</code> en el 
+  caso de que no se est&eacute; mostrando ning&uacute;n elemento. Esto ocurrir&aacute; 
+  al comienzo de la ejecuci&oacute;n de la aplicaci&oacute;n cuando todav&iacute;a 
+  no se ha asignado ning&uacute;n elemento al <code>Display</code>. Podemos establecer 
+  el elemento que queremos mostrar en pantalla con:</p>
+<pre class="codigo">mi_display.<strong>setCurrent</strong>(nuevo_elemento);</pre>
+<p>Como s&oacute;lo podemos mostrar simult&aacute;neamente un elemento <em>displayable</em> 
+  en el <em>display</em>, este elemento ocupar&aacute; todo el visor. Adem&aacute;s 
+  ser&aacute; este elemento el que recibir&aacute; la entrada del usuario.</p>
+<p>Entre estos elementos <em>displayables</em> podemos distinguir una API de bajo 
+  nivel, y una API de alto nivel.</p>
+<h3><strong>5.2.1. API de alto nivel</strong></h3>
+<p>Consiste en una serie de elementos predefinidos: <code>Form</code>, <code>List</code>, 
+  <code>Alert</code> y <code>TextBox</code> que son extensiones de la clase abstracta 
+  <code>Screen</code>. Estos son elementos comunes que podemos encontrar en la 
+  interfaz de todos los dispositivos, por lo que el tenerlos predefinidos nos 
+  permitir&aacute; utilizarlos de forma sencilla sin tenerlos que crear nosotros 
+  a mano en nuestras aplicaciones. Se implementan de forma nativa por cada dispositivo 
+  concreto, por lo que pueden variar de unos dispositivos a otros. Estos componentes 
+  hacen que las aplicaciones sean m&aacute;s sencillas y portables, pero nos limita 
+  a una serie de controles predefinidos. </p>
+<p>Este tipo de componentes ser&aacute;n adecuados para realizar <em>front-ends</em> 
+  de aplicaciones corporativas. De esta forma obtendremos aplicaciones totalmente 
+  portables, en las que la implementaci&oacute;n nativa ser&aacute; la que se 
+  deber&aacute; encargar de dibujar estos componentes. Por lo tanto, en cada dispositivo 
+  podr&aacute;n mostrarse de una forma distinta. Adem&aacute;s no se permitir&aacute; 
+  acceder directamente a los eventos de entrada del teclado.</p>
+<h3><strong>5.2.2. API de bajo nivel</strong></h3>
+<p>Consiste en la clase <code>Canvas</code>, que nos permitir&aacute; dibujar 
+  lo que queramos en la pantalla. Tendremos que dibujarlo todo nosotros a mano. 
+  Esto nos permitir&aacute; tener un mayor control sobre lo que dibujamos, y podremos 
+  recibir eventos del teclado a bajo nivel. Esto provocar&aacute; que las aplicaciones 
+  sean menos portables. Esta API ser&aacute; conveniente para las aplicaciones 
+  que necesitan tener control total sobre lo que se dibuja y sobre la entrada, 
+  como por ejemplo los juegos.</p>
+<div align="center"><img src="imagenes/lcdui/jerarquia.gif" width="312" height="145"> 
+</div>
+<p class="caption">Figura 2. Jerarqu&iacute;a de elementos displayables</p>
+<h2>5.3. Componentes de alto nivel</h2>
+<p>Todos los componentes de alto nivel derivan de la clase <code>Screen</code>. 
+  Se llama as&iacute; debido a que cada uno de estos componentes ser&aacute; una 
+  pantalla de nuestra aplicaci&oacute;n, ya que no puede haber m&aacute;s de un 
+  componente en la pantalla al mismo tiempo. Esta clase contiene las propiedades 
+  comunes a todos los elementos de alto nivel:</p>
+<p><strong>T&iacute;tulo</strong>: Es el t&iacute;tulo que se mostrar&aacute; 
+  en la pantalla correspondiente al componente. Podemos leer o asignar el t&iacute;tulo 
+  con los m&eacute;todos:</p>
+<pre class="codigo">String titulo = componente.<strong>getTitle</strong>();
+componente.<strong>setTitle</strong>(titulo);</pre>
+<p><strong>Ticker</strong>: Podemos mostrar un <em>ticker</em> en la pantalla. 
+  El <em>ticker</em> consiste en un texto que ir&aacute; desplaz&aacute;ndose 
+  de derecha a izquierda. Podemos asignar o obtener el <em>ticker</em> con:</p>
+<pre class="codigo">Ticker ticker = componente.<strong>getTicker</strong>();
+componente.<strong>setTicker</strong>(ticker);</pre>
+<p>A continuaci&oacute;n podemos ver c&oacute;mo se muestra el t&iacute;tulo y 
+  el <em>ticker</em> en distintos modelos de m&oacute;viles:</p>
+<table width="90%" border="0" align="center">
+  <tr>
+    <td><img src="imagenes/lcdui/screen_1.gif" width="187" height="190"></td>
+    <td><img src="imagenes/lcdui/screen_2.gif" width="233" height="190"></td>
+    <td><img src="imagenes/lcdui/screen_3.gif" width="145" height="190"></td>
+  </tr>
+</table>
+<p class="caption">Figura 3. T&iacute;tulo y ticker de las pantallas</p>
+<p>Los componentes de alto nivel disponibles son cuadros de texto (<code>TextBox</code>), 
+  listas (<code>List</code>), formularios (<code>Form</code>) y alertas (<code>Alert</code>).</p>
+<h3><strong>5.3.1. Cuadros de texto</strong></h3>
+<p>Este componente muestra un cuadro donde el usuario puede introducir texto. 
+  La forma en la que se introduce el texto es dependiente del dispositivo. Por 
+  ejemplo, los tel&eacute;fonos que soporten texto predictivo podr&aacute;n introducir 
+  texto de esta forma. Esto se hace de forma totalmente nativa, por lo que desde 
+  Java no podremos modificar este m&eacute;todo de introducci&oacute;n del texto.</p>
+<p>Para crear un campo de texto deberemos crear un objeto de la clase <code>TextBox</code>, 
+  utilizando el siguiente constructor:</p>
+<pre class="codigo">TextBox tb = new TextBox(titulo, texto, capacidad, restricciones);</pre>
+<p>Donde <code>titulo</code> ser&aacute; el t&iacute;tulo que se mostrar&aacute; 
+  en la pantalla, <code>texto</code> ser&aacute; el texto que se muestre inicialmente 
+  dentro del cuadro, y <code>capacidad</code> ser&aacute; el n&uacute;mero de 
+  caracteres m&aacute;ximo que puede tener el texto. Adem&aacute;s podemos a&ntilde;adir 
+  una serie de restricciones, definidas como constantes de la clase <code>TextField</code>, 
+  que limitar&aacute;n el tipo de texto que se permita escribir en el cuadro. 
+  Puede tomar los siguientes valores:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="31%"><code>TextField.ANY</code></td>
+    <td width="69%">Cualquier texto</td>
+  </tr>
+  <tr> 
+    <td><code>TextField.NUMERIC</code></td>
+    <td>N&uacute;meros enteros</td>
+  </tr>
+  <tr> 
+    <td><code>TextField.PHONENUMBER</code></td>
+    <td>N&uacute;meros de tel&eacute;fono</td>
+  </tr>
+  <tr> 
+    <td><code>TextField.EMAILADDR</code></td>
+    <td>Direcciones de e-mail</td>
+  </tr>
+  <tr> 
+    <td><code>TextField.URL</code></td>
+    <td>URLs</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>TextField.PASSWORD</code></td>
+    <td>Se ocultan los caracteres escritos utilizando, por ejemplo utilizando 
+      asteriscos (<code>*</code>). Puede combinarse con los valores anteriores 
+      utilizando el operador OR (<code>|</code>).</td>
+  </tr>
+</table>
+<p>Una vez creado, para que se muestre en la pantalla debemos establecerlo como 
+  el componente actual del <em>display</em>:</p>
+<pre class="codigo">mi_display.<strong>setCurrent</strong>(tb);</pre>
+<p>Una vez hecho esto este ser&aacute; el componente que se muestre en el <em>display</em>, 
+  y el que recibir&aacute; los eventos y comandos de entrada, de forma que cuando 
+  el usuario escriba utilizando el teclado del m&oacute;vil estar&aacute; escribiendo 
+  en este cuadro de texto.</p>
+<p>Podemos obtener el texto que haya escrito el usuario en este cuadro de texto 
+  utilizando el m&eacute;todo:</p>
+<pre class="codigo">String texto = tb.<strong>getString</strong>();</pre>
+<p>Esto lo haremos cuando ocurra un determinado evento, que nos indique que el 
+  usuario ya ha introducido el texto, como por ejemplo cuando pulse sobre la opci&oacute;n 
+  OK. </p>
+<p>Adem&aacute;s tiene m&eacute;todos con los que podremos modificar el contenido 
+  del cuadro de texto, insertando, modificando o borrando caracteres o bien cambiando 
+  todo el texto, as&iacute; como para obtener informaci&oacute;n sobre el mismo, 
+  como el n&uacute;mero de caracteres que se han escrito, la capacidad m&aacute;xima 
+  o las restricciones impuestas.</p>
+<p>Por ejemplo, podemos crear y mostrar un campo de texto para introducir una 
+  contrase&ntilde;a de 8 caracteres de la siguiente forma:</p>
+<pre class="codigo"><strong>TextBox</strong> tb = new <strong>TextBox</strong>(&quot;Contrase&ntilde;a&quot;, &quot;&quot;, 8, <br>                         TextField.ANY | TextField.PASSWORD);<br>Display d = Display.getDisplay(this);<br>d.setCurrent(tb);</pre>
+<p>El aspecto que mostrar&aacute; esta pantalla en distintos modelos de m&oacute;viles 
+  ser&aacute; el siguiente:</p>
+<table width="90%" border="0" align="center">
+  <tr>
+    <td><img src="imagenes/lcdui/textbox_1.gif" width="190" height="190"></td>
+    <td><img src="imagenes/lcdui/textbox_2.gif" width="211" height="190"></td>
+    <td><img src="imagenes/lcdui/textbox_3.gif" width="147" height="190"></td>
+  </tr>
+</table>
+<p class="caption">Figura 4. Cuadros de texto</p>
+<h3><strong>5.3.2. Listas</strong></h3>
+<p>Este componente muestra una lista de elementos en la pantalla. Las listas pueden 
+  ser de distintos tipos:</p>
+<ul>
+  <li><strong>Impl&iacute;cita</strong>: Este tipo de listas nos servir&aacute;n 
+    por ejemplo para hacer men&uacute;s. Cuando pulsemos sobre un elemento de 
+    la lista se le notificar&aacute; inmediatamente a la aplicaci&oacute;n el 
+    elemento sobre el que hemos pulsado, para que &eacute;sta pueda realizar la 
+    acci&oacute;n correspondiente. <br>
+  </li>
+  <li><strong>Exclusiva</strong>: A diferencia de la anterior, en esta lista cuando 
+    se pulsa sobre un elemento no se notifica a la aplicaci&oacute;n, sino que 
+    simplemente lo que hace es marcar el elemento como seleccionado. En esta lista 
+    podremos tener s&oacute;lo un elemento marcado, si previamente ya tuvi&eacute;semos 
+    uno marcado, cuando pulsemos sobre uno nuevo se desmarcar&aacute; el anterior.<br>
+  </li>
+  <li><strong>M&uacute;ltiple</strong>: Es similar a la exclusiva, pero podemos 
+    marcar varios elementos simult&aacute;neamente. Pulsando sobre un elemento 
+    lo marcaremos o lo desmarcaremos, pudiendo de esta forma marcar tantos como 
+    queramos.</li>
+</ul>
+<p>Las listas se definen mediante la clase <code>List</code>, y para crear una 
+  lista podemos utilizar el siguiente constructor:</p>
+<pre class="codigo">List l = new List(titulo, tipo);
+</pre>
+<p>Donde titulo ser&aacute; el t&iacute;tulo de la pantalla correspondiente a 
+  nuestra lista, y tipo ser&aacute; uno de los tipos vistos anteriormente, definidos 
+  como constantes de la clase <code>Choice</code>:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="30%"><code>Choice.IMPLICIT</code></td>
+    <td width="70%">Lista impl&iacute;cita</td>
+  </tr>
+  <tr> 
+    <td><code>Choice.EXCLUSIVE</code></td>
+    <td>Lista exclusiva</td>
+  </tr>
+  <tr> 
+    <td><code>Choice.MULTIPLE</code></td>
+    <td>Lista m&uacute;ltiple</td>
+  </tr>
+</table>
+<p>Tambi&eacute;n tenemos otro constructor en el que podemos especificar un <em>array</em> 
+  de elementos a mostrar en la lista, para a&ntilde;adir toda esa lista de elementos 
+  en el momento de su construcci&oacute;n. Si no lo hacemos en este momento, podremos 
+  a&ntilde;adir elementos posteriormente utilizando el m&eacute;todo:</p>
+<pre class="codigo">l.<strong>append</strong>(texto, imagen);</pre>
+<p>Donde <code>texto</code> ser&aacute; la cadena de texto que se muestre, e <code>imagen</code> 
+  ser&aacute; una imagen que podremos poner a dicho elemento de la lista de forma 
+  opcional. Si no queremos poner ninguna imagen podemos especificar <code>null</code>.</p>
+<p>Podremos conocer desde el c&oacute;digo los elementos que est&aacute;n marcados 
+  en la lista en un momento dado. Tambi&eacute;n tendremos m&eacute;todos para 
+  insertar, modificar o borrar elementos de la lista, as&iacute; como para marcarlos 
+  o desmarcarlos.</p>
+<p>Por ejemplo, podemos crear un men&uacute; para nuestra aplicaci&oacute;n de 
+  la siguiente forma:</p>
+<pre class="codigo"><strong>List</strong> l = new <strong>List</strong>(&quot;Menu&quot;, Choice.IMPLICIT);
+l.<strong>append</strong>(&quot;Nuevo juego&quot;, null);
+l.<strong>append</strong>(&quot;Continuar&quot;, null);
+l.<strong>append</strong>(&quot;Instrucciones&quot;, null);
+l.<strong>append</strong>(&quot;Hi-score&quot;, null);
+l.<strong>append</strong>(&quot;Salir&quot;, null);
+Display d = Display.getDisplay(this);
+d.setCurrent(l);
+</pre>
+<p>A continuaci&oacute;n se muestra el aspecto de los distintos tipos de listas 
+  existentes:</p>
+<table width="50%" border="0" align="center">
+  <tr> 
+    <td align="center"> <div align="center"><img src="imagenes/lcdui/list_1.gif" width="141" height="190"><br>
+        <em>IMPL&Iacute;CITA</em></div></td>
+    <td><div align="center"><img src="imagenes/lcdui/list_2.gif" width="143" height="190"><br>
+        <em>EXCLUSIVA</em></div></td>
+    <td><div align="center"><img src="imagenes/lcdui/list_3.gif" width="141" height="190"><br>
+        <em>M&Uacute;LTIPLE</em></div></td>
+  </tr>
+</table>
+<p class="caption">Figura 5. Tipos de listas</p>
+<h3><strong>5.3.3. Formularios</strong></h3>
+<p>Este componente es m&aacute;s complejo, permiti&eacute;ndonos mostrar varios 
+  elementos en una misma pantalla. Los formularios se encapsulan en la clase <code>Form</code>, 
+  y los elementos que podemos incluir en ellos son todos derivados de la clase 
+  <code>Item</code>. Tenemos disponibles los siguientes elementos:</p>
+<ul>
+  <li><strong>Etiquetas</strong> (<code>StringItem</code>): Muestra una etiqueta 
+    de texto est&aacute;tico, es decir, que no podr&aacute; ser modificado por 
+    el usuario. Se compone de un t&iacute;tulo del campo y de un texto como contenido.<br>
+  </li>
+  <li><strong>Im&aacute;genes</strong> (<code>ImageItem</code>): Muestra una imagen 
+    en el formulario. Esta imagen tambi&eacute;n es est&aacute;tica. Se compone 
+    de un t&iacute;tulo, la imagen, y un texto alternativo en el caso de que el 
+    dispositivo no pueda mostrar im&aacute;genes.<br>
+  </li>
+  <li><strong>Campo de texto</strong> (<code>TextField</code>): Muestra un cuadro 
+    donde el usuario podr&aacute; introducir texto. Se trabaja con &eacute;l de 
+    forma similar al componente <code>TextBox</code> visto anteriormente. <br>
+  </li>
+  <li><strong>Campo de fecha</strong> (<code>DateField</code>): Permite al usuario 
+    introducir una fecha. La forma de introducir la fecha variar&aacute; de un 
+    modelo de m&oacute;vil a otro. Por ejemplo, puede introducirse directamente 
+    introduciendo num&eacute;ricamente la fecha, o mostrar un calendario donde 
+    el usuario pueda seleccionar el d&iacute;a.<br>
+  </li>
+  <li><strong>Cuadro de opciones</strong> (<code>ChoiceGroup</code>): Muestra 
+    un grupo de opciones para que el usuario marque una o varias de ellas. Se 
+    trabaja con &eacute;l de forma similar al componente <code>List</code> visto 
+    anteriormente, pudiendo en este caso ser de tipo exclusivo o m&uacute;ltiple. 
+    <br>
+  </li>
+  <li><strong>Barra de nivel </strong>(<code>Gauge</code>): Muestra una barra 
+    para seleccionar un nivel, como por ejemplo podr&iacute;a ser el nivel de 
+    volumen. Cada posici&oacute;n de esta barra corresponder&aacute; a un valor 
+    entero. Este valor ir&aacute; de cero a un valor m&aacute;ximo que podremos 
+    especificar nosotros. La barra podr&aacute; ser interactiva o fija.</li>
+</ul>
+<div align="center"><img src="imagenes/lcdui/jerarquia_form.gif" width="334" height="139"> 
+</div>
+<p class="caption">Figura 6. Jerarqu&iacute;a de los elementos de los formularios</p>
+<p>Para crear el formulario podemos utilizar el siguiente constructor, en el que 
+  especificamos el t&iacute;tulo de la pantalla:</p>
+<pre class="codigo">Form f = new Form(titulo);
+</pre>
+<p>Tambi&eacute;n podemos crear el formulario proporcionando el <em>array</em> 
+  de elementos (items) que tiene en el constructor. Si no lo hemos hecho en el 
+  constructor, podemos a&ntilde;adir items al formulario con:</p>
+<pre class="codigo">f.append(item);</pre>
+<p>Podremos a&ntilde;adir como item o bien cualquiera de los items vistos anteriormente, 
+  derivados de la clase <code>Item</code>, o una cadena de texto o una imagen. 
+  Tambi&eacute;n podremos insertar, modificar o borrar los items del formulario.</p>
+<p>A continuaci&oacute;n mostramos un ejemplo de formulario:</p>
+<pre class="codigo"><strong>Form</strong> f = new <strong>Form</strong>(&quot;Formulario&quot;);
+<br>Item itemEtiqueta = new <strong>StringItem</strong>(&quot;Etiqueta:&quot;, <br>                                   &quot;Texto de la etiqueta&quot;);
+Item itemTexto = new <strong>TextField</strong>(&quot;Telefono:&quot;, &quot;&quot;, 8, <br>                               TextField.PHONENUMBER);
+Item itemFecha = new <strong>DateField</strong>(&quot;Fecha&quot;, DateField.DATE_TIME);
+Item itemBarra = new <strong>Gauge</strong>(&quot;Volumen&quot;, true, 10, 8);
+ChoiceGroup itemOpcion = new <strong>ChoiceGroup</strong>(&quot;Opcion&quot;, <br>                                         Choice.EXCLUSIVE);
+itemOpcion.append(&quot;Si&quot;, null);
+itemOpcion.append(&quot;No&quot;, null);<br>		<br>f.<strong>append</strong>(itemEtiqueta);<br>f.<strong>append</strong>(itemTexto);<br>f.<strong>append</strong>(itemFecha);<br>f.<strong>append</strong>(itemBarra);<br>f.<strong>append</strong>(itemOpcion);<br><br>Display d = Display.getDisplay(this);
+d.setCurrent(f);</pre>
+<p>El aspecto de este formulario es el siguiente:</p>
+<table width="50%" border="0" align="center">
+  <tr>
+    <td><img src="imagenes/lcdui/form_1.gif" width="144" height="190"></td>
+    <td><img src="imagenes/lcdui/form_2.gif" width="143" height="190"></td>
+    <td><img src="imagenes/lcdui/form_3.gif" width="138" height="190"></td>
+  </tr>
+</table>
+<p class="caption">Figura 7. Aspecto de los formularios</p>
+<p>En MIDP 2.0 aparecen dos nuevos tipos de items que podremos a&ntilde;adir a 
+  los formularios. Estos items son:</p>
+<ul>
+  <li><strong>Spacer</strong>: Se trata de un item vac&iacute;o, al que se le 
+    asigna un tama&ntilde;o m&iacute;nimo, que nos servir&aacute; para introducir 
+    un espacio en blanco en el formulario. El item tendr&aacute; una altura y 
+    anchura m&iacute;nima, y al insertarlo en el formulario se crear&aacute; un 
+    espacio en blanco con este tama&ntilde;o. El siguiente item que a&ntilde;adamos 
+    se posicionar&aacute; despu&eacute;s de este espacio.<br>
+  </li>
+  <li><strong>CustomItem</strong>: Este es un item personalizable, en el que podremos 
+    definir totalmente su aspecto y su forma de interactuar con el usuario. La 
+    forma en la que se definen estos items es similar a la forma en la que se 
+    define el <code>Canvas</code>, que estudiaremos en temas posteriores. Al igual 
+    que el <code>Canvas</code>, este componente pertenece a la API de bajo nivel, 
+    ya que permite al usuario dibujar los gr&aacute;ficos y leer la entrada del 
+    usuario a bajo nivel.</li>
+</ul>
+<h3><strong>5.3.4. Alertas</strong></h3>
+<p>Las alertas son un tipo especial de pantallas, que servir&aacute;n normalmente 
+  de transici&oacute;n entre dos pantallas. En ellas normalmente se muestra un 
+  mensaje de informaci&oacute;n, error o advertencia y se pasa autom&aacute;ticamente 
+  a la siguiente pantalla.</p>
+<p>Las alertas se encapsulan en la clase <code>Alert</code>, y se crear&aacute;n 
+  normalmente con el siguiente constructor:</p>
+<pre class="codigo">Alert a = new Alert(titulo, texto, imagen, tipo);</pre>
+<p>Donde <code>titulo</code> es el t&iacute;tulo de la pantalla y <code>texto</code> 
+  ser&aacute; el texto que se muestre en la alerta. Podemos mostrar una imagen 
+  de forma opcional. Si no queremos usar ninguna imagen pondremos <code>null</code> 
+  en el campo correspondiente. Adem&aacute;s debemos dar un tipo de alerta. Estos 
+  tipos se definen como constantes de la clase <code>AlertType</code>:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="36%" valign="top">
+<pre>AlertType.ERROR</pre></td>
+    <td width="64%">Muestran un mensaje de error de la aplicaci&oacute;n.</td>
+  </tr>
+  <tr> 
+    <td valign="top">
+<pre>AlertType.WARNING</pre></td>
+    <td>Muestran un mensaje de advertencia.</td>
+  </tr>
+  <tr> 
+    <td valign="top">
+<pre>AlertType.INFO</pre></td>
+    <td>Muestran un mensaje de informaci&oacute;n.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><pre>AlertType.CONFIRMATION</pre></td>
+    <td>Muestran un mensaje de confirmaci&oacute;n de alguna acci&oacute;n realizada.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><pre>AlertType.ALARM</pre></td>
+    <td>Notifican de un evento en el que est&aacute; interesado el usuario.</td>
+  </tr>
+</table>
+<p>A estas alertas se les puede asignar un tiempo l&iacute;mite (<em>timeout</em>), 
+  de forma que transcurrido este tiempo desde que se mostr&oacute; la alerta se 
+  pase autom&aacute;ticamente a la siguiente pantalla.</p>
+<p>Para mostrar una alerta lo haremos de forma distinta a los componentes que 
+  hemos visto anteriormente. En este caso utilizaremos el siguiente m&eacute;todo:</p>
+<pre class="codigo">mi_display.<strong>setCurrent</strong>(alerta, siguiente_pantalla);</pre>
+<p>Debemos especificar adem&aacute;s de la alerta, la siguiente pantalla a la 
+  que iremos tras mostrar la alerta, ya que como hemos dicho anteriormente la 
+  alerta es s&oacute;lo una pantalla de transici&oacute;n.</p>
+<p>Por ejemplo, podemos crear una alerta que muestre un mensaje de error al usuario 
+  y que vuelva a la misma pantalla en la que estamos:</p>
+<pre class="codigo"><strong>Alert</strong> a = new <strong>Alert</strong>(&quot;Error&quot;, &quot;No hay ninguna nota seleccionada&quot;,  <br>                    null, <strong>AlertType.ERROR</strong>); <br>Display d = Display.getDisplay(midlet); <br>d.setCurrent(a, d.getCurrent());  </pre>
+<p>A continuaci&oacute;n podemos ver dos alertas distintas, mostrando mensajes 
+  de error, de informaci&oacute;n y de alarma respectivamente:</p>
+<table width="50%" border="0" align="center">
+  <tr> 
+    <td align="center"><img src="imagenes/lcdui/alert_1.gif" width="140" height="190"></td>
+    <td align="center"><img src="imagenes/lcdui/alert_2.gif" width="141" height="190"></td>
+    <td align="center"><img src="imagenes/lcdui/alert_3.gif" width="142" height="190"></td>
+  </tr>
+</table>
+<p class="caption">Figura 8. Alertas de error, de informaci&oacute;n y de alarma</p>
+<p>Puede ser interesante combinar las alertas con temporizadores para implementar 
+  agendas en las que el m&oacute;vil nos recuerde diferentes eventos mostrando 
+  una alerta a una hora determinada, o hacer sonar una alarma, ya que estas alertas 
+  nos permiten incorporar sonido.</p>
+<p>Por ejemplo podemos implementar una tarea que dispare una alarma, mostrando 
+  una alerta y reproduciendo sonido. La tarea puede contener el siguiente c&oacute;digo:</p>
+<pre class="codigo">class Alarma extends <strong>TimerTask</strong> {
+    public void run() {
+        <strong>Alert</strong> a = new <strong>Alert</strong>(&quot;Alarma&quot;, <br>            &quot;Se ha disparado la alarma&quot;, null, AlertType.ALARM);
+        a.<strong>setTimeout</strong>(Alert.FOREVER);
+<br>        Display d = Display.getDisplay(midlet);
+        AlertType.ALARM.<strong>playSound</strong>(d);<br><br>        d.setCurrent(a, d.getCurrent());
+    }
+}</pre>
+<p>Una vez definida la tarea que implementa la alarma, podemos utilizar un temporizador 
+  para planificar el comienzo de la alarma a una hora determinada:</p>
+<pre class="codigo">Timer temp = new Timer();
+Alarma a = new Alarma();
+temp.schedule(a, tiempo);</pre>
+<p>Como tiempo de comienzo podremos especificar un retardo en milisegundos o una 
+  hora absoluta a la que queremos que se dispare la alarma.</p>
+<h2>5.4. Im&aacute;genes</h2>
+<p>En muchos de los componentes anteriores hemos visto que podemos incorporar 
+  im&aacute;genes. Estas im&aacute;genes se encapsular&aacute;n en la clase <code>Image</code>, 
+  que contendr&aacute; el <em>raster</em> (matriz de <em>pixels</em>) correspondiente 
+  a dicha imagen en memoria. Seg&uacute;n si este <em>raster</em> puede ser modificado 
+  o no, podemos clasificar las im&aacute;genes en mutables e inmutables.</p>
+<h3><strong>5.4.1. Im&aacute;genes mutables</strong></h3>
+<p>Nos permitir&aacute;n modificar su contenido dentro del c&oacute;digo de nuestra 
+  aplicaci&oacute;n. En la API de interfaz gr&aacute;fica de bajo nivel veremos 
+  c&oacute;mo modificar estas im&aacute;genes. Las im&aacute;genes mutables se 
+  crean como una imagen en blanco con unas determinadas dimensiones, utilizando 
+  el siguiente m&eacute;todo:</p>
+<pre class="codigo">Image img = Image.<strong>createImage</strong>(ancho, alto);</pre>
+<p>Nada m&aacute;s crearla estar&aacute; vac&iacute;a. A partir de este momento 
+  podremos dibujar en ella cualquier contenido, utilizando la API de bajo nivel.</p>
+<h3><strong>5.4.2. Im&aacute;genes inmutables</strong></h3>
+<p>Las im&aacute;genes inmutables una vez creadas no pueden ser modificadas. Las 
+  im&aacute;genes que nos permiten a&ntilde;adir los componentes de alto nivel 
+  vistos previamente deben ser inmutables, ya que estos componentes no est&aacute;n 
+  preparados para que la imagen pueda cambiar en cualquier momento.</p>
+<p>Para crear una imagen inmutable deberemos proporcionar el contenido de la imagen 
+  en el momento de su creaci&oacute;n, ya que no se podr&aacute; modificar m&aacute;s 
+  adelante. Lo normal ser&aacute; utilizar ficheros de im&aacute;genes. Las aplicaciones 
+  MIDP soportan el formato PNG, por lo que deberemos utilizar este formato. </p>
+<ul>
+  <li>Carga de im&aacute;genes desde recursos: 
+    <p>Podemos cargar una imagen de un fichero PNG incluido dentro del JAR de 
+      nuestra aplicaci&oacute;n utilizando el siguiente m&eacute;todo:</p>
+    <pre class="codigo">Image img = Image.<strong>createImage</strong>(nombre_fichero);</pre>
+    <p>De esta forma buscar&aacute; dentro del JAR un recurso con el nombre que 
+      hayamos proporcionado, utilizando internamente el m&eacute;todo <code>Class.getResourceAsStream</code> 
+      que vimos en el cap&iacute;tulo anterior.</p>
+    <p>NOTA: Las im&aacute;genes son el &uacute;nico tipo de recurso que proporcionan 
+      su propio m&eacute;todo para cargarlas desde un fichero dentro del JAR. 
+      Para cualquier otro tipo de recurso, como por ejemplo ficheros de texto, 
+      deberemos utilizar <code>Class.getResourceAsStream</code> para abrir un 
+      flujo de entrada que lea de &eacute;l y leerlo manualmente.</p>
+  </li>
+  <li>Carga desde otra ubicaci&oacute;n: 
+    <p>Si la imagen no est&aacute; dentro del fichero JAR, como por ejemplo en 
+      el caso de que queramos leerla de la web, no podremos utilizar el m&eacute;todo 
+      anterior. Encontramos un m&eacute;todo m&aacute;s gen&eacute;rico para la 
+      creaci&oacute;n de una imagen inmutable que crea la imagen a partir de la 
+      secuencia de <em>bytes</em> del fichero PNG de la misma:</p>
+    <pre class="codigo">Image img = Image.<strong>createImage</strong>(datos, offset, longitud);</pre>
+    <p>Donde <code>datos</code> es un <em>array</em> de <em>bytes</em>, <code>offset</code> 
+      la posici&oacute;n del <em>array</em> donde comienza la imagen, y <code>longitud</code> 
+      el n&uacute;mero de <em>bytes</em> que ocupa la imagen.</p>
+    <p>Por ejemplo, si queremos cargar una imagen desde la red podemos hacer lo 
+      siguiente:</p>
+    <pre class="codigo">// Abre una conexion en red con la URL de la imagen<br>String url = &quot;http://j2ee.ua.es/imagenes/logo.png&quot;;<br>ContentConnection con = (ContentConnection) Connector.open(url);<br>InputStream in = con.openInputStream();<br><br>// Lee bytes de la imagen
+int c;
+ByteArrayOutputStream baos = new ByteArrayOutputStream();<br>while( (c=in.read()) != -1 ) {<br>    baos.write(c);<br>}<br><br>// Crea imagen a partir de array de bytes<br>byte [] datos = baos.toByteArray();<br>Image img = Image.<strong>createImage</strong>(datos,0,datos.length);</pre>
+  </li>
+  <li> Conversi&oacute;n de mutable a inmutable:
+    <p>Es posible que queramos mostrar una imagen que hemos modificado desde dentro 
+      de nuestro programa en alguno de los componentes de alto nivel anteriores. 
+      Sin embargo ya hemos visto que s&oacute;lo se pueden mostrar en estos componentes 
+      im&aacute;genes inmutables.</p>
+    <p>Lo que podemos hacer es convertir la imagen de mutable a inmutable, de 
+      forma que crearemos una versi&oacute;n no modificable de nuestra imagen 
+      mutable, que pueda ser utilizada en estos componentes. Si hemos creado una 
+      imagen mutable <code>img_mutable</code>, podemos crear una versi&oacute;n 
+      inmutable de esta imagen de la siguiente forma:</p>
+    <pre class="codigo">Image img_inmutable = Image.<strong>createImage</strong>(img_mutable);</pre>
+  </li>
+</ul>
+<p>Una vez tenemos creada la imagen inmutable, podremos mostrarla en distintos 
+  componentes de alto nivel, como alertas, listas y algunos items dentro de los 
+  formularios (cuadro de opciones e item de tipo imagen). </p>
+<p>En las alertas, listas y cuadros de opciones de los formularios simplemente 
+  especificaremos la imagen que queremos mostrar, y &eacute;ste se mostrar&aacute; 
+  en la pantalla de alerta o junto a uno de los elementos de la lista. En los 
+  items de tipo imagen (<code>ImageItem</code>) de los formularios, podremos controlar 
+  la disposici&oacute;n (<em>layout</em>) de la imagen, permiti&eacute;ndonos 
+  por ejemplo mostrarla centrada, a la izquierda o a la derecha.</p>
+<h2>5.5. Comandos de entrada</h2>
+<p>Hemos visto como crear una serie de componentes de alto nivel para mostrar 
+  en nuestra aplicaci&oacute;n. Sin embargo no hemos visto como interactuar con 
+  las acciones que realice el usuario, para poderles dar una respuesta desde nuestra 
+  aplicaci&oacute;n.</p>
+<p>En estos componentes de alto nivel el usuario podr&aacute; interactuar mediante 
+  una serie de comandos que podr&aacute; ejecutar. Para cada pantalla podremos 
+  definir una lista de comandos, de forma que el usuario pueda seleccionar y ejecutar 
+  uno de ellos. Esta es una forma de interacci&oacute;n de alto nivel, que se 
+  implementar&aacute; a nivel nativo y que ser&aacute; totalmente portable.</p>
+<p>En el m&oacute;vil estos comandos se encontrar&aacute;n normalmente en una 
+  o en las dos esquinas inferiores, y se podr&aacute;n activar pulsando sobre 
+  el bot&oacute;n situado justo bajo dicha esquina:</p>
+<div align="center"><img src="imagenes/lcdui/command_1.gif" width="165" height="300"> 
+</div>
+<p class="caption">Figura 9. Comandos de las pantallas</p>
+<p>Seg&uacute;n el dispositivo tendremos uno o dos botones de este tipo. Si tenemos 
+  varios comandos, al pulsar sobre el bot&oacute;n de la esquina correspondiente 
+  se abrir&aacute; un men&uacute; con todos los comandos disponibles para seleccionar 
+  uno de ellos.</p>
+<div align="center"><img src="imagenes/lcdui/command_2.gif" width="165" height="300"> 
+</div>
+<p class="caption">Figura 10. Despliegue del men&uacute; de comandos</p>
+<h3><strong>5.5.1. Creaci&oacute;n de comandos</strong></h3>
+<p>Estos comandos se definen mediante la clase <code>Command</code>, y pueden 
+  ser creados utilizando el siguiente constructor:</p>
+<pre class="codigo">Command c = new Command(etiqueta, tipo, prioridad);</pre>
+<p>En etiqueta especificaremos el texto que se mostrar&aacute; en el comando. 
+  Los otros dos par&aacute;metros se utilizar&aacute;n para mejorar la portabilidad 
+  entre dispositivos. En tipo podremos definir el tipo del comando, pudiendo ser:</p>
+<table width="90%" border="0">
+  <tr> 
+    <td width="30%"><code>Command.OK</code></td>
+    <td width="70%">Dar una respuesta positiva</td>
+  </tr>
+  <tr> 
+    <td><code>Command.BACK</code></td>
+    <td>Volver a la pantalla anterior</td>
+  </tr>
+  <tr> 
+    <td><code>Command.CANCEL</code></td>
+    <td>Dar una respuesta negativa</td>
+  </tr>
+  <tr> 
+    <td><code>Command.EXIT</code></td>
+    <td>Salir de la aplicaci&oacute;n</td>
+  </tr>
+  <tr> 
+    <td><code>Command.HELP</code></td>
+    <td>Mostrar una pantalla de ayuda</td>
+  </tr>
+  <tr> 
+    <td><code>Command.STOP</code></td>
+    <td>Detener alg&uacute;n proceso que se est&eacute; realizando</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>Command.SCREEN</code></td>
+    <td>Comando propio de nuestra aplicaci&oacute;n para la pantalla actual.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>Command.ITEM</code></td>
+    <td>Comando espec&iacute;fico para ser aplicado al item seleccionado actualmente. 
+      De esta forma se comportar&aacute; como un men&uacute; contextual.</td>
+  </tr>
+</table>
+<p>El asignar uno de estos tipos no servir&aacute; para que el comando realice 
+  una de estas acciones. Las acciones que se realicen al ejecutar el comando las 
+  deberemos implementar siempre nosotros. El asignar estos tipos simplemente sirve 
+  para que la implementaci&oacute;n nativa del dispositivo conozca qu&eacute; 
+  funci&oacute;n desempe&ntilde;a cada comando, de forma que los sit&uacute;e 
+  en el lugar adecuado para dicho dispositivo. Cada dispositivo podr&aacute; distribuir 
+  los distintos tipos de comandos utilizando diferentes criterios.</p>
+<p>Por ejemplo, si en nuestro dispositivo la acci&oacute;n de volver atr&aacute;s 
+  suele asignarse al bot&oacute;n de la esquina derecha, si a&ntilde;adimos un 
+  comando de este tipo intentar&aacute; situarlo en este lugar.</p>
+<p>Adem&aacute;s les daremos una prioridad con la que establecemos la importancia 
+  de los comandos. Esta prioridad es un valor entero, que cuanto menor sea m&aacute;s 
+  importancia tendr&aacute; el comando. Un comando con prioridad <code>1</code> 
+  tiene importancia m&aacute;xima. Primero situar&aacute; los comandos utilizando 
+  el tipo como criterio, y para los comandos con el mismo tipo utilizar&aacute; 
+  la prioridad para poner m&aacute;s accesibles aquellos con mayor prioridad.</p>
+<p>Una vez hemos creado los comandos, podemos a&ntilde;adirlos a la pantalla actual 
+  utilizando el m&eacute;todo:</p>
+<pre class="codigo">pantalla.<strong>addCommand</strong>(c);</pre>
+<p>Esta <code>pantalla</code> podr&aacute; ser cualquier elemento <em>displayable</em> 
+  de los que hemos visto anteriormente excepto <code>Alarm</code>. ya que no esta 
+  permitido a&ntilde;adir comandos a las alarmas. De esta forma a&ntilde;adiremos 
+  todos los comandos necesarios.</p>
+<p>Por ejemplo, podemos a&ntilde;adir una serie de comandos a la pantalla de <em>login</em> 
+  de nuestra aplicaci&oacute;n de la siguiente forma:</p>
+<pre class="codigo">TextBox tb = new TextBox(&quot;Login&quot;, &quot;&quot;, 8, TextField.ANY);
+<br><strong>Command</strong> cmdOK = new <strong>Command</strong>(&quot;OK&quot;, <strong>Command.OK</strong>, 1);
+<strong>Command</strong> cmdAyuda = new <strong>Command</strong>(&quot;Ayuda&quot;, <strong>Command.HELP</strong>, 1);
+<strong>Command</strong> cmdSalir = new <strong>Command</strong>(&quot;Salir&quot;, <strong>Command.EXIT</strong>, 1);
+<strong>Command</strong> cmdBorrar = new <strong>Command</strong>(&quot;Borrar&quot;, <strong>Command.SCREEN</strong>, 1);
+<strong>Command</strong> cmdCancelar = new <strong>Command</strong>(&quot;Cancelar&quot;, <strong>Command.CANCEL</strong>, 1);
+<br>tb.<strong>addCommand</strong>(cmdOK);
+tb.<strong>addCommand</strong>(cmdAyuda);
+tb.<strong>addCommand</strong>(cmdSalir);
+tb.<strong>addCommand</strong>(cmdBorrar);
+tb.<strong>addCommand</strong>(cmdCancelar);
+<br>Display d = Display.getDisplay(this);
+d.setCurrent(tb);</pre>
+<h3><strong>5.5.2. Listener de comandos</strong></h3>
+<p>Una vez a&ntilde;adidos los comandos a la pantalla, deberemos definir el c&oacute;digo 
+  para dar respuesta a cada uno de ellos. Para ello deberemos crear un <em>listener</em>, 
+  que es un objeto que escucha las acciones del usuario para darles una respuesta.</p>
+<p>El <em>listener</em> ser&aacute; una clase en la que introduciremos el c&oacute;digo 
+  que queremos que se ejecute cuando el usuario selecciona uno de los comandos. 
+  Cuando se pulse sobre uno de estos comandos, se invocar&aacute; dicho c&oacute;digo.</p>
+<p>Para crear el <em>listener</em> debemos crear una clase que implemente la interfaz 
+  <code>commandListener</code>. El implementar esta interfaz nos obligar&aacute; 
+  a definir el m&eacute;todo <code>commandAction</code>, que ser&aacute; donde 
+  deberemos introducir el c&oacute;digo que d&eacute; respuesta al evento de selecci&oacute;n 
+  de un comando.</p>
+<pre class="codigo">class MiListener implements <strong>CommandListener</strong> {
+
+    public void <strong>commandAction</strong>(Command c, Displayable d) {
+
+        // C&oacute;digo de respuesta al comando
+
+    }
+}</pre>
+<p>Cuando se produzca un evento de este tipo, conoceremos qu&eacute; comando se 
+  ha seleccionado y en que <em>displayable</em> estaba, ya que esta informaci&oacute;n 
+  se proporciona como par&aacute;metros. Seg&uacute;n el comando que se haya ejecutado, 
+  dentro de este m&eacute;todo deberemos decidir qu&eacute; acci&oacute;n realizar.</p>
+<p>Por ejemplo, podemos crear un listener para los comandos a&ntilde;adidos a 
+  la pantalla de <em>login</em> del ejemplo anterior:</p>
+<pre class="codigo">class ListenerLogin implements <strong>CommandListener</strong> {
+
+    public void <strong>commandAction</strong>(Command c, Displayable d) {
+
+        if(c == cmdOK) {<br>            // Aceptar<br>        } else if(c == cmdCancelar) {<br>            // Cancelar<br>        } else if(c == cmdSalir) {<br>            // Salir<br>        } else if(c == cmdAyuda) {<br>            // Ayuda<br>        } else if(c == cmdBorrar) {<br>            // Borrar<br>        }<br>    }
+}</pre>
+<p>Una vez creado el <em>listener</em> tendremos registrarlo en el <em>displayable</em> 
+  que contiene los comandos para ser notificado de los comandos que ejecute el 
+  usuario. Para establecerlo como <em>listener</em> utilizaremos el m&eacute;todo 
+  <code>setCommandListener</code> del <em>displayable</em>.</p>
+<p>Por ejemplo, en el caso del campo de texto de la pantalla de <em>login</em> 
+  lo registraremos de la siguiente forma:</p>
+<pre class="codigo">tb.<strong>setCommandListener</strong>(new ListenerLogin());</pre>
+<p>Una vez hecho esto, cada vez que el usuario ejecute un comando se invocar&aacute; 
+  el m&eacute;todo <code>commandAction</code> del <em>listener</em> que hemos 
+  definido, indic&aacute;ndonos el comando que se ha invocado.</p>
+<h3><strong>5.5.3. Listas impl&iacute;citas</strong></h3>
+<p>En las listas impl&iacute;citas dijimos que cuando se pulsa sobre un elemento 
+  de la lista se notifica inmediatamente a la aplicaci&oacute;n para que se realice 
+  la acci&oacute;n correspondiente, de forma que se comporta como un men&uacute;.</p>
+<p>La forma que tiene de notificarse la selecci&oacute;n de un elemento de este 
+  tipo de listas es invocando un comando. En este caso se invocar&aacute; un tipo 
+  especial de comando definido como constante en la clase <code>List</code>, se 
+  trata de <code>List.SELECT_COMMAND</code>.</p>
+<p>Dentro de <code>commandAction</code> podemos comprobar si se ha ejecutado un 
+  comando de este tipo para saber si se ha seleccionado un elemento de la lista. 
+  En este caso, podremos saber el elemento del que se trata viendo el &iacute;ndice 
+  que se ha seleccionado:</p>
+<pre class="codigo">class ListenerLogin implements <strong>CommandListener</strong> {
+
+    public void <strong>commandAction</strong>(Command c, Displayable d) {
+
+        if(c == <strong>List.SELECT_COMMAND</strong>) {<br><br>			int indice = l.<strong>getSelectedIndex</strong>();<br>            if(indice == 0) {<br>                // Nuevo juego<br>            } else if(indice == 1) {<br>                // Continuar<br>            } else if(indice == 2) {<br>                // Instrucciones<br>            } else if(indice == 3) {<br>                // Hi-score<br>            } else if(indice == 4) {<br>                // Salir<br>            }<br>        }<br>    }
+}</pre>
+<h3><strong>5.5.4. Listener de items</strong></h3>
+<p>En el caso de los formularios, podremos tener constancia de cualquier cambio 
+  que el usuario haya introducido en alguno de sus campos antes de que se ejecute 
+  alg&uacute;n comando para realizar alguna acci&oacute;n.</p>
+<p>Por ejemplo, esto nos puede servir para validar los datos introducidos. En 
+  el momento que el usuario cambie alg&uacute;n campo, se nos notificar&aacute; 
+  dicho cambio pudiendo comprobar de esta forma si el valor introducido es correcto 
+  o no. Adem&aacute;s, de esta forma sabremos si ha habido cambios, por lo que 
+  podremos volver a grabar los datos del formulario de forma persistente s&oacute;lo 
+  en caso necesario.</p>
+<p>Para recibir la notificaci&oacute;n de cambio de alg&uacute;n item del formulario, 
+  utilizaremos un <em>listener</em> de tipo <code>ItemStateListener</code>, en 
+  el que deberemos definir el m&eacute;todo <code>itemStateChanged</code> donde 
+  introduciremos el c&oacute;digo a ejecutar en caso de que el usuario modifique 
+  alguno de los campos modificables (cuadros de opciones, campo de texto, campo 
+  de fecha o barra de nivel). El esqueleto de un <em>listener</em> de este tipo 
+  ser&aacute; el siguiente:</p>
+<pre class="codigo">class MiListener implements <strong>ItemStateListener</strong> {<br>    public void <strong>itemStateChanged</strong>(Item i) {<br>        // Se ha modificado el item i<br>    }<br>}</pre>
+<h2>5.6. Transiciones entre pantallas</h2>
+<p>Hemos visto que cada uno de los componentes <em>displayables</em> que tenemos 
+  disponibles representa una pantalla, y podemos cambiar esta pantalla utilizando 
+  el m&eacute;todo <code>setCurrent</code> del <em>display</em>. </p>
+<p>De esta forma podremos pasar de una pantalla a otra de la aplicaci&oacute;n 
+  cuando ocurra un determinado evento, como puede ser por ejemplo que el usuario 
+  ejecute un determinado comando o que se ejecute alguna tarea planificada por 
+  un temporizador.</p>
+<p>Cuando tengamos una aplicaci&oacute;n con un n&uacute;mero elevado de pantallas, 
+  ser&aacute; recomendable hacer previamente un dise&ntilde;o de esta aplicaci&oacute;n. 
+  Definiremos un diagrama de navegaci&oacute;n, en el que cada bloque representar&aacute; 
+  una pantalla, y las flechas que unen dichos bloques ser&aacute;n las transiciones 
+  entre pantallas.</p>
+<div align="center"><img src="imagenes/lcdui/mapa.gif" width="486" height="166"> 
+</div>
+<p class="caption">Figura 11. Mapa de pantallas</p>
+<p>Debemos asegurarnos en este mapa de pantallas que el usuario en todo momento 
+  puede volver atr&aacute;s y que hemos definido todos los enlaces necesarios 
+  para acceder a todas las pantallas de la aplicaci&oacute;n.</p>
+<h3><strong>5.6.1. Vuelta atr&aacute;s</strong></h3>
+<p>Normalmente las aplicaciones tendr&aacute;n una opci&oacute;n que nos permitir&aacute; 
+  volver a la pantalla visitada anteriormente. Para implementar esto podemos utilizar 
+  una pila (<code>Stack</code>), en la que iremos apilando todas las pantallas 
+  conforme las visitamos. Cuando pulsemos el bot&oacute;n para ir atr&aacute;s 
+  desapilaremos la ultima pantalla y la mostraremos en el <em>display</em> utilizando 
+  <code>setCurrent</code>.</p>
+<h3><strong>5.6.2. Dise&ntilde;o de pantallas</strong></h3>
+<p>Es conveniente tomar alg&uacute;n determinado patr&oacute;n de dise&ntilde;o 
+  para implementar las pantallas de nuestra aplicaci&oacute;n. Podemos crear una 
+  clase por cada pantalla, donde encapsularemos todo el contenido que se debe 
+  mostrar en la pantalla, los comandos disponibles, y los <em>listeners</em> que 
+  den respuesta a estos comandos.</p>
+<p>Las clases implementadas seg&uacute;n este patr&oacute;n de dise&ntilde;o cumplir&aacute;n 
+  lo siguiente:</p>
+<ul>
+  <li>Heredan del tipo de <em>displayable</em> al que pertenecen. De esta forma 
+    nuestra pantalla ser&aacute; un tipo especializado de este <em>displayable</em>.<br>
+  </li>
+  <li>Implementan la interfaz <code>CommandListener</code> para encapsular la 
+    respuesta a los comandos. Esto nos forzar&aacute; a definir dentro de esta 
+    clase el m&eacute;todo <code>commandAction</code> para dar respuesta a los 
+    comandos. Podemos implementar tambi&eacute;n la interfaz <code>ItemStateListener</code> 
+    en caso necesario.<br>
+  </li>
+  <li>Al constructor se le proporciona como par&aacute;metro el <code>MIDlet</code> 
+    de la aplicaci&oacute;n, adem&aacute;s de cualquier otro par&aacute;metro 
+    que necesitemos a&ntilde;adir. Esto ser&aacute; necesario para poder obtener 
+    una referencia al <em>display</em>, y de esa forma poder provocar la transici&oacute;n 
+    a otra pantalla. As&iacute; podremos hacer que sea dentro de la clase de cada 
+    pantalla donde se definan las posibles transiciones a otras pantallas.</li>
+</ul>
+<p>Por ejemplo, podemos implementar el men&uacute; principal de nuestra aplicaci&oacute;n 
+  de la siguiente forma:</p>
+<pre class="codigo">import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;<br><br>public class MenuPrincipal extends <strong>List</strong> implements <strong>CommandListener</strong> {<br><br>    MiMIDlet owner;<br>    Command selec;<br>    int itemNuevo;
+    int itemSalir;<br><br>    public MenuPrincipal(MiMIDlet owner) {
+        super(&quot;Menu&quot;, List.IMPLICIT);<br>        this.owner = owner;<br><br>        // A&ntilde;ade opciones al menu
+        itemNuevo = this.append(&quot;Nuevo juego&quot;, null);
+        itemSalir = this.append(&quot;Salir&quot;, null);<br><br>        // Crea comandos
+        selec = new Command(&quot;Seleccionar&quot;, Command.SCREEN, 1);
+        this.addCommand(selec);
+        this.setCommandListener(this);
+    }
+   
+    public void commandAction(Command c, Displayable d) {
+        if(c == selec || c == List.SELECT_COMMAND) {<br>            if(getSelectedIndex() == itemNuevo) {<br>                // Nuevo juego
+                Display display = Display.getDisplay(owner);
+                PantallaJuego pj = new PantallaJuego(owner, this);
+                display.setCurrent(pj);<br>            } else if(getSelectedIndex() == itemSalir) {<br>                // Salir de la aplicaci&oacute;n<br>                owner.salir();<br>            }<br>        } 
+    }
+}</pre>
+<p>Si esta es la pantalla principal de nuestra aplicaci&oacute;n, la podremos 
+  mostrar desde nuestro MIDlet de la siguiente forma:</p>
+<pre class="codigo">import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;<br><br>public class MiMIDlet extends MIDlet {<br>    protected void startApp() throws MIDletStateChangeException {
+        Display d = Display.getDisplay(this);
+        MenuPrincipal mp = new MenuPrincipal(this);
+        d.setCurrent(mp);
+    }<br><br>    protected void pauseApp() {<br>    }<br><br>    protected void destroyApp(boolean incondicional) <br>        throws MIDletStateChangeException {<br>    }<br><br>    public void salir() {<br>        try {<br>            destroyApp(false);<br>            notifyDestroyed();<br>        } catch(MIDletStateChangeException e) {<br>            // Evitamos salir de la aplicacion<br>        }				<br>    }<br>}</pre>
+<p>Este patr&oacute;n de dise&ntilde;o encapsula el comportamiento de cada pantalla 
+  en clases independientes, lo cual har&aacute; m&aacute;s legible y reutilizable 
+  el c&oacute;digo.</p>
+<p>Con este dise&ntilde;o, si queremos permitir volver a una pantalla anterior 
+  podemos pasar como par&aacute;metro del constructor, adem&aacute;s del MIDlet, 
+  el elemento <em>displayable</em> correspondiente a esta pantalla anterior. De 
+  esta forma cuando pulsemos <em>Atr&aacute;s</em> s&oacute;lo tendremos que mostrar 
+  este elemento en el <em>display</em>.</p>
+</body>
+</html>
