@@ -1,0 +1,57 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Ejercicios de aplicaciones corporativas</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2> A.11. Aplicaciones corporativas</h2>
+             
+<p><strong>11.1.</strong> En el directorio <code>AlarmaPush</code> se encuentra 
+  el ejemplo de la alarma, esta vez activable mediante <em>push</em>. Probar la 
+  aplicaci&oacute;n despleg&aacute;ndola en un emulador v&iacute;a OTA. Comprobar 
+  que el MIDlet se inicia a la hora que se haya programado la alarma.</p>
+<p><strong>11.2.</strong> En el directorio <code>Agenda</code> de las plantillas 
+  de la sesi&oacute;n tenemos implementada una aplicaci&oacute;n de ejemplo. Se 
+  trata de una aplicaci&oacute;n de agenda distribuida, que nos permite registrar 
+  citas que constar&aacute;n de fecha y hora, asunto, lugar, contacto y posibilidad 
+  de programar una alarma.</p>
+<p>Las citas que a&ntilde;adamos se sincronizar&aacute;n con el servidor de la 
+  aplicaci&oacute;n, de forma que tendremos las mismas citas en cliente y servidor. 
+  El servidor de la aplicaci&oacute;n se incluye en el directorio <code>ejemplos</code> 
+  de las plantillas de la sesi&oacute;n de red. Podremos a&ntilde;adir citas utilizando 
+  directamente una interfaz web incluida en la aplicaci&oacute;n web, o bien a&ntilde;adirlas 
+  en el m&oacute;vil y sincronizarlas con el servidor. </p>
+<p>Podemos encontrar la interfaz web en la direcci&oacute;n:</p>
+<pre class="codigo">http://www.jtech.ua.es/ejemplos-j2me/citas</pre>
+<p>Si a&ntilde;adimos la cita en el servidor, cuando sincronicemos desde el m&oacute;vil 
+  veremos dicha cita en nuestro dispositivo m&oacute;vil. Si a&ntilde;adimos la 
+  cita en el cliente m&oacute;vil, cuando sincronicemos desde &eacute;ste la cita 
+  se a&ntilde;adir&aacute; al servidor.</p>
+<p>Adem&aacute;s podemos utilizar la aplicaci&oacute;n en modo online, que conectar&aacute; 
+  al servidor cada vez que solicitemos consultar o a&ntilde;adir datos. De esta 
+  forma no har&aacute; falta sincronizar manualmente para actualizar la informaci&oacute;n, 
+  aunque tendr&aacute; el inconveniente de que realizar&aacute; un mayor n&uacute;mero 
+  de transferencias a trav&eacute;s de la red.</p>
+<p>Probar la aplicaci&oacute;n para estudiar su funcionamiento. Una vez hecho 
+  esto, consultar el c&oacute;digo fuente de la aplicaci&oacute;n, en &eacute;l 
+  podemos ver:</p>
+<ul>
+  <li>Distinguir los diferentes componentes del modelo de dise&ntilde;o MVC: modelo, 
+    vista y controlador.</li>
+  <li>Forma de procesar los eventos en el controlador.</li>
+  <li>Adaptador RMS para el almacenamiento de citas de la agenda.</li>
+  <li><em>Proxy</em> remoto para acceder al servidor y sincronizar datos con &eacute;ste.</li>
+  <li>Ver c&oacute;mo se ha implementado el patr&oacute;n de dise&ntilde;o fachada, 
+    y el funcionamiento de los modos <em>online</em> y <em>offline</em>.</li>
+  <li>Estudiar el mecanismo de sincronizaci&oacute;n: estampas de tiempo para 
+    recibir mensajes del servidor y marcar las citas como pendientes de enviar 
+    para enviar las nuevas citas al servidor.</li>
+</ul>
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Ejercicios de juegos</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2> A.7. Juegos</h2>
+             
+<p><strong>7.1.</strong> Vamos a ver un ejemplo de juego b&aacute;sico implementado 
+  en MIDP 2.0. Este juego se encuentra ya implementado en el directorio <code>Juego</code> 
+  de las plantillas de la sesi&oacute;n. </p>
+<p>En el juego podemos encontrar los siguientes elementos:</p>
+<ul>
+  <li>Tenemos un <em>sprite</em> de un coche que se mueve por la pantalla. Se 
+    utiliza como <em>sprite</em> la imagen <code>coche.png</code>.<br>
+  </li>
+  <li> En el ciclo del juego se lee la entrada del usuario, y seg&uacute;n &eacute;sta 
+    movemos el <em>sprite</em> por la pantalla (en las direcciones izquierda, 
+    derecha, arriba y abajo), y actualizamos los gr&aacute;ficos.<br>
+  </li>
+  <li> Tenemos un fondo construido mediante un objeto <code>TiledLayer</code>. 
+    En la imagen <code>fondo.png</code> tenemos una serie de elementos con los 
+    que construir el fondo de la carretera. Utilizamos el fichero <code>datos</code> 
+    donde tenemos codificado un posible escenario. De este fichero leemos el &iacute;ndice 
+    del elemento que se debe mostrar en cada celda del fondo. Se encuentra codificado 
+    de la siguiente forma: 
+    <p><code>&lt;ancho:int&gt; &lt;alto:int&gt;<br>
+      &lt;celda_1_1:byte&gt; &lt;celda_1_2:byte&gt; ... &lt;celda_1_ancho&gt;<br>
+      &lt;celda_2_1:byte&gt; &lt;celda_2_2:byte&gt; ... &lt;celda_2_ancho&gt;<br>
+      ...<br>
+      &lt;celda_alto_1:byte&gt; &lt;celda_alto_2:byte&gt; ... &lt;celda_alto_ancho&gt;</code></p>
+    <p>Leemos estos datos utilizando un <code>DataInputStream</code>. Dibujamos 
+      este fondo como capa en la pantalla, y en cada iteraci&oacute;n lo vamos 
+      desplazando hacia abajo para causar el efecto de que el coche avanza por 
+      la carretera.</p>
+  </li>
+  <li>Detecci&oacute;n de colisiones con nuestro coche y el fondo. De esta forma 
+    podremos chocar con los bordes de la carretera, teniendo que evitar salirnos 
+    de estos m&aacute;rgenes. Cuando chocamos simplemente se muestra una alerta 
+    que nos avisa de que hemos chocado y se vuelva a iniciar el juego.</li>
+</ul>
+<p><strong>7.2.</strong> Ejemplo de juego completo. En las plantillas de la sesi&oacute;n 
+  se incluye un juego completo como ejemplo en el directorio <code>Panj</code>. 
+  Consultar el c&oacute;digo fuente de este juego y probarlo.</p>
+</body>
+</html>

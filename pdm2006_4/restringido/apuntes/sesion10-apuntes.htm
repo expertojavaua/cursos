@@ -1,0 +1,1139 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 10: Red y E/S</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+<h1> 10. Red y E/S</h1>
+<p>En J2SE tenemos una gran cantidad de clases en el paquete<code> java.net </code>para 
+  permitir establecer distintos tipos de conexiones en red. Sin embargo, el soportar 
+  esta gran API no es viable en la configuraci&oacute;n CLDC dedicada a dispositivos 
+  muy limitados. Por lo tanto en CLDC se sustituye esta API por el marco de conexiones 
+  gen&eacute;ricas (GCF, <em>Generic Connection Framework</em>), con el que se 
+  pretenden cubrir todas las necesidades de conectividad de estos dispositivos 
+  a trav&eacute;s de una API sencilla.</p>
+<h2>10.1. Marco de conexiones gen&eacute;ricas</h2>
+<p>Los distintos dispositivos m&oacute;viles pueden utilizar distintos tipos de 
+  redes para conectarse. Algunos utilizan redes de conmutaci&oacute;n de circuitos, 
+  orientadas a conexi&oacute;n, que necesitar&aacute;n protocolos como TCP. Otros 
+  utilizan redes de transmisi&oacute;n de paquetes en las que no se establece 
+  una conexi&oacute;n permanente, y con las que deberemos trabajar con protocolos 
+  como por ejemplo UDP. Incluso otros dispositivos podr&iacute;an utilizar otras 
+  redes distintas en las que debamos utilizar otro tipo de protocolos. </p>
+<p>El marco de conexiones gen&eacute;ricas (GFC) har&aacute; que esta red m&oacute;vil 
+  subyacente sea transparente para el usuario, proporcionando a &eacute;ste protocolos 
+  est&aacute;ndar de comunicaciones. La API de GFC se encuentra en el paquete 
+  <code>javax.microedition.io</code>. Esta API utilizar&aacute; un &uacute;nico 
+  m&eacute;todo que nos servir&aacute; para establecer cualquier tipo de conexi&oacute;n 
+  que queramos, por esta raz&oacute;n recibe el nombre de marco de conexiones 
+  gen&eacute;ricas, lo cu&aacute;l adem&aacute;s lo hace extensible para incorporar 
+  nuevos tipos de conexiones. Para crear la conexi&oacute;n utilizaremos el siguiente 
+  m&eacute;todo:</p>
+<pre class="codigo">Connection con = Connector.<strong>open</strong>(url);</pre>
+<p> En el que deberemos especificar una URL como par&aacute;metro con el siguiente 
+  formato:</p>
+<p><code>protocolo:direccion;par&aacute;metros</code></p>
+<p>Cambiando el protocolo podremos especificar distintos tipos de conexiones. 
+  Por ejemplo, podr&iacute;amos utilizar las siguientes URLs:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="43%" valign="top"><code>&quot;http://j2ee.ua.es/pdm&quot;</code></td>
+    <td width="57%">Abre una conexi&oacute;n HTTP.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>&quot;datagram://192.168.0.4:6666&quot;</code></td>
+    <td>Abre una conexi&oacute;n por datagramas.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>&quot;socket://192.168.0.4:4444&quot;</code></td>
+    <td>Abre una conexi&oacute;n por <em>sockets</em>.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>&quot;comm:0;baudrate=9600&quot;</code></td>
+    <td>Abre una conexi&oacute;n a trav&eacute;s de un puerto de comunicaciones.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>&quot;file:/fichero.txt&quot;</code></td>
+    <td>Abre un fichero.</td>
+  </tr>
+</table>
+<p>Cuando especifiquemos uno de estos protocolos, la clase <code>Connector</code> 
+  buscar&aacute; en tiempo de ejecuci&oacute;n la clase que implemente dicho tipo 
+  de conexi&oacute;n, y si la encuentra nos devolver&aacute; un objeto que implemente 
+  la interfaz <code>Connection</code> que nos permitir&aacute; comunicarnos a 
+  trav&eacute;s de dicha conexi&oacute;n.</p>
+<p>CLDC nos proporciona interfaces para cada tipo gen&eacute;rico de conexi&oacute;n, 
+  pero las implementaciones reales de los protocolos pertenecen a los perfiles.</p>
+<div align="center"><img src="imagenes/red/jerarquia.gif" width="497" height="312"> 
+</div>
+<p class="caption">Figura 1. Componentes de GCF</p>
+<p>El &uacute;nico protocolo que la especificaci&oacute;n de MIDP exige que se 
+  implemente es el protocolo HTTP. Este protocolo pertenece a MIDP, y no a CLDC 
+  como era el caso de las clases gen&eacute;ricas anteriores. Distintos modelos 
+  de dispositivos pueden soportar otro tipo de conexiones, pero si queremos hacer 
+  aplicaciones portables deberemos utilizar HTTP.</p>
+<h2>10.2. Conexi&oacute;n HTTP</h2>
+<p>La conexi&oacute;n mediante el protocolo HTTP es el &uacute;nico tipo de conexi&oacute;n 
+  que sabemos que va a estar soportado por todos los dispositivos MIDP. Este protocolo 
+  podr&aacute; ser implementado en cada modelo de m&oacute;vil bien utilizando 
+  protocolos IP como TCP/IP o bien protocolos no IP como WAP o i-Mode. </p>
+<div align="center"><img src="imagenes/red/gateway.gif" width="352" height="188"> 
+</div>
+<p class="caption">Figura 2. Gateway para protocolos no IP</p>
+<p>De esta forma nosotros podremos utilizar directamente HTTP de una forma est&aacute;ndar 
+  sin importarnos el tipo de red que el m&oacute;vil tenga por debajo.</p>
+<p>Cuando establezcamos una conexi&oacute;n mediante protocolo HTTP, podemos hacer 
+  una conversi&oacute;n <em>cast</em> del objeto <code>Connection</code> devuelto 
+  a un subtipo <code>HttpConnection</code> especializado en conexiones HTTP:</p>
+<pre class="codigo">HttpConnection con = 
+    (HttpConnection)Connector.<strong>open</strong>(&quot;http://j2ee.ua.es/datos.txt&quot;);</pre>
+<p>Este objeto <code>HttpConnection</code> contiene gran cantidad de m&eacute;todos 
+  dedicados a trabajar con el protocolo HTTP, lo cu&aacute;l facilitar&aacute; 
+  en gran medida el trabajo de los desarrolladores.</p>
+<p>HTTP es un protocolo de petici&oacute;n/respuesta. El cliente crea un mensaje 
+  de petici&oacute;n y lo env&iacute;a a una determinada URL. El servidor analizar&aacute; 
+  esta petici&oacute;n y le devolver&aacute; una respuesta al cliente. Estos mensajes 
+  de petici&oacute;n y respuesta se compondr&aacute;n de una serie de cabeceras 
+  y del bloque de contenido. Cada cabecera tendr&aacute; un nombre y un valor. 
+  El contenido podr&aacute; contener cualquier tipo de informaci&oacute;n (texto, 
+  HTML, im&aacute;genes, mensajes codificados en binario, etc). Tendremos una 
+  serie de cabeceras est&aacute;ndar con las que podremos intercambiar datos sobre 
+  el cliente o el servidor, o bien sobre la informaci&oacute;n que estamos transmitiendo. 
+  Tambi&eacute;n podremos a&ntilde;adir nuestras propias cabeceras para intercambiar 
+  datos propios.</p>
+<p>Una vez creada la conexi&oacute;n, &eacute;sta pasar&aacute; por tres estados:</p>
+<ul>
+  <li><strong>Configuraci&oacute;n</strong>: No se ha establecido la conexi&oacute;n, 
+    todav&iacute;a no se ha enviado el mensaje de petici&oacute;n. Este ser&aacute; 
+    el momento en el que deberemos a&ntilde;adir la informaci&oacute;n necesaria 
+    a las cabeceras del mensaje de petici&oacute;n.<br>
+  </li>
+  <li><strong>Conectada</strong>: El mensaje de petici&oacute;n ya se ha enviado, 
+    y se espera recibir una respuesta. En este momento podremos leer las cabeceras 
+    o el contenido de la respuesta.<br>
+  </li>
+  <li><strong>Cerrada</strong>: La conexi&oacute;n se ha cerrado y ya no podemos 
+    hacer nada con ella.</li>
+</ul>
+<p>La conexi&oacute;n nada m&aacute;s crearse se encuentra en estado de configuraci&oacute;n. 
+  Pasar&aacute; autom&aacute;ticamente a estado conectada cuando solicitemos cualquier 
+  informaci&oacute;n sobre la respuesta.</p>
+<h3><strong>10.2.1. Lectura de la respuesta</strong></h3>
+<p>Vamos a comenzar viendo c&oacute;mo leer el contenido de una URL. En este caso 
+  no vamos a a&ntilde;adir ninguna informaci&oacute;n al mensaje de petici&oacute;n, 
+  ya que no es necesario. S&oacute;lo queremos obtener el contenido del recurso 
+  solicitado en la URL. </p>
+<p>Imaginemos que queremos leer el fichero en la URL <code>http://j2ee.ua.es/datos.txt</code>. 
+  Como primer paso deberemos crear una conexi&oacute;n con dicha URL como hemos 
+  visto anteriormente. Una vez tengamos este objeto <code>HttpConnection</code> 
+  abriremos un flujo de entrada para leer su contenido de la siguiente forma:</p>
+<pre class="codigo">InputStream in = con.<strong>openInputStream</strong>();</pre>
+<p>Una vez hecho esto, la conexi&oacute;n pasar&aacute; a estado conectada, ya 
+  que estamos solicitando leer su contenido. Por lo tanto en este momento ser&aacute; 
+  cuando env&iacute;e el mensaje de petici&oacute;n al servidor, y se quede esperando 
+  a recibir la respuesta. Con el flujo de datos obtenido podremos leer el contenido 
+  de la misma, al igual que leemos cualquier otro flujo de datos en Java.</p>
+<p>Dado que en este momento ya se ha enviado el mensaje de petici&oacute;n, ya 
+  no tendr&aacute; sentido realizar modificaciones en la petici&oacute;n. Es por 
+  esta raz&oacute;n por lo que la creaci&oacute;n del mensaje de petici&oacute;n 
+  debe hacerse en el estado de configuraci&oacute;n.</p>
+<p>Una vez hayamos terminado de leer la respuesta, deberemos cerrar el flujo y 
+  la conexi&oacute;n:</p>
+<pre class="codigo">in.close();<br>con.<strong>close</strong>();</pre>
+<p>Con esto la conexi&oacute;n pasar&aacute; a estado cerrada, liberando todos 
+  los recursos.</p>
+<h3><strong>10.2.2. Mensaje de petici&oacute;n</strong></h3>
+<p>En muchos casos podemos necesitar enviar informaci&oacute;n al servidor, como 
+  por ejemplo el <em>login</em> y el <em>password</em> del usuario para autentificarse 
+  en la aplicaci&oacute;n web. Esta informaci&oacute;n deberemos incluirla en 
+  el mensaje de petici&oacute;n. Existen distintas formas de enviar informaci&oacute;n 
+  en la petici&oacute;n.</p>
+<p>Encontramos los diferentes tipos de mensajes de petici&oacute;n soportados 
+  por MIDP:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="30%" valign="top"><code>HttpConnection.GET</code></td>
+    <td width="70%"><p>Los par&aacute;metros que se env&iacute;an al servidor 
+        se incluyen en la misma URL. Por ejemplo, podemos mandar un par&aacute;metro 
+        <code>login</code> en la petici&oacute;n de la siguiente forma: <code><br>
+        </code><code>http://j2ee.ua.es/pdm?login=miguel</code></p>
+      </td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>HttpConnection.POST</code></td>
+    <td>Los par&aacute;metros que se env&iacute;an al servidor se incluyen como 
+      contenido del mensaje. Tiene la ventaja de que se puede enviar la cantidad 
+      de datos que queramos, a diferencia del m&eacute;todo GET en el que esta 
+      cantidad puede estar limitada. Adem&aacute;s los datos no ser&aacute;n visibles 
+      en la misma URL, ya que se incluyen como contenido del mensaje.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>HttpConnection.HEAD</code></td>
+    <td>No se solicita el contenido del recurso al servidor, s&oacute;lo informaci&oacute;n 
+      sobre &eacute;ste, es decir, las cabeceras HTTP.</td>
+  </tr>
+</table>
+<p>Podemos establecer uno de estos tipos utilizando el m&eacute;todo <code>setRequestMethod</code>, 
+  por ejemplo para utilizar una petici&oacute;n POST haremos lo siguiente:</p>
+<pre class="codigo">con.<strong>setRequestMethod</strong>(HttpConnection.POST);</pre>
+<p>Adem&aacute;s podremos a&ntilde;adir cabeceras a la petici&oacute;n con el 
+  siguiente m&eacute;todo:</p>
+<pre class="codigo">con.<strong>setRequestProperty</strong>(nombre, valor);</pre>
+<p>Por ejemplo, podemos mandar las siguiente cabeceras:</p>
+<pre class="codigo">c.setRequestProperty(&quot;IF-Modified-Since&quot;, 
+    &quot;22 Sep 2002 08:00:00 GMT&quot;);
+c.setRequestProperty(&quot;User-Agent&quot;,
+    &quot;Profile/MIDP-1.0 Configuration/CLDC-1.0&quot;);
+c.setRequestProperty(&quot;Content-Language&quot;, &quot;es-ES&quot;);
+</pre>
+<p>Con esto estaremos diciendo al servidor que queremos que nos devuelva una respuesta 
+  s&oacute;lo si ha sido modificada desde la fecha indicada, y adem&aacute;s le 
+  estamos comunicando datos sobre el cliente. Indicamos mediante estas cabeceras 
+  est&aacute;ndar que el cliente es una aplicaci&oacute;n MIDP, y que el lenguaje 
+  es espa&ntilde;ol de Espa&ntilde;a. </p>
+<h3><strong>10.2.3. Env&iacute;o de datos en la petici&oacute;n</strong></h3>
+<p>Cuando necesitemos enviar datos al servidor mediante HTTP mediante nuestra 
+  aplicaci&oacute;n Java, podemos simular el env&iacute;o de datos que realiza 
+  un formulario HTML. Podremos simular tanto el comportamiento de un formulario 
+  que utilice m&eacute;todo GET como uno que utilice m&eacute;todo POST. </p>
+<p>En el caso del m&eacute;todo GET, simplemente utilizaremos una petici&oacute;n 
+  de tipo <code>HttpConnection.GET</code> e incluiremos estos datos codificados 
+  en la URL. Por ejemplo, si estamos registrando los datos de un usuario (nombre, 
+  apellidos y edad) podemos incluir estos par&aacute;metros en la URL de la siguiente 
+  forma:</p>
+<pre class="codigo">HttpConnection con = 
+    (HttpConnection)Connector.<strong>open</strong>(&quot;http://www.j2ee.ua.es/aplic&quot; +
+      &quot;/registraUsuario?nombre=Pedro&amp;apellidos=Lopez+Garcia&amp;edad=25&quot;);</pre>
+<p>Cada par&aacute;metro tiene la forma <code>nombre=valor</code>, pudiendo incluir 
+  varios par&aacute;metros separados por el car&aacute;cter <code>'&amp;'</code>. 
+  Como en la URL no puede haber espacios, estos caracteres se sustituyen por el 
+  car&aacute;cter <code>'+'</code> como podemos ver en el ejemplo. </p>
+<p>En el caso de que queramos simular un formulario con m&eacute;todo POST, utilizamos 
+  una petici&oacute;n de tipo <code>HttpConnection.POST</code> y deberemos incluir 
+  los par&aacute;metros que enviemos al servidor como contenido del mensaje. Para 
+  ello deberemos indicar que el tipo de contenido de la petici&oacute;n es <code>application/x-www-form-urlencoded</code>, 
+  y como contenido codificaremos los par&aacute;metros de la misma forma que se 
+  utiliza para codificarlos en la URL cuando se hace una petici&oacute;n GET:</p>
+<pre class="codigo">nombre=Pedro&amp;apellidos=Lopez+Garcia&amp;edad=25</pre>
+<p>De esta forma podemos enviar al servidor datos en forma de una serie de par&aacute;metros 
+  que toman como valor cadenas de texto. Sin embargo, puede que necesitemos intercambiar 
+  datos m&aacute;s complejos con el servidor. Por ejemplo, podemos querer serializar 
+  objetos Java y enviarlos al servidor, o enviar documentos XML. </p>
+<p>Para enviar estos tipos de informaci&oacute;n podemos utilizar tambi&eacute;n 
+  el bloque de contenido, debiendo especificar en cada caso el tipo MIME del contenido 
+  que vamos a a&ntilde;adir. Ejemplos de tipos MIME que podemos utilizar para 
+  el bloque de contenido son:</p>
+<table width="90%" border="0">
+  <tr> 
+    <td width="48%" valign="top"><code>application/x-www-form-urlencoded</code></td>
+    <td width="52%">Se env&iacute;an los datos codificados de la misma forma en 
+      la que son codificados por un formulario HTML con m&eacute;todo POST.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>text/plain</code></td>
+    <td>Se env&iacute;a como contenido texto ASCII.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>application/octet-stream</code></td>
+    <td>Se env&iacute;a como contenido datos binarios. Dentro de la secuencia 
+      de bytes podremos codificar la informaci&oacute;n como queramos. Por ejemplo, 
+      podemos codificar de forma binaria un objeto serializado, utilizando un 
+      <code>DataOutputStream</code>. </td>
+  </tr>
+</table>
+<p>Para establecer el tipo de contenido la cabecera est&aacute;ndar de HTTP <code>Content-Type</code>. 
+  Por ejemplo, si a&ntilde;adimos texto ASCII, podemos establecer esta cabecera 
+  de la siguiente forma:</p>
+<pre class="codigo">con.<strong>setRequestProperty</strong>(&quot;Content-Type&quot;, &quot;text/plain&quot;);</pre>
+<p>Para escribir en el contenido del mensaje de petici&oacute;n deberemos abrir 
+  un flujo de salida como se muestra a continuaci&oacute;n:</p>
+<pre class="codigo">OutputStream out = con.<strong>openOutputStream</strong>();</pre>
+<p>Podremos escribir en este flujo de salida igual que lo hacemos en cualquier 
+  otro flujo de salida, con lo que de esta forma podremos escribir cualquier contenido 
+  en el mensaje de petici&oacute;n.</p>
+<p>Al abrir el flujo para escribir en la petici&oacute;n provocaremos que se pase 
+  a estado conectado. Por lo tanto deberemos haber establecido el tipo de petici&oacute;n 
+  y todas las cabeceras previamente a la apertura de este flujo, cuando todav&iacute;a 
+  est&aacute;bamos en estado de configuraci&oacute;n.</p>
+<h3><strong>10.2.4. Tipo y cabeceras de la respuesta</strong></h3>
+<p>En estado conectado, adem&aacute;s del contenido del mensaje de la respuesta, 
+  podemos obtener el estado de la respuesta y sus cabeceras. Los estados de respuesta 
+  se componen de un c&oacute;digo y un mensaje y nos permitir&aacute;n saber si 
+  la petici&oacute;n ha podido atenderse correctamente o si por el contrario ha 
+  habido alg&uacute;n tipo de error. Por ejemplo, posibles estados son:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="51%"><code>HttpConnection.HTTP_OK</code></td>
+    <td width="7%">200 </td>
+    <td width="42%">OK</td>
+  </tr>
+  <tr> 
+    <td><code>HttpConnection.HTTP_BAD_REQUEST</code></td>
+    <td>400 </td>
+    <td>Bad Request</td>
+  </tr>
+  <tr> 
+    <td><code>HttpConnection.HTTP_INTERNAL_ERROR</code></td>
+    <td>500</td>
+    <td>Internal Server Error</td>
+  </tr>
+</table>
+<p>Este mensaje de estado encabeza el mensaje de respuesta. Si el servidor nos 
+  devuelve un mensaje con c&oacute;digo 200 como el siguiente:</p>
+<pre>HTTP/1.1 200 OK</pre>
+<p>Es que se ha procesado correctamente la petici&oacute;n y nos devuelve su respuesta. 
+  Si ha ocurrido un error, nos mandar&aacute; el c&oacute;digo y mensaje de error 
+  correspondiente. Por ejemplo, el error 400 indica que el servidor no ha entendido 
+  la petici&oacute;n que hemos hecho, posiblemente porque la hemos escrito incorrectamente. 
+  El error 500 nos dice que se trata de un error interno del servidor, no de la 
+  petici&oacute;n realizada.</p>
+<p>Podemos obtener tanto el c&oacute;digo como el mensaje de estado con los siguientes 
+  m&eacute;todos:</p>
+<pre class="codigo">int cod = con.<strong>getResponseCode</strong>(); <br>String msg = con.<strong>getResponseMessage</strong>();</pre>
+<p>Los c&oacute;digos de estado podemos encontrarlos como constantes de la clase 
+  <code>HttpConnection</code> como hemos visto para los tres c&oacute;digos anteriores.</p>
+<p>Tambi&eacute;n podemos utilizar este objeto para leer las cabeceras que nos 
+  ha devuelto la respuesta. Nos ofrece m&eacute;todos para leer una serie de cabeceras 
+  est&aacute;ndar de HTTP como los siguientes:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="22%" valign="top"><code>getLength</code></td>
+    <td width="24%" valign="top"><code>content-length</code></td>
+    <td width="54%">Longitud del contenido, o <code>-1</code> si la longitud es 
+      desconocida</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>getType</code></td>
+    <td valign="top"><code>content-type</code></td>
+    <td>Tipo MIME del contenido devuelto</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>getEncoding</code></td>
+    <td valign="top"><code>content-encoding</code></td>
+    <td>Codificaci&oacute;n del contenido</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>getExpiration</code></td>
+    <td valign="top"><code>expires</code></td>
+    <td>Fecha de expiraci&oacute;n del recurso</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>getDate</code></td>
+    <td valign="top"><code>date</code></td>
+    <td>Fecha de env&iacute;o del recurso</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>getLastModified</code></td>
+    <td valign="top"><code>last-modified</code></td>
+    <td>Fecha de &uacute;ltima modificaci&oacute;n del recurso</td>
+  </tr>
+</table>
+<p>Puede ser que queramos obtener otras cabeceras, como por ejemplo cabeceras 
+  propias no est&aacute;ndar. Para ello tendremos una serie de m&eacute;todos 
+  que obtendr&aacute;n las cabeceras directamente por su nombre:</p>
+<pre class="codigo">String valor = con.<strong>getHeaderField</strong>(nombre);
+int valor = con.<strong>getHeaderFieldInt</strong>(nombre);
+long valor = con.<strong>getHeaderFieldDate</strong>(nombre);</pre>
+<p>De esta forma podemos obtener el valor de la cabecera o bien como una cadena, 
+  o en los datos que sean de tipo fecha (valor <code>long</code>) o enteros tambi&eacute;n 
+  podremos obtener su valor directamente en estos tipos de datos.<br>
+  <br>
+  Podremos acceder a las cabeceras tambi&eacute;n a partir de su &iacute;ndice:</p>
+<pre class="codigo">String valor = con.<strong>getHeaderField</strong>(int indice);
+String nombre = con.<strong>getHeaderFieldKey</strong>(int indice);</pre>
+<p>Podemos obtener de esta forma tanto el nombre como el valor de la cabecera 
+  que ocupa un determinado &iacute;ndice.</p>
+<p>Esta respuesta HTTP, adem&aacute;s de un estado y una serie de cabeceras, tendr&aacute; 
+  un bloque que contenido que podremos leer abriendo un flujo de entrada en la 
+  conexi&oacute;n como hemos visto anteriormente. Normalmente cuando hacemos una 
+  petici&oacute;n a una URL de una aplicaci&oacute;n web nos devuelve como contenido 
+  un documento HTML. Sin embargo, en el caso de nuestra aplicaci&oacute;n MIDP 
+  este tipo de contenido no es apropiado. En su lugar podremos utilizar como contenido 
+  de la respuesta cualquier otro tipo MIME, que vendr&aacute; indicado en la cabecera 
+  <code>content-type</code> de la respuesta. Por ejemplo, podremos devolver una 
+  respuesta codificada de forma binaria que sea le&iacute;da y descodificada por 
+  nuestra aplicaci&oacute;n MIDP.</p>
+<p>Tanto los m&eacute;todos que obtienen un flujo para leer o escribir en la conexi&oacute;n, 
+  como estos m&eacute;todos que acabamos de ver para obtener informaci&oacute;n 
+  sobre la respuesta producir&aacute;n una transici&oacute;n al estado conectado.</p>
+<h2>10.3. Acceso a la red a bajo nivel</h2>
+<p>Como hemos comentado, el &uacute;nico tipo de conexi&oacute;n especificada 
+  en MIDP 1.0 es HTTP, la cual es suficiente y adecuada para acceder a aplicaciones 
+  corporativas. Sin embargo, con las redes 2.5G y 3G tendremos una mayor capacidad 
+  en las conexiones, nos permitir&aacute;n realizar cualquier tipo de conexi&oacute;n 
+  TCP y UDP (no s&oacute;lo HTTP) y adem&aacute;s la comunicaci&oacute;n podr&aacute; 
+  ser m&aacute;s fluida. </p>
+<p>Para poder acceder a estas mejoras desde nuestra aplicaci&oacute;n Java, surge 
+  la necesidad de que en MIDP 2.0 se incorpore soporte para tipos de conexiones 
+  a bajo nivel: sockets (TCP) y datagramas (UDP). Estos tipos de conexiones de 
+  MIDP 2.0 son optativos, de forma que aunque se encuentran definidos en la especificaci&oacute;n 
+  de MIDP 2.0, no se obliga a que los fabricantes ni los operadores de telefon&iacute;a 
+  lo soporten. Es decir, que la posibilidad de utilizar estas conexiones depender&aacute; 
+  de que la red de telefon&iacute;a de nuestro operador y el modelo de nuestro 
+  m&oacute;vil las soporte.</p>
+<p>Si intentamos utilizar un tipo de conexi&oacute;n no soportada por nuestro 
+  sistema, se producir&aacute; una excepci&oacute;n de tipo <code>ConnectionNotFoundException</code>.</p>
+<h3><strong>10.3.1. Sockets</strong></h3>
+<p>Los sockets nos permiten crear conexiones TCP. En este tipo de conexiones se 
+  establece un circuito virtual de forma permanente entre los dispositivos que 
+  se comunican. Se nos asegura que los datos enviados han llegado al servidor 
+  y que han llegado en el mismo orden en el que los enviamos. El inconveniente 
+  que tienen es que el tener un canal de comunicaci&oacute;n abierto permanentemente 
+  consume una mayor cantidad de recursos.</p>
+<p>Para abrir una conexi&oacute;n mediante sockets utilizaremos una URL como la 
+  siguiente:</p>
+<pre class="codigo"><strong>SocketConnection</strong> sc = 
+    (<strong>SocketConnection</strong>) Connector.open(&quot;<strong>socket://host:puerto</strong>&quot;);</pre>
+<p>Una vez abierta la conexi&oacute;n, podremos abrir sus correspondientes flujos 
+  de entrada y salida para enviar y recibir datos a trav&eacute;s de ella:</p>
+<pre class="codigo">InputStream in = sc.<strong>openInputStream</strong>();
+OutputStream out = sc.<strong>openOutputStream</strong>();</pre>
+<p>Es posible tambi&eacute;n hacer que nuestro dispositivos act&uacute;e como 
+  servidor. En este caso utilizaremos una URL como las siguientes para crear el 
+  socket servidor:</p>
+<pre class="codigo"><strong>ServerSocketConnection</strong> ssc = 
+  (<strong>ServerSocketConnection</strong>) Connector.open(&quot;<strong>socket://:puerto</strong>&quot;);
+<strong>ServerSocketConnection</strong> ssc = 
+  (<strong>ServerSocketConnection</strong>) Connector.open(&quot;<strong>socket://</strong>&quot;);</pre>
+<p>En el primer caso indicamos el puerto en el que queremos que escuche nuestro 
+  servidor. En el segundo caso este puerto ser&aacute; asignado autom&aacute;ticamente 
+  por el sistema. Para conocer la direcci&oacute;n y el puerto donde escucha nuestro 
+  servidor podremos utilizar los siguientes m&eacute;todos:</p>
+<pre class="codigo">int puerto = ssc.<strong>getLocalPort</strong>();
+String host = ssc.<strong>getLocalAddress</strong>();</pre>
+<p>Para hacer que el servidor comience a escuchar y aceptar conexiones utilizaremos 
+  el siguiente m&eacute;todo:</p>
+<pre class="codigo"><strong>SocketConnection</strong> sc = (<strong>SocketConnection</strong>) ssc.<strong>acceptAndOpen</strong>();</pre>
+<p>Obtendremos un objeto <code>SocketConnection</code> con el que podremos comunicarnos 
+  con el cliente que acaba de conectarse a nuestro servidor. </p>
+<p>Debemos tener en cuenta que normalmente los m&oacute;viles realizan conexiones 
+  puntuales cuando necesitan acceder a la red, y cada vez que se conecta se le 
+  asigna una nueva IP de forma din&aacute;mica. Esto hace dif&iacute;cil que un 
+  m&oacute;vil pueda comportarse como servidor, ya que no podremos conocer <em>a 
+  priori</em> la direcci&oacute;n en la que est&aacute; atendiendo para poder 
+  conectarnos a ella desde un cliente.</p>
+<h3><strong>10.3.2. Datagramas</strong></h3>
+<p>Cuando trabajemos con datagramas estaremos utilizando una conexi&oacute;n UDP. 
+  En ella no se establece un circuito virtual permanente, sino que cada paquete 
+  (datagrama) es enrutado de forma independiente. Esto produce que los paquetes 
+  puedan perderse o llegar desordenados al destino. Cuando la p&eacute;rdida de 
+  paquetes o su ordenaci&oacute;n no sea cr&iacute;ticos, convendr&aacute; utilizar 
+  este tipo de conexiones, ya que consume menos recursos que los circuitos virtuales.</p>
+<p>Para trabajar con datagramas utilizaremos una URL como la siguiente:</p>
+<pre class="codigo"><strong>DatagramConnection</strong> dc = 
+   (<strong>DatagramConnection</strong>) Connector.open(&quot;<strong>datagram://host:puerto</strong>&quot;);</pre>
+<p>En este caso no hemos abierto una conexi&oacute;n, ya que s&oacute;lo se establecer&aacute; 
+  una conexi&oacute;n cuando se env&iacute;e un datagrama, simplemente hemos creado 
+  el objeto que nos permitir&aacute; intercambiar estos paquetes. Podemos crear 
+  un datagrama que contenga datos codificados en binario de la siguiente forma:</p>
+<pre class="codigo">byte[] datos = obtenerDatos();
+<strong>Datagram</strong> dg = dc.<strong>newDatagram</strong>(datos, datos.length);</pre>
+<p>Una vez hemos creado el datagrama, podemos enviarlo al destinatario utilizando 
+  la conexi&oacute;n:</p>
+<pre class="codigo">dc.<strong>send</strong>(dg);</pre>
+<p>En el caso del servidor, crearemos la conexi&oacute;n de datagramas de forma 
+  similar, pero sin especificar la direcci&oacute;n a la que conectar, ya que 
+  dependiendo del cliente deberemos enviar los datagramas a diferentes direcciones.</p>
+<pre class="codigo"><strong>DatagramConnection</strong> dc = 
+   (<strong>DatagramConnection</strong>) Connector.open(&quot;<strong>datagram://:puerto</strong>&quot;);</pre>
+<p>El servidor no conocer&aacute; las direcciones de sus clientes hasta que haya 
+  recibido alg&uacute;n datagrama de ellos. Para recibir un datagrama crearemos 
+  un datagrama vac&iacute;o indicando su capacidad (en <em>bytes</em>) y lo utilizaremos 
+  para recibir en &eacute;l la informaci&oacute;n que se nos env&iacute;a desde 
+  el cliente de la siguiente forma:</p>
+<pre class="codigo"><strong>Datagram</strong> dg = dc.<strong>newDatagram</strong>(longitud);
+dc.<strong>receive</strong>(dg);</pre>
+<p>Una vez obtenido el datagrama, podremos obtener la direcci&oacute;n desde la 
+  cual se nos env&iacute;a:</p>
+<pre class="codigo"> String direccion = dg.<strong>getAddress</strong>();</pre>
+<p>Ahora podremos crear un nuevo datagrama con la respuesta indicando la direcci&oacute;n 
+  a la que vamos a enviarlo. En este caso en cada datagrama se deber&aacute; especificar 
+  la direcci&oacute;n a la que se env&iacute;a:</p>
+<pre class="codigo"><strong>Datagram</strong> dg = dc.<strong>newDatagram</strong>(datos, datos.length, direccion);</pre>
+<p>El datagrama ser&aacute; enviado de la misma forma en la que se hac&iacute;a 
+  en el cliente. Posteriormente el cliente podr&aacute; recibir este datagrama 
+  de la misma forma en que hemos visto que el servidor recib&iacute;a su primer 
+  datagrama. De esta forma podremos establecer una conversaci&oacute;n entre cliente 
+  y servidor, intercambiando estos datagramas.</p>
+<h2>10.4. Env&iacute;o y recepci&oacute;n de mensajes</h2>
+<p>Podemos utilizar la API adicional WMA para enviar o recibir mensajes cortos 
+  (SMS, <em>Short Message Service</em>) a trav&eacute;s del tel&eacute;fono m&oacute;vil. 
+  Esta API extiende GFC, permitiendo establecer conexiones para recibir o enviar 
+  mensajes. Cuando queramos enviar mensajes nos comportaremos como clientes en 
+  la conexi&oacute;n, mientras que para recibirlos actuaremos como servidor. La 
+  URL para establecer una conexi&oacute;n con el sistema de mensajes para ser 
+  enviados o recibidos a trav&eacute;s de una portadora SMS sobre GSM tendr&aacute; 
+  el siguiente formato: </p>
+<p><code>sms://telefono:puerto</code></p>
+<p>Las clases de esta API se encuentran en el paquete <code>javax.wireless.messaging</code>. 
+  Aqu&iacute; se definen una serie de interfaces para trabajar con los mensajes 
+  y con la conexi&oacute;n. </p>
+<h3><strong>10.4.1. Envio de mensajes</strong></h3>
+<p>Si queremos enviar mensajes, deberemos crear una conexi&oacute;n cliente proporcionando 
+  en la URL el n&uacute;mero del tel&eacute;fono al que vamos a enviar el mensaje 
+  y el puerto al que lo enviaremos de forma opcional:</p>
+<p><code>sms://+34555000000<br>
+  sms://+34555000000:4444</code></p>
+<p>Si no especificamos el puerto se utilizar&aacute; el puerto que se use por 
+  defecto para los mensajes del usuario en el tel&eacute;fono m&oacute;vil. Deberemos 
+  abrir una conexi&oacute;n con una de estas URLs utilizando GFC, con lo que nos 
+  devolver&aacute; una conexi&oacute;n de tipo <code>MessageConnection</code></p>
+<pre class="codigo"><strong>MessageConnection</strong> mc = 
+    (<strong>MessageConnection</strong>)Connector.open(&quot;sms://+34555000000&quot;);</pre>
+<p>Una vez creada la conexi&oacute;n podremos utilizarla para enviar mensajes 
+  cortos. Podremos mandar tanto mensajes de texto como binarios. Estos mensajes 
+  tienen un tama&ntilde;o limitado a un m&aacute;ximo de 140 <em>bytes</em>. Si 
+  el mensaje es de texto el n&uacute;mero de caracteres depender&aacute; de la 
+  codificaci&oacute;n de &eacute;stos. Por ejemplo si los codificamos con 7 bits 
+  tendremos una longitud de 160 caracteres, mientras que con una codificaci&oacute;n 
+  de 8 bits tendremos un juego de caracteres m&aacute;s amplio pero los mensajes 
+  estar&aacute;n limitados a 140 caracteres.</p>
+<p>WMA permite encadenar mensajes, de forma que esta longitud podr&aacute; ser 
+  por lo menos 3 veces mayor. El encadenamiento consiste en que si el mensaje 
+  supera la longitud m&aacute;xima de 140 <em>bytes</em> que puede transportar 
+  SMS, entonces se fracciona en varios fragmentos que ser&aacute;n enviados independientemente 
+  a trav&eacute;s de SMS y ser&aacute;n unidos al llegar a su destino para formar 
+  el mensaje completo. Esto tiene el inconveniente de que realmente por la red 
+  est&aacute;n circulando varios mensajes, por lo que se nos cobrar&aacute; por 
+  el n&uacute;mero de fragmentos que haya enviado. </p>
+<p>Podremos crear el mensaje a enviar a partir de la conexi&oacute;n. Los mensajes 
+  de texto los crearemos de la siguiente forma:</p>
+<pre class="codigo">String texto = &quot;Este es un mensaje corto de texto&quot;;
+TextMessage msg = mc.<strong>newMessage</strong>(mc.TEXT_MESSAGE);
+msg.<strong>setPayloadText</strong>(texto);</pre>
+<p>Para el caso de un mensaje binario, lo crearemos de la siguiente forma:</p>
+<pre class="codigo">byte [] datos = codificarDatos();
+BinaryMessage msg = mc.<strong>newMessage</strong>(mc.BINARY_MESSAGE);
+msg.<strong>setPayloadData</strong>(datos);
+</pre>
+<p>Antes de enviar el mensaje, podemos ver en cu&aacute;ntos fragmentos deber&aacute; 
+  ser dividido para poder ser enviado utilizando la red subyacente con el siguiente 
+  m&eacute;todo:</p>
+<pre class="codigo">int num_segmentos = mc.<strong>numberOfSegments</strong>(msg);</pre>
+<p>Esto nos devolver&aacute; el n&uacute;mero de segmentos en los que se fraccionar&aacute; 
+  el mensaje, &oacute; 0 si el mensaje no puede ser enviado utilizando la red 
+  subyacente. </p>
+<p>Independientemente de si se trata de un mensaje de texto o de un mensaje binario, 
+  podremos enviarlo utilizando el siguiente m&eacute;todo:</p>
+<pre class="codigo">mc.<strong>send</strong>(msg);
+</pre>
+<h3><strong>10.4.2. Recepci&oacute;n de mensajes</strong></h3>
+<p>Para recibir mensajes deberemos crear una conexi&oacute;n de tipo servidor. 
+  Para ello en la URL s&oacute;lo especificaremos el puerto en el que queremos 
+  recibir los mensajes:</p>
+<p> <code>sms://:4444</code></p>
+<p>Crearemos una conexi&oacute;n utilizando una URL como esta, en la que no se 
+  especifique el n&uacute;mero de tel&eacute;fono destino.</p>
+<pre class="codigo"><strong>MessageConnection</strong> mc = 
+    (<strong>MessageConnection</strong>)Connector.open(&quot;sms://:4444&quot;);</pre>
+<p>Para recibir un mensaje utilizaremos el m&eacute;todo:</p>
+<pre class="codigo">Message msg = mc.<strong>receive</strong>();</pre>
+<p>Si hemos recibido un mensaje que todav&iacute;a no hay sido leido este m&eacute;todo 
+  obtendr&aacute; dicho mensaje. Si todav&iacute;a no se ha recibido ning&uacute;n 
+  mensaje, este m&eacute;todo se quedar&aacute; bloqueado hasta que se reciba 
+  un mensaje, momento en el que lo leer&aacute; y nos lo devolver&aacute;.</p>
+<p>Podemos determinar en tiempo de ejecuci&oacute;n si se trata de un mensaje 
+  de texto o de un mensaje binario. Para ello deberemos comprobar de qu&eacute; 
+  tipo es realmente el objeto devuelto, y seg&uacute;n este tipo leer sus datos 
+  como texto o como <em>array</em> de <em>bytes</em>:</p>
+<pre class="codigo">if(msg instanceof TextMessage) {<br>    String texto = ((TextMessage)msg).<strong>getPayloadText</strong>();<br>    // Procesar texto<br>} else if(msg instanceof TextMessage) {<br>    byte [] datos = ((BinaryMessage)msg).<strong>getPayloadData</strong>();<br>    // Procesar datos<br>}</pre>
+<p>Hemos visto que el m&eacute;todo <code>receive</code> se queda bloqueado hasta 
+  que se reciba un mensaje. No debemos hacer que la aplicaci&oacute;n se quede 
+  bloqueada esperando un mensaje, ya que &eacute;ste puede tardar bastante, o 
+  incluso no llegar nunca. Podemos solucionar este problema realizando la lectura 
+  de los mensajes mediante un hilo en segundo plano. Otra soluci&oacute;n es utilizar 
+  un <em>listener</em>.</p>
+<h3><strong>10.4.3. Listener de mensajes</strong></h3>
+<p>Estos <em>listeners</em> nos servir&aacute;n para que se nos notifique el momento 
+  en el que se recibe un mensaje corto. De esta forma no tendremos que quedarnos 
+  bloqueados esperando recibir el mensaje, sino que podemos invocar <code>receive</code> 
+  directamente cuando sepamos que se ha recibido el mensaje.</p>
+<p>Para crear un <em>listener</em> de este tipo deberemos crear una clase que 
+  implemente la interfaz <code>MessageListener</code>:</p>
+<pre class="codigo">public MiListener implements <strong>MessageListener</strong> {<br>    public void <strong>notifyIncomingMessage</strong>(MessageConnection mc) {<br>        // Se ha recibido un mensaje a trav&eacute;s de la conexion mc<br>    }<br>}</pre>
+<p>Dentro del m&eacute;todo <code>notifyIncomingMessage</code> deberemos introducir 
+  el c&oacute;digo a ejecutar cuando se reciba un mensaje. No debemos ejecutar 
+  la operaci&oacute;n <code>receive</code> directamente dentro de este m&eacute;todo, 
+  ya que es una operaci&oacute;n costosa que no debe ser ejecutada dentro de los 
+  <em>callbacks</em> que deben devolver el control lo antes posible para no entorpecer 
+  el procesamiento de eventos de la aplicaci&oacute;n. Deberemos hacer que la 
+  recepci&oacute;n del mensaje la realice un hilo independiente. </p>
+<p>Para que la recepci&oacute;n de mensajes le sea notificada a nuestro <em>listener</em> 
+  deberemos registrarlo como <em>listener</em> de la conexi&oacute;n con:</p>
+<pre class="codigo">mc.<strong>setMessageListener</strong>(new MiListener());</pre>
+<p>En WTK 2.0 tenemos disponible una consola WMA con la que podremos simular el 
+  env&iacute;o y la recepci&oacute;n de mensajes cortos que se intercambien entre 
+  los emuladores, de forma que podremos probar estas aplicaciones sin tener que 
+  enviar realmente los mensajes y pagar por ellos.</p>
+<h2>10.5. Servicios Web</h2>
+<p>Los servicios web son una tecnolog&iacute;a interesante para las aplicaciones 
+  MIDP, ya que nos permiten acceder a informaci&oacute;n de nuestras aplicaciones 
+  corporativas de forma est&aacute;ndar sobre protocolo HTTP. </p>
+<p>En una aplicaci&oacute;n MIDP no nos servir&aacute; de nada obtener un documento 
+  HTML, ya que no es adecuado para presentarlo en la interfaz del m&oacute;vil, 
+  y ser&aacute; muy complicado extraer de &eacute;l informaci&oacute;n porque 
+  normalmente estar&aacute; escrito en lenguaje natural y con un formato adecuado 
+  para su presentaci&oacute;n, pero no para ser entendido por una m&aacute;quina.</p>
+<p>Los servicios web nos permiten obtener &uacute;nicamente la informaci&oacute;n 
+  que necesitamos, pero no la presentaci&oacute;n. Esta informaci&oacute;n vendr&aacute; 
+  codificada en XML de forma est&aacute;ndar. Podemos ver los servicios web como 
+  una web para aplicaciones, frente a los documentos HTML que ser&iacute;an una 
+  web para humanos.</p>
+<p>El problema que encontramos con los servicios web es que el procesamiento de 
+  XML es bastante costoso en t&eacute;rminos de procesamiento y memoria, lo cual 
+  lo hace poco adecuado para dispositivos muy limitados. Adem&aacute;s la informaci&oacute;n 
+  codificada en XML ocupa mucho m&aacute;s espacio que utilizando la codificaci&oacute;n 
+  binaria, por lo que tendremos que transferir una mayor cantidad de informaci&oacute;n 
+  a trav&eacute;s de la red. Cuando la red es lenta y cara, esto es un gran inconveniente, 
+  que hace que los servicios web por el momento no se puedan utilizar en la pr&aacute;ctica 
+  para este tipo de dispositivos.</p>
+<p>Sin embargo, ya existen APIs que nos permiten utilizar esta tecnolog&iacute;a 
+  desde m&oacute;viles. Web Services API (WSA) nos permite crear clientes de servicios 
+  web SOAP desde dispositivos m&oacute;viles. Podremos acceder a servicios existentes 
+  proporcionados por terceros, o crear nuestros propios servicios para acceder 
+  a nuestra aplicaci&oacute;n. </p>
+<p>Si queremos acceder a servicios proporcionados por terceros deberemos tener 
+  en cuenta que WSA s&oacute;lo soporta servicios de tipo <code>document/literal</code>. 
+  Si el servicio al que queremos acceder no es de este tipo (podemos consultar 
+  esta informaci&oacute;n en su documento WSDL) como soluci&oacute;n podremos 
+  crearnos un servicio propio compatible con WSA que encapsule una llamada al 
+  servicio proporcionado por terceros.</p>
+<h3><strong>10.5.1. Creaci&oacute;n del servicio</strong></h3>
+<p>Vamos a ver como crear un servicio compatible con WSA. Para esto deberemos 
+  especificar que debe ser de tipo <code>document/literal</code>. Consideraremos 
+  el caso de la creaci&oacute;n del servicio con JWSDP 1.3.</p>
+<p>Lo primero que deberemos hacer es implementar el servicio, creando una interfaz 
+  remota con los m&eacute;todos que nos ofrece el servicio y una clase Java que 
+  implemente esta interfaz donde se definir&aacute; la funcionalidad del servicio. 
+</p>
+<p>Por ejemplo, podemos crear un servicio con la siguiente interfaz:</p>
+<pre class="codigo">package es.ua.j2ee.sw.hola;<br><br>import java.rmi.Remote;
+import java.rmi.RemoteException;<br><br>public interface <strong>HolaMundoIF</strong> extends Remote {
+  public String <strong>saluda</strong>(String nombre) throws RemoteException;
+}</pre>
+<p>Y con la siguiente implementaci&oacute;n de la anterior interfaz:</p>
+<pre class="codigo">package es.ua.j2ee.sw.hola;<br><br>import java.rmi.RemoteException;<br><br>public class <strong>HolaMundoImpl</strong> implements <strong>HolaMundoIF</strong> {<br>  public String <strong>saluda</strong>(String nombre) throws RemoteException {
+    return &quot;Hola &quot; + nombre;
+  }<br>}
+</pre>
+<p>Para que el servicio creado sea del tipo <code>document/literal</code> antes 
+  de generar el servicio, deberemos generar un modelo donde se especifique el 
+  tipo de servicio. Podemos generar el modelo con la herramienta <code>wscompile</code>. 
+  Para utilizar esta herramienta necesitamos crear un fichero de configuraci&oacute;n 
+  de nuestro servicio (<code>config.xml</code>) como el siguiente:</p>
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;configuration 
+  xmlns=&quot;http://java.sun.com/xml/ns/jax-rpc/ri/config&quot;&gt;
+&lt;service 
+  name=&quot;HolaMundoMovil&quot; 
+  targetNamespace=&quot;http://j2ee.ua.es/sw&quot; 
+  typeNamespace=&quot;http://j2ee.ua.es/sw&quot; 
+  packageName=&quot;es.ua.j2ee.sw.hola&quot;&gt;
+  &lt;interface name=&quot;es.ua.j2ee.sw.hola.HolaMundoIF&quot;/&gt;
+&lt;/service&gt;
+&lt;/configuration&gt; </pre>
+<p>Podemos ejecutar la herramienta <code>wscompile</code> desde l&iacute;nea de 
+  comando o desde ant. Para utilizarla desde ant deberemos declarar en el fichero 
+  <code>build.xml</code> esta tarea y el <em>classpath</em> necesario para ejecutarla:</p>
+<pre class="codigo">&lt;!-- Propiedades --&gt;<br><br>&lt;property name=&quot;jwsdp.home&quot; value=&quot;c:\\jwsdp-1.3&quot;/&gt;
+   
+&lt;!-- Classpath --&gt;<br><br>&lt;path id=&quot;<strong>compile.classpath</strong>&quot;&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/jwsdp-shared/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/jaxp/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/jaxp/lib/endorsed&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/jaxrpc/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/saaj/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/apache-ant/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+&lt;/path&gt;<br><br>&lt;!-- Definicion de tareas --&gt;<br><br>&lt;taskdef name=&quot;<strong>wscompile</strong>&quot; 
+   classname=&quot;com.sun.xml.rpc.tools.ant.Wscompile&quot;&gt;
+  &lt;classpath refid=&quot;compile.classpath&quot;/&gt;
+&lt;/taskdef&gt;
+&lt;taskdef name=&quot;<strong>wsdeploy</strong>&quot; 
+   classname=&quot;com.sun.xml.rpc.tools.ant.Wsdeploy&quot;&gt;
+  &lt;classpath refid=&quot;compile.classpath&quot;/&gt;
+&lt;/taskdef&gt;</pre>
+<p>En la llamada a la tarea <code>wscompile</code> deberemos especificar como 
+  par&aacute;metro que el tipo de servicio es <code>documentliteral</code> y el 
+  fichero donde queremos que se genere el modelo:</p>
+<pre class="codigo">&lt;target name=&quot;generate&quot;&gt;
+  &lt;<strong>wscompile</strong> 
+     keep=&quot;true&quot;
+     define=&quot;true&quot;
+     <strong>features=&quot;documentliteral&quot;</strong>
+     base=&quot;.&quot;
+     xPrintStackTrace=&quot;true&quot;
+     verbose=&quot;true&quot;
+     <strong>model=&quot;model.gz&quot;</strong>
+     config=&quot;config.xml&quot;&gt;
+     &lt;classpath&gt;
+       &lt;path refid=&quot;compile.classpath&quot;/&gt;
+     &lt;/classpath&gt;
+  &lt;/wscompile&gt;
+&lt;/target&gt;</pre>
+<p>Una vez tenemos el modelo generado, podemos crear un fichero descriptor de 
+  servicios web (<code>jaxrpc-ri.xml</code>) que utilice este modelo:</p>
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;webServices
+   xmlns=&quot;http://java.sun.com/xml/ns/jax-rpc/ri/dd&quot;
+   version=&quot;1.0&quot;
+   targetNamespaceBase=&quot;http://j2ee.ua.es/wsdl&quot;
+   typeNamespaceBase=&quot;http://j2ee.ua.es/types&quot;
+   urlPatternBase=&quot;/ws&quot;&gt;<br>  &lt;endpoint
+     name=&quot;HolaMundo&quot;
+     displayName=&quot;Servicio HolaMundo&quot;
+     description=&quot;Servicio Web Hola Mundo&quot; 
+     interface=&quot;es.ua.j2ee.sw.hola.HolaMundoIF&quot; 
+     <strong>model=&quot;/WEB-INF/model.gz&quot;</strong>
+     implementation=&quot;es.ua.j2ee.sw.hola.HolaMundoImpl&quot;/&gt; <br>  &lt;endpointMapping
+     endpointName=&quot;HolaMundo&quot;
+     urlPattern=&quot;/hola&quot;/&gt;<br>&lt;/webServices&gt;</pre>
+<p>Una vez tenemos implementado el servicio, creado el modelo y el fichero descriptor 
+  de servicios web, organizaremos estos ficheros utilizando la estructura de directorios 
+  que deben seguir los servicios web de JWSDP:</p>
+<pre class="codigo">/WEB-INF/web.xml
+/WEB-INF/jaxrpc-ri.xml
+/WEB-INF/<strong>model.gz</strong>
+/WEB-INF/classes/es/ua/j2ee/sw/hola/HolaMundoIF.class
+/WEB-INF/classes/es/ua/j2ee/sw/hola/HolaMundoImpl.class</pre>
+<p>Empaquetaremos toda esta estructura en un fichero WAR, y entonces podremos 
+  utilizar la tarea <code>wsdeploy</code> para generar el servicio a partir de 
+  dicho fichero, de la misma forma que se hace con cualquier otro servicio web 
+  en JWSDP. La &uacute;nica novedad en este caso ha sido que hemos incluido en 
+  el servicio un fichero <code>model.gz</code> donde se especifica el tipo de 
+  servicio que queremos generar.</p>
+<p>Si observamos el fichero WSDL generado para el servicio, podremos comprobar 
+  que en el apartado <code>binding</code> se especifica que es de tipo <code>document</code> 
+  y <code>literal</code>:</p>
+<pre class="codigo">&lt;binding name=&quot;HolaMundoIFBinding&quot; type=&quot;tns:HolaMundoIF&quot;&gt;
+  &lt;operation name=&quot;saluda&quot;&gt;
+    &lt;input&gt;
+      &lt;soap:body <strong>use=&quot;literal&quot;</strong>/&gt;
+    &lt;/input&gt;
+    &lt;output&gt;
+      &lt;soap:body <strong>use=&quot;literal&quot;</strong>/&gt;
+    &lt;/output&gt;
+    &lt;soap:operation soapAction=&quot;&quot;/&gt;<br>  &lt;/operation&gt;
+  &lt;soap:binding transport=&quot;http://schemas.xmlsoap.org/soap/http&quot;    <br>                <strong>style=&quot;document&quot;</strong>/&gt;<br>&lt;/binding&gt;</pre>
+<p>Cualquier servicio que sea de este tipo se podr&aacute; ejecutar desde clientes 
+  J2ME. De esta forma, para comprobar si un servicio es compatible con la implementaci&oacute;n 
+  de J2ME, podremos consultar su fichero WSDL y ver el tipo especificado en el 
+  apartado <code>binding</code>.</p>
+<h3><strong>10.5.2. Creaci&oacute;n del stub</strong></h3>
+<p>Para acceder al servicio desde nuestra aplicaci&oacute;n deberemos crear una 
+  capa <em>stub</em>. Esta capa ser&aacute; la encargada de acceder al servicio, 
+  de forma que el desarrollador no tenga que preocuparse de implementar este acceso. 
+  Simplemente accederemos al stub para invocar los m&eacute;todos del servicio 
+  como si se tratase de un objeto local, sin tenernos que preocupar del mecanismo 
+  de invocaci&oacute;n subyacente.</p>
+<p>WTK 2.1 incluye herramientas para la generaci&oacute;n autom&aacute;tica de 
+  este <em>stub</em>. Podremos generar un <em>stub</em> en nuestro proyecto utilizando 
+  la opci&oacute;n <strong>Project &gt; Stub Generator ...</strong> :</p>
+<div align="center"><img src="imagenes/red/sw_1.gif" width="498" height="272"> 
+</div>
+<p>Cuando pulsemos sobre dicha opci&oacute;n, se abrir&aacute; una ventana donde 
+  deberemos introducir los datos del servicio para el cual queremos generar el 
+  <em>stub</em>:</p>
+<div align="center"><img src="imagenes/red/sw_2.gif" width="302" height="303"> 
+</div>
+<p>En esta ventana indicaremos la direcci&oacute;n donde se encuentra el documento 
+  WSDL del servicio al que vamos a acceder, y el paquete donde generaremos las 
+  clases del <em>stub</em>. Una vez hayamos introducido los datos pulsaremos OK 
+  y el <em>stub</em> se generar&aacute; autom&aacute;ticamente.</p>
+<h3><strong>10.5.3. Invocaci&oacute;n del servicio</strong></h3>
+<p>Una vez tenemos generado el <em>stub</em> para acceder al servicio, podemos 
+  utilizar este <em>stub</em> desde nuestra aplicaci&oacute;n MIDP. El <em>stub</em> 
+  generado ser&aacute; una clase con el nombre de la interfaz de nuestro servicio 
+  a&ntilde;adiendo el sufijo <code>_Stub</code>. </p>
+<p>Esta clase implementar&aacute; la misma interfaz que nuestro servicio, de forma 
+  que podremos instanciarla e invocar los m&eacute;todos de este objeto para acceder 
+  a las operaciones del servicio como si se tratase de un acceso a un objeto local.</p>
+<p>Por ejemplo, en el caso de nuestro servicio web <em>&quot;Hola Mundo&quot;</em>, 
+  podemos acceder a &eacute;l desde nuestra aplicaci&oacute;n cliente de la siguiente 
+  forma: </p>
+<pre class="codigo"><strong>HolaMundoIF</strong> hola = new <strong>HolaMundoIF_Stub</strong>();
+try {
+  String saludo = hola.<strong>saluda</strong>(&quot;Miguel&quot;);
+} catch(RemoteException re) {
+  // Error
+}
+</pre>
+<h2>10.6. Conexiones bluetooth</h2>
+<p>Bluetooth es una tecnolog&iacute;a que nos permite conectar dispositivos pr&oacute;ximos 
+  por radio, sustituyendo de esta forma a las conexiones por cable o infrarrojos. 
+  Adem&aacute;s <em>bluetooth</em> nos ofrece distintos servicios como voz, fax, 
+  modem, conexi&oacute;n por puerto serie para transmisi&oacute;n de datos, etc.</p>
+<p>No se debe ver bluetooth como un competidor de las redes inal&aacute;mbricas 
+  802.11b, ya que cada tecnolog&iacute;a tiene un fin distinto. Bluetooth se utilizar&aacute; 
+  para conectar peque&ntilde;os dispositivos en un radio peque&ntilde;o (unos 
+  10 metros), mientras que las redes 802.11b se utilizar&aacute;n para conectar 
+  dispositivos m&aacute;s potentes como ordenadores de sobremesa y port&aacute;tiles 
+  en un &aacute;rea m&aacute;s grande. Nos podemos referir a las redes 802.11b 
+  como redes de &aacute;rea local (LAN), y a las redes bluetooth como redes de 
+  &aacute;rea personal (PAN). </p>
+<p>Aunque el alcance normal de bluetooth son 10 metros, aumentando la potencia 
+  del punto de acceso bluetooth podemos aumentar su radio de alcance hasta 100 
+  metros.</p>
+<p>La tecnolog&iacute;a bluetooth se puede utilizar para conectar dispositivos, 
+  como por ejemplo kits de manos libres, para intercambiar datos con otros dispositivos, 
+  para acceder a funcionalidades u obtener informaci&oacute;n de dispositivos 
+  de nuestro entorno, etc. Podemos crear una red de dispositivos que se conecten 
+  entre si utilizando esta tecnolog&iacute;a.</p>
+<h3><strong>10.6.1. Topolog&iacute;a de las redes bluetooth</strong></h3>
+<p>Las redes que se crean utilizando bluetooth son redes &quot;<em>ad hoc</em>&quot;, 
+  es decir, se crean din&aacute;micamente. La comunicaci&oacute;n entre distintos 
+  dispositivos hace que se cree un red de forma espont&aacute;nea. </p>
+<p>Los dispositivos bluetooth tienen la capacidad de &quot;descubrir&quot; otros 
+  dispotivos bluetooth de su entorno. De esta forma, los dispositivos pueden localizarse 
+  entre ellos y conectarse formando una red de forma din&aacute;mica, sin tener 
+  que haber creado previamente ninguna infraestructura para dicha red. Cada dispositivo 
+  tendr&aacute; un identificador bluetooth &uacute;nico con el que se identificar&aacute;.</p>
+<p>Las redes bluetooth se forman en grupos llamados <em>piconets</em>. Cada <em>piconet</em> 
+  es un grupo que puede contener hasta 8 dispositivos como m&aacute;ximo, en el 
+  que uno de ellos ser&aacute; el maestro, y los dem&aacute;s ser&aacute;n esclavos 
+  que estar&aacute;n conectados a este maestro. </p>
+<div align="center"> <img src="imagenes/red/bt_piconet.gif" width="294" height="297"> 
+  <p class="caption">Figura 3. Topolog&iacute;a de una red bluetooth</p>
+</div>
+<p>Un mismo dispositivo puede pertenecer a dos <em>piconets</em> distintas. Es 
+  m&aacute;s, puede que el dispositivo tenga una funci&oacute;n distinta en cada 
+  <em>piconet</em>, por ejemplo puede actuar como maestro en uno de ellos, y como 
+  esclavo en el otro.</p>
+<p>Cuando un dispositivo pertenece a varias <em>piconets</em>, estas piconets 
+  estar&aacute;n conectadas entre ellas. Cuanto tenemos varias <em>piconets</em> 
+  conectadas de esta forma, todas ellas formar&aacute;n lo que se conoce como 
+  una <em>scatternet</em>. En el caso de las <em>scatternet</em>, dado que existen 
+  dispositivos que est&aacute;n conectados al mismo tiempo a dos <em>piconets</em>, 
+  el ancho de banda de la red ser&aacute; menor. Adem&aacute;s, hay muchos dispositivos 
+  que no soportan este tipo de redes.</p>
+<h3><strong>10.6.2. Capas de protocolos</strong></h3>
+<p>Vamos a ver los protocolos que se utilizan en la comunicaci&oacute;n mediante 
+  bluetooth.</p>
+<div align="center"><img src="imagenes/red/bt_capas.gif" width="303" height="315"> 
+</div>
+<p class="caption">Figura 4. Capas de bluetooth</p>
+<p>Encontramos las siguientes capas:</p>
+<ul>
+  <li><strong>Radio</strong>: Nivel f&iacute;sico, en el que se establecen las 
+    comunicaciones mediante ondas de radio.</li>
+  <li><strong>Banda base</strong>: Se encarga de enviar y recibir paquetes de 
+    datos utilizando la capa f&iacute;sica subyacente. Proporciona canales para 
+    voz y datos</li>
+  <li><strong>LMP</strong> (<em>Link Manager Protocol</em>): Utiliza los enlaces 
+    de la banda base para establecer conexiones y gestionar las piconets. </li>
+  <li><strong>HCI</strong> (<em>Host Controller Interface</em>): Es la l&iacute;nea 
+    divisoria entre software y hardware. Las capas por encima de esta est&aacute;n 
+    implementadas en software, y las capas por debajo en hardware. Es la interfaz 
+    del bus f&iacute;sico que conecta estos componentes. </li>
+  <li><strong>L2CAP</strong> (<em>Logical Link Control and Adaptation Protocol</em>): 
+    Esta capa es el protocolo de comunicaciones m&aacute;s bajo nivel que pueden 
+    utilizar las aplicaciones para comunicarse mediante bluetooth. Esta capa ya 
+    es directamente accesible desde las aplicaciones, que podr&aacute;n utilizarla 
+    para enviar y recibir paquetes de datos.</li>
+</ul>
+<p>Para las comunicaciones bluetooth utiliza multiplexado en el tiempo, para poder 
+  utilizar una comunicaci&oacute;n <em>full-duplex</em>. Los datos se env&iacute;an 
+  en ranuras de tiempo de 625ms cada una, el maestro utilizar&aacute; las ranuras 
+  impares y los esclavos utilizar&aacute;n las pares. Un paquete podr&aacute; 
+  enviarse en un m&aacute;ximo de 5 ranuras de tiempo (2745 bits de longitud). 
+</p>
+<p>Las capas por encima de L2CAP ser&aacute;n los distintos protocolos de comunicaciones 
+  que podremos utilizar en las aplicaciones que establezcan conexiones bluetooth. 
+  Los protocolos que podremos utilizar para comunicarnos mediante bluetooth son:</p>
+<ul>
+  <li><strong>L2CAP</strong>: Es el protocolo a m&aacute;s bajo nivel sobre el 
+    que se construir&aacute;n el resto de protocolos. Est&aacute; basado en la 
+    transmisi&oacute;n de paquetes, que tendr&aacute;n un tama&ntilde;o limitado. 
+    Este protocolo no realiza control del flujo, por lo que es posible que se 
+    pierdan paquetes en las comunicaciones. </li>
+  <li><strong>RFCOMM</strong>: Emula un puerto serie sobre bluetooth. Es un tipo 
+    de conexi&oacute;n basada en flujo de datos, en la que el protocolo utilizado 
+    realiza el control necesario para evitar la p&eacute;rdida de datos en las 
+    comunicaciones. </li>
+  <li><strong>SDP</strong> (<em>Service Discovery Protocol</em>): Se utiliza para 
+    poder &quot;descubrir&quot; de forma din&aacute;mica qu&eacute; servicios 
+    est&aacute;n disponibles en un determinados dispositivo.</li>
+  <li><strong>TCS</strong> (<em>Telephony Control Protocol</em>): Protocolo para 
+    aplicaciones de telefon&iacute;a.</li>
+  <li><strong>OBEX</strong> (<em>OBject EXchange</em>): OBEX se podr&iacute;a 
+    describir como un protocolo HTTP binario, que se utiliza para transmitir todo 
+    tipo de objetos como ficheros, im&aacute;genes, etc. Est&aacute; pensado para 
+    redes inal&aacute;mbricas &quot;<em>ad hoc</em>&quot;.</li>
+</ul>
+<p>Cuando dos dispositivos se conectan por primera vez, por motivos de seguridad 
+  deben establecer un secreto compartido. Esto es lo que se conoce como <em>pairing</em>. 
+  Es decir, los usuarios de los distintos dispositivos que vayan a conectarse 
+  deben ponerse de acuerdo e introducir en ellos el mismo c&oacute;digo, para 
+  de esta forma evitar que se realicen conexiones no deseadas a nuestro dispositivo. 
+  Una vez se ha realizado el pairing, este c&oacute;digo se guarda en el dispositivo 
+  y ya no har&aacute; falta introducirlo para las sucesivas conexiones.</p>
+<p>Una vez realizado el <em>pairing</em> de los dispositivos, estos pueden conectarse 
+  para formar una red bluetooth. Esta red se formar&aacute; de la siguiente forma:</p>
+<ul>
+  <li>Los dispositivos esclavos publican sus servicios. Estos servicios se identificar&aacute;n 
+    mediante un UUID, que es una clave &uacute;nica en el espacio y en el tiempo. 
+  </li>
+  <li>El dispositivo maestro busca los dispositivos bluetooth de su entorno.</li>
+  <li>Para cada dispositivo encontrado, descubre los servicios que ofrece. </li>
+  <li>Si tuviese el servicio que vamos a utilizar para comunicarnos, nos conectaremos 
+    a dicho dispositivo usando este servicio.</li>
+  <li>Enviaremos y recibiremos informaci&oacute;n a trav&eacute;s de las conexiones 
+    establecidas.</li>
+</ul>
+<p>En las redes bluetooth el dispositivo maestro es el que establece los tiempos 
+  y el acceso en la piconet. Adem&aacute;s hemos visto que tiene la responsabilidad 
+  de a&ntilde;adir a los esclavos a la piconet.</p>
+<p>Podemos ver el maestro como el servidor de la red, que gestiona las conexiones 
+  con varios clientes que en este caso ser&iacute;an los esclavos. En las conexiones 
+  cliente/servidor normalmente el servidor permanece a la escucha esperando peticiones 
+  de conexi&oacute;n de los clientes. Sin embargo, en el caso de bluetooth ocurre 
+  al contrario, es el servidor (maestro) el que se encarga de solicitar a los 
+  clientes (esclavos) que se a&ntilde;adan a la piconet. Para ello estos esclavos 
+  deben haber ofrecido (publicado) el servicio necesario, para que el maestro 
+  pueda descubrirlo y conectarse a &eacute;l.</p>
+<p>En el caso de conexiones punto-a-punto, es indiferente quien se conecte como 
+  esclavo y quien como maestro. Esta decisi&oacute;n tendr&aacute; mayor relevancia 
+  en el caso de conexiones punto-a-multipunto, en las que todos los esclavos estar&aacute;n 
+  conectados a un mismo maestro.</p>
+<p>Vamos a ver ahora c&oacute;mo establecer estas conexiones bluetooth utilizando 
+  las APIs de Java para Bluetooth (JSR-82). Esta API es el primer est&aacute;ndar 
+  no propietario que ha aparecido para desarrollar aplicaciones bluetooth utilizando 
+  este lenguaje. Podemos distinguir dos APIs independientes:</p>
+<pre class="codigo">javax.bluetooth
+javax.obex</pre>
+<p>Esto es as&iacute; porque OBEX puede funcionar sobre distintos tipos de conexiones 
+  como cable o infrarrojos. De esta forma la API OBEX no estar&aacute; ligada 
+  a la de bluetooth, sino que ser&aacute; independiente, pudiendo as&iacute; ser 
+  utilizada para trabajar con estro protocolo sobre los dem&aacute;s tipos de 
+  conexiones. </p>
+<p>La API de bluetooth soporta los protocolos L2CAP, SDP y RFCOMM, pero no soporta 
+  comunicaciones de voz. Con la API OBEX tambi&eacute;n podremos utilizar este 
+  protocolo. </p>
+<p>A partir de WTK 2.2 se incluye soporte para bluetooth en este kit de desarrollo. 
+  Para poder probar las aplicaciones bluetooth podemos usar esta versi&oacute;n 
+  que, adem&aacute;s de incorporar la API JSR-82, incluye emuladores que simulan 
+  este tipo de conexiones. Podremos ejecutar varias instancias del emulador y 
+  simular conexiones bluetooth entre ellos, sin necesitar disponer de dispositivos 
+  bluetooth reales.</p>
+<h3><strong>10.6.3. Registrar servicios</strong></h3>
+  <p>Lo primero que deberemos hacer para crear una red bluetooth es registrar los 
+  servicios de los esclavos, para que el maestro sea capaz de localizarlos y establecer 
+  una comunicaci&oacute;n con ellos. </p>
+<p>Deberemos asignar un UUID al servicio que vayamos a crear. Deberemos asegurarnos 
+  de que el UUID que generemos sea un identificador &uacute;nico que identifique 
+  el tipo de servicio que estamos implementando. </p>
+<p>Un UUID es un n&uacute;mero de 128 bits que tiene la siguiente forma (en hexadecimal):</p>
+<pre class="codigo">UUID = 00000000-0000-1000-8000-0014e3a325f9
+       32       16   16   16   48 <br>       bits     bits bits bits bits</pre>
+<p>Podemos distinguir varios bloques dentro de este n&uacute;mero con distinto 
+  n&uacute;mero de bits cada uno de ellos.</p>
+<p>Para generar este UUID podemos utilizar herramientas como <code>uuidgen</code>, 
+  que suelen generar este n&uacute;mero bas&aacute;ndose en el instante de tiempo 
+  actual o en generaci&oacute;n de n&uacute;meros aleatorios. </p>
+<p>Tambi&eacute;n podemos generar este n&uacute;mero manualmente. Para garantizar 
+  que sea &uacute;nico, podemos poner como el &uacute;ltimo bloque de 48 bits 
+  el identificador de nuestro dispositivo bluetooth, y en el resto de bloques 
+  podremos poner lo que queramos, siempre que para dos servicios que hagamos no 
+  utilicemos el mismo UUID.</p>
+<p>Una vez hayamos generado un UUID para nuestro servicio, podemos introducirlo 
+  como constante en el c&oacute;digo de nuestra aplicaci&oacute;n para tener acceso 
+  a &eacute;l cuando sea necesario, tanto desde el cliente como desde el servidor.</p>
+<pre class="codigo">public final static String <strong>UUID</strong> = &quot;000000000000010008000123456789ab&quot;;</pre>
+<p>Para poder registrar nuestro servicio, lo primero que debemos hacer es establecer 
+  nuestro dispositivo como descubrible. Para ello accederemos a nuestro dispositivo 
+  local a trav&eacute;s de un objeto <code>LocalDevice</code> que obtenemos de 
+  la siguiente forma:</p>
+<pre class="codigo"><strong>LocalDevice</strong> ld = <strong>LocalDevice</strong>.<strong>getLocalDevice</strong>();</pre>
+<p>Con este objeto <code>LocalDevice</code> podremos obtener datos de nuestro 
+  dispositivo local como su direcci&oacute;n bluetooth o su nombre.</p>
+<pre class="codigo">String bt_addr = ld.<strong>getBluetoothAddress</strong>();
+String bt_name = ld.<strong>getFriendlyName</strong>();</pre>
+<p>Una vez tenemos acceso a este objeto, podremos cambiar el modo de ser descubierto 
+  del mismo utilizando el m&eacute;todo <code>setDiscoverable</code>. Hay tres 
+  modos de ser descubiertos:</p>
+<ul>
+  <li><code><strong>DiscoveryAgent.GIAC</strong></code>: Es el modo general que 
+    se utiliza para que los dispositivos bluetooth sean descubiertos (GIAC). <br>
+  </li>
+  <li><code><strong>DiscoveryAgent.LIAC</strong></code>: Se trata de un modo limitado 
+    para acotar la b&uacute;squeda (LIAC, o tambi&eacute;n conocido como DIAC). 
+    Ser&aacute; de utilidad cuando estemos en un entorno con muchos dispositivos 
+    bluetooth y estemos buscando uno de ellos en concreto. Haciendo una analog&iacute;a, 
+    ser&iacute;a como cuando estamos buscando a un conocido entre una multitud, 
+    y nuestro conocido levanta la mano para que le podamos encontrar r&aacute;pidamente.<br>
+  </li>
+  <li><code><strong>DiscoveryAgent.NOT_DISCOVERABLE</strong></code>: No descubrible. 
+    Nuestro dispositivo no podr&aacute; ser localizado por ning&uacute;n otro 
+    dispositivo de nuestro entorno.</li>
+</ul>
+<p>Si no consigui&eacute;semos hacer nuestro dispositivo localizable, lanzaremos 
+  una excepci&oacute;n para interrumpir el flujo del programa, ya que no podremos 
+  publicar servicios si nadie va a poder descubrirlos.</p>
+<pre class="codigo">if (!ld.<strong>setDiscoverable</strong>(<strong>DiscoveryAgent.GIAC</strong>)) {
+  // Lanzar excepcion, no se puede descubrir
+}</pre>
+<p>Una vez establecido el dispositivo local como descubrible, pasaremos a crear 
+  y registrar el servicio. Deberemos definir una URL para nuestro servicio a partir 
+  de su UUID. En la URL especificaremos el protocolo de comunicaciones que vamos 
+  a utilizar. Para utilizar RFCOMM utilizaremos el protocolo <code>btspp</code> 
+  (Bluetooth Serial Port Protocol), mientras que para L2CAP utilizaremos <code>btl2cap</code>:</p>
+<pre class="codigo">String url = &quot;btspp://localhost:&quot; + UUID;</pre>
+<p>Utilizando esta URL crearemos una conexi&oacute;n que ser&aacute; la encargada 
+  de atender para prestar dicho servicio:</p>
+<pre class="codigo"><strong>StreamConnectionNotifier</strong> scn = <br>   (<strong>StreamConnectionNotifier</strong>)Connector.open(url);</pre>
+<p>Con esto tendremos ya nuestro servicio registrado en el dispositivo. Podemos 
+  obtener un registro del servicio que ser&aacute; accesible tanto desde el lado 
+  del cliente como desde el servidor. En este objeto podremos a&ntilde;adir atributos 
+  que el cliente del servicio podr&aacute; leer.</p>
+<pre class="codigo"><strong>ServiceRecord</strong> sr = ld.<strong>getRecord</strong>(scn);
+</pre>
+<p>Ahora que tenemos el servicio creado y registrado, deberemos atender las conexiones 
+  que se produzcan a dicho servicio. Con <code>acceptAndOpen</code> nos quedaremos 
+  bloqueados esperando que se conecte alg&uacute;n cliente a nuestro servicio. 
+  Una vez conectado obtendremos una conexi&oacute;n de tipo <code>StreamConnection</code>, 
+  a partir de la cual podremos abrir flujos de entrada y salida para comunicarnos 
+  con el dispositivo remoto seg&uacute;n el protocolo que hayamos establecido.</p>
+<pre class="codigo">while(true) {
+  <strong>StreamConnection</strong> sc = (<strong>StreamConnection</strong>)scn.<strong>acceptAndOpen</strong>();<br><br>  // Se ha conectado un maestro
+   
+  InputStream is = sc.<strong>openInputStream</strong>();
+  OutputStream os = sc.<strong>openOutputStream</strong>();
+   
+  // Enviar y recibir datos seg&uacute;n el protocolo que establezcamos
+   
+  os.<strong>flush</strong>();
+  is.<strong>close</strong>();
+  os.<strong>close</strong>();
+  sc.<strong>close</strong>();
+}</pre>
+<h3><strong>10.6.4. Descubrimiento de dispositivos</strong></h3>
+<p>Para establecer una conexi&oacute;n con otro dispositivo, lo primero que necesitaremos 
+  es localizar (descubrir) dicho dispositivo.</p>
+<p>Para localizar los dispositivos necesitaremos utilizar un objeto <code>DiscoveryAgent</code> 
+  que obtendremos a partir del objeto <code>LocalDevice</code>:</p>
+<pre class="codigo"><strong>LocalDevice</strong> ld = <strong>LocalDevice</strong>.<strong>getLocalDevice</strong>();
+<strong>DiscoveryAgent</strong> da = ld.<strong>getDiscoveryAgent</strong>();</pre>
+<p>La b&uacute;squeda se podr&aacute; hacer de tres formas diferentes:</p>
+<ul>
+  <li>Buscar todos los dispositivos del entorno: Con el m&eacute;todo <code>startInquiry</code> 
+    se realiza una b&uacute;squeda de todos los dispositivos que haya actualmente 
+    en nuestro entorno. Deberemos proporcionar un <em>listener</em>, que ser&aacute; 
+    llamado cada vez que se encuentre un nuevo dispositivo.<br>
+  </li>
+  <li>Obtener dispositivos en cach&eacute;: Obtiene la lista de dispositivos que 
+    se hayan almacenado en cach&eacute; despu&eacute;s de b&uacute;squedas anteriores. 
+    Obtendremos la lista de dispositivos remotos con:</li>
+</ul>
+<pre class="codigo"><strong>RemoteDevice</strong>[] dispositivos = <br>    da.<strong>retrieveDevices</strong>(<strong>DiscoveryAgent.CACHED</strong>);</pre>
+<ul>
+  <li>Obtener dispositivos preconocidos: Obtiene la lista de dispositivos preconocidos 
+    que tengamos configurada en nuestro dispositivo. Podemos a&ntilde;adir dispositivos 
+    a esta lista en el centro de control de bluetooth de nuestro m&oacute;vil. 
+    Obtendremos esta lista de dispositivos con:</li>
+</ul>
+<pre class="codigo"><strong>RemoteDevice</strong>[] dispositivos = <br>    da.<strong>retrieveDevices</strong>(<strong>DiscoveryAgent.PREKNOWN</strong>);</pre>
+<p></p>
+<p>Vamos a ver c&oacute;mo descubrir los dispositivos que hay actualmente en nuestro 
+  entorno con <code>startInquiry</code>. Necesitaremos definir un listener que 
+  herede de <code>DiscoveryListener</code> e implemente los siguientes m&eacute;todos:</p>
+<pre class="codigo">public void <strong>deviceDiscovered</strong>(RemoteDevice rd, DeviceClass dc);
+public void <strong>inquiryCompleted</strong>(int tipo);
+public void <strong>servicesDiscovered</strong>(int transID, ServiceRecord[] servicios);
+public void <strong>serviceSearchCompleted</strong>(int transID, int estado);</pre>
+<p>Los dos primeros m&eacute;todos se utilizar&aacute;n durante el descubrimiento 
+  de dispositivos, mientras que los dos &uacute;ltimos se utilizar&aacute;n para 
+  el descubrimiento de servicios de un dispositivo, como veremos m&aacute;s adelante.</p>
+<p>El m&eacute;todo <code>deviceDiscovered</code> se invocar&aacute; cada vez 
+  que un dispositivo remoto sea descubierto. El c&oacute;digo que introduciremos 
+  en &eacute;l normalmente ser&aacute; para a&ntilde;adir dicho dispositivo a 
+  una lista de dispositivos descubiertos:</p>
+<pre class="codigo">public void <strong>deviceDiscovered</strong>(RemoteDevice rd, DeviceClass dc) {
+  remoteDevices.addElement(rd);
+}
+</pre>
+<p>A partir del objeto <code>RemoteDevice</code> obtenido podremos obtener informaci&oacute;n 
+  sobre el dispositivo remoto, como su nombre o su direcci&oacute;n bluetooth, 
+  al igual que con <code>LocalDevice</code> obten&iacute;amos informaci&oacute;n 
+  sobre el dispositivo local. </p>
+<p>Una vez haya terminado la b&uacute;squeda de dispositivos se invocar&aacute; 
+  el m&eacute;todo <code>inquiryCompleted</code>. En este m&eacute;todo podremos 
+  introducir c&oacute;digo para que, en el caso de haberse completado la b&uacute;squeda 
+  con &eacute;xito, nuestra aplicaci&oacute;n pase a realizar la siguiente tarea 
+  pendiente, que normalmente ser&aacute; la b&uacute;squeda de servicios que nos 
+  ofrecen los dispositivos descubiertos.</p>
+<p>Cuando hayamos creado el listener, podremos comenzar la b&uacute;squeda con 
+  <code>startInquiry</code> especificando el modo de b&uacute;squeda (GIAC o LIAC) 
+  y el listener al que se notificar&aacute;n los dispositivos encontrados:</p>
+<pre class="codigo">da.<strong>startInquiry</strong>(DiscoveryAgent.GIAC, miListener);
+</pre>
+<p>Una vez terminada la b&uacute;squeda de dispositivos, necesitaremos buscar 
+  los servicios que nos ofrecen, para comprobar si est&aacute; disponible el servicio 
+  que buscamos (el que tiene nuestro UUID). </p>
+<p>Para cada dispositivo, podremos buscar los servicios identificados mediante 
+  una determinada UUID de la siguiente forma:</p>
+<pre class="codigo">da.<strong>searchServices</strong>(null, new UUID[]{new UUID(UUID,false)},<br>                 (RemoteDevice)remoteDevices.elementAt(i),miListener);
+ </pre>
+<p>Con esto comenzar&aacute; la b&uacute;squeda de servicios del dispositivo especificado. 
+  Cada vez que se encuentre uno o varios servicios nuevos, ser&aacute; invocado 
+  el m&eacute;todo <code>servicesDiscovered</code> con una lista de servicios 
+  descubiertos. Para cada servicio remoto encontrado tendremos un objeto <code>ServiceRecord</code>. 
+  Podemos a&ntilde;adir los servicios encontrados en una lista, igual que en el 
+  caso de los dispositivos:</p>
+<pre class="codigo">public void <strong>servicesDiscovered</strong>(int transID, ServiceRecord[] servicios) {
+  for(int i=0;i&lt;servicios.length;i++) {
+    remoteServices.addElement(servicios[i]);
+  }
+}</pre>
+<p>Cuando haya finalizado la b&uacute;squeda de servicios, se invocar&aacute; 
+  el m&eacute;todo <code>serviceSearchComplete</code>.</p>
+<h3><strong>10.6.5. Establecer conexiones</strong></h3>
+<p>Como &uacute;ltimo paso, tendremos que establecer una conexi&oacute;n con alguno 
+  de los servicios que hayamos localizado. Para ello utilizaremos el objeto <code>ServiceRecord</code> 
+  obtenido correspondiente a dicho servicio.</p>
+<pre class="codigo"> <strong>ServiceRecord</strong> rs = (<strong>ServiceRecord</strong>)remoteServices.elementAt(0);
+</pre>
+<p>A partir de este objeto podremos obtener la URL necesaria para conectarnos 
+  al servicio:</p>
+<pre class="codigo">String url = rs.<strong>getConnectionURL</strong>(<br>    ServiceRecord.NOAUTHENTICATE_NOENCRYPT, true);</pre>
+<p>Con esta URL podremos crear una conexi&oacute;n de tipo flujo y abrir los correspondiente 
+  flujos de entrada salida para intercambiar datos con el servidor:</p>
+<pre class="codigo"><strong>StreamConnection</strong> sc = (<strong>StreamConnection</strong>)Connector.open(url);<br><br>InputStream is = sc.<strong>openInputStream</strong>();
+OutputStream os = sc.<strong>openOutputStream</strong>();
+<br>// Enviar y recibir datos seg&uacute;n el protocolo que establezcamos
+   
+os.<strong>flush</strong>();<br>os.<strong>close</strong>();<br>is.<strong>close</strong>();
+sc.<strong>close</strong>();</pre>
+<h3><strong>10.6.6. Protocolo L2CAP</strong></h3>
+<p>En el caso de utilizar directamente el protocolo de bajo nivel L2CAP, utilizaremos 
+  una URL como la siguiente para crear la conexi&oacute;n:</p>
+<pre class="codigo">String url = &quot;btl2cap://localhost:&quot; + UUID;</pre>
+<p>Cuando abramos la conexi&oacute;n con <code>Connector.open</code> obtendremos 
+  un objeto de tipo <code>L2CAPConnectionNotifier</code>, y mediante el m&eacute;todo 
+  <code>acceptAndOpen</code> de este objeto podremos aceptar conexiones L2CAP 
+  de clientes. Cuando aceptemos una conexi&oacute;n de un cliente obtendremos 
+  un objeto <code>L2CAPConnection</code> con el que podremos realizar la comunicaci&oacute;n.</p>
+<p>Este objeto <code>L2CAPConnection</code> tiene dos m&eacute;todos <code>send</code> 
+  y <code>receive</code> con los que podremos enviar y recibir respectivamente 
+  paquetes de datos L2CAP. </p>
+<p>Como este protocolo no proporciona control de flujo, este control lo deberemos 
+  hacer nosotros si queremos asegurarnos de que los paquetes enviados no se han 
+  perdido. </p>
+<p>Utilizaremos este protocolo cuando necesitemos una comunicaci&oacute;n r&aacute;pida 
+  o cuando la p&eacute;rdida de paquetes no sea cr&iacute;tica para nuestra aplicaci&oacute;n.</p>
+</body>
+</html>

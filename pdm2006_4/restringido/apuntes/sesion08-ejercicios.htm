@@ -1,0 +1,100 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Proyecto: Juego</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2> A.8. Proyecto: Juego</h2>
+             
+<p><strong>8.1.</strong> Vamos a implementar un clon del cl&aacute;sico <em>Frogger</em>. 
+  En el directorio <code>Cochedrilo</code> de las plantillas de la sesi&oacute;n 
+  se encuentra una base sobre la que se puede implementar el juego. En esta plantilla 
+  tenemos:</p>
+<ul>
+  <li>Recursos necesarios: im&aacute;genes y fichero con los datos de las fases.</li>
+  <li>Clase con los datos del juego (<code>CommonData</code>). En ella tenemos 
+    toda la informaci&oacute;n acerca del tama&ntilde;o de los <em>sprites</em>, 
+    las secuencias de <em>frames</em> de las animaciones, sus coordenadas iniciales, 
+    etc.</li>
+  <li>Clase del MIDlet principal (<code>MIDletCDrilo</code>).</li>
+  <li>Pantalla <em>splash</em> (<code>SplashScreen</code>).</li>
+  <li>Clase para la gesti&oacute;n de los recursos (<code>Resources</code>).</li>
+  <li>Clase que implementa un ciclo de juego gen&eacute;rico (<code>GameEngine</code>).</li>
+  <li>Pantalla de titulo (<code>TitleScene</code>) e interfaz para las escenas 
+    del juego (<code>Scene</code>).</li>
+  <li>Pantalla de juego (<code>GameScene</code>) vac&iacute;a. Deberemos implementar 
+    la l&oacute;gica y la presentaci&oacute;n del juego en esta clase.</li>
+</ul>
+<p>Debemos:</p>
+<p><em>a)</em> Crear las estructuras de datos necesarias para cargar la informaci&oacute;n 
+  sobre las fases. Los datos de cada fase son los siguientes:</p>
+<ul>
+  <li>T&iacute;tulo de la fase</li>
+  <li>Carriles de la carretera. Para cada carril tendremos los siguientes datos: 
+    <ul>
+      <li>Velocidad de los coches que circulan por &eacute;l.</li>
+      <li>Separaci&oacute;n que hay entre los coches del carril.</li>
+      <li>Tipo de coche que circula por el carril.</li>
+    </ul>
+  </li>
+</ul>
+Estos datos se encuentras codificados en el fichero de datos de fases (<code>stages.dat</code>) 
+de la siguiente forma:
+<pre class="codigo">&lt;<strong>int</strong>&gt; Numero de fases
+Para cada fase
+  &lt;<strong>UTF</strong>&gt; Titulo
+  &lt;<strong>byte</strong>&gt; N&uacute;mero de carriles
+  Para cada carril
+    &lt;<strong>byte</strong>&gt; Velocidad
+    &lt;<strong>short</strong>&gt; Separaci&oacute;n
+    &lt;<strong>byte</strong>&gt; Tipo de coche
+</pre>
+<p>Deberemos a&ntilde;adir a las clases que encapsulen estos datos m&eacute;todos 
+  para deserializarlos de este fichero.</p>
+<p>Introducir c&oacute;digo en <code>Resources</code> para cargar esta informaci&oacute;n 
+  y a&ntilde;adir los datos de niveles como recurso global de nuestro juego.</p>
+<p><em>b)</em> A&ntilde;adir el <em>sprite</em> de nuestro personaje. Hacer que 
+  el <em>sprite</em> se mueva por la pantalla como respuesta a las pulsaciones 
+  del cursor.</p>
+<p><em>c)</em> A&ntilde;adir un fondo a la escena. El fondo se construir&aacute; 
+  utilizando un objeto <code>TiledLayer</code>. Utilizaremos la informaci&oacute;n 
+  sobre el n&uacute;mero de carriles de la fase actual para generar este fondo.</p>
+<p><em>d)</em> A&ntilde;adir los coches a la escena. Los coches deben aparecer 
+  a la izquierda y avanzar hacia la derecha. En cada carril los coches se generar&aacute;n 
+  de distinta forma. Cada carril tiene los siguientes atributos:</p>
+<ul>
+  <li>Velocidad: Los coches que circulen en dicho carril ir&aacute;n a la velocidad 
+    indicada. La velocidad se mide en pixeles que avanzan los coches en cada <em>tick</em>.<br>
+  </li>
+  <li>Separaci&oacute;n: El espacio en pixels que queda entre un coche y el siguiente 
+    que aparece. Podemos implementar esto creando un contador para cada carril, 
+    que controle en qu&eacute; momento debe hacer aparecer un nuevo coche en dicho 
+    carril. Por ejemplo, si tenemos un carril cuya velocidad es 3 y la separaci&oacute;n 
+    80, inicializaremos el contador a 80 y en cada tick lo decrementaremos en 
+    3 unidades. Cuando el contador llegue a 0 haremos aparecer un coche y le sumaremos 
+    80 para volver a empezar a contar lo que queda para aparecer el siguiente 
+    coche. <br>
+  </li>
+  <li>Tipo de coche: En cada carril circular&aacute; un tipo de coche distinto. 
+    Tenemos definidos 3 tipos, cada uno de ellos con distinto aspecto y tama&ntilde;o. 
+    Seg&uacute;n el tipo (0, 1 &oacute; 2) crearemos el sprite del coche utilizando 
+    una imagen distinta. </li>
+</ul>
+<p><em>e)</em> Implementar el resto de funcionalidades del juego:</p>
+<ul>
+  <li>Comprobar colisiones de los coches con nuestro personaje. Cuando esto suceda 
+    perderemos una vida y volver&aacute; a comenzar el nivel. En el caso de que 
+    no queden vidas, terminar&aacute; el juego.<br>
+  </li>
+  <li>Comprobar si el personaje ha cruzado la carretera para pasar de fase. Cuando 
+    hayamos llegado al otro lado de la carretera pasaremos a la siguiente fase. 
+    Si fuese la &uacute;ltima, podr&iacute;amos hacer que vuelva al comienzo del 
+    juego (primera fase).</li>
+</ul>
+</body>
+</html>

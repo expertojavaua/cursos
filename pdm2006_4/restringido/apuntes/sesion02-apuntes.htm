@@ -1,0 +1,2124 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesion 2: Java para MIDs. MIDlets</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1> 3. Introducción a Java para MIDs</h1>
+             
+<h2>3.1. Introducción a Java</h2>
+             
+<p><b>Java</b> es un lenguaje de programaci&oacute;n creado por <i>Sun Microsystems</i>
+         para poder funcionar en distintos tipos de procesadores. Su sintaxis es muy parecida a la de C o C++, e incorpora como propias algunas
+caracter&iacute;sticas que en otros lenguajes son extensiones: gesti&oacute;n de hilos, ejecuci&oacute;n 
+    remota, etc.   </p>
+             
+<p>El c&oacute;digo Java, una vez compilado, puede llevarse sin modificaci&oacute;n 
+  alguna sobre cualquier m&aacute;quina, y ejecutarlo. Esto se debe a que el c&oacute;digo 
+  se ejecuta sobre una m&aacute;quina hipot&eacute;tica o virtual, la <b>Java 
+  Virtual Machine</b>, que se encarga de interpretar el c&oacute;digo (ficheros 
+  compilados <code>.class</code>)<i> </i>y convertirlo a c&oacute;digo particular 
+  de la CPU que se est&eacute; utilizando (siempre que se soporte dicha m&aacute;quina 
+  virtual). </p>
+<p>En el caso de los MIDs, este c&oacute;digo intermedio Java se ejecutar&aacute; 
+  sobre una versi&oacute;n reducida de la m&aacute;quina virtual, la <strong>KVM</strong> 
+  (<strong>Kilobyte Virtual Machine</strong>). </p>
+             
+<p>Cuando se programa con Java, se dispone de antemano de un conjunto de clases 
+  ya implementadas. Estas clases (aparte de las que pueda hacer el usuario) forman 
+  parte del propio lenguaje (lo que se conoce como <b>API</b> (<i>Application 
+  Programming Interface</i>) de Java). </p>
+<p>La API que se utilizar&aacute; para programar las aplicaciones para MIDs ser&aacute; 
+  la API de MIDP, que contendr&aacute; un conjunto reducido de clases que nos 
+  permitan realizar las tareas fundamentales en estas aplicaciones. La implementaci&oacute;n 
+  de esta API estar&aacute; optimizada para ejecutarse en este tipo de dispositivos.</p>
+             
+<h2>3.2. Introducci&oacute;n a la Programación Orientada a Objetos (POO)</h2>
+<h3>3.2.1. Objetos y clases</h3>
+<ul>
+  <li><b>Objeto</b>: conjunto de variables junto con los m&eacute;todos relacionados 
+    con &eacute;stas. Contiene la <b>informaci&oacute;n</b> (las variables) y 
+    la forma de manipular la informaci&oacute;n (los m&eacute;todos).&nbsp;</li>
+  <li><b>Clase</b>: prototipo que define las variables y m&eacute;todos que va 
+    a emplear un determinado tipo de objeto.&nbsp;</li>
+</ul>
+<h3>3.2.2. Campos, métodos y constructores</h3>
+<ul>
+  <li><b>Campos</b>: contienen la informaci&oacute;n relativa a la clase&nbsp;</li>
+  <li><b>Métodos</b>: permiten manipular dicha informaci&oacute;n.&nbsp;</li>
+  <li><b>Constructores</b>: reservan memoria para almacenar un objeto de esa clase.</li>
+</ul>
+<h3>3.2.3. Herencia y polimorfismo</h3>
+<p>Con la <b>herencia</b> podemos definir una clase a partir de otra que ya exista, 
+  de forma que la nueva clase tendr&aacute; todas las variables y m&eacute;todos 
+  de la clase a partir de la que se crea, m&aacute;s las variables y m&eacute;todos 
+  nuevos que necesite. A la clase base a partir de la cual se crea la nueva clase 
+  se le llama <b>superclase</b>. 
+<p>
+  <center>
+    <img SRC="imagenes/java/herencia.jpg" NOSAVE height=113 width=354> 
+  </center>
+<p class="caption">Figura 1. Ejemplo de herencia</p>
+<p>Por ejemplo, tenemos una clase gen&eacute;rica <code>Animal</code>, y heredamos 
+  de ella para formar clases m&aacute;s espec&iacute;ficas, como <code>Pato</code> 
+  , <code>Elefante</code>, o <code>Le&oacute;n</code>. Si tenemos por ejemplo 
+  el m&eacute;todo <code>dibuja(Animal a)</code>, podremos pasarle a este m&eacute;todo 
+  como par&aacute;metro tanto un <i>Animal</i> como un <i>Pato</i>, <i>Elefante, 
+  </i>etc. Esto se conoce como <b>polimorfismo</b> . </p>
+<h3>3.2.4. Clases abstractas e interfaces</h3>
+<p>Mediante las <b>clases abstractas</b> y los <b>interfaces</b> podemos definir 
+  el esqueleto de una familia de clases, de forma que los subtipos de la clase 
+  abstracta o la interfaz implementen ese esqueleto para dicho subtipo concreto. 
+  Por ejemplo, podemos definir en la clase <code>Animal</code> el m&eacute;todo 
+  <code>dibuja()</code> y el m&eacute;todo <code>imprime()</code>, y que <code>Animal</code> 
+  sea una clase abstracta o un interfaz. 
+<p>
+  <center>
+    <img SRC="imagenes/java/interfaz.jpg" NOSAVE height=200 width=377> 
+  </center>
+<p class="caption">Figura 2. Ejemplo de interfaz y clase abstracta</p>
+Vemos la diferencia entre clase, clase abstracta e interfaz con este esquema: 
+<ul>
+  <li> En una <b>clase</b>, al definir <code>Animal</code> tendr&iacute;amos que 
+    implementar los m&eacute;todos <code>dibuja()</code> e <code>imprime()</code>. 
+    Las clases hijas no tendr&iacute;an por qu&eacute; implementar los m&eacute;todos, 
+    a no ser que quieran adaptarlos a sus propias necesidades.</li>
+  <li> En una <b>clase abstracta</b> podr&iacute;amos implementar los m&eacute;todos 
+    que nos interese, dejando sin implementar los dem&aacute;s (dej&aacute;ndolos 
+    como m&eacute;todos abstractos). Dichos m&eacute;todos tendr&iacute;an que 
+    implementarse en las clases hijas.</li>
+  <li> En un <b>interfaz</b> no podemos implementar ning&uacute;n m&eacute;todo 
+    en la clase padre, y cada clase hija tiene que hacer sus propias implementaciones 
+    de los m&eacute;todos. Adem&aacute;s, las clases hija podr&iacute;an implementar 
+    otros interfaces.</li>
+</ul>
+
+<h2>3.3. Conceptos Básicos de Java</h2>
+<h3>3.3.1. Componentes de un programa Java</h3>
+<p> En un programa Java podemos distinguir varios elementos:</p>
+<ul>
+  <li> <b>Paquetes</b>: equivalentes a los "<code>include</code>" de C, permiten 
+    utilizar clases en otras, y llamarlas de forma abreviada:</li>
+</ul>
+<ul>
+  <pre class="codigo">import java.util.*;</pre>
+</ul>
+<ul>
+  <li> <b>Clases</b>:&nbsp;</li>
+</ul>
+<ul>
+  <pre class="codigo">public class
+MiClase
+{
+&nbsp;&nbsp; ...</pre>
+</ul>
+<ul>
+  <li> <b>Campos</b>: Constantes, variables y en general elementos de informaci&oacute;n.</li>
+</ul>
+<ul>
+  <pre class="codigo">public int a;
+Vector v;</pre>
+</ul>
+<ul>
+  <li> <b>M&eacute;todos</b>: Para las funciones que devuelvan alg&uacute;n tipo 
+    de valor, es imprescindible colocar una sentencia <code>return</code> en la 
+    funci&oacute;n.</li>
+</ul>
+<ul>
+  <pre class="codigo">public void imprimirA()
+public void insertarVector(String cadena)</pre>
+  <li> <b>Constructores</b>: Un tipo de m&eacute;todo que siempre tiene el mismo 
+    nombre que la clase. Se pueden definir uno o varios.&nbsp;</li>
+  <pre class="codigo">public MiClase()</pre>
+  <p>As&iacute;, podemos definir una <b>instancia</b> con <b>new</b>: 
+  <pre class="codigo">MiClase mc;
+mc = new MiClase ();
+mc.a++;
+mc.insertarVector(&quot;hola&quot;);</pre>
+</ul>
+<blockquote>
+  <p> No tenemos que preocuparnos de liberar la memoria del objeto al dejar de 
+    utilizarlo. Esto lo hace autom&aacute;ticamente el <b>garbage collector</b>. 
+    A diferencia de J2SE, en MIDP los objetos no tienen el m&eacute;todo <code>finalize</code>.</p>
+</blockquote>
+<h3>3.3.2. Otras posibilidades</h3>
+<ul>
+  <li> <b>Herencia</b>: Se utiliza la palabra <code>extends</code> para decir 
+    de qu&eacute; clase se hereda. Para hacer que <code>Pato </code>herede de 
+    <code>Animal</code>:</li>
+</ul>
+<ul>
+  <pre class="codigo">class Pato extends Animal</pre>
+</ul>
+<ul>
+  <li> <b><code>this</code></b> se usa para hacer referencia a los miembros de 
+    la propia clase. Se utiliza cuando hay otros elementos con el mismo nombre, 
+    para distinguir :</li>
+</ul>
+<ul>
+  <pre class="codigo">public class MiClase {
+&nbsp;&nbsp; int i;
+&nbsp;&nbsp; public MiClase (int i) {
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.i = i; 	// i de la clase = parametro i
+</b>&nbsp;&nbsp; }
+}</pre>
+</ul>
+<ul>
+  <li> <b><code>super</code></b> se usa para llamar al mismo elemento en la clase 
+    padre. Si la clase <code>MiClase</code> tiene un método <code>Suma_a_i(...)</code>, 
+    lo llamamos con:</li>
+</ul>
+<ul>
+  <pre class="codigo">public class MiNuevaClase extends MiClase {
+&nbsp;&nbsp; public void Suma_a_i (int j) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; i = i + (j / 2);
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; super.Suma_a_i (j);
+</b>&nbsp; }
+}</pre>
+</ul>
+<ul>
+  <li> <b>Modificadores</b>:&nbsp;en algunos elementos (campos, métodos, clases, 
+    etc) se utilizan algunos de estos modificadores al declararlos:</li>
+</ul>
+<ul>
+  <ul>
+    <li> <b><code>public</code></b>:&nbsp; cualquier objeto puede acceder al elemento</li>
+    <li> <b><code>protected</code></b>: s&oacute;lo pueden acceder las subclases 
+      de la clase.</li>
+    <li> <b><code>private</code></b>: s&oacute;lo pueden ser accedidos desde dentro 
+      de la clase.</li>
+    <li> <b><code>abstract</code></b>: elemento base para la herencia (los objetos 
+      subtipo deber&aacute;n definir este elemento).</li>
+    <li> <b><code>static</code></b>: elemento compartido por todos los objetos 
+      de la misma clase.</li>
+    <li> <b><code>final</code></b>: objeto final, no modificable ni heredable.</li>
+    <li> <b><code>synchronized</code></b>: para elementos a los que no se puede 
+      acceder al mismo tiempo desde distintos hilos de ejecuci&oacute;n.</li>
+  </ul>
+</ul>
+<ul>
+  <li> <b>Clases abstractas e Interfaces</b>: si queremos definir una clase (por 
+    ejemplo, <code>Animal</code>), como clase abstracta o como interfaz, se declara 
+    como sigue (respectivamente). También se indica cómo hacer una clase o interfaz 
+    subtipo de la clase o interfaz padre (en este caso, la subclase es <code>Pato</code>):</li>
+  <center>
+    <table BORDER="0" COLS=2 WIDTH="354" >
+      <caption>&nbsp;
+      </caption>
+      <tbody>
+      </tbody>
+      <tr> 
+        <td width="344" height="117"> <pre class="codigo">public <b>interface</b> Animal
+{
+&nbsp;&nbsp; void dibujar ();
+&nbsp;&nbsp; void imprimir ();
+}</pre> 
+        </td>
+      </tr>
+      <tr> 
+        <td width="344"> <pre class="codigo">public class Pato <b>implements</b> Animal
+{
+&nbsp;&nbsp; void dibujar() { codigo; }
+&nbsp;&nbsp; void imprimir() { codigo; }
+}</pre> 
+        </td>
+      </tr>
+    </table>
+    <table BORDER="0" COLS=2 WIDTH="356" >
+      <caption>&nbsp;
+      </caption>
+      <tbody>
+      </tbody>
+      <tr> 
+        <td width="346"> <pre class="codigo">public <b>abstract</b> class Animal
+{
+&nbsp;&nbsp; abstract void dibujar ();
+&nbsp;&nbsp; void imprimir () { codigo; }
+}</pre> 
+        </td>
+      </tr>
+      <tr> 
+        <td width="346"> <pre class="codigo">public class Pato <b>extends</b> Animal
+{
+&nbsp;&nbsp; void dibujar() { codigo; }
+}</pre> </td>
+      </tr>
+    </table>
+  </center>
+</ul>
+<ul>
+  <li> <b>Paquetes</b>: la palabra&nbsp; <code>package</code> permite agrupar 
+    clases e interfaces. Los nombres de los paquetes son palabras separadas por 
+    puntos, y se almacenan en directorios que coinciden con esos nombres. As&iacute;, 
+    si definimos la clase:</li>
+</ul>
+<ul>
+  <pre class="codigo">package paquete1.subpaquete1;
+public class MiClase1_1
+...</pre>
+</ul>
+<blockquote> 
+  <p>haremos que la clase <code>MiClase1_1</code> pertenezca al subpaquete <code>subpaquete1 
+    </code>del paquete <code>paquete1</code>.</p>
+  <p>Para utilizar las clases de un paquete utilizamos <code>import</code>:</p>
+</blockquote>
+<ul>
+  <pre class="codigo">import java.Date;
+import paquete1.subpaquete1.*;
+import java.awt.*;</pre>
+</ul>
+<blockquote> Para importar todas las clases del paquete se utiliza el asterisco 
+  <code>*</code> (aunque no vayamos a usarlas todas, si utilizamos varias de ellas 
+  puede ser útil simplificar con un asterisco). Si sólo queremos importar una 
+  o algunas pocas, se pone un<code> import</code> por cada una, terminando el 
+  paquete con el nombre de la clase en lugar del asterisco (como pasa con <code>Date</code> 
+  en el ejemplo). 
+  <p align="left">Al poner <code>import</code><i> </i>podemos utilizar el nombre 
+    corto de la clase. Es decir, si ponemos:</p>
+  <pre class="codigo">import java.Date;
+import java.util.*;</pre>
+  <p align="left">Podemos hacer referencia a un objeto <code>Date</code> o a un 
+    objeto <code>Vector </code>(una clase del paquete <code>java.util</code>)<i> 
+    </i>con:</p>
+  <pre class="codigo">Date d = ...
+Vector v = ...</pre>
+  <p align="left">Si no pusiéramos los <code>import</code>, deberíamos hacer referencia 
+    a los objetos con:</p>
+  <pre class="codigo">java.Date d = ...
+java.util.Vector v = ...</pre>
+  <p>Es decir, cada vez que queramos poner el nombre de la clase, deberíamos colocar 
+    todo el nombre, con los paquetes y subpaquetes. </p>
+  <p>Cuando no especificamos el paquete al que pertenece una clase, esa clase 
+    ser&aacute; incluida en un paquete <em>sin nombre</em>. Al no tener nombre, 
+    no podremos importar este paquete desde otras clases pertenecientes a paquetes 
+    distintos, por lo que no podr&aacute;n utilizar esta clase. </p>
+  <p>Cuando realicemos aplicaciones en Java es importante asignar un nombre de 
+    paquete a cada clase, de forma que puedan ser localizadas. El utilizar clases 
+    en paquetes <em>sin nombre</em> nos servir&aacute; &uacute;nicamente si queremos 
+    hacer un programa de forma r&aacute;pida para hacer alguna prueba, pero no 
+    se debe hacer en ning&uacute;n otro caso.</p>
+  <p>La forma recomendada de asignar nombre a los paquetes de las aplicaciones 
+    que desarrollemos ser&aacute; similar a las DNS de Internet pero al rev&eacute;s, 
+    es decir, comenzaremos por el dominio, compa&ntilde;&iacute;a, subunidad y 
+    nombre de la aplicaci&oacute;n. Por ejemplo, si tenemos la URL <code>j2ee.ua.es</code> 
+    y vamos a realizar una aplicaci&oacute;n llamada <code>prueba</code>, pondremos 
+    las clases en un paquete <code>es.ua.j2ee.prueba</code> o subpaquetes del 
+    mismo.</p>
+</blockquote>
+
+<h3>3.3.3. Sintaxis de Java</h3>
+<blockquote>
+  <p><b>Tipos de datos</b>
+  </p>
+  <p>Se tienen los siguientes tipos de datos simples. Adem&aacute;s, se pueden 
+    crear complejos, todos los cuales ser&aacute;n subtipos de <code>Object</code> 
+  <table WIDTH="477" BORDER="0" align="center" CELLPADDING=2 CELLSPACING=2 >
+    <caption>&nbsp;
+    </caption>
+    <tbody>
+    </tbody>
+    <tbody>
+    </tbody>
+    <tr> 
+      <td VALIGN=TOP width="71"> <center>
+          <b><font size=-1>Tipo</font></b></center></td>
+      <td VALIGN=TOP width="151"> <center>
+          <b><font size=-1>Tama&ntilde;o/Formato</font></b></center></td>
+      <td VALIGN=TOP width="130"> <center>
+          <b><font size=-1>Descripci&oacute;n</font></b></center></td>
+      <td VALIGN=TOP width="89"> <center>
+          <b><font size=-1>Ejemplos</font></b></center></td>
+    </tr>
+    <tr> 
+      <td VALIGN=TOP width="71"><b><font size=-1>byte</font></b></td>
+      <td VALIGN=TOP width="151"><font size=-1>8 bits, complemento a 2</font></td>
+      <td VALIGN=TOP width="130"><font size=-1>Entero de 1 byte</font></td>
+      <td VALIGN=TOP width="89"> <center>
+          <font size=-1>210, 0x456</font></center></td>
+    </tr>
+    <tr> 
+      <td VALIGN=TOP width="71"><b><font size=-1>short</font></b></td>
+      <td VALIGN=TOP width="151"><font size=-1>16 bits, complemento a 2</font></td>
+      <td VALIGN=TOP width="130"><font size=-1>Entero corto</font></td>
+      <td VALIGN=TOP width="89"> <center>
+          <font size=-1>"</font></center></td>
+    </tr>
+    <tr> 
+      <td VALIGN=TOP width="71"><b><font size=-1>int</font></b></td>
+      <td VALIGN=TOP width="151"><font size=-1>32 bits, complemento a 2</font></td>
+      <td VALIGN=TOP width="130"><font size=-1>Entero</font></td>
+      <td VALIGN=TOP width="89"> <center>
+          <font size=-1>"</font></center></td>
+    </tr>
+    <tr> 
+      <td VALIGN=TOP width="71"><b><font size=-1>long</font></b></td>
+      <td VALIGN=TOP width="151"><font size=-1>64 bits, complemento a 2</font></td>
+      <td VALIGN=TOP width="130"><font size=-1>Entero largo</font></td>
+      <td VALIGN=TOP width="89"> <center>
+          <font size=-1>"</font></center></td>
+    </tr>
+    <tr> 
+      <td VALIGN=TOP width="71"><b><font size=-1>char</font></b></td>
+      <td VALIGN=TOP width="151"><font size=-1>16 bits, car&aacute;cter</font></td>
+      <td VALIGN=TOP width="130"><font size=-1>Car&aacute;cter simple</font></td>
+      <td VALIGN=TOP width="89"> <center>
+          <font size=-1>'a'</font></center></td>
+    </tr>
+    <tr> 
+      <td VALIGN=TOP width="71"><b><font size=-1>boolean</font></b></td>
+      <td VALIGN=TOP width="151"><font size=-1>true / false</font></td>
+      <td VALIGN=TOP width="130"><font size=-1> verdadero / falso</font></td>
+      <td VALIGN=TOP width="89"> <center>
+          <font size=-1>true,&nbsp; false</font></center></td>
+    </tr>
+  </table>
+  <p>Aqu&iacute; desaparecen los tipos <code>float</code> y <code>double</code> 
+    que pod&iacute;amos usar en otras ediciones de Java. Esto es debido a que 
+    la <strong>KVM</strong> no tiene soporte para estos tipos, ya que las operaciones 
+    con n&uacute;meros reales son complejas y estos dispositivos muchas veces 
+    no tienen unidad de punto flotante.</p>
+  <p>Las aplicaciones J2ME para dispositivos CDC si que podr&aacute;n usar estos 
+    tipos de datos, ya que funcionar&aacute;n con la m&aacute;quina virtual <strong>CVM</strong> 
+    que si que soporta estos tipos. Por lo tanto la limitaci&oacute;n no es de 
+    J2ME, sino de la m&aacute;quina virtual <strong>KVM</strong> en la que se 
+    basan las aplicaciones CLDC. </p>
+  <p>NOTA: En CLDC 1.1 se incorporan los tipos de datos <code>double</code> y 
+    <code>float</code>. En los dispositivos que soporten esta versi&oacute;n de 
+    la API podremos utilizar estos tipos de datos.</p>
+  <p><b>Cadenas</b> 
+  <p>Para trabajar con cadenas de caracteres se utiliza la clase <code>String</code>. 
+    Un valor posible para este tipo de datos es <code>&quot;Hola mundo&quot;</code>. 
+    Cuando escribamos una cadena de este tipo dentro del c&oacute;digo Java, se 
+    crear&aacute; un objeto <code>String</code> encapsulando dicha cadena. 
+  <p>Si trabajamos con cadenas largas, o vamos a realizar bastantes operaciones 
+    que modifiquen la cadena, ser&aacute; conveniente utilizar <code>StringBuffer</code>, 
+    ya que se trata de una implementaci&oacute;n m&aacute;s eficiente. La clase 
+    <code>String</code> no permite modificar el contenido de la cadena, por lo 
+    que cualquier modificaci&oacute;n implicar&aacute; reservar m&aacute;s memoria. 
+    <code>StringBuffer</code> si que nos permite modificar el <em>buffer</em> 
+    interno donde almacena la cadena, de forma que podremos hacer modificaciones 
+    sin tener que instanciar nuevos objetos. 
+  <p><b>Arrays</b> 
+  <p>Se definen <em>arrays</em> o conjuntos de elementos de forma similar a como 
+    se hace en C. Hay 2 m&eacute;todos: 
+  <pre class="codigo">int a[] = new int [10];
+String s[] = {&quot;Hola&quot;, &quot;Adios&quot;};</pre>
+  No pueden crearse <em>arrays</em> est&aacute;ticos en tiempo de compilaci&oacute;n 
+  (<code>int a[8];</code>), ni rellenar un <em>array</em> sin definir previamente 
+  su tama&ntilde;o con el operador <code>new</code>. La función miembro <code>length</code> 
+  se puede utilizar para conocer la longitud del <em>array</em>: 
+  <pre class="codigo">int a [][] = new int [10] [3];
+a.length;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Devolvería 10
+a[0].length;&nbsp;&nbsp;&nbsp;&nbsp; // Devolvería 3</pre>
+  Los <em>arrays</em> empiezan a numerarse desde 0, hasta el tope definido menos 
+  uno (como en C). 
+  <p>
+<b>Identificadores</b>
+  </p>
+  <p>Nombran variables, funciones, clases y objetos. Comienzan por una letra, 
+    car&aacute;cter de subrayado <code>_</code> o s&iacute;mbolo <code>$</code>. 
+    El resto de caracteres pueden ser letras o d&iacute;gitos (o <code>_</code>). 
+    Se distinguen may&uacute;sculas de min&uacute;sculas, y no hay longitud m&aacute;xima. 
+    Las variables en Java s&oacute;lo son v&aacute;lidas desde el punto donde 
+    se declaran hasta el final de la sentencia compuesta (las llaves) que la engloba. 
+    No se puede declarar una variable con igual nombre que una del mismo &aacute;mbito. 
+  <p>En
+  Java se tiene también un término NULL, pero si bien el de C es con
+  mayúsculas (<code>NULL</code>), éste es con minúsculas (<code>null</code>):<pre class="codigo">String a = null;
+...
+if (a == null)...</pre>
+<p><b>Referencias</b>
+  <p> En Java no existen punteros, simplemente se crea otro objeto que referencie 
+    al que queremos "apuntar".&nbsp; 
+  <table WIDTH="482" BORDER="0" align="center" COLS=2 >
+    <caption></caption>
+<tbody>
+</tbody>
+
+<tr>
+<td width="276">
+<pre class="codigo">MiClase mc = new MiClase();
+MiClase mc2 = mc;</pre>
+</td>
+
+<td width="190"> <code>mc2</code> y <code>mc</code> apuntan a la misma variable (al cambiar una cambiar&aacute;
+la otra).&nbsp;</td>
+</tr>
+
+<tr>
+<td width="276">
+<pre class="codigo">MiClase mc = new MiClase();
+MiClase mc2 = new MiClase();</pre>
+</td>
+
+<td width="190">Tendremos dos objetos apuntando a elementos diferentes en memoria.</td>
+</tr>
+</table>
+
+<p><b>Comentarios</b>
+<pre class="codigo">// comentarios para una sola línea
+
+/* comentarios de 
+   una o más líneas */
+
+/** comentarios de documentación para javadoc, 
+    de una o más líneas */</pre>
+<b>Operadores</b>
+<p>Se muestra una tabla con los operadores en orden
+de precedencia
+  <table WIDTH="485" BORDER="0" align="center" CELLPADDING=2 CELLSPACING=2 >
+    <caption>&nbsp;</caption>
+<tbody></tbody><tbody>
+</tbody>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><b><font size=-1>Operador</font></b></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><b><font size=-1>Ejemplo</font></b></center>
+</td>
+
+<td VALIGN=TOP width="140">
+<center><b><font size=-1>Descripci&oacute;n</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>.</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a.length</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Campo o m&eacute;todo de objeto</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>[ ]</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a[6]</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Referencia a elemento de array</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>( )</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>(a +
+b)</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Agrupaci&oacute;n de operaciones</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>++ ,&nbsp; --</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a++;
+b--</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Autoincremento / Autodecremento de 1 unidad</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>!, ~</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>!a ;
+~b</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Negaci&oacute;n / Complemento</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>instanceof</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a instanceof
+TipoDato</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Indica si <i>a </i>es del tipo <i>TipoDato</i></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>*, /, %</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a*b;
+b/c; c%a</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Multiplicaci&oacute;n, divisi&oacute;n y resto
+de divisi&oacute;n entera</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>+, -</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a+b;
+b-c</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Suma y resta</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>&lt;&lt;, >></font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a>>2;
+b&lt;&lt;1</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Desplazamiento de bits a izquierda y derecha</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>&lt;, >, &lt;=, >=, ==, !=</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a>b;
+b==c; c!=a</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Comparaciones (mayor, menor, igual, distinto...)</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>&amp;, |, ^</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a&amp;b;
+b|c</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>AND, OR y XOR l&oacute;gicas</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>&amp;&amp;, ||</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a&amp;&amp;b;
+b||c</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>AND y OR condicionales</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>?:</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a?b:c</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Condicional: si <i>a </i>entonces <i>b</i>
+, si no <i>c</i></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>=, +=, -=, *=, /= ...</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a=b;
+b*=c</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Asignaci&oacute;n. a += b equivale a (a =
+a + b)</font></td>
+</tr>
+</table>
+
+  <p>Puesto que con la KVM no tenemos soporte para n&uacute;meros reales, la operaci&oacute;n 
+    de divisi&oacute;n ser&aacute; entera. Nos devolver&aacute; un valor entero.</p>
+  <p><b>Control de flujo</b>
+<p>TOMA DE DECISIONES
+  <p>Este tipo de sentencias definen el c&oacute;digo que debe ejecutarse si se 
+    cumple una determinada condici&oacute;n. Se&nbsp; dispone de sentencias <code>if 
+    </code> y de sentencias <code>switch</code>: 
+  <table BORDER="0" CELLSPACING=2 CELLPADDING=2 WIDTH="490" >
+    <caption>&nbsp;</caption>
+<tbody></tbody><tbody>
+</tbody>
+
+<tr>
+<td VALIGN=TOP width="262">
+<center><b><font size=-1>Sintaxis</font></b></center>
+</td>
+
+<td VALIGN=TOP width="214">
+<center><b><font size=-1>Ejemplos</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="262">
+<pre class="codigo">if (condicion1) {
+&nbsp;&nbsp; sentencias;
+} else if (condicion2) {
+&nbsp;&nbsp; sentencias;
+&nbsp;&nbsp; ...
+} else if(condicionN) {
+&nbsp;&nbsp; sentencias;
+} else {
+&nbsp;&nbsp; sentencias;
+}</pre>
+</td>
+
+<td VALIGN=TOP width="214">
+<pre class="codigo">if
+(a == 1) {
+&nbsp;&nbsp; b++;
+} else if (b == 1) {
+&nbsp;&nbsp; c++;
+} else if (c == 1) {
+&nbsp;&nbsp; d++;
+}
+
+
+</pre>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="262">
+<pre class="codigo">switch (condicion) {
+&nbsp;&nbsp; case caso1: sentencias;
+&nbsp;&nbsp;&nbsp;case caso2: sentencias;
+&nbsp;&nbsp; case casoN: sentencias;
+&nbsp;&nbsp; default:&nbsp;&nbsp;&nbsp; sentencias;
+}
+
+
+</pre>
+</td>
+
+<td VALIGN=TOP width="214">
+<pre class="codigo">switch (a) {
+&nbsp;&nbsp; case 1: b++;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;
+&nbsp;&nbsp; case 2: c++;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;
+&nbsp;&nbsp; default:b--;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;
+}</pre>
+</td>
+</tr>
+</table>
+
+<p>BUCLES
+  <p>Para repetir un conjunto de sentencias durante un determinado n&uacute;mero 
+    de iteraciones se tienen las sentencias <code>for</code>, <code>while</code> 
+    y <code>do...while</code> : 
+  <table BORDER="0" CELLSPACING=2 CELLPADDING=2 WIDTH="491" >
+    <caption>&nbsp;</caption>
+<tbody></tbody><tbody>
+</tbody>
+
+<tr>
+<td VALIGN=TOP width="322">
+<center><b><font size=-1>Sintaxis</font></b></center>
+</td>
+
+<td VALIGN=TOP width="254">
+<center><b><font size=-1>Ejemplo</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="322">
+<pre class="codigo">for(inicio;condicion;
+    incremento) 
+{
+&nbsp; sentencias;
+}</pre></td>
+
+<td VALIGN=TOP width="254">
+<pre class="codigo">for (i=1;i&lt;10;i++)
+{
+&nbsp;&nbsp; b = b+i;
+}
+
+</pre></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="322">
+<pre class="codigo">while (condicion){
+&nbsp;&nbsp; sentencias;
+}
+
+</pre>
+</td>
+
+<td VALIGN=TOP width="254">
+<pre class="codigo">while (i &lt; 10) {
+&nbsp;&nbsp; b += i;
+&nbsp;&nbsp; i++;
+}</pre></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="322">
+<pre class="codigo">do{
+&nbsp;&nbsp; sentencias;
+} while (condicion);
+
+</pre>
+</td>
+
+<td VALIGN=TOP width="254">
+<pre class="codigo">do {
+&nbsp;&nbsp; b += i;
+&nbsp;&nbsp; i++;
+} while (i &lt; 10);</pre></td>
+</tr>
+</table>
+
+<p>SENTENCIAS DE RUPTURA
+  <p>Se tienen las sentencias <code>break</code> (para terminar la ejecución de 
+    un bloque o saltar a una etiqueta), <code>continue </code>(para forzar una 
+    ejecución más de un bloque o saltar a una etiqueta) y <code>return </code>(para 
+    salir de una función devolviendo o sin devolver un valor): 
+  <pre class="codigo">public int miFuncion(int n)
+{
+	int i = 0;
+  	while (i &lt; n)
+  	{
+  		i++;
+  		if (i &gt; 10)
+			// Sale del while
+			break;		
+  		if (i &lt; 5)
+			// Fuerza una iteracion mas
+  			continue;	
+  	}
+	// Devuelve lo que valga i al llegar aquí  	
+	return i;			
+}  </pre>
+</blockquote>
+<p><b>N&uacute;meros reales</b> 
+<p>En CLDC 1.0 echamos en falta el soporte para n&uacute;mero de coma flotante 
+  (<code>float</code> y <code>double</code>). En principio podemos pensar que 
+  esto es una gran limitaci&oacute;n, sobretodo para aplicaciones que necesiten 
+  trabajar con valores de este tipo. Por ejemplo, si estamos trabajando con informaci&oacute;n 
+  monetaria para mostrar el precio de los productos necesitaremos utilizar n&uacute;meros 
+  como 13.95&euro;. </p>
+<p>Sin embargo, en muchos casos podremos valernos de los n&uacute;meros enteros 
+  para representar estos n&uacute;meros reales. Vamos a ver un truco con el que 
+  implementar soporte para n&uacute;meros reales de coma fija mediante datos de 
+  tipo entero (<code>int</code>).</p>
+<p>Este truco consiste en considerar un n&uacute;mero <em>N</em> fijo de decimales, 
+  por ejemplo en el caso de los precios podemos considerar que van a tener 2 decimales. 
+  Entonces lo que haremos ser&aacute; trabajar con n&uacute;meros enteros, considerando 
+  que las <em>N</em> &uacute;ltimas cifras son los decimales. Por ejemplo, si 
+  un producto cuesta 13.95&euro;, lo guardaremos en una variable entera con valor 
+  1395, es decir, en este caso es como si estuvi&eacute;semos guardando la informaci&oacute;n 
+  en c&eacute;ntimos.</p>
+<p>Cuando queramos mostrar este valor, deberemos separar la parte entera y la 
+  fraccionaria para imprimirlo con el formato correspondiente a un n&uacute;mero 
+  real. Haremos la siguiente transformaci&oacute;n:</p>
+<pre class="codigo">public String imprimeReal(int numero) {
+    int entero = numero / 100;
+    int fraccion = numero % 100;
+    return entero + &quot;.&quot; + fraccion;
+}</pre>
+<p>Cuando el usuario introduzca un n&uacute;mero con formato real, y queramos 
+  leerlo y guardarlo en una variable de tipo entero (<code>int</code>) deberemos 
+  hacer la transformaci&oacute;n contraria:</p>
+<pre class="codigo">public int leeReal(String numero) {
+    int pos_coma = numero.indexOf('.');
+
+    String entero = numero.substring(0, pos_coma - 1);
+
+    String fraccion = numero.substring(pos_coma + 1, pos_coma + 2);
+
+    return Integer.parseInt(entero)*100 + Integer.parseInt(fraccion);
+
+}</pre>
+<p>Es posible que necesitemos realizar operaciones b&aacute;sicas con estos n&uacute;meros 
+  reales. Podremos realizar operaciones como suma, resta, multiplicaci&oacute;n 
+  y divisi&oacute;n utilizando la representaci&oacute;n como enteros de estos 
+  n&uacute;meros.</p>
+<p>El caso de la suma y de la resta es sencillo. Si sumamos o restamos dos n&uacute;meros 
+  con <em>N</em> decimales cada uno, podremos sumarlos como si fuesen enteros 
+  y sabremos que las &uacute;ltimas <em>N</em> cifras del resultado son decimales. 
+  Por ejemplo, si queremos a&ntilde;adir dos productos a la cesta de la compra, 
+  cuyos precios son 13.95&euro; y 5.20&euro; respectivamente, deberemos sumar 
+  estas cantidades para obtener el importe total. Para ello las trataremos como 
+  enteros y hacemos la siguiente suma:</p>
+<p><code>1395 + 520 = 1915</code></p>
+<p>Por lo tanto, el resultado de la suma de los n&uacute;meros reales ser&aacute; 
+  19.15&euro;.</p>
+<p>El caso de la multiplicaci&oacute;n es algo m&aacute;s complejo. Si queremos 
+  multiplicar dos n&uacute;meros, con <em>N</em> y <em>M</em> decimales respectivamente, 
+  podremos hacer la multiplicaci&oacute;n como si fuesen enteros sabiendo que 
+  el resultado tendr&aacute; <em>N+M</em> decimales. Por ejemplo, si al importe 
+  anterior de 19.15&euro; queremos a&ntilde;adirle el IVA, tendremos que multiplicarlo 
+  por 1.16. Haremos la siguiente operaci&oacute;n entera:</p>
+<p><code>1915 * 116 = 222140</code></p>
+<p>El resultado real ser&aacute; 22.2140&euro;, ya que si cada operando ten&iacute;a 
+  2 decimales, el resultado tendr&aacute; 4.</p>
+<p>Si estas operaciones b&aacute;sicas no son suficiente podemos utilizar una 
+  librer&iacute;a como <strong>MathFP</strong>, que nos permitir&aacute; realizar 
+  operaciones m&aacute;s complejas con n&uacute;meros de coma fija representados 
+  como enteros. Entre ellas tenemos disponibles operaciones trigonom&eacute;tricas, 
+  logar&iacute;tmicas, exponenciales, potencias, etc. Podemos descargar esta librer&iacute;a 
+  de <code>http://www.jscience.net/</code> e incluirla libremente en nuestra aplicaciones 
+  J2ME.</p>
+<h2>3.4. Caracter&iacute;sticas b&aacute;sicas de CLDC</h2>
+<p>Vamos a ver las caracter&iacute;sticas b&aacute;sicas del lenguaje Java (plataforma 
+  J2SE) que tenemos disponibles en la API CLDC de los dispositivos m&oacute;viles. 
+  Dentro de esta API tenemos la parte b&aacute;sica del lenguaje que debe estar 
+  disponible en cualquier dispositivo conectado limitado.</p>
+<p>Esta API b&aacute;sica se ha tomado directamente de J2SE, de forma que los 
+  programadores que conozcan el lenguaje Java podr&aacute;n programar de forma 
+  sencilla aplicaciones para dispositivos m&oacute;viles sin tener que aprender 
+  a manejar una API totalmente distinta. S&oacute;lo tendr&aacute;n que aprender 
+  a utilizar la parte de la API propia de estos dispositivos m&oacute;viles, que 
+  se utiliza para caracter&iacute;sticas que s&oacute;lo est&aacute;n presentes 
+  en estos dispositivos.</p>
+<p>Dado que estos dispositivos tienen una capacidad muy limitada, en CLDC s&oacute;lo 
+  est&aacute; disponible una parte reducida de esta API de Java. Vamos a ver en 
+  este punto qu&eacute; caracter&iacute;sticas de las que ya conocemos del lenguaje 
+  Java est&aacute;n presentes en CLDC para programar en dispositivos m&oacute;viles.</p>
+<h3>3.4.1. Excepciones</h3>
+<p>Las excepciones son eventos que ocurren durante la ejecuci&oacute;n de un programa 
+  y hacen que &eacute;ste salga de su flujo normal de instrucciones. Este mecanismo 
+  permite tratar los errores de una forma elegante, ya que separa el c&oacute;digo 
+  para el tratamiento de errores del c&oacute;digo normal del programa. Se dice 
+  que una excepci&oacute;n es <i>lanzada</i> cuando se produce un error, y esta 
+  excepci&oacute;n puede ser <i>capturada</i> para tratar dicho error.</p>
+<p class="subsection"><strong> Tipos de excepciones</strong></p>
+<p>Tenemos diferentes tipos de excepciones dependiendo del tipo de error que representen. 
+  Todas ellas descienden de la clase <code>Throwable</code>, la cual tiene dos 
+  descendientes directos:</p>
+<ul>
+  <li> <b><code>Error</code></b>: Se refiere a errores graves en la m&aacute;quina 
+    virtual de Java, como por ejemplo fallos al enlazar con alguna librer&iacute;a. 
+    Normalmente en los programas Java no se tratar&aacute;n este tipo de errores.</li>
+  <li><b><code>Exception</code></b>: Representa errores que no son críticos y 
+    por lo tanto pueden ser tratados y continuar la ejecuci&oacute;n de la aplicaci&oacute;n. 
+    La mayor&iacute;a de los programas Java utilizan estas excepciones para el 
+    tratamiento de los errores que puedan ocurrir durante la ejecuci&oacute;n 
+    del c&oacute;digo.</li>
+</ul>
+<p>Dentro de <code>Exception</code>, cabe destacar una subclase especial de excepciones 
+  denominada <code>RuntimeException</code>, de la cual derivar&aacute;n todas 
+  aquellas excepciones referidas a los errores que com&uacute;nmente se pueden 
+  producir dentro de cualquier fragmento de c&oacute;digo, como por ejemplo hacer 
+  una referencia a un puntero <i>null</i>, o acceder fuera de los l&iacute;mites 
+  de un <i>array</i>. </p>
+<p>Estas RuntimeException se diferencian del resto de excepciones en que no son 
+  de tipo <i>checked</i>. Una excepci&oacute;n de tipo <i>checked</i> debe ser 
+  capturada o bien especificar que puede ser lanzada de forma obligatoria, y si 
+  no lo hacemos obtendremos un error de compilaci&oacute;n. Dado que las <code>RuntimeException</code> 
+  pueden producirse en cualquier fragmento de c&oacute;digo, ser&iacute;a impensable 
+  tener que a&ntilde;adir manejadores de excepciones y declarar que &eacute;stas 
+  pueden ser lanzadas en todo nuestro c&oacute;digo.</p>
+<div align="center"><img src="imagenes/java/excepcion.png" width="491" height="254"></div>
+<p align="center" class="caption">Figura 3. Tipos de excepciones</p>
+<p>Dentro de estos grupos principales de excepciones podremos encontrar tipos 
+  concretos de excepciones o bien otros grupos que a su vez pueden contener m&aacute;s 
+  subgrupos de excepciones, hasta llegar a tipos concretos de ellas. Cada tipo 
+  de excepci&oacute;n guardar&aacute; informaci&oacute;n relativa al tipo de error 
+  al que se refiera, adem&aacute;s de la informaci&oacute;n com&uacute;n a todas 
+  las excepciones. </p>
+<p class="subsection"><strong> Captura de excepciones</strong></p>
+<p>Cuando un fragmento de c&oacute;digo sea susceptible de lanzar una excepci&oacute;n 
+  y queramos tratar el error producido o bien por ser una excepci&oacute;n de 
+  tipo <i>checked</i> debamos capturarla, podremos hacerlo mediante la estructura 
+  <code>try-catch-finally</code>, que consta de tres bloques de c&oacute;digo:</p>
+<ul>
+  <li> Bloque <code>try</code>: Contiene el c&oacute;digo regular de nuestro programa 
+    que puede producir una excepci&oacute;n en caso de error.</li>
+  <li>Bloque <code>catch</code>: Contiene el c&oacute;digo con el que trataremos 
+    el error en caso de producirse.</li>
+  <li>Bloque <code>finally</code>: Este bloque contiene el c&oacute;digo que se 
+    ejecutar&aacute; al final tanto si se ha producido una excepci&oacute;n como 
+    si no lo ha hecho. Este bloque se utiliza para, por ejemplo, cerrar alg&uacute;n 
+    flujo que haya podido ser abierto dentro del c&oacute;digo regular del programa, 
+    de manera que nos aseguremos que tanto si se ha producido un error como si 
+    no este flujo se cierre. El bloque <code>finally</code> no es obligatorio 
+    ponerlo.</li>
+</ul>
+<p>Para el bloque <code>catch</code> adem&aacute;s deberemos especificar el tipo 
+  o grupo de excepciones que tratamos en dicho bloque, pudiendo incluir varios 
+  bloques <code>catch</code>, cada uno de ellos para un tipo/grupo de excepciones 
+  distinto. La forma de hacer esto ser&aacute; la siguiente:</p>
+<pre class="codigo"><b><span class="codigo">try</span></b><span class="codigo"> {
+	// Código regular del programa
+	// Puede producir excepciones
+} <b>catch(TipoDeExcepcion1 e1)</b> {
+	// Código que trata las excepciones de tipo 
+	// TipoDeExcepcion1 o subclases de ella.
+	// Los datos sobre la excepción los encontraremos 
+	// en el objeto e1.
+} <b>catch(TipoDeExcepcion2 e2)</b> {
+</span><span class="codigo">	// Código que trata las excepciones de tipo 
+	// TipoDeExcepcion2 o subclases de ella.
+	// Los datos sobre la excepción los encontraremos 
+	// en el objeto e2.
+...
+} <b>catch(TipoDeExcepcionN eN)</b> {
+</span><span class="codigo">	// Código que trata las excepciones de tipo 
+	// TipoDeExcepcionN o subclases de ella.
+	// Los datos sobre la excepción los encontraremos 
+	// en el objeto eN.
+} <b>finally</b> {
+	// Código de finalización (opcional)
+}</span></pre>
+<p> Si como tipo de excepci&oacute;n especificamos un grupo de excepciones este 
+  bloque se encargar&aacute; de la captura de todos los subtipos de excepciones 
+  de este grupo. Por lo tanto, si especificamos <code>Exception</code> capturaremos 
+  cualquier excepci&oacute;n, ya que est&aacute; es la superclase com&uacute;n 
+  de todas las excepciones. </p>
+<p> En el bloque <code>catch</code> pueden ser útiles algunos métodos de la excepción 
+  (que podemos ver en la API de la clase padre <code>Exception</code>): </p>
+<pre class="codigo">String getMessage()
+void printStackTrace()</pre>
+<p>con <code>getMessage</code> obtenemos una cadena descriptiva del error (si 
+  la hay). Con <code>printStackTrace</code> se muestra por la salida estándar 
+  la traza de errores que se han producido (en ocasiones la traza es muy larga 
+  y no puede seguirse toda en pantalla con algunos sistemas operativos). </p>
+<p>Normalmente en los dispositivos m&oacute;viles cuando imprimimos por la salida 
+  est&aacute;ndar se ignorar&aacute; lo que estamos imprimiendo (se env&iacute;a 
+  a un dispositivo <em>null</em>), por lo que imprimir esta traza en el dispositivo 
+  no tiene mucho sentido. Puede resultar &uacute;til para depurar la aplicaci&oacute;n 
+  mientras la estemos probando en emuladores, ya que en este caso cuando imprimamos 
+  por la salida est&aacute;ndar veremos los mensajes en la consola.</p>
+<p>Un ejemplo de uso: </p>
+<pre class="codigo">try
+{
+	... // Aqui va el codigo que puede lanzar una excepcion
+} catch (Exception e) {
+	muestraAlerta(&quot;El error es: &quot; + e.getMessage());
+	e.printStackTrace();
+}</pre>
+<p class="subsection"><strong> Lanzamiento de excepciones</strong></p>
+<p>Hemos visto cómo capturar excepciones que se produzcan en el c&oacute;digo, 
+  pero en lugar de capturarlas tambi&eacute;n podemos hacer que se propaguen al 
+  m&eacute;todo de nivel superior (desde el cual se ha llamado al método actual). 
+  Para esto, en el método donde se vaya a lanzar la excepción, se siguen 2 pasos:</p>
+<ul>
+  <li>Indicar en el m&eacute;todo que determinados tipos de excepciones o grupos 
+    de ellas pueden ser lanzados, cosa que haremos de la siguiente forma, por 
+    ejemplo:</li>
+</ul>
+<pre class="codigo">public void lee_datos() <b>
+throws </b>IOException, ClassNotFoundException
+{
+    // Cuerpo de la función
+}</pre>
+<blockquote> 
+  <p>Podremos indicar tantos tipos de excepciones como queramos en la cl&aacute;usula 
+    <code>throws</code>. Si alguna de estas clases de excepciones tiene subclases, 
+    tambi&eacute;n se considerar&aacute; que puede lanzar todas estas subclases.</p>
+</blockquote>
+<ul>
+  <li> Para lanzar la excepci&oacute;n utilizamos la instrucci&oacute;n <code>throw</code>, 
+    proporcion&aacute;ndole un objeto correspondiente al tipo de excepci&oacute;n 
+    que deseamos lanzar. Por ejemplo:</li>
+</ul>
+<blockquote> 
+  <pre class="codigo"><b>throw</b> new ClassNotFoundException(mensaje_error);</pre>
+</blockquote>
+<ul>
+  <li>Juntando estos dos pasos:</li>
+</ul>
+<blockquote> 
+  <pre class="codigo">public void lee_datos() <b>
+throws </b>IOException, ClassNotFoundException
+{
+    ...
+    throw new ClassNotFoundException(mensaje_error);
+    ...
+}</pre>
+</blockquote>
+<p>Podremos lanzar así excepciones en nuestras funciones para indicar que algo 
+  no es como debiera ser a las funciones llamadoras. </p>
+<p>NOTA: para las excepciones que no son de tipo <i> checked</i> no har&aacute; 
+  falta la cláusula <code>throws</code> en la declaración del método, pero seguir&aacute;n 
+  el mismo comportamiento que el resto, si no son capturadas pasar&aacute;n al 
+  método de nivel superior, y seguir&aacute;n as&iacute; hasta llegar a la funci&oacute;n 
+  principal, momento en el que si no se captura provocar&aacute; la salida de 
+  nuestro programa mostrando el error correspondiente.</p>
+<p> <span class="subsection"><strong> Creaci&oacute;n de nuevas excepciones</strong></span></p>
+<p>Adem&aacute;s de utilizar los tipos de excepciones contenidos en la distribuci&oacute;n 
+  de Java, podremos crear nuevos tipos que se adapten a nuestros problemas.</p>
+<p>Para crear un nuevo tipo de excepciones simplemente deberemos crear una clase 
+  que herede de <code>Exception</code> o cualquier otro subgrupo de excepciones 
+  existente. En esta clase podremos a&ntilde;adir m&eacute;todos y propiedades 
+  para almacenar informaci&oacute;n relativa a nuestro tipo de error. Por ejemplo:</p>
+<pre class="codigo">public class MiExcepcion extends Exception
+{
+	public MiExcepcion (String mensaje)
+	{
+		super(mensaje);
+	}
+}</pre>
+<p>Adem&aacute;s podremos crear subclases de nuestro nuevo tipo de excepci&oacute;n, 
+  creando de esta forma grupos de excepciones. Para utilizar estas excepciones 
+  (capturarlas y/o lanzarlas) hacemos lo mismo que lo explicado antes para las 
+  excepciones que se tienen definidas en Java.</p>
+<h3>3.4.2. Hilos</h3>
+<p>Un hilo es un flujo de control dentro de un programa. Creando varios hilos 
+  podremos realizar varias tareas simult&aacute;neamente. Cada hilo tendr&aacute; 
+  s&oacute;lo un contexto de ejecuci&oacute;n (contador de programa, pila de ejecuci&oacute;n). 
+  Es decir, a diferencia de los procesos UNIX, no tienen su propio espacio de 
+  memoria sino que acceden todos al mismo espacio de memoria com&uacute;n, por 
+  lo que ser&aacute; importante su sincronizaci&oacute;n cuando tengamos varios 
+  hilos accediendo a los mismos objetos.</p>
+<p class="subsection"><strong> Creaci&oacute;n de hilos</strong></p>
+<p>En Java los hilos est&aacute;n encapsulados en la clase <code>Thread</code>. 
+  Para crear un hilo tenemos dos posibilidades:</p>
+<ul>
+  <li>Heredar de <code>Thread</code> redefiniendo el m&eacute;todo <code>run</code>.</li>
+  <li>Crear una clase que implemente la interfaz <code>Runnable</code> que nos 
+    obliga a definir el m&eacute;todo <code>run</code>.</li>
+</ul>
+<p>En ambos casos debemos definir un m&eacute;todo <code>run</code> que ser&aacute; 
+  el que contenga el c&oacute;digo del hilo. Desde dentro de este m&eacute;todo 
+  podremos llamar a cualquier otro m&eacute;todo de cualquier objeto, pero este 
+  m&eacute;todo <code>run</code> ser&aacute; el m&eacute;todo que se invoque cuando 
+  iniciemos la ejecuci&oacute;n de un hilo. El hilo terminar&aacute; su ejecuci&oacute;n 
+  cuando termine de ejecutarse este m&eacute;todo <code>run</code>.</p>
+<p>Para crear nuestro hilo mediante herencia haremos lo siguiente:</p>
+<pre class="codigo">public class EjemploHilo extends <strong>Thread</strong>
+{
+    public void <strong>run</strong>() {
+        // C&oacute;digo del hilo
+    }
+}</pre>
+<p>Una vez definida la clase de nuestro hilo deberemos instanciarlo y ejecutarlo 
+  de la siguiente forma:</p>
+<pre class="codigo"><strong>Thread</strong> t = new EjemploHilo();
+t.<strong>start</strong>();</pre>
+<p>Crear un hilo heredando de <code>Thread</code> tiene el problema de que al 
+  no haber herencia m&uacute;ltiple en Java, si heredamos de <code>Thread</code> 
+  no podremos heredar de ninguna otra clase, y por lo tanto un hilo no podr&iacute;a 
+  heredar de ninguna otra clase.</p>
+<p>Este problema desaparece si utilizamos la interfaz <code>Runnable</code> para 
+  crear el hilo, ya que una clase puede implementar varios interfaces. Definiremos 
+  la clase que contenga el hilo como se muestra a continuaci&oacute;n:</p>
+<pre class="codigo">public class EjemploHilo implements <strong>Runnable</strong>
+{
+    public void <strong>run</strong>() {
+        // C&oacute;digo del hilo
+    }
+}</pre>
+<p>Para instanciar y ejecutar un hilo de este tipo deberemos hacer lo siguiente:</p>
+<pre class="codigo"><strong>Thread</strong> t = new <strong>Thread</strong>(new EjemploHilo());
+t.<strong>start</strong>();</pre>
+<p>Esto es as&iacute; debido a que en este caso <code>EjemploHilo</code> no deriva 
+  de una clase <code>Thread</code>, por lo que no se puede considerar un hilo, 
+  lo &uacute;nico que estamos haciendo implementando la interfaz es asegurar que 
+  vamos a tener definido el m&eacute;todo <code>run</code>. Con esto lo que haremos 
+  ser&aacute; proporcionar esta clase al constructor de la clase <code>Thread</code>, 
+  para que el objeto <code>Thread</code> que creemos llame al m&eacute;todo <code>run</code> 
+  de la clase que hemos definido al iniciarse la ejecuci&oacute;n del hilo, ya 
+  que implementando la interfaz aseguramos que esta funci&oacute;n existe.</p>
+<p class="subsection"><strong> Estado y propiedades de los hilos</strong></p>
+<p>Un hilo pasar&aacute; por varios estados durante su ciclo de vida. </p>
+<pre class="codigo"><strong>Thread</strong> t = new Thread(this);</pre>
+<p>Una vez se ha instanciado el objeto del hilo, diremos que est&aacute; en estado 
+  de <i> Nuevo hilo</i>.</p>
+<pre class="codigo">t.<strong>start</strong>();</pre>
+<p>Cuando invoquemos su m&eacute;todo <code>start</code> el hilo pasar&aacute; 
+  a ser un hilo <i>vivo</i>, comenz&aacute;ndose a ejecutar su m&eacute;todo <code>run</code>. 
+  Una vez haya salido de este m&eacute;todo pasar&aacute; a ser un hilo <i>muerto</i>.</p>
+<p>La &uacute;nica forma de parar un hilo es hacer que salga del m&eacute;todo 
+  <code>run</code> de forma natural. Podremos conseguir esto haciendo que se cumpla 
+  la condici&oacute;n de salida del bucle principal definido dentro del <code>run</code>. 
+  Las funciones para parar, pausar y reanudar hilos est&aacute;s desaprobadas 
+  en las versiones actuales de Java.</p>
+<p>Mientras el hilo est&eacute; <i>vivo</i>, podr&aacute; encontrarse en dos estados: 
+  <i> Ejecutable</i> y <i> No ejecutable</i>. El hilo pasar&aacute; de <i> Ejecutable</i> 
+  a <i> No ejecutable</i> en los siguientes casos:</p>
+<ul>
+  <li>Cuando se encuentre dormido por haberse llamado al m&eacute;todo <code>sleep</code>, 
+    permanecer&aacute; <i> No ejecutable</i> hasta haber transcurrido el n&uacute;mero 
+    de milisegundos especificados.</li>
+  <li>Cuando se encuentre bloqueado en una llamada al m&eacute;todo <code>wait</code> 
+    esperando que otro hilo lo desbloquee llamando a <code>notify</code> o <code>notifyAll</code>.</li>
+  <li>Cuando se encuentre bloqueado en una petici&oacute;n de E/S, hasta que se 
+    complete la operaci&oacute;n de E/S.</li>
+</ul>
+<div align="center"><img border="0" src="imagenes/java/3-2.gif" width="405" height="154"></div>
+<p align="center" class="caption">Figura 4. Ciclo de vida de los hilos</p>
+<p>Lo &uacute;nico que podremos saber es si un hilo se encuentra vivo o no, llamando 
+  a su m&eacute;todo <code>isAlive</code>.</p>
+<p>Adem&aacute;s, una propiedad importante de los hilos ser&aacute; su prioridad. 
+  Mientras el hilo se encuentre vivo, el <i> scheduler</i> de la m&aacute;quina 
+  virtual Java le asignar&aacute; o lo sacar&aacute; de la CPU, coordinando as&iacute; 
+  el uso de la CPU por parte de todos los hilos activos bas&aacute;ndose en su 
+  prioridad. Se puede forzar la salida de un hilo de la CPU llamando a su m&eacute;todo 
+  <code>yield</code>. Tambi&eacute;n se sacar&aacute; un hilo de la CPU cuando 
+  un hilo de mayor prioridad se haga <i>Ejecutable</i>, o cuando el tiempo que 
+  se le haya asignado expire.</p>
+<p>Para cambiar la prioridad de un hilo se utiliza el m&eacute;todo <code>setPriority</code>, 
+  al que deberemos proporcionar un valor de prioridad entre <code>MIN_PRIORITY</code> 
+  y <code>MAX_PRIORITY</code>.</p>
+<p class="subsection"><strong> Sincronizaci&oacute;n de hilos</strong></p>
+<p>Muchas veces los hilos deber&aacute;n trabajar de forma coordinada, por lo 
+  que es necesario un mecanismo de sincronizaci&oacute;n entre ellos.</p>
+<p>Un primer mecanismo de comunicaci&oacute;n es la variable cerrojo incluida 
+  en todo objeto <code>Object</code>, que permitir&aacute; evitar que m&aacute;s 
+  de un hilo entre en la secci&oacute;n cr&iacute;tica. Los m&eacute;todos declarados 
+  como <code>synchronized</code> utilizan el cerrojo de la clase a la que pertenecen 
+  evitando que m&aacute;s de un hilo entre en ellos al mismo tiempo.</p>
+<pre class="codigo">public <strong>synchronized</strong> void seccion_critica()
+{
+    // C&oacute;digo secci&oacute;n cr&iacute;tica
+}</pre>
+<p>Tambi&eacute;n podemos utilizar cualquier otro objeto para la sincronizaci&oacute;n 
+  dentro de nuestro m&eacute;todo de la siguiente forma:</p>
+<pre class="codigo"><strong>synchronized</strong> (objeto_con_cerrojo) 
+{
+    // C&oacute;digo secci&oacute;n cr&iacute;tica
+}</pre>
+<p>Adem&aacute;s podemos hacer que un hilo quede bloqueado a la espera de que 
+  otro hilo lo desbloquee cuando suceda un determinado evento. Para bloquear un 
+  hilo usaremos la funci&oacute;n <code>wait</code>, para lo cual el hilo que 
+  llama a esta funci&oacute;n debe estar en posesi&oacute;n del monitor, cosa 
+  que ocurre dentro de un m&eacute;todo <code>synchronized</code>, por lo que 
+  s&oacute;lo podremos bloquear a un proceso dentro de estos m&eacute;todos. </p>
+<p>Para desbloquear a los hilos que haya bloqueados se utilizar&aacute; <code>notifyAll</code>, 
+  o bien <code>notify</code> para desbloquear s&oacute;lo uno de ellos aleatoriamente. 
+  Para invocar estos m&eacute;todos ocurrir&aacute; lo mismo, el hilo deber&aacute; 
+  estar en posesi&oacute;n del monitor.</p>
+<p>Cuando un hilo queda bloqueado liberar&aacute; el cerrojo para que otro hilo 
+  pueda entrar en la secci&oacute;n cr&iacute;tica y desbloquearlo.</p>
+<p>Por &uacute;ltimo, puede ser necesario esperar a que un determinado hilo haya 
+  finalizado su tarea para continuar. Esto lo podremos hacer llamando al m&eacute;todo 
+  <code>join</code> de dicho hilo, que nos bloquear&aacute; hasta que el hilo 
+  haya finalizado.</p>
+<p>En la API de CLDC no est&aacute;n presentes los grupos de hilos. La clase <code>ThreadGroup</code> 
+  de la API de J2SE no existe en la API de CLDC, por lo que no podremos utilizar 
+  esta caracter&iacute;stica desde los MIDs. Tampoco podemos ejecutar hilos como 
+  demonios (<em>daemon</em>).</p>
+<h3 class="subsection">3.4.3. Tipos de datos</h3>
+<p>En J2SE existe lo que se conoce como marco de colecciones, que comprende una 
+  serie de tipos de datos. Estos tipos de datos se denominan colecciones por ser 
+  una colecci&oacute;n de elementos, tenemos distintos subtipos de colecciones 
+  como las listas (secuencias de elementos), conjuntos (colecciones sin elementos 
+  repetidos) y mapas (conjunto de parejas <em>&lt;clave, valor&gt;</em>). Tendremos 
+  varias implementaciones de estos tipos de datos, siendo sus operadores polim&oacute;rficos, 
+  es decir, se utilizan los mismos operadores para distintos tipos de datos. Para 
+  ello se definen interfaces que deben implementar estos tipos de datos, una serie 
+  de implementaciones de estas interfaces y algoritmos para trabajar con ellos.</p>
+<p>Sin embargo, en CLDC no tenemos este marco de colecciones. Al tener que utilizar 
+  una API tan reducida como sea posible, tenemos solamente las clases <code>Vector</code> 
+  (tipo lista), <code>Stack</code> (tipo pila) y <code>Hashtable</code> (mapa) 
+  tal como ocurr&iacute;a en las primeras versiones de Java. Estas clases son 
+  independientes, no implementan ninguna interfaz com&uacute;n.</p>
+<p><strong>Enumeraciones</strong></p>
+<p>Para consultar las colecciones de elementos que contienen estos tipos de datos, 
+  podemos utilizar las enumeraciones. En J2SE ten&iacute;amos la posibilidad de 
+  utilizar tambi&eacute;n iteradores, pero la clase <code>Iterator</code> no est&aacute; 
+  disponible en CLDC.</p>
+<p>Las enumeraciones, definidas mediante la interfaz <code>Enumeration</code>, 
+  nos permiten consultar los elementos que contiene una colecci&oacute;n de datos. 
+  Muchos m&eacute;todos de clases Java que deben devolver m&uacute;ltiples valores, 
+  lo que hacen es devolvernos una enumeraci&oacute;n que podremos consultar mediante 
+  los m&eacute;todos que ofrece dicha interfaz.</p>
+<p>La enumeraci&oacute;n ir&aacute; recorriendo secuencialmente los elementos 
+  de la colecci&oacute;n. Para leer cada elemento de la enumeraci&oacute;n deberemos 
+  llamar al m&eacute;todo:</p>
+<pre class="codigo">Object item = enum.<strong>nextElement()</strong>;</pre>
+<p>Que nos proporcionar&aacute; en cada momento el siguiente elemento de la enumeraci&oacute;n 
+  a leer. Adem&aacute;s necesitaremos saber si quedan elementos por leer, para 
+  ello tenemos el m&eacute;todo:</p>
+<pre class="codigo">enum.<strong>hasMoreElements()</strong></pre>
+<p>Normalmente, el bucle para la lectura de una enumeraci&oacute;n ser&aacute; 
+  el siguiente:</p>
+<pre class="codigo">while (enum.<strong>hasMoreElements()</strong>) {
+  Object item = enum.<strong>nextElement()</strong>;
+  // Hacer algo con el item leido
+}</pre>
+<p>Vemos como en este bucle se van leyendo y procesando elementos de la enumeraci&oacute;n 
+  uno a uno mientras queden elementos por leer en ella.</p>
+<p><strong>Vector</strong></p>
+<p>Implementa una lista de elementos mediante un <em>array</em> de tama&ntilde;o 
+  variable. Conforme se a&ntilde;aden elementos el tama&ntilde;o del <em>array</em> 
+  ir&aacute; creciendo si es necesario. El <em>array</em> tendr&aacute; una capacidad 
+  inicial, y en el momento en el que se rebase dicha capacidad, se aumentar&aacute; 
+  el tama&ntilde;o del <em>array</em>.</p>
+<p>Las operaciones de a&ntilde;adir un elemento al final del <em>array</em> (<em>add</em>), 
+  y de establecer u obtener el elemento en una determinada posici&oacute;n (<em>get</em>/<em>set</em>) 
+  tienen un coste temporal constante. Las inserciones y borrados tienen un coste 
+  lineal <em>O(n)</em>, donde <em>n</em> es el n&uacute;mero de elementos del 
+  <em>array</em>.</p>
+<p>Los m&eacute;todos que tenemos para trabajar con el <code>Vector</code> son 
+  los m&eacute;todos que ten&iacute;a en las primeras versiones de Java:</p>
+<pre class="codigo">void <strong>addElement(Object obj)</strong></pre>
+<p>A&ntilde;ade un elemento al final del vector.</p>
+<pre class="codigo">Object <strong>elementAt(int indice)</strong></pre>
+<p>Devuelve el elemento de la posici&oacute;n del vector indicada por el &iacute;ndice.</p>
+<pre class="codigo">void <strong>insertElementAt(Object obj, int indice)</strong></pre>
+<p>Inserta un elemento en la posici&oacute;n indicada.</p>
+<pre class="codigo">boolean <strong>removeElement(Object obj)</strong></pre>
+<p>Elimina el elemento indicado del vector, devolviendo <code>true</code> si dicho 
+  elemento estaba contenido en el vector, y <code>false</code> en caso contrario.</p>
+<pre class="codigo">void <strong>removeElementAt(int indice)</strong></pre>
+<p>Elimina el elemento de la posici&oacute;n indicada en el &iacute;ndice.</p>
+<pre class="codigo">void <strong>setElementAt(Object obj, int indice)</strong></pre>
+<p>Sobrescribe el elemento de la posici&oacute;n indicada con el objeto especificado.</p>
+<pre class="codigo">int <strong>size()</strong></pre>
+<p>Devuelve el n&uacute;mero de elementos del vector.</p>
+<p><strong>Stack</strong></p>
+<p>Sobre el vector se construye el tipo pila (<code>Stack</code>), que apoy&aacute;ndose 
+  en el tipo vector ofrece m&eacute;todos para trabajar con dicho vector como 
+  si se tratase de una pila, apilando y desapilando elementos (operaciones <code>push 
+  </code>y<code> pop</code> respectivamente). La clase <code>Stack</code> hereda 
+  de <code>Vector</code>, por lo que en realidad ser&aacute; un vector que ofrece 
+  m&eacute;todos adicionales para trabajar con &eacute;l como si fuese una pila.</p>
+<p><strong>Hashtable</strong></p>
+<p>Relaciona una clave (<em>key</em>) con un valor. Contendr&aacute; un conjunto 
+  de claves, y a cada clave se le asociar&aacute; un determinado valor. Tanto 
+  la clave como el valor puede ser cualquier objeto. Lo que contendr&aacute; este 
+  tipo de dato ser&aacute; una colecci&oacute;n de parejas <em>&lt;clave, valor&gt;</em>.</p>
+<p>Los m&eacute;todos b&aacute;sicos para trabajar con estos elementos son los 
+  siguientes:</p>
+<pre class="codigo">Object <strong>get(Object clave)</strong></pre>
+<p>Nos devuelve el valor asociado a la clave indicada</p>
+<pre class="codigo">Object <strong>put(Object clave, Object valor)</strong></pre>
+<p>Inserta una nueva clave con el valor especificado. Nos devuelve el valor que 
+  ten&iacute;a antes dicha clave, o <code>null</code> si la clave no estaba en 
+  la tabla todav&iacute;a.</p>
+<pre class="codigo">Object <strong>remove(Object clave)</strong></pre>
+<p>Elimina una clave, devolvi&eacute;ndonos el valor que ten&iacute;a dicha clave.</p>
+<pre class="codigo">Enumeration <strong>keys()</strong></pre>
+<p>Este m&eacute;todo nos devolver&aacute; una enumeraci&oacute;n de todas las 
+  claves registradas en la tabla.</p>
+<pre class="codigo">int <strong>size()</strong></pre>
+<p>Nos devuelve el n&uacute;mero de parejas <em>&lt;clave,valor&gt;</em> registradas.</p>
+<p><strong>Wrappers de tipos b&aacute;sicos</strong></p>
+<p>Hemos visto que en Java cualquier tipo de datos es un objeto, excepto los tipos 
+  de datos b&aacute;sicos: <code>boolean</code>, <code>int</code>, <code>long</code>, 
+  <code>byte</code>, <code>short</code>, <code>char</code>. </p>
+<p>Cuando trabajamos con estos tipos de datos los elementos que contienen &eacute;stos 
+  son siempre objetos, por lo que en un principio no podr&iacute;amos insertar 
+  elementos de estos tipos b&aacute;sicos. Para hacer esto posible tenemos una 
+  serie de objetos que se encargar&aacute;n de envolver a estos tipos b&aacute;sicos, 
+  permiti&eacute;ndonos tratarlos como objetos y por lo tanto insertarlos como 
+  elementos de colecciones. Estos objetos son los llamados <em>wrappers</em>, 
+  y las clases en las que se definen tienen nombres similares al del tipo b&aacute;sico 
+  que encapsulan, con la diferencia de que comienzan con may&uacute;scula: <code>Boolean</code>, 
+  <code>Integer</code>, <code>Long</code>, <code>Byte</code>, <code>Short</code>, 
+  <code>Character</code>.</p>
+<p>Estas clases, adem&aacute;s de servirnos para encapsular estos datos b&aacute;sicos 
+  en forma de objetos, nos proporcionan una serie de m&eacute;todos e informaci&oacute;n 
+  &uacute;tiles para trabajar con estos datos. Nos proporcionar&aacute;n m&eacute;todos 
+  por ejemplo para convertir cadenas a datos num&eacute;ricos de distintos tipos 
+  y viceversa, as&iacute; como informaci&oacute;n acerca del valor m&iacute;nimo 
+  y m&aacute;ximo que se puede representar con cada tipo num&eacute;rico.</p>
+<p>NOTA: Dado que a partir de CLDC 1.1 se incorporan los tipos de datos <code>float</code> 
+  y <code>double</code>, aparecer&aacute;n tambi&eacute;n sus correspondientes 
+  <em>wrappers</em>: <code>Float</code> y <code>Double</code>.</p>
+<h3>3.4.4. Clases &uacute;tiles</h3>
+<p>Vamos a ver ahora una serie de clases b&aacute;sicas del lenguaje Java que 
+  siguen estando en CLDC. La versi&oacute;n de CLDC de estas clases estar&aacute; 
+  normalmente m&aacute;s limitada, a continuaci&oacute;n veremos las diferencias 
+  existentes entre la versi&oacute;n de J2SE y la de CLDC.</p>
+<p><strong>Object</strong></p>
+<p>Esta es la clase base de todas las clases en Java, toda clase hereda en &uacute;ltima 
+  instancia de la clase <code>Object</code>, por lo que los m&eacute;todos que 
+  ofrece estar&aacute;n disponibles en cualquier objeto Java, sea de la clase 
+  que sea.</p>
+<p>En Java es importante distinguir claramente entre lo que es una variable, y 
+  lo que es un objeto. Las variables simplemente son referencias a objetos, mientras 
+  que los objetos son las entidades instanciadas en memoria que podr&aacute;n 
+  ser manipulados mediante las referencias que tenemos a ellos (mediante variable 
+  que apunten a ellos) dentro de nuestro programa. Cuando hacemos lo siguiente:</p>
+<pre class="codigo">new MiClase()</pre>
+<p>Se est&aacute; instanciando en memoria un nuevo objeto de clase <code>MiClase</code> 
+  y nos devuelve una referencia a dicho objeto. Nosotros deberemos guardarnos 
+  dicha referencia en alguna variable con el fin de poder acceder al objeto creado 
+  desde nuestro programa:</p>
+<pre class="codigo">MiClase mc = new MiClase();</pre>
+<p>Es importante declarar la referencia del tipo adecuado (en este caso tipo <code>MiClase</code>) 
+  para manipular el objeto, ya que el tipo de la referencia ser&aacute; el que 
+  indicar&aacute; al compilador las operaciones que podremos realizar con dicho 
+  objeto. El tipo de esta referencia podr&aacute; ser tanto el mismo tipo del 
+  objeto al que vayamos a apuntar, o bien el de cualquier clase de la que herede 
+  o interfaz que implemente nuestro objeto. Por ejemplo, si <code>MiClase</code> 
+  se define de la siguiente forma:</p>
+<pre class="codigo">public class MiClase extends Thread implements List {
+	...
+}</pre>
+<p>Podremos hacer referencia a ella de diferentes formas:</p>
+<pre class="codigo">MiClase mc = new MiClase();
+Thread t = new MiClase();
+List l = new MiClase();
+Object o = new MiClase();</pre>
+<p>Esto es as&iacute; ya que al heredar tanto de <code>Thread</code> como de <code>Object</code>, 
+  sabemos que el objeto tendr&aacute; todo lo que tienen estas clases m&aacute;s 
+  lo que a&ntilde;ada <code>MiClase</code>, por lo que podr&aacute; comportarse 
+  como cualquiera de las clases anteriores. Lo mismo ocurre al implementar una 
+  interfaz, al forzar a que se implementen sus m&eacute;todos podremos hacer referencia 
+  al objeto mediante la interfaz ya que sabemos que va a contener todos esos m&eacute;todos. 
+  Siempre vamos a poder hacer esta asignaci&oacute;n 'ascendente' a clases o interfaces 
+  de las que deriva nuestro objeto.</p>
+<p>Si hacemos referencia a un objeto <code>MiClase</code> mediante una referencia 
+  <code>Object</code> por ejemplo, s&oacute;lo podremos acceder a los m&eacute;todos 
+  de <code>Object</code>, aunque el objeto contenga m&eacute;todos adicionales 
+  definidos en <code>MiClase</code>. Si conocemos que nuestro objeto es de tipo 
+  <code>MiClase</code>, y queremos poder utilizarlo como tal, podremos hacer una 
+  asignaci&oacute;n 'descendente' aplicando una conversi&oacute;n <em>cast</em> 
+  al tipo concreto de objeto:</p>
+<pre class="codigo">Object o = new MiClase();
+...
+MiClase mc = (MiClase) o;</pre>
+<p>Si resultase que nuestro objeto no es de la clase a la que hacemos <em>cast</em>, 
+  ni hereda de ella ni la implementa, esta llamada resultar&aacute; en un <code>ClassCastException</code> 
+  indicando que no podemos hacer referencia a dicho objeto mediante esa interfaz 
+  debido a que el objeto no la cumple, y por lo tanto podr&aacute;n no estar disponibles 
+  los m&eacute;todos que se definen en ella.</p>
+<p>Una vez hemos visto la diferencia entre las variables (referencias) y objetos 
+  (entidades) vamos a ver como se har&aacute; la asignaci&oacute;n y comparaci&oacute;n 
+  de objetos. Si hici&eacute;semos lo siguiente:</p>
+<pre class="codigo">MiClase mc1 = new MiClase();
+MiClase mc2 = mc1;</pre>
+<p>Puesto que hemos dicho que las variables simplemente son referencias a objetos, 
+  la asignaci&oacute;n estar&aacute; copiando una referencia, no el objeto. Es 
+  decir, tanto la variable <code>mc1 </code>como <code>mc2 </code>apuntar&aacute;n 
+  a un mismo objeto.</p>
+<p>En J2SE la clase <code>Object</code> tiene un m&eacute;todo <code>clone</code> 
+  que podemos utilizar para realizar una copia del objeto, de forma que tengamos 
+  dos objetos independientes en memoria con el mismo contenido. Este m&eacute;todo 
+  no existe en CLDC, por lo que si queremos realizar una copia de un objeto deberemos 
+  definir un constructor de copia, es decir, un constructor que construya un nuevo 
+  objeto copiando todas las propiedades de otro objeto de la misma clase. </p>
+<p>Por ejemplo, si tenemos una clase <code>Punto2D</code>, cuyas propiedades sean 
+  las coordenadas<em> (x,y)</em> del punto, podemos definir un constructor de 
+  copia como se muestra a continuaci&oacute;n:</p>
+<pre class="codigo">public class Punto2D { 
+    public int x, y; 
+
+
+    ... 
+
+
+    public <strong>Punto2D</strong>(Punto2D p) {
+        this.x = p.x;
+        this.y = p.y
+    }
+}</pre>
+<p>Por otro lado, para la comparaci&oacute;n, si hacemos lo siguiente:</p>
+<pre class="codigo">mc1 == mc2</pre>
+<p>Estaremos comparando referencias, por lo que estaremos viendo si las dos referencias 
+  apuntan a un mismo objeto, y no si los objetos a los que apuntan son iguales. 
+  Para ver si los objetos son iguales, aunque sean entidades distintas, tenemos:</p>
+<pre class="codigo">mc1.<strong>equals</strong>(mc2)</pre>
+<p>Este m&eacute;todo tambi&eacute;n es propio de la clase <code>Object</code>, 
+  y ser&aacute; el que se utilice para comparar internamente los objetos.</p>
+<p>El m&eacute;todo<code> equals</code>, deber&aacute; ser redefinido en nuestras 
+  clases para adaptarse a &eacute;stas. Deberemos especificar dentro de &eacute;l 
+  como se compara si dos objetos de esta clase son iguales:</p>
+<pre class="codigo">public class Punto2D {
+
+	public int x, y;	
+
+
+	...
+
+
+	public boolean <strong>equals</strong>(Object o) {
+		Punto2D p = (Punto2D)o;
+		// Compara objeto this con objeto p
+		return (x == p.x &amp;&amp; y == p.y);
+	}
+}</pre>
+<p>Un &uacute;ltimo m&eacute;todo interesante de la clase <code>Object</code> 
+  es <code>toString</code>. Este m&eacute;todo nos devuelve una cadena (<code>String</code>) 
+  que representa dicho objeto. Por defecto nos dar&aacute; un identificador del 
+  objeto, pero nosotros podemos sobrescribirla en nuestras propias clases para 
+  que genere la cadena que queramos. De esta manera podremos imprimir el objeto 
+  en forma de cadena de texto, mostr&aacute;ndose los datos con el formato que 
+  nosotros les hayamos dado en<code> toString</code>. Por ejemplo, si tenemos 
+  una clase <code>Punto2D</code>, ser&iacute;a buena idea hacer que su conversi&oacute;n 
+  a cadena muestre las coordenadas <i>(x,y)</i> del punto:</p>
+<pre class="codigo">public class Punto2D {
+
+	public int x,y;
+
+
+	...
+
+
+	public String <b>toString</b>() {
+		String s = &quot;(&quot; + x + &quot;,&quot; + y + &quot;)&quot;;
+		return s;
+	}
+}</pre>
+<p><strong>System</strong></p>
+<p>Esta clase nos ofrece una serie de m&eacute;todos y campos &uacute;tiles del 
+  sistema. Esta clase no se debe instanciar, todos estos m&eacute;todos y campos 
+  son est&aacute;ticos.</p>
+<p>Podemos encontrar los objetos que encapsulan la salida y salida de error est&aacute;ndar 
+  como veremos con m&aacute;s detalle en el apartado de entrada/salida. A diferencia 
+  de J2SE, en CLDC no tenemos entrada est&aacute;ndar.</p>
+<p>Tampoco nos permite instalar un gestor de seguridad para la aplicaci&oacute;n. 
+  La API de CLDC y MIDP ya cuenta con las limitaciones suficientes para que las 
+  aplicaciones sean seguras.</p>
+<p>Otros m&eacute;todos &uacute;tiles que encontramos son:</p>
+<pre class="codigo">void <strong>exit(int estado)</strong></pre>
+<p>Finaliza la ejecuci&oacute;n de la aplicaci&oacute;n, devolviendo un c&oacute;digo 
+  de estado. Normalmente el c&oacute;digo <code>0</code> significa que ha salido 
+  de forma normal, mientras que con otros c&oacute;digos indicaremos que se ha 
+  producido alg&uacute;n error. Este m&eacute;todo produce que se cierre la m&aacute;quina 
+  virtual de Java, normalmente no utilizaremos este m&eacute;todo directamente 
+  en las aplicaciones MIDP, haremos que el AMS sea quien cierre la aplicaci&oacute;n, 
+  como veremos m&aacute;s adelante. </p>
+<pre class="codigo">void <strong>gc()</strong></pre>
+<p>Fuerza una llamada al colector de basura para limpiar la memoria. Esta es una 
+  operaci&oacute;n costosa. Normalmente no lo llamaremos expl&iacute;citamente, 
+  sino que dejaremos que Java lo invoque cuando sea necesario.</p>
+<pre class="codigo">long <strong>currentTimeMillis()</strong></pre>
+<p>Nos devuelve el tiempo medido en el n&uacute;mero de milisegundos transcurridos 
+  desde el 1 de Enero de 1970 a las 0:00.</p>
+<pre class="codigo">void <strong>arraycopy(Object fuente, int pos_fuente, 
+				Object destino, int pos_dest, int n)</strong></pre>
+<p>Copia <em>n</em> elementos del <em>array</em> <code>fuente</code>, desde la 
+  posici&oacute;n <code>pos_fuente</code>, al <em>array</em> <code>destino</code> 
+  a partir de la posici&oacute;n <code>pos_dest</code>.</p>
+<pre class="codigo">String <strong>getProperty(String key)</strong></pre>
+<p>En CLDC no tenemos una clase <code>Properties</code> con una colecci&oacute;n 
+  de propiedades. Por esta raz&oacute;n, cuando leamos propiedades del sistema 
+  no podremos obtenerlas en un objeto <code>Properties</code>, sino que tendremos 
+  que leerlas individualmente. Estas son propiedades del sistema, no son los propiedades 
+  del usuario que aparecen en el fichero JAD. En el pr&oacute;ximo tema veremos 
+  c&oacute;mo leer estas propiedades del usuario.</p>
+<p><strong>Runtime</strong></p>
+<p>Toda aplicaci&oacute;n Java tiene una instancia de la clase <code>Runtime</code> 
+  que se encargar&aacute; de hacer de interfaz con el entorno en el que se est&aacute; 
+  ejecutando. Para obtener este objeto debemos utilizar el siguiente m&eacute;todo 
+  est&aacute;tico:</p>
+<pre class="codigo">Runtime rt = <strong>Runtime.getRuntime()</strong>;</pre>
+<p>En J2SE podemos utilizar esta clase para ejecutar comandos del sistema con 
+  <code>exec</code>. En CLDC no disponemos de esta caracter&iacute;stica. Lo que 
+  si podremos hacer con este objeto es obtener la memoria del sistema, y la memoria 
+  libre.</p>
+<p><strong>Math</strong></p>
+<p>La clase<code> Math</code> nos ser&aacute; de gran utilidad cuando necesitemos 
+  realizar operaciones matem&aacute;ticas. Esta clase no necesita ser instanciada, 
+  ya que todos sus m&eacute;todos son est&aacute;ticos. En CLDC 1.0, al no contar 
+  con soporte para n&uacute;meros reales, esta clase contendr&aacute; muy pocos 
+  m&eacute;todos, s&oacute;lo tendr&aacute; aquellas operaciones que trabajan 
+  con n&uacute;meros enteros, como las operaciones de valor absoluto, m&aacute;ximo 
+  y m&iacute;nimo.</p>
+<p><strong>Random</strong></p>
+<p>La clase <code>Random</code> nos permitir&aacute; generar n&uacute;meros aleatorios. 
+  En CLDC 1.0 s&oacute;lo nos permitir&aacute; generar n&uacute;meros enteros 
+  de forma aleatoria, ya que no tenemos soporte para reales.</p>
+<p><strong>Fechas y horas</strong></p>
+<p>Si miramos dentro del paquete <code>java.util</code>, podremos encontrar una 
+  serie de clases que nos podr&aacute;n resultar &uacute;tiles para determinadas 
+  aplicaciones.</p>
+<p>Entre ellas tenemos la clase <code>Calendar</code>, que junto a <code>Date</code> 
+  nos servir&aacute; cuando trabajemos con fechas y horas. La clase <code>Date</code> 
+  representar&aacute; un determinado instante de tiempo, en tiempo absoluto. Esta 
+  clase trabaja con el tiempo medido en milisegundos desde el desde el 1 de enero 
+  de 1970 a las 0:00, por lo que ser&aacute; dif&iacute;cil trabajar con esta 
+  informaci&oacute;n directamente.</p>
+<p> Podremos utilizar la clase <code>Calendar</code> para obtener un determinado 
+  instante de tiempo encapsulado en un objeto <code>Date</code>, proporcionando 
+  informaci&oacute;n de alto nivel como el a&ntilde;o, mes, d&iacute;a, hora, 
+  minuto y segundo.</p>
+<p>Con <code>TimeZone</code> podemos representar una determinada zona horaria, 
+  con lo que podremos utilizarla junto a las clases anteriores para obtener diferencias 
+  horarias.</p>
+<p><strong>Temporizadores</strong></p>
+<p>Los temporizadores nos permitir&aacute;n planificar tareas para ser ejecutadas 
+  por un hilo en segundo plano. Para trabajar con temporizadores tenemos las clases 
+  <code>Timer</code> y <code>TimerTask</code>. </p>
+<p>Lo primero que deberemos hacer es crear las tareas que queramos planificar. 
+  Para crear una tarea crearemos una clase que herede de <code>TimerTask</code>, 
+  y que defina un m&eacute;todo <code>run</code> donde incluiremos el c&oacute;digo 
+  que implemente la tarea.</p>
+<pre class="codigo">public class MiTarea extends <strong>TimerTask</strong> {
+    public void <strong>run</strong>() {
+        // C&oacute;digo de la tarea
+    }
+}</pre>
+<p>Una vez definida la tarea, utilizaremos un objeto <code>Timer</code> para planificarla. 
+  Para ello deberemos establecer el tiempo de comienzo de dicha tarea, cosa que 
+  puede hacerse de dos formas diferentes:</p>
+<ul>
+  <li><strong>Retardo</strong> (<em>delay</em>): Nos permitir&aacute; planificar 
+    la tarea para que comience a ejecutarse transcurrido un tiempo dado. Por ejemplo, 
+    podemos hacer que una determinada tarea comience a ejecutarse dentro de 10 
+    segundos.<br>
+  </li>
+  <li><strong>Fecha y hora</strong>: Podemos hacer que la tarea comience a una 
+    determinada hora y fecha dada en tiempo absoluto. Por ejemplo, podemos hacer 
+    que a las 8:00 se ejecute una tarea que haga de despertador.</li>
+</ul>
+<p>Tenemos diferentes formas de planificaci&oacute;n de tareas, seg&uacute;n el 
+  n&uacute;mero de veces y la periodicidad con la que se ejecutan:</p>
+<ul>
+  <li><strong>Una sola ejecuci&oacute;n</strong>: Se ejecuta en el tiempo de inicio 
+    especificado y no se vuelve a ejecutar a no ser que la volvamos a planificar.<br>
+  </li>
+  <li><strong>Repetida con retardo fijo</strong>: Se ejecuta repetidas veces, 
+    con un determinado retardo entre cada dos ejecuciones consecutivas. Este retardo 
+    podremos especificarlo nosotros. La tarea se volver&aacute; a ejecutar siempre 
+    transcurrido este tiempo desde la &uacute;ltima vez que se ejecut&oacute;, 
+    hasta que detengamos el temporizador.<br>
+  </li>
+  <li><strong>Repetida con frecuencia constante</strong>: Se ejecuta repetidas 
+    veces con una frecuencia dada. Deberemos especificar el retardo que queremos 
+    entre dos ejecuciones consecutivas. A diferencia del caso anterior, no se 
+    toma como referencia el tiempo de ejecuci&oacute;n de la tarea anterior, sino 
+    el tiempo de inicio de la primera ejecuci&oacute;n. De esta forma, si una 
+    ejecuci&oacute;n se retrasa por alguna raz&oacute;n, como por ejemplo por 
+    tener demasiada carga el procesador, la siguiente tarea comenzar&aacute; transcurrido 
+    un tiempo menor, para mantener la frecuencia deseada.</li>
+</ul>
+<p>Deberemos como primer paso crear el temporizador y la tarea que vamos a planificar:</p>
+<pre class="codigo">Timer t = new Timer();
+TimerTask tarea = new MiTarea();</pre>
+<p>Ahora podemos planificarla para comenzar con un retardo, o bien a una determinada 
+  fecha y hora. Si vamos a hacerlo por retardo, utilizaremos uno de los siguientes 
+  m&eacute;todos, seg&uacute;n la periodicidad:</p>
+<pre class="codigo">t.<strong>schedule</strong>(tarea, retardo);                     // Una vez
+t.<strong>schedule</strong>(tarea, retardo, periodo);            // Retardo fijo
+t.<strong>scheduleAtFixedRate</strong>(tarea, retardo, periodo); // Frecuencia constante</pre>
+<p>Si queremos comenzar a una determinada fecha y hora, deberemos utilizar un 
+  objeto <code>Date</code> para especificar este tiempo de comienzo:</p>
+<pre class="codigo">Calendar calendario = Calendar.getInstance();
+calendario.set(Calendar.HOUR_OF_DAY, 8);
+calendario.set(Calendar.MINUTE, 0);
+calendario.set(Calendar.SECOND, 0);
+calendario.set(Calendar.MONTH, Calendar.SEPTEMBER);
+calendario.set(Calendar.DAY_OF_MONTH, 22);
+Date fecha = calendario.getTime();</pre>
+<p>Una vez obtenido este objeto con la fecha a la que queremos comenzar la tarea 
+  (en nuestro ejemplo el d&iacute;a 22 de septiembre a las 8:00), podemos planificarla 
+  con el temporizador igual que en el caso anterior:</p>
+<pre class="codigo">t.<strong>schedule</strong>(tarea, fecha);                     // Una vez
+t.<strong>schedule</strong>(tarea, fecha, periodo);            // Retardo fijo
+t.<strong>scheduleAtFixedRate</strong>(tarea, fecha, periodo); // Frecuencia constante</pre>
+<p>Los temporizadores nos ser&aacute;n &uacute;tiles en las aplicaciones m&oacute;viles 
+  para realizar aplicaciones como por ejemplo agendas o alarmas. La planificaci&oacute;n 
+  por retardo nos permitir&aacute; mostrar ventanas de transici&oacute;n en nuestras 
+  aplicaciones durante un n&uacute;mero determinado de segundos.</p>
+<p>Si queremos que un temporizador no vuelva a ejecutar la tarea planificada, 
+  utilizaremos su m&eacute;todo cancel para cancelarlo.</p>
+<pre class="codigo">t.<strong>cancel</strong>();</pre>
+<p>Una vez cancelado el temporizador, no podr&aacute; volverse a poner en marcha 
+  de nuevo. Si queremos volver a planificar la tarea deberemos crear un temporizador 
+  nuevo.</p>
+<h3>3.4.5. Flujos de entrada/salida</h3>
+<p>Los programas muy a menudo necesitan enviar datos a un determinado destino, 
+  o bien leerlos de una determinada fuente externa, como por ejemplo puede ser 
+  un fichero para almacenar datos de forma permanente, o bien enviar datos a través 
+  de la red, a memoria, o a otros programas. Esta entrada/salida de datos en Java 
+  la realizaremos por medio de <i>flujos (streams)</i> de datos, a través de los 
+  cuales un programa podrá recibir o enviar datos en serie.&nbsp;</p>
+<p>En las aplicaciones CLDC, normalmente utilizaremos flujos para enviar o recibir 
+  datos a trav&eacute;s de la red, o para leer o escribir datos en alg&uacute;n 
+  <em>buffer</em> de memoria.</p>
+<p class="subsection">Existen varios objetos que hacen de flujos de datos, y que 
+  se distinguen por la finalidad del flujo de datos y por el tipo de datos que 
+  viajen a través de ellos. Según el tipo de datos&nbsp; que transporten podemos 
+  distinguir:</p>
+<ul>
+  <li>Flujos de caracteres</li>
+  <li>Flujos de <em>bytes</em></li>
+</ul>
+<p>Dentro de cada uno de estos grupos tenemos varios pares de objetos, de los 
+  cuales uno nos servirá para leer del flujo y el otro para escribir en él. Cada 
+  par de objetos será utilizado para comunicarse con distintos elementos (memoria, 
+  red, etc). Estas clases, según sean de entrada o salida y según sean de caracteres 
+  o de <em>bytes</em> llevarán distintos sufijos, según se muestra en la siguiente 
+  tabla:</p>
+<table border="1" width="100%">
+  <tr> 
+    <td width="33%">&nbsp;</td>
+    <td width="33%"><b>Flujo de entrada / lector</b></td>
+    <td width="34%"><b>Flujo de salida / escritor</b></td>
+  </tr>
+  <tr> 
+    <td width="33%"><b>Caractéres</b></td>
+    <td width="33%"><code>_Reader</code></td>
+    <td width="34%"><code>_Writer</code></td>
+  </tr>
+  <tr> 
+    <td width="33%"><b>Bytes</b></td>
+    <td width="33%"><code>_InputStream</code></td>
+    <td width="34%"><code>_OutputStream</code></td>
+  </tr>
+</table>
+<p>Además podemos distinguir los flujos de datos según su propósito, pudiendo 
+  ser:</p>
+<ul>
+  <li>Canales de datos, simplemente para leer o escribir datos directamente en 
+    una fuente o sumidero externo.</li>
+  <li>Flujos de procesamiento, que además de enviar o recibir datos realizan algún 
+    procesamiento con ellos. Tenemos por ejemplo flujos conversores datos (con 
+    prefijo <code>Data</code>) que permiten escribir distintos tipos de datos 
+    (num&eacute;ricos, <em>booleanos</em>, <em>bytes</em>, caracteres), y flujos 
+    preparados para la impresión de elementos (con prefijo <code>Print</code>) 
+    que ofrecen m&eacute;todos para imprimir distintos tipos de datos en forma 
+    de cadena de texto.</li>
+</ul>
+<p>Un tipo de filtros de procesamiento a destacar son aquellos que nos permiten 
+  convertir un flujo de <em>bytes</em> a flujo de caracteres. Estos objetos son 
+  <code>InputStreamReader</code> y <code>OutputStreamWriter</code>. Como podemos 
+  ver en su sufijo, son flujos de caracteres, pero se construyen a partir de flujos 
+  de <em>bytes</em>, permitiendo de esta manera acceder a nuestro flujo de <em>bytes</em> 
+  como si fuese un flujo de caracteres.</p>
+<p>Para cada uno de los tipos básicos de flujo que hemos visto existe una superclase, 
+  de la que heredaran todos sus subtipos, y que contienen una serie de métodos 
+  que serán comunes a todos ellos. Entre estos métodos encontramos los métodos 
+  básicos para leer o escribir caracteres o <em>bytes</em> en el flujo a bajo 
+  nivel. En la siguiente tabla se muestran los métodos más importantes de cada 
+  objeto:</p>
+<table border="1" width="100%">
+  <tr> 
+    <td width="29%"><code><b>InputStream</b></code></td>
+    <td width="71%"><code><b>read</b>(), <b>reset</b>(), <b>available</b>(), <b>close</b>()</code></td>
+  </tr>
+  <tr> 
+    <td width="29%"><code><b>OutputStream</b></code></td>
+    <td width="71%"><code><b>write</b>(int b), <b>flush</b>(), <b>close</b>()</code></td>
+  </tr>
+  <tr> 
+    <td width="29%"><code><b>Reader</b></code></td>
+    <td width="71%"><code><b>read</b>(), <b>reset</b>(), <b>close</b>()</code></td>
+  </tr>
+  <tr> 
+    <td width="29%"><code><b>Writer</b></code></td>
+    <td width="71%"><code><b>write</b>(int c), <b>flush</b>(), <b>close</b>()</code></td>
+  </tr>
+</table>
+<p>En CLDC no encontramos flujos para acceder directamente a ficheros, ya que 
+  no podemos contar con poder acceder al sistema de ficheros de los dispositivos 
+  m&oacute;viles, esta caracter&iacute;stica ser&aacute; opcional. Tampoco tenemos 
+  disponible ning&uacute;n <em>tokenizer</em>, por lo que la lectura y escritura 
+  deber&aacute; hacerse a bajo nivel como acabamos de ver, e implementar nuestro 
+  propio analizador l&eacute;xico en caso necesario. </p>
+<p><strong>Serializaci&oacute;n de objetos</strong></p>
+<p>Otra caracter&iacute;stica que no est&aacute; disponible en CLDC es la serializaci&oacute;n 
+  autom&aacute;tica de objetos, por lo que no podremos enviar directamente objetos 
+  a trav&eacute;s de los flujos de datos. No existe ninguna forma de serializar 
+  cualquier objeto arbitrario autom&aacute;ticamente en CLDC, ya que no soporta 
+  <em>reflection</em>.</p>
+<p>Sin embargo, podemos hacerlo de una forma m&aacute;s sencilla, y es haciendo 
+  que cada objeto particular proporcione m&eacute;todos para serializarse y deserializarse. 
+  Estos m&eacute;todos los deberemos escribir nosotros, adapt&aacute;ndolos a 
+  las caracter&iacute;sticas de los objetos. </p>
+<p>Por ejemplo, supongamos que tenemos una clase <code>Punto2D</code> como la 
+  siguiente:</p>
+<pre class="codigo">public class Punto2D {<br>    int x;
+    int y;
+    String etiqueta;
+
+    ...
+}</pre>
+<p class="subsection">Los datos que contiene cada objeto de esta clase son las 
+  coordenadas <em>(x,y) </em>del punto y una etiqueta para identificar este punto. 
+  Si queremos serializar un objeto de esta clase esta ser&aacute; la informaci&oacute;n 
+  que deberemos codificar en forma de serie de <em>bytes</em>. </p>
+<p class="subsection">Podemos crear dos m&eacute;todos manualmente para codificar 
+  y descodificar esta informaci&oacute;n en forma de <em>array</em> de <em>bytes</em>, 
+  como se muestra a continuaci&oacute;n:</p>
+<pre class="codigo">public class Punto2D {
+    int x;
+    int y; 
+    String etiqueta; 
+    ... 
+    public void <strong>serialize</strong>(OutputStream out) throws IOException {
+        DataOutputStream dos = new DataOutputStream( out );
+<br>        dos.writeInt(x);
+        dos.writeInt(y);
+        dos.writeUTF(etiqueta);<br>        dos.flush();
+    }
+
+    public static Punto2D <strong>deserialize</strong>(InputStream in) 
+      throws IOException {
+        DataInputStream dis = new DataInputStream( in );
+<br>        Punto2D p = new Punto2D();
+        p.x = dis.readInt();
+        p.y = dis.readInt();
+        p.etiqueta = dis.readUTF();<br><br>        return p;<br>    }
+}</pre>
+<p class="subsection">Hemos visto como los flujos de procesamiento <code>DataOutputStream</code> 
+  y <code>DataInputStream</code> nos facilitan la codificaci&oacute;n de distintos 
+  tipos de datos para ser enviados a trav&eacute;s de un flujo de datos.</p>
+<p class="subsection"><strong>Acceso a los recursos</strong></p>
+<p>Hemos visto que no podemos acceder al sistema de ficheros directamente como 
+  hac&iacute;amos en J2SE. Sin embargo, con las aplicaciones MIDP podemos incluir 
+  una serie de recursos a los que deberemos poder acceder. Estos recursos son 
+  ficheros incluidos en el fichero JAR de la aplicaci&oacute;n, como por ejemplo 
+  sonidos, im&aacute;genes o ficheros de datos. </p>
+<p>Para acceder a estos recursos deberemos abrir un flujo de entrada que se encargue 
+  de leer su contenido. Para ello utilizaremos el m&eacute;todo <code>getResourceAsStream</code> 
+  de la clase <code>Class</code>:</p>
+<pre class="codigo">InputStream in = getClass().<strong>getResourceAsStream</strong>(&quot;datos.txt&quot;);</pre>
+<p>De esta forma podremos utilizar el flujo de entrada obtenido para leer el contenido 
+  del fichero que hayamos indicado. Este fichero deber&aacute; estar contenido 
+  en el JAR de la aplicaci&oacute;n.</p>
+<p class="subsection"><strong>Salida y salida de error estándar</strong></p>
+<p>Al igual que en C, en Java también existen los conceptos de entrada, salida, 
+  y salida de error estándar. En J2SE la entrada estándar normalmente se refiere 
+  a lo que el usuario escribe en la consola, aunque el sistema operativo puede 
+  hacer que se tome de otra fuente. De la misma forma la salida y la salida de 
+  error estándar lo que hacen normalmente es mostrar los mensajes y los errores 
+  del programa respectivamente en la consola, aunque el sistema operativo también 
+  podrá redirigirlas a otro destino.</p>
+<p>En los MIDs no tenemos consola, por lo que los mensajes que imprimamos por 
+  la salida est&aacute;ndar normalmente ser&aacute;n ignorados. Esta salida estar&aacute; 
+  dirigida a un dispositivo <em>null</em> en los tel&eacute;fonos m&oacute;viles. 
+  Sin embargo, imprimir por la salida est&aacute;ndar puede resultarnos &uacute;til 
+  mientras estemos probando la aplicaciones en emuladores, ya que al ejecutarse 
+  en el ordenador estos emuladores, estos mensajes si que se mostrar&aacute;n 
+  por la consola, por lo que podremos imprimir en ellos informaci&oacute;n que 
+  nos sirva para depurar las aplicaciones.</p>
+<p>En MIDP no existe la entrada est&aacute;ndar. La salida y salida de error estándar 
+  se tratan de la misma forma que cualquier otro flujo de datos, estando estos 
+  dos elementos encapsulados en dos objetos de flujo de datos que se encuentran 
+  como propiedades estáticas de la clase <code>System</code>:</p>
+<table width="61%" border="0" align="center">
+  <tr> 
+    <td width="52%">&nbsp;</td>
+    <td width="23%"><b>Tipo</b></td>
+    <td width="25%"><b>Objeto</b></td>
+  </tr>
+  <tr> 
+    <td width="52%"><b>Salida estándar</b></td>
+    <td width="23%"><code>PrintStream</code></td>
+    <td width="25%"><code>System.<b>out</b></code></td>
+  </tr>
+  <tr> 
+    <td width="52%"><b>Salida de error estándar</b></td>
+    <td width="23%"><code>PrintStream</code></td>
+    <td width="25%"><code>System.<b>err</b></code></td>
+  </tr>
+</table>
+<p>Se utilizan objetos <code>PrintWriter</code> que facilitan la impresión de 
+  texto ofreciendo a parte del método común de bajo nivel <code>write(int b)</code> 
+  para escribir <em>bytes</em>, dos métodos más: <code>print(s)</code> y <code>println(s)</code>. 
+  Estas funciones nos permitirán escribir cualquier cadena, tipo básico, o bien 
+  cualquier objeto que defina el método <code>toString()</code> que devuelva una 
+  representación del objeto en forma de cadena. La única diferencia entre los 
+  dos métodos es que el segundo añade automáticamente un salto de línea al final 
+  del texto impreso, mientras que en el primero deberemos especificar explícitamente 
+  este salto.</p>
+<p>Para escribir texto en la consola normalmente utilizaremos:</p>
+<pre class="codigo">System.out.println(&quot;Hola mundo&quot;);</pre>
+<p>En el caso de la impresión de errores por la salida de error de estándar, deberemos 
+  utilizar:&nbsp;</p>
+<pre class="codigo">System.err.println(&quot;Error: Se ha producido un error&quot;);</pre>
+<h3 class="subsection">3.4.6. Caracter&iacute;sticas ausentes</h3>
+<p>Adem&aacute;s de las diferencias que hemos visto en los puntos anteriores, 
+  tenemos APIs que han desaparecido en su totalidad, o pr&aacute;cticamente en 
+  su totalidad.</p>
+<p><strong>Reflection</strong></p>
+<p>En CLDC no est&aacute; presente la API de <em>reflection</em>. S&oacute;lo 
+  est&aacute; presente la clase <code>Class</code> con la que podremos cargar 
+  clases din&aacute;micamente y comprobar la clase a la que pertenece un objeto 
+  en tiempo de ejecuci&oacute;n. Tenemos adem&aacute;s en esta clase el m&eacute;todo 
+  <code>getResourceAsStream</code> que hemos visto anteriormente, que nos servir&aacute; 
+  para acceder a los recursos dentro del JAR de la aplicaci&oacute;n.</p>
+<p><strong>Red</strong></p>
+<p>La API para el acceso a la red de J2SE es demasiado compleja para los MIDs. 
+  Por esta raz&oacute;n se ha sustituido por una nueva API totalmente distinta, 
+  adaptada a las necesidades de conectividad de estos dispositivos. Desaparece 
+  la API <code>java.net</code>, para acceder a la red ahora deberemos utilizar 
+  la API <code>javax.microedition.io </code>incluida en CLDC que veremos en detalle 
+  en el pr&oacute;ximo tema.</p>
+<p><strong>AWT/Swing</strong></p>
+<p>Las librer&iacute;as para la creaci&oacute;n de interfaces gr&aacute;ficas, 
+  AWT y Swing, desaparecen totalmente ya que estas interfaces no son adecuadas 
+  para las pantallas de los MIDs. Para crear la interfaz gr&aacute;fica de las 
+  aplicaciones para m&oacute;viles tendremos la API <code>javax.microedition.lcdui</code> 
+  perteneciente a MIDP.</p>
+<h1> 4. MIDlets</h1>
+<p>Hasta ahora hemos visto la parte b&aacute;sica del lenguaje Java que podemos 
+  utilizar en los dispositivos m&oacute;viles. Esta parte de la API est&aacute; 
+  basada en la API b&aacute;sica de J2SE, reducida y optimizada para su utilizaci&oacute;n 
+  en dispositivos de baja capacidad. Esta es la base que necesitaremos para programar 
+  cualquier tipo de dispositivo, sin embargo con ella por si sola no podemos acceder 
+  a las caracter&iacute;sticas propias de los m&oacute;viles, como su pantalla, 
+  su teclado, reproducir tonos, etc.</p>
+<p>Vamos a ver ahora las APIs propias para el desarrollo de aplicaciones m&oacute;viles. 
+  Estas APIs ya no est&aacute;n basadas en APIs existentes en J2SE, sino que se 
+  han desarrollado espec&iacute;ficamente para la programaci&oacute;n en estos 
+  dispositivos. Todas ellas pertenecen al paquete <code>javax.microedition</code>.</p>
+<p>Los MIDlets son las aplicaciones para MIDs, realizadas con la API de MIDP. 
+  La clase principal de cualquier aplicaci&oacute;n MIDP deber&aacute; ser un 
+  MIDlet. Ese MIDlet podr&aacute; utilizar cualquier otra clase Java y la API 
+  de MIDP para realizar sus funciones.</p>
+<p>Para crear un MIDlet deberemos heredar de la clase <code>MIDlet</code>. Esta 
+  clase define una serie de m&eacute;todos abstractos que deberemos definir en 
+  nuestros MIDlets, introduciendo en ellos el c&oacute;digo propio de nuestra 
+  aplicaci&oacute;n:</p>
+<pre class="codigo">protected abstract void <strong>startApp</strong>();<br>protected abstract void <strong>pauseApp</strong>();
+protected abstract void <strong>destroyApp</strong>(boolean incondicional);</pre>
+<p>A continuaci&oacute;n veremos con m&aacute;s detalle qu&eacute; deberemos introducir 
+  en cada uno de estos m&eacute;todos.</p>
+<h3>4.1. Componentes y contenedores</h3>
+<p>Numerosas veces encontramos dentro de las tecnolog&iacute;as Java el concepto 
+  de componentes y contenedores. Los componentes son elementos que tienen una 
+  determinada interfaz, y los contenedores son la infraestructura que da soporte 
+  a estos componentes. </p>
+<p>Por ejemplo, podemos ver los <em>applets</em> como un tipo de componente, que 
+  para poderse ejecutar necesita un navegador web que haga de contenedor y que 
+  lo soporte. De la misma forma, los <em>servlets</em> son componentes que encapsulan 
+  el mecanismo petici&oacute;n/respuesta de la web, y el servidor web tendr&aacute; 
+  un contenedor que de soporte a estos componentes, para ejecutarlos cuando se 
+  produzca una petici&oacute;n desde un cliente. De esta forma nosotros podemos 
+  deberemos definir s&oacute;lo el componente, con su correspondiente interfaz, 
+  y ser&aacute; el contenedor quien se encargue de controlar su ciclo de vida 
+  (instanciarlo, ejecutarlo, destruirlo).</p>
+<p>Cuando desarrollamos componentes, no deberemos crear el m&eacute;todo <code>main</code>, 
+  ya que estos componentes no se ejecutan como una aplicaci&oacute;n independiente 
+  (<em>stand-alone</em>), sino que son ejecutados dentro de una aplicaci&oacute;n 
+  ya existente, que ser&aacute; el contenedor. </p>
+<p>El contenedor que da soporte a los MIDlets recibe el nombre de <em>Application 
+  Management Software</em> (AMS). El AMS adem&aacute;s de controlar el ciclo de 
+  vida de la ejecuci&oacute;n MIDlets (inicio, pausa, destrucci&oacute;n), controlar&aacute; 
+  el ciclo de vida de las aplicaciones que se instalen en el m&oacute;vil (instalaci&oacute;n, 
+  actualizaci&oacute;n, ejecuci&oacute;n, desinstalaci&oacute;n).</p>
+<h3>4.2. Ciclo de vida</h3>
+<p>Durante su ciclo de vida un MIDlet puede estar en los siguientes estados:</p>
+<ul>
+  <li><strong>Activo</strong>: El MIDlet se est&aacute; ejecutando actualmente.<br>
+  </li>
+  <li><strong>Pausado</strong>: El MIDlet se encuentra a mitad de una ejecuci&oacute;n 
+    pero est&aacute; pausado. La ejecuci&oacute;n podr&aacute; reanudarse, pasando 
+    de nuevo a estado activo. <br>
+  </li>
+  <li><strong>Destruido</strong>: El MIDlet ha terminado su ejecuci&oacute;n y 
+    ha liberado todos los recursos, por lo que ya no se puede volver a estado 
+    activo. La aplicaci&oacute;n est&aacute; cerrada, por lo que para volver a 
+    ponerla en marcha tendr&iacute;amos que volver a ejecutarla.</li>
+</ul>
+<p>Ser&aacute; el AMS qui&eacute;n se encargue de controlar este ciclo de vida, 
+  es decir, qui&eacute;n realice las transiciones de un estado a otro. Nosotros 
+  podremos saber cuando hemos entrado en cada uno de estos estados porque el AMS 
+  invocar&aacute; al m&eacute;todo correspondiente dentro de la clase del MIDlet. 
+  Estos m&eacute;todos son los que se muestran en el siguiente esqueleto de un 
+  MIDlet:</p>
+<pre class="codigo">import javax.microedition.midlet.*;
+<br>public class MiMIDlet extends <strong>MIDlet</strong> {<br><br>    protected void <strong>startApp</strong>() <br>            throws MIDletStateChangeException {
+		// Estado activo -&gt; comenzar
+    }<br><br>    protected void <strong>pauseApp</strong>() {
+        // Estado pausa -&gt; detener hilos<br>    }<br><br>    protected void <strong>destroyApp</strong>(boolean incondicional) <br>            throws MIDletStateChangeException {
+        // Estado destruido -&gt; liberar recursos<br>    }<br>}</pre>
+<p>Deberemos definir los siguientes m&eacute;todos para controlar el ciclo de 
+  vida del MIDlet:</p>
+<ul>
+  <li><strong><code>startApp()</code></strong>: Este m&eacute;todo se invocar&aacute; 
+    cuando el MIDlet pase a estado activo. Es aqu&iacute; donde insertaremos el 
+    c&oacute;digo correspondiente a la tarea que debe realizar dicho MIDlet. </li>
+</ul>
+<blockquote> 
+  <p>Si ocurre un error que impida que el MIDlet empiece a ejecutarse deberemos 
+    notificarlo. Podemos distinguir entre errores pasajeros o errores permanentes. 
+    Los errores pasajeros impiden que el MIDlet se empiece a ejecutar ahora, pero 
+    podr&iacute;a hacerlo m&aacute;s tarde. Los permanentes se dan cuando el MIDlet 
+    no podr&aacute; ejecutarse nunca. </p>
+  <p><strong>Pasajero</strong>: En el caso de que el error sea pasajero, lo notificaremos 
+    lanzando una excepci&oacute;n de tipo <code>MIDletStateChangeException</code>, 
+    de modo que el MIDlet pasar&aacute; a estado pausado, y se volver&aacute; 
+    intentar activar m&aacute;s tarde.</p>
+  <p><strong>Permanente</strong>: Si por el contrario el error es permanente, 
+    entonces deberemos destruir el MIDlet llamando a <code>notifyDestroyed</code> 
+    porque sabemos que nunca podr&aacute; ejecutarse correctamente. Si se lanza 
+    una excepci&oacute;n de tipo <code>RuntimeException</code> dentro del m&eacute;todo 
+    <code>startApp</code> tendremos el mismo efecto, se destruir&aacute; el MIDlet. 
+  </p>
+</blockquote>
+<ul>
+  <li><strong><code>pauseApp()</code></strong>: Se invocar&aacute; cuando se pause 
+    el MIDlet. En &eacute;l deberemos detener las actividades que est&eacute; 
+    realizando nuestra aplicaci&oacute;n.</li>
+</ul>
+<blockquote> 
+  <p>Igual que en el caso anterior, si se produce una excepci&oacute;n de tipo 
+    <code>RuntimeException</code> durante la ejecuci&oacute;n de este m&eacute;todo, 
+    el MIDlet se destruir&aacute;.</p>
+</blockquote>
+<ul>
+  <li><strong><code>destroyApp(boolean incondicional)</code></strong>: Se invocar&aacute; 
+    cuando se vaya a destruir la aplicaci&oacute;n. En &eacute;l deberemos incluir 
+    el c&oacute;digo para liberar todos los recursos que estuviese usando el MIDlet. 
+    Con el <em>flag</em> que nos proporciona como par&aacute;metro indica si la 
+    destrucci&oacute;n es incondicional o no. Es decir, si <code>incondicional</code> 
+    es <code>true</code>, entonces se destruir&aacute; siempre. En caso de que 
+    sea <code>false</code>, podemos hacer que no se destruya lanzando la excepci&oacute;n 
+    <code>MIDletStateChangeException</code> desde dentro de este m&eacute;todo.</li>
+</ul>
+<div align="center"><img src="imagenes/midlet/ciclo.gif" width="400" height="174"> 
+</div>
+<p class="caption">Figura 1. Ciclo de vida de un MIDlet</p>
+<p>Hemos visto que el AMS es quien realiza las transiciones entre distintos estados. 
+  Sin embargo, nosotros podremos forzar a que se produzcan transiciones a los 
+  estados pausado o destruido:</p>
+<ul>
+  <li><strong><code>notifyDestroyed()</code></strong>: Destruye el MIDlet. Utilizaremos 
+    este m&eacute;todo cuando queramos finalizar la aplicaci&oacute;n. Por ejemplo, 
+    podemos ejecutar este m&eacute;todo como respuesta a la pulsaci&oacute;n del 
+    bot&oacute;n <em>&quot;Salir&quot;</em> por parte del usuario.</li>
+</ul>
+<blockquote> 
+  <p>NOTA: La llamada a este m&eacute;todo notifica que el MIDlet ha sido destruido, 
+    pero no invoca el m&eacute;todo <code>destroyApp</code> para liberar los recursos, 
+    por lo que tendremos que invocarlo nosotros manualmente antes de llamar a 
+    <code>notifyDestroyed</code>.</p>
+</blockquote>
+<ul>
+  <li><strong><code>notifyPause()</code></strong>: Notifica al AMS de que el MIDlet 
+    ha entrado en modo pausa. Despu&eacute;s de esto, el AMS podr&aacute; realizar 
+    una llamada a <code>startApp</code> para volverlo a poner en estado activo.<br>
+  </li>
+  <li><strong><code>resumeRequest()</code></strong>: Solicita al AMS que el MIDlet 
+    vuelva a ponerse activo. De esta forma, si el AMS tiene varios MIDlets candidatos 
+    para activar, elegir&aacute; alguno de aquellos que lo hayan solicitado. Este 
+    m&eacute;todo no fuerza a que se produzca la transici&oacute;n como en los 
+    anteriores, simplemente lo solicita al AMS y ser&aacute; &eacute;ste qui&eacute;n 
+    decida.</li>
+</ul>
+<h3>4.3. Cerrar la aplicaci&oacute;n</h3>
+<p>La aplicaci&oacute;n puede ser cerrada por el AMS, por ejemplo si desde el 
+  sistema operativo del m&oacute;vil hemos forzado a que se cierre. En ese caso, 
+  el AMS invocar&aacute; el m&eacute;todo <code>destroyApp</code> que nosotros 
+  habremos definido para liberar los recursos, y pasar&aacute; a estado <strong>destruido</strong>.</p>
+<p>Si queremos hacer que la aplicaci&oacute;n termine de ejecutarse desde dentro 
+  del c&oacute;digo, nunca utilizaremos el m&eacute;todo <code>System.exit</code> 
+  (o <code>Runtime.exit</code>), ya que estos m&eacute;todos se utilizan para 
+  salir de la m&aacute;quina virtual. En este caso, como se trata de un componente, 
+  si ejecut&aacute;semos este m&eacute;todo cerrar&iacute;amos toda la aplicaci&oacute;n, 
+  es decir, el AMS. Por esta raz&oacute;n esto no se permite, si intent&aacute;semos 
+  hacerlo obtendr&iacute;amos una excepci&oacute;n de seguridad. </p>
+<p>La &uacute;nica forma de salir de una aplicaci&oacute;n MIDP es haciendo pasar 
+  el componente a estado destruido, como hemos visto en el punto anterior, para 
+  que el contenedor pueda eliminarlo. Esto lo haremos invocando <code>notifyDestroyed</code> 
+  para cambiar el estado a destruido. Sin embargo, si hacemos esto no se invocar&aacute; 
+  autom&aacute;ticamente el m&eacute;todo <code>destroyApp</code> para liberar 
+  los recursos, por lo que deberemos ejecutarlo nosotros manualmente antes de 
+  marcar la aplicaci&oacute;n como destruida:</p>
+<pre class="codigo">public void salir() {
+    try {<br>        destroyApp(true);
+    } catch(MIDletStateChangeException e) {
+    }
+
+    notifyDestroyed();
+}</pre>
+<p>Si queremos implementar una salida condicional, para que el m&eacute;todo <code>destroyApp</code> 
+  pueda decidir si permitir que se cierre o no la aplicaci&oacute;n, podemos hacerlo 
+  de la siguiente forma:</p>
+<pre class="codigo">public void salir_cond() {
+    try {
+
+        destroyApp(false);
+
+        notifyDestroyed();
+    } catch(MIDletStateChangeException e) {
+    }
+
+}</pre>
+<h3>4.4. Parametrizaci&oacute;n de los MIDlets</h3>
+<p>Podemos a&ntilde;adir una serie de propiedades en el fichero descriptor de 
+  la aplicaci&oacute;n (JAD), que podr&aacute;n ser le&iacute;das desde el MIDlet. 
+  De esta forma, podremos cambiar el valor de estas propiedades sin tener que 
+  rehacer el fichero JAR. </p>
+<p>Cada propiedad consistir&aacute; en una clave (<em>key</em>) y en un valor. 
+  La clave ser&aacute; el nombre de la propiedad. De esta forma tendremos un conjunto 
+  de par&aacute;metros de configuraci&oacute;n (claves) con un valor asignado 
+  a cada una. Podremos cambiar f&aacute;cilmente estos valores editando el fichero 
+  JAD con cualquier editor de texto.</p>
+<p>Para leer estas propiedades desde el MIDlet utilizaremos el m&eacute;todo:</p>
+<pre class="codigo">String valor = <strong>getAppProperty</strong>(String key)</pre>
+<p>Que nos devolver&aacute; el valor asignado a la clave con nombre <em>key</em>.</p>
+<h3>4.5. Peticiones al dispositivo</h3>
+<p>A partir de MIDP 2.0 se incorpora una nueva funci&oacute;n que nos permite 
+  realizar peticiones que se encargar&aacute; de gestionar el dispositivo, de 
+  forma externa a nuestra aplicaci&oacute;n. Por ejemplo, con esta funci&oacute;n 
+  podremos realizar una llamada a un n&uacute;mero telef&oacute;nico o abrir el 
+  navegador web instalado para mostrar un determinado documento. </p>
+<p>Para realizar este tipo de peticiones utilizaremos el siguiente m&eacute;todo:</p>
+<pre class="codigo">boolean debeSalir = <strong>platformRequest</strong>(url);</pre>
+<p>Esto proporcionar&aacute; una URL al AMS, que determinar&aacute;, seg&uacute;n 
+  el tipo de la URL, qu&eacute; servicio debe invocar. Adem&aacute;s nos devolver&aacute; 
+  un valor <em>booleano</em> que indicar&aacute; si para que este servicio sea 
+  ejecutado debemos cerrar el MIDlet antes. Algunos servicios de determinados 
+  dispositivos no pueden ejecutarse concurrentemente con nuestra aplicaci&oacute;n, 
+  por lo que en estos casos hasta que no la cerremos no se ejecutar&aacute; el 
+  servicio.</p>
+<p>Los tipos servicios que se pueden solicitar dependen de las caracter&iacute;sticas 
+  del m&oacute;vil en el que se ejecute. Cada fabricante puede ofrecer un serie 
+  de servicios accesibles mediante determinados tipos de URLs. Sin intentamos 
+  acceder a un servicio que no est&aacute; disponible en el m&oacute;vil, se producir&aacute; 
+  una excepci&oacute;n de tipo <code>ConnectionNotFoundException</code>.</p>
+<p>En el est&aacute;ndar de MIDP 2.0 s&oacute;lo se definen URLs para dos tipos 
+  de servicios:</p>
+<ul>
+  <li>Iniciar una llamada de voz. Para ello se utilizar&aacute; una URL como la 
+    siguiente: 
+    <pre class="codigo"><strong>tel</strong>:&lt;numero&gt;</pre>
+  </li>
+</ul>
+<blockquote> 
+  <p>Por ejemplo, podr&iacute;amos poner:</p>
+  <pre class="codigo"><strong>tel</strong>:+34-965-123-456.</pre>
+</blockquote>
+<ul>
+  <li>Instalar una <em>suite</em> de MIDlets. Se proporciona la URL donde est&aacute; 
+    el fichero JAD de la suite que queramos instalar. Por ejemplo: 
+    <pre class="codigo">http://www.j2ee.ua.es/prueba/aplic.jad</pre>
+  </li>
+</ul>
+<p>Si como URL proporcionamos una cadena vac&iacute;a (no <code>null</code>), 
+  se cancelar&aacute;n todas las peticiones de servicios anteriores.</p>
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,2838 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 1: Introducci&oacute;n y entorno de desarrollo</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1> 1. Introducción a los dispositivos m&oacute;viles</h1>
+             
+<p>Durante los &uacute;ltimos a&ntilde;os hemos visto como han ido evolucionando 
+  los tel&eacute;fonos m&oacute;viles, pasando de ser simplemente tel&eacute;fonos 
+  a ser peque&ntilde;os ordenadores en los que tenemos disponibles una serie de 
+  aplicaciones preinstaladas (mensajer&iacute;a, registro de llamadas, agenda, 
+  calculadora, juegos, etc).</p>
+<p>Un paso importante en esta evoluci&oacute;n ha sido la posibilidad de que estos 
+  dispositivos se conecten a Internet. Esto permitir&aacute; que accedan a informaci&oacute;n 
+  disponible en la red, a aplicaciones corporativas utilizando alg&uacute;n<em> 
+  front-end</em>, o descargar nuevas aplicaciones para nuestro m&oacute;vil. </p>
+<p>De esta forma vemos que se podr&aacute;n incluir nuevas aplicaciones en cada 
+  dispositivo, adecu&aacute;ndose a las necesidades de cada usuario. Estas aplicaciones 
+  podr&aacute;n ser tanto<em> front-ends</em> que nos permitan acceder a aplicaciones 
+  de empresa residentes en alg&uacute;n servidor de Internet, como aplicaciones 
+  locales para utilizar en nuestro m&oacute;vil.</p>
+<p>Nos interesar&aacute; contar con un amplio repertorio de aplicaciones disponibles, 
+  y con la posibilidad de que las empresas puedan desarrollar f&aacute;cilmente 
+  software para los m&oacute;viles que se adapte a sus aplicaciones. Por lo tanto 
+  surge la necesidad de que los desarrolladores puedan realizar estas aplicaciones 
+  de forma r&aacute;pida y con el menor coste posible, sin tener que conocer los 
+  detalles de la especificaci&oacute;n de cada modelo concreto de m&oacute;vil. 
+</p>
+<p>Vamos primero a estudiar las distintas eras en la evoluci&oacute;n de Internet, 
+  seg&uacute;n el tipo de dispositivos que se conectan a esta red, para ver el 
+  momento en el que se introducen este tipo de dispositivos y la problem&aacute;tica 
+  que plantean. A continuaci&oacute;n estudiaremos las caracter&iacute;sticas 
+  de este tipo de dispositivos, y por &uacute;ltimo analizaremos de forma general 
+  las distintas APIs ofrecidas por la plataforma J2ME para la programaci&oacute;n 
+  de dispositivos m&oacute;viles.</p>
+<h2>1.1. Evoluci&oacute;n de Internet</h2>
+             
+<p> Hasta hace poco hemos visto la red Internet como una red en la que se encuentran 
+  conectados ordenadores de todo el mundo. Sin embargo, durante los &uacute;ltimos 
+  a&ntilde;os estamos entrando en una segunda era de Internet, en la que se est&aacute;n 
+  conectando a la red diferentes tipos de dispositivos heterog&eacute;neos como 
+  por ejemplo tel&eacute;fonos m&oacute;viles o PDAs. </p>
+<h3>1.1.1. Primera era: El Internet de los ordenadores</h3>
+<p>En esta primera era tenemos conectados a Internet ordenadores que cuentan con 
+  una interfaz com&uacute;n y una capacidad m&iacute;nima suficiente. La informaci&oacute;n 
+  que obtenemos de la red se obtiene normalmente en forma de p&aacute;ginas web 
+  escritas en HTML, dise&ntilde;adas para mostrarse en dispositivos gr&aacute;ficos 
+  con resoluciones por encima de 640x480 <em>pixels</em> y con monitores de por 
+  lo menos 14&quot;. </p>
+<div align="center"><img src="imagenes/introduccion/inet_maquinas.gif" width="354" height="290"> 
+</div>
+<p class="caption">Figura 1. El Internet de los ordenadores</p>
+<p>Asumiendo que los clientes cuentan con esta configuraci&oacute;n m&iacute;nima, 
+  podemos elaborar p&aacute;ginas que se visualicen correctamente en ellos. Es 
+  decir, parte de la capa de presentaci&oacute;n residir&aacute; en el servidor, 
+  ya que estas p&aacute;ginas HTML definir&aacute;n el formato con el que se mostrar&aacute; 
+  la informaci&oacute;n. Los navegadores en las m&aacute;quinas cliente deber&aacute;n 
+  ser capaces de interpretar el c&oacute;digo HTML y mostrar en pantalla las p&aacute;ginas 
+  web. </p>
+<h3>1.1.2. Segunda era: El Internet de los dispositivos</h3>
+<p>Al incorporarse distintos tipos de dispositivos a Internet, cada uno de ellos 
+  con interfaces y capacidad totalmente distinta, ya no va a ser posible definir 
+  una presentaci&oacute;n &uacute;nica en el lado del servidor, ya que &eacute;sta 
+  no va a poder ser visualizada correctamente por todos los clientes. </p>
+<div align="center"><img src="imagenes/introduccion/inet_disp.gif" width="341" height="304"> 
+</div>
+<p class="caption">Figura 2. El Internet de los dispositivos</p>
+<p>Estos dispositivos llevan ordenadores embebidos, en muchos casos con grandes 
+  limitaciones en su interfaz y baja capacidad, debido a su reducido tama&ntilde;o 
+  o a la escasa necesidad de incorporar un ordenador mayor que encarecer&iacute;a 
+  el producto. Deber&aacute;n conectarse a Internet utilizando estos ordenadores, 
+  por lo que el acceso ser&aacute; distinto dependiendo del dispositivo del que 
+  se trate.</p>
+<p>Una posible soluci&oacute;n es definir un nuevo tipo de documento, adaptado 
+  a la reducida interfaz de estos dispositivos. Este es el caso por ejemplo de 
+  los documentos WML para los tel&eacute;fonos m&oacute;viles WAP. El problema 
+  es que si definimos esta presentaci&oacute;n en el servidor para todos los m&oacute;viles, 
+  tendremos que definirla de forma que sea compatible con todos los modelos existentes 
+  que soporten esta tecnolog&iacute;a. Conforme mejoran los modelos de m&oacute;viles, 
+  podr&iacute;amos visualizar en ellos aplicaciones m&aacute;s ricas, pero el 
+  tener que utilizar un formato compatible para todos los m&oacute;viles nos obligar&aacute; 
+  a definir un documento bastante m&aacute;s pobre que sea soportado por todos 
+  ellos.</p>
+<p>Por ello en esta segunda era surgen nuevos paradigmas para la programaci&oacute;n 
+  web. La informaci&oacute;n se empezar&aacute; a ofrecer en forma de servicios, 
+  en lugar de documentos. Es decir, obtendremos de Internet &uacute;nicamente 
+  la informaci&oacute;n, pero no la presentaci&oacute;n. Por ejemplo, esta informaci&oacute;n 
+  puede estar codificada en lenguaje XML siguiendo un determinado est&aacute;ndar, 
+  de forma que cualquier aplicaci&oacute;n sea capaz de entenderla, o bien utilizar 
+  nuestra propia codificaci&oacute;n. De esta forma, cada cliente (m&oacute;vil) 
+  tendr&aacute; aplicaciones adaptadas a sus caracter&iacute;sticas, que obtendr&aacute;n 
+  de Internet &uacute;nicamente la informaci&oacute;n a la que necesitan acceder.</p>
+<p>Nos vamos a centrar en la programaci&oacute;n de este tipo de aplicaciones 
+  para dispositivos m&oacute;viles. Estas aplicaciones se alojar&aacute;n y se 
+  ejecutar&aacute;n de forma local en el dispositivo. Ser&aacute; deseable que 
+  la API (Interfaz de Programaci&oacute;n de Aplicaciones) que ofrezca cada dispositivo 
+  para programar en &eacute;l nos permita utilizar todas las caracter&iacute;sticas 
+  del mismo, y establecer conexiones de red para obtener la informaci&oacute;n 
+  necesaria de Internet. </p>
+<h3>1.1.3. Tercera era: El Internet de las cosas</h3>
+<p>En una futura era de Internet, podr&aacute; formar parte de Internet cualquier 
+  cosa. Podremos de esta forma tener conectada a la red ropa, productos de alimentaci&oacute;n 
+  o cualquier otra cosa que incorpore un chip capaz de conectarse y ofrecer informaci&oacute;n 
+  sobre el producto. Con esto se disparar&aacute; el n&uacute;mero de elementos 
+  conectados a la red. </p>
+<div align="center"><img src="imagenes/introduccion/inet-cosas.gif" width="347" height="308"> 
+</div>
+<p class="caption">Figura 3. El Internet de las cosas</p>
+<p>Por ejemplo, la tecnolog&iacute;a <em>Auto ID</em> consiste en un peque&ntilde;o 
+  chip transmisor (del tama&ntilde;o de la cabeza de un alfiler) que podr&aacute; 
+  ser incluido en los art&iacute;culos. Este chip vendr&aacute; a sustituir en 
+  el futuro al c&oacute;digo de barras, ya que adem&aacute;s de ofrecernos toda 
+  la informaci&oacute;n sobre el producto, nos permitir&aacute; conocer su localizaci&oacute;n. 
+  Para comunicarse emitir&aacute;n una se&ntilde;al de radio, que ser&aacute; 
+  recibida por un receptor conectado a un ordenador que nos ofrezca la informaci&oacute;n 
+  sobre estas &quot;cosas&quot; conectadas.</p>
+<p> De esta forma podremos saber f&aacute;cilmente si en nuestra tienda tenemos 
+  un determinado tipo de productos, o si se han agotado y tenemos que realizar 
+  un pedido. Tambi&eacute;n podremos saber si alguien se lleva un producto de 
+  nuestra tienda, lo cu&aacute;l ser&aacute; &uacute;til para evitar robos. O 
+  incluso ver si en nuestra tienda tenemos productos que hayan caducado, y descubrir 
+  d&oacute;nde est&aacute;n estos productos para poder retirarlos de la venta.</p>
+<p>Vemos que esta tecnolog&iacute;a tiene multitud de posibles aplicaciones. Como 
+  inconveniente, tenemos la presunta violaci&oacute;n de la intimidad de los consumidores 
+  al poder estos chips ofrecer informaci&oacute;n sobre los art&iacute;culos que 
+  han adquirido.</p>
+<h3>1.1.4. Internet como un conjunto de servicios</h3>
+<p>Hemos visto como en la segunda era de Internet surgen los Servicios Web como 
+  alternativa a los documentos web (como las p&aacute;ginas HTML y WML por ejemplo). 
+  Podemos definir un servicio como la interfaz que nos da acceso a un m&oacute;dulo 
+  de funcionalidad. </p>
+<p>Por ejemplo, podemos tener un servicio que nos permita acceder a informaci&oacute;n 
+  sobre cambio de monedas. Este servicio nos ofrecer&aacute; una operaci&oacute;n 
+  <code>cambioVenta(moneda_origen, moneda_destino)</code> que nos devolver&aacute; 
+  el cambio actual entre dos monedas, para la venta, y otra operaci&oacute;n an&aacute;loga 
+  <code>cambioCompra(moneda_origen, moneda_destino)</code> para obtener esta informaci&oacute;n 
+  en el caso de la compra.</p>
+<p>Un Servicio Web ser&aacute; un servicio al que podamos acceder mediante protocolos 
+  web est&aacute;ndar. Se utilizar&aacute; lenguaje XML para codificar el mensaje 
+  de invocaci&oacute;n de las operaciones del servicio, y la respuesta que nos 
+  haya devuelto la operaci&oacute;n. De esta forma podremos invocar servicios 
+  a trav&eacute;s de Internet.</p>
+<p>Los documentos web mezclan la informaci&oacute;n y la presentaci&oacute;n. 
+  Normalmente la informaci&oacute;n que ofrecen est&aacute; escrita en lenguaje 
+  natural y formateada de forma que los humanos la podamos entender f&aacute;cilmente. 
+  Sin embargo, esto ser&aacute; dif&iacute;cilmente entendible por una aplicaci&oacute;n. 
+  Los Servicios Web nos ofrecen &uacute;nicamente la informaci&oacute;n que nos 
+  ha devuelto la operaci&oacute;n invocada. Por ello podemos ver estos Servicios 
+  Web como la web para aplicaciones, frente a los documentos web que ser&iacute;an 
+  la web para humanos. Ser&aacute;n las aplicaciones instaladas en el cliente, 
+  que invocan los Servicios Web, las encargadas de dar formato y presentar al 
+  usuario la informaci&oacute;n obtenida.</p>
+<p>En la actualidad podemos encontrar algunos Servicios Web ofrecidos por una 
+  serie de proveedores. En el futuro Internet ser&aacute; como un gran Sistema 
+  Operativo distribuido, en el que haya disponibles un gran n&uacute;mero de servicios 
+  que puedan ser utilizados por cualquier m&aacute;quina conectada a la red. De 
+  esta forma las aplicaciones se encontrar&aacute;n distribuidas en Internet, 
+  es decir, estar&aacute;n formadas por m&oacute;dulos que podr&aacute;n residir 
+  en distintos lugares del mundo. La cuesti&oacute;n es qui&eacute;n se har&aacute; 
+  con el control de este gran Sistema Operativo, &iquest;Microsoft con .NET o 
+  Sun con las tecnolog&iacute;as Java?.</p>
+<h2>1.2. Caracter&iacute;sticas de los dispositivos</h2>
+<p>Vamos a ver los distintos tipos de dispositivos con ordenadores embebidos que 
+  podemos encontrar, as&iacute; como sus caracter&iacute;sticas, para luego centrarnos 
+  en los dispositivos m&oacute;viles de informaci&oacute;n (<em>Mobile Information 
+  Devices</em>, MIDs) que son los que trataremos con mayor detalle.</p>
+<h3>1.2.1. Tipos de dispositivos</h3>
+<p>Podemos encontrar distintos dispositivos con ordenadores embebidos que van 
+  introduci&eacute;ndose en nuestros hogares. Por un lado tenemos los tel&eacute;fonos 
+  m&oacute;viles y las agendas electr&oacute;nicas o PDAs. Estos dispositivos 
+  son conocidos como <strong>dispositivos m&oacute;viles de informaci&oacute;n 
+  (MIDs)</strong>. Incorporan un reducido Sistema Operativo y una serie de aplicaciones 
+  que se ejecutan sobre &eacute;l (Agenda, Notas, Mensajes, etc) adaptadas a la 
+  interfaz de estos dispositivos, de forma que se puedan visualizar correctamente 
+  en su peque&ntilde;a pantalla y que se puedan manejar usando el teclado del 
+  tel&eacute;fono o el puntero del PDA por ejemplo.</p>
+<p>A parte de los MIDs encontramos m&aacute;s tipos de dispositivos, cuyo n&uacute;mero 
+  crecer&aacute; conforme pase el tiempo. Tenemos por ejemplo los descodificadores 
+  de televisi&oacute;n digital (<em>set top boxes</em>). Las plataformas de televisi&oacute;n 
+  digital, tanto por sat&eacute;lite, por cable, o terrestre, ofrecen una serie 
+  de servicios accesibles desde estos descodificadores, como por ejemplo servicios 
+  de telegu&iacute;a, juegos, etc. Para ello deberemos tener aplicaciones que 
+  se ejecuten en estos dispositivos.</p>
+<p>Los electrodom&eacute;sticos tambi&eacute;n siguen esta tendencia y ya podemos 
+  encontrar por ejemplo frigor&iacute;ficos o lavadoras con un peque&ntilde;o 
+  computador capaz de conectarse a la red dom&eacute;stica. La idea es integrar 
+  todos estos dispositivos es nuestra red para construir un sistema dom&oacute;tico. 
+  Para ello todos los dispositivos que queramos integrar deber&aacute;n ser capaces 
+  de conectarse a la red.</p>
+<p>Hablamos de <strong>dispositivos conectados</strong> para referirnos a cualquier 
+  dispositivo capaz de conectarse a la red. Podemos tener distintos tipos de dispositivos 
+  conectados, con grandes diferencias de capacidad. Un subgrupo de estos dispositivos 
+  conectados son los MIDs de los que hemos hablado previamente.</p>
+<h3>1.2.2. Dispositivos m&oacute;viles de informaci&oacute;n (MIDs)</h3>
+<p>Vamos a centrarnos en el estudio de los MIDs. Para ello vamos a ver las caracter&iacute;sticas 
+  de una serie de modelos actuales con lo que podremos hacernos una idea del rango 
+  de memoria y los tipos de interfaz con los que vamos a tener que trabajar.</p>
+<table width="95%" border="0" align="center">
+  <tr> 
+    <td width="12%"><font size="2" face="Arial, Helvetica, sans-serif">&nbsp;</font></td>
+    <td width="22%" valign="top"> <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/8310.jpg" width="45" height="100"></font></p>
+      <p><font size="2" face="Arial, Helvetica, sans-serif">Nokia 8310<br>
+        -Serie 20<br>
+        -Similar a 3330<br>
+        -Sin Java</font></p></td>
+    <td width="22%" valign="top"> <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/3410.jpg" width="45" height="100"></font></p>
+      <p><font size="2" face="Arial, Helvetica, sans-serif">Nokia 3410 <br>
+        -Serie 30</font></p></td>
+    <td width="22%" valign="top"> <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/6100.jpg" width="42" height="100"></font></p>
+      <p><font size="2" face="Arial, Helvetica, sans-serif">Nokia 6100 <br>
+        -Serie 40<br>
+        -Similar a 6610, 7210, 7250, 5100, 3300</font></p></td>
+    <td width="22%" valign="top"> <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/3650.jpg" width="45" height="100"></font></p>
+      <p><font size="2" face="Arial, Helvetica, sans-serif">Nokia 3650<br>
+        -Serie 60<br>
+        -Similar a 7650, N-Gage</font></p></td>
+  </tr>
+  <tr> 
+    <td><strong><font size="2" face="Arial, Helvetica, sans-serif">Interfaz</font></strong></td>
+    <td nowrap><font size="2" face="Arial, Helvetica, sans-serif">84x48 <br>
+      Monocromo</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">96x65 <br>
+      Monocromo</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">128x128<br>
+      12bits (4096 colores)</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">176x208<br>
+      12 bits (4096 colores)</font></td>
+  </tr>
+  <tr> 
+    <td><strong><font size="2" face="Arial, Helvetica, sans-serif">Memoria</font></strong></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">&nbsp;-</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">Heap 164 KB<br>
+      Shared 150 KB<br>
+      JAR 50 KB</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">Heap 200 KB<br>
+      Shared 725 KB <br>
+      (625 KB en 6610, 7210) <br>
+      (4,6 MB en 7250)<br>
+      (4,5 MB en 3300)<br>
+      JAR 64 KB</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">Heap 1,4 MB <br>
+      (2,4 MB en N-Gage)<br>
+      Shared 3,4 MB <br>
+      (4 MB en 7650, N-Gage)<br>
+      JAR 4 MB</font></td>
+  </tr>
+  <tr> 
+    <td><strong><font size="2" face="Arial, Helvetica, sans-serif">APIs</font></strong></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">&nbsp;-</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">CLDC 1.0<br>
+      MIDP 1.0<br>
+      WMA<br>
+      Nokia UI<br>
+      Nokia SMS</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">CLDC 1.0<br>
+      MIDP 1.0<br>
+      Nokia UI<br>
+      WMA (3300)</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">CLDC 1.0<br>
+      MIDP 1.0<br>
+      WMA (N-Gage, 3650)<br>
+      MMAPI (N-Gage, 3650)<br>
+      Nokia UI<br>
+      SO Symbian</font></td>
+  </tr>
+  <tr> 
+    <td><strong><font size="2" face="Arial, Helvetica, sans-serif">Otros</font></strong></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">HSCSD<br>
+      GPRS (8310)<br>
+      CSD (3330)<br>
+      WAP 1.2.1 (8310)<br>
+      WAP 1.1 (3330)<br>
+      IrDA (8310)</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">CSD<br>
+      WAP 1.1&nbsp;</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">HSCSD<br>
+      GPRS<br>
+      WAP 1.2.1<br>
+      USB<br>
+      IrDA<br>
+      C&aacute;mara (7250)</font></td>
+    <td><p><font size="2" face="Arial, Helvetica, sans-serif"> HSCSD<br>
+        GPRS<br>
+        WAP 1.2.1<br>
+        XHTML<br>
+        Camara (3650, 7650)<br>
+        Bluetooth<br>
+        IrDA (3650, 7650)<br>
+        USB (N-Gage)</font><br>
+      </p></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table width="95%" border="0" align="center">
+  <tr valign="top"> 
+    <td width="10%"> 
+      <div align="left"><font size="2" face="Arial, Helvetica, sans-serif"></font></div></td>
+    <td width="30%"> 
+      <div align="left">
+        <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/sl45i.jpg" width="40" height="100"></font></p>
+        <p><font size="2" face="Arial, Helvetica, sans-serif">SL45i</font></p>
+      </div></td>
+    <td width="30%"> 
+      <div align="left">
+        <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/c55.jpg" width="48" height="100"></font></p>
+        <p><font size="2" face="Arial, Helvetica, sans-serif">C55<br>
+          -Similar a M50</font></p>
+      </div></td>
+    <td width="30%" nowrap> 
+      <div align="left">
+        <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/sl55.jpg" width="47" height="100"></font></p>
+        <p><font size="2" face="Arial, Helvetica, sans-serif">SL55<br>
+          -Similar a M55, S55</font></p>
+      </div></td>
+  </tr>
+  <tr> 
+    <td><div align="left"><strong><font size="2" face="Arial, Helvetica, sans-serif">Interfaz</font></strong></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">101x80 
+        <br>
+        Monocromo</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">101x64<br>
+        Monocromo</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">101x80<br>
+        12 bits (4096 colores)<br>
+        (256 colores en S55)</font></div></td>
+  </tr>
+  <tr> 
+    <td><div align="left"><strong><font size="2" face="Arial, Helvetica, sans-serif">Memoria</font></strong></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">Heap 
+        147 KB<br>
+        Flex 0,2 MB<br>
+        JAR 70 KB</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">Heap 
+        150 KB<br>
+        Flex 0,5 MB <br>
+        (0,2 MB en M50)<br>
+        JAR 70 KB</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">Heap 
+        365 KB<br>
+        (560 KB en M55)<br>
+        Flex 1,6 MB <br>
+        (1 MB en S55)<br>
+        JAR 70 KB</font></div></td>
+  </tr>
+  <tr> 
+    <td><div align="left"><strong><font size="2" face="Arial, Helvetica, sans-serif">APIs</font></strong></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">MIDP 
+        1.0 </font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">MIDP 
+        1.0 </font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">MIDP 
+        1.0 </font></div></td>
+  </tr>
+  <tr> 
+    <td><div align="left"><strong><font size="2" face="Arial, Helvetica, sans-serif">Otros</font></strong></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">WAP 
+        1.1<br>
+        IrDA</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">GPRS<br>
+        WAP 1.2.1</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">GPRS<br>
+        WAP 1.2.1<br>
+        IrDA (S55, SL55)<br>
+        Bluetooth (S55)<br>
+        C&aacute;mara (SL55)</font></div></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table width="95%" border="0" align="center">
+  <tr valign="top"> 
+    <td width="12%"> 
+      <div align="left"><font size="2" face="Arial, Helvetica, sans-serif"></font></div></td>
+    <td width="22%"> 
+      <div align="left">
+        <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/9210.jpg" width="71" height="100"></font></p>
+        <p><font size="2" face="Arial, Helvetica, sans-serif">Nokia 9210<br>
+          -Serie 80<br>
+          -Comunicador</font></p>
+      </div></td>
+    <td width="22%"> 
+      <div align="left">
+        <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/sharp.jpg" width="75" height="100"></font></p>
+        <p><font size="2" face="Arial, Helvetica, sans-serif">Sharp Zaurus SL-5500</font></p>
+      </div></td>
+    <td width="22%"> 
+      <div align="left">
+        <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/palm.jpg" width="78" height="100"></font></p>
+        <p><font size="2" face="Arial, Helvetica, sans-serif">Palm Tungsten</font></p>
+      </div></td>
+    <td width="22%"> 
+      <div align="left">
+        <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/hp.jpg" width="60" height="100"></font></p>
+        <p><font size="2" face="Arial, Helvetica, sans-serif">HP iPAQ Pocket PC 
+          H1930</font></p>
+      </div></td>
+  </tr>
+  <tr> 
+    <td><div align="left"><strong><font size="2" face="Arial, Helvetica, sans-serif">Interfaz</font></strong></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">640x200<br>
+        12 bits (4096 colores)</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">240x320<br>
+        16 bits (65536 colores)</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">240x320 
+        <br>
+        Color</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">240x320 
+        <br>
+        Color</font></div></td>
+  </tr>
+  <tr> 
+    <td><div align="left"><strong><font size="2" face="Arial, Helvetica, sans-serif">Memoria</font></strong></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">8 
+        MB SD-RAM<br>
+        18 MB disponibles<br>
+        14 MB aplicaciones</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">64 
+        MB RAM</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">16 
+        MB RAM</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">64 
+        MB SDRAM</font></div></td>
+  </tr>
+  <tr> 
+    <td><div align="left"><strong><font size="2" face="Arial, Helvetica, sans-serif">APIs</font></strong></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">PersonalJava<br>
+        JavaPhone<br>
+        SO Symbian</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">SO 
+        Linux 2.4</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">SO 
+        Palm</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">SO 
+        Windows Pocket PC 2003 Professional</font></div></td>
+  </tr>
+  <tr> 
+    <td><div align="left"><strong><font size="2" face="Arial, Helvetica, sans-serif">Otros</font></strong></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">HSCSD<br>
+        WAP 1.1<br>
+        HTML 3.2<br>
+        IrDA<br>
+        Cable serie</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">IrDA<br>
+        USB</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">IrDA<br>
+        Bluetooth<br>
+        USB</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">IrDA<br>
+        USB</font></div></td>
+  </tr>
+</table>
+<p>Podemos ver que las caracter&iacute;sticas de los m&oacute;viles var&iacute;an 
+  bastante, tanto a nivel de memoria como de interfaz entre los diferentes modelos 
+  disponibles. Adem&aacute;s, a medida que aparezcan modelos nuevos encontraremos 
+  mayor diferencia entre los modelos antiguos y los m&aacute;s recientes. Es dif&iacute;cil 
+  realizar una aplicaci&oacute;n que se adapte perfectamente al modelo utilizado. 
+  Por eso normalmente lo que se har&aacute; ser&aacute; realizar distintas versiones 
+  de una misma aplicaci&oacute;n para distintos conjuntos de m&oacute;viles con 
+  similares caracter&iacute;sticas. El coste de hacer una aplicaci&oacute;n capaz 
+  de adaptarse ser&iacute;a mayor que el de hacer varias versiones de la aplicaci&oacute;n, 
+  intentando siempre hacerlo de forma que tenga que modificarse la menor cantidad 
+  de c&oacute;digo posible.</p>
+<p>Tenemos adem&aacute;s un problema adicional, y es que cada m&oacute;vil puede 
+  tener su propia API. Distintos modelos de m&oacute;viles, tanto de marcas distintas 
+  como de la misma marca, pueden incluir Sistemas Operativos diferentes y por 
+  lo tanto una interfaz diferente para programar aplicaciones (API). Esto nos 
+  obligar&aacute; a tener que modificar gran parte del c&oacute;digo para portar 
+  nuestras aplicaciones a diferentes modelos de m&oacute;viles. Dado el creciente 
+  n&uacute;mero de dispositivos disponibles esto ser&aacute; un grave problema 
+  ya que ser&aacute; dif&iacute;cil que una aplicaci&oacute;n est&eacute; disponible 
+  para todos los modelos.</p>
+<p>Aqu&iacute; es donde aparece la conveniencia de utilizar tecnolog&iacute;as 
+  Java para programar este tipo de dispositivos tan heterog&eacute;neos. Sun ha 
+  apostado desde hace tiempo por las aplicaciones independientes de la plataforma 
+  con su tecnolog&iacute;a Java. Esta independencia de la plataforma cobra un 
+  gran inter&eacute;s en este caso, en el que tenemos un gran n&uacute;mero de 
+  dispositivos heterog&eacute;neos.</p>
+<p>Con la edici&oacute;n <em>Micro Edition</em> de <em>Java 2</em>, se introduce 
+  esta plataforma en los dispositivos. De esta forma podremos desarrollar aplicaciones 
+  Java que puedan correr en todos los dispositivos que soporten las APIs de J2ME. 
+  Al ser estas APIs un est&aacute;ndar, los programas que escribamos en Java que 
+  las utilicen ser&aacute;n portables a todos estos dispositivos.</p>
+<p>Es m&aacute;s, no ser&aacute; necesario recompilar la aplicaci&oacute;n para 
+  cada tipo de dispositivo. Las aplicaciones Java corren sobre una m&aacute;quina 
+  virtual Java, que deber&aacute; estar instalada en todos los dispositivos que 
+  soporten Java. Las aplicaciones Java se compilan a un tipo de c&oacute;digo 
+  intermedio (conocido como <em>bytecodes</em>) que es capaz de interpretar la 
+  m&aacute;quina virtual. De esta forma, nuestra aplicaci&oacute;n una vez compilada 
+  podr&aacute; ejecutarse en cualquier dispositivo que tenga una m&aacute;quina 
+  virtual Java, ya que esta m&aacute;quina virtual ser&aacute; capaz de interpretar 
+  el c&oacute;digo compilado de la aplicaci&oacute;n sin necesidad de compilarla 
+  otra vez. Incluso si aparece un nuevo modelo de dispositivo con soporte para 
+  Java despu&eacute;s de que nosotros hayamos publicado una aplicaci&oacute;n, 
+  esta aplicaci&oacute;n funcionar&aacute; en este modelo.</p>
+<p>Es por esta raz&oacute;n que las tecnolog&iacute;as Java se han impuesto en 
+  el mercado de programaci&oacute;n de dispositivos m&oacute;viles, teniendo pr&aacute;cticamente 
+  todos los modelos de m&oacute;viles que aparecen en la actualidad soporte para 
+  Java. </p>
+<h3>1.2.3. Redes m&oacute;viles</h3>
+<p>Centr&aacute;ndonos en los tel&eacute;fonos m&oacute;viles celulares, vamos 
+  a ver las distintas generaciones de estos dispositivos seg&uacute;n la red de 
+  comunicaciones utilizada.</p>
+<p>Se denominan celulares porque la zona de cobertura se divide en zonas de menor 
+  tama&ntilde;o llamadas c&eacute;lulas. Cada c&eacute;lula tendr&aacute; un transmisor 
+  que se comunicar&aacute; con los dispositivos dentro del &aacute;rea de dicha 
+  c&eacute;lula mediante se&ntilde;ales de radio, operando en una determinada 
+  banda de frecuencias. Dentro de esta banda de frecuencias, tendremos un determinado 
+  n&uacute;mero de canales a trav&eacute;s de los cuales se podr&aacute;n comunicar 
+  los m&oacute;viles de dicha zona.</p>
+<p>Este n&uacute;mero de canales estar&aacute; limitado por la banda de frecuencias 
+  utilizada, lo que limitar&aacute; el n&uacute;mero de usuarios que puedan estar 
+  conectados simult&aacute;neamente a la red. Al dividir la cobertura en c&eacute;lulas 
+  permitimos que en distintas c&eacute;lulas se reutilicen las mismas frecuencias, 
+  por lo que este n&uacute;mero limitar&aacute; s&oacute;lo los usuarios conectados 
+  dentro de una misma c&eacute;lula, que es un &aacute;rea peque&ntilde;a donde 
+  habr&aacute; menos usuarios, y no de toda la zona global de cobertura.</p>
+<p><strong>Primera generaci&oacute;n (1G): Red anal&oacute;gica</strong></p>
+<p>Los primeros tel&eacute;fonos m&oacute;viles que aparecieron utilizaban una 
+  red anal&oacute;gica para comunicarse. La informaci&oacute;n anal&oacute;gica 
+  se transfiere por ondas de radio sin ninguna codificaci&oacute;n, por frecuencia 
+  modulada (FM). Este tipo de redes permiten &uacute;nicamente comunicaciones 
+  de voz. Un ejemplo de red anal&oacute;gica es la red TACS, que opera en la banda 
+  de frecuencias entorno a los 900MHz. Al ser anal&oacute;gica hace un uso poco 
+  eficiente del espectro, por lo que tendremos menos canales disponibles y por 
+  lo tanto ser&aacute; m&aacute;s f&aacute;cil que la red se sature. </p>
+<p>Esta es la red anal&oacute;gica que se utiliza en Espa&ntilde;a para telefon&iacute;a 
+  m&oacute;vil, basada en la Estadounidense AMPS (<em>Advanced Mobile Phone System</em>). 
+  En EEUU adem&aacute;s de esta podemos encontrar bastantes m&aacute;s tipos de 
+  redes anal&oacute;gicas.</p>
+<p>Un gran inconveniente de estas redes anal&oacute;gicas es que existen numerosos 
+  tipos de redes, y cada pa&iacute;s adopt&oacute; una distinta. Esto dificulta 
+  la itinerancia (o <em>roaming</em>), ya que no posibilita que utilicemos nuestro 
+  dispositivo en otros pa&iacute;ses con redes diferentes.</p>
+<p><strong>Segunda generaci&oacute;n (2G): Red digital</strong></p>
+<p>La segunda generaci&oacute;n de m&oacute;viles consiste en aquellos que utilizan 
+  una red digital para comunicarse. En Europa se adopt&oacute; como est&aacute;ndar 
+  la red GSM (<em>Global System for Mobile communication</em>s). Se trata de una 
+  red inicialmente dise&ntilde;ada para voz, pero que tambi&eacute;n puede transferir 
+  datos, aunque es m&aacute;s apropiada para voz. Digitaliza tanto la voz como 
+  los datos para su transmisi&oacute;n. Esta red es la que ha producido un acercamiento 
+  entre la telefon&iacute;a m&oacute;vil y la inform&aacute;tica. En Jap&oacute;n 
+  se utiliza una red diferente con caracter&iacute;sticas similares a GSM, llamada 
+  PDC. </p>
+<p>La red GSM se implanta como est&aacute;ndar en Europa y desplaza r&aacute;pidamente 
+  a los anal&oacute;gicos. En una primera fase opera en los 900MHz. Una vez saturada 
+  la banda de los 900MHz empieza a funcionar en 1800MHz. Los m&oacute;viles capaces 
+  de funcionar en ambas bandas (<em>dualband</em>) tendr&aacute;n una mayor cobertura, 
+  ya que si una banda esta saturada podr&aacute;n utilizar la otra. En EEUU se 
+  utiliza la banda 1900MHz. Hay m&oacute;viles tribanda que nos permitir&aacute;n 
+  conectarnos en cualquiera de estas 3 bandas, por lo que con ellos tendremos 
+  cobertura en EEUU, Europa y Asia.</p>
+<p>Una caracter&iacute;stica de los dispositivos GSM es que los datos relevantes 
+  del usuario se almacenan en una tarjeta de pl&aacute;stico extra&iacute;ble 
+  (SIM, <em>Suscriber Identification Module</em>), lo cual independiza la identificaci&oacute;n 
+  del usuario (n&uacute;mero de tel&eacute;fono y otros datos) del terminal m&oacute;vil, 
+  permitiendo llevar esta tarjeta de un terminal a otro sin tener que cambiar 
+  el n&uacute;mero.</p>
+<p>Opera por conmutaci&oacute;n de circuitos (CSD, <em>Circuit Switched Data</em>), 
+  es decir, se establece un circuito permanente de comunicaci&oacute;n. Con esta 
+  tecnolog&iacute;a se consigue una velocidad de 9,6kbps, siendo el tiempo de 
+  establecimiento de conexi&oacute;n de unos 10 segundos. Los inconvenientes de 
+  esta tecnolog&iacute;a son:</p>
+<ul>
+  <li>Debido a que se establece un circuito de comunicaci&oacute;n de forma permanente, 
+    se tarifica por tiempo, por lo que se cobrar&aacute; al usuario el tiempo 
+    que est&eacute; conectado aunque no est&eacute; descargando nada. <br>
+  </li>
+  <li>Adem&aacute;s, tiene una velocidad de transmisi&oacute;n demasiado lenta, 
+    lo cu&aacute;l es bastante negativo para el usuario sobretodo al tarificarse 
+    por tiempo de conexi&oacute;n. <br>
+  </li>
+  <li>Otro inconveniente es que no se trata de una red IP, por lo que el m&oacute;vil 
+    no podr&aacute; conectarse directamente a Internet. Tendr&aacute; que hacerlo 
+    a trav&eacute;s de alg&uacute;n intermediario (<em>gateway</em>) que traduzca 
+    los protocolos propios de la red m&oacute;vil a los protocolos TCP/IP de Internet.</li>
+</ul>
+<p>M&aacute;s adelante se desarrolla la tecnolog&iacute;a HSCSD (<em>High Speed 
+  Circuit Switched Data</em>), que consigue una velocidad de 56Kbps sobre la misma 
+  red GSM. Para conseguir esta alta velocidad, esta tecnolog&iacute;a utiliza 
+  varios canales de comunicaci&oacute;n simult&aacute;neamente, cada uno de los 
+  cuales funciona a una velocidad de 9'6Kbps f&iacute;sicos de forma similar a 
+  como se hac&iacute;a con CSD (se puede conseguir aumentar a 14'4kbps utilizando 
+  m&eacute;todos de compresi&oacute;n por software). Al transmitir por 4 canales 
+  se consigue esta mayor velocidad, pero tenemos el gran inconveniente de tener 
+  4 circuitos establecidos de forma permanente, por lo que el coste de la conexi&oacute;n 
+  se multiplicar&aacute; por 4, tarific&aacute;ndose por tiempo de conexi&oacute;n 
+  igual que ocurr&iacute;a en el caso anterior. Otro inconveniente es que sigue 
+  sin ser compatible con IP.</p>
+<p><strong>Paso intermedio (2,5G): GPRS</strong></p>
+<p>Hemos visto que con las tecnolog&iacute;as anteriores de portadoras de datos 
+  (CSD y HSCSD) tenemos los problemas de la baja velocidad, tarificaci&oacute;n 
+  por tiempo y el no ser una red IP. Surge aqu&iacute; la necesidad de implantar 
+  un m&eacute;todo de transmisi&oacute;n por paquetes que no requiera ocupar un 
+  canal de forma permanente, sino que env&iacute;e los datos fraccionados en paquetes 
+  IP independientes. De esta forma surge GPRS, que se considera como un paso intermedio 
+  entre la segunda (2G) y tercera (3G) generaci&oacute;n.</p>
+<p>GPRS (<em>General Packet Radio Service</em>) es una evoluci&oacute;n de las 
+  redes GSM y funciona sobre estas mismas redes, por lo que no ser&aacute; necesario 
+  realizar una gran inversi&oacute;n en infraestructuras, simplemente se deber&aacute; 
+  actualizar la red GSM para que soporte la transmisi&oacute;n de paquetes. </p>
+<p>Esta tecnolog&iacute;a realiza una transmisi&oacute;n inal&aacute;mbrica de 
+  datos basada en paquetes. Puede alcanzar una velocidad de hasta 144kbps te&oacute;ricamente, 
+  aunque en la pr&aacute;ctica no suele pasar de los 40Kbps por limitaciones de 
+  los dispositivos. La informaci&oacute;n se fragmenta en paquetes que se env&iacute;an 
+  mediante el protocolo IP por distintos canales de forma independiente y se reconstruye 
+  en destino. Al seguir el protocolo IP, podremos acceder a todos los recursos 
+  de la red Internet.</p>
+<p>Un canal no tendr&aacute; que estar dedicado a la comunicaci&oacute;n exclusivamente 
+  de un punto a otro, es decir, no mantiene una conexi&oacute;n abierta de forma 
+  permanente, conecta solo para transmitir datos (paquetes). Por esta raz&oacute;n 
+  se aprovechar&aacute;n mejor los canales de comunicaci&oacute;n, ya que s&oacute;lo 
+  se ocupan cuando es necesario y se optimiza as&iacute; el uso de la red. El 
+  tiempo de establecimiento de conexi&oacute;n es de aproximadamente 1 segundo. 
+  De esta forma se paga por informaci&oacute;n transmitida, y no por tiempo de 
+  conexi&oacute;n. Esto nos permite que podamos estar siempre conectados a Internet, 
+  ya que mientras no se transfieran paquetes no estaremos ocupando los canales 
+  de comunicaci&oacute;n y por lo tanto no se nos estar&aacute; cobrando.</p>
+<p>Los dispositivos cuentan con varios canales para transmitir (a 10Kbps cada 
+  uno), tanto para enviar como para recibir. Por ejemplo podemos tener dispositivos 
+  (2+1), con 2 canales para recibir y 1 para enviar, por lo que recibir&aacute;n 
+  datos a 20Kbps y enviar&aacute;n a 10Kbps. Se pueden tener hasta un m&aacute;ximo 
+  de 8 canales. Esto nos permite tener simultaneidad de voz y datos.</p>
+<p>En Jap&oacute;n, de forma similar, se tiene la red PDC-P que es una extensi&oacute;n 
+  de la anterior red PDC para trabajar mediante transmisi&oacute;n por paquetes 
+  a una velocidad de 28.8Kbps.</p>
+<p><strong>Tercera generaci&oacute;n (3G): Banda ancha</strong></p>
+<p>La tercera generaci&oacute;n de telefon&iacute;a m&oacute;vil viene con la 
+  red UMTS (<em>Universal Mobile Telephony System</em>). Con esta nueva tecnolog&iacute;a 
+  de radio se pretende buscar un est&aacute;ndar mundial para las redes de telefon&iacute;a 
+  m&oacute;vil, de forma que podemos movernos a cualquier parte del mundo sin 
+  que nuestro m&oacute;vil deje de funcionar.</p>
+<p>Adem&aacute;s con ella se pretende dar acceso a servicios multimedia, como 
+  videoconferencia, ver la TV a trav&eacute;s del m&oacute;vil, o&iacute;r m&uacute;sica, 
+  etc. Para ello esta red proporciona un ancho de banda mucho mayor que las redes 
+  de segunda generaci&oacute;n, teniendo velocidades de transferencia entre 384kbps 
+  y 2Mbps. Al igual que ocurr&iacute;a con GPRS la informaci&oacute;n se enviar&aacute; 
+  por paquetes, por lo que se cobrar&aacute; por informaci&oacute;n transmitida, 
+  lo que nos permitir&aacute; estar conectados permanentemente. </p>
+<p>Esta red tiene el inconveniente de que para implantarla es necesario realizar 
+  una fuerte inversi&oacute;n en infraestructuras. Es compatible con GSM y funciona 
+  en la frecuencia 2GHz.</p>
+<h3>1.2.4. Portadores</h3>
+<p>En la arquitectura de capas de las redes m&oacute;viles, denominamos capa portadora 
+  (<em>bearer</em>) a aquella que se va a utilizar para transferir los datos a 
+  trav&eacute;s de la red. Distintas tecnolog&iacute;as que podemos utilizar como 
+  portadoras para enviar o recibir datos a trav&eacute;s de la red son:</p>
+<ul>
+  <li><strong>CSD</strong>: Conmutaci&oacute;n de circuitos sobre una red GSM. 
+    <br>
+  </li>
+  <li><strong>HSCSD</strong>: Conmutaci&oacute;n de circuitos de alta velocidad 
+    sobre una red GSM. <br>
+  </li>
+  <li><strong>GPRS</strong>: Env&iacute;o de paquetes a trav&eacute;s de una red 
+    GSM.<br>
+  </li>
+  <li><strong>PDC</strong>: Red de caracter&iacute;sticas similares a GSM utilizada 
+    en Jap&oacute;n.<br>
+  </li>
+  <li><strong>PDC-P</strong>: Extensi&oacute;n de PDC para trabajar por transmisi&oacute;n 
+    de paquetes.<br>
+  </li>
+  <li><strong>SMS</strong>: Mensajes de texto cortos. Se env&iacute;an por paquetes, 
+    limitando su contenido a 140 <em>bytes</em>.<br>
+  </li>
+  <li><strong>MMS</strong>: Mensajes multimedia. Permiten incorporar elementos 
+    multimedia (audio, im&aacute;genes, video) al mensaje. </li>
+</ul>
+<p>Debemos distinguir claramente las tecnolog&iacute;as portadoras de las tecnolog&iacute;as 
+  para desarrollar aplicaciones. Podemos desarrollar aplicaciones para dispositivos 
+  m&oacute;viles utilizando diferentes tecnolog&iacute;as, y para acceder a una 
+  aplicaci&oacute;n podremos utilizar diferentes portadores. </p>
+<h3>1.2.5. Aplicaciones para m&oacute;viles</h3>
+<p>Las aplicaciones web normalmente se desarrollan pensando en ser vistas en las 
+  pantallas de nuestro PCs, con una resoluci&oacute;n de unos 800x600 <em>pixels</em> 
+  y navegar en ellas mediante el puntero del rat&oacute;n. Por lo tanto, estas 
+  aplicaciones no se podr&aacute;n mostrar correctamente en las reducidas pantallas 
+  de los dispositivos m&oacute;viles. Adem&aacute;s, en gran parte de los dispositivos 
+  m&oacute;viles (como por ejemplo los tel&eacute;fonos) no tenemos ning&uacute;n 
+  dispositivo de tipo puntero, por lo que deberemos realizar p&aacute;ginas en 
+  las que se pueda navegar f&aacute;cilmente utilizando el reducido teclado de 
+  estos dispositivos.</p>
+<p>Han surgido diferentes tecnolog&iacute;as dise&ntilde;adas para ofrecer contenidos 
+  aptos para este tipo de dispositivos. Entre ellas destacamos las siguientes:</p>
+<ul>
+  <li><strong>WAP</strong> (<em>Wireless Application Protocol</em>): Se compone 
+    de un conjunto de protocolos que se sit&uacute;an por encima de la capa portadora. 
+    Puede funcionar sobre cualquier tecnolog&iacute;a portadora existente (CSD, 
+    HSCSD, GRPS, SMS, UMTS, etc). </li>
+</ul>
+<div align="center"><img src="imagenes/introduccion/arquitectura_wap.gif" width="400" height="237"> 
+</div>
+<p class="caption">Figura 3. Arquitectura WAP</p>
+<blockquote>
+  <p>Debido a que la red m&oacute;vil puede no ser una red IP, se introduce un 
+    elemento intermediario: el <em>gateway</em> WAP. Este <em>gateway</em> traduce 
+    entre el protocolo WSP (perteneciente a WAP) de la red m&oacute;vil y el protocolo 
+    TCP/IP de Internet.</p>
+</blockquote>
+<div align="center"><img src="imagenes/introduccion/gateway_wap.gif" width="500" height="220"> 
+</div>
+<p class="caption">Figura 4. Gateway WAP</p>
+<blockquote>
+  <p> Los documentos web se escriben en lenguaje WML (<em>Wireless Markup Language</em>), 
+    que forma parte del protocolo WAP. Se trata de un lenguaje de marcado para 
+    definir documentos web que puedan ser visualizados en pantallas peque&ntilde;as, 
+    usando navegadores WML. Como inconvenientes de este lenguaje encontramos la 
+    pobreza de los documentos que podemos generar con &eacute;l, ya que para asegurarse 
+    de funcionar en todos los dispositivos debe ser muy restrictivo, y tambi&eacute;n 
+    el ser un lenguaje totalmente distinto a HTML, que obligar&aacute; a los desarrolladores 
+    a tener que aprender otro lenguaje y escribir desde cero una nueva versi&oacute;n 
+    de las aplicaciones.<br>
+  </p>
+</blockquote>
+<ul>
+  <li><strong>iMode</strong>: Esta tecnolog&iacute;a fue lanzada por la empresa 
+    NTT en Jap&oacute;n. Para escribir los documentos se utiliza cHTML, un subconjunto 
+    del HTML (compacto). En Jap&oacute;n esta tecnolog&iacute;a se ofreci&oacute; 
+    desde el principio con una velocidad similar a la de las red GSM, con conexi&oacute;n 
+    permanente y tarificando por informaci&oacute;n transmitida. Se lanz&oacute; 
+    con gran cantidad de servicios, y cuenta con un gran &eacute;xito en Jap&oacute;n. 
+    En Europa tambi&eacute;n se introduce esta tecnolog&iacute;a, en este caso 
+    sobre GPRS. El inconveniente que tiene es que es propietario, mientras que 
+    WAP es abierto.<br>
+  </li>
+  <li><strong>XHTML</strong>: Se trata de una versi&oacute;n reducida de lenguaje 
+    HTML ideado para crear aplicaciones para dispositivos m&oacute;viles con interfaces 
+    reducidas. Es similar a cHTML, pero a diferencia de este &uacute;ltimo, se 
+    ha desarrollado como est&aacute;ndar</li>
+</ul>
+<p>Con estas tecnolog&iacute;as podemos desarrollar aplicaciones web para acceder 
+  desde dispositivos m&oacute;viles. Sin embargo, en este tipo de dispositivos 
+  donde muchas veces la conexi&oacute;n es lenta, cara e inestable es conveniente 
+  poder trabajar con las aplicaciones de forma local. Adem&aacute;s las aplicaciones 
+  que instalemos en el dispositivo podr&aacute;n estar hechas a medida para nuestro 
+  modelo de dispositivo concreto y de esta manera adaptarse mejor a las posibilidades 
+  que ofrece. </p>
+<p>Vamos a ver qu&eacute; tecnolog&iacute;as podemos utilizar para desarrollar 
+  estar aplicaciones. Los dispositivos tendr&aacute;n instalado un sistema operativo. 
+  Existen diferentes sistemas operativos disponibles para este tipo de dispositivos, 
+  entre los que destacamos los siguientes:</p>
+<ul>
+  <li><strong>Windows Pocket PC</strong>: Se trata de una versi&oacute;n del sistema 
+    operativo Windows de Microsoft para PDAs. Es una evoluci&oacute;n de Windows 
+    CE, destinado tambi&eacute;n a este tipo de dispositivos. Windows CE ten&iacute;a 
+    un aspecto similar al Windows 9X, pero no se adaptaba bien a las reducidas 
+    interfaces de estos dispositivos. Pocket PC soluciona este problema y tiene 
+    un aspecto similar a Windows XP. Una ventaja de Pocket PC es que mantiene 
+    la compatibilidad con los sistemas Windows de escritorio, ya que maneja los 
+    mismos formatos de ficheros, por lo tanto podremos transferir f&aacute;cilmente 
+    nuestros datos entre PCs y PDAs.<br>
+  </li>
+  <li><strong>Palm OS</strong>: Sistema operativo para los PDAs Palm. Se adapta 
+    mejor a los dispositivos que Windows CE.<br>
+  </li>
+  <li><strong>Symbian OS</strong>: Se trata de un Sistema Operativo incluido en 
+    distintos modelos de m&oacute;viles, como por ejemplo en la serie 60 de Nokia. 
+  </li>
+</ul>
+<p>Podemos programar aplicaciones utilizando la API de estos SO, pero estas aplicaciones 
+  s&oacute;lo funcionar&aacute;n en dispositivos que cuenten con dicho SO. Si 
+  adem&aacute;s accedemos directamente al hardware del dispositivo en nuestros 
+  programas, entonces s&oacute;lo podemos confiar en que sea compatible con el 
+  modelo concreto para el que lo hayamos desarrollado.</p>
+<p>Debido al gran n&uacute;mero de dispositivos distintos existentes con diferentes 
+  sistemas operativos, programar a bajo nivel (es decir, utilizando directamente 
+  la API del SO) no ser&aacute; conveniente ya que ser&aacute; muy complicado 
+  portar nuestro programas a otros dispositivos distintos. Por ello adquiere especial 
+  inter&eacute;s en el campo de la programaci&oacute;n de dispositivos m&oacute;viles 
+  el tener aplicaciones independientes de la plataforma. </p>
+<p>Para tener esta independencia de la plataforma deberemos tener instalado en 
+  los dispositivos un entorno de ejecuci&oacute;n que sea capaz de interpretar 
+  estas aplicaciones multiplataforma. Existen diferentes tecnolog&iacute;as que 
+  nos permitir&aacute;n crear este tipo de aplicaciones, como son las siguientes: 
+</p>
+<ul>
+  <li><strong>BREW</strong> (<em>Binary Runtime Environment for Wireless</em>): 
+    El lenguaje de programaci&oacute;n nativo es C/C++. Tambi&eacute;n puede usarse 
+    Java y otros lenguajes. El inconveniente de esta tecnolog&iacute;a es que 
+    es desconocida por los desarrolladores, y que est&aacute; soportada por un 
+    n&uacute;mero reducido de dispositivos.</li>
+</ul>
+<ul>
+  <li><strong>J2ME </strong>(<em>Java 2 Micro Edition</em>): Edici&oacute;n de 
+    la plataforma Java para dispositivos m&oacute;viles. Se trata de una versi&oacute;n 
+    reducida de Java que nos permitir&aacute; ejecutar aplicaciones escritas en 
+    este lenguaje en estos dispositivos. Con Java desde el principio se apost&oacute; 
+    por la multiplataforma, por lo que la filosof&iacute;a seguida con esta tecnolog&iacute;a 
+    es muy adecuada a este tipo de dispositivos.<br>
+    <br>
+    Tiene la ventaja de que existe una gran comunidad de desarrolladores Java, 
+    a los que no les costar&aacute; aprender a programar para estos dispositivos, 
+    ya que se usa pr&aacute;cticamente la misma API, y adem&aacute;s la mayor&iacute;a 
+    de modelos de m&oacute;viles que aparecen en el mercado soportan esta tecnolog&iacute;a. 
+    Podemos encontrar gran n&uacute;mero de p&aacute;ginas que nos ofrecen aplicaciones 
+    y juegos Java para descargar en nuestros m&oacute;viles.</li>
+</ul>
+<h3>1.2.6. Conectividad de los MIDs</h3>
+<p>Hemos hablado de que estos dispositivos son capaces de conectarse. Vamos a 
+  ver las posibles formas de conectar estos dispositivos m&oacute;viles para obtener 
+  datos, aplicaciones o intercambiar cualquier otra informaci&oacute;n. Una primera 
+  forma de conectarlos consiste en establecer una conexi&oacute;n a Internet desde 
+  el m&oacute;vil a trav&eacute;s de la red GSM. Sin embargo, esta conexi&oacute;n 
+  cuesta dinero, por lo que ser&aacute; interesante tener otros mecanismos de 
+  conexi&oacute;n directa de nuestro m&oacute;vil para poder copiar en &eacute;l 
+  las aplicaciones que estemos desarrollando para hacer pruebas, gestionar nuestros 
+  datos, o intercambiar informaci&oacute;n con otros usuarios.</p>
+<ul>
+  <li><strong>OTA (Over The Air)</strong>: Se conecta directamente a Internet 
+    de forma inal&aacute;mbrica utilizando la red m&oacute;vil (GSM o en el futuro 
+    UMTS). Esto nos permitir&aacute; acceder a los recursos que haya en Internet. 
+    Por ejemplo, podemos publicar nuestras aplicaciones en una p&aacute;gina WML 
+    y descargarlas desde ah&iacute; para instalarlas en el m&oacute;vil. El inconveniente 
+    de este m&eacute;todo es que el tiempo de conexi&oacute;n tiene un coste elevado.<br>
+  </li>
+  <li><strong>Cable serie/USB</strong>: Algunos dispositivos permiten ser conectados 
+    a un PC mediante cable serie o USB. Con ello podremos copiar los datos del 
+    m&oacute;vil al PC, o al rev&eacute;s. De este forma podremos subir nuestras 
+    aplicaciones al m&oacute;vil para probarlas. El problema es que tendremos 
+    que conectar el m&oacute;vil f&iacute;sicamente mediante un cable.<br>
+  </li>
+  <li><strong>Infrarrojos (IrDA)</strong>: Un gran n&uacute;mero de modelos nos 
+    permiten establecer conexiones v&iacute;a infrarrojos. Podemos de esta manera 
+    conectar varios dispositivos entre si, o bien conectarlos con un PC. Para 
+    ello el PC deber&aacute; contar con puerto de infrarrojos. Muchos port&aacute;tiles 
+    incorporan este puerto, o tambi&eacute;n podemos a&ntilde;adir este puerto 
+    a cualquier otro ordenador por ejemplo a trav&eacute;s de interfaz USB. Tenemos 
+    la ventaja de que podemos conectar todo tipo de dispositivos que cuenten con 
+    este puerto, y adem&aacute;s no es necesario contar con un cable f&iacute;sico. 
+    El inconveniente es que los dispositivos deber&aacute;n verse entre si para 
+    poder comunicarse por infrarrojos.<br>
+  </li>
+  <li><strong>Bluetooth</strong>: <em>Bluetooth</em> es una tecnolog&iacute;a 
+    que nos permite conectar distintos tipos de dispositivos utilizando ondas 
+    de radio para comunicarse. Podremos de esta forma conectar distintos dispositivos 
+    <em>bluetooth</em> entre ellos. Podemos incorporar un adaptador <em>bluetooth</em> 
+    a nuestro PC (a trav&eacute;s de USB por ejemplo) de forma que nuestro ordenador 
+    se comporte como un dispositivo <em>bluetooth</em> m&aacute;s y de esta forma 
+    podamos conectarlo a nuestro m&oacute;vil. Al comunicarse por ondas de radio 
+    no har&aacute; falta que los dispositivos est&eacute;n visibles entre si, 
+    teniendo estas ondas un alcance de unos 10 metros. Es el sustituto de alta 
+    velocidad de los infrarrojos, pudiendo alcanzar velocidades de 723Kbit/s.</li>
+</ul>
+<h2>1.3 Aplicaciones J2ME</h2>
+<p>La plataforma J2ME nos ofrece una serie de APIs con las que desarrollar las 
+  aplicaciones en lenguaje Java. Una vez tengamos la aplicaci&oacute;n podremos 
+  descargarla en cualquier dispositivo con soporte para J2ME y ejecutarla en &eacute;l. 
+</p>
+<p>J2ME soporta una gran variedad de dispositivos, no &uacute;nicamente MIDs. 
+  Actualmente define APIs para dar soporte a los dispositivos conectados en general, 
+  tanto aquellos con una gran capacidad como a tipos m&aacute;s limitados de estos 
+  dispositivos. </p>
+<h3>1.3.1. Arquitectura de J2ME</h3>
+<p>Hemos visto que existen dispositivos de tipos muy distintos, cada uno de ellos 
+  con sus propias necesidades, y muchos con grandes limitaciones de capacidad. 
+  Si obtenemos el m&aacute;ximo com&uacute;n denominador de todos ellos nos quedamos 
+  pr&aacute;cticamente con nada, por lo que es imposible definir una &uacute;nica 
+  API en J2ME que nos sirva para todos. </p>
+<p>Por ello en J2ME existir&aacute;n diferentes APIs cada una de ellas dise&ntilde;ada 
+  para una familia de dispositivos distinta. Estas APIs se encuentras arquitecturadas 
+  en dos capas: configuraciones y perfiles.</p>
+<p align="center"><center>
+    <img src="imagenes/introduccion/arquitectura.gif" width="284" height="402"> 
+  </center></p>
+<p class="caption">Figura 5. Arquitectura de J2ME</p>
+<p><strong>Configuraciones</strong></p>
+<p>Las configuraciones son las capas de la API de bajo nivel, que residen sobre 
+  la m&aacute;quina virtual y que est&aacute;n altamente vinculadas con ella, 
+  ofrecen las caracter&iacute;sticas b&aacute;sicas de todo un gran conjunto de 
+  dispositivos. En esta API ofrecen lo que ser&iacute;a el m&aacute;ximo denominador 
+  com&uacute;n de todos ellos, la API de programaci&oacute;n b&aacute;sica en 
+  lenguaje Java.</p>
+<p>Encontramos distintas configuraciones para adaptarse a la capacidad de los 
+  dispositivos. La configuraci&oacute;n CDC (<em>Connected Devices Configuration</em>) 
+  contiene la API com&uacute;n para todos los dispositivos conectados, soportada 
+  por la m&aacute;quina virtual Java.</p>
+<p>Sin embargo, para algunos dispositivos con grandes limitaciones de capacidad 
+  esta m&aacute;quina virtual Java puede resultar demasiado compleja. Hemos de 
+  pensar en dispositivos que pueden tener 128 KB de memoria. Es evidente que la 
+  m&aacute;quina virtual de Java (JVM) pensada para ordenadores con varias megas 
+  de RAM instaladas no podr&aacute; funcionar en estos dispositivos.</p>
+<p>Por lo tanto aparece una segunda configuraci&oacute;n llamada CLDL (<em>Connected 
+  Limited Devices Configuration</em>) pensada para estos dispositivos con grandes 
+  limitaciones. En ella se ofrece una API muy reducida, en la que tenemos un menor 
+  n&uacute;mero de funcionalidades, adapt&aacute;ndose a las posibilidades de 
+  estos dispositivos. Esta configuraci&oacute;n est&aacute; soportada por una 
+  m&aacute;quina virtual mucho m&aacute;s reducida, la KVM (<em>Kilobyte Virtual 
+  Machine</em>), que necesitar&aacute; muchos menos recursos por lo que podr&aacute; 
+  instalarse en dispositivos muy limitados.</p>
+<p>Vemos que tenemos distintas configuraciones para adaptarnos a dispositivos 
+  con distinta capacidad. La configuraci&oacute;n CDC soportada por la JVM (<em>Java 
+  Virtual Machine</em>) funcionar&aacute; s&oacute;lo con dispositivos con memoria 
+  superior a 1 MB, mientras que para los dispositivos con memoria del orden de 
+  los KB tenemos la configuraci&oacute;n CLDC soportada por la KVM, de ah&iacute; 
+  viene el nombre de <em>Kilobyte Virtual Machine</em>.</p>
+<p><strong>Perfiles</strong></p>
+<p>Como ya hemos dicho, las configuraciones nos ofrecen s&oacute;lo la parte b&aacute;sica 
+  de la API para programar en los dispositivos, aquella parte que ser&aacute; 
+  com&uacute;n para todos ellos. El problema es que esta parte com&uacute;n ser&aacute; 
+  muy reducida, y no nos permitir&aacute; acceder a todas las caracter&iacute;sticas 
+  de cada tipo de dispositivo espec&iacute;fico. Por lo tanto, deberemos extender 
+  la API de programaci&oacute;n para cada familia concreta de dispositivos, de 
+  forma que podamos acceder a las caracter&iacute;sticas propias de cada familia.</p>
+<p>Esta extensi&oacute;n de las configuraciones es lo que se denomina perfiles. 
+  Los perfiles son una capa por encima de las configuraciones que extienden la 
+  API definida en la configuraci&oacute;n subyacente a&ntilde;adiendo las operaciones 
+  adecuadas para programar para una determinada familia de dispositivos.</p>
+<p>Por ejemplo, tenemos un perfil MIDP (<em>Mobile Information Devices Profile</em>) 
+  para programar los dispositivos m&oacute;viles de informaci&oacute;n. Este perfil 
+  MIDP reside sobre CLDC, ya que estos son dispositivos bastante limitados a la 
+  mayor&iacute;a de las ocasiones.</p>
+<p><strong>Paquetes opcionales</strong></p>
+<p>Adem&aacute;s podemos incluir paquetes adicionales, como una tercera capa por 
+  encima de las anteriores, para dar soporte a funciones concretas de determinados 
+  modelos de dispositivos. Por ejemplo, los m&oacute;viles que incorporen c&aacute;mara 
+  podr&aacute;n utilizar una API multimedia para acceder a ella.</p>
+<h3>1.3.2. Configuraci&oacute;n CDC</h3>
+<p>La configuraci&oacute;n CDC se utilizar&aacute; para dispositivos conectados 
+  con una memoria de por lo menos 1 MB (se recomiendan al menos 2 MB para un funcionamiento 
+  correcto). Se utilizar&aacute; en dispositivos como PDAs de gama alta, comunicadores, 
+  descodificadores de televisi&oacute;n, impresoras de red, <em>routers</em>, 
+  etc. </p>
+<p>CDC se ha dise&ntilde;ado de forma que se mantenga la m&aacute;xima compatibilidad 
+  posible con J2SE, permitiendo de este modo portar f&aacute;cilmente las aplicaciones 
+  con las que ya contamos en nuestros ordenadores a CDC. </p>
+<p>La m&aacute;quina virtual utilizada, la CVM, cumple con la misma especificaci&oacute;n 
+  que la JVM, por lo que podremos programar las aplicaciones de la misma forma 
+  que lo hac&iacute;amos en J2SE. Existe una nueva m&aacute;quina virtual para 
+  soportar CDC, llamada CDC <em>Hotspot</em>, que incluye diversas optimizaciones 
+  utilizando la tecnolog&iacute;a <em>Hotspot</em>.</p>
+<p>La API que ofrece CDC es un subconjunto de la API que ofrec&iacute;a J2SE, 
+  optimizada para este tipo de dispositivos que tienen menos recursos que los 
+  PCs en los que utilizamos J2SE. Se mantienen las clases principales de la API, 
+  que ofrecer&aacute;n la misma interfaz que en su versi&oacute;n de J2SE.</p>
+<p>CDC viene a sustituir a la antigua API <em>PersonalJava</em>, que se aplicaba 
+  al mismo tipo de dispositivos. La API CDC, a diferencia de <em>PersonalJava</em>, 
+  est&aacute; integrada dentro de la arquitectura de J2ME. </p>
+<p>Tenemos diferentes perfiles disponibles seg&uacute;n el tipo de dispositivo 
+  que estemos programando: <em>Foundation Profile</em> (FP), <em>Personal Basis 
+  Profile</em> (PBP) y <em>Personal Profile</em> (PP).</p>
+<p><strong>Foundation Profile</strong></p>
+<p>Este es el perfil b&aacute;sico para la programaci&oacute;n con CDC. No incluye 
+  ninguna API para la creaci&oacute;n de una interfaz gr&aacute;fica de usuario, 
+  por lo que se utilizar&aacute; para dispositivos sin interfaz, como por ejemplo 
+  impresoras de red o <em>routers</em>.</p>
+<p>Los paquetes que se incluyen en este perfil son:</p>
+<pre>   java.io
+   java.lang
+   java.lang.ref
+   java.lang.reflect
+   java.net
+   java.security
+   java.security.acl
+   java.security.cert
+   java.security.interfaces
+   java.security.spec
+   java.text
+   java.util
+   java.util.jar
+   java.util.zip
+</pre>
+<p>Vemos que incluye todos los paquetes del n&uacute;cleo de Java, para la programaci&oacute;n 
+  b&aacute;sica en el lenguaje (<code>java.lang</code>), para manejar la entrada/salida 
+  (<code>java.io</code>), para establecer conexiones de red (<code>java.net</code>), 
+  para seguridad (<code>java.security</code>), manejo de texto (<code>java.text</code>) 
+  y clases &uacute;tiles (<code>java.util</code>). Estos paquetes se incluyen 
+  en su versi&oacute;n integra, igual que en J2SE. Adem&aacute;s incluye un paquete 
+  adicional que no pertenece a J2SE:</p>
+<pre>   javax.microedition.io</pre>
+<p>Este paquete pertenece est&aacute; presente para mantener la compatibilidad 
+  con CLDC, ya que pertenece a esta configuraci&oacute;n, como veremos m&aacute;s 
+  adelante.</p>
+<p><strong>Personal Basis Profile</strong></p>
+<p>Este perfil incluye una API para la programaci&oacute;n de la interfaz gr&aacute;fica 
+  de las aplicaciones. Lo utilizaremos para dispositivos en los que necesitemos 
+  aplicaciones con interfaz gr&aacute;fica. Este es el caso de los descodificadores 
+  de televisi&oacute;n por ejemplo.</p>
+<p>Adem&aacute;s de los paquetes incluidos en FP, a&ntilde;ade los siguientes:</p>
+<pre>   java.awt
+   java.awt.color
+   java.awt.event
+   java.awt.image
+   java.beans
+   java.rmi
+   java.rmi.registry</pre>
+<p>Estos paquetes incluyen un subconjunto de las clases que conten&iacute;an en 
+  J2SE. Tenemos el paquete AWT (<code>java.awt</code>) para la creaci&oacute;n 
+  de la interfaz gr&aacute;fica de las aplicaciones. Este paquete s&oacute;lo 
+  incluye soporte para componentes ligeros (aquellos que definen mediante c&oacute;digo 
+  Java la forma de dibujarse), y no incluye ning&uacute;n componente de alto nivel 
+  (como botones, campos de texto, etc). Tendremos que crear nosotros nuestros 
+  propios componentes, definiendo la forma en la que se dibujar&aacute; cada uno. 
+</p>
+<p>Tambi&eacute;n incluye un soporte limitado para <em>beans</em> (<code>java.beans</code>) 
+  y objetos distribuidos RMI (<code>java.rmi</code>).</p>
+<p>Adem&aacute;s podemos encontrar un nuevo tipo de componente no existente en 
+  J2SE, que son los <strong>Xlets</strong>.</p>
+<pre>   javax.microedition.xlet
+   javax.microedition.xlet.ixc</pre>
+<p>Estos <em>xlets</em> son similares a los <em>applets</em>, son componentes 
+  que se ejecutan dentro de un contenedor que controla su ciclo de vida. En el 
+  caso de los <em>applets</em> este contenedor era normalmente el navegador donde 
+  se cargaba el <em>applet</em>. Los <em>xlets</em> se ejecutan dentro del <em>xlet 
+  manager</em>. Los <em>xlets</em> pueden comunicarse entre ellos mediante RMI. 
+  De hecho, la parte de RMI incluida en PBP es &uacute;nicamente la dedicada a 
+  la comunicaci&oacute;n entre <em>xlets</em>. </p>
+<p>Los <em>xlets</em> se diferencian tambi&eacute;n de los <em>applets</em> en 
+  que tienen un ciclo de vida definido m&aacute;s claramente, y que no est&aacute;n 
+  tan vinculados a la interfaz (AWT) como los <em>applets</em>. Por lo tanto podremos 
+  utilizar tanto <em>xlets</em> con interfaz gr&aacute;fica, como sin ella. </p>
+<p>Estos <em>xlets</em> se suelen utilizar en aplicaciones de televisi&oacute;n 
+  interactiva, instaladas en los descodificadores (<em>set top boxes</em>).</p>
+<p><strong>Personal Profile</strong></p>
+<p>Este perfil incluye soporte para <em>applets</em> e incluye la API de AWT &iacute;ntegra. 
+  De esta forma podremos utilizar los componentes pesados de alto nivel definidos 
+  en AWT (botones, men&uacute;s, campos de texto, etc). Estos componentes pesado 
+  utilizan la interfaz gr&aacute;fica nativa del dispositivo donde se ejecutan. 
+  De esta forma, utilizaremos este perfil cuando trabajemos con dispositivos que 
+  disponen de su propia interfaz gr&aacute;fica de usuario (GUI) nativa.</p>
+<p>Incluye los siguientes paquetes:</p>
+<pre>   java.applet
+   java.awt
+   java.awt.datatransfer</pre>
+<p>En este caso ya se incluye &iacute;ntegra la API de AWT (<code>java.awt</code>) 
+  y el soporte para applets (<code>java.applet</code>). Este paquete es el m&aacute;s 
+  parecido al desaparecido <em>PersonalJava</em>, por lo que ser&aacute; el m&aacute;s 
+  adecuado para migrar las aplicaciones <em>PersonalJava</em> a J2ME.</p>
+<p><strong>Paquetes opcionales</strong></p>
+<p>En CDC se incluyen como paquetes opcionales subconjuntos de otras APIs presentes 
+  en J2SE: la API <strong>JDBC</strong> para conexi&oacute;n a bases de datos, 
+  y la API de <strong>RMI</strong> para utilizar esta tecnolog&iacute;a de objetos 
+  distribuidos. </p>
+<p>Adem&aacute;s tambi&eacute;n podremos utilizar como paquete opcional la API 
+  <strong>Java TV</strong>, adecuada para aplicaciones de televisi&oacute;n interactiva 
+  (iTV), que pueden ser instaladas en descodificadores de televisi&oacute;n digital. 
+  Incluye la extensi&oacute;n JMF (<em>Java Media Framework</em>) para controlar 
+  los flujos de video.</p>
+<p>Podremos utilizar estas APIs para programar todos aquellos dispositivos que 
+  las soporten.</p>
+<h3> 1.3.3. Configuraci&oacute;n CLDC</h3>
+<p>La configuraci&oacute;n CLDC se utilizar&aacute; para dispositivos conectados 
+  con poca memoria, pudiendo funcionar correctamente con s&oacute;lo 128 KB de 
+  memoria. Normalmente la utilizaremos para los dispositivos con menos de 1 &oacute; 
+  2 MB de memoria, en los que CDC no funcionar&aacute; correctamente. Esta configuraci&oacute;n 
+  se utilizar&aacute; para tel&eacute;fonos m&oacute;viles (celulares) y PDAs 
+  de gama baja.</p>
+<p>Esta configuraci&oacute;n se ejecutar&aacute; sobre la KVM, una m&aacute;quina 
+  virtual con una serie de limitaciones para ser capaz de funcionar en estas configuraciones 
+  de baja memoria. Por ejemplo, no tiene soporte para tipos de datos <code>float</code> 
+  y <code>double</code>, ya que estos dispositivos normalmente no tienen unidad 
+  de punto flotante.</p>
+<p>La API que ofrece esta configuraci&oacute;n consiste en un subconjunto de los 
+  paquetes principales del n&uacute;cleo de Java, adaptados para funcionar en 
+  este tipo de dispositivos. Los paquetes que ofrece son los siguientes:</p>
+<pre>   java.lang
+   java.io
+   java.util</pre>
+<p>Tenemos las clases b&aacute;sicas del lenguaje (<code>java.lang</code>), algunas 
+  clases &uacute;tiles (<code>java.util</code>), y soporte para flujos de entrada/salida 
+  (<code>java.io</code>). Sin embargo vemos que no se ha incluido la API de red 
+  (<code>java.net</code>). Esto es debido a que esta API es demasiado compleja 
+  para estos dispositivos, por lo que se sustituir&aacute; por una API de red 
+  propia m&aacute;s reducida, adaptada a sus necesidades de conectividad:</p>
+<pre>    javax.microedition.io</pre>
+<p>En la actualidad encontramos &uacute;nicamente un perfil que se ejecuta sobre 
+  CLDC. Este perfil es MIDP (<em>Mobile Information Devices Profile</em>), y corresponde 
+  a la familia de dispositivos m&oacute;viles de informaci&oacute;n (tel&eacute;fonos 
+  m&oacute;viles y PDAs).</p>
+<p>Los dispositivos iMode utilizan una API de Java propietaria de NTT DoCoMo, 
+  llamada DoJa. Esta API se construye sobre CLDC, pero no es un perfil pertenecienta 
+  a J2ME. Simplemente es una extensi&oacute;n de CLDC para tel&eacute;fonos iMode.</p>
+<p><strong>Mobile Information Devices Profile</strong></p>
+<p>Utilizaremos este perfil para programar aplicaciones para MIDs. En los siguientes 
+  cap&iacute;tulos nos centraremos en la programaci&oacute;n de aplicaciones para 
+  m&oacute;viles utilizando este perfil, que es el que m&aacute;s protagonismo 
+  ha cobrado tras la aparici&oacute;n de los &uacute;ltimos modelos de m&oacute;viles 
+  que incluyen soporte para esta API.</p>
+<p>La API que nos ofrece MIDP consiste, adem&aacute;s de los paquetes ofrecidos 
+  en CLDL, en los siguientes paquetes:</p>
+<pre>   javax.microedition.lcdui 
+   javax.microedition.lcdui.game 
+   javax.microedition.media 
+   javax.microedition.media.control 
+   javax.microedition.midlet 
+   javax.microedition.pki 
+   javax.microedition.rms 
+</pre>
+<p>Las aplicaciones que desarrollaremos para estos dispositivos se llaman <strong>MIDlets</strong>. 
+  El m&oacute;vil actuar&aacute; como contenedor de este tipo de aplicaciones, 
+  controlando su ciclo de vida. Tenemos un paquete con las clases correspondientes 
+  a este tipo de componentes (<code>javax.microedition.midlet</code>). Adem&aacute;s 
+  tendremos otro paquete con los elementos necesarios para crear la interfaz gr&aacute;fica 
+  en la pantalla de los m&oacute;viles (<code>javax.microedition.lcdui</code>), 
+  que adem&aacute;s nos ofrece facilidades para la programaci&oacute;n de juegos. 
+  Tenemos tambi&eacute;n un paquete con clases para reproducci&oacute;n de m&uacute;sicas 
+  y tonos (<code>javax.microedition.media</code>), para creaci&oacute;n de certificados 
+  por clave p&uacute;blica para controlar la seguridad de las aplicaciones (<code>javax.microedition.pki</code>), 
+  y para almacenamiento persistente de informaci&oacute;n (<code>javax.microedition.rms</code>).</p>
+<p><strong>Paquetes opcionales</strong></p>
+<p>Como paquetes opcionales tenemos:</p>
+<ul>
+  <li><strong>Wireless Messaging API (WMA)</strong> (JSR-120): Nos permitir&aacute; 
+    trabajar con mensajes en el m&oacute;vil. De esta forma podremos por ejemplo 
+    enviar o recibir mensajes de texto SMS.<br>
+  </li>
+  <li><strong>Mobile Media API (MMAPI)</strong> (JSR-135): Proporciona controles 
+    para la reproducci&oacute;n y captura de audio y video. Permite reproducir 
+    ficheros de audio y video, generar y secuenciar tonos, trabajar con <em>streams</em> 
+    de estos medios, e incluso capturar audio y video si nuestro m&oacute;vil 
+    est&aacute; equipado con una c&aacute;mara.</li>
+</ul>
+<ul>
+  <li><strong>J2ME Web Services API (WSA) </strong>(JSR-172):Nos permitir&aacute; 
+    invocar Servicios Web desde nuestro cliente m&oacute;vil. Muchos fabricantes 
+    de servidores de aplicaciones J2EE, con soporte para desplegar Servicios Web, 
+    nos ofrecen sus propias APIs para invocar estos servicios desde los m&oacute;viles 
+    J2ME, como es el caso de Weblogic por ejemplo.<br>
+  </li>
+  <li><strong>Bluetooth API</strong> (JSR-82): Con esta API podremos establecer 
+    comunicaciones con otros dispositivos de forma inal&aacute;mbrica y local 
+    v&iacute;a <em>bluetooth</em>.<br>
+  </li>
+  <li><strong>Security and Trust Services API for J2ME</strong> (JSR-177): Ofrece 
+    servicios de seguridad para proteger los datos privados que tenga almacenados 
+    el usuario, encriptar la informaci&oacute;n que circula por la red, y otros 
+    servicios como identificaci&oacute;n y autentificaci&oacute;n.<br>
+  </li>
+  <li><strong>Location API for J2ME</strong> (JSR-179): Proporciona informaci&oacute;n 
+    acerca de la localizaci&oacute;n f&iacute;sica del dispositivo (por ejemplo 
+    mediante GPS o E-OTD).<br>
+  </li>
+  <li><strong>SIP API for J2ME</strong> (JSR-180): Permite utilizar SIP (<em>Session 
+    Initiation Protocol</em>) desde aplicaciones MIDP. Este protocolo se utiliza 
+    para establecer y gestionar conexiones IP multimedia. Este protocolo puede 
+    usarse en aplicaciones como juegos, videoconferencias y servicios de mensajer&iacute;a 
+    instant&aacute;nea.<br>
+  </li>
+  <li><strong>Mobile 3D Graphics (M3G)</strong> (JSR-184): Permite mostrar gr&aacute;ficos 
+    3D en el m&oacute;vil. Se podr&aacute; utilizar tanto para realizar juegos 
+    3D como para representar datos.<br>
+  </li>
+  <li><strong>PDA Optional Packages for J2ME</strong> (JSR-75): Contiene dos paquetes 
+    independientes para acceder a funcionalidades caracter&iacute;sticas de muchas 
+    PDAs y algunos tel&eacute;fonos m&oacute;viles. Estos paquetes son PIM (<em>Personal 
+    Information Management</em>) y FC (<em>FileConnection</em>). PIM nos permitir&aacute; 
+    acceder a informaci&oacute;n personal que tengamos almacenada de forma nativa 
+    en nuestro dispositivo, como por ejemplo nuestra libreta de direcciones. FC 
+    nos permitir&aacute; abrir ficheros del sistema de ficheros nativo de nuestro 
+    dispositivo.</li>
+</ul>
+<h2>1.4 JWTI</h2>
+<p>JWTI (<em>Java Technology for Wireless Industry</em>) es una especificaci&oacute;n 
+  que trata de definir una plataforma est&aacute;ndar para el desarrollo de aplicaciones 
+  para m&oacute;viles. En ella se especifican las tecnolog&iacute;as que deben 
+  ser soportadas por los dispositivos m&oacute;viles:</p>
+<ul>
+  <li>CLDC 1.0</li>
+  <li>MIDP 2.0</li>
+  <li>WMA 1.1</li>
+  <li>Opcionalmente CLDC 1.1 y MMAPI</li>
+</ul>
+<p>De esta forma se pretende evitar la fragmentaci&oacute;n de APIs, proporcionando 
+  un est&aacute;ndar que sea aceptado por la gran mayor&iacute;a de los dispositivos 
+  existentes. El objetivo principal de esta especificaci&oacute;n es aumentar 
+  la compatibilidad e interoperabilidad, de forma que cualquier aplicaci&oacute;n 
+  que desarrollemos que cumpla con JTWI pueda ser utilizada en cualquier dispositivo 
+  que soporte esta especificaci&oacute;n.</p>
+<p>En ella se especifica el conjunto de APIs que deben incorporar los tel&eacute;fonos 
+  JTWI, de forma que podremos confiar en que cuando utilicemos estas APIs, la 
+  aplicaci&oacute;n va a ser soportada por todos ellos. Adem&aacute;s con esta 
+  especificaci&oacute;n se pretende evitar el uso de APIs opcionales no est&aacute;ndar 
+  que producen aplicaciones incompatibles con la mayor&iacute;a de dispositivos. 
+</p>
+<p>Hay aspectos en los que las especificaciones de las diferentes APIs (MIDP, 
+  CLDC, etc) no son claras del todo. Con JTWI tambi&eacute;n se pretende aclarar 
+  todos estos puntos, para crear un est&aacute;ndar que se cumpla al 100% por 
+  todos los fabricantes, consiguiendo de esta forma una interoperabilidad total. 
+</p>
+<p>Tambi&eacute;n se incluyen recomendaciones sobre las caracter&iacute;sticas 
+  m&iacute;nimas que deber&iacute;an tener todos los dispositivos JTWI.</p>
+<h1> 2. Entorno de desarrollo</h1>
+<p>En este tema vamos a ver c&oacute;mo construir aplicaciones J2ME a partir del 
+  c&oacute;digo fuente de forma que est&eacute;n listas para ser instaladas directamente 
+  en cualquier dispositivo con soporte para esta tecnolog&iacute;a. </p>
+<p>Vamos a estudiar la creaci&oacute;n de aplicaciones para MIDs, que ser&aacute;n 
+  normalmente tel&eacute;fonos m&oacute;viles o algunos PDAs. Por lo tanto nos 
+  centraremos en el perfil MIDP.</p>
+<p>Para comenzar vamos a ver de qu&eacute; se componen las aplicaciones MIDP que 
+  podemos instalar en los m&oacute;viles (ficheros JAD y JAR), y c&oacute;mo se 
+  realiza este proceso de instalaci&oacute;n. A continuaci&oacute;n veremos como 
+  crear paso a paso estos ficheros de los que se componen estas aplicaciones, 
+  y como probarlas en emuladores para no tener que transferirlas a un dispositivo 
+  real cada vez que queramos hacer una prueba. En el siguiente punto se ver&aacute; 
+  c&oacute;mo podremos facilitar esta tarea utilizando los kits de desarrollo 
+  que hay disponibles, y algunos entornos integrados (IDEs) para hacer m&aacute;s 
+  c&oacute;modo todav&iacute;a el desarrollo de aplicaciones para m&oacute;viles.</p>
+<h2>2.1. Aplicaciones J2ME</h2>
+<p>Para distribuir e instalar las aplicaciones J2ME en los dispositivos utilizaremos 
+  ficheros de tipos JAR y JAD. Las aplicaciones estar&aacute;n compuestas por 
+  un fichero JAR y un fichero JAD.</p>
+<h3>2.1.1. Suite de MIDlets</h3>
+<p>Los MIDlets son las aplicaciones Java desarrolladas con MIDP que se pueden 
+  ejecutar en los MIDs. Los ficheros JAD y JAR contienen un conjunto de MIDlets, 
+  lo que se conoce como <em>suite</em>. Una <em>suite</em> es un conjunto de uno 
+  o m&aacute;s MIDlets empaquetados en un mismo fichero. De esta forma cuando 
+  dicha <em>suite</em> sea instalada en el m&oacute;vil se instalar&aacute;n todas 
+  las aplicaciones (MIDlets) que contenga.</p>
+<p>El fichero JAR ser&aacute; el que contendr&aacute; las aplicaciones de la <em>suite</em>. 
+  En &eacute;l tendremos tanto el c&oacute;digo compilado como los recursos que 
+  necesite para ejecutarse (im&aacute;genes, sonidos, etc). Estos ficheros JAR 
+  son un est&aacute;ndar de la plataforma Java, disponibles en todas las ediciones 
+  de esta plataforma, que nos permitir&aacute;n empaquetar una aplicaci&oacute;n 
+  Java en un solo fichero. Al ser un est&aacute;ndar de la plataforma Java ser&aacute; 
+  portable a cualquier sistema donde contemos con esta plataforma.</p>
+<p>Por otro lado, el fichero JAD (<em>Java Application Descriptor</em>) contendr&aacute; 
+  una descripci&oacute;n de la <em>suite</em> . En &eacute;l podremos encontrar 
+  datos sobre su nombre, el tama&ntilde;o del fichero, la versi&oacute;n, su autor, 
+  MIDlets que contiene, etc. Adem&aacute;s tambi&eacute;n tendr&aacute; una referencia 
+  al fichero JAR donde se encuentra la aplicaci&oacute;n.</p>
+<h3>2.1.2. Instalaci&oacute;n de aplicaciones</h3>
+<p>De esta forma cuando queramos instalar una aplicaci&oacute;n deberemos localizar 
+  su fichero JAD. Una vez localizado el fichero JAD, deberemos indicar que deseamos 
+  instalar la aplicaci&oacute;n, de forma que se descargue e instale en nuestro 
+  dispositivo el fichero JAR correspondiente. Adem&aacute;s el fichero JAD localizado 
+  nos permitir&aacute; saber si una aplicaci&oacute;n ya est&aacute; instalada 
+  en nuestro dispositivo, y de ser as&iacute; comprobar si hay disponible una 
+  versi&oacute;n superior y dar la opci&oacute;n al usuario de actualizarla. De 
+  esta forma no ser&aacute; necesario descargar el fichero JAR entero, cuyo tama&ntilde;o 
+  ser&aacute; mayor debido a que contiene toda la aplicaci&oacute;n, para conocer 
+  los datos de la aplicaci&oacute;n y si la tenemos ya instalada en nuestro m&oacute;vil.</p>
+<p>Un posible escenario de uso es el siguiente. Podemos navegar con nuestro m&oacute;vil 
+  mediante WAP por una p&aacute;gina WML. En esa p&aacute;gina puede haber publicadas 
+  una serie de aplicaciones Java para descargar. En la p&aacute;gina tendremos 
+  los enlaces a los ficheros JAD de cada aplicaci&oacute;n disponible. Seleccionando 
+  con nuestro m&oacute;vil uno de estos enlaces, acceder&aacute; al fichero JAD 
+  y nos dar&aacute; una descripci&oacute;n de la aplicaci&oacute;n que estamos 
+  solicitando, pregunt&aacute;ndonos si deseamos instalarla. Si decimos que si, 
+  descargar&aacute; el fichero JAR asociado en nuestro m&oacute;vil e instalar&aacute; 
+  la aplicaci&oacute;n de forma que podemos usarla. Si accedemos posteriormente 
+  a la p&aacute;gina WML y pinchamos sobre el enlace al JAD de la aplicaci&oacute;n, 
+  lo comparar&aacute; con las aplicaciones que tenemos instaladas y nos dir&aacute; 
+  que la aplicaci&oacute;n ya est&aacute; instalada en nuestro m&oacute;vil. Adem&aacute;s, 
+  al incluir la informaci&oacute;n sobre la versi&oacute;n podr&aacute; saber 
+  si la versi&oacute;n que hay actualmente en la p&aacute;gina es m&aacute;s nueva 
+  que la que tenemos instalada, y en ese caso nos dar&aacute; la opci&oacute;n 
+  de actualizarla.</p>
+<h3>2.1.3. Software gestor de aplicaciones</h3>
+<p>Los dispositivos m&oacute;viles contienen lo que se denomina AMS (<em>Application 
+  Management Software</em>), o software gestor de aplicaciones en castellano. 
+  Este software ser&aacute; el encargado de realizar el proceso de instalaci&oacute;n 
+  de aplicaciones que hemos visto en el punto anterior. Ser&aacute; el que controle 
+  el ciclo de vida de las <em>suites</em>: </p>
+<ul>
+  <li>Obtendr&aacute; informaci&oacute;n de las <em>suites</em> a partir de un 
+    fichero JAD mostr&aacute;ndosela al usuario y permitiendo que &eacute;ste 
+    instale la aplicaci&oacute;n.<br>
+  </li>
+  <li>Comprobar&aacute; si la aplicaci&oacute;n est&aacute; ya instalada en el 
+    m&oacute;vil, y en ese caso comparar&aacute; las versiones para ver si la 
+    versi&oacute;n disponible es m&aacute;s reciente que la instalada y por lo 
+    tanto puede ser actualizada.<br>
+  </li>
+  <li>Instalar&aacute; o actualizar&aacute; las aplicaciones cuando se requiera, 
+    de forma que el usuario tenga la aplicaci&oacute;n disponible en el m&oacute;vil 
+    para ser utilizada.<br>
+  </li>
+  <li>Ejecutar&aacute; los MIDlets instalados, controlando el ciclo de vida de 
+    estos MIDlets como veremos en el cap&iacute;tulo 4.<br>
+  </li>
+  <li>Permitir&aacute; desinstalar las aplicaciones, liberando as&iacute; el espacio 
+    que ocupan en el m&oacute;vil.</li>
+</ul>
+<h3>2.1.4. Fichero JAD</h3>
+<p>Los ficheros JAD son ficheros ASCII que contienen una descripci&oacute;n de 
+  la <em>suite</em>. En &eacute;l se le dar&aacute; valor a una serie de propiedades 
+  (par&aacute;metros de configuraci&oacute;n) de la <em>suite</em>. Tenemos una 
+  serie de propiedades que deberemos especificar de forma obligatoria en el fichero:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="25%" valign="top"><code>MIDlet-Name</code></td>
+    <td width="75%">Nombre de la suite.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>MIDlet-Version</code></td>
+    <td>Versi&oacute;n de la suite. La versi&oacute;n se compone de 3 n&uacute;mero 
+      separados por puntos: <code>&lt;mayor&gt;.&lt;menor&gt;.&lt;micro&gt;</code>, 
+      como por ejemplo <code>1.0.0</code></td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>MIDlet-Vendor</code></td>
+    <td>Autor (Proveedor) de la <em>suite</em>.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>MIDlet-Jar-URL</code></td>
+    <td>Direcci&oacute;n (URL) de donde obtener el fichero JAR con la <em>suite</em>.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>MIDlet-Jar-Size</code></td>
+    <td>Tama&ntilde;o del fichero JAR en <em>bytes</em>.</td>
+  </tr>
+</table>
+<p>Adem&aacute;s podemos incluir una serie de propiedades adicionales de forma 
+  optativa:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="25%" valign="top"><code>MIDlet-Icon</code></td>
+    <td width="75%">Icono para la <em>suite</em>. Si especificamos un icono &eacute;ste 
+      se mostrar&aacute; junto al nombre de la <em>suite</em>, por lo que nos 
+      servir&aacute; para identificarla. Este icono ser&aacute; un fichero con 
+      formato PNG que deber&aacute; estar contenido en el fichero JAR.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>MIDlet-Description</code></td>
+    <td>Descripci&oacute;n de la <em>suite</em>.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>MIDlet-Info-URL</code></td>
+    <td>Direcci&oacute;n URL donde podemos encontrar informaci&oacute;n sobre 
+      la <em>suite</em>.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>MIDlet-Data-Size</code></td>
+    <td>N&uacute;mero m&iacute;nimo de <em>bytes</em> que necesita la <em>suite</em> 
+      para almacenar datos de forma persistente. Por defecto este n&uacute;mero 
+      m&iacute;nimo se considera <code>0</code>. </td>
+  </tr>
+  <tr>
+    <td valign="top"><code>MIDlet-Delete-Confirm</code></td>
+    <td>Mensaje de texto con el que se le preguntar&aacute; al usuario si desea 
+      desinstalar la aplicaci&oacute;n.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>MIDlet-Delete-Notify</code></td>
+    <td>URL a la que se enviar&aacute; una notificaci&oacute;n de que el usuario 
+      ha desinstalado nuestra aplicaci&oacute;n de su m&oacute;vil.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>MIDlet-Install-Notify</code></td>
+    <td>URL a la que se enviar&aacute; una notificaci&oacute;n de que el usuario 
+      ha instalado nuestra aplicaci&oacute;n en su m&oacute;vil.</td>
+  </tr>
+</table>
+<p>Estas son propiedades que reconocer&aacute; el AMS y de las que obtendr&aacute; 
+  la informaci&oacute;n necesaria sobre la <em>suite</em>. Sin embargo, como desarrolladores 
+  puede interesarnos incluir una serie de par&aacute;metros de configuraci&oacute;n 
+  propios de nuestra aplicaci&oacute;n. Podremos hacer eso simplemente a&ntilde;adiendo 
+  nuevas propiedades con nombres distintos a los anteriores al fichero JAR. En 
+  el cap&iacute;tulo 4 veremos como acceder a estas propiedades desde nuestras 
+  aplicaciones. </p>
+<p>Un ejemplo de fichero JAD para una <em>suite</em> de MIDlets es el siguiente:</p>
+<pre class="codigo">MIDlet-Name: SuiteEjemplos
+MIDlet-Version: 1.0.0
+MIDlet-Vendor: Universidad de Alicante
+MIDlet-Description: Aplicaciones de ejemplo para moviles.
+MIDlet-Jar-Size: 16342
+MIDlet-Jar-URL: ejemplos.jar
+</pre>
+<h3>2.1.5. Fichero JAR</h3>
+<p>En el fichero JAR empaquetaremos los ficheros <code>.class</code> resultado 
+  de compilar las clases que componen nuestra aplicaci&oacute;n, as&iacute; como 
+  todos los recursos que necesite la aplicaci&oacute;n, como pueden ser im&aacute;genes, 
+  sonidos, m&uacute;sicas, videos, ficheros de datos, etc.</p>
+<p>Para empaquetar estos ficheros en un fichero JAR, podemos utilizar la herramienta 
+  <code>jar</code> incluida en J2SE. M&aacute;s adelante veremos como hacer esto.</p>
+<p>Adem&aacute;s de estos contenidos, dentro del JAR tendremos un fichero <code>MANIFEST.MF</code> 
+  que contendr&aacute; una serie de par&aacute;metros de configuraci&oacute;n 
+  de la aplicaci&oacute;n. Se repiten algunos de los par&aacute;metros especificados 
+  en el fichero JAD, y se introducen algunos nuevos. Los par&aacute;metros requeridos 
+  son:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="40%" valign="top"><code>MIDlet-Name</code></td>
+    <td width="71%">Nombre de la <em>suite</em>.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>MIDlet-Version</code></td>
+    <td>Versi&oacute;n de la <em>suite</em>. </td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>MIDlet-Vendor</code></td>
+    <td>Autor (Proveedor) de la <em>suite</em>.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>MicroEdition-Profile</code></td>
+    <td>Perfil requerido para ejecutar la <em>suite</em>. Podr&aacute; tomar el 
+      valor <code>MIDP-1.0</code> &oacute; <code>MIDP-2.0</code>, seg&uacute;n 
+      las versi&oacute;n de MIDP que utilicen las aplicaciones incluidas.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>MicroEdition-Configuration</code></td>
+    <td>Configuraci&oacute;n requerida para ejecutar la <em>suite</em>. Tomar&aacute; 
+      el valor <code>CLDC-1.0</code> para las aplicaciones que utilicen esta configuraci&oacute;n.</td>
+  </tr>
+</table>
+<p>Deberemos incluir tambi&eacute;n informaci&oacute;n referente a cada MIDlet 
+  contenido en la <em>suite</em>. Esto lo haremos con la siguiente propiedad:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="25%" valign="top"><code>MIDlet-&lt;n&gt;</code></td>
+    <td width="75%">Nombre, icono y clase principal del MIDlet n&uacute;mero <code>n</code></td>
+  </tr>
+</table>
+<p>Los MIDlets se empezar&aacute;n a numerar a partir del n&uacute;mero 1, y deberemos 
+  incluir una l&iacute;nea de este tipo para cada MIDlet disponible en la <em>suite</em>. 
+  Daremos a cada MIDlet un nombre para que lo identifique el usuario, un icono 
+  de forma optativa, y el nombre de la clase principal que contiene dicho MIDlet. 
+</p>
+<p>Si especificamos un icono, deber&aacute; ser un fichero con formato PNG contenido 
+  dentro del JAR de la <em>suite</em>. Por ejemplo, para una <em>suite</em> con 
+  3 MIDlets podemos tener la siguiente informaci&oacute;n:</p>
+<pre class="codigo">MIDlet-Name: SuiteEjemplos
+MIDlet-Version: 1.0.0
+MIDlet-Vendor: Universidad de Alicante
+MIDlet-Description: Aplicaciones de ejemplo para moviles.
+MicroEdition-Configuration: CLDC-1.0
+MicroEdition-Profile: MIDP-1.0
+MIDlet-1: Snake, /icons/snake.png, es.ua.j2ee.serpiente.SerpMIDlet
+MIDlet-2: TeleSketch, /icons/ts.png, es.ua.j2ee.ts.TeleSketchMIDlet
+MIDlet-3: Panj, /icons/panj.png, es.ua.j2ee.panj.PanjMIDlet</pre>
+<p>Adem&aacute;s tenemos las mismas propiedades optativas que en el fichero JAD:</p>
+<p></p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="25%" valign="top"><code>MIDlet-Icon</code></td>
+    <td width="75%">Icono para la <em>suite</em>. </td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>MIDlet-Description</code></td>
+    <td>Descripci&oacute;n de la <em>suite</em>.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>MIDlet-Info-URL</code></td>
+    <td>Direcci&oacute;n URL con informaci&oacute;n</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>MIDlet-Data-Size</code></td>
+    <td>N&uacute;mero m&iacute;nimo de <em>bytes</em> para datos persistentes.</td>
+  </tr>
+</table>
+<p>En este fichero, a diferencia del fichero JAD, no podremos introducir propiedades 
+  propias del usuario, ya que desde dentro de la aplicaci&oacute;n no podremos 
+  acceder a los propiedades contenidas en este fichero.</p>
+<h2>2.2. Construcci&oacute;n de aplicaciones</h2>
+<p>Vamos a ver los pasos necesarios para construir una aplicaci&oacute;n con J2ME 
+  a partir del c&oacute;digo fuente, obteniendo finalmente los ficheros JAD y 
+  JAR con los que podremos instalar la aplicaci&oacute;n en dispositivos m&oacute;viles. 
+</p>
+<p>El primer paso ser&aacute; compilar las clases, obteniendo as&iacute; el c&oacute;digo 
+  intermedio que podr&aacute; ser ejecutado en una m&aacute;quina virtual de Java. 
+  El problema es que este c&oacute;digo intermedio es demasiado complejo para 
+  la KVM, por lo que deberemos realizar una preverificaci&oacute;n del c&oacute;digo, 
+  que simplifique el c&oacute;digo intermedio de las clases y compruebe que no 
+  utiliza ninguna caracter&iacute;stica no soportada por la KVM. Una vez preverificado, 
+  deberemos empaquetar todos los ficheros de nuestra aplicaci&oacute;n en un fichero 
+  JAR, y crear el fichero JAD correspondiente. En este momento podremos probar 
+  la aplicaci&oacute;n en un emulador o en un dispositivo real. Los emuladores 
+  nos permitir&aacute;n probar las aplicaciones directamente en nuestro ordenador 
+  sin tener que transferirlas a un dispositivo m&oacute;vil real.</p>
+<div align="center"><img src="imagenes/entornos/proceso.gif" width="292" height="271"> 
+</div>
+<p class="caption">Figura 1. Proceso de construcci&oacute;n de aplicaciones</p>
+<p>Necesitaremos tener instalado J2SE, ya que utilizaremos las mismas herramientas 
+  para compilar y empaquetar las clases. Adem&aacute;s necesitaremos herramientas 
+  adicionales, ya que la m&aacute;quina virtual reducida de los dispositivos CLDC 
+  necesita un c&oacute;digo intermedio simplificado.</p>
+<h3>2.2.1. Compilaci&oacute;n</h3>
+<p>Lo primero que deberemos hacer es compilar las clases de nuestra aplicaci&oacute;n. 
+  Para ello utilizaremos el compilador incluido en J2SE, <code>javac</code>, por 
+  lo que deberemos tener instalada esta edici&oacute;n de Java.</p>
+<p>Al compilar, el compilador buscar&aacute; las clases que utilizamos dentro 
+  de nuestros programas para comprobar que estamos utiliz&aacute;ndolas correctamente, 
+  y si utilizamos una clase que no existe, o bien llamamos a un m&eacute;todo 
+  o accedemos a una propiedad que no pertenece a dicha clase nos dar&aacute; un 
+  error de compilaci&oacute;n. Java busca las clases en el siguiente orden:</p>
+<blockquote> 
+  <p>1. Clases de n&uacute;cleo de Java (<em>bootstrap</em>)<br>
+    2. Extensiones instaladas<br>
+    3. <em>Classpath</em></p>
+</blockquote>
+<p>Si estamos compilando con el compilador de J2SE, por defecto considerar&aacute; 
+  que las clases del n&uacute;cleo de Java son las clases de la API de J2SE. Debemos 
+  evitar que esto ocurra, ya que estas clases no van a estar disponibles en los 
+  dispositivos MIDP que cuentan con una API reducida. Deberemos hacer que tome 
+  como clases del n&uacute;cleo las clases de la API de MIDP, esto lo haremos 
+  mediante el par&aacute;metro <code>bootclasspath</code> del compilador:</p>
+<pre class="codigo">javac -<strong>bootclasspath</strong> ${ruta_midp}/midpapi.zip &lt;ficheros .java&gt;</pre>
+<p>Con esto estaremos compilando nuestras clases utilizando como API del n&uacute;cleo 
+  de Java la API de MIDP. De esta forma, si dentro de nuestro programa utiliz&aacute;semos 
+  una clase que no pertenece a MIDP, aunque pertenezca a J2SE nos dar&aacute; 
+  un error de compilaci&oacute;n.</p>
+<h3>2.2.2. Ofuscaci&oacute;n</h3>
+<p>Este es un paso opcional, pero recomendable. El c&oacute;digo intermedio de 
+  Java incluye informaci&oacute;n sobre los nombres de los constructores, de los 
+  m&eacute;todos y de los atributos de las clases e interfaces para poder acceder 
+  a esta informaci&oacute;n utilizando la API de <em>reflection</em> en tiempo 
+  de ejecuci&oacute;n.</p>
+<p>El contar con esta informaci&oacute;n nos permite descompilar f&aacute;cilmente 
+  las aplicaciones, obteniendo a partir del c&oacute;digo compilado unos fuentes 
+  muy parecidos a los originales. Lo &uacute;nico que se pierde son los comentarios 
+  y los nombres de las variables locales y de los par&aacute;metros de los m&eacute;todos.</p>
+<p>Esto ser&aacute; un problema si no queremos que se tenga acceso al c&oacute;digo 
+  fuente de nuestra aplicaci&oacute;n. Adem&aacute;s incluir esta informaci&oacute;n 
+  en los ficheros compilados de nuestra aplicaci&oacute;n har&aacute;n que crezca 
+  el tama&ntilde;o de estos ficheros ocupando m&aacute;s espacio, un espacio muy 
+  preciado en el caso de los dispositivos m&oacute;viles con baja capacidad. Hemos 
+  de recordar que el tama&ntilde;o de los ficheros JAR que soportan est&aacute; 
+  limitado en muchos casos a 64kb o menos.</p>
+<p>El proceso de ofuscaci&oacute;n del c&oacute;digo consiste en simplificar esta 
+  informaci&oacute;n, asign&aacute;ndoles nombres tan cortos como se pueda a las 
+  clases e interfaces y a sus constructores, m&eacute;todos y atributos. De esta 
+  forma al descompilar obtendremos un c&oacute;digo nada legible con nombres sin 
+  ninguna significancia. </p>
+<p>Adem&aacute;s conseguiremos que los ficheros ocupen menos espacio en disco, 
+  lo cu&aacute;l ser&aacute; muy conveniente para las aplicaciones para dispositivos 
+  m&oacute;viles con baja capacidad y reducida velocidad de descarga.</p>
+<p>La ofuscaci&oacute;n de c&oacute;digo deberemos hacerla antes de la preverificaci&oacute;n, 
+  dejando la preverificaci&oacute;n para el final, y asegur&aacute;ndonos as&iacute; 
+  de que el c&oacute;digo final de nuestra aplicaci&oacute;n funcionar&aacute; 
+  correctamente en la KVM. Podemos utilizar para ello diferentes ofuscadores, 
+  como ProGuard, RetroGuard o JODE. Deberemos obtener alguno de estos ofuscadores 
+  por separado, ya que no se incluyen en J2SE ni en los kits de desarrollo para 
+  MIDP que veremos m&aacute;s adelante.</p>
+<h3>2.2.3. Preverificaci&oacute;n</h3>
+<p>Con la compilaci&oacute;n que acabamos de realizar hemos generado c&oacute;digo 
+  intermedio que ser&aacute;n capaces de interpretar las m&aacute;quinas virtuales 
+  Java. Sin embargo, m&aacute;quina virtual de los dispositivos CLDC, la KVM, 
+  es un caso especial ya que las limitaciones de estos dispositivos hacen que 
+  tenga que ser bastante m&aacute;s reducida que otras m&aacute;quinas virtuales 
+  para poder funcionar correctamente.</p>
+<p>La m&aacute;quina virtual de Java hace una verificaci&oacute;n de las clases 
+  que ejecuta en ella. Este proceso de verificaci&oacute;n es bastante complejo 
+  para la KVM, por lo que deberemos reorganizar el c&oacute;digo intermedio generado 
+  para facilitar esta tarea de verificaci&oacute;n. En esto consiste la fase de 
+  preverificaci&oacute;n que deberemos realizar antes de llevar la aplicaci&oacute;n 
+  a un dispositivo real.</p>
+<p>Adem&aacute;s la KVM tiene una serie de limitaciones en cuanto al c&oacute;digo 
+  que puede ejecutar en ella, como por ejemplo la falta de soporte para tipos 
+  de datos <code>float</code> y <code>double</code>. Con la compilaci&oacute;n 
+  hemos comprobado que no estamos utilizando clases que no sean de la API de MIDP, 
+  pero se puede estar permitiendo utilizar caracter&iacute;sticas del lenguaje 
+  no soportada por la KVM. Es el proceso de preverificaci&oacute;n el que deber&aacute; 
+  detectar el error en este caso.</p>
+<p>Para realizar la preverificaci&oacute;n necesitaremos la herramienta <code>preverify</code>. 
+  Esta herramienta no se incluye en J2SE, por lo que deberemos obtenerla por separado. 
+  Podemos encontrarla en diferentes kits de desarrollo o en implementaciones de 
+  referencia de MIDP, como veremos m&aacute;s adelante. Deberemos especificar 
+  como <code>classpath</code> la API que estemos utilizando para nuestra aplicaci&oacute;n, 
+  como por ejemplo MIDP:</p>
+<pre class="codigo">preverify -classpath ${ruta_midp}/midpapi.zip -d &lt;directorio destino&gt;<br>&lt;ficheros .class&gt; 
+</pre>
+<p>Preverificar&aacute; los ficheros <code>.class</code> especificados y guardar&aacute; 
+  el resultado de la preverificaci&oacute;n en el directorio destino que indiquemos. 
+  Las clases generadas en este directorio destino ser&aacute;n las que tendremos 
+  que empaquetar en nuestra <em>suite</em>.</p>
+<h3>2.2.4. Creaci&oacute;n de la suite</h3>
+<p>Una vez tenemos el c&oacute;digo compilado preverificado, deberemos empaquetarlo 
+  todo en un fichero JAR para crear la <em>suite</em> con nuestra aplicaci&oacute;n. 
+  En este fichero JAR deberemos empaquetar todos los ficheros <code>.class</code> 
+  generados, as&iacute; como todos los recursos que nuestra aplicaci&oacute;n 
+  necesite para funcionar, como pueden ser iconos, im&aacute;genes, sonidos, ficheros 
+  de datos, videos, etc.</p>
+<p>Para empaquetar un conjunto de ficheros en un fichero JAR utilizaremos la herramienta 
+  <code>jar</code> incluida en J2SE. Adem&aacute;s de las clases y los recursos, 
+  deberemos a&ntilde;adir al fichero <code>MANIFEST.MF</code> del JAR los par&aacute;metros 
+  de configuraci&oacute;n que hemos visto en el punto anterior. Para ello crearemos 
+  un fichero de texto ASCII con esta informaci&oacute;n, y utilizaremos dicho 
+  fichero a la hora de crear el JAR. Utilizaremos la herramienta <code>jar</code> 
+  de la siguiente forma:</p>
+<pre class="codigo">jar cmf &lt;fichero manifest&gt; &lt;fichero jar&gt; &lt;ficheros a incluir&gt;</pre>
+<p>Una vez hecho esto tendremos construido el fichero JAR con nuestra aplicaci&oacute;n. 
+  Ahora deberemos crear el fichero JAD. Para ello podemos utilizar cualquier editor 
+  ASCII e incluir las propiedades necesarias. Como ya hemos generado el fichero 
+  JAR podremos indicar su tama&ntilde;o dentro del JAD.</p>
+<h3>2.2.5. Prueba en emuladores</h3>
+<p>Una vez tengamos los ficheros JAR y JAD ya podremos probar la aplicaci&oacute;n 
+  transfiri&eacute;ndola a un dispositivo que soporte MIDP e instal&aacute;ndola 
+  en &eacute;l. Sin embargo, hacer esto para cada prueba que queramos hacer es 
+  una tarea tediosa. Tendremos que limitarnos a hacer pruebas de tarde en tarde 
+  porque si no se perder&iacute;a demasiado tiempo. Adem&aacute;s no podemos contar 
+  con que todos los desarrolladores tengan un m&oacute;vil con el que probar las 
+  aplicaciones.</p>
+<p>Si queremos ir probando con frecuencia los avances que hacemos en nuestro programa 
+  lo m&aacute;s inmediato ser&aacute; utilizar un emulador. Un emulador es una 
+  aplicaci&oacute;n que se ejecuta en nuestro ordenador e imita (emula) el comportamiento 
+  del m&oacute;vil. Entonces podremos ejecutar nuestras aplicaciones dentro de 
+  un emulador y de esta forma para la aplicaci&oacute;n ser&aacute; pr&aacute;cticamente 
+  como si se estuviese ejecutando en un m&oacute;vil con soporte para MIDP. As&iacute; 
+  podremos probar las aplicaciones en nuestro mismo ordenador sin necesitar tener 
+  que llevarla a otro dispositivo.</p>
+<p>Adem&aacute;s podremos encontrar emuladores que imitan distintos modelos de 
+  m&oacute;viles, tanto existentes como ficticios. Esta es una ventaja m&aacute;s 
+  de tener emuladores, ya que si probamos en dispositivos reales necesitar&iacute;amos 
+  o bien disponer de varios de ellos, o probar la aplicaci&oacute;n s&oacute;lo 
+  con el que tenemos y arriesgarnos a que no vaya en otros modelos. Ser&aacute; 
+  interesante probar emuladores de tel&eacute;fonos m&oacute;viles con distintas 
+  caracter&iacute;sticas (distinto tama&ntilde;o de pantalla, colores, memoria) 
+  para comprobar que nuestra aplicaci&oacute;n funciona correctamente en todos 
+  ellos.</p>
+<p>Podemos encontrar emuladores proporcionados por distintos fabricantes, como 
+  Nokia, Siemens o Sun entre otros. De esta forma tendremos emuladores que imitan 
+  distintos modelos de tel&eacute;fonos Nokia o Siemens existentes. Sun proporciona 
+  una serie de emuladores gen&eacute;ricos que podremos personalizar dentro dentro 
+  de su kit de desarrollo que veremos en el pr&oacute;ximo apartado.</p>
+<h3>2.2.6. Prueba de la aplicaci&oacute;n en dispositivos reales</h3>
+<p>Ser&aacute; importante tambi&eacute;n, una vez hayamos probado la aplicaci&oacute;n 
+  en emuladores, probarla en un dispositivo real, ya que puede haber cosas que 
+  funcionen bien en emuladores pero no lo hagan cuando lo llevamos a un dispositivo 
+  m&oacute;vil de verdad. Los emuladores pretenden imitar en la medida de lo posible 
+  el comportamiento de los dispositivos reales, pero siempre hay diferencias, 
+  por lo que ser&aacute; importante probar las aplicaciones en m&oacute;viles 
+  de verdad antes de distribuir la aplicaci&oacute;n.</p>
+<p>La forma m&aacute;s directa de probar la aplicaci&oacute;n en dispositivos 
+  m&oacute;viles es conectarlos al PC mediante alguna de las tecnolog&iacute;as 
+  disponibles (<em>bluetooth</em>, IrDA, cable serie o USB) y copiar la aplicaci&oacute;n 
+  del PC al dispositivo. Una vez copiada, podremos instalarla desde el mismo dispositivo, 
+  y una vez hecho esto ya podremos ejecutarla.</p>
+<p>Por ejemplo, los emuladores funcionan bien con c&oacute;digo no preverificado, 
+  o incluso muchos de ellos funcionan con los ficheros una vez compilados sin 
+  necesidad de empaquetarlos en un JAR.</p>
+<h3>2.2.7. Despliegue</h3>
+<p>Entendemos por despliegue de la aplicaci&oacute;n la puesta en marcha de la 
+  misma, permitiendo que el p&uacute;blico acceda a ella y la utilice. Para desplegar 
+  una aplicaci&oacute;n MIDP deberemos ponerla en alg&uacute;n lugar accesible, 
+  al que podamos conectarnos desde los m&oacute;viles y descargarla.</p>
+<p>Podremos utilizar cualquier servidor web para ofrecer la aplicaci&oacute;n 
+  en Internet, como puede ser por ejemplo el Tomcat. Deberemos configurar el servidor 
+  de forma que reconozca correctamente los tipos de los ficheros JAR y JAD. Para 
+  ello asociaremos estas extensiones a los tipos MIME:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="12%"><strong><code>.jad</code></strong></td>
+    <td width="88%"><code>text/vnd.sun.j2me.app-descriptor</code></td>
+  </tr>
+  <tr> 
+    <td><strong><code>.jar</code></strong></td>
+    <td><code>application/java-archive</code></td>
+  </tr>
+</table>
+<p>Adem&aacute;s en el fichero JAD, deberemos especificar como URL la direcci&oacute;n 
+  de Internet donde finalmente hemos ubicado el fichero JAR.</p>
+<h2>2.3. Kits de desarrollo</h2>
+<p>Para simplificar la tarea de desarrollar aplicaciones MIDP, tenemos disponibles 
+  distintos kits de desarrollo proporcionados por distintos fabricantes, como 
+  Sun o Nokia. Antes de instalar estos kits de desarrollo deberemos tener instalado 
+  J2SE. Estos kits de desarrollo contienen todos los elementos necesarios para, 
+  junto a J2SE, crear aplicaciones MIDP:</p>
+<ul>
+  <li><strong>API de MIDP</strong>. Librer&iacute;a de clases que componen la 
+    API de MIDP necesaria para poder compilar las aplicaciones que utilicen esta 
+    API.<br>
+  </li>
+  <li><strong>Preverificador</strong>. Herramienta necesaria para realizar la 
+    fase de preverificaci&oacute;n del c&oacute;digo.<br>
+  </li>
+  <li><strong>Emuladores</strong>. Nos servir&aacute;n para probar la aplicaci&oacute;n 
+    en nuestro propio PC, sin necesidad de llevarla a un dispositivo real.<br>
+  </li>
+  <li><strong>Entorno para la creaci&oacute;n de aplicaciones</strong>. Estos 
+    kits normalmente proporcionar&aacute;n una herramienta que nos permita automatizar 
+    el proceso de construcci&oacute;n de aplicaciones MIDP que hemos visto en 
+    el punto anterior.<br>
+  </li>
+  <li><strong>Herramientas adicionales</strong>. Podemos encontrar herramientas 
+    adicionales, de configuraci&oacute;n, personalizaci&oacute;n de los emuladores, 
+    despliegue de aplicaciones, conversores de formatos de ficheros al formato 
+    reconocido por MIDP, etc.</li>
+</ul>
+<p>Vamos a centrarnos en estudiar c&oacute;mo trabajar con el kit de desarrollo 
+  de Sun, ya que es el m&aacute;s utilizado por ser gen&eacute;rico y el que mejor 
+  se integra con otros entornos y herramientas. Este kit recibe el nombre de <em>Wireless 
+  Toolkit </em>(WTK). Existen diferentes versiones de WTK, cada una de ellas adecuada 
+  para un determinado tipo de aplicaciones:</p>
+<ul>
+  <li><strong>WTK 1.0.4</strong>: Soporta MIDP 1.0 y CLDC 1.0. Ser&aacute; adecuado 
+    para desarrollar aplicaciones para m&oacute;viles que soporten s&oacute;lo 
+    esta versi&oacute;n de MIDP, aunque tambi&eacute;n funcionar&aacute;n con 
+    modelos que soporten versiones posteriores de MIDP, aunque en estos casos 
+    no estaremos aprovechando al m&aacute;ximo las posibilidades del dispositivo.<br>
+  </li>
+  <li><strong>WTK 2.0</strong>: Soporta MIDP 2.0, CLDC 1.0 y las APIs opcionales 
+    WMA y MMAPI. Ser&aacute; adecuado para realizar aplicaciones para m&oacute;viles 
+    MIDP 2.0, pero no para aquellos que s&oacute;lo soporten MIDP 1.0, ya que 
+    las aplicaciones que hagamos con este kit pueden utilizar elementos que no 
+    est&eacute;n soportados por MIDP 1.0 y por lo tanto es posible que no funcionen 
+    cuando las despleguemos en este tipo de dispositivos. Adem&aacute;s en esta 
+    versi&oacute;n se incluyen mejoras como la posibilidad de probar las aplicaciones 
+    v&iacute;a OTA.<br>
+  </li>
+  <li><strong>WTK 2.1</strong>: Soporta MIDP 2.0, MIDP 1.0, CLDC 1.1 (con soporte 
+    para punto flotante), CLDC 1.0, y las APIs opcionales WMA, MMAPI y WSA. En 
+    este caso podemos configurar cu&aacute;l es la plataforma para la que desarrollamos 
+    cada aplicaci&oacute;n. Por lo tanto, esta versi&oacute;n ser&aacute; adecuada 
+    para desarrollar para cualquier tipo de m&oacute;viles. Puede generar aplicaciones 
+    totalmente compatibles con JTWI. <br>
+  </li>
+  <li><strong>WTK 2.2</strong>: Aparte de todo lo soportado por WTK 2.1, incorpora 
+    las APIs para gr&aacute;ficos 3D (JSR-184) y bluetooth (JSR-82). Nos centraremos 
+    en el estudio de esta versi&oacute;n por ser la que incorpora un mayor n&uacute;mero 
+    de APIs en el momento de la escritura de este texto, adem&aacute;s de ser 
+    gen&eacute;rica (se puede utilizar para cualquier versi&oacute;n de MIDP).</li>
+</ul>
+<h3>2.3.1. Creaci&oacute;n de aplicaciones con WTK</h3>
+<p>Hemos visto en el punto anterior los pasos que deberemos seguir para probar 
+  nuestras aplicaciones MIDP: compilar, preverificar, empaquetar, crear el archivo 
+  JAD y ejecutar en un emulador. </p>
+<p>Normalmente, mientras escribimos el programa querremos probarlo numerosas veces 
+  para comprobar que lo que llevamos hecho funciona correctamente. Si cada vez 
+  que queremos probar el programa tuvi&eacute;semos que realizar todos los pasos 
+  vistos anteriormente de forma manual programar aplicaciones MIDP ser&iacute;a 
+  una tarea tediosa. Adem&aacute;s requerir&iacute;a aprender a manejar todas 
+  las herramientas necesarias para realizar cada paso en la l&iacute;nea de comando.</p>
+<p>Por ello los kits de desarrollo, y concretamente WTK, proporcionan entornos 
+  para crear aplicaciones de forma automatizada, sin tener que trabajar directamente 
+  con las herramientas en l&iacute;nea de comando. En el caso de WTK, esta herramienta 
+  recibe el nombre de <code>ktoolbar</code>:</p>
+<div align="center"><img src="imagenes/entornos/wtk1.gif" width="492" height="240"> 
+</div>
+<p>Este entorno nos permitir&aacute; construir la aplicaci&oacute;n a partir del 
+  c&oacute;digo fuente, pero no proporciona ning&uacute;n editor de c&oacute;digo 
+  fuente, por lo que tendremos que escribir el c&oacute;digo fuente utilizando 
+  cualquier editor externo. Otra posibilidad es integrar WTK en alg&uacute;n entorno 
+  de desarrollo integrado (IDE) de forma que tengamos integrado el editor con 
+  todas las herramientas para construir las aplicaciones facilitando m&aacute;s 
+  aun la tarea del desarrollador. En el siguiente punto veremos como desarrollar 
+  aplicaciones utilizando un IDE.</p>
+<p><strong>Directorio de aplicaciones</strong></p>
+<p>Este entorno de desarrollo guarda todas las aplicaciones dentro de un mismo 
+  directorio de aplicaciones. Cada aplicaci&oacute;n estar&aacute; dentro de un 
+  subdirectorio dentro de este directorio de aplicaciones, cuyo nombre corresponder&aacute; 
+  al nombre de la aplicaci&oacute;n. </p>
+<p>Por defecto, este directorio de aplicaciones es el directorio <code>${WTK_HOME}/apps</code>, 
+  pero podemos modificarlo a&ntilde;adiendo al fichero <code>ktools.properties</code> 
+  la siguiente l&iacute;nea:</p>
+<pre class="codigo">kvem.apps.dir: &lt;directorio de aplicaciones&gt;</pre>
+<p>Adem&aacute;s, dentro de este directorio hay un directorio <code>lib</code>, 
+  donde se pueden poner las librer&iacute;as externas que queremos que utilicen 
+  todas las aplicaciones. Estas librer&iacute;as ser&aacute;n ficheros JAR cuyo 
+  contenido ser&aacute; incorporado a las aplicaciones MIDP que creemos, de forma 
+  que podamos utilizar esta librer&iacute;a dentro de ellas.</p>
+<p>Por ejemplo, despu&eacute;s de instalar WTK podemos encontrar a parte del directorio 
+  de librer&iacute;as una serie de aplicaciones de demostraci&oacute;n instaladas. 
+  El directorio de aplicaciones puede contener por ejemplo los siguientes directorios 
+  (en el caso de WTK 2.1):</p>
+<pre class="codigo">audiodemo<br>demos
+FPDemo<br>games<br>JSR172Demo
+lib
+mmademo<br>NetworkDemo<br>photoalbum
+SMSDemo<br>tmplib
+UIDemo</pre>
+<p>Tendremos por lo tanto las aplicaciones <code>games</code>,<code> demos</code>,<code> 
+  photoalbum</code>, y<code> UIDemo</code>. El directorio <code>tmplib</code> 
+  lo utiliza el entorno para trabajar de forma temporal con las librer&iacute;as 
+  del directorio <code>lib</code>.</p>
+<p>NOTA: Dado que se manejan gran cantidad de herramientas y emuladores independientes 
+  en el desarrollo de las aplicaciones MIDP, es recomendable que el directorio 
+  donde est&aacute; instalada la aplicaci&oacute;n (ni ninguno de sus ascendientes) 
+  contenga espacios en blanco, ya que algunas aplicaciones puede fallar en estos 
+  casos. </p>
+<p><strong>Estructura de las aplicaciones</strong></p>
+<p>Dentro del directorio de cada aplicaci&oacute;n, se organizar&aacute;n los 
+  distintos ficheros de los que se compone utilizando la siguiente estructura 
+  de directorios:</p>
+<pre class="codigo">bin
+lib
+res
+src
+classes
+tmpclasses
+tmplib</pre>
+<p>Deberemos crear el c&oacute;digo fuente de la aplicaci&oacute;n dentro del 
+  directorio <code>src</code>, creando dentro de este directorio la estructura 
+  de directorios correspondiente a los paquetes a los que pertenezcan nuestras 
+  clases. </p>
+<p>En <code>res</code> guardaremos todos los recursos que nuestra aplicaci&oacute;n 
+  necesite, pudiendo crear dentro de este directorio la estructura de directorios 
+  que queramos para organizar estos recursos. </p>
+<p>Por &uacute;ltimo, en <code>lib</code> deberemos poner las librer&iacute;as 
+  adicionales que queramos incorporar a nuestra aplicaci&oacute;n. Pondremos en 
+  este directorio el fichero JAR con la librer&iacute;a de clases que queramos 
+  a&ntilde;adir. Lo que se har&aacute; ser&aacute; a&ntilde;adir todas las clases 
+  contenidas en estas librer&iacute;as, as&iacute; como las contenidas en las 
+  librer&iacute;as globales que hemos visto anteriormente, al fichero JAR que 
+  creemos para nuestra aplicaci&oacute;n. </p>
+<p>NOTA: Si lo que queremos es utilizar en nuestra aplicaci&oacute;n una API opcional 
+  soportada por el m&oacute;vil, no debemos introducirla en este directorio. En 
+  ese caso s&oacute;lo deberemos a&ntilde;adirla al <code>classpath</code> a la 
+  hora de compilar, pero no introducirla en este directorio ya que el m&oacute;vil 
+  ya cuenta con su propia implementaci&oacute;n de dicha librer&iacute;a y no 
+  deberemos a&ntilde;adir la implementaci&oacute;n de referencia que tenemos en 
+  el ordenador al paquete de nuestra aplicaci&oacute;n.</p>
+<p>Esto es todo lo que tendremos que introducir nosotros. Todo lo dem&aacute;s 
+  ser&aacute; generado autom&aacute;ticamente por la herramienta <code>ktoolbar</code> 
+  como veremos a continuaci&oacute;n. En el directorio <code>classes</code> se 
+  generar&aacute;n las clases compiladas y preverificadas de nuestra aplicaci&oacute;n, 
+  y en <code>bin</code> tendremos finalmente los ficheros JAR y JAD para desplegar 
+  nuestra aplicaci&oacute;n. </p>
+<p><strong>Creaci&oacute;n de una nueva aplicaci&oacute;n</strong></p>
+<p>Cuando queramos crear una nueva aplicaci&oacute;n, lo primero que haremos ser&aacute; 
+  pulsar el bot&oacute;n <strong>&quot;New Project ...&quot;</strong> para abrir 
+  el asistente de creaci&oacute;n de aplicaciones. Lo primero que nos pedir&aacute; 
+  es el nombre que queremos darla a la aplicaci&oacute;n, y el nombre de la clase 
+  principal (MIDlet) que vamos a crear:</p>
+<div align="center"><img src="imagenes/entornos/wtk2.gif" width="424" height="73"> 
+</div>
+<p>Debemos indicar aqu&iacute; un nombre para la aplicaci&oacute;n (<em>Project 
+  Name</em>), que ser&aacute; el nombre del directorio donde se guardar&aacute; 
+  la aplicaci&oacute;n. Adem&aacute;s deberemos indicar el nombre de la clase 
+  correspondiente al MIDlet principal de la <em>suite</em> (<em>MIDlet Class Name</em>). 
+  Es posible que nosotros todav&iacute;a no hayamos creado esta clase, por lo 
+  que deberemos indicar el nombre que le asignaremos cuando la creemos. De todas 
+  formas este dato puede ser modificado m&aacute;s adelante. </p>
+<p>Una vez hayamos introducido estos datos, pulsamos <strong>&quot;Create Project&quot; 
+  </strong>y nos aparecer&aacute; una ficha para introducir todos los datos necesarios 
+  para crear el fichero JAD y el <code>MANIFEST.MF</code> del JAR. Con los datos 
+  introducidos en la ventana anterior habr&aacute; rellenado todos los datos necesarios, 
+  pero nosotros podemos modificarlos manualmente si queremos personalizarlo m&aacute;s. 
+  La primera ficha nos muestra los datos obligatorios:</p>
+<div align="center"><img src="imagenes/entornos/wtk3.gif" width="457" height="196"> 
+</div>
+<p> Como nombre de la <em>suite</em> y del JAR habr&aacute; tomado por defecto 
+  el nombre del proyecto que hayamos especificado. Ser&aacute; conveniente modificar 
+  los datos del fabricante y de la versi&oacute;n, para adaptarlos a nuestra aplicaci&oacute;n. 
+  No debemos preocuparnos por especificar el tama&ntilde;o del JAR, ya que este 
+  dato ser&aacute; actualizado de forma autom&aacute;tica cuando se genere el 
+  JAR de la aplicaci&oacute;n.</p>
+<p>En la segunda pesta&ntilde;a tenemos los datos opcionales que podemos introducir 
+  en estos ficheros:</p>
+<div align="center"><img src="imagenes/entornos/wtk4.gif" width="457" height="202"> 
+</div>
+<p>Estos datos est&aacute;n vac&iacute;os por defecto, ya que no son necesarios, 
+  pero podemos darles alg&uacute;n valor si lo deseamos. Estas son las propiedades 
+  opcionales que reconoce el AMS. Si queremos a&ntilde;adir propiedades propias 
+  de nuestra aplicaci&oacute;n, podemos utilizar la tercera pesta&ntilde;a:</p>
+<div align="center"><img src="imagenes/entornos/wtk5.gif" width="457" height="148"> 
+</div>
+<p>Aqu&iacute; podemos a&ntilde;adir o eliminar cualquier otra propiedad que queramos 
+  definir para nuestra aplicaci&oacute;n. De esta forma podemos parametrizarlas. 
+  En el ejemplo de la figura hemos creado una propiedad <code>msg.bienvenida</code> 
+  que contendr&aacute; el texto de bienvenida que mostrar&aacute; nuestra aplicaci&oacute;n. 
+  De esta forma podremos modificar este texto simplemente modificando el valor 
+  de la propiedad en el JAD, sin tener que recompilar el c&oacute;digo.</p>
+<p>En la &uacute;ltima pesta&ntilde;a tenemos los datos de los MIDlets que contiene 
+  la <em>suite</em>. Por defecto nos habr&aacute; creado un &uacute;nico MIDlet:</p>
+<div align="center"><img src="imagenes/entornos/wtk6.gif" width="457" height="155"> 
+</div>
+<p>Por defecto le habr&aacute; dado a este MIDlet el mismo nombre que a la aplicaci&oacute;n, 
+  es decir, el nombre del proyecto que hemos especificado, al igual que ocurre 
+  con el nombre del icono. Como clase correspondiente al MIDlet habr&aacute; introducido 
+  el nombre de la clase que hemos especificado anteriormente.</p>
+<p>Dado que una <em>suite</em> puede contener m&aacute;s de un MIDlet, desde esta 
+  pesta&ntilde;a podremos a&ntilde;adir tantos MIDlets como queramos, especificando 
+  para cada uno de ellos su nombre, icono (de forma opcional) y clase.</p>
+<p>Una vez terminemos de introducir todos estos datos, pulsamos <strong>&quot;OK&quot;</strong> 
+  y en la ventana principal nos mostrar&aacute; el siguiente mensaje:</p>
+<div align="center"><img src="imagenes/entornos/wtk7.gif" width="514" height="241"> 
+</div>
+<p>Con este mensaje nos notifica el directorio donde se ha creado la aplicaci&oacute;n, 
+  y los subdirectorios donde debemos introducir el c&oacute;digo fuente, recursos 
+  y librer&iacute;as externas de nuestra aplicaci&oacute;n. Se habr&aacute; creado 
+  la siguiente estructura de directorios en el disco:</p>
+<div align="center"><img src="imagenes/entornos/wtk8.gif" width="160" height="119"> 
+</div>
+<p>En el directorio <code>bin</code> se habr&aacute;n creado los ficheros JAD 
+  y <code>MANIFEST.MF</code> provisionales con los datos que hayamos introducido. 
+  Los dem&aacute;s directorios estar&aacute;n vac&iacute;os, deberemos introducir 
+  en ellos todos los componentes de nuestra aplicaci&oacute;n.</p>
+<p><strong>Abrir una aplicaci&oacute;n ya existente</strong></p>
+<p>Si tenemos una aplicaci&oacute;n ya creada, podemos abrirla desde el entorno 
+  para continuar trabajando con ella. Para abrir una aplicaci&oacute;n pulsamos 
+  <strong>&quot;Open Project ...&quot;</strong> y nos mostrar&aacute; la siguiente 
+  ventana con las aplicaciones disponibles:</p>
+<div align="center"><img src="imagenes/entornos/wtk9.gif" width="179" height="164"> 
+</div>
+<p>Podemos seleccionar cualquiera de ellas y abrirla pulsando <strong>&quot;Open 
+  Project&quot;</strong>. Una vez abierta podremos modificar todos los datos que 
+  hemos visto anteriormente correspondientes a los ficheros JAD y <code>MANIFEST.MF</code> 
+  pulsando sobre el bot&oacute;n <strong>&quot;Settings ...&quot;</strong>.</p>
+<p>Adem&aacute;s podremos compilarla, empaquetarla y probarla en cualquier emulador 
+  instalado como veremos a continuaci&oacute;n.</p>
+<h3>2.3.2. Compilaci&oacute;n y empaquetamiento</h3>
+<p>Una vez hemos escrito el c&oacute;digo fuente de nuestra aplicaci&oacute;n 
+  MIDP (en el directorio <code>src</code>) y hemos a&ntilde;adido los recursos 
+  y las librer&iacute;as necesarias para ejecutarse dicha aplicaci&oacute;n (en 
+  los directorios <code>res</code> y <code>lib</code> respectivamente) podremos 
+  utilizar la herramienta <code>ktoolbar</code> para realizar de forma automatizada 
+  todos los pasos para la construcci&oacute;n de la aplicaci&oacute;n. Vamos a 
+  ver ahora como realizar este proceso.</p>
+<p><strong>Compilaci&oacute;n</strong></p>
+<p>Para compilar el c&oacute;digo fuente de la aplicaci&oacute;n simplemente deberemos 
+  pulsar el bot&oacute;n <strong>&quot;Build&quot;</strong> o ir a la opci&oacute;n 
+  del men&uacute; <strong>Project &gt; Build</strong>. Con esto compilar&aacute; 
+  y preverificar&aacute; de forma autom&aacute;tica todas las clases de nuestra 
+  aplicaci&oacute;n, guardando el resultado en el directorio <code>classes</code> 
+  de nuestro proyecto.</p>
+<p>Para compilar las clases utilizar&aacute; como <em>classpath</em> la API proporcionada 
+  por el emulador seleccionado actualmente. Para los emuladores distribuidos con 
+  WTK estas clases ser&aacute;n las API b&aacute;sica de MIDP (1.0 &oacute; 2.0 
+  seg&uacute;n la versi&oacute;n de WTK instalada). Sin embargo, podemos incorporar 
+  emuladores que soporten APIs adicionales, como por ejemplo MMAPI para dar soporte 
+  a elementos multimedia, o APIs propietarias de distintas compa&ntilde;&iacute;as 
+  como Nokia. En caso de tener seleccionado un emulador con alguna de estas APIs 
+  adicionales, estas APIs tambi&eacute;n estar&aacute;n incluidas en el <em>classpath</em>, 
+  por lo que podremos compilar correctamente programas que las utilicen. El emulador 
+  seleccionado aparece en el desplegable <strong>Device</strong>.</p>
+<p><strong>Ofuscaci&oacute;n</strong></p>
+<p>El entorno de desarrollo de WTK tambi&eacute;n nos permitir&aacute; ofuscar 
+  el c&oacute;digo de forma autom&aacute;tica. Este paso es opcional, y si queremos 
+  que WTK sea capaz de utilizar la ofuscaci&oacute;n deberemos descargar alguno 
+  de los ofuscadores soportados por este entorno, como <em>ProGuard</em> (en WTK 
+  2.X) o <em>RetroGuard</em> (en WTK 1.0). Estos ofuscadores son proporcionados 
+  por terceros.</p>
+<p>Una vez tenemos uno de estos ofuscadores, tendremos un fichero JAR con las 
+  clases del ofuscador. Lo que deberemos hacer para instalarlo es copiar este 
+  fichero JAR al directorio <code>${WTK_HOME}/bin</code>. Una vez tengamos el 
+  fichero JAR del ofuscador en este directorio, WTK podr&aacute; utilizarlo de 
+  forma autom&aacute;tica para ofuscar el c&oacute;digo.</p>
+<p>La ofuscaci&oacute;n la realizar&aacute; WTK en el mismo paso de la creaci&oacute;n 
+  del paquete JAR, en caso de disponer de un ofuscador instalado, como veremos 
+  a continuaci&oacute;n.</p>
+<p><strong>Empaquetamiento</strong></p>
+<p>Para poder instalar una aplicaci&oacute;n en el m&oacute;vil y distribuirla, 
+  deberemos generar el fichero JAR con todo el contenido de la aplicaci&oacute;n. 
+  Para hacer esto de forma autom&aacute;tica deberemos ir al men&uacute; <strong>Project 
+  &gt; Package</strong>. Dentro de este men&uacute; tenemos dos opciones:</p>
+<ul>
+  <li><strong>Create Package<br>
+    </strong></li>
+  <li><strong>Create Obfuscated Package</strong></li>
+</ul>
+<p>Ambas realizan todo el proceso necesario para crear el paquete de forma autom&aacute;tica: 
+  compilan los fuentes, ofuscan (s&oacute;lo en el segundo caso), preverifican 
+  y empaquetan las clases resultantes en un fichero JAR. Por lo tanto no ser&aacute; 
+  necesario utilizar la opci&oacute;n <strong>Build</strong> previamente, ya que 
+  el mismo proceso de creaci&oacute;n del paquete ya realiza la compilaci&oacute;n 
+  y la preverificaci&oacute;n.</p>
+<p>Una vez construido el fichero JAR lo podremos encontrar en el directorio <code>bin</code> 
+  de la aplicaci&oacute;n. Adem&aacute;s este proceso actualizar&aacute; de forma 
+  autom&aacute;tica el fichero JAD, para establecer el tama&ntilde;o correcto 
+  del fichero JAR que acabamos de crear en la propiedad correspondiente.</p>
+<h3>2.3.3. Ejecuci&oacute;n en emuladores</h3>
+<p>Dentro del mismo entorno de desarrollo de WTK podemos ejecutar la aplicaci&oacute;n 
+  en diferentes emuladores que haya instalados para probarla. Podemos seleccionar 
+  el emulador a utilizar en el cuadro desplegable <strong>Device</strong> de la 
+  ventana principal de <code>ktoolbar</code>. </p>
+<p>Para ejecutar la aplicaci&oacute;n en el emulador seleccionado solo debemos 
+  pulsar el bot&oacute;n <strong>&quot;Run&quot;</strong> o la opci&oacute;n del 
+  men&uacute; <strong>Project &gt; Run</strong>. Normalmente, para probar la aplicaci&oacute;n 
+  en un emulador no es necesario haber creado el fichero JAR, simplemente con 
+  las clases compiladas es suficiente. En caso de ejecutarse sin haber compilado 
+  las clases, el entorno las compilar&aacute; de forma autom&aacute;tica.</p>
+<p>Sin embargo, hay algunos emuladores que s&oacute;lo funcionan con el fichero 
+  JAR, por lo que en este caso deberemos crear el paquete antes de ejecutar el 
+  emulador. Esto ocurre por ejemplo con alg&uacute;n emulador proporcionado por 
+  Nokia.</p>
+<p>Por ejemplo, los emuladores de tel&eacute;fonos m&oacute;viles proporcionados 
+  con WTK 2.2 son:</p>
+<ul>
+  <li><strong>DefaultColorPhone</strong>. Dispositivo con pantalla a color.<br>
+  </li>
+  <li><strong>DefaultGrayPhone</strong>. Dispositivo con pantalla monocroma.<br>
+  </li>
+  <li><strong>MediaControlSkin</strong>. Dispositivo con teclado orientado a la 
+    reproducci&oacute;n de elementos multimedia.<br>
+  </li>
+  <li><strong>QwertyDevice</strong>. Dispositivo con teclado de tipo QWERTY.</li>
+</ul>
+<p>Adem&aacute;s de estos, podemos incorporar otros emuladores al kit de desarrollo. 
+  Por ejemplo, los emuladores proporcionados por Nokia, imitando diversos modelos 
+  de tel&eacute;fonos m&oacute;viles de dicha compa&ntilde;&iacute;a, pueden ser 
+  integrados f&aacute;cilmente en WTK.</p>
+<p>Para integrar los emuladores de tel&eacute;fonos Nokia en WTK simplemente tendremos 
+  que instalar estos emuladores en el directorio <code>${WTK_HOME}/wtklib/devices</code>. 
+  Una vez instalados en este directorio, estos emuladores estar&aacute;n disponibles 
+  dentro del kit de desarrollo, de forma que podremos seleccionarlos en el cuadro 
+  desplegable como cualquier otro emulador.</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="50%" height="233"> <div align="center"> <img src="imagenes/entornos/emu4.jpg" width="169" height="195"> 
+        <p class="caption">MinimumPhone</p>
+      </div></td>
+    <td><div align="center"> <img src="imagenes/entornos/emu5.jpg" width="174" height="195"> 
+        <p class="caption">DefaultColorPhone</p>
+      </div></td>
+  </tr>
+  <tr> 
+    <td height="233"><div align="center"> <img src="imagenes/entornos/emu1.jpg" width="198" height="195"> 
+        <p class="caption">Motorola i85s</p>
+      </div></td>
+    <td><div align="center"> <img src="imagenes/entornos/emu6.jpg" width="160" height="195"> 
+        <p class="caption">Nokia 6310</p>
+      </div></td>
+  </tr>
+  <tr> 
+    <td height="233"><div align="center"> <img src="imagenes/entornos/emu3.jpg" width="215" height="195"> 
+        <p class="caption">Nokia 7210</p>
+      </div></td>
+    <td><div align="center"> <img src="imagenes/entornos/emu2.jpg" width="180" height="195"> 
+      </div>
+      <p class="caption">Nokia Series 60 </p></td>
+  </tr>
+</table>
+<p>Podemos encontrar adem&aacute;s emuladores proporcionados por otras compa&ntilde;&iacute;as. 
+  WTK tambi&eacute;n nos permite personalizar los emuladores, cambiando su aspecto 
+  y caracter&iacute;sticas para adaptarlos a nuestras necesidades.</p>
+<p><strong>Optimizaci&oacute;n</strong></p>
+<p>En WTK, adem&aacute;s de los emuladores, contamos con herramientas adicionales 
+  que nos ayudar&aacute;n a optimizar nuestras aplicaciones. Desde la ventana 
+  de preferencias podemos activar distintos monitores que nos permitir&aacute;n 
+  monitorizar la ocupaci&oacute;n de memoria y el tr&aacute;fico en la red:</p>
+<div align="center"><img src="imagenes/entornos/wtk_optim.gif" width="609" height="475"> 
+</div>
+<p>Ser&aacute; conveniente utilizar estos monitores para medir el consumo de recursos 
+  de nuestra aplicaci&oacute;n e intentar reducirlo al m&iacute;nimo. </p>
+<p>En cuanto a la memoria, deberemos intentar que el consumo sea lo menor posible 
+  y que nunca llegue a pasar de un determinado umbral. Si la memoria creciese 
+  sin parar en alg&uacute;n momento la aplicaci&oacute;n fallar&iacute;a por falta 
+  de memoria al llevarla a nuestro dispositivo real.</p>
+<p>Es importante tambi&eacute;n intentar minimizar el tr&aacute;fico en la red, 
+  ya que en los dispositivos reales este tipo de comunicaciones ser&aacute;n lentas 
+  y caras. </p>
+<p>Desde esta ventana de preferencias podemos cambiar ciertas caracter&iacute;sticas 
+  de los emuladores, como el tama&ntilde;o m&aacute;ximo de la memoria o la velocidad 
+  de su procesador. Es conveniente intentar utilizar los par&aacute;metros m&aacute;s 
+  parecidos a los dispositivos para los cueles estemos desarrollando, sobretodo 
+  en cuanto a consumo de memoria, para asegurarnos de que la aplicaci&oacute;n 
+  seguir&aacute; funcionando cuando la llevamos al dispositivo real.</p>
+<h3>2.3.4. Provisionamiento OTA</h3>
+<p>Hemos visto como probar la aplicaci&oacute;n directamente utilizando emuladores. 
+  Una vez generados los ficheros JAR y JAD tambi&eacute;n podremos copiarlos a 
+  un dispositivo real y probarlos ah&iacute;.</p>
+<p>Sin embargo, cuando un usuario quiera utilizar nuestra aplicaci&oacute;n, normalmente 
+  lo har&aacute; v&iacute;a OTA (Over The Air), es decir, se conectar&aacute; 
+  a la direcci&oacute;n donde hayamos publicado nuestra aplicaci&oacute;n y la 
+  descargar&aacute; utilizando la red de nuestro m&oacute;vil. </p>
+<p>Para desplegar una aplicaci&oacute;n de forma que sea accesible v&iacute;a 
+  OTA, simplemente deberemos:</p>
+<ul>
+  <li>Publicar los ficheros JAR y JAD de nuestra aplicaci&oacute;n en un servidor 
+    web, que sea accesible a trav&eacute;s de Internet.</li>
+  <li>Crear un documento web que tenga un enlace al fichero JAD de nuestra aplicaci&oacute;n. 
+    Este documento puede ser por ejemplo WML, xHTML o XHTML.</li>
+  <li>Configurar el servidor web para que asocie los ficheros JAD y JAR al tipo 
+    MIME adecuado, tal como hemos visto anteriormente.</li>
+  <li>Editar el fichero JAD. En la l&iacute;nea donde hace referencia a la URL 
+    del fichero JAR deberemos indicar la URL donde hemos desplegado realmente 
+    el fichero JAR.</li>
+</ul>
+<p>Una vez est&aacute; desplegada la aplicaci&oacute;n v&iacute;a OTA, el provisionamiento 
+  OTA consistir&aacute; en los siguientes pasos:</p>
+<ul>
+  <li>El usuario accede con su m&oacute;vil a nuestra direcci&oacute;n de Internet 
+    utilizando un navegador web.</li>
+  <li>Selecciona el enlace que lleva al fichero JAD de nuestra aplicaci&oacute;n</li>
+  <li>El navegador descarga el fichero JAD</li>
+  <li>El fichero JAD ser&aacute; abierto por el AMS del m&oacute;vil, que nos 
+    mostrar&aacute; sus datos y nos preguntar&aacute; si queremos instalar la 
+    aplicaci&oacute;n.</li>
+  <li>Si respondemos afirmativamente, se descargar&aacute; el fichero JAR utilizando 
+    la URL que se indica en el fichero JAD.</li>
+  <li>Instalar&aacute; la aplicaci&oacute;n en el m&oacute;vil.</li>
+  <li>Una vez instalada, se a&ntilde;adir&aacute; la aplicaci&oacute;n a la lista 
+    de aplicaciones instaladas en nuestro m&oacute;vil. Desde esta lista el usuario 
+    del m&oacute;vil podr&aacute; ejecutar la aplicaci&oacute;n cada vez que quiera 
+    utilizarla. Cuando el usuario no necesite la aplicaci&oacute;n, podr&aacute; 
+    desinstalarla para liberar espacio en el medio de almacenamiento del m&oacute;vil.</li>
+</ul>
+<p>A partir de WTK 2.0 podemos simular en los emuladores el provisionamiento OTA 
+  de aplicaciones. Ejecutando la aplicaci&oacute;n <em>OTA Provisioning</em> se 
+  nos abrir&aacute; el emulador que tengamos configurado por defecto y nos dar&aacute; 
+  la opci&oacute;n de instalar aplicaciones (<em>Install Application</em>) v&iacute;a 
+  OTA. Si pulsamos sobre esta opci&oacute;n nos pedir&aacute; la URL donde hayamos 
+  publicado nuestra aplicaci&oacute;n. </p>
+<div align="center"><img src="imagenes/entornos/ota1.gif" width="181" height="208"> 
+  &nbsp; <img src="imagenes/entornos/ota2.gif" width="180" height="208"> </div>
+<p>De esta forma podremos probar aplicaciones publicadas en alg&uacute;n servidor 
+  de Internet. Para probar nuestras aplicaciones utilizando este procedimiento 
+  deberemos desplegar previamente nuestra aplicaci&oacute;n en un servidor web 
+  y utilizar la direcci&oacute;n donde la hayamos desplegados para instalar la 
+  aplicaci&oacute;n desde ese lugar.</p>
+<p>Este procedimiento puede ser demasiado costoso si queremos probar la aplicaci&oacute;n 
+  repetidas veces utilizando este procedimiento, ya que nos obligar&iacute;a, 
+  para cada nueva prueba que quisi&eacute;semos hacer, a volver a desplegar la 
+  aplicaci&oacute;n en el servidor web.</p>
+<p>La aplicaci&oacute;n <code>ktoolbar</code> nos ofrece una facilidad con el 
+  que simular el provisionamiento OTA utilizando un servidor web interno, de forma 
+  que no tendremos que publicar la aplicaci&oacute;n manualmente para probarla. 
+  Para ello, abriremos nuestro proyecto en <code>ktoolbar</code> y seleccionaremos 
+  la opci&oacute;n <strong>Project &gt; Run via OTA</strong>. Con esto, autom&aacute;ticamente 
+  nos rellenar&aacute; la direcci&oacute;n de donde queremos instalar la aplicaci&oacute;n 
+  con la direcci&oacute;n interna donde est&aacute; desplegada:</p>
+<div align="center"><img src="imagenes/entornos/ota3.gif" width="180" height="208"> 
+  &nbsp; <img src="imagenes/entornos/ota4.gif" width="180" height="208"> </div>
+<p>Una vez introducida la direcci&oacute;n del documento web donde tenemos publicada 
+  nuestra aplicaci&oacute;n, nos mostrar&aacute; la lista de enlaces a ficheros 
+  JAD que tengamos en esa p&aacute;gina. Podremos seleccionar uno de estos enlaces 
+  para instalar la aplicaci&oacute;n. En ese momento descargar&aacute; el fichero 
+  JAD y nos mostrar&aacute; la informaci&oacute;n contenida en &eacute;l, pregunt&aacute;ndonos 
+  si queremos instalar la aplicaci&oacute;n:</p>
+<div align="center"><img src="imagenes/entornos/ota5.gif" width="180" height="208"> 
+  &nbsp; <img src="imagenes/entornos/ota6.gif" width="180" height="209"> </div>
+<p>Si aceptamos la instalaci&oacute;n de la aplicaci&oacute;n, pulsando sobre 
+  <em>Install</em>, descargar&aacute; el fichero JAR con la aplicaci&oacute;n 
+  y lo instalar&aacute;. Ahora veremos esta aplicaci&oacute;n en la lista de aplicaciones 
+  instaladas:</p>
+<div align="center"><img src="imagenes/entornos/ota7.gif" width="180" height="209"> 
+</div>
+<p>Desde esta lista podremos ejecutar la aplicaci&oacute;n e instalar nuevas aplicaciones 
+  que se vayan a&ntilde;adiendo a esta lista. Cuando no necesitemos esta aplicaci&oacute;n 
+  desde aqu&iacute; tambi&eacute;n podremos desinstalarla.</p>
+<h2>2.4. Antenna</h2>
+<p>La herramienta <code>ant</code> nos permite automatizar tareas como la compilaci&oacute;n, 
+  empaquetamiento, despliegue o ejecuci&oacute;n de aplicaciones. Es similar a 
+  la herramienta <code>make</code>, pero con la ventaja de que es totalmente independiente 
+  de la plataforma, ya que en lugar de utilizar comandos nativos utiliza clases 
+  Java para realizar las tareas.</p>
+<p>Tiene una serie de tareas definidas, que servir&aacute;n para compilar clases, 
+  empaquetar en ficheros JAR, ejecutar aplicaciones, etc. Todas estas tareas est&aacute;n 
+  implementadas mediante clases Java. Adem&aacute;s, nos permitir&aacute; a&ntilde;adir 
+  nuevas tareas, incorporando una librer&iacute;a de clases Java que las implemente.</p>
+<p><em>Antenna</em> es una librer&iacute;a de tareas para <em>ant</em> que nos 
+  permitir&aacute;n trabajar con aplicaciones MIDP. Entre estas tareas encontramos 
+  la compilaci&oacute;n y el empaquetamiento (con preverificaci&oacute;n y ofuscaci&oacute;n), 
+  la creaci&oacute;n de los ficheros JAD y <code>MANIFEST.MF</code>, y la ejecuci&oacute;n 
+  de aplicaciones en emuladores.</p>
+<p>Para realizar estas tareas utiliza WTK, por lo que necesitaremos tener este 
+  kit de desarrollo instalado. Los emuladores que podremos utilizar para ejecutar 
+  las aplicaciones ser&aacute;n todos aquellos emuladores instalados en WTK.</p>
+<p>Para utilizar estas tareas deberemos copiar el JAR de <em>Antenna</em> al directorio 
+  de librer&iacute;as de <em>ant</em>, o bien introducir este JAR en el <em>classpath</em> 
+  para que est&eacute; localizable.</p>
+<h3><strong>2.4.1. Declaraciones</strong></h3>
+<p>Dentro del fichero <code>build.xml</code> de <em>ant</em> deberemos especificar 
+  como propiedad <code>wtk.home</code> el directorio donde tenemos instalado WTK:</p>
+<pre class="codigo"> &lt;property name=&quot;wtk.home&quot; value=&quot;c:\WTK104&quot;/&gt;
+</pre>
+<p>Adem&aacute;s, debemos declarar las tareas de <em>Antenna</em> para poder utilizarlas 
+  dentro de dicho fichero:</p>
+<pre class="codigo">&lt;taskdef name=&quot;wtkjad&quot; 
+    classname=&quot;de.pleumann.antenna.WtkJad&quot;/&gt;
+&lt;taskdef name=&quot;wtkbuild&quot; 
+    classname=&quot;de.pleumann.antenna.WtkBuild&quot;/&gt;
+&lt;taskdef name=&quot;wtkpackage&quot; 
+    classname=&quot;de.pleumann.antenna.WtkPackage&quot;/&gt;
+&lt;taskdef name=&quot;wtkrun&quot; 
+    classname=&quot;de.pleumann.antenna.WtkRun&quot;/&gt;
+&lt;taskdef name=&quot;wtkpreverify&quot; 
+    classname=&quot;de.pleumann.antenna.WtkPreverify&quot;/&gt;
+&lt;taskdef name=&quot;wtkobfuscate&quot; 
+    classname=&quot;de.pleumann.antenna.WtkObfuscate&quot;/&gt;
+</pre>
+<h3><strong>2.4.2. Tareas</strong></h3>
+<p>Para crear el fichero JAD utilizaremos la tarea <code>wtkjad</code>, a la que 
+  debemos proporcionar la siguiente informaci&oacute;n:</p>
+<pre class="codigo">&lt;wtkjad jadfile=&quot;${jad.file}&quot;
+    jarfile=&quot;${jar.file}&quot;
+    name=&quot;${midlet.name}&quot;
+    vendor=&quot;${vendor.name}&quot;
+    version=&quot;${midlet.version}&quot;&gt;
+        &lt;midlet name=&quot;${midlet.name}&quot; class=&quot;${midlet.class}&quot;/&gt;
+        &lt;attribute name=&quot;msg.bienvenida&quot; value=&quot;Hola mundo&quot;/&gt;<br>&lt;/wtkjad&gt;
+</pre>
+<p>Para compilar utilizaremos <code>wtkbuild</code>. Esta tarea nos permite preverificar, 
+  pero podemos dejar esto para el paso siguiente:</p>
+<pre class="codigo">&lt;wtkbuild srcdir=&quot;${src.home}&quot;
+    destdir=&quot;${build.home}&quot;
+    preverify=&quot;false&quot;/&gt;
+</pre>
+<p>Para empaquetar utilizaremos <code>wtkpackage</code>. En este paso podremos 
+  ofuscar y preverificar el c&oacute;digo:</p>
+<pre class="codigo">&lt;wtkpackage jarfile=&quot;${jar.file}&quot;
+    jadfile=&quot;${jad.file}&quot;
+    obfuscate=&quot;${obfuscate}&quot;
+    preverify=&quot;true&quot;&gt;
+      &lt;fileset dir=&quot;${build.home}&quot;/&gt;
+      &lt;fileset dir=&quot;${res.home}&quot;/&gt;
+&lt;/wtkpackage&gt;
+</pre>
+<p>Aqu&iacute; debemos especificar los ficheros que vamos a incluir en el paquete 
+  JAR mediante las etiquetas <code>fileset</code>. En este ejemplo estamos incluyendo 
+  todos los ficheros que haya en el directorio de clases compiladas y en el directorio 
+  de recursos. Si queremos incluir librer&iacute;as JAR (o ZIP) podemos utilizar 
+  las siguientes etiquetas:</p>
+<pre class="codigo">&lt;zipfileset src=&quot;libreria.zip&quot;/&gt;
+&lt;zipgroupfileset dir=&quot;lib&quot;/&gt;</pre>
+<p>La primera de ellas (<code>zipfileset</code>) nos permite especificar una &uacute;nica 
+  librer&iacute;a para incluir. Con la segunda (<code>zipgroupfileset</code>) 
+  se incluir&aacute;n todas las librer&iacute;as del directorio especificado.</p>
+<p>Por &uacute;ltimo, para ejecutar la aplicaci&oacute;n en un emulador utilizaremos 
+  la tarea <code>wtkrun</code>:</p>
+<pre class="codigo">&lt;wtkrun jadfile=&quot;${jad.file}&quot; 
+    heapsize=&quot;0&quot; 
+    device=&quot;${emulator.name}&quot;    
+    wait=&quot;true&quot;/&gt;
+</pre>
+<p>Con esto podremos crear nuestras aplicaciones MIDP utilizando <em>ant</em>, 
+  en lugar de utilizar la aplicaci&oacute;n <code>ktoolbar</code> de WTK.</p>
+<h3><strong>2.4.3. Ejemplo completo</strong></h3>
+<p>Vamos a ver un ejemplo completo gen&eacute;rico. Este c&oacute;digo podr&aacute; 
+  ser aprovechado para la mayor&iacute;a de aplicaciones J2ME, simplemente cambiando 
+  las propiedades declaradas al principio del fichero para introducir los datos 
+  correspondientes a cada aplicaci&oacute;n:</p>
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;project name=&quot;Prueba&quot; default=&quot;run&quot; basedir=&quot;.&quot;&gt;
+
+&lt;!-- Propiedades del MIDlet --&gt;
+&lt;property name=&quot;jad.file&quot; value=&quot;aplic.jad&quot;/&gt;
+&lt;property name=&quot;jar.file&quot; value=&quot;aplic.jar&quot;/&gt;
+&lt;property name=&quot;vendor.name&quot; value=&quot;Miguel Angel&quot;/&gt;	   
+&lt;property name=&quot;midlet.version&quot; value=&quot;1.0.0&quot;/&gt;
+&lt;property name=&quot;midlet.name&quot; value=&quot;Prueba&quot;/&gt;
+&lt;property name=&quot;midlet.class&quot; 
+    value=&quot;es.ua.j2ee.prueba.PrimerMIDlet&quot;/&gt;
+   
+&lt;!-- Propiedades del entorno --&gt;
+&lt;property name=&quot;emulator.name&quot; value=&quot;DefaultColorPhoneEmulator&quot;/&gt;
+&lt;property name=&quot;base.home&quot; value=&quot;.&quot;/&gt;
+&lt;property name=&quot;src.home&quot; value=&quot;${base.home}/src&quot;/&gt;
+&lt;property name=&quot;build.home&quot; value=&quot;${base.home}/classes&quot;/&gt;
+&lt;property name=&quot;res.home&quot; value=&quot;${base.home}/res&quot;/&gt;
+&lt;property name=&quot;obfuscate&quot; value=&quot;true&quot;/&gt;
+
+&lt;!-- Establece el directorio de WTK (requerido por Antenna). --&gt;
+&lt;property name=&quot;wtk.home&quot; value=&quot;c:\WTK104&quot;/&gt;
+
+&lt;!-- Define las tareas de Antenna. --&gt;
+&lt;taskdef name=&quot;wtkjad&quot; 
+    classname=&quot;de.pleumann.antenna.WtkJad&quot;/&gt;
+&lt;taskdef name=&quot;wtkbuild&quot; 
+    classname=&quot;de.pleumann.antenna.WtkBuild&quot;/&gt;
+&lt;taskdef name=&quot;wtkpackage&quot; 
+    classname=&quot;de.pleumann.antenna.WtkPackage&quot;/&gt;
+&lt;taskdef name=&quot;wtkrun&quot; 
+    classname=&quot;de.pleumann.antenna.WtkRun&quot;/&gt;
+&lt;taskdef name=&quot;wtkpreverify&quot; 
+    classname=&quot;de.pleumann.antenna.WtkPreverify&quot;/&gt;
+&lt;taskdef name=&quot;wtkobfuscate&quot; 
+    classname=&quot;de.pleumann.antenna.WtkObfuscate&quot;/&gt;
+   
+&lt;!-- Crea el fichero JAD. --&gt;
+&lt;target name=&quot;jad&quot;&gt;
+  &lt;wtkjad jadfile=&quot;${jad.file}&quot;
+    jarfile=&quot;${jar.file}&quot;
+    name=&quot;${midlet.name}&quot;
+    vendor=&quot;${vendor.name}&quot;
+    version=&quot;${midlet.version}&quot;&gt;
+      &lt;midlet name=&quot;${midlet.name}&quot; class=&quot;${midlet.class}&quot;/&gt;
+  &lt;/wtkjad&gt;
+&lt;/target&gt;
+
+&lt;!-- Limpia el directorio de compilacion. --&gt;
+&lt;target name=&quot;clean&quot;&gt;
+  &lt;delete dir=&quot;${build.home}&quot;/&gt;
+  &lt;mkdir dir=&quot;${build.home}&quot;/&gt;
+&lt;/target&gt;
+
+&lt;!-- Compila las clases. --&gt;
+&lt;target name=&quot;compile&quot; depends=&quot;clean&quot;&gt;
+  &lt;wtkbuild srcdir=&quot;${src.home}&quot;
+    destdir=&quot;${build.home}&quot;
+    preverify=&quot;false&quot;/&gt;
+&lt;/target&gt;
+
+&lt;!-- Empaqueta la aplicacion. --&gt;
+&lt;target name=&quot;package&quot; depends=&quot;jad,compile&quot;&gt;
+  &lt;wtkpackage jarfile=&quot;${jar.file}&quot;
+    jadfile=&quot;${jad.file}&quot;
+    obfuscate=&quot;${obfuscate}&quot;
+    preverify=&quot;true&quot;&gt;
+      &lt;fileset dir=&quot;${build.home}&quot;/&gt;
+      &lt;fileset dir=&quot;${res.home}&quot;/&gt;
+  &lt;/wtkpackage&gt;
+&lt;/target&gt;
+
+&lt;!-- Ejecuta el MIDlet en un emulador. --&gt;
+&lt;target name=&quot;run&quot; depends=&quot;package&quot;&gt;
+  &lt;wtkrun jadfile=&quot;${jad.file}&quot; heapsize=&quot;0&quot; 
+     device=&quot;${emulator.name}&quot; wait=&quot;true&quot;/&gt;
+&lt;/target&gt;
+
+&lt;/project&gt;</pre>
+<h3><strong>2.4.4. APIs opcionales</strong></h3>
+<p>Puede ocurrir que una aplicaci&oacute;n necesite APIs adicionales para compilarse, 
+  como puede ser MMAPI, WMA u otras APIs opcionales que podamos encontrar en algunos 
+  modelos de tel&eacute;fonos m&oacute;viles. Es este caso deberemos especificar 
+  de forma expl&iacute;cita el <em>classpath</em> que vamos a utilizar para la 
+  compilaci&oacute;n (<code>wtkbuild</code>) y el empaquetamiento (<code>wtkpackage</code>). 
+  Para ello deberemos a&ntilde;adir dentro de cada una de estas tareas el siguiente 
+  atributo:</p>
+<pre class="codigo"> bootclasspath=&quot;&lt;classpath&gt;&quot;</pre>
+<p>Por ejemplo, si queremos utilizar la API multimedia MMAPI, podemos hacerlo 
+  de la siguiente forma:</p>
+<pre class="codigo">&lt;!-- Compila las clases. --&gt;
+&lt;target name=&quot;compile&quot; depends=&quot;clean&quot;&gt;
+  &lt;wtkbuild srcdir=&quot;${src.home}&quot;
+    destdir=&quot;${build.home}&quot;
+    <strong>bootclasspath</strong>=&quot;${wtk.home}/lib/midpapi.zip;${wtk.home}/lib/mmapi.jar&quot;
+    preverify=&quot;false&quot;&gt;
+  &lt;/wtkbuild&gt;
+&lt;/target&gt;
+   
+&lt;!-- Empaqueta la aplicacion. --&gt;
+&lt;target name=&quot;package&quot; depends=&quot;jad,compile&quot;&gt;
+  &lt;wtkpackage jarfile=&quot;${jar.file}&quot;
+    jadfile=&quot;${jad.file}&quot;
+    obfuscate=&quot;${obfuscate}&quot;
+    <strong>bootclasspath</strong>=&quot;${wtk.home}/lib/midpapi.zip;${wtk.home}/lib/mmapi.jar&quot;
+    preverify=&quot;true&quot;&gt;
+    &lt;fileset dir=&quot;${build.home}&quot;/&gt;
+    &lt;fileset dir=&quot;${res.home}&quot;/&gt;
+  &lt;/wtkpackage&gt;
+&lt;/target&gt;</pre>
+<h2>2.5. Entornos de Desarrollo Integrados (IDEs)</h2>
+<p>Hemos visto que los kits de desarrollo como WTK nos permiten construir la aplicaci&oacute;n 
+  pero no tienen ning&uacute;n editor integrado donde podamos escribir el c&oacute;digo. 
+  Por lo tanto tendr&iacute;amos que escribir el c&oacute;digo fuente utilizando 
+  cualquier editor de texto externo, y una vez escrito utilizar WTK para construir 
+  la aplicaci&oacute;n.</p>
+<p>Vamos a ver ahora como facilitar el desarrollo de la aplicaci&oacute;n utilizando 
+  distintos entornos integrados de desarrollo (IDEs) que integran un editor de 
+  c&oacute;digo con las herramientas de desarrollo de aplicaciones MIDP. Estos 
+  editores adem&aacute;s nos facilitar&aacute;n la escritura del c&oacute;digo 
+  coloreando la sintaxis, revisando la correcci&oacute;n del c&oacute;digo escrito, 
+  autocompletando los nombres, formateando el c&oacute;digo, etc.</p>
+<p>Para desarrollar aplicaciones J2ME podremos utilizar la mayor&iacute;a de los 
+  IDEs existentes para Java, a&ntilde;adiendo alguna extensi&oacute;n para permitirnos 
+  trabajar con este tipo de aplicaciones. Tambi&eacute;n podemos encontrar entornos 
+  dedicados exclusivamente a la creaci&oacute;n de aplicaciones J2ME.</p>
+<p>Vamos a centrarnos en dos entornos que tienen la ventaja de ser de libre distribuci&oacute;n, 
+  y que son utilizados por una gran cantidad de usuarios dadas sus buenas prestaciones. 
+  Luego comentaremos m&aacute;s brevemente otros entornos disponibles para trabajar 
+  con aplicaciones J2ME. </p>
+<h3>2.5.1. Eclipse</h3>
+<p>Eclipse es un entorno de desarrollo de libre distribuci&oacute;n altamente 
+  modular. Una de sus ventajas es que no necesita demasiados recursos para ejecutarse 
+  correctamente, por lo que ser&aacute; adecuado para m&aacute;quinas poco potentes. 
+  Vamos a utilizar como referencia la versi&oacute;n 2.1.1 de este entorno. Algunas 
+  caracter&iacute;sticas pueden variar si se utiliza una versi&oacute;n distinta.</p>
+<p>Este entorno nos permite crear proyectos en Java. Nos ofrece un editor, en 
+  el que podemos escribir el c&oacute;digo, viendo la sintaxis coloreada para 
+  mayor claridad, y notific&aacute;ndonos de los errores que hayamos cometido 
+  al escribir el c&oacute;digo, como por ejemplo haber escrito mal el nombre de 
+  un m&eacute;todo, o usar un tipo o n&uacute;mero incorrecto de par&aacute;metros. 
+  Adem&aacute;s nos permitir&aacute; autocompletar los nombres de los m&eacute;todos 
+  o las propiedades de las clases conforme los escribimos. Si el c&oacute;digo 
+  ha quedado desordenado, nos permite darle formato autom&aacute;ticamente, poniendo 
+  la sangr&iacute;a adecuada para cada l&iacute;nea de c&oacute;digo.</p>
+<p>Esto nos facilitar&aacute; bastante la escritura del c&oacute;digo fuente. 
+  Sin embargo, no nos permitir&aacute; crear visualmente la GUI de las aplicaciones, 
+  ni el dise&ntilde;o, ni manejar&aacute; conexiones con BDs ni con servidores 
+  de aplicaciones. Esto hace que el entorno sea bastante m&aacute;s ligero que 
+  otros entornos, por lo que ser&aacute; m&aacute;s c&oacute;modo de manejar si 
+  no necesitamos todas estas caracter&iacute;sticas. Incluso podemos a&ntilde;adirle 
+  muchas de estas funcionalidades que se echan en falta a&ntilde;adiendo m&oacute;dulos 
+  (<em>plugins</em>) al entorno.</p>
+<p>Podremos compilar las clases del proyecto desde el mismo entorno, y ejecutar 
+  la aplicaci&oacute;n para probarla utilizando la m&aacute;quina virtual de Java. 
+  Esto ser&aacute; suficiente para aplicaciones J2SE, pero en principio no ofrece 
+  soporte directo para J2ME. Podemos optar por diferentes soluciones para crear 
+  aplicaciones J2ME con este entorno: </p>
+<ul>
+  <li><strong>Editor de c&oacute;digo</strong>. Lo que podemos hacer es utilizarlo 
+    &uacute;nicamente como editor de c&oacute;digo, ya que es un editor bastante 
+    c&oacute;modo y r&aacute;pido, y utilizar de forma externa WTK para compilar 
+    y ejecutar la aplicaci&oacute;n.<br>
+  </li>
+  <li><strong>Integraci&oacute;n con Antenna</strong>. Dado que el entorno viene 
+    integrado con la herramienta <em>ant</em>, podemos utilizar <em>Antenna</em> 
+    para compilar y ejecutar las aplicaciones desde el mismo entorno. Esta soluci&oacute;n 
+    es bastante vers&aacute;til, ya que desde el fichero de <em>ant</em> podemos 
+    personalizar la forma en la que se realizar&aacute;n los distintos pasos del 
+    proceso. El inconveniente es que es m&aacute;s complicado escribir el fichero 
+    de <em>ant</em> que usar un entorno que realiza ese proceso autom&aacute;ticamente, 
+    y requerir&aacute; que los usuarios conozcan dicha herramienta.<br>
+  </li>
+  <li><strong>EclipseME</strong>. Otra soluci&oacute;n es utilizar un <em>plugin</em> 
+    que nos permita desarrollar aplicaciones J2ME desde Eclipse. Tenemos disponible 
+    el plugin <strong>EclipseME</strong> que realizar&aacute; esta tarea.</li>
+</ul>
+<p>A continuaci&oacute;n veremos como crear aplicaciones J2ME paso a paso siguiendo 
+  cada uno de estos tres m&eacute;todos.</p>
+<p><strong>Editor de c&oacute;digo</strong></p>
+<p>Vamos a ver como utilizar Eclipse simplemente para editar el c&oacute;digo 
+  de las aplicaciones J2ME, dejando las tareas de compilaci&oacute;n, empaquetamiento 
+  y ejecuci&oacute;n para realizarlas de forma externa con WTK.</p>
+<p>Lo primero que tenemos que hacer es crear una nueva aplicaci&oacute;n utilizando 
+  WTK, como hemos visto en el punto anterior, de forma que nos cree la estructura 
+  de directorios necesaria en nuestro directorio de proyectos.</p>
+<p>Una vez hecho esto, podemos entrar ya en Eclipse para comenzar a escribir c&oacute;digo. 
+  Crearemos un nuevo proyecto Java, utilizando el comando <strong>New</strong>:</p>
+<div align="center"><img src="imagenes/entornos/eclipse1.gif" width="500" height="426"> 
+</div>
+<p>Elegimos <strong>Java Project</strong> y pulsamos <strong>Next</strong> para 
+  comenzar el asistente de creaci&oacute;n del proyecto:</p>
+<div align="center"><img src="imagenes/entornos/eclipse2.gif" width="500" height="513"> 
+</div>
+<p>Debemos darle un nombre al proyecto, y un directorio donde guardar su contenido. 
+  Elegiremos la opci&oacute;n <strong>Create project at external location</strong> 
+  para poder elegir como directorio del proyecto el directorio que queramos, y 
+  seleccionaremos como tal el directorio que hemos creado previamente con WTK. 
+  Pulsamos <strong>Next</strong> para continuar con el asistente.</p>
+<div align="center"><img src="imagenes/entornos/eclipse3.gif" width="500" height="513"> 
+</div>
+<p>Debemos especificar los directorios donde guardar los fuentes del proyecto, 
+  y donde se guardar&aacute;n las clases compiladas. Pulsamos sobre <strong>Add 
+  Folder ...</strong> para seleccionar el directorio donde se encontrar&aacute;n 
+  los fuentes de nuestro proyecto.</p>
+<div align="center"><img src="imagenes/entornos/eclipse4.gif" width="346" height="429"> 
+</div>
+<p>Como directorio de fuentes seleccionaremos el subdirectorio <code>src</code> 
+  del directorio de nuestro proyecto, si no estuviese seleccionado ya. </p>
+<div align="center"><img src="imagenes/entornos/eclipse5.gif" width="500" height="513"> 
+</div>
+<p>Como directorio de salida (<strong>Default output folder</strong>) podemos 
+  especificar el directorio <code>classes</code>.</p>
+<p>Ahora pasamos a la pesta&ntilde;a <strong>Libraries</strong> de esta misma 
+  ventana.</p>
+<div align="center"><img src="imagenes/entornos/eclipse6.gif" width="500" height="521"> 
+</div>
+<div align="center"> </div>
+<p>En ella por defecto tendremos las librer&iacute;as de J2SE. Como no queremos 
+  que se utilicen estas librer&iacute;as en nuestra aplicaci&oacute;n, las eliminaremos 
+  de la lista con <strong>Remove</strong>, y a&ntilde;adiremos la librer&iacute;a 
+  de la API MIDP. Para ello pulsaremos el bot&oacute;n <strong>Add External JARs</strong> 
+  y seleccionaremos el JAR de MIDP, ubicado normalmente en el directorio <code>${WTK_HOME}/lib/midpapi.zip</code>. 
+  Si quisi&eacute;ramos utilizar otras APIs en nuestra aplicaci&oacute;n, como 
+  MMAPI o APIs propietarias, seguiremos el mismo proceso para a&ntilde;adir sus 
+  correspondientes ficheros JAR a la lista.</p>
+<div align="center"><img src="imagenes/entornos/eclipse7.gif" width="563" height="419"> 
+</div>
+<p>Como no vamos a utilizar Eclipse para compilar, estas librer&iacute;as nos 
+  servir&aacute;n simplemente para que Eclipse pueda autocompletar el c&oacute;digo 
+  que escribamos y detectar errores. </p>
+<div align="center"><img src="imagenes/entornos/eclipse8.gif" width="500" height="554"> 
+</div>
+<p>Una vez hemos terminado pulsaremos <strong>Finish</strong> con lo que terminaremos 
+  de configurar el proyecto en Eclipse. Una vez hecho esto, en la ventana del 
+  explorador de paquete de Eclipse (<strong>Package Explorer</strong>) veremos 
+  nuestro proyecto ya creado:</p>
+<div align="center"><img src="imagenes/entornos/eclipse9.gif" width="215" height="156"> 
+</div>
+<p>Ahora podemos empezar a crear las clases de nuestra aplicaci&oacute;n. Para 
+  ello pulsaremos sobre <strong>New</strong> y elegiremos crear una nueva clase 
+  Java, con lo que se abrir&aacute; la siguiente ventana de creaci&oacute;n de 
+  la clase:</p>
+<div align="center"><img src="imagenes/entornos/eclipse10.gif" width="515" height="564"> 
+</div>
+<div align="center"> </div>
+<p>Aqu&iacute; deberemos introducir el paquete al que pertenecer&aacute; la clase, 
+  y el nombre de la misma. Tambi&eacute;n debemos indicar la superclase y las 
+  interfaces que implementa la clase que vayamos a crear. En caso de querer crear 
+  un MIDlet, utilizaremos como superclase la clase <code>MIDlet</code>. Para a&ntilde;adir 
+  una superclase podemos pulsar sobre el bot&oacute;n <strong>Browse...</strong>, 
+  de forma que nos mostrar&aacute; la siguiente ventana desde la que podremos 
+  buscar clases de las que heredar:</p>
+<div align="center"><img src="imagenes/entornos/eclipse11.gif" width="297" height="476"> 
+</div>
+<p>En el campo de texto superior, donde nos dice <strong>Choose a type</strong>, 
+  podremos empezar a escribir el nombre de la clase de la que queramos heredar, 
+  y el explorador nos mostrar&aacute; todas las clases cuyo nombre coincida total 
+  o parcialmente con el texto escrito. Seleccionaremos la clase deseada y pulsamos 
+  <strong>OK</strong>.</p>
+<div align="center"><img src="imagenes/entornos/eclipse12.gif" width="515" height="564"> 
+</div>
+<p>Si dejamos marcada la casilla <strong>Inherited abstract methods</strong>, 
+  nos crear&aacute; el esqueleto de la clase con los m&eacute;todos definidos 
+  como abstractos en la superclase que debemos rellenar como vemos a continuaci&oacute;n:</p>
+<div align="center"><img src="imagenes/entornos/eclipse13.gif" width="713" height="590"> 
+</div>
+<p>Aqu&iacute; podremos introducir el c&oacute;digo necesario en los m&eacute;todos 
+  que nos ha creado. Junto al editor de c&oacute;digo en el explorador de paquetes 
+  veremos la clase que acabamos de crear:</p>
+<div align="center"> <img src="imagenes/entornos/eclipse14.gif" width="205" height="166"> 
+  <p>Aqu&iacute; podemos ver la estructura de directorios de nuestro proyecto, 
+    los paquetes y las clases de nuestra aplicaci&oacute;n, y las librer&iacute;as 
+    utilizadas.</p>
+</div>
+<p>Una vez hayamos creado todas las clases necesarias desde Eclipse, y hayamos 
+  escrito el c&oacute;digo fuente, deberemos volver a WTK para compilar y ejecutar 
+  nuestra aplicaci&oacute;n.</p>
+<p><strong>Integracci&oacute;n con Antenna</strong></p>
+<p>Para no tener que utilizar dos herramientas por separado (WTK y Eclipse), podemos 
+  aprovechar la integraci&oacute;n de <em>ant</em> con Eclipse para compilar y 
+  ejecutar las aplicaciones J2ME utilizando las tareas de <em>Antenna</em>. </p>
+<p>Para poder utilizar estas tareas deberemos configurar <em>Antenna</em> dentro 
+  de Eclipse, para lo cual debemos ir a <strong>Window &gt; Preferences</strong>, 
+  y dentro de la ventana de preferencias seleccionar las preferencias de <em>Runtime</em> 
+  de Ant:</p>
+<div align="center"><img src="imagenes/entornos/ant1.gif" width="606" height="405"> 
+</div>
+<p>Aqu&iacute; deberemos a&ntilde;adir como entrada adicional de <em>classpath</em> 
+  el fichero JAR de <em>Antenna</em>. Una vez hecho esto podremos utilizar las 
+  tareas de <em>Antenna</em> dentro de los ficheros de <em>ant</em>.</p>
+<p>NOTA: Para que <em>ant</em> funcione correctamente desde dentro de Eclipse 
+  es necesario a&ntilde;adir al classpath de <em>ant</em> (<strong>Runtime classpath</strong> 
+  de la ventana anterior) la librer&iacute;a <code>tools.jar</code> que podemos 
+  encontrar dentro del directorio <code>${JAVA_HOME}$/lib</code>.</p>
+<p>Ahora tenemos que crear el fichero de <em>ant</em>. Para ello seleccionamos 
+  <strong>New &gt; File</strong>, para crear un fichero gen&eacute;rico. Llamaremos 
+  al fichero <code>build.xml</code>, y escribiremos en &eacute;l todas las tareas 
+  necesarias para compilar y ejecutar la aplicaci&oacute;n, como vimos en el punto 
+  de <em>Antenna</em>. Una vez escrito este fichero lo grabaremos.</p>
+<p>Ahora debemos ir al panel de <strong>Ant</strong> dentro de Eclipse. Si no 
+  tenemos este panel iremos a <strong>Window &gt; Show view </strong>para mostrarlo. 
+  Dentro de este panel pulsaremos sobre el bot&oacute;n para a&ntilde;adir un 
+  <em>buildfile</em>, seleccionando el fichero que acabamos de crear, y una vez 
+  a&ntilde;adido veremos en ese panel la lista de los posibles objetivos que hay 
+  definidos en el fichero. Podremos desde este mismo panel ejecutar cualquiera 
+  de los objetivos, pudiendo de esta forma compilar y ejecutar la aplicaci&oacute;n 
+  directamente desde el entorno.</p>
+<div align="center"><img src="imagenes/entornos/ant2.gif" width="185" height="157"> 
+</div>
+<p><strong>EclipseME</strong></p>
+<p>EclipseME es un <em>plugin</em> realizado por terceros que nos facilitar&aacute; 
+  la creaci&oacute;n de aplicaciones J2ME desde Eclipse. </p>
+<p>Lo primero que debemos hacer es instalar el <em>plugin</em>, descomprimi&eacute;ndolo 
+  en el directorio <code>${ECLIPSE_HOME}/plugins</code>. Una vez hecho esto, deberemos 
+  reiniciar el entorno, y entonces deberemos ir a <strong>Window &gt; Preferences</strong> 
+  para configurar el <em>plugin</em>:</p>
+<div align="center"><img src="imagenes/entornos/eme1.gif" width="635" height="364"> 
+</div>
+<p>En el apartado de configuraci&oacute;n de J2ME, dentro del subapartado <strong>Platform 
+  Components</strong>, deberemos especificar el directorio donde tenemos instalado 
+  WTK. Para ello pulsamos con el bot&oacute;n derecho del rat&oacute;n sobre <strong>Wireless 
+  Toolkits</strong> y seleccionamos la opci&oacute;n <strong>Add Wireless Toolkit</strong>. 
+  Nos mostrar&aacute; la siguiente ventana, en la que deberemos seleccionar el 
+  directorio donde se encuentra WTK:</p>
+<div align="center"><img src="imagenes/entornos/eme2.gif" width="438" height="275"> 
+</div>
+<p> Una vez a&ntilde;adido un <em>toolkit</em>, se mostrar&aacute;n los componentes 
+  a&ntilde;adidos en la ventana de configuraci&oacute;n:</p>
+<div align="center"><img src="imagenes/entornos/eme3.gif" width="635" height="360"> 
+</div>
+<p>De esta forma vemos que al a&ntilde;adir WTK 2.1 hemos a&ntilde;adido soporte 
+  para los perfiles MIDP 1.0 y 2.0, y para las configuraciones CLDC 1.0 y 1.1. 
+  Podremos configurar varios <em>toolkits</em>. Por ejemplo, podemos tener configuradas 
+  las distintas versiones de WTK (1.0, 2.0, 2.1 y 2.2) para utilizar la que convenga 
+  en cada momento. Una vez hayamos terminado de configurar los <em>toolkits</em>, 
+  pulsaremos <strong> OK</strong> para cerrar esta ventana.</p>
+<p>Una vez configurado, podremos pulsar sobre <strong>New</strong>, donde encontraremos 
+  disponibles asistentes para crear aplicaciones J2ME:</p>
+<div align="center"><img src="imagenes/entornos/eme4.gif" width="500" height="432"> 
+</div>
+<p>Lo primero que haremos ser&aacute; crear la <em>suite</em> (proyecto). Seleccionamos 
+  <strong>J2ME Midlet Suite</strong> y pulsamos <strong>Next</strong> para comenzar 
+  con el asistente de creaci&oacute;n de la <em>suite</em> J2ME:</p>
+<div align="center"><img src="imagenes/entornos/eme5.gif" width="500" height="319"> 
+</div>
+<p>Deberemos darle un nombre al proyecto que estamos creando. En este caso podemos 
+  utilizar el directorio por defecto, ya que no vamos a utilizar WTK para construir 
+  la aplicaci&oacute;n, la construiremos directamente desde Eclipse. Una vez asignado 
+  el nombre pulsamos sobre <strong>Next</strong> para ir a la siguiente ventana:</p>
+<div align="center"><img src="imagenes/entornos/eme6.gif" width="500" height="319"> 
+</div>
+<p>Aqu&iacute; podemos elegir la versi&oacute;n de MIDP para la que queremos programar, 
+  siempre que tengamos instalado el WTK correspondiente para cada una de ellas. 
+  Una vez elegida la versi&oacute;n para la que queremos desarrollar pulsamos 
+  <strong>Finish</strong>, con lo que habremos terminado de configurar nuestro 
+  proyecto. En este caso no hace falta que especifiquemos las librer&iacute;as 
+  de forma manual, ya que el asistente las habr&aacute; configurado de forma autom&aacute;tica. 
+</p>
+<p>Una vez creado el proyecto, podremos a&ntilde;adir MIDlets u otras clases Java. 
+  Pulsando sobre <strong>New</strong> veremos los elementos que podemos a&ntilde;adir 
+  a la <em>suite</em>:</p>
+<div align="center"><img src="imagenes/entornos/eme7.gif" width="500" height="462"> 
+</div>
+<p>Si queremos crear un MIDlet, podremos utilizar la opci&oacute;n <strong>J2ME 
+  Midlet</strong> y pulsar <strong>Next</strong>, con lo que se mostrar&aacute; 
+  la siguiente ventana para introducir los datos del MIDlet:</p>
+<div align="center"></div>
+<div align="center"><img src="imagenes/entornos/eme8.gif" width="515" height="576"> 
+</div>
+<p>Aqu&iacute; deberemos dar el nombre del paquete y el nombre de la clase de 
+  nuestro MIDlet. Pulsando sobre <strong>Finish</strong> crear&aacute; el esqueleto 
+  de la clase correspondiente al MIDlet, donde nosotros podremos insertar el c&oacute;digo 
+  necesario. </p>
+<p>En el explorador de paquetes podemos ver las clases creadas, la librer&iacute;a 
+  utilizada y el fichero JAD del proyecto. Pinchando sobre el fichero JAD se mostrar&aacute; 
+  en el editor la siguiente ficha con los datos de la <em>suite</em>:</p>
+<div align="center"><img src="imagenes/entornos/eme9.gif" width="446" height="273"> 
+</div>
+<p>Aqu&iacute; deberemos introducir la informaci&oacute;n necesaria, sobre los 
+  datos de la <em>suite</em> (<strong>Required</strong>) y los MIDlets que hayamos 
+  creado en ella (en la pesta&ntilde;a <strong>Midlets</strong>). Podemos ver 
+  que, cuando creemos un MIDlet mediante el asistente que acabamos de utilizar 
+  para la creaci&oacute;n de MIDlets, los datos del MIDlet creado se a&ntilde;aden 
+  autom&aacute;ticamente al JAD.</p>
+<p>No es necesario compilar el proyecto manualmente, ya que Eclipse se ocupar&aacute; 
+  de ello. Cuando queramos ejecutarlo, podemos seleccionar en el explorador de 
+  paquetes el MIDlet que queramos probar y pulsar sobre el bot&oacute;n <strong>Run 
+  &gt; Emulated J2ME Midlet</strong>:</p>
+<div align="center"><img src="imagenes/entornos/eme10.gif" width="319" height="164"> 
+</div>
+<p>Esto abrir&aacute; nuestro MIDlet en el emulador que se haya establecido como 
+  emulador por defecto del <em>toolkit</em> utilizado. Si queremos tener un mayor 
+  control sobre c&oacute;mo se ejecuta nuestra aplicaci&oacute;n, podemos utilizar 
+  la opci&oacute;n <strong>Run...</strong> que nos mostrar&aacute; la siguiente 
+  ventana:</p>
+<div align="center"><img src="imagenes/entornos/eme11.gif" width="668" height="401"> 
+</div>
+<p>En esta ventana pulsaremos sobre <strong>Wireless Toolkit Emulator</strong> 
+  y sobre <strong>New</strong> para crear una nueva configuraci&oacute;n de ejecuci&oacute;n 
+  sobre los emuladores de J2ME. Dentro de esta configuraci&oacute;n podremos seleccionar 
+  el emulador dentro de la pesta&ntilde;a <strong>Device</strong>, y una vez seleccionado 
+  ya podremos pulsar sobre <strong>Run</strong> para ejecutar la aplicaci&oacute;n.</p>
+<h3>2.5.2. NetBeans</h3>
+<p>Con Eclipse hemos visto un entorno bastante ligero para la escritura del c&oacute;digo. 
+  Vamos a ver ahora un entorno m&aacute;s completo tambi&eacute;n de libre distribuci&oacute;n. 
+  Se trata de NetBeans, versi&oacute;n de libre distribuci&oacute;n del entorno 
+  de Sun Forte for Java, tambi&eacute;n conocido como Sun One Studio. </p>
+<p>NetBeans adem&aacute;s del editor integrado de c&oacute;digo, nos permitir&aacute; 
+  crear la GUI de las aplicaciones de forma visual, crear elementos para aplicaciones 
+  J2EE, como <em>servlets</em>, JSPs y <em>beans</em>, manejar conexiones a BDs, 
+  e integra su propio servidor de aplicaciones para poder probar las aplicaciones 
+  web entre otras cosas. El contar con todas estas caracter&iacute;sticas le hace 
+  ser un entorno bastante m&aacute;s pesado que el anterior, que necesitar&aacute; 
+  un mayor n&uacute;mero de recursos para ejecutarse correctamente.</p>
+<p>Al igual que Eclipse, el editor tambi&eacute;n nos permite autocompletar el 
+  c&oacute;digo, colorea la sintaxis para una mayor claridad y detecta algunos 
+  fallos conforme vamos escribiendo.</p>
+<p>Respecto a las aplicaciones MIDP, podemos encontrar <em>plugins</em> oficiales 
+  para desarrollar este tipo de aplicaciones desde el entorno. Adem&aacute;s, 
+  incluir&aacute; un depurador (<em>debugger</em>) con el que podremos depurar 
+  las aplicaciones para m&oacute;viles, cosa que no podemos hacer simplemente 
+  con WTK o con Eclipse.</p>
+<p>Tenemos una serie de <em>plugins</em> para a&ntilde;adir los asistentes y soporte 
+  necesario para los componentes MIDP y para instalar una versi&oacute;n de WTK 
+  integrada en el mismo entorno, por lo que no necesitar&iacute;amos instalar 
+  una versi&oacute;n externa. Tambi&eacute;n disponemos de <em>plugins</em> con 
+  distintos ofuscadores, que podemos instalar de forma opcional, de forma que 
+  podamos ofuscar el c&oacute;digo desde el mismo entorno.</p>
+<p>Una vez instalados estos <em>plugins</em>, pulsando sobre <strong>New...</strong> 
+  podemos crear diferentes elementos para las aplicaciones MIDP:</p>
+<div align="center"><img src="imagenes/entornos/nb1.gif" width="560" height="379"> 
+</div>
+<p>Vamos a comenzar creando la <em>suite</em>. Para ello seleccionamos <strong>MIDletSuite</strong> 
+  y pulsamos sobre <strong>Next</strong> para continuar con el asistente de creaci&oacute;n 
+  de la <em>suite</em>:</p>
+<div align="center"><img src="imagenes/entornos/nb2.gif" width="414" height="229"> 
+</div>
+<p>Debemos especificar un nombre para la <em>suite</em>. Escribiremos el nombre 
+  que queramos y pulsamos sobre <strong>Next</strong> para pasar a la siguiente 
+  ficha:</p>
+<div align="center"><img src="imagenes/entornos/nb3.gif" width="581" height="455"> 
+</div>
+<p>Aqu&iacute; podremos crear nuestro MIDlet principal para incluir en la <em>suite</em> 
+  si no tenemos ning&uacute;n MIDlet creado todav&iacute;a. Existen diferentes 
+  plantillas para MIDlets, que introducen cierta parte del c&oacute;digo por nosotros. 
+  Podemos seleccionar la plantilla <strong>MIDlet</strong> si queremos que se 
+  genere el esqueleto vac&iacute;o de un MIDlet, o <strong>HelloMIDlet</strong> 
+  si queremos que se genere un MIDlet de ejemplo que contenga el c&oacute;digo 
+  para mostrar el mensaje <em>&quot;Hola mundo&quot;</em>, cosa que nos puede 
+  servir para probar estas aplicaciones sin tener que introducir c&oacute;digo 
+  fuente nosotros. Deberemos adem&aacute;s darle un nombre al MIDlet que creemos, 
+  que debe constar del nombre del paquete y nombre de la clase. Pulsamos sobre 
+  <strong>Next</strong> para continuar:</p>
+<div align="center"><img src="imagenes/entornos/nb4.gif" width="551" height="253"> 
+</div>
+<p>Ahora deberemos introducir el nombre que queremos darle al MIDlet, y de forma 
+  opcional el icono con el que se identificar&aacute; el MIDlet. Una vez hecho 
+  esto ya podremos pulsar sobre <strong>Finish</strong> con lo que habremos terminado 
+  de crear la <em>suite</em>. Podremos ver en el explorador de NetBeans los elementos 
+  que se han creado.</p>
+<p>Dentro del entorno tenemos tres pesta&ntilde;as como las siguientes:</p>
+<div align="center"> <img src="imagenes/entornos/nb16.gif" width="185" height="57"> 
+  <p>Para editar el c&oacute;digo utilizaremos la vista de edici&oacute;n, teniendo 
+    seleccionada la primera pesta&ntilde;a (<strong>Editing</strong>). La segunda 
+    (<strong>GUI Editing</strong>) nos servir&aacute; para crear de forma visual 
+    la GUI de las aplicaciones AWT y Swing, por lo que no nos servir&aacute; para 
+    el desarrollo de aplicaciones J2ME. La tercera (<strong>Debugging</strong>) 
+    la utilizaremos cuando estemos depurando el c&oacute;digo, tal como veremos 
+    m&aacute;s adelante.</p>
+  <p>Vamos a ver como trabajar en vista de edici&oacute;n para editar y probar 
+    nuestra aplicaci&oacute;n. En esta vista se mostrar&aacute; en la parte izquierda 
+    de la pantalla el explorador, donde podemos ver los elementos que hemos creado:</p>
+  <img src="imagenes/entornos/nb5.gif" width="297" height="185"> 
+  <p>Haciendo doble <em>click</em> sobre el elemento correspondiente a la <em>suite</em> 
+    podremos modificar sus propiedades. Se abrir&aacute; la siguiente ventana:</p>
+</div>
+<div align="center"><img src="imagenes/entornos/nb6.gif" width="608" height="485"> 
+</div>
+<p>Aqu&iacute; podremos modificar la lista de MIDlets que vamos a incluir en la 
+  <em>suite</em>. En la pesta&ntilde;a <strong>Jar Contents</strong> podremos 
+  seleccionar todos los elementos que vamos a introducir en el JAR de la <em>suite</em>, 
+  como recursos, clases y librer&iacute;as externas. </p>
+<p>En la parte inferior el explorador tenemos el inspector de propiedades, donde 
+  podemos consultar o modificar las propiedades del elemento seleccionado actualmente 
+  en el explorador. Si tenemos seleccionado el elemento correspondientes a la 
+  <em>suite</em>, veremos las siguientes propiedades:</p>
+<div align="center"></div>
+<div align="center"><img src="imagenes/entornos/nb7.gif" width="296" height="186"> 
+</div>
+<p>Aqu&iacute; podremos modificar distintas propiedades de la <em>suite</em>, 
+  correspondientes a los datos que se incluir&aacute;n en los ficheros JAD y <code>MANIFEST.MF</code>. 
+  Adem&aacute;s, en la pesta&ntilde;a <strong>Execution</strong> podremos seleccionar 
+  el emulador en el que se va a ejecutar esta <em>suite</em> cuando la probemos. 
+  Tendremos disponibles los mismos emuladores que contenga el WTK, y podremos 
+  especificar la versi&oacute;n de WTK de la que queremos que coja los emuladores.</p>
+<p>Para ejecutar la <em>suite</em> en el emulador pulsaremos con el bot&oacute;n 
+  derecho sobre el elemento correspondiente a dicha <em>suite</em> en el explorador, 
+  y seleccionamos la opci&oacute;n <strong>Execute</strong>, con lo que la ejecutar&aacute; 
+  en el emulador seleccionado:</p>
+<div align="center"><img src="imagenes/entornos/nb8.gif" width="305" height="415"> 
+</div>
+<p>Otra forma de ejecutar la <em>suite</em> es, teniendo seleccionada la <em>suite</em> 
+  en el explorador, pulsar el bot&oacute;n de ejecuci&oacute;n (&oacute; F6):</p>
+<div align="center"><img src="imagenes/entornos/nb9.gif" width="21" height="24"> 
+</div>
+<p><strong>Depuraci&oacute;n</strong></p>
+<p>En lugar de simplemente ejecutar la aplicaci&oacute;n para probarla, si queremos 
+  localizar fallos en ella, podemos utilizar el depurador que lleva integrado 
+  NetBeans. Podemos establecer puntos de ruptura (<em>breakpoints</em>) en el 
+  c&oacute;digo para que cuando la ejecuci&oacute;n llegue a ese lugar se detenga, 
+  permiti&eacute;ndonos ejecutar paso a paso y ver detenidamente lo que ocurre. 
+  Para establecer un punto de ruptura pincharemos sobre la banda gris a la izquierda 
+  de la l&iacute;nea donde queremos que se detenga, quedando marcada de la siguiente 
+  forma:</p>
+<div align="center"><img src="imagenes/entornos/nb10.gif" width="525" height="103"> 
+</div>
+<p>Para ejecutar la aplicaci&oacute;n en modo depuraci&oacute;n utilizaremos los 
+  siguientes botones:</p>
+<div align="center"><img src="imagenes/entornos/nb11.gif" width="93" height="24"> 
+</div>
+<p>El primero de ellos nos servir&aacute; para comenzar la ejecuci&oacute;n hasta 
+  que llegue un punto de ruptura. Una vez se produzca se detendr&aacute; el programa 
+  y podremos ir ejecutando instrucciones paso a paso utilizando el bot&oacute;n 
+  correspondiente en la barra de botones anterior. Se mostrar&aacute; con una 
+  flecha verde la l&iacute;nea que se va a ejecutar en cada momento, como se muestra 
+  a continuaci&oacute;n:</p>
+<div align="center"><img src="imagenes/entornos/nb12.gif" width="507" height="100"> 
+</div>
+<p>Mientras se ejecuta el programa podemos ver el estado de la memoria y de las 
+  llamadas a m&eacute;todos en la ventana del depurador. Para ello tendremos que 
+  estar en vista de depuraci&oacute;n (pesta&ntilde;a <strong>Debugger</strong> 
+  del entorno). Veremos la siguiente informaci&oacute;n:</p>
+<div align="center"><img src="imagenes/entornos/nb13.gif" width="351" height="608"> 
+</div>
+<p>Aqu&iacute; podremos ver los valores que toma cada variable conforme se ejecuta 
+  el c&oacute;digo, lo cual nos facilitar&aacute; la detecci&oacute;n de fallos 
+  en nuestro programas. </p>
+<p><strong>Librer&iacute;as adicionales</strong></p>
+<p>Las librer&iacute;as que se utilizan al compilar y ejecutar las aplicaciones 
+  MIDP son las librer&iacute;as que aporte el emulador seleccionado, al igual 
+  que ocurr&iacute;a con WTK. Sin embargo, conforme editamos el c&oacute;digo 
+  s&oacute;lo cuenta con que estemos utilizando la API de MIDP b&aacute;sica, 
+  por lo que todos los elementos que incluyamos de librer&iacute;as adicionales 
+  nos los marcar&aacute; como err&oacute;neos, y no nos permitir&aacute; autocompletar 
+  los nombres para ellos.</p>
+<p>Para que reconozca estos elementos correctamente deberemos a&ntilde;adir estas 
+  librer&iacute;as a los sistemas de ficheros montados en el entorno. Para ello 
+  seleccionamos montar un sistema de ficheros desde un archivo, como vemos en 
+  la siguiente figura, de forma que nos permita seleccionar el fichero JAR correspondiente 
+  a la librer&iacute;a que queremos a&ntilde;adir.</p>
+<div align="center"><img src="imagenes/entornos/nb14.gif" width="309" height="168"> 
+</div>
+<p>Una vez montada la librer&iacute;a JAR, podremos verla en el explorador. Ahora 
+  considerar&aacute; que esa librer&iacute;a est&aacute; en el <em>classpath</em> 
+  y nos permitir&aacute; utilizar sus elementos en el editor de c&oacute;digo 
+  sin mostrar errores. Podremos navegar por los elementos de la librer&iacute;a 
+  dentro de explorador:</p>
+<div align="center"><img src="imagenes/entornos/nb15.gif" width="296" height="400"> 
+</div>
+<p>Esto ser&aacute; suficiente si la librer&iacute;a corresponde a una API disponible 
+  en el tel&eacute;fono m&oacute;vil, como puede ser MMAPI, WMA y APIs propietarias 
+  de Nokia.</p>
+<p>Si lo que queremos es a&ntilde;adir una librer&iacute;a al fichero JAR de la 
+  aplicaci&oacute;n para introducirla en el m&oacute;vil junto a la aplicaci&oacute;n, 
+  lo primero que haremos es montarla como acabamos de ver. Una vez montada, podemos 
+  ir a la ventana de edici&oacute;n de la <em>suite</em> como hemos visto antes 
+  (haciendo doble <em>click</em> sobre la <em>suite</em>), y en la pesta&ntilde;a 
+  <strong>Jar Contents</strong> podremos a&ntilde;adir las librer&iacute;as montadas 
+  a nuestro JAR.</p>
+<h3>2.5.3. Otros entornos</h3>
+<p>A parte de los entornos que hemos visto, existen numerosos IDEs para desarrollo 
+  con J2ME, la mayor&iacute;a de ellos de pago. A continuaci&oacute;n vamos a 
+  ver brevemente los m&aacute;s destacados.</p>
+<p><strong>Sun One Studio ME</strong></p>
+<p>Se trata de la versi&oacute;n ME (<em>Micro Edition</em>) del entorno de desarrollo 
+  de Sun, Sun One Studio, anteriormente llamado Forte for Java. Esta versi&oacute;n 
+  ME est&aacute; dirigida a crear aplicaciones J2ME, e incluye todo el software 
+  necesario para realizar esta tarea, no hace falta instalar por separado el WTK 
+  ni otras herramientas.</p>
+<p>El entorno es muy parecido a NetBeans. Podemos descargar una versi&oacute;n 
+  de prueba sin ninguna limitaci&oacute;n. Una ventaja de este entorno es que 
+  podemos integrarlo con otros kits de desarrollo como por ejemplo el kit de desarrollo 
+  de Nokia.</p>
+<p><strong>JBuilder y MobileSet</strong></p>
+<p>Podemos utilizar tambi&eacute;n el entorno de Borland, JBuilder, con la extensi&oacute;n 
+  MobileSet. A partir de la versi&oacute;n 9 de JBuilder tenemos una edici&oacute;n 
+  Mobile para trabajar con aplicaciones J2ME directamente sin tener que instalar 
+  ninguna extensi&oacute;n. Podemos descargar de forma gratuita la versi&oacute;n 
+  personal del entorno JBuilder, pero tiene el inconveniente de estar bastante 
+  m&aacute;s limitada que las versiones de pago.</p>
+<p>Este entorno puede tambi&eacute;n integrarse con el kit de desarrollo de Nokia. 
+  Adem&aacute;s como caracter&iacute;stica adicional podremos crear de forma visual 
+  la GUI de las aplicaciones m&oacute;viles. Esta caracter&iacute;stica no est&aacute; 
+  muy extendida por este tipo de entornos debido a la simplicidad de las GUIs 
+  para m&oacute;viles.</p>
+<p><strong>JDeveloper y J2ME Plugin</strong></p>
+<p>El entorno de desarrollo de Oracle, JDeveloper, est&aacute; dedicado principalmente 
+  a la creaci&oacute;n de aplicaciones J2EE, permiti&eacute;ndonos crear un gran 
+  n&uacute;mero de componentes Java, como <em>servlets</em>, JSPs, EJBs, servicios 
+  web, etc. Para facilitar la tarea de creaci&oacute;n de estos componentes, automatizando 
+  todo lo posible, utiliza APIs propietarias de Oracle.</p>
+<p>Podemos trabajar directamente en vista de dise&ntilde;o, utilizar distintos 
+  patrones de dise&ntilde;o para desarrollar las aplicaciones web, etc. Tiene 
+  integrado un servidor de aplicaciones propio para probar las aplicaciones en 
+  modo local, y nos permite establecer conexiones a BDs y a servidores de aplicaciones 
+  para realizar el despliegue de estas aplicaciones.</p>
+<p>Aunque est&aacute; principalmente dedicado para aplicaciones web con J2EE, 
+  tambi&eacute;n podemos utilizarlo para aplicaciones J2SE. Adem&aacute;s tambi&eacute;n 
+  podemos encontrar un <em>plugin</em> para realizar aplicaciones J2ME, permiti&eacute;ndonos 
+  crear MIDlets y <em>suites</em> mediante asistentes, y ejecutar las aplicaciones 
+  directamente en emuladores. </p>
+<p>Podemos descargar de forma gratuita una versi&oacute;n de prueba de este entorno 
+  de la web sin limitaciones.</p>
+<p><strong>Websphere Studio Device Developer</strong></p>
+<p>Se trata de un entorno de IBM basado en Eclipse, por lo que tiene una interfaz 
+  similar. Este entorno esta dedicado a la programaci&oacute;n de aplicaciones 
+  para dispositivos m&oacute;viles. Integra los asistentes necesarios para la 
+  creaci&oacute;n de los componentes de aplicaciones MIDP, as&iacute; como las 
+  herramientas de desarrollo necesarias y nos permite probar la aplicaci&oacute;n 
+  directamente en emuladores desde el mismo entorno.</p>
+<p>Podemos encontrar en la web una versi&oacute;n de prueba sin limitaciones para 
+  descargar.</p>
+<p><strong>Codewarrior Wireless Studio</strong></p>
+<p>Este es otro entorno bastante utilizado tambi&eacute;n para el desarrollo de 
+  aplicaciones para m&oacute;viles. Est&aacute; desarrollado por Metrowerks y 
+  se puede encontrar disponible para un gran n&uacute;mero de plataformas distintas. 
+  Existe una versi&oacute;n de evaluaci&oacute;n limitada a 30 d&iacute;as de 
+  uso que puede ser encargada desde la web.</p>
+</body>
+</html>
