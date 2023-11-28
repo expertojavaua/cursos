@@ -1,0 +1,1054 @@
+<html>
+<head>
+<title>Tema 3: Interfaz gr&aacute;fica</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h2><span class="section">3.4. Gr&aacute;ficos y animaci&oacute;n</span> </h2>
+<p>Hasta ahora hemos visto la creaci&oacute;n de aplicaciones con una interfaz 
+  gr&aacute;fica a partir de una serie de componentes definidos en la API de AWT 
+  y de Swing (ventanas, botones, campos de texto, etc).</p>
+<p>En este punto veremos como dibujar nuestros propios gr&aacute;ficos directamente 
+  en pantalla. Para ello Java nos proporciona acceso al contexto gr&aacute;fico 
+  del &aacute;rea donde vayamos a dibujar, permiti&eacute;ndonos a trav&eacute;s 
+  de &eacute;ste modificar los pixels de este &aacute;rea, dibujar una serie de 
+  figuras geom&eacute;tricas, as&iacute; como volcar im&aacute;genes en ella.</p>
+<h3 class="subsection">3.4.1. Gr&aacute;ficos en AWT</h3>
+<p>Para dibujar gr&aacute;ficos en un &aacute;rea de la pantalla, AWT nos ofrece 
+  un objeto con el contexto gr&aacute;fico de dicha &aacute;rea, perteneciente 
+  a la clase <strong>Graphics</strong>. Este objeto nos ofrece una serie de m&eacute;todos 
+  que nos permiten dibujar distintos elementos en pantalla. M&aacute;s adelante 
+  veremos con detalle los m&eacute;todos m&aacute;s importantes.</p>
+<p>Este objeto <strong>Graphics</strong> nos lo deber&aacute; proporcionar AWT 
+  en el momento en que vayamos a dibujar, ya que no podremos obtenerlo por nuestra 
+  cuenta de ninguna otra forma.</p>
+<p>Para dibujar en pantalla cualquier componente AWT, estos componentes proporcionan 
+  dos m&eacute;todos: <strong>paint(Graphics g)</strong> y <strong>update(Graphics 
+  g)</strong>. </p>
+<p>Estos m&eacute;todos ser&aacute;n invocados por AWT cuando necesite dibujar 
+  su contenido en pantalla. Por ejemplo, cuando la ventana se muestre por primera 
+  vez, AWT invocar&aacute; al m&eacute;todo <strong>paint(Graphics g)</strong> 
+  de todos los componentes AWT que contenga la aplicaci&oacute;n, de forma que 
+  estos se dibujen en pantalla. Cuando una aplicaci&oacute;n minimizada se maximice, 
+  o una aplicaci&oacute;n que estaba total o parcialmente tapada por otra pase 
+  a primer plano de nuevo, tambi&eacute;n podr&aacute; ser necesario invocar dicho 
+  m&eacute;todo para volver a dibujar los componentes de la ventana.</p>
+<p>Cada componente AWT definir&aacute; su propio m&eacute;todo <strong>paint(Graphics 
+  g)</strong> para dibujar su contenido. Por ejemplo, un <em>Button</em> dibujar&aacute; 
+  en pantalla la forma del bot&oacute;n y el texto. Si creamos una subclase de 
+  estos componentes y sobrescribimos su m&eacute;todo <strong>paint(Graphics g)</strong> 
+  con un m&eacute;todo propio, dentro de &eacute;l podremos utilizar el objeto 
+  de contexto gr&aacute;fico <strong>Graphics</strong> para dibujar en el &aacute;rea 
+  de dicho componente.</p>
+<p>La mayor&iacute;a de los componentes tienen ya definido su propio comportamiento 
+  y apariencia, por lo que no deberemos sobrescribir este m&eacute;todo ya que 
+  el componente dejar&iacute;a de funcionar correctamente. Sin embargo, hay un 
+  componente dise&ntilde;ado para que el usuario pueda utilizarlo como &aacute;rea 
+  de dibujo, este es el caso del <strong>Canvas</strong>. Este componente simplemente 
+  comprende un &aacute;rea vac&iacute;a de la pantalla, en la que nosotros podremos 
+  dibujar nuestros propios gr&aacute;ficos sobrescribiendo su m&eacute;todo <strong>paint(Graphics 
+  g)</strong>. Sobrescribiremos el m&eacute;todo de la siguiente forma:</p>
+<pre class="codigo">public class MiCanvas <strong>extends Canvas</strong> {
+	public void <strong>paint(Graphics g)</strong> {
+		// Dibujamos en el área del canvas
+		// usando el objeto g proporcionado
+	}
+}</pre>
+<p>Con esto en la clase MiCanvas hemos creado un componente propio en el que nosotros 
+  controlamos lo que se dibuja en pantalla. Podremos a&ntilde;adir este componente 
+  a nuestra aplicaci&oacute;n de la misma forma que a&ntilde;adimos cualquier 
+  otro componente AWT:</p>
+<pre class="codigo">MiCanvas mc = <strong>new MiCanvas()</strong>;
+panel.<strong>add</strong>(mc);</pre>
+<p>Hemos de recordar que no podemos controlar cuando se invoca el m&eacute;todo 
+  <strong>paint(Graphics g)</strong>, est&eacute; m&eacute;todo ser&aacute; invocado 
+  por AWT en el momento en el que el SO necesite que la ventana sea redibujada. 
+  En &eacute;l simplemente definimos como se dibujar&aacute; el contenido de nuestro 
+  componente en pantalla, y AWT ya se encargar&aacute; de invocarlo cuando sea 
+  necesario.</p>
+<h3>3.4.2 Contexto gr&aacute;fico: Graphics</h3>
+<p>El objeto <strong>Graphics</strong> nos permitir&aacute; acceder al contexto 
+  gr&aacute;fico de un determinado componente y a trav&eacute;s de &eacute;l dibujar 
+  en su &aacute;rea en pantalla. Vamos a ver ahora como dibujar utilizando dicho 
+  objeto.</p>
+<h4>3.4.2.1 Atributos</h4>
+<p>El contexto gr&aacute;fico tendr&aacute; asociado el color del l&aacute;piz 
+  que usamos en cada momento para dibujar, as&iacute; como la fuente de texto 
+  que se utilizar&aacute; en el caso de que dibujemos una cadena de texto. Para 
+  consultar o modificar el color o la fuente asociadas al contexto gr&aacute;fico 
+  se proporcionan los siguientes m&eacute;todos:</p>
+<ul>
+  <li><strong>Color getColor() </strong>/<strong> setColor(Color c)</strong>: 
+    Obtiene/Establece el color del l&aacute;piz en el contexto gr&aacute;fico. 
+    Deberemos utilizar un objeto de la clase <strong>Color</strong> para especificar 
+    el color que queremos establecer. Los objetos <strong>Color</strong> pueden 
+    ser construidos a partir de las componentes RGB del color deseado, o bien 
+    utilizar como color alguno de los colores predefinidos como constantes en 
+    la misma clase <strong>Color</strong>.</li>
+  <li><strong>Font getFont() </strong>/<strong> setFont (Font f)</strong>: Obtiene 
+    /Establece la fuente que se utilizar&aacute; para dibujar texto. Utilizaremos 
+    la clase <strong>Font</strong> para especificar la fuente de texto que vamos 
+    a utilizar.</li>
+  <li><strong>setPaintMode()</strong> / <strong>setXORMode(Color c)</strong>: 
+    Establece el modo de dibujo. El modo <strong>Paint</strong> dibuja directamente 
+    en el &aacute;rea con el color actual, sobrescribiendo con este color el valor 
+    anterior de los pixels sobre los que se dibuja. El modo <strong>XOR</strong> 
+    realiza una operaci&oacute;n XOR entre el color del nuevo pixel y el que habia 
+    antes en esa posici&oacute;n, dibujando el resultado de dicha operaci&oacute;n. 
+    M&aacute;s adelante veremos la utilidad de este modo.</li>
+</ul>
+<p>Una vez establecidos estos atributos en el contexto gr&aacute;fico, podremos 
+  dibujar en &eacute;l una serie de elementos utilizando una serie de m&eacute;todos 
+  de <strong>Graphics</strong>. Estos m&eacute;todos comienzan por <strong>drawXXXX</strong> 
+  para dibujar el contorno de una determinada forma, o <strong>fillXXXX</strong> 
+  para dibujar dicha forma con relleno. </p>
+<p>El sistema de coordenadas del &aacute;rea en pantalla tendr&aacute; la coordenada 
+  (0,0) en su esquina superior izquierda, y las coordenadas ser&aacute;n positivas 
+  hacia la derecha (coordenada x) y hacia abajo (coordenada y), tal como se muestra 
+  a continuaci&oacute;n:</p>
+<div align="center"><img src="imagenes/awtswing/scoord.gif" width="215" height="159" align="middle"></div>
+<p align="center" class="caption">Figura 1. Coordenadas del &aacute;rea de dibujo</p>
+<h4><strong>3.4.2.2 Figuras</strong></h4>
+<p>El contexto gr&aacute;fico nos ofrece una serie de m&eacute;todos para dibujar 
+  en &eacute;l las principales primitivas geom&eacute;tricas b&aacute;sicas:</p>
+<ul>
+  <li><strong>draw-</strong> / <strong>fillRect(int x, int y, int widh, int height)</strong>: 
+    Dibuja un rect&aacute;ngulo dadas sus coordenadas de inicio y el ancho y el 
+    alto. </li>
+  <li><strong>draw-</strong> / <strong>fillOval(int x, int y, int widh, int height)</strong>: 
+    Dibuja una elipse dadas las coordenadas de inicio y el ancho y el alto del 
+    rect&aacute;ngulo que la contiene. </li>
+  <li><strong>drawLine(int x1, int y1, int x2, int y2)</strong>: Dibuja una l&iacute;nea 
+    desde el punto <em>(x1,y1)</em> hasta <em>(x2,y2)</em>. </li>
+  <li><strong>draw-</strong> / <strong>fillPolygon(int [] xPoint, int [] yPoint, 
+    int nPoint)</strong>: Dibuja un pol&iacute;gono cerrado cuyos v&eacute;rtices 
+    tienen las coordenadas <em>(x,y)</em> especificadas en las listas <em>xPoint</em> 
+    e <em>yPoint</em> proporcionadas. </li>
+</ul>
+<p>Por ejemplo, el siguiente canvas aparecer&aacute; con un dibujo de un c&iacute;rculo 
+  rojo y un cuadrado verde:</p>
+<pre class="codigo">public class MiCanvas extends Canvas {
+	public void paint(Graphics g) {
+		g.<strong>setColor</strong>(Color.red);
+		g.<strong>fillOval</strong>(10,10,50,50);
+		g.<strong>setColor</strong>(Color.green);
+		g.<strong>fillRect</strong>(60,60,50,50);
+	}
+}</pre>
+<h4>3.4.2.3 Texto</h4>
+<p>A parte de dibujar figuras geom&eacute;tricas tambi&eacute;n podremos dibujar 
+  cadenas de texto. Para ello se proporciona el m&eacute;todo <strong>drawString(String 
+  s, int x, int y)</strong> que dibuja la cadena <em>s</em> en las coordenadas 
+  <em>(x,y)</em>. Este punto corresponder&aacute; al inicio de la cadena, en la 
+  l&iacute;nea de base del texto como se muestra a continuaci&oacute;n:</p>
+<div align="center"><img src="imagenes/awtswing/lbase.gif" width="212" height="58"></div>
+<p align="center" class="caption">Figura 2. L&iacute;nea de base del texto</p>
+<p>Con esto dibujaremos un texto en pantalla, pero podemos querer hacer por ejemplo 
+  que el texto sea sensible a pulsaciones del rat&oacute;n sobre &eacute;l. Lo 
+  &uacute;nico que nos proporciona AWT es la posici&oacute;n del rat&oacute;n 
+  dentro del &aacute;rea, por lo que para saber si est&aacute; sobre el texto 
+  tendremos que saber que regi&oacute;n ocupa el texto. Aqu&iacute; es donde encontramos 
+  el problema, seg&uacute;n la fuente, la cadena escrita, y el contexto donde 
+  la escribamos, el texto puede tener distintas dimensiones, y nosotros s&oacute;lo 
+  conocemos las coordenadas de comienzo. La soluci&oacute;n a esto la proporciona 
+  el objeto <strong>FontMetrics</strong>, que podemos obtener llamando al m&eacute;todo<strong> 
+  getFontMetrics(Font f)</strong> del contexto gr&aacute;fico o del componente 
+  AWT (ambos tipos de objetos contienen este m&eacute;todo). Este objeto nos dar&aacute; 
+  informaci&oacute;n sobre las m&eacute;tricas de dicha fuente en este contexto. 
+  De este objeto podemos sacar la siguiente informaci&oacute;n:</p>
+<ul>
+  <li><strong>int stringWidth(String s)</strong>: Nos devuelve el ancho que tendr&aacute; 
+    la cadena<i> s</i> en pixels.</li>
+  <li><strong>int getAscent()</strong> / <strong>int getMaxAscent()</strong>: 
+    Nos devuelve la altura t&iacute;pica o la m&aacute;xima altura respectivamente 
+    que tendr&aacute;n los caracteres (valores positivos).</li>
+  <li><strong>int getDescent()</strong> / <strong>int getMaxDescent()</strong>: 
+    Nos devuelve lo que descienden los car&aacute;cteres desde la l&iacute;nea 
+    de base, tanto el descenso t&iacute;pico como el m&aacute;ximo respectivamente 
+    (valores positivos).</li>
+</ul>
+<p>Con estas medidas podremos conocer exactamente los l&iacute;mites de una cadena 
+  de texto, tal como se muestra a continuaci&oacute;n:</p>
+<div align="center"><img src="imagenes/awtswing/fmetrics.gif" width="272" height="57"></div>
+<p align="center" class="caption">Figura 3. M&eacute;tricas del texto</p>
+<h4>3.4.2.4 Im&aacute;genes</h4>
+<p>Por &uacute;ltimo, un m&eacute;todo importante es el que nos permite volcar 
+  una imagen al &aacute;rea de dibujo. Las im&aacute;genes en Java se encapsulan 
+  en mediante la clase <strong>Image</strong>. Podemos o bien crearnos una imagen 
+  vacia para dibujar nosotros en ella, o cargar im&aacute;genes desde ficheros. 
+  Para cargar una imagen de un fichero en caso de un <strong>Applet</strong>, 
+  simplemente deberemos llamar al m&eacute;todo <strong>getImage(URL url)</strong> 
+  de la clase <strong>Applet</strong> que nos devolver&aacute; el objeto <strong>Image</strong> 
+  con la imagen cargada, que podr&aacute; estar en formato GIF, JPG o PNG. En 
+  el caso de una aplicaci&oacute;n deberemos seguir los siguientes pasos:</p>
+<p>Obtener la implementaci&oacute;n del toolkit de AWT a partir de cualquier componente 
+  AWT de nuestra aplicaci&oacute;n. Si tenemos una ventana con un canvas, tanto 
+  la ventana como el canvas nos servir&iacute;an dado que ambos son componentes 
+  AWT. Sobre el componente llamaremos al m&eacute;todo <strong>getToolkit()</strong> 
+  para obtener el objeto <strong>Toolkit</strong>:</p>
+<pre class="codigo">Canvas mc = new MiCanvas();
+Toolkit toolkit = mc.<strong>getToolkit()</strong>;</pre>
+<p>Tambi&eacute;n podemos obtener el toolkit por defecto si no podemos acceder 
+  a ning&uacute;n componente AWT:</p>
+<pre class="codigo">Toolkit toolkit = Toolkit.<b>getDefaultToolkit</b>();</pre>
+<p>Utilizar el m&eacute;todo <strong>createImage(String filename)</strong> del 
+  Toolkit para cargar la imagen del fichero de nombre <em>filename</em>:</p>
+<pre class="codigo">Image img = toolkit.<strong>createImage</strong>(&quot;foto.jpg&quot;);</pre>
+<p>Una vez obtenida la imagen podremos dibujarla en el contexto gr&aacute;fico 
+  con <strong>drawImage(Image img, int x, int y, ImageObserver obs)</strong>. 
+  Con esto dibujaremos la imagen <em>img</em> en las coordenadas <em>(x,y)</em> 
+  del &aacute;rea. Adem&aacute;s necesitamos proporcionar el objeto <strong>ImageObserver</strong> 
+  que se utilizar&aacute; para comunicarle cuando la imagen est&aacute; cargada 
+  del todo, y por lo tanto puede mostrarla por pantalla. Cualquier componente 
+  AWT capaz de mostrar imagenes implementar&aacute; la interfaz <b>ImageObserver</b>, 
+  por lo que podremos utilizarlo en la llamada a dicho m&eacute;todo. Por ejemplo, 
+  si dibujamos la imagen en un <strong>Canvas</strong>, utilizaremos el mismo 
+  <strong>Canvas</strong> como <strong>ImageObserver</strong> ya que es el componente 
+  en el que vamos a observar la imagen:</p>
+<pre class="codigo">public class MiCanvas extends Canvas {
+	public void paint(Graphics g) {
+		Toolkit toolkit = getToolkit();
+		Image img = toolkit.createImage(&quot;foto.jpg&quot;);
+
+		g.<strong>drawImage(img, 0, 0, this)</strong>;
+	}
+}
+</pre>
+<p>Si no necesitamos utilizar un <b>ImageObserver</b> podemos especificar <i>null 
+  </i>en este par&aacute;metro. Esto ser&aacute; &uacute;til cuando trabajemos 
+  con im&aacute;genes que sabemos que ya est&aacute;n cargadas, y cuando no tengamos 
+  la referencia al componente donde se va a dibujar la imagen.</p>
+<h4>3.4.2.5 Otros m&eacute;todos</h4>
+<p>Otros m&eacute;todos &uacute;tiles del contexto gr&aacute;fico son:</p>
+<ul>
+  <li><strong>clearRect(int x, int y, int width, int height)</strong>: Vacia el 
+    rect&aacute;ngulo especificado del &aacute;rea. El color del rect&aacute;ngulo 
+    ser&aacute; el del color de fondo del componente AWT (el contexto gr&aacute;fico 
+    no define color de fondo, este color es propio del componente AWT en el que 
+    se dibuja).</li>
+  <li><strong>clipRect(int x, int y, int width, int height)</strong>: Define un 
+    rect&aacute;ngulo de recorte. Cuando definimos un &aacute;rea de recorte en 
+    el contexto gr&aacute;fico, s&oacute;lo se dibujar&aacute;n en pantalla los 
+    pixels que caigan dentro de este &aacute;rea. El espacio que ocupa el componente 
+    en el que dibujamos es un &aacute;rea de recorte impuesta por el sistema. 
+    Nunca se dibujar&aacute;n los pixels que escribamos fuera de este espacio. 
+    Este m&eacute;todo establece un recorte en el &aacute;rea de recorte anterior, 
+    si ya existia un rect&aacute;ngulo de recorte, el nuevo rect&aacute;ngulo 
+    de recorte ser&aacute; la intersecci&oacute;n de ambos. Si queremos eliminar 
+    el &aacute;rea de recorte anterior deberemos usar el m&eacute;todo <strong>setClip(null)</strong>.</li>
+  <li><strong>copyArea(int x, int y, int width, int height, int dx, int dy)</strong>: 
+    Copia el &aacute;rea dentro del rect&aacute;ngulo especificado en las coordenadas 
+    de destino<em> (dx, dy)</em>.</li>
+</ul>
+<h3>3.4.3 Animaciones</h3>
+<p>Hasta ahora hemos visto como dibujar gr&aacute;ficos en pantalla, pero lo &uacute;nico 
+  que hacemos es definir un m&eacute;todo que se encargue de dibujar el contenido 
+  del componente, y ese m&eacute;todo ser&aacute; invocado cuando el sistema necesite 
+  dibujar la ventana. </p>
+<p>Sin embargo puede interesarnos cambiar din&aacute;micamente los gr&aacute;ficos 
+  de nuestro componente. Para ello deberemos indicar el momento en el que queremos 
+  que se redibujen los gr&aacute;ficos, ya que el sistema por si solo s&oacute;lo 
+  llamar&aacute; a <strong>paint(Graphics g)</strong> cuando sea necesario volver 
+  a dibujar la ventana porque su contenido se ha perdido, pero no lo llamar&aacute; 
+  cuando hayamos realizado cambios.</p>
+<h4>3.4.3.1 Redibujado del &aacute;rea</h4>
+<p>Para forzar que se redibuje el &aacute;rea del componente, deberemos llamar 
+  al m&eacute;todo <strong>repaint()</strong> del componente (del canvas por ejemplo). 
+  Con eso estamos solicitando al sistema que se repinte el componente, pero no 
+  lo repinta en el mismo momento en el que se llama. El sistema introducir&aacute; 
+  esta solicitud en la cola de ventanas de debe repintar, y cuando tenga tiempo 
+  repintar&aacute; su contenido.</p>
+<pre class="codigo">MiCanvas mc = new MiCanvas();
+...
+mc.<strong>repaint()</strong>;</pre>
+<p>En este caso para repintar el componente no llamar&aacute; a su m&eacute;todo 
+  <strong>paint(Graphics g)</strong>, sino al m&eacute;todo <strong>update(Graphics 
+  g)</strong>. Este es el m&eacute;todo que se encarga de actualizar los gr&aacute;ficos. 
+  Su implementaci&oacute;n por defecto consiste en borrar los gr&aacute;ficos 
+  actuales del &aacute;rea del componente, y llamar a <strong>paint(Graphics g)</strong> 
+  para pintarlo de nuevo.</p>
+<p>Imaginemos que estamos moviendo un rect&aacute;ngulo por pantalla. El rect&aacute;ngulo 
+  ir&aacute; cambiando de posici&oacute;n, y en cada momento lo dibujaremos en 
+  la posici&oacute;n en la que se encuentre. Pero si no borramos el contenido 
+  de la pantalla en el instante anterior, el rect&aacute;ngulo aparecer&aacute; 
+  en todos los lugares donde ha estado en instantes anteriores produciendo este 
+  efecto indeseable de dejar rastro. Por ello el m&eacute;todo <strong>update(Graphics 
+  g)</strong> vac&iacute;a todo el &aacute;rea del componente antes de invocar 
+  a <strong>paint(Graphics g)</strong> para que dibuje los gr&aacute;ficos en 
+  el instante actual.</p>
+<p><a href="ejemplos/graficos/flicker.htm">Ejemplo de efecto flicker</a></p>
+<p>Sin embargo, al estar vaciando y volviendo a dibujar en el componente, veremos 
+  en &eacute;ste un efecto parpadeo (<i>flicker</i>). Por ello, si queremos que 
+  nuestra aplicaci&oacute;n no muestre este aspecto de aplicaci&oacute;n <em>amateur</em>, 
+  deberemos sobrescribir el m&eacute;todo <strong>update(Graphics g)</strong> 
+  para que su &uacute;nica funci&oacute;n sea llamar a <strong>paint(Graphics 
+  g) </strong>sin vaciar previamente el &aacute;rea:</p>
+<pre class="codigo">public class MiCanvas {
+	public void <strong>update(Graphics g)</strong> {
+		paint(g);
+	}
+
+	public void paint(Graphics g) {
+		// Aqui dibujamos el contenido del componente
+	}
+}</pre>
+<p>Pero ahora nos encontramos con otros problemas. Al no borrar la pantalla los 
+  objetos pueden dejar rastro. Adem&aacute;s puede que queramos dibujar varios 
+  componentes en pantalla, y si los dibujamos uno detr&aacute;s de otro puede 
+  producirse el efecto poco deseable de ver como se va construyendo la imagen. 
+  Para evitar que esto ocurra y conseguir unas animaciones limpias, utilizaremos 
+  la t&eacute;cnica del <em>doble buffer</em>.</p>
+<p><a href="ejemplos/graficos/rastro.htm">Ejemplo de efecto rastro</a></p>
+<h4>3.4.3.2 T&eacute;cnica del doble buffer</h4>
+<p>La t&eacute;cnica del <em>doble buffer</em> consiste en dibujar todos los elementos 
+  que queremos mostrar en una imagen en memoria, y una vez se ha dibujado todo, 
+  volcarlo a pantalla como una unidad. De esta forma, mientras se va dibujando 
+  la imagen, como no se hace directamente en pantalla no veremos efectos de parpadeo 
+  al borrar el contenido anterior, ni veremos como se va creando la imagen, en 
+  pantalla se mostrar&aacute; la imagen cuando est&eacute; completa.</p>
+<p><a href="ejemplos/graficos/buffer.htm">Ejemplo de doble buffer</a></p>
+<p>Para utilizar esta t&eacute;cnica lo primero que deberemos hacer es crearnos 
+  el denominado <em>back buffer</em> que ser&aacute; el buffer en memoria donde 
+  dibujamos la imagen. Para implementarlo en Java utilizaremos una imagen (objeto 
+  <strong>Image</strong>) que tendremos en memoria, y sobre la que dibujaremos 
+  el contenido que queramos mostrar. Deberemos crear una imagen del mismo tama&ntilde;o 
+  del componente en el que vamos a dibujar. Para crear una imagen en blanco podemos 
+  usar el m&eacute;todo <strong>createImage(int width, int height) </strong>que 
+  se encuentra en cualquier componente AWT (<strong>Component</strong>), como 
+  por ejemplo nuestro canvas, y crea una imagen vacia con las dimensiones especificadas. 
+  Tendremos que crearla con las dimensiones del componente:</p>
+<pre class="codigo">Image backbuffer = <b>createImage</b>(getWidth(), getHeight());</pre>
+<p>Al igual que cada componente tiene un contexto gr&aacute;fico asociado en el 
+  que podemos dibujar, una imagen en memoria tambi&eacute;n tendr&aacute; su contexto 
+  gr&aacute;fico. Mientras el contexto gr&aacute;fico de los componentes hace 
+  referencia a la pantalla, el de una imagen har&aacute; referencia a un espacio 
+  de memoria en el que se almacena la imagen, pero la forma de dibujar en ambos 
+  se realizar de la misma forma a trav&eacute;s de la misma interfaz (objeto <b>Graphics</b>). 
+  Para obtener el contexto gr&aacute;fico de una imagen utilizaremos el m&eacute;todo 
+  <b>getGraphics()</b> de la misma:</p>
+<pre class="codigo">Graphics offScreen = backbuffer.<strong>getGraphics</strong>();</pre>
+<p>Una vez obtenido este contexto gr&aacute;fico, dibujaremos todo lo que queremos 
+  mostrar en &eacute;l, en lugar de hacerlo en pantalla. Una vez hemos dibujado 
+  todo el contenido en este contexto gr&aacute;fico, deberemos volcar la imagen 
+  a pantalla para que &eacute;sta se haga visible:</p>
+<pre class="codigo">g.<strong>drawImage</strong>(backbuffer, 0, 0, this);</pre>
+<p>La imagen conviene crearla una &uacute;nica vez, ya que la animaci&oacute;n 
+  puede redibujar frecuentemente, y si cada vez que lo hacemos creamos un nuevo 
+  objeto imagen estaremos malgastando memoria inutilmente. Es buena pr&aacute;ctica 
+  de programaci&oacute;n en Java instanciar nuevos objetos las m&iacute;nimas 
+  veces posibles, intentando reutilizar los que ya tenemos. </p>
+<p>Podemos ver como quedar&iacute;a nuestra clase ahora:</p>
+<pre class="codigo">public MiCanvas extends Canvas {
+
+	// Backbuffer
+	Image backbuffer = null;
+
+	// Ancho y alto del backbuffer
+	int width, height;
+
+	// Coordenadas del rectangulo dibujado
+	int x, y;
+
+	public void update(Graphics g) {
+		paint(g);
+	}
+
+	public void paint(Graphics g) {
+		// Solo creamos la imagen la primera vez 
+		// o si el componente ha cambiado de tamaño
+		if( backbuffer == null || 
+			width != getWidth() || 
+			height != getHeight() )
+		{
+			width = getWidth();
+			height = getHeight();
+			backbuffer = <strong>createImage</strong>(width, height);
+		}
+
+		Graphics offScreen = backbuffer.<strong>getGraphics</strong>();
+
+		// Vaciamos el área de dibujo
+
+		offScreen.<strong>clearRect</strong>(0,0,getWidth(), getHeight());
+
+		// Dibujamos el contenido en offScreen
+		offScreen.setColor(Color.red);
+		offScreen.fillRect(x,y,50,50);
+
+		// Volcamos el back buffer a pantalla
+		g.<strong>drawImage</strong>(backbuffer,0,0,this);
+	}
+}</pre>
+<p>En ese ejemplo se dibuja un rect&aacute;ngulo rojo en la posici&oacute;n <em>(x,y)</em> 
+  de la pantalla que podr&aacute; ser variable, tal como veremos a continuaci&oacute;n 
+  a&ntilde;adiendo a este ejemplo m&eacute;todos para realizar la animaci&oacute;n.</p>
+<h4>3.4.3.3 C&oacute;digo para la animaci&oacute;n</h4>
+<p>Si queremos hacer una animaci&oacute;n tendremos que ir cambiando ciertas propiedades 
+  de los objetos de la imagen (por ejemplo su posici&oacute;n) y solicitar que 
+  se redibuje tras cada cambio. El bucle para la animaci&oacute;n podr&iacute;a 
+  ser el siguiente:</p>
+<pre class="codigo">public class MiCanvas extends Canvas {
+	...
+	public void anima() {
+		// El rectangulo comienza en (10,10)
+		x = 10;
+		y = 10;
+
+		while(x &lt; 100) {
+			x++;
+			<strong>repaint</strong>();
+
+			try {
+				Thread.currentThread().sleep(100);
+			} catch(InterruptedException e) {}
+		}
+	}
+}</pre>
+<p>Con este c&oacute;digo de ejemplo veremos una animaci&oacute;n en la que el 
+  rect&aacute;ngulo que dibujamos partir&aacute; de la posici&oacute;n (10,10) 
+  y cada 100ms se mover&aacute; un pixel hacia la derecha, hasta llegar a la coordenada 
+  (100,10).</p>
+<p>Para ello s&oacute;lo tendremos que invocar el m&eacute;todo <em>anima()</em> 
+  de nuestro componente. Pero es importante no invocar este m&eacute;todo directamente 
+  desde cualquier respuesta a un evento, como puede ser la pulsaci&oacute;n de 
+  un boton:</p>
+<pre class="codigo">public void actionPerformed(ActionEvent e) {
+	// ¡¡¡ No hay que hacer esto !!!
+	mc.<strong>anima</strong>();
+}</pre>
+<p>&iquest;Por qu&eacute; no debemos hacer esto? Parece dificil ver que esto pueda 
+  causar alg&uacute;n problema, pero debemos pensar que Java tiene un hilo en 
+  el que se tratan los eventos que se van produciendo, y este mismo hilo ser&aacute; 
+  el que se encargue de repintar la pantalla cuando se lo solicitemos. Sin embargo, 
+  si desde este hilo llamamos al m&eacute;todo que realiza la animaci&oacute;n 
+  y &eacute;ste no devuelve el control hasta que la animaci&oacute;n no ha terminado, 
+  al no continuar el hilo no podr&aacute; repintar el contenido de la pantalla, 
+  por mucho que se lo pidamos dentro de nuestra funci&oacute;n de animaci&oacute;n. 
+  Esto producir&aacute; el efecto de no ver la animaci&oacute;n mientras se est&aacute; 
+  realizando, s&oacute;lo se actualizar&aacute; la pantalla una vez haya terminado 
+  la animaci&oacute;n, por lo tanto se producir&aacute; un salto desde el estado 
+  inicial hasta el estado final.</p>
+<p>Por lo tanto, si queremos hacer una animaci&oacute;n lo mejor ser&aacute; crear 
+  un hilo independiente que se encargue de realizar dicha animaci&oacute;n, y 
+  de esta manera el hilo de procesamiento de eventos pueda continuar realizando 
+  sus tareas mientras se ejecuta la animaci&oacute;n:</p>
+<pre class="codigo">public class MiCanvas extends Canvas implements <strong>Runnable</strong> {
+	...
+	public void <strong>run</strong>() {
+		anima();
+	}
+}</pre>
+<p>Ahora si que podremos invocar la animaci&oacute;n desde el c&oacute;digo de 
+  los eventos creando un hilo independiente que se encargue de ella:</p>
+<pre class="codigo">public void actionPerformed(ActionEvent e) {
+	// Así si que funciona
+	Thread t = new Thread(mc);
+	t.start();
+}</pre>
+<h4>3.4.3.4 Modo XOR</h4>
+<p>Si no queremos tener que sobrescribir la pantalla entera cada vez que se actualiza, 
+  podemos utilizar otra t&eacute;cnica que se basa en el modo XOR de dibujo para 
+  evitar que los objetos dejen rastro al ser modificados. </p>
+<p>Lo que haremos en este caso es activar el modo XOR mientras estemos modificando 
+  un objeto. Cada vez que realicemos un cambio en el objeto (movimiento, cambio 
+  de tama&ntilde;o o forma), lo que haremos ser&aacute; dibujar de nuevo el objeto 
+  en su posici&oacute;n anterior, de forma que al estar activado el modo XOR se 
+  borrar&aacute; el objeto, y a continuaci&oacute;n lo dibujamos en su nueva posici&oacute;n. 
+  Este modo es muy utilizado en programas de dibujo, mientras estamos dibujando 
+  figuras en pantalla.</p>
+<h3>3.4.4 API de Java 2D</h3>
+<p>Java 2D es una nueva API introducida a partir de JDK 1.2, que extiende AWT 
+  para proporcionar un extenso conjunto de funcionalidades para trabajar con gr&aacute;ficos 
+  2D, texto e im&aacute;genes. Aporta una serie de formas primitivas b&aacute;sicas 
+  con las que podremos trabajar.</p>
+<p>Adem&aacute;s de mostrar gr&aacute;ficos por pantalla, es capaz de sacarlos 
+  a trav&eacute;s de la impresora, utilizando un modelo uniforme de render para 
+  ambos casos.</p>
+<p>El mecanismo de render es el mismo que vimos en AWT para versiones anteriores 
+  de JDK, cuando el sistema necesita redibujar un componente, se invoca a su m&eacute;todo 
+  <strong>paint</strong> o <strong>update</strong>. Sin embargo, lo que se proporciona 
+  es un objeto <strong>Graphics2D</strong>, que extiende a <strong>Graphics</strong> 
+  proporcionando acceso a las nuevas funcionalidades de Java 2D.</p>
+<p>Adem&aacute;s, todos aquellos componentes de Swing derivados de <b>JComponent</b> 
+  implementan internamente el doble buffer, por lo que no tendremos que ocuparnos 
+  de hacerlo nosotros. Simplemente deberemos rellenar el c&oacute;digo del m&eacute;todo 
+  <b>paint</b>, borrando el contenido del contexto gr&aacute;fico que se nos proporciona, 
+  si fuese necesario, y dibujando los gr&aacute;ficos. Es importante hacer notar 
+  que no todos los componentes de Swing derivan de<b> JComponent</b>, como es 
+  el caso de <b>JFrame</b> por ejemplo, por lo que en este caso no implementar&aacute; 
+  internamente el doble buffer. Para saber si un componente deriva de &eacute;ste, 
+  simplemente tendremos que ir a la documentaci&oacute;n de la API de Java y en 
+  la p&aacute;gina de dicho componente veremos toda la jerarqu&iacute;a de sus 
+  ascendientes. </p>
+<p>Lo que deberemos hacer (siempre que trabajemos con la versi&oacute;n 1.2 de 
+  JDK o posteriores) ser&aacute; hacer una conversi&oacute;n cast del objeto <strong>Graphics</strong> 
+  proporcionado a un objeto <strong>Graphics2D</strong>. Esto es as&iacute; porque 
+  a los m&eacute;todos <strong>paint</strong> y <strong>update</strong> se les 
+  estar&aacute; proporcionando en realidad un objeto <strong>Graphics2D</strong>, 
+  aunque la referencia a &eacute;l sea de tipo <strong>Graphics</strong> por cuesti&oacute;n 
+  de mantener la compatibilidad con versiones anteriores. Si queremos utilizar 
+  las funcionalidades mejoradas que ofrece la nueva API de Java 2D, deberemos 
+  obtener el objeto<b> Graphics2D </b>de la siguiente forma:</p>
+<pre class="codigo">public void paint(Graphics g) {
+	<strong>Graphics2D</strong> g2 = <strong>(Graphics2D)</strong>g;
+}</pre>
+<p>Este objeto nos permitir&aacute; realizar un mayor n&uacute;mero de operaciones 
+  en el contexto gr&aacute;fico pudiendo as&iacute; obtener de forma sencilla 
+  unos gr&aacute;ficos mejorados.</p>
+<p>En este nuevo contexto gr&aacute;fico tendremos los siguiente atributos:</p>
+<ul>
+  <li><i>Paint</i>: Relleno de las figuras o texto dibujadas. En este caso el 
+    relleno no tiene porque ser un color s&oacute;lido. Tambi&eacute;n podr&aacute; 
+    ser un determinado patr&oacute;n o un gradiente. </li>
+  <blockquote> 
+    <div align="center"><img src="imagenes/awtswing/paint.gif" width="516" height="70"></div>
+    <p align="center" class="caption">Figura 4. Relleno de las figuras</p>
+  </blockquote>
+  <li><i>Font</i>: Fuente utilizada para dibujar texto.</li>
+  <li><i>Stroke</i>: Contorno de las figuras o texto dibujadas (l&aacute;piz). 
+    Podremos utilizar para el contorno lineas continuas o discontinuas, y distintos 
+    grosores de l&iacute;nea. </li>
+  <blockquote> 
+    <div align="center"><img src="imagenes/awtswing/stroke.gif" width="410" height="167"></div>
+    <p align="center" class="caption">Figura 5. Tipos de l&aacute;p&igrave;ces</p>
+  </blockquote>
+  <li><i>Transform</i>: Podremos realizar transformaciones con las figuras, texto 
+    o im&aacute;genes que dibujemos. Podremos utilizar aqu&iacute; cualquier transformaci&oacute;n 
+    af&iacute;n, por lo que podremos realizar traslaciones, rotaciones, escalados, 
+    desencajados, en resumen, cualquier transformaci&oacute;n que pueda ser definida 
+    por una matriz de transformaci&oacute;n 3x3.</li>
+  <li><i>Composite</i>: Se refiere a la forma de combinar las distintas figuras 
+    que dibujemos. Podremos hacer que al dibujar una figura sobre otra se produzcan 
+    diferentes efectos, como quedarse encima o debajo, o bien producirse una intersecci&oacute;n, 
+    uni&oacute;n o resta de figuras. </li>
+  <blockquote> 
+    <div align="center"><img src="imagenes/awtswing/composite.gif" width="428" height="198"></div>
+    <p align="center" class="caption">Figura 6. Composici&oacute;n de figuras</p>
+  </blockquote>
+  <li><i>Clip</i>: Realiza un recortado del contenido que dibujemos. Nos permite 
+    definir unos l&iacute;mites del &aacute;rea en la que queremos que se dibuje. 
+    Todo lo que quede fuera de este &aacute;rea no se dibujar&aacute; en pantalla. 
+    El &aacute;rea de recortado no se limita s&oacute;lo a rect&aacute;ngulos 
+    en este caso.</li>
+  <li><i>Calidad del render</i> <i>(RenderingHints)</i>: Aqu&iacute; podremos 
+    cambiar determinadas opciones de render. Por ejemplo, podremos usar antialiasing 
+    para reducir el efecto escalera de los gr&aacute;ficos. </li>
+  <blockquote> 
+    <div align="center"><img src="imagenes/awtswing/aliasing.gif" width="268" height="54"></div>
+    <p align="center" class="caption">Figura 7. Efecto aliasing</p>
+  </blockquote>
+</ul>
+<p>Se proporcionan una ser&iacute;e de m&eacute;todos <b>setXXXX</b> y <b>getXXXX</b> 
+  para obtener y modificar los atributos anteriores. </p>
+<p>Para dibujar figuras podemos utilizar el siguiente m&eacute;todo:</p>
+<pre class="codigo">g2.<b>draw</b>(Shape figura);</pre>
+<p>La informaci&oacute;n de las figuras estar&aacute; encapsulada en clases derivadas 
+  de <b>Shape</b> (podemos encontrar rect&aacute;ngulos, l&iacute;neas, curvas, 
+  etc). Deberemos instanciar la figura adecuada y dibujarla en el contexto gr&aacute;fico 
+  mediante el m&eacute;todo anterior.</p>
+<div align="center"><img src="imagenes/awtswing/figuras.gif" width="451" height="203"></div>
+<p align="center" class="caption">Figura 8. Tipos de figuras</p>
+<h3>3.4.5 Modelo de imagen</h3>
+<p>A lo largo de la evoluci&oacute;n de Java han aparecido distintos modelos para 
+  trabajar con im&aacute;genes. A continuaci&oacute;n estudiaremos cada modelo 
+  viendo como se trabaja con ellos y sus pros y sus contras.</p>
+<h4>3.4.5.1 Modelo productor/consumidor (push)</h4>
+<p>Este es el primer modelo que apareci&oacute;. Entonces Java estaba orientado 
+  hacia la creaci&oacute;n de <b>Applets</b>, que son aplicaciones Java que nuestro 
+  navegador descarga de la red y ejecuta en nuestra m&aacute;quina como un objeto 
+  incrustado en un documento (p&aacute;gina web). En este caso las im&aacute;genes 
+  ser&aacute;n recursos que deban descargarse del servidor, lo cu&aacute;l puede 
+  llevar un tiempo, incluso puede ocurrir que no se consiga descargar la imagen.</p>
+<p>Por ello, este modelo no fuerza a que se complete la carga de la imagen. Es 
+  m&aacute;s, el consumidor de la imagen no controlar&aacute; cuando la imagen 
+  llega a &eacute;l, simplemente puede esperar a que el productor vaya <i>empujando</i> 
+  los datos hacia &eacute;l conforme se vayan cargando, por esto se dice que es 
+  un modelo <i>push</i>.</p>
+<p>En este modelo no existe la idea de tener una imagen persistente almacenada 
+  en memoria. Una imagen definida en la clase<b> Image</b> no contiene los datos 
+  de los pixels de la imagen, sino que simplemente contiene una referencia a un 
+  productor que ser&aacute; el objeto que tendremos que utilizar para obtener 
+  estos datos. El productor se define en la clase <b>ImageProducer</b>, y podremos 
+  tener distintos tipos de productores seg&uacute;n donde se encuentre la imagen 
+  que queramos utilizar. Cuando cargamos una imagen de la red, el productor se 
+  encargar&aacute; de descargar los datos de la imagen de la red.</p>
+<p>El productor ir&aacute; produciendo los datos de la imagen, y se los ir&aacute; 
+  suministrando a un consumidor, que es un objeto definido en <b>ImageConsumer</b>, 
+  y que ser&aacute; el objeto interesado en los datos de la imagen para utilizarlos. 
+  Normalmente, cuando mostramos una imagen, AWT es el consumidor que utilizar&aacute; 
+  los datos que produce el productor para mostrarlos por pantalla.</p>
+<p>En resumen, cuando en AWT dibujamos una imagen hacemos lo siguiente:</p>
+<ol>
+  <li>Llamamos a <i>drawImage</i> proporcionando un objeto <b>Image</b>. 
+    <pre>g.<b>drawImage</b>(img,0,0,obs);</pre>
+  </li>
+  <li>Ser&aacute; el mismo AWT el que se comporte como consumidor de dicha imagen. 
+  </li>
+  <li>Obtendr&aacute; el productor asociado a la imagen que le hemos proporcionado. 
+    Para ello utilizar&aacute; el m&eacute;todo <i>getSource</i> del objeto imagen. 
+    <pre>ImageProducer prod = img.<b>getSource</b>();</pre>
+  </li>
+  <li>En el objeto productor, se registrar&aacute; el consumidor de la imagen. 
+    Para ello llamar&aacute; al m&eacute;todo <i>addConsumer</i> del productor 
+    de la imagen, registrando como consumidor el objeto consumidor que AWT utilice 
+    para mostrar la imagen. 
+    <pre>prod.<b>addConsumer</b>(ImageConsumer consumidor);</pre>
+  </li>
+  <li>El productor, al recibir los datos de la imagen se los proporcionar&aacute; 
+    a todos los consumidores que tenga registrados. Para ello llama el m&eacute;todo 
+    <i>setPixels </i>de cada consumidor proporcionando la informaci&oacute;n de 
+    los pixels obtenidos. 
+    <pre>consumidor.<b>setPixels</b>( ... );</pre>
+  </li>
+  <li>El consumidor (AWT en este caso) podr&aacute; dibujar los pixels conforme 
+    le llegan, o bien hacer un backup temporal de estos datos para mostrarlos 
+    cuando haya recibido la imagen completa.</li>
+</ol>
+<p>Como deciamos anteriormente, es el productor el que llamar&aacute; a un m&eacute;todo 
+  del consumidor cuando le lleguen datos, por lo que el consumidor no puede hacer 
+  m&aacute;s que esperar a que llamen a ese m&eacute;todo suyo para que se le 
+  proporcionen los datos de la imagen, no puede obtenerlos m&aacute;s que cuando 
+  el productor los empuje hacia &eacute;l.</p>
+<div align="center"><img src="imagenes/awtswing/img_pc.gif" width="502" height="43"></div>
+<p align="center" class="caption">Figura 9. Modelo productor/consumidor</p>
+<p>Aqu&iacute; vemos que el consumidor s&oacute;lo recibe datos, pero adem&aacute;s 
+  necesitar&aacute; saber cuando ha terminado de recibir la imagen para poderla 
+  mostrar entera. Para ello tiene el m&eacute;todo<i> imageComplete</i> al que 
+  llamar&aacute; el productor una vez finalizada la producci&oacute;n.</p>
+<p><b>Control de la producci&oacute;n de la imagen</b></p>
+<p>Si de forma externa queremos conocer el proceso de carga de la imagen, podemos 
+  usar o bien la clase <b>MediaTracker</b>, o la interfaz <b>ImageObserver</b>. 
+  <b>ImageObserver</b> nos permitir&aacute; conocer con m&aacute;s detalle en 
+  todo momento el estado de la producci&oacute;n de la imagen, pero para las necesidades 
+  que podamos tener en nuestras aplicaciones con la informaci&oacute;n que ofrece 
+  MediaTracker ser&aacute; suficiente.</p>
+<p>Cuando dibujamos una imagen en AWT, hemos visto anteriormente que debemos proporcionar 
+  un objeto que cumpla la interfaz<b> ImageObserver</b>. Esta interfaz define 
+  el m&eacute;todo<i> imageUpdate</i>, al que el consumidor (AWT) ir&aacute; llamando 
+  conforme se carga la imagen. Como <b>ImageObserver</b> nosotros deberemos indicar 
+  el componente AWT donde estamos dibujando la imagen, ya que el comportamiento 
+  por defecto de este observador ser&aacute; llamar a <i>repaint</i> cuando la 
+  imagen se haya completado, para que &eacute;sta sea dibujada por completo en 
+  el &aacute;rea del componente.</p>
+<p>La utilizaci&oacute;n de un <b>MediaTracker</b>, nos permitir&aacute; controlar 
+  si un conjunto de recursos (im&aacute;genes) han sido cargados por completo. 
+  Nos permite tambi&eacute;n esperar hasta que esto ocurra, lo cu&aacute;l ser&aacute; 
+  util si no queremos que nuestra aplicaci&oacute;n continue su ejecuci&oacute;n 
+  hasta que no se hayan cargado todas las im&aacute;genes necesarias. Mientras 
+  tanto, ser&aacute; buena idea mostrar un mensajedel tipo <i>&quot;Cargando datos, 
+  espere por favor ...&quot;</i>. La utilizaci&oacute;n de un <b>MediaTracker</b> 
+  para esperar hasta que se haya cargado una imagen se har&aacute; como se muestra 
+  a continuaci&oacute;n:</p>
+<pre class="codigo">// Carga la imagen suponiendo que se trata de un Applet
+Image img = getImage(getCodeBase(), &quot;foto.jpg&quot;);	
+
+// this hace referencia al componente AWT donde se cargan las imágenes 
+MediaTracker tracker = new <b>MediaTracker</b>(this); 	
+
+// Añade la imagen img bajo el identificador 0.
+// Pueden añadirse multiples imágenes bajo un mismo identificador
+tracker.<b>addImage</b>(img,0);	
+
+// Bloquea el código hasta que se hayan cargado todas las imágenes
+// con identificador 0
+tracker.<b>waitForId</b>(0);	</pre>
+<p><b>Filtrado de im&aacute;genes</b></p>
+<p>Este modelo nos permite construir cadenas de productores, cada uno de los cuales 
+  puede tomar como entrada la salida del anterior productor de la cadena, y de 
+  esta forma realizar distintos filtrados a la imagen en cada etapa.</p>
+<div align="center"><img src="imagenes/awtswing/img_pfc.gif" width="515" height="48"></div>
+<p align="center" class="caption">Figura 10. Filtrado de im&aacute;genes</p>
+<p>Tenemos para ello un tipo de productor denominado <b>FilteredImageSource</b>, 
+  que tomar&aacute; los datos generados por otro productor, los procesar&aacute; 
+  de alguna forma, y los suministrar&aacute; a los consumidores que haya registrados 
+  a la espera de datos. Al construir este objeto deberemos proporcionar el productor 
+  que produce la imagen que vamos a tomar como entrada, y el filtro que vamos 
+  a aplicarle a dicha imagen. </p>
+<pre class="codigo">img = getImage(&quot;foto.jpg&quot;);
+ImageProducer productor = img.getSource();
+
+ImageFilter filtro = ... // Construye filtro a aplicar
+
+FilteredImageSource fis = new <b>FilteredImageSource</b>(productor, filtro);
+
+Image resultado = createImage(fis);</pre>
+<p>Los filtros se definen en la clase<b> ImageFilter</b>, y son un tipo de consumidores 
+  de im&aacute;genes (implementan <b>ImageConsumer</b>). En realidad, contienen 
+  un consumidor como uno de sus campos, y lo que har&aacute;n ser&aacute; reenviar 
+  las llamadas a sus m&eacute;todos al consumidor interno. Cuando se contruya 
+  la imagen, el filtro la procesar&aacute; y enviar&aacute; los datos procesados 
+  a su consumidor interno. Ser&aacute; entonces de este consumidor interno del 
+  que el productor <b>FilteredImageSource</b> obtendr&aacute; los datos a producir 
+  para el siguiente elemento de la cadena.</p>
+<p>Cuando creemos nuestro propio filtro, deberemos crear una subclase de<b> ImageFilter</b> 
+  y leer los pixels que se nos entreguen llamando a nuestro m&eacute;todo <i>setPixels</i> 
+  y almacenarlos en un<i> buffer</i> interno. Una vez se llame a nuestro m&eacute;todo 
+  <i>imageComplete</i>, podremos procesar la imagen que hemos almacenado, y enviar 
+  el resultado al consumidor interno (campo <b>consumer</b>) utilizando sus m&eacute;todos 
+  <i>setPixels</i> e <i>imageComplete</i>.</p>
+<p><b>Acceso a los pixels de la imagen</b></p>
+<p>Antes comentabamos que con este modelo no exista la idea de una imagen persistente, 
+  la imagen en memoria no mantiene almacenados sus pixels, sin embargo, existen 
+  m&eacute;todos para convertir un array de memoria en un productor de im&aacute;genes, 
+  o bien capturar la salida del productor guard&aacute;ndola en un array en memoria.</p>
+<p>Para poder utilizar un array de pixels que tengamos en memoria como una imagen, 
+  podemos definir un productor que utilice dicho array para producir la imagen. 
+  Este tipo de productor es <b>MemoryImageSource</b> (derivado de <b>ImageProducer</b>).</p>
+<pre class="codigo">int ancho = 100;
+int alto = 100;
+int [] pixels = new int[ancho*alto];
+
+for(int i=0;i&lt;alto;i++) {
+    for(int j=0;j&lt;ancho;j++) {
+        int rojo = ...  // Valor de 0 a 255 indicando el nivel de rojo
+        int verde = ... // Valor de 0 a 255 indicando el nivel de verde
+        int azul = ...  // Valor de 0 a 255 indicando el nivel de azul
+
+        pixels[i*ancho + j] = (255 &lt;&lt; 24) | 
+                              (rojo &lt;&lt; 16) | (verde &lt;&lt; 8) | azul;
+    }
+}
+
+Image img = createImage(
+       new <b>MemoryImageSource</b>(ancho, alto, pixels, 0, ancho));</pre>
+<p>Si lo que queremos es capturar los pixels de una imagen con la que ya contamos 
+  (por ejemplo cargada de un fichero), lo que haremos ser&aacute; utilizar un 
+  consumidor que nos proporcione el array de pixels de la imagen consumida. Este 
+  consumidor es <b>PixelGrabber</b> (derivado de <b>ImageConsumer</b>). Proporcionaremos 
+  a este objeto la imagen a consumir, de la cual queramos extraer los pixels, 
+  y una vez finalizada la producci&oacute;n de la imagen nos devolver&aacute; 
+  el array de pixels que haya producido.</p>
+<pre class="codigo">int ancho = 100;
+int alto = 100;
+int [] pixels = new int[ancho*alto];
+
+// Capturamos la región de la imagen img que comienza en (x,y) 
+// con dimensiones de ancho x alto
+
+PixelGrabber pg = 
+	new <b>PixelGrabber</b>(img, x, y, ancho, alto, pixels, 0, ancho);
+
+try {
+    pg.<b>grabPixels</b>();
+} catch (InterruptedException e) {
+    System.err.println(&quot;Interrumpido durante la captura&quot;);
+    return;
+}
+if ((pg.<b>getStatus</b>() &amp; ImageObserver.ABORT) != 0) {
+    System.err.println(&quot;Carga de la imagen abortada&quot;);
+    return;
+}
+
+for(int i=0;i&lt;alto;i++) {
+	for(int j=0;j&lt;ancho;j++) {
+		int pix_rgb = pixels[i*ancho + j];
+
+		int alpha = (pix_rgb &gt;&gt; 24) &amp; 0xFF;
+		int rojo = (pix_rgb &gt;&gt; 16) &amp; 0xFF;
+		int verde = (pix_rgb &gt;&gt; 8) &amp; 0xFF;
+		int azul = pix_rgb &amp; 0xFF;
+
+		// Ahora podemos utilizar estos datos del pixel leido
+	}
+}
+</pre>
+<p>Como vemos, este modelo est&aacute; pensado para aplicaciones que cargan im&aacute;genes 
+  de la red simplemente para mostrarlas sin realizar ninguna operaci&oacute;n 
+  compleja con ellas. Por lo tanto, el modelo carece de capacidad para escribir 
+  c&oacute;digo de alto rendimiento para el procesamiento de imagenes.</p>
+<p>Si lo &uacute;nico que necesitamos es cargar y mostrar im&aacute;genes en nuestra 
+  aplicaci&oacute;n, no har&aacute; falta que entendamos el funcionamiento interno 
+  del modelo productor/consumidor.</p>
+<h4>3.4.5.2 Modo inmediato</h4>
+<p>Este nuevo modo pretende eliminar las restricciones impuestas por el sistema 
+  anterior. Se incorpora junto a la API de Java 2D introducida a partir de JDK 
+  1.2.</p>
+<p>Aqu&iacute; ya aparece la imagen persistente en memoria, con la que tenemos 
+  los datos de la imagen almacenados en el objeto de la imagen, y no dependemos 
+  de un productor para obtener dichos datos. La clase que se utiliza en este caso 
+  para la encapsulaci&oacute;n de las im&aacute;genes es <b>BufferedImage</b>, 
+  y &eacute;sta si que contiene los datos sobre la matriz de pixels de la imagen, 
+  denominado <i>raster</i>. En ella se mantiene la compatibilidad con el modelo 
+  productor/consumidor, por lo que podremos utilizar este tipo de im&aacute;genes 
+  en cualquier situaci&oacute;n en la que usabamos las anteriores.</p>
+<div align="center"><img src="imagenes/awtswing/bufimg.gif" width="406" height="118"></div>
+<p align="center" class="caption">Figura 11. Modelo de modo inmediato</p>
+<p>En el esquema vemos que la imagen contiene informaci&oacute;n del <i>raster</i>, 
+  encapsulada en la clase <b>Raster</b>, y del modelo de color utilizado en la 
+  representaci&oacute;n de dicho raster encapsulada en <b>ColorModel</b>. </p>
+<p>El <i>raster </i>se compondr&aacute; de las clases <b>SampleModel</b> y <b>DataBuffer</b>. 
+  Los datos de los pixels de la imagen est&aacute;n contenidos en <b>DataBuffer</b>. 
+  El objeto <b>SampleModel</b> indicar&aacute; la organizaci&oacute;n de los datos 
+  dentro del buffer. Por ejemplo, podemos tener una imagen almacenada por bandas, 
+  en la que encontramos primero los datos de la banda roja, despu&eacute;s todos 
+  los de la verde y por &uacute;ltimo los de la azul, o bien almacenar empaquetados 
+  en cada pixel los componentes rojo, verde y azul. </p>
+<p>Por lo tanto, el <b>SampleModel</b> contiene la informaci&oacute;n sobre como 
+  est&aacute;n almacenados los pixels en el buffer de datos, de forma que el desarrollador 
+  pueda acceder a ellos directamente a bajo nivel. Sin embargo, normalmente no 
+  necesitaremos trabajar directamente con estos datos, ya que el <b>Raster</b> 
+  proporciona m&eacute;todos para el acceso a los pixels de la imagen de forma 
+  sencilla.</p>
+<p>Con esto tenemos almacenado en el <i>raster </i>un valor para cada pixel de 
+  la imagen. Ahora necesitamos el objeto <b>ColorModel</b> para saber a que color 
+  corresponde cada valor, es decir, que valores de rojo, verde, azul y alpha corresponden 
+  a ese pixel. Para ello <b>ColorModel</b> contiene un objeto <b>ColosSpace</b>, 
+  que encapsula la informaci&oacute;n del espacio de color que estemos usando. 
+  El espacio de color m&aacute;s com&uacute;n ser&aacute; el RGB donde los valores 
+  de las bandas de rojo, verde y azul se mueven en los intervalos de 0 a 1. Utilizando 
+  ya esta informaci&oacute;n, la clase <b>BufferedImage</b> nos ofrece m&eacute;todos 
+  para acceder directamente a los valores RGB de los pixels de la imagen. Para 
+  obtener este valor podemos usar el m&eacute;todo:</p>
+<pre class="codigo">int valor_rgb = buf_img.<b>getPixel</b>(x,y);</pre>
+<p>De esta forma podemos leer la imagen pixel a pixel. Tambi&eacute;n podemos 
+  encontrar una variante de este m&eacute;todo que nos permite obtener un array 
+  de pixels, lo cu&aacute;l ser&aacute; bastante m&aacute;s r&aacute;pido ya que 
+  con una &uacute;nica llamada al m&eacute;todo, obtendremos toda la informaci&oacute;n 
+  necesaria para trabajar con la imagen. La codificaci&oacute;n de estos valores 
+  RGB es la siguiente (en hexadecimal):</p>
+<pre class="codigo">0xAARRGGBB</pre>
+<p>Donde AA es el valor alpha (para transparencia y otros efectos, normalmente 
+  lo pondremos con valor FF), RR el rojo, GG el valor de verde, y BB el de azul.</p>
+<p>Como vemos, con este modelo es muy sencillo acceder al contenido de la imagen, 
+  sin necesitar conocer los aspectos internos de la implementaci&oacute;n de <b>BufferedImage</b> 
+  que hemos descrito anteriormente.</p>
+<p>La im&aacute;genes en el modo inmediato, concretamente la clase <b>BufferedImage</b> 
+  que es la implementaci&oacute;n b&aacute;sica en este modo, implementan la interfaz 
+  <b>RenderedImage</b>. En el caso de <b>BufferedImage</b> se implementa un subtipo 
+  de dicha interfaz denominado <b>WritableRenderedImage</b>, ya que podemos modificar 
+  el valor de los pixels de dicha imagen (con la interfaz anterior s&oacute;lo 
+  se permitir&iacute;a el acceso a los pixels). Decimos que la imagen es renderizada 
+  (<i>rendered</i>) porque tiene una resoluci&oacute;n fija, es decir, contiene 
+  un array de pixels (<i>raster</i>) que se volcar&aacute; tal cual a pantalla, 
+  con las dimensiones que tenga. Por otro lado, una imagen rendirizable (<i>renderable</i>), 
+  no proporciona directamente un array de pixels, ya que es independiente del 
+  contexto (de la resoluci&oacute;n). Deberemos renderizarla con unas determinadas 
+  dimensiones, y entonces se crear&aacute; una imagen renderizada con un raster 
+  de pixels con las dimensiones que hayamos indicado.</p>
+<p>Como hemos comentado anteriormente, la implementaci&oacute;n de <b>BufferedImage</b> 
+  es renderizada, por lo que no vamos a entrar a estudiar con m&aacute;s profundidad 
+  las imagenes renderizables. Si queremos cambiar el tama&ntilde;o (resoluci&oacute;n) 
+  de una imagen <b>BufferedImage</b>, podremos utilizar un filtro que realice 
+  dicha operaci&oacute;n.</p>
+<p><b>Filtrados de im&aacute;genes</b></p>
+<p>Podemos utilizar una serie de filtros para procesar las im&aacute;genes (<b>BufferedImage</b>). 
+  Para ello se proporcionan una serie de objetos operadores (filtros), que tomar&aacute;n 
+  como entrada una imagen origen y una imagen destino. Acceder&aacute; al contenido 
+  de la imagen origen, lo procesar&aacute;, y escribir&aacute; el resultado en 
+  la imagen destino.</p>
+<p>Los operadores de im&aacute;genes puedes trabajar a dos niveles: </p>
+<ul>
+  <li><b>BufferedImageOp</b>: Procesan un objeto <b>BufferedImage</b>. Encontramos 
+    los siguientes subtipos: 
+    <ul>
+      <li><b>AffineTransformOp</b>: Realiza una transformaci&oacute;n af&iacute;n 
+        a la imagen, dada por su matriz de transformaci&oacute;n. Con ello podremos 
+        realizar traslaciones, rotaciones, escalados y otras operaciones como 
+        desencajados o espejos de la imagen original.</li>
+      <li><b>ColorConvertOp</b>: Cambia el espacio de color de la imagen (<b>ColorSpace</b>).</li>
+      <li><b>ConvolveOp</b>: Realiza la convoluci&oacute;n de la imagen con un 
+        m&aacute;scara. La m&aacute;scara se define mediante un objeto <b>Kernel</b>. 
+        Esto nos permitir&aacute; hacer cualquier operaci&oacute;n que podamos 
+        realizar mediante la convoluci&oacute;n, seg&uacute;n la m&aacute;scara 
+        que indiquemos, como pueden ser suavizados, realzado de contornos, extracci&oacute;n 
+        de bordes, etc.</li>
+      <li><b>LookupOp</b>: Nos permite modificar los valores de los pixels. Para 
+        ello debemos proporcionar una tabla de transici&oacute;n de luminancia, 
+        definida en la clase <b>LookupTable</b>, que establecer&aacute; las correspondencias 
+        entre las intensidades de los pixels de entrada y las intensidades por 
+        las que las deberemos cambiar en la imagen de salida. Podemos definir 
+        una &uacute;nica tabla para todas las bandas de la imagen, o tablas distintas 
+        para cada banda. Con esta operaci&oacute;n podremos cambiar el valor (color 
+        o intensidad) de los pixels, permiti&eacute;ndonos realizar operaciones 
+        de cambio del brillo de la imagen, cambio del contraste, o ecualizaciones 
+        para mejorar el contraste.</li>
+      <li><b>RescaleOp</b>: Realiza un cambio en el tama&ntilde;o de la imagen. 
+        El contenido de la imagen se ver&aacute; cortado por las dimensiones de 
+        la imagen destino. Deberemos proporcionar una imagen de un tama&ntilde;o 
+        suficiente para que el cambio de escala pueda caber dentro del &aacute;rea 
+        de la imagen.</li>
+    </ul>
+  </li>
+  <li><b>RasterOp</b>: Procesan directamente el <i>raster</i> de una imagen. Hemos 
+    de tener en cuenta que en este caso no se podr&aacute; modificar el modelo 
+    de color en caso de que fuese necesario. Encontramos todos los tipos anteriores, 
+    que pueden trabajar tambi&eacute;n directamente con el <i>raster</i>, y adem&aacute;s:
+    <ul>
+      <li><b>BandCombineOp</b>: Realiza una combinaci&oacute;n lineal de las bandas 
+        de una imagen. Se proporciona una matriz, en la que cada fila generar&aacute; 
+        una banda en la imagen resultante. Cada fila contendr&aacute; los coeficientes 
+        por los que se multiplicar&aacute; cada banda de la imagen origen, m&aacute;s 
+        un coeficiente extra que ser&aacute; sumado. Por lo tanto, tendr&aacute; 
+        tantas filas como bandas queramos que tenga el <i>raster </i>resultante, 
+        y tantas columnas como n&uacute;mero de bandas del <i>raster</i> origen 
+        m&aacute;s una.</li>
+    </ul>
+  </li>
+</ul>
+<p>Para aplicar el filtro, lo &uacute;nico que tendremos que hacer ser&aacute; 
+  instanciar el operador adecuado, y realizar el filtrado de la imagen de la siguiente 
+  forma:</p>
+<pre class="codigo">BufferedImage origen = ... // Imagen origen
+BufferedImage destino = ... // Imagen destino
+
+<b>BufferedImageOp</b> filtro = ... // Instanciamos el filtro adecuado
+
+filtro.<b>filter</b>(origen,destino);
+</pre>
+<p>Podemos forzar a que se cree la imagen destino adecuada para realizar la transformaci&oacute;n 
+  en ella especificando <i>null </i>como imagen destino:</p>
+<pre class="codigo">BufferedImage origen = ... // Imagen origen
+
+<b>BufferedImageOp</b> filtro = ... // Instanciamos el filtro adecuado
+
+BufferedImage destino = filtro.<b>filter</b>(origen,null);</pre>
+<p>Si trabajamos con <i>rasters</i>, lo haremos de forma similar:</p>
+<pre class="codigo">BufferedImage origen = ... // Imagen origen
+BufferedImage destino = ... // Imagen destino
+
+Raster r_origen = origen.<b>getData</b>();
+WritableRaster r_destino = destino.<b>getRaster</b>();
+
+<b>RasterImageOp</b> filtro = ... // Instanciamos el filtro adecuado
+
+filtro.<b>filter</b>(r_origen,r_destino);</pre>
+<p>Igual que ocurr&iacute;a con <b>BufferedImageOp</b>, especificando como destino 
+  <i>null </i>forzaremos a que se cree autom&aacute;ticamente un <i>raster</i> 
+  destino donde escribir el resultado.</p>
+<h4><b>3.4.5.3 Modelo pipeline (pull)</b></h4>
+<p>Este &uacute;ltimo modelo est&aacute; dise&ntilde;ado para la realizaci&oacute;n 
+  de aplicaciones en las que necesitemos realizar operaciones de alto rendimiento 
+  con las im&aacute;genes, en las que realicemos un tratamiento avanzado de las 
+  im&aacute;genes. En este caso ya no se trabaja con productores y consumidores 
+  (es un modelo <i>pull</i>).</p>
+<p>No se proporciona en la distribuci&oacute;n b&aacute;sica de JDK, sino que 
+  hay que obtenerlo como una extensi&oacute;n. Esta extensi&oacute;n es JAI (Java 
+  Advanced Imaging), de la cual hablaremos con m&aacute;s detalle en el &uacute;ltimo 
+  tema. </p>
+<h3>3.4.6 Modo a pantalla completa</h3>
+<p>A partir de JDK 1.4.0 podremos utilizar un modo de gr&aacute;ficos a pantalla 
+  completa. Con este modo tendremos acceso exclusivo y directo al dispositivo 
+  de la pantalla.</p>
+<p>En AWT hemos visto anteriormente que era el sistema el que se encargaba de 
+  mandar eventos para repintar el contenido de nuestra ventana. Esto tiene que 
+  hacerse as&iacute; ya que el dispositivo gr&aacute;fico (la pantalla) se comparte 
+  con el sistema operativo y el resto de aplicaciones en ejecuci&oacute;n, por 
+  lo que es el mismo sistema el que nos tiene que indicar cuando podemos redibujar. 
+</p>
+<p>Sin embargo, al tener ahora un acceso exclusivo a la pantalla, podremos dibujar 
+  en ella en cualquier momento. Esto es lo que se conoce como render activo, frente 
+  al render pasivo que hemos visto anteriormente.</p>
+<p>Para utilizar este modo exclusivo a pantalla completa lo primero que deberemos 
+  hacer es obtener el dispositivo gr&aacute;fico (<b>GraphicsDevice</b>) que vamos 
+  a utilizar. Lo obtendremos a partir del entorno gr&aacute;fico (<b>GraphicsEnvironment</b>) 
+  de nuestra m&aacute;quina:</p>
+<pre class="codigo">GraphicsEnvironmen ge = 
+	GraphicsEnvironment.<b>getLocalGraphicsEnvironment</b>();
+GraphicsDevice gd = ge.<b>getDefaultScreenDevice</b>();</pre>
+<p>Podemos tener varios dispositivos gr&aacute;ficos en nuestra m&aacute;quina, 
+  que podr&aacute;n ser obtenidos tambi&eacute;n a trav&eacute;s del entorno gr&aacute;fico. 
+  Con el m&eacute;todo visto anteriormente obtendremos el dispositivo primario 
+  que es el que querremos utilizar normalmente, ya que lo normal ser&aacute; disponer 
+  de un solo dispositivo gr&aacute;fico.</p>
+<p>Una vez tenemos el dispositivo gr&aacute;fico podemos podremos comprobar si 
+  soporta el modo a pantalla completa:</p>
+<pre class="codigo">boolean <b>isFullScreenSupported</b>()</pre>
+<p>Una vez hemos comprobado que soporta dicho modo podremos pasar a pantalla completa 
+  indicando que ventana (<b>Window</b>) de nuestra aplicaci&oacute;n vamos a mostrar 
+  en la pantalla:</p>
+<pre class="codigo">void <b>setFullScreenWindow</b>(Window w)</pre>
+<p>Del objeto de dispositivo gr&aacute;fico podremos obtener la lista de modos 
+  soportados por dicho dispositivo (resoluci&oacute;n y profundidad de color), 
+  y seleccionar cualquiera de estos modos siempre que la operaci&oacute;n est&eacute; 
+  permitida en nuestro sistema. Obtenemos el modo gr&aacute;fico actual con:</p>
+<pre class="codigo">DisplayMode dm = gd.<b>getDisplayMode</b>();</pre>
+<p>Para obtener todos los modos soportados haremos lo siguiente:</p>
+<pre class="codigo">DisplayMode [] dms = gd.<b>getDisplayModes</b>();</pre>
+<p>Los datos sobre los modos gr&aacute;ficos se encapsulan en la clase <b>DisplayMode</b>. 
+  Una vez elegido el modo que queremos utilizar podemos seleccionarlo con:</p>
+<pre class="codigo">gd.<b>setDisplayMode</b>(dm);</pre>
+<p>Antes hemos hablado del concepto de render activo. Para utilizar este tipo 
+  de render tendremos que obtener el objeto de contexto gr&aacute;fico asociado 
+  al componente donde vamos a dibujar (la ventana en este caso):</p>
+<pre class="codigo">Graphics g = getGraphics();</pre>
+<p>Como vemos, una vez hemos terminado de dibujar en la pantalla, debemos llamar 
+  a <b>dispose</b> para liberar los recursos que estuviese utilizando.</p>
+<p>Podemos usar tanto el modo activo como el modo pasivo cuando trabajemos a imagen 
+  completa. Sin embargo el modo activo nos dar&aacute; un mayor control y podremos 
+  utilizar t&eacute;cnicas avanzada como el intercambio (<i>flipping</i>) de p&aacute;ginas 
+  de memoria de video.</p>
+<p>Antes hemos visto como implementar el doble buffer. Pero ahora que tenemos 
+  acceso directo al dispositivo gr&aacute;fico, podremos usar una t&eacute;cnica 
+  m&aacute;s r&aacute;pida para implementarlo. Existen dos t&eacute;cnicas:</p>
+<p><b>BLT</b>: Leido como <i>blit </i>(<i>blitting</i>), que significa <i>BLock 
+  Transfer</i>. Es una t&eacute;cnica similar a la que hemos descrito anteriormente. 
+  El backbuffer es un &aacute;rea en memoria, y cuando queremos volcar este contenido 
+  a pantalla copiaremos el contenido de dicho &aacute;rea a la memoria del dispositivo 
+  gr&aacute;fico.</p>
+<p><b>FLIP</b>: Se refiere al intercambio (<i>flipping</i>) de p&aacute;ginas 
+  de memoria de video. Normalmente la tarjeta gr&aacute;fica tendr&aacute; varias 
+  p&aacute;ginas de memoria (doble buffer o triple buffer normalmente). En un 
+  momento dado el dispositivo gr&aacute;fico estar&aacute; mostrando el contenido 
+  de una de estas p&aacute;ginas. Lo que haremos ser&aacute; utilizar la p&aacute;gina 
+  que no se est&eacute; mostrando como backbuffer. Una vez hayamos terminado de 
+  dibujar, haremos que esa p&aacute;gina pase a ser el buffer de pantalla mostr&aacute;ndose 
+  as&iacute; su contenido sin tener que hacer ninguna transferencia de datos, 
+  y la otra p&aacute;gina pasar&aacute; a ser el backbuffer donde dibujaremos 
+  a continuaci&oacute;n. Esta t&eacute;cnica, puesto que la p&aacute;gina contiene 
+  todo el contenido de la pantalla, no podremos utilizarla si estamos compartiendo 
+  la pantalla con otras aplicaciones, ya que afectariamos a todas ellas. Es por 
+  esto que esta t&eacute;cnica solo podemos utilizarla al trabajar a pantalla 
+  completa.</p>
+<p>Con el modo a pantalla completa podremos utilizar cualquiera de las dos t&eacute;cnicas 
+  anteriores. Para ello tenemos las clases <b>BufferStrategies</b> y <b>BufferCapabilities</b> 
+  que implementan dichas t&eacute;cnicas.</p>
+<h3>3.4.7 Sonido y m&uacute;sica. Java Sound</h3>
+<p>Hemos visto como incluir gr&aacute;ficos y animaciones en nuestras aplicaciones 
+  y applets. Con Java adem&aacute;s podremos a&ntilde;adir sonido y m&uacute;sica 
+  de forma sencilla.</p>
+<p>En las primeras versiones de JDK los applets permit&iacute;an cargar clips 
+  de audio, con lo que podiamos reproducir m&uacute;sica y sonido en la web. Los 
+  tipos de ficheros y formatos reconocidos entonces eran bastante limitados (MIDI, 
+  WAV, AU).</p>
+<p>A partir de Java 2, se incorpora la API de Java Sound, que nos permite adem&aacute;s 
+  de tratar con una mayor n&uacute;mero de formatos, incorporar sonido tanto a 
+  applets como aplicaciones y trabajar con la reproducci&oacute;n del sonido a 
+  un nivel m&aacute;s bajo, lo cual nos dar&aacute; mayor flexibilidad para incluir 
+  todo tipo de efectos de sonido en nuestras aplicaciones.</p>
+<p>Nos referiremos a las m&uacute;sicas y a los efectos de sonido como clips de 
+  audio. Estos clips de audio estar&aacute;n encapsulados en la clase <b>AudioClip</b>. 
+  Para cargar un clip de audio, los applets siempre han incorporado el siguiente 
+  m&eacute;todo:</p>
+<pre class="codigo"><b>AudioClip</b> clip = <b>getAudioClip</b>(url);</pre>
+<p>Para ello deberemos estar dentro un applet, ya que dicho m&eacute;todo pertenece 
+  a la clase <b>Applet</b> y para usarlo debe haber un objeto <b>Applet</b> instanciado.</p>
+<p>Si estamos dentro de una aplicaci&oacute;n, no tendremos acceso a este m&eacute;todo. 
+  Por ello, a partir de JDK 1.2 se incorpora a la clase <b>Applet</b> el siguiente 
+  m&eacute;todo est&aacute;tico:</p>
+<pre class="codigo"><b>AudioClip</b> clip = Applet.<b>newAudioClip</b>(url);</pre>
+<p>Al ser est&aacute;tico no har&aacute; falta haber instanciado un applet para 
+  poder usarlo, por lo que lo podremos utilizar desde cualquier aplicaci&oacute;n 
+  Java. El problema que tenemos en este caso es que debemos proporcionar una URL, 
+  cuando lo m&aacute;s seguro es que queramos cargar un fichero del disco local. 
+  Podemos obtener una url para esto de la siguiente forma:</p>
+<pre class="codigo">URL url = new URL(&quot;file:&quot; + System.getProperty(&quot;user.dir&quot;) 
+                          + &quot;/sonido.wav&quot;;</pre>
+<p>Utilizamos la propiedad del sistema <i>user.dir</i> para obtener el directorio 
+  actual, y con &eacute;l podemos construir un URL para el acceso a ficheros locales.</p>
+<p>Una vez obtenido el clip de audio, podremos reproducirlo.</p>
+<pre class="codigo">clip.<b>play</b>();</pre>
+<p>Reproduce el clip una sola vez.</p>
+<pre class="codigo">clip.<b>loop</b>();</pre>
+<p>Reproduce el clip ciclicamente. Util en el caso de que queramos tener una m&uacute;sica 
+  de fondo que no pare de sonar.</p>
+<pre class="codigo">clip.<b>stop</b>();</pre>
+<p>Detiene la reproducci&oacute;n del clip de audio. Sobretodo &uacute;til para 
+  m&uacute;sicas, y cuando hayamos establecido que se reproduzca ciclicamente.</p>
+<p>En la API Java Sound incorporada en las &uacute;ltimas versiones de Java, tenemos 
+  bastante m&aacute;s clases que nos permitir&aacute;n controlar la secuenciaci&oacute;n, 
+  el mezclado, etc. Estas clases se incluyen en el paquete <b>javax.sound</b> 
+  y subpaquetes.</p>
+</body>
+</html>

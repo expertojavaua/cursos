@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios de hilos</title>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ 
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+ <body bgcolor="#ffffff" text="#000000">
+<h1>Hilos</h1>
+<p><b>1.</b> En la clase <b>Ej1</b>se crean hilos utilizando la interfaz <i><b>Runnable</b></i>. 
+  De esta forma podremos crear múltiples hilos que ejecuten el mismo método <i>run() 
+  </i>de esta clase accediendo al mismo espacio de memoria de este objeto. Ejecutar 
+  el programa, ver lo que hace, consultar el código fuente y contestar a las siguientes 
+  preguntas: </p>
+    <blockquote><i>a)</i>  Explica que es lo que hace la condición de
+      terminación del bucle <i>while </i>en el método <i>run()</i>. ¿Qué
+      utilidad le ves?
+      <p><i>b)</i>  ¿Puede haber en algún momento dos hilos ejecutando
+      simultáneamente el método <i>run()</i>?</p>
+      <p><i>c)</i>  ¿Si hubiese dos hilos ejecutando el <i>run()</i>, podría
+      haber conflictos en el acceso a la variable <i>ini</i>? Es decir, que un
+      hilo sobrescriba el valor que había escrito en ella el otro hilo ¿Por
+      qué?</p>
+      <p><i>d)</i>  ¿Cómo podemos parar este hilo sin crear uno nuevo?</p>
+      </blockquote>
+      
+<b>2.</b> En la clase <b>Ej2</b> tenemos un programa que muestre una carrera entre 
+tres hilos de distintas prioridades. Se pide: 
+<blockquote>
+        <p><i>a)</i>  Cada hilo tiene su propio contador que se va incrementando
+        cada iteración de dicho hilo. En este caso, ¿podrá haber conflicto en
+        el acceso al contador del hilo entre los distintos hilos? ¿Por qué?</p>
+        <p><i>b)</i>  Fíjate en el bucle principal en el que se imprime el
+        contador de cada hilo, ¿cuál es su condición de terminación?</p>
+        
+  <p><i>c)</i> En cada iteración los hilos hacen una operación costosa. En este 
+    caso estamos forzando a que llamen al colector de basura (garbage collector) 
+    con la instrucción <i>System.gc()</i>. Sustituir esta instrucción por dormir 
+    durante 100ms y probar. ¿Qué ocurre en este caso? ¿Por qué? Volver a dejar 
+    el programa como antes, con la llamada al colector de basura.</p>
+        <p><i>d)</i>  En el método <i>run()</i> de <b>Hilo</b>, añade la
+        instrucción necesaria para que en el caso de que el hilo <i>t </i>sea
+        distinto de <i>null<b> </b></i>se quede bloqueado hasta que dicho hilo
+        termine su ejecución. Probar el programa y ver lo que ocurre en este
+        caso.</p>
+        <p><i>e)</i>   Prueba cambiando las prioridades de los hilos. Cuando
+        tenemos hilos de alta prioridad e hilos de baja prioridad, cuando los de
+        alta prioridad terminan, ¿qué ocurre con los de baja prioridad? ¿por
+        qué?</p>
+        </blockquote>
+        
+<p><b>3.</b> En este ejercicio vamos a resolver el problema de los productores 
+  y los consumidores. Vamos a definir 3 clases: el hilo <b> Productor</b>, el 
+  hilo <b>Consumidor</b>, y el objeto <b>Recipiente </b>donde el productor deposita 
+  el valor producido, y de donde el consumidor extrae los datos. <br>
+        </p>
+        
+<ul>
+  <li>El productor se ejecuta durante 10 iteraciones y en cada una de ellas deposita 
+    en el recipiente el número de la iteración actual. Entre iteraci&oacute;n 
+    e interaci&oacute;n se quedará durmiendo durante un tiempo aleatorio entre 
+    1 y 2 segundos.</li>
+  <li>El consumidor se ejecuta el mismo n&uacute;mero de iteraciones que el productor, 
+    pero en cada una de ellas saca el valor almacenado en el recipiente y lo muestra 
+    por pantalla. Entre cada iteraci&oacute;n duerme también un tiempo aleatorio 
+    entre 1 y 2 segundos.</li>
+  <li>El recipiente proporciona los métodos <i>produce</i> y <i>consume </i>para 
+    depositar un dato en él y para sacarlo de él respectivamente. </li>
+</ul>
+ 
+ <p>El programa mostrará cuando el productor produce un valor y cuando el
+ consumidor lo consume. El funcionamiento correcto debería ser que el
+ consumidor consuma exactamente los mismos valores que el productor ha
+ producido, sin saltarse ninguno ni repetirlos. Se pide:</p>
+ <blockquote>
+  <p><i>a)</i>   Compilar y probar el programa. ¿Funciona correctamente? ¿Por
+  qué? Ejecutar varias veces y explicar lo que pasa. ¿Qué tendremos que hacer
+  para que funcione correctamente?</p>
+  <p><i>b)</i>   Vamos a añadir el código necesario en los métodos <i>produce
+  </i>y <i>consume</i> para sincronizar el acceso a ellos. El comportamiento
+  debería ser el siguiente:</p>
+  <ul>
+    <li>Si queremos producir y todavía hay datos disponibles en el recipiente,
+      esperaremos hasta que se saquen, si no produciremos y avisamos a posibles
+      consumidores que estén a la espera.</li>
+    <li>Si queremos consumir y no hay datos disponibles en el recipiente,
+      esperaremos hasta que se produzcan, si no consumimos el valor disponible y
+      avisamos a posibles productores que estén a la espera.</li>
+  </ul>
+  <p>¿Qué métodos utilizaremos para la sincronización? Insertar el código
+  necesario y compilar. Probar el programa, ¿da alguna excepción? En caso
+  afirmativo, ¿por qué? ¿será necesario añadir algo más en el encabezado
+  de los métodos <i>produce </i>y <i>consume</i>? Hacer las modificaciones
+  necesarias.</p>
+  <p>Compilar y comprobar que el programa funciona correctamente.<br>
+  </p>
+ </blockquote>
+ 
+        </body>
+        </html>

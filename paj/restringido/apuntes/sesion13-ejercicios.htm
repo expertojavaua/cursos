@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+    
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+  <title>Ejercicios de objetos distribuidos</title>
+     
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1>Objetos Distribuidos</h1>
+
+<p>&nbsp;</p>
+
+<p><b>1. </b>En el directorio <i>servidor1 </i>tenemos un servidor RMI <i>ServidorPrimos
+    </i>que está continuamente calculando números primos. Implementa la interfaz remota <i>InterfazServidorNumeros</i>:</p>
+  <pre class="codigo">public interface InterfazServidorNumeros extends java.rmi.Remote
+{
+&nbsp; public int ultimoNumero() throws java.rmi.RemoteException;
+}</pre>
+  <p>donde el método <i>ultimoNumero() </i>devuelve el último número
+  encontrado. El interfaz remoto ya está compilado y metido en el fichero JAR <i>interfaz.jar</i>.</p>
+En el directorio <i>cliente1 </i>tenemos el esqueleto de un <b>cliente</b>
+    <i>ClienteNumeros </i>que queremos que se conecte a dicho servidor. El
+    directorio también tiene el fichero <i>interfaz.jar </i>con la interfaz
+remota, y el fichero <i>java.policy</i> con la política de seguridad.&nbsp;
+<p>Se pide:</p>
+<blockquote>
+  <p> Completar el código del cliente para que obtenga un objeto remoto y
+    llame a su método <i>ultimoNumero()</i>. Para ello, seguir los pasos:</p>
+  <ul>
+    <li>Instalar un gestor de seguridad:</li>
+  </ul>
+  <blockquote>
+  <pre class="codigo">if (System.getSecurityManager() == null)
+   	System.setSecurityManager(
+	   new java.rmi.RMISecurityManager());</pre>
+  </blockquote>
+<ul>
+  <li>Obtener un objeto remoto (con <i>Naming.lookup()</i>). El nombre con que se ha registrado (ver el
+    código del servidor) es <i>ServidorNumeros</i>:</li>
+</ul>
+  <blockquote>
+    <pre class="codigo">//direccion_IP:puerto/ServidorNumeros</pre>
+    <p>La dirección IP y el
+    puerto es recomendable pasarlos como parámetro al <i>main()</i> para que
+    puedan modificarse sin problema. Podéis ver el código del cliente visto en
+    teoría para ayudaros.</p>
+  </blockquote>
+<ul>
+  <li>Llamar al método <i>ultimoNumero()</i> de dicho objeto y sacar por
+    pantalla lo que devuelve</li>
+</ul>
+</blockquote>
+
+<p>Para probar el programa:</p>
+<ul>
+  <li>En la carpeta <i>servidor1 </i>tenéis los comandos <b>compilar</b>
+      y <b>ejecutar</b>. El primero compila el servidor, y el segundo lo
+    ejecuta, pasándole como parámetro el puerto por el que escuchar, de forma
+    similar al servidor visto en teoría:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">compilar
+ejecutar 1200
+
+(Windows)</pre>
+  <pre class="codigo">. ./compilar.sh
+. ./ejecutar.sh 1200
+
+(Linux)</pre>
+</blockquote>
+<ul>
+  <li>Falta compilar y ejecutar el cliente, siguiendo los pasos explicados en
+    teoría:
+    <ul>
+      <li>Incluir el JAR <i>interfaz.jar</i> en el CLASSPATH:</li>
+    </ul>
+    <blockquote>
+      <pre class="codigo">set CLASSPATH=.\interfaz.jar;.	
+(Windows)
+export CLASSPATH=./interfaz.jar:.
+(Linux)</pre>
+    </blockquote>
+    <ul>
+      <li>Compilar la clase del cliente:</li>
+    </ul>
+  </li>
+</ul>
+<blockquote>
+  <blockquote>
+    <pre class="codigo">javac ClienteNumeros.java</pre>
+  </blockquote>
+  <ul type="circle">
+    <li>Copiar el fichero <i>Stub</i> del servidor en la carpeta del cliente.</li>
+    <li>Ejecutar el cliente pasándole los parámetros necesarios (fichero de
+      política de seguridad, IP y puerto, como se hace en el ejemplo visto en
+      teoría).</li>
+  </ul>
+  <p>Podéis utilizar los scripts para compilar y ejecutar el cliente visto
+  en teoría, cambiando lo que sea necesario. Ejecutando el cliente varias veces podréis comprobar cómo el servidor va
+  descubriendo nuevos números.</p>
+</blockquote>
+<p>&nbsp;</p>
+<p><b>2. </b>En el directorio <i>servidor2 </i>queremos tener otro <b>servidor RMI
+</b> 
+<i>ServidorVeces
+    </i>que implemente la misma interfaz remota <i>InterfazServidorNumeros </i>vista
+antes, pero que la llamada al método <i>ultimoNumero()</i> en este caso
+devuelva el número de veces que se ha solicitado ese método (en lugar del
+último primo calculado). Se tiene la interfaz remota en el fichero <i>interfaz.jar</i>
+de la carpeta del servidor.</p>
+<p>Se pide:</p>
+<blockquote>
+  <p><b>a) </b>Implementar el servidor (completar el esqueleto que se da) para
+  que realice la función indicada. Para ello podéis valeros del servidor
+  anterior como ayuda, siguiendo los pasos:</p>
+  <ul>
+    <li>Rellenar el método <i>ultimoNumero()</i> para que devuelva el número
+      de veces que se ha pedido el mismo. Podéis crear&nbsp; los campos en la
+      clase y variables auxiliares que necesitéis.</li>
+    <li>Rellenar el método <i>main()</i> para que:
+    </li>
+  </ul>
+  <blockquote>
+    <ul>
+      <li>Instale un gestor de seguridad.</li>
+      <li>Cree un objeto remoto</li>
+      <li>Lo publique (con <i>Naming.rebind()</i>)</li>
+    </ul>
+  </blockquote>
+  <ul>
+    <li>Compilar y ejecutar el servidor. Podéis utilizar los scripts de <i>compilar</i>
+      y <i>ejecutar</i> del <i>servidor1</i>, adaptándolos a este nuevo
+      servidor.</li>
+  </ul>
+  <p><b>b) </b>¿Qué cambios habría que hacer en el cliente <i>ClienteNumeros</i>
+  del primer ejercicio para conectar con este otro
+servidor? Indicad en el fichero <i>respuestas.txt </i>los cambios que se
+  realizarían.</p>
+
+</blockquote>
+<p>&nbsp;</p>
+<p align="left"><b>3.&nbsp;</b> Supongamos que tenemos que crear un cliente RMI que se
+conecta a una máquina remota para acceder a un objeto remoto llamado <i>MiObjetoDesconocido</i>,
+cuyo código fuente desconocemos. Se nos proporciona en un fichero JAR llamado <i>compartido.jar
+</i>la interfaz que implementa el servidor (llamada <i>MiInterfazDesconocida</i>),
+y una clase <i>Serializable</i> que utiliza (llamada <i>Datos</i>).&nbsp;</p>
+<p>Se pide:</p>
+<blockquote>
+  <p align="left">Completar en la carpeta <i>cliente3 </i>el cliente <i>Ej3 </i>que acceda a
+  un objeto remoto de este tipo, valiéndonos únicamente del fichero <i>compartido.jar
+  </i>con la interfaz remota y la clase serializable.&nbsp;</p>
+  <p align="left">Podéis valeros del cliente visto en teoría o el del primer
+  ejercicio como ayuda.</p>
+  <p align="left">Los pasos que se piden en el cliente son:</p>
+  <ul>
+    <li>Instalar un gestor de seguridad:</li>
+  </ul>
+  <ul>
+    <li>Obtener un objeto remoto&nbsp;(con <i>Naming.lookup()</i>):</li>
+  </ul>
+  <blockquote>
+    <pre class="codigo">MiInterfazDesconocida mid = ... 
+// Codigo para acceder al objeto remoto</pre>
+    <p>El nombre con que se ha publicado en el registro RMI es <i>&quot;Desconocido&quot;</i>,
+    es decir:&nbsp;</p>
+    <pre class="codigo">//direccion_IP:puerto/Desconocido</pre>
+  </blockquote>
+  <ul>
+    <li>Llamar al método <i>datos()</i> del objeto remoto y obtener un objeto <i>Datos</i>:</li>
+  </ul>
+  <blockquote>
+    <pre class="codigo">Datos d = mid.datos();</pre>
+  </blockquote>
+  <ul>
+    <li>Llamar al método <i>cadena()</i> del objeto <i>Datos</i> obtenido y ver
+      lo que saca por pantalla:</li>
+  </ul>
+  <blockquote>
+    <pre class="codigo">System.out.println (d.cadena());</pre>
+  </blockquote>
+  <ul type="disc">
+    <li>En clase se dejará un servidor funcionando con el objeto remoto en una
+    máquina remota. Compilad y conectad el cliente a dicha máquina e indicad en el
+    fichero <i>respuestas.txt </i>lo que devuelve al llamar a <i>cadena() </i>en
+      el cliente.</li>
+  </ul>
+</blockquote>
+<p>&nbsp;</p>
+<p><b>Para entregar:</b> Debéis entregar un ZIP <i>e7.zip</i>   con:
+<ul>
+  <li>La carpeta <i>cliente1 </i>con el cliente implementado para el ejercicio 1</li>
+  <li>La carpeta <i>servidor2 </i>con el servidor implementado para el ejercicio
+    2</li>
+  <li>La carpeta <i>cliente3 </i>con el cliente implementado para el ejercicio 3</li>
+  <li>El fichero <i>respuestas.txt</i> con las cuestiones respondidas.</li>
+</ul>
+&nbsp;
+</body>
+</html>

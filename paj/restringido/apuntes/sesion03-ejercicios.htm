@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios Excepciones y Reflection</title>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ 
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+ <body bgcolor="#ffffff" text="#000000">
+<h1><span class="section">Excepciones </span> </h1>
+<p><b>1.</b> El fichero <i> Ej1.java</i> es un programa que toma un n&uacute;mero
+como par&aacute;metro, y como salida muestra el logaritmo de dicho
+n&uacute;mero. Sin embargo, en ning&uacute;n momento comprueba si se ha proporcionado
+alg&uacute;n par&aacute;metro, ni si ese par&aacute;metro es un n&uacute;mero.
+Se pide:</p>
+ 
+<blockquote> 
+  <p><b>a)</b> Compilar el programa y ejecutadlo de tres formas distintas:</p>
+ 
+  <ul>
+    <li>Sin par&aacute;metros</li>
+  </ul>
+  <blockquote>
+  <pre class="codigo">java Ej1 </pre>
+  </blockquote>
+ 
+  <ul>
+    <li>Poniendo un par&aacute;metro no num&eacute;rico</li>
+  </ul>
+  <blockquote>
+  <pre class="codigo">java Ej1 pepe</pre>
+  </blockquote>
+ 
+  <ul>
+    <li>Poniendo un par&aacute;metro
+num&eacute;rico&nbsp;</li>
+  </ul>
+  <blockquote>
+  <pre class="codigo">java Ej1 30</pre>
+  </blockquote>
+  <p>Anotad las excepciones que se lanzan en cada caso (si se lanzan)</p>
+ 
+  <p><b>b)</b><i> </i> Modificar el c&oacute;digo de <i>main() </i>para que capture las excepciones producidas 
+    y muestre los errores correspondientes en cada caso:</p>
+  <ul>
+    <li>Para comprobar si no hay parámetros se capturará una excepción de
+      tipo <b>ArrayIndexOutOfBoundsException</b> (para ver si el array de <i>String</i>
+      que se pasa en el main tiene algún elemento).</li>
+    <li>Para comprobar si el parámetro es numérico, se capturará una
+      excepción de tipo <b>NumberFormatException</b>.</li>
+  </ul>
+  <p>Así, tendremos en el <i>main() </i>algo como:</p>
+  <pre class="codigo">try
+{
+	// Tomar parámetro y asignarlo a un double
+} catch (ArrayIndexOutOfBoundsException e1) {
+	// Codigo a realizar si no hay parametros
+} catch (NumberFormatException e2) {
+	// Codigo a realizar con parametro no numerico
+}</pre>
+ 
+  <p>Probad de nuevo el programa 
+    igual que en el caso anterior comprobando que las excepciones son capturadas 
+    y tratadas.</p>
+ </blockquote>
+ 
+  
+<p><b>2.</b>&nbsp; El fichero <i>Ej2.java</i> es similar al anterior, aunque
+ahora no vamos a tratar las excepciones del <i>main()</i>, sino las del método<i>
+logaritmo()</i>:<i> </i> 
+  en la funci&oacute;n que calcula el logaritmo se comprueba si el valor introducido 
+  es menor o igual que 0, ya que para estos valores la funci&oacute;n logaritmo 
+  no est&aacute; definida. Se pide:</p>
+ 
+  <blockquote>   
+    
+  <p><b>a)</b> Buscar entre las excepciones de Java la m&aacute;s adecuada para 
+    lanzar en este caso, que indique que a un m&eacute;todo se le ha pasado un 
+    argumento ilegal. (Pista: Buscar entre las clases derivadas de <b>Exception</b>. 
+    En este caso la m&aacute;s adecuada se encuentra entre las derivadas de <b>RuntimeException</b>).</p>
+   
+  <p><b>b)</b><i> </i>Una vez elegida la excepci&oacute;n adecuada, a&ntilde;adir
+c&oacute;digo (en el método <i>logaritmo()</i>)<i> </i>para que   en el caso de haber introducido un par&aacute;metro
+incorrecto se lance dicha   excepci&oacute;n.&nbsp;</p>
+   
+  <pre class="codigo">throw new ... // excepcion elegida</pre>
+   
+  <p> Probar el programa para comprobar
+el efecto que tiene el   lanzamiento de la excepci&oacute;n.</p>
+   
+  <p><b>c)</b> Al no ser una excepci&oacute;n del tipo <i>checked</i> no
+har&aacute; falta   que la capturemos ni que declaremos que puede ser lanzada.
+Vamos a crear   nuestro propio tipo de excepci&oacute;n derivada de <b>Exception</b>
+ (de tipo <i>checked</i>)   para ser lanzada en caso de introducir un valor
+no v&aacute;lido como par&aacute;metro. La   excepci&oacute;n se llamar&aacute;
+    <b>WrongParameterException</b> y tendrá la siguiente forma:</p>
+  <pre class="codigo">public class WrongParameterException extends Exception 
+{
+	public WrongParameterException(String msg) {
+		super(msg);
+	}
+}</pre>
+  <p>Deberemos lanzarla en   lugar de la
+escogida en el punto anterior.&nbsp;</p>
+  <pre class="codigo">throw new WrongParameterException(...);</pre>
+  <p> Intentar compilar el programa y   observar
+los errores que aparecen. &iquest;Por qu&eacute; ocurre esto? A&ntilde;adir
+los   elementos necesarios al c&oacute;digo para que compile y probarlo.&nbsp;</p>
+ </blockquote>
+ 
+<p><b>3.</b>&nbsp;<b>(CHAT)</b>  Durante el curso vamos a construir una aplicación de chat, en la que los
+ usuarios deberán registrarse antes de poder entrar. Para ello tendremos una
+ función <i>registraUsuario(login, password)</i> que añadirá el usuario a la
+ base de datos. Cuando llamemos a esta función puede ocurrir que se registre el
+ usuario, o bien que haya algún error como que el login esté repetido o sea un
+ login no válido (p.ej cadena vacía). En el caso de error nos interesará
+ conocer cuál ha sido la causa del error para poder comunicárselo al usuario.&nbsp;</p>
+ 
+<p>
+ Se pide:</p>
+ 
+<blockquote>
+  <p><b>a) </b>Implementar una nueva excepción <b>LoginInvalidoException</b>
+    contenida en un subpaquete <b>usuarios </b>(más adelante iremos añadiendo
+  otras clases a este paquete). Esta excepción tomará en el
+    constructor una cadena en la que se indicará el mensaje de error producido.
+    Si nos fijamos en la clase <b>Exception</b> de la que hereda, vemos que
+    tiene un constructor a partir del mensaje de error. También la excepción <i>WrongParameterException</i>
+  hecha en el ejercicio anterior lo utiliza. ¿Qué instrucción
+    deberemos usar para utilizar dicho constructor desde la subclase?
+  Implementar y compilar
+    la nueva excepción (podéis fijaros en <i>WrongParameterException</i> para
+  hacer la nueva, teniendo en cuenta que debe ser del paquete <i>usuarios</i>).</p>
+ 
+  <p><b>b)</b><i> </i>Esta clase es sólo un componente de nuestra futura aplicación
+    de chat que vamos a construir. Para poder probar estos componentes
+    individuales sin tener la aplicación completa utilizaremos lo que
+    denominamos un <i>conductor</i> que será código provisional lo más simple
+    posible que nos permita probar todas las funcionalidades de nuestro módulo.
+    En este caso nuestro conductor estará en el fichero <i>Ej3.java</i>.</p>
+   
+  <ul>
+    <li>Al
+    estar la clase de la excepción en el paquete <i>usuarios</i>, ¿qué línea
+    deberemos añadir al conductor para que sea capaz de localizar dicha clase?
+    Añadirla al código y compilar ¿Por qué da error de compilación?</li>
+    <li>Añadir las líneas <i>throw </i>necesarias para lanzar las excepciones
+    únicamente en los lugares indicados en el código de la función <i>registraUsuario()
+    </i>y compilar. ¿Qué error da? ¿Por qué?&nbsp;</li>
+    <li> Añadir a la declaración de la
+    función <i>registraUsuario()</i> lo que sea necesario para que compile.</li>
+  </ul>
+  <p>Probar el programa. Se le pasan como parámetro el <i>login</i> y <i>password</i>
+  que se pasan a <i>registraUsuario()</i>. Variando estos parámetros podréis
+  comprobar los mensajes que se pueden mostrar, y el comportamiento de la
+  excepción creada.</p>
+   
+</blockquote>
+<h1>&nbsp; </h1>
+<h1><span class="section">Reflection </span> </h1>
+<p><b>4.</b>  Tenemos hechas las clases <i>MiClase1 </i>y <i>MiClase2. </i>Ambas
+tienen un constructor sin parámetros, y un solo método llamado <i>imprime()</i> que saca un mensaje por
+pantalla (distinto para cada clase). El programa <i>Ej4.java</i>  acepta como
+único parámetro el nombre de una de estas dos clases (<i>MiClase1</i> o <i>MiClase2</i>).
+</p>
+ 
+<p>Se pide:</p>
+ 
+<blockquote>
+  <p><b>a) </b>Hacer que <i>Ej4</i> cree en tiempo de ejecución una instancia
+  de un objeto de la clase que se le pasa como parámetro.</p>
+ 
+  <ul>
+    <li>Obtener el objeto <i>Class</i> mediante un <i>forName()</i>, pasándole
+      como parámetro el nombre de la clase indicada. Por ejemplo:</li>
+  </ul>
+  <blockquote>
+    <pre class="codigo">Class c = Class.forName(&quot;MiClase1&quot;);</pre>
+  </blockquote>
+  <ul>
+    <li>Obtener un <i>Object</i> mediante un <i>newInstance()</i> del objeto <i>Class</i>
+      obtenido:</li>
+  </ul>
+  <blockquote>
+    <pre class="codigo">Object o = c.newInstance();</pre>
+  </blockquote>
+ 
+  <p><b>b)</b> Llamar en <i>Ej4 </i>al método del objeto creado (tras crearlo)
+  para que imprima el mensaje por pantalla.</p>
+ 
+  <ul>
+    <li>Obtener los métodos de la clase mediante el <i>getMethods()</i> del
+      objeto <i>Class</i>:</li>
+  </ul>
+  <blockquote>
+    <pre class="codigo">Method[] metodos = c.getMethods();</pre>
+  </blockquote>
+  <ul>
+    <li>Invocar al primer método de la lista de métodos obtenida, pasándole
+      como parámetros el objeto creado (objeto donde se llama al método), y
+      los parámetros (que en este caso no utiliza):</li>
+  </ul>
+  <blockquote>
+    <pre class="codigo">metodos[0].invoke(o, null);</pre>
+  </blockquote>
+ 
+</blockquote>
+<p>&nbsp;</p>
+ 
+<p><b>5.</b>  Se tienen las clases <i>MiClase1b </i>y <i>MiClase2b</i>, que
+son como las<i> </i>anteriores <i>MiClase1 </i>y <i>MiClase2 </i>respectivamente,
+pero pasándole un parámetro <i>String</i> tanto al constructor como al método
+<i>imprime()</i>.<i> </i>El programa <i>Ej5.java</i>  acepta como
+parámetro el nombre de una de las dos clases (<i>MiClase1b </i>o <i>MiClase2b</i>).</p>
+ 
+<p>Se pide:</p>
+ 
+<blockquote>
+  <p><b>a) </b>Crear en tiempo de ejecución una instancia de un objeto de la
+  clase que se le pasa como parámetro, utilizando el nuevo constructor, y
+  pasándole como parámetro al mismo la cadena &quot;Hola&quot;.</p>
+ 
+  <ul>
+    <li>Obtener el objeto <i>Class</i> mediante un <i>forName()</i>, pasándole
+      como parámetro el nombre de la clase indicada. Por ejemplo:</li>
+  </ul>
+  <blockquote>
+    <pre class="codigo">Class c = Class.forName(&quot;MiClase2b&quot;);</pre>
+  </blockquote>
+  <ul>
+    <li>Obtener los constructores del objeto:<pre class="codigo">Constructor[] constructores = 
+     c.getDeclaredConstructors();</pre>
+    </li>
+    <li>Construir el array de <i>Object </i>con los parámetros del constructor
+      (en este caso sólo es un <i>String</i>):</li>
+  </ul>
+  <blockquote>
+    <pre class="codigo">Object[] parametros = {&quot;Hola&quot;};</pre>
+  </blockquote>
+  <ul>
+    <li>Crear un objeto con el constructor:</li>
+  </ul>
+  <blockquote>
+    <pre class="codigo">Object o = 
+     constructores[0].newInstance(parametros);</pre>
+  </blockquote>
+ 
+  <p><b>b)</b>  Llamar al método del objeto creado (el método que acepta una
+  cadena) pasándole como parámetro la cadena &quot;Imprimir&quot;.</p>
+ 
+</blockquote>
+ 
+<blockquote>
+  <ul>
+    <li>Obtener los métodos de la clase mediante el <i>getMethods()</i> del
+      objeto <i>Class</i>:</li>
+  </ul>
+  <blockquote>
+    <pre class="codigo">Method[] metodos = c.getMethods();</pre>
+  </blockquote>
+  <ul>
+    <li>Construir el array de <i>Object </i>con los parámetros del método (en
+      este caso sólo es un <i>String</i>):<pre class="codigo">Object[] parametros2 = {&quot;Imprimiendo&quot;};</pre>
+    </li>
+    <li>Invocar al primer método de la lista de métodos obtenida, pasándole
+      como parámetros el objeto creado (objeto donde se llama al método), y
+      los parámetros (que en este caso no utiliza):</li>
+  </ul>
+  <blockquote>
+    <pre class="codigo">metodos[0].invoke(o, parametros2);</pre>
+  </blockquote>
+ 
+</blockquote>
+<p>&nbsp;</p>
+ 
+                      <p><b>Para entregar:</b> Debéis entregar un ZIP <i>e2_1.zip</i>
+                      con:</p>
+                      <ul>
+                        <li>El programa <i>Ej1.java</i> con las excepciones
+                          capturadas en el <i>main()</i></li>
+                        <li>La excepción <i>WrongParameterException </i>construida,
+                          y el programa <i>Ej2.java</i> con la excepción <i>WrongParameterException</i>
+                          lanzada en el método <i>logaritmo()</i>.</li>
+                        <li>
+                          <p align="left">La excepción <i>LoginInvalidoException</i>
+                          creada en el paquete <i>usuarios</i>, y el programa <i>Ej3.java</i>
+                          con los cambios añadidos para poder probar la
+                          excepción.</li>
+                        <li>
+                          <p align="left">El programa <i>Ej4.java </i>realizado.</li>
+                        <li>
+                          <p align="left">El programa <i>Ej5.java </i>realizado.</li>
+                        <li>El fichero <i>respuestas.txt</i> con las cuestiones
+                          que aparecen en él respondidas.</li>
+                      </ul>
+                                     
+        </body>
+        </html>

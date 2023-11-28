@@ -1,0 +1,480 @@
+<html>
+<head>
+<title>Tema 4: Acceso a bases de datos con JDBC</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1><span class="section">4. Acceso a bases de datos con JDBC</span> </h1>
+<p>JDBC nos permitirá acceder a bases de datos desde Java. Para ello necesitaremos 
+  contar con un SGBD (sistema gestor de bases de datos) además de un driver específico 
+  para poder acceder a este SGBD.&nbsp;La ventaja de JDBC es que nos permitir&aacute; 
+  acceder a cualquier tipo de base de datos, siempre que contemos con un driver 
+  apropiado para ella.</p>
+<div align="center"><img src="imagenes/jdbc/img_jdbc.gif" width="109" height="235"></div>
+<p align="center" class="caption">Figura 1. Arquitectura de JDBC</p>
+<p align="left">Como podemos ver en la Figura 1, cuando construimos una aplicaci&oacute;n 
+  Java utilizando JDBC para el acceso a nuestra base de datos, en nuestra aplicaci&oacute;n 
+  siempre utilizaremos la API est&aacute;ndar de JDBC, y la implementaci&oacute;n 
+  concreta de la base de datos ser&aacute; transparente para nosotros. </p>
+<p align="left">Esto es importante ya que distintos SGBD tienen interfaces distintas 
+  (distintas APIs), por lo que si en alg&uacute;n momento quisiesemos migrar una 
+  aplicaci&oacute;n que utiliza una de estas APIs a otro tipo de SGBD nos ver&iacute;amos 
+  obligados a adaptar todo el c&oacute;digo fuente de la aplicaci&oacute;n a la 
+  nueva API, lo cual hace que la aplicaci&oacute;n sea menos mantenible.</p>
+<p align="left">JDBC ser&aacute; quien se encargue por nosotros de tratar de forma 
+  interna las diferencias entre las APIs de distintos SGBDs, de forma que nosotros 
+  siempre utilizaremos la API de JDBC dentro de nuestra aplicaci&oacute;n, y si 
+  cambiamos de SGBD no ser&aacute; necesario realizar ning&uacute;n cambio.</p>
+<div align="center"><img src="imagenes/jdbc/img_jdbc2.gif" width="397" height="235"></div>
+<p align="center" class="caption">Figura 2. Conexión de JDBC a distintos SGBDs</p>
+<p align="left">El &uacute;nico cambio que tendremos que hacer ser&aacute; cargar 
+  al comienzo el driver apropiado para la BD que estemos utilizando. El resto 
+  de nuestro c&oacute;digo permanecer&aacute; inalterado sea cual sea la BD a 
+  la que nos conectemos.</p>
+<h2 class="subsection">4.1. Instalación de drivers</h2>
+<p>Los drivers para poder acceder a cada SGBD no forman parte de la
+distribución de Java por lo que deberemos obtenerlos por separado. El único
+driver incluido es el puente JDBC-ODBC que nos permitirá acceder a cualquier
+fuente de datos ODBC instalada.</p>
+<p>Si queremos trabajar directamente con un SGBD será necesario obtener el
+driver correspondiente. Vamos a utilizar MySQL, por lo que deberemos descargar e
+instalar el SGBD y el driver, que puede ser obtenido en la dirección <a href="http://www.mysql.com/downloads/api-jdbc.html">http://www.mysql.com/downloads/api-jdbc.html</a>.</p>
+<p>Para instalar el driver lo único que deberemos hacer es incluir el fichero
+JAR que lo contiene en el CLASSPATH:</p>
+<pre class="codigo">set CLASSPATH=%CLASSPATH%;<b>c:\mmsql\mm.mysql-2.0.4-bin.jar</b></pre>
+<p>Con el driver instalado, podremos cargarlo desde nuestra aplicación
+simplemente cargando dinámicamente la clase correspondiente al driver:</p>
+<pre class="codigo">Class.forName(&quot;<b>org.gjt.mm.mysql.Driver</b>&quot;);</pre>
+<p>Si quisiesemos cargar el driver JDBC-ODBC deberemos hacerlo como se muestra a
+continuación:</p>
+<pre class="codigo">Class.forName(&quot;<b>sun.jdbc.odbc.JdbcOdbcDriver</b>&quot;);</pre>
+<p>La carga del driver se deberá hacer siempre antes de conectar con la BD.</p>
+<h2 class="subsection">4.2. Conexión a la BD</h2>
+<p>Una vez cargado el driver apropiado para nuestro SGBD deberemos establecer la
+conexión con la BD. Para ello utilizaremos el siguiente método:</p>
+<pre class="codigo"><b><span class="codigo">Connection</span></b><span class="codigo"> con = DriverManager.<b>getConnection</b>(url, login, password);</span></pre>
+<p>La conexión a la BD está encapsulada en un objeto <b>Connection</b>, y como
+hemos visto para su creación debemos proporcionar la <i> url</i> de la BD y el <i>login</i>
+y <i>
+password</i> para acceder a ella. El formato de la <i> url</i> variará según el driver que
+utilicemos.</p>
+<p>En el caso de MySQL, si queremos conectarnos a una BD de nombre <i>paj</i>
+alojada en la máquina local (<i>localhost</i>), lo haremos de la siguiente
+forma:</p>
+<pre class="codigo"><b><span class="codigo">Connection</span></b><span class="codigo"> con = DriverManager.getConnection(
+                  &quot;<b>jdbc:mysql://localhost/paj</b>&quot;, null, null);</span></pre>
+<p>Para conectar a una fuente ODBC de nombre <i>paj</i> por ejemplo,
+utilizaremos la siguiente URL:</p>
+<pre class="codigo"><b><span class="codigo">Connection</span></b><span class="codigo"> con = DriverManager.getConnection(
+                  &quot;<b>jdbc:odbc:paj</b>&quot;, null, null);</span></pre>
+<p>En este caso no hemos especificado <i>login </i>ni <i>password</i> por lo que
+sólo se nos permitirá acceder si la BD no está protegida con contraseña.</p>
+<h2 class="subsection">4.3. Creación y ejecución de sentencias SQL</h2>
+<p>Una vez obtenida la conexión a la BD, podemos utilizarla para crear
+sentencias. Estas sentencias están encapsuladas en la clase <b>Statement</b>, y
+podemos crearlas de la siguiente forma:</p>
+<pre class="codigo"><b><span class="codigo">Statement</span></b><span class="codigo"> stmt = con.<b>createStatement</b>();</span></pre>
+<p>Una vez obtenido este objeto podemos ejecutar sentencias utilizando su
+método <b>executeUpdate() </b>al que proporcionaremos una cadena con la
+sentencia SQL que queramos ejecutar:</p>
+<pre class="codigo">stmt.<b>executeUpdate</b>(sentenciaSQL);</pre>
+<p>Estas sentencias pueden utilizarse para creación de tablas, y para la
+inserción, actualización y borrado de datos en ellas. Para ello utilizaremos
+las correspondientes sentencias SQL.</p>
+<p>Vamos a ver a continuación un ejemplo de estas operaciones. Crearemos una
+tabla ALUMNOS en nuestra base de datos y añadiremos datos a la misma. La
+sentencia para la creación de la tabla será la siguiente:</p>
+<pre class="codigo">   String st_crea = &quot;<b>CREATE TABLE</b> ALUMNOS (
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exp <b>INTEGER</b>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nombre <b>VARCHAR</b>(32),
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nota <b>VARCHAR</b>(3) default 'NP',
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>PRIMARY</b> <b>KEY</b> (exp)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; )&quot;;
+
+   <span class="codigo">stmt.<b>executeUpdate</b>(st_crea);</span>
+</pre>
+<p>Una vez creada la tabla podremos insertar datos en ella como se muestra a
+continuación:</p>
+<pre class="codigo">   String st_inserta = &quot;<b>INSERT</b> <b>INTO</b> ALUMNOS(exp, nombre) 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>VALUES</b>(1285, 'Manu')&quot;;
+
+   stmt.<b>executeUpdate</b>(st_inserta);</pre>
+<p>Cuando tengamos datos dentro de la tabla, podremos modificarlos utilizando
+para ello una sentencia UPDATE:</p>
+<pre class="codigo">   String st_actualiza = &quot;<b>UPDATE FROM</b> ALUMNOS
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>SET</b> nota = 'NOT'
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>WHERE</b> exp = 1285&quot;;
+
+   stmt.<b>executeUpdate</b>(st_actualiza);</pre>
+<p>Si queremos eliminar un registro de la tabla utilizaremos una sentencia
+DELETE como se muestra a continuación:</p>
+<pre class="codigo">   String st_borra = &quot;<b>DELETE FROM</b> ALUMNOS
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>WHERE</b> exp = 1285&quot;;
+
+   stmt.<b>executeUpdate</b>(st_borra);</pre>
+<p>Como hemos visto mediante el método <b>executeUpdate() </b>del objeto <b>Statement</b> 
+  podremos ejecutar cualquier sentencia SQL en la base de datos a la que nos hayamos 
+  conectado, pudiendo así&nbsp; realizar cualquier acción que nos permita SQL 
+  de manera sencilla.</p>
+<pre class="codigo">int n = stmt.<b>executeUpdate</b>(sentencia);</pre>
+<p>Como resultado nos devolver&aacute; un entero que podremos consultar, y que 
+  nos dir&aacute; el n&uacute;mero de registros a los que ha afectado la operaci&oacute;n, 
+  en caso de sentencias INSERT, UPDATE y DELETE. En el caso de una sentencia DDL 
+  (Lenguaje de definici&oacute;n de datos), como puede ser por ejemplo la creaci&oacute;n 
+  de una tabla, como no afecta a los datos contenidos en la BD nos devolver&aacute; 
+  siempre 0.</p>
+<h2 class="subsection">4.4. Obtención de datos</h2>
+<p>Para obtener datos almacenados en la BD podemos utilizar una consulta SQL (<i>query</i>).
+Podemos ejecutar la consulta utilizando el objeto <b>Statement</b>, con el
+método <b>executeQuery() </b>al que le pasaremos una cadena con la consulta
+SQL. Los datos resultantes nos los devolverá como un objeto <b>ResultSet</b>.</p>
+<pre class="codigo"><b><span class="codigo">ResultSet</span></b><span class="codigo"> result = stmt.<b>executeQuery</b>(query);</span></pre>
+<p>La consulta SQL nos devolverá una tabla, que tendrá una serie de campos y
+un conjunto de registros, cada uno de los cuales consistirá en una tupla de
+valores correspondientes a los campos de la tabla.&nbsp; </p>
+<p> Los campos que tenga la tabla
+resultante dependerán de la consulta que hagamos, de los datos que solicitemos
+que nos devuelva. Por ejemplo, podemos solicitar que una consulta nos devuelva
+los campos <i>expediente </i>y <i>nombre</i> de los alumnos. </p>
+<p> Además en la consulta impondremos unas restricciones a los datos que queremos 
+  ver, devolviéndonos únicamente aquellos registros que cumplan dichas restricciones. 
+  Por ejemplo, podemos solicitar que nos devuelva sólo los registros de aquellos 
+  alumnos cuya nota sea suspenso. </p>
+<p>Veamos el funcionamiento de las consultas SQL mediante un ejemplo:</p>
+<pre class="codigo">String query = &quot;<b>SELECT </b>*<b> FROM </b>ALUMNOS 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>WHERE </b>nota <b>= '</b>SUS<b>'</b>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; )&quot;;<b>
+
+ResultSet</b> result = stmt.<b>executeQuery</b>(query);</pre>
+<p>En esta consulta estamos solicitando todos los registros de la tabla ALUMNOS 
+  en los que la nota sea suspenso ('SUS'), pidiendo que nos devuelva todos los 
+  campos (indicado con *) de dicha tabla. Nos devolverá una tabla como la siguiente:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%"><b>exp</b></td>
+    <td width="33%"><b>nombre</b></td>
+    <td width="34%"><b>nota</b></td>
+  </tr>
+  <tr>
+    <td width="33%">1286</td>
+    <td width="33%">Pedro</td>
+    <td width="34%">SUS</td>
+  </tr>
+  <tr>
+    <td width="33%">1304</td>
+    <td width="33%">Juana</td>
+    <td width="34%">SUS</td>
+  </tr>
+  <tr>
+    <td width="33%">1310</td>
+    <td width="33%">Jaume</td>
+    <td width="34%">SUS</td>
+  </tr>
+</table>
+<p>Estos datos nos los devolverá como un objeto <b>ResultSet</b>. A continuación 
+  veremos el acceso a estos valores dentro de dicho objeto.</p>
+<p>En el objeto <b>ResultSet </b>existe un <i>cursor</i> que estará situado en 
+  el registro que podemos consultar en cada momento. Este <i>cursor</i> en un 
+  principio estará situado en una posición anterior al primer registro de la tabla. 
+  Podemos mover el cursor al siguiente registro con el método <b>next()</b> del 
+  <b>ResultSet</b>. La llamada a este método nos devolverá <b>true</b> mientras 
+  pueda pasar al siguiente registro, y <b>false </b>en el caso de que ya estuviésemos 
+  en el último registro de la tabla. Para la consulta de todos los registros obtenidos 
+  utilizaremos normalmente un bucle como el siguiente:</p>
+<pre class="codigo">while(result.<strong>next</strong>())
+{
+	// Leer registro
+}</pre>
+<p>Ahora necesitamos obtener los datos del registro que marca el <i>cursor</i>,
+para lo cual podremos acceder a los campos de dicho registro. Esto lo haremos
+utilizando los métodos <b>getXXXX(campo)</b> donde <b>XXXX</b> será el tipo de
+datos de Java en el que queremos que nos devuelva el valor del campo. Hemos de
+tener en cuenta que el tipo del campo en la tabla debe ser convertible al tipo
+de datos Java solicitado. Para especificar el campo que queremos leer podremos
+utilizar bien su nombre en forma de cadena, o bien su índice que dependerá de
+la ordenación de los campos que devuelve la consulta.</p>
+<p>Los tipos principales que podemos obtener son los siguientes:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="19%"><b>getInt</b></td>
+    <td width="81%">Datos enteros</td>
+  </tr>
+  <tr>
+    <td width="19%"><b>getDouble</b></td>
+    <td width="81%">Datos reales</td>
+  </tr>
+  <tr>
+    <td width="19%"><b>getBoolean</b></td>
+    <td width="81%">Campos booleanos (si/no)</td>
+  </tr>
+  <tr>
+    <td width="19%"><b>getString</b></td>
+    <td width="81%">Campos de texto</td>
+  </tr>
+  <tr>
+    <td width="19%"><b>getDate</b></td>
+    <td width="81%">Tipo fecha</td>
+  </tr>
+</table>
+<p>Si queremos imprimir todos los datos obtenidos de nuestra tabla ALUMNOS del
+ejemplo podremos hacer lo siguiente:</p>
+<pre class="codigo">int exp;
+String nombre;
+int nota;
+
+while(result.<strong>next</strong>())
+{
+	exp = result.<strong>getInt</strong>(&quot;exp&quot;);
+	nombre = result.<strong>getString</strong>(&quot;nombre&quot;);
+	nota = result.<strong>getString</strong>(&quot;nota&quot;);
+	System.out.println(exp + &quot;\t&quot; + nombre + &quot;\t&quot; + nota);
+}</pre>
+<p>Igual que los métodos <b>getXXXX </b>tenemos también métodos <b>updateXXXX
+</b>que nos permiten actualizar el campo especificado en el registro actual. La
+actualización se hace sobre los datos en memoria, si queremos que este cambio
+se aplique a la BD deberemos llamar a <b>updateRow()</b> tras modificar los
+datos del registro.</p>
+<p>Existe un registro especial al que no se puede acceder como hemos visto anteriormente, 
+  que es el registro de inserción. Este registro se utiliza para insertar nuevos 
+  registros en la tabla. Para situarnos en él deberemos llamar al método <b>moveToInsertRow()</b>. 
+  Una vez situados en él deberemos asignar los datos y una vez hecho esto llamar 
+  a <b>insertRow() </b>para que el registro se inserte en la BD. Podemos volver 
+  al registro donde nos encontrábamos antes de movernos al registro de inserción 
+  llamando a <b>moveToCurrentRow()</b>. Si queremos eliminar el registro actual 
+  de la BD podemos llamar a <b>deleteRow()</b>.</p>
+<p>En la interfaz <b>Statement</b> podemos observar un tercer m&eacute;todo que 
+  podemos utilizar para la ejecuci&oacute;n de sentencias SQL. Hasta ahora hemos 
+  visto como para la ejecuci&oacute;n de sentencias que devuelven datos (consultas) 
+  debemos usar <b>executeQuery()</b>, mientras que para las sentencias INSERT, 
+  DELETE, UPDATE e instrucciones DDL utilizamos <b>executeUpdate()</b>. Sin embargo, 
+  puede haber ocasiones en las que no conozcamos de antemano el tipo de la sentencia 
+  que vamos a utilizar (por ejemplo si la sentencia la introduce el usuario). 
+  En este caso podemos usar el m&eacute;todo <b>execute()</b>.</p>
+<pre class="codigo">boolean hay_result = stmt.<b>execute</b>(sentencia);</pre>
+<p>Podemos ver que el m&eacute;todo devuelve un valor <i>booleano</i>. Este valor 
+  ser&aacute; <i>true</i> si la sentencia ha devuelto resultados (uno o varios 
+  objetos <b>ResultSet</b>), y false en el caso de que s&oacute;lo haya devuelto 
+  el n&uacute;mero de registros afectados. Tras haber ejecutado la sentencia con 
+  el m&eacute;todo anterior, para obtener estos datos devueltos proporciona una 
+  serie de m&eacute;todos:</p>
+<pre class="codigo">int n = stmt.<b>getUpdateCount</b>();</pre>
+<p>El m&eacute;todo <b>getUpdateCount()</b> nos devuelve el n&uacute;mero de registros 
+  a los que afecta la actualizaci&oacute;n, inserci&oacute;n o borrado, al igual 
+  que el resultado que devolv&iacute;a <b>executeUpdate()</b>.</p>
+<pre class="codigo">ResultSet rs = stmt.<b>getResultSet</b>();</pre>
+<p>El m&eacute;todo <b>getResultSet()</b> nos devolver&aacute; el objeto <b>ResultSet</b> 
+  que haya devuelto en el caso de ser una consulta, al igual que hac&iacute;a 
+  <b>executeQuery()</b>. Sin embargo, de esta forma nos permitir&aacute; adem&aacute;s 
+  tener m&uacute;ltiples objetos <b>ResultSet</b> como resultado de una llamada. 
+  Eso puede ser necesario por ejemplo en el caso de una llamada a un procedimiento, 
+  que nos puede devolver varios resultados como veremos m&aacute;s adelante. Para 
+  movernos al siguiente <b>ResultSet</b> utilizaremos el siguiente m&eacute;todo:</p>
+<pre class="codigo">boolean hay_mas_results = stmt.<b>getMoreResults</b>();</pre>
+<p>La llamada a este m&eacute;todo nos mover&aacute; al siguiente <b>ResultSet</b> 
+  devuelto, devolviendonos <i>true</i> en el caso de que exista, y <i>false</i> 
+  en el caso de que no haya m&aacute;s resultados. Si existe, una vez nos hayamos 
+  movido podremos consultar el nuevo <b>ResultSet</b> llamando nuevamente al m&eacute;todo 
+  <b>getResultSet()</b>.</p>
+<h2>4.5. Optimizaci&oacute;n de sentencias</h2>
+<p>Cuando vamos a invocar una determinada sentencia repetidas veces, puede ser 
+  conveniente dejar esa sentencia preparada para que pueda ser ejecutada de forma 
+  m&aacute;s eficiente. Para hacer esto utilizaremos la interfaz <b>PreparedStatement</b>, 
+  que podr&aacute; obtenerse a partir de la conexi&oacute;n a la BD de la siguiente 
+  forma:</p>
+<pre class="codigo"><b>PreparedStatement</b> ps = con.<b>prepareStatement</b>(&quot;UPDATE FROM alumnos
+                            SET nota = 'NP'
+                            WHERE exp&gt;1200 AND exp&lt;1300&quot;);</pre>
+<p>Vemos que a este objeto, a diferencia del objeto <b>Statement</b> visto anteriormente, 
+  le proporcionamos la sentencia SQL en el momento de su creaci&oacute;n, por 
+  lo que estar&aacute; preparado y optimizado para la ejecuci&oacute;n de dicha 
+  sentencia posteriormente.</p>
+<p>Sin embargo, lo m&aacute;s com&uacute;n es que necesitemos hacer variaciones 
+  sobre la sentencia, ya que normalmente no ser&aacute; necesario ejecutar repetidas 
+  veces la misma sentencia exactamente, sino variaciones de ella. Por ello, este 
+  objeto nos permite parametrizar la sentencia. Estableceremos las posiciones 
+  de los par&aacute;metros con el car&aacute;cter '?' dentro de la cadena de la 
+  sentencia, tal como se muestra a continuaci&oacute;n:</p>
+<pre class="codigo"><b>PreparedStatement</b> ps = con.<b>prepareStatement</b>(&quot;UPDATE FROM alumnos
+                            SET nota = 'NP'
+                            WHERE exp &gt; ? AND exp &lt; ?&quot;);</pre>
+<p>En este caso tenemos dos par&aacute;metros, que ser&aacute; el n&uacute;mero 
+  de expediente m&iacute;nimo y el m&aacute;ximo del rango que queremos actualizar. 
+  Cuando ejecutemos esta sentencia, la nota de los alumnos desde expediente inferior 
+  hasta expediente superior se establecer&aacute; a NO PRESENTADO ('NP').</p>
+<p>Para dar valor a estos par&aacute;metros utilizaremos m&eacute;todo <b>setXXX()</b> 
+  donde <b>XXX</b> ser&aacute; el tipo de los datos que asignamos al par&aacute;metro, 
+  indicando el n&uacute;mero del par&aacute;metro (que empieza desde 1) y el valor 
+  que le queremos dar. Por ejemplo, para asignar valores enteros a los par&aacute;metros 
+  de nuestro ejemplo haremos:</p>
+<pre class="codigo">ps.<b>setInt</b>(1,1200);<b>
+</b>ps.<b>setInt</b>(2,1300);</pre>
+<p>Una vez asignados los par&aacute;metros, podremos ejecutar la sentencia llamando 
+  al m&eacute;todo <b>executeUpdate()</b> del objeto <b>PreparedStatement</b>:</p>
+<pre class="codigo">int n = ps.<b>executeUpdate</b>();</pre>
+<p>Igual que en el caso de los objetos <b>Statement</b>, podremos utilizar cualquier 
+  otro de los m&eacute;todos para la ejecuci&oacute;n de sentencias, <b>executeQuery()</b> 
+  o <b>execute()</b>, seg&uacute;n el tipo de sentencia que vayamos a ejecutar.</p>
+<h2>4.6. Llamadas a procedimientos</h2>
+<p>Los procedimientos (PROCEDURES) son unidades de c&oacute;digo que contienen 
+  un conjunto de sentencias SQL. Estos pueden servirnos para tener en nuestra 
+  BD una serie de acciones comunes predefinidas.</p>
+<p>Por ejemplo, si cuando realizamos una venta tenemos que a&ntilde;adir informaci&oacute;n 
+  de la venta, y reducir el stock del producto vendido, podemos definir un procedimiento 
+  que haga esto de la siguiente forma:</p>
+<pre class="codigo">
+String procedure = &quot;CREATE PROCEDURE EFECTUAR_VENTA
+    (IN cod_cliente INT, IN cod_producto INT, IN cantidad INT)
+    LANGUAGE SQL
+    BEGIN
+		INSERT
+		    INTO ventas(cliente, producto, cant)
+		    VALUES(cod_cliente, cod_producto, cantidad);
+		UPDATE productos
+		    SET stock = stock - cantidad
+		    WHERE producto = cod_producto;
+	END&quot;;
+
+stmt.executeUpdate(procedure);</pre>
+<p>Los procedimientos se crean mediante una sentencia DDL como la del ejemplo, 
+  ejecut&aacute;ndola de la misma forma que cualquier sentencia DDL. En este caso 
+  tomar&aacute; tres par&aacute;metros de entrada y no devuelve ning&uacute;n 
+  resultado.</p>
+<p>En muchos SGBD podemos definir procedimientos tambi&eacute;n como se muestra 
+  a continuaci&oacute;n:</p>
+<pre class="codigo">
+String procedure = &quot;CREATE PROCEDURE VER_VENTAS_CLIENTE
+	AS SELECT cliente, sum(precio) FROM ventas, productos
+		WHERE ventas.producto = productos.producto
+		GROUP BY cliente&quot;;
+
+stmt.executeUpdate(procedure);</pre>
+<p>En este caso este procedimiento no toma par&aacute;metros de entrada pero si 
+  que producir&aacute; resultados. Podremos tener procedimientos con distinto 
+  n&uacute;mero de par&aacute;metros de entrada, par&aacute;metros de salida, 
+  y podr&aacute;n generar incluso varios <b>ResultSet</b>.</p>
+<p>Para llamar al procedimiento necesitaremos un tipo especial de interfaz llamada<b> 
+  CallableStatement</b>. Con esta interfaz podremos invocar sentencias para la 
+  ejecuci&oacute;n de procedimientos como las que tenemos a continuaci&oacute;n:</p>
+<blockquote> 
+  <p> </blockquote>
+<pre class="codigo"><strong>CallableStatement</strong> cs = con.<strong>prepareCall</strong>(&quot;{call VER_VENTAS_CLIENTE}&quot;);
+
+ResultSet rs = cs.executeQuery();</pre>
+<blockquote> 
+  <p></p>
+</blockquote>
+<p>Podremos pasar par&aacute;metros de entrada de la misma forma que los pasabamos 
+  con la interfaz <b>PreparedStatement</b>:</p>
+<pre class="codigo"><strong>CallableStatement</strong> cs = con.<strong>prepareCall</strong>(
+	&quot;{call EFECTUAR_VENTA[?, ?, ?]}&quot;);
+
+cs.setInt(1, 112);
+cs.setInt(2, 3380);
+cs.setInt(3, 1);
+
+cs.executeUpdate();</pre>
+<p>Incluso podremos indicar par&aacute;metros de salida si el procedimiento nos 
+  proporciona alguno. En el caso de que el procedimiento genere m&uacute;ltiples 
+  <b>ResultSet</b>, podremos obtenerlos utilizando el m&eacute;todo <b>execute()</b> 
+  tal como vimos anteriormente.<br>
+</p>
+<h2>4.7. Transacciones</h2>
+<p>Muchas veces, cuando tengamos que realizar una serie de acciones, querremos 
+  que todas se hayan realizado correctamente, o bien que no se realice ninguna 
+  de ellas, pero no que se realicen algunas y otras no.</p>
+<p>Podemos ver esto mediante un ejemplo, en el que se va a hacer una reserva de 
+  vuelos para ir desde Alicante a Osaka. Para hacer esto tendremos que hacer transbordo 
+  en dos aeropuertos, por lo que tenemos que reservar un vuelo Alicante-Madrid, 
+  un vuelo Madrid-Amsterdam, y un vuelo Amsterdam-Osaka.</p>
+<p>Si cualquiera de estos tres vuelos estuviese lleno y no pudiesemos reservar, 
+  no querremos reservar ninguno de los otros dos porque no nos servir&iacute;a 
+  de nada. Por lo tanto s&oacute;lo nos interesa que la reserva se lleve a cabo 
+  si podemos reservar los tres vuelos.</p>
+<p>Una transacci&oacute;n son un conjunto de sentencias que deben ser ejecutadas 
+  como una unidad, de forma que si una de ellas no puede realizarse, no se llevar&aacute; 
+  a cabo ninguna.</p>
+<p>Pero para hacer esto encontramos un problema. Pensemos en nuestro ejemplo de 
+  la reserva de vuelos, en la que necesitaremos realizar las siguiente inserciones 
+  (reservas):</p>
+<pre class="codigo">try {
+	stmt.executeUpdate(&quot;INSERT 
+		INTO RESERVAS(pasajero, origen, destino)
+		VALUES('Paquito', 'Alicante', 'Madrid')&quot;);
+	stmt.executeUpdate(&quot;INSERT 
+		INTO RESERVAS(pasajero, origen, destino)
+		VALUES('Paquito', 'Madrid', 'Amsterdam')&quot;);
+	stmt.executeUpdate(&quot;INSERT 
+		INTO RESERVAS(pasajero, origen, destino)
+		VALUES('Paquito', 'Amsterdam', 'Osaka')&quot;);
+} catch(SQLException e) {
+	// ¿Dónde ha fallado? ¿Qué hacemos ahora?
+}</pre>
+<p>En este caso, vemos que si falla la reserva de uno de los tres vuelos obtendremos 
+  una excepci&oacute;n, pero en ese caso, &iquest;c&oacute;mo podremos saber donde 
+  se ha producido el fallo y hasta que acci&oacute;n debemos deshacer? Con la 
+  excepci&oacute;n lo &uacute;nico que sabemos es que algo ha fallado, pero no 
+  sabremos donde ha sido, por lo que de esta forma no podremos saber hasta que 
+  acci&oacute;n deberemos deshacer.</p>
+<p>Para hacer esto de una forma limpia asegurando la consistencia de los datos, 
+  utilizaremos las operaciones de <i>commit</i> y <i>rollback</i>.</p>
+<p>Cuando realicemos cambios en la base de datos, estos cambios se har&aacute;n 
+  efectivos en ella de forma persistente cuando realicemos la operaci&oacute;n 
+  <i>commit</i>. En el modo de operaci&oacute;n que hemos visto hasta ahora, por 
+  defecto tenemos activado el modo <i>auto-commit</i>, de forma que siempre que 
+  ejecutamos alguna sentencia se realiza <i>commit</i> autom&aacute;ticamente. 
+  Sin embargo, en el caso de las transacciones con m&uacute;ltiples sentencias, 
+  no nos interesar&aacute; hacer estos cambios persistentes hasta haber comprobado 
+  que todos los cambios se pueden hacer de forma correcta. Para ello desactivaremos 
+  este modo con:</p>
+<pre class="codigo">con.<b>setAutoCommit</b>(false); </pre>
+<p>Al desactivar este modo, una vez hayamos hecho las modificaciones de forma 
+  correcta, deberemos hacerlas persistentes mediante la operaci&oacute;n <i>commit</i> 
+  llamando de forma expl&iacute;cita a:</p>
+<pre class="codigo">con.<b>commit</b>();</pre>
+<p>Si por el contrario hemos obtenido alg&uacute;n error, no querremos que esas 
+  modificaciones se lleven a cabo finalmente en la BD, por lo que podremos deshacerlas 
+  llamando a:</p>
+<pre class="codigo">con.<b>rollback</b>();</pre>
+<p>Por lo tanto, la operaci&oacute;n <i>rollback</i> deshar&aacute; todos los 
+  cambios que hayamos realizado para los que todav&iacute;a no hubiesemos hecho 
+  <i>commit</i> para hacerlos persistentes, permiti&eacute;ndonos de esta forma 
+  implementar estas transacciones de forma at&oacute;mica.</p>
+<p>Nuestro ejemplo de la reserva de vuelos deber&iacute;a hacerse de la siguiente 
+  forma:</p>
+<pre class="codigo">try {
+
+	con.<b>setAutoCommit</b>(false);
+
+	stmt.executeUpdate(&quot;INSERT 
+		INTO RESERVAS(pasajero, origen, destino)
+		VALUES('Paquito', 'Alicante', 'Madrid')&quot;);
+	stmt.executeUpdate(&quot;INSERT 
+		INTO RESERVAS(pasajero, origen, destino)
+		VALUES('Paquito', 'Madrid', 'Amsterdam')&quot;);
+	stmt.executeUpdate(&quot;INSERT 
+		INTO RESERVAS(pasajero, origen, destino)
+		VALUES('Paquito', 'Amsterdam', 'Osaka')&quot;);
+	// Hemos podido reservar los tres vuelos correctamente
+	con.<b>commit</b>();
+} catch(SQLException e) {
+	// Alguno de los tres ha fallado, deshacemos los cambios
+	con.<b>rollback</b>();
+}</pre>
+<h2>4.8. JDBC y Applets</h2>
+<p>Cuando utilicemos acceso a bases de datos mediante JDBC desde un <i>Applet</i>, 
+  deberemos tener en cuenta que el <i>Applet</i> se ejecuta en la m&aacute;quina 
+  del cliente, por lo que si la BD est&aacute; alojada en nuestro servidor tendr&aacute; 
+  que establecer una conexi&oacute;n remota.</p>
+<p>Aqu&iacute; encontramos el problema de que si el <i>Applet</i> es visible desde 
+  Internet, es muy posible que el puerto en el que escucha el servidor de base 
+  de datos puede estar cortado por alg&uacute;n <i>firewall</i>, por lo que el 
+  acceso desde el exterior no ser&iacute;a posible.</p>
+<p>El uso del puente JDBC-ODBC tampoco es recomendable en <i>Applets</i>, ya que 
+  requiere que cada cliente tenga configurada la fuente de datos ODBC adecuada 
+  en su m&aacute;quina. Esto podemos controlarlo en el caso de una intranet, pero 
+  en el caso de Internet ser&aacute; mejor utilizar otros m&eacute;todos para 
+  la conexi&oacute;n.</p>
+</body>
+</html>

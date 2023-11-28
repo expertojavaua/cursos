@@ -1,0 +1,188 @@
+<html>
+<head>
+<title>Tema 2: Caracter&iacute;sticas b&aacute;sicas</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h2><span class="section">2.6. Red</span> </h2>
+<p>En este apartado veremos como establecer una comunicación en red mediante
+sockets (protocolos TCP y UDP), y como acceder a URLs. Además Java permite
+mecanismos de comunicación por red de más alto nivel como por ejemplo RMI que
+veremos en capítulos posteriores. &nbsp;</p>
+<h3 class="subsection">2.6.1. Acceso a URLs</h3>
+<p>Una URL (<i>Uniform Resource Locator</i>) es una cadena utilizada para
+localizar un recurso en Internet. Dentro de la URL podemos distinguir varias componentes:</p>
+<pre class="codigo">protocolo://servidor[:puerto]/recurso</pre>
+<p>Por ejemplo, en el caso de la dirección http://www.ua.es/es/index.html lo que 
+  se hará será acceder al servidor www.ua.es mediante protocolo <b>HTTP</b> y 
+  solicitar el recurso <b>/es/index.html</b>. El puerto por defecto es el 80, 
+  pero si el servidor Web atendiese en un puerto distinto a este deberíamos especificarlo 
+  también en la URL.</p>
+<p>En Java tenemos el objeto <b>URL </b>que se encargará de representar las
+URLs. Podemos construir un objeto <b>URL </b>a partir del nombre completo de la
+URL:</p>
+<pre class="codigo"><b><span class="codigo">URL</span></b><span class="codigo"> url = new <b>URL</b>(&quot;http://www.ua.es/es/index.html&quot;);</span></pre>
+<p>Dado que muchas veces se especifican links relativos, será de ayuda contar
+con un segundo constructor que nos permita crear URLs a partir de la dirección
+base donde nos encontremos y de la dirección relativa solicitada:</p>
+<pre class="codigo"><b><span class="codigo">URL</span></b><span class="codigo"> url = new <b>URL</b>(direccion_base, direccion_relativa);</span></pre>
+<p>Aquí la dirección relativa puede referirse a un recurso alojado en el
+servidor donde nos encontremos o bien a un destino dentro de la web donde
+estamos, referenciado mediante <b>#nombre_destino</b>.</p>
+<p>Existen más constructores de esta clase, permitiéndonos por ejemplo
+construir una URL dando cada elemento (protocolo, servidor, puerto, recurso) por
+separado. Siempre que creemos una URL deberemos capturar la excepción <b>MalformedURLException</b>
+que se producirá en el caso de estar mal construida.</p>
+<pre class="codigo">try {
+&nbsp;&nbsp;&nbsp; <b>URL</b> url = new <b>URL</b>(&quot;http://www.ua.es/es/index.html&quot;);
+} catch(<b>MalformedURLException</b> e) {
+&nbsp;&nbsp;&nbsp; System.err.println(&quot;Error: URL mal construida&quot;);
+}</pre>
+<p>La clase <b>URL </b>proporciona métodos para obtener información sobre la
+URL que representa.</p>
+<p>Para leer desde la dirección URL representada por el objeto deberemos
+obtener un flujo de entrada provinente de ella. Para obtener este flujo
+utilizaremos el método <b>openStream() </b>del objeto <b>URL</b>.</p>
+<pre class="codigo"><b><span class="codigo">InputStream</span></b><span class="codigo"> in = url.<b>openStream</b>();</span></pre>
+<p>Una vez obtenido este flujo de entrada podremos leer de él o bien
+transformarlo a otro tipo de flujo como por ejemplo a un flujo de caracteres o
+de procesamiento.</p>
+<p>Con esto será suficiente para leer desde una URL, pero también podremos
+establecer una conexión con la URL. Para ello deberemos utilizar el método <b>openConnection()</b>
+que nos devolverá un objeto del tipo <b>URLConnection</b>. Estableciendo una
+conexión podremos leer o escribir en la URL. Para ello deberemos:</p>
+<ol>
+  <li>Establecer la conexión&nbsp;&nbsp;&nbsp;<br> &nbsp;&nbsp;&nbsp; URLConnection conn =
+    url.<b>openConnection</b>();</li>
+  <li>Si vamos a escribir en ella, establecer la capacidad de salida&nbsp;con: <br>
+    &nbsp;&nbsp;&nbsp; conn.<b>setDoOutput</b>(true);</li>
+  <li>Si vamos a leer, obtener el flujo de entrada con: <br>&nbsp;&nbsp;&nbsp; InputStream in =
+    conn.<b>getInputStream</b>();</li>
+  <li>Si vamos a escribir, obtener el flujo de salida con: <br>&nbsp;&nbsp;&nbsp;
+    OutputStream out = conn.<b>getOutputStream</b>();</li>
+  <li>Leer o escribir en los flujos de entrada y de salida obtenidos como vimos en
+    capítulos anteriores.</li>
+</ol>
+<h3 class="subsection">2.6.2. Comunicación por SOCKETS</h3>
+<p>El mecanismo de acceso a URLs proporcionado por Java nos permite establecer
+conexiones en red de alto nivel, sin embargo es posible que necesitemos
+establecer una conexión a bajo nivel mediante protocolos TCP o UDP. Los <i> sockets</i>
+nos permitirán realizar este tipo de conexiones en red de bajo nivel, estableciéndose un canal de comunicación entre un par de
+<i>sockets</i>, cada uno de
+los cuales puede residir en una máquina distinta.</p>
+<p>Los <i> sockets</i> son los extremos de un canal de flujo de datos a través de la
+red. Estos <i> sockets</i> vendrán representados en Java por el objeto <b>Socket</b>,
+que nos permitirá conectar con una máquina remota y abrir canales de E/S para
+comunicarnos con ella. Además tenemos un tipo especial de <i> socket</i> en el
+servidor, en la clase <b>ServerSocket</b>, que se quedará a la escucha en un
+determinado puerto de la máquina servidora y cuando le llegue una petición de
+conexión de un cliente creará un objeto <b>Socket </b>para atenderlo. </p>
+<p>Para establecer una conexión con el servidor, desde el cliente deberemos
+crear un objeto <b>Socket</b> proporcionando el nombre de la máquina (host o
+dirección IP) y el puerto al que nos vamos a conectar:</p>
+<pre class="codigo">Socket cliente = new <b>Socket</b>(&quot;127.0.0.1&quot;, 6006);</pre>
+<p>En este ejemplo nos conectaremos a nuestra propia máquina local mediante su
+dirección de <i>loopback</i>, al puerto 6006. Si en nuestra máquina tenemos un
+servidor atendiendo en dicho puerto se establecerá una comunicación con él.</p>
+<p>Para obtener los canales de E/S asociados a dicho <i> socket</i> podremos utilizar
+los métodos <b>getInputStream() </b>y <b>getOutputStream()</b>, y convertir
+posteriormente estos flujos de bytes a otros tipos para mayor comodidad en la
+lectura y escritura.</p>
+<pre class="codigo">InputStream in = cliente.<b>getInputStream</b>();
+OutputStream out = cliente.<b>getOutputStream</b>();</pre>
+<p>Una
+vez terminemos de usar el <i>socket</i>, a parte de cerrar los flujos de entrada y
+salida que hayamos utilizado deberemos cerrar la conexión del <i> socket</i> con:</p>
+<pre class="codigo">cliente.<strong>close</strong>();</pre>
+<h3 class="subsection">2.6.3. Creación de un servidor</h3>
+<p>En el servidor deberemos crear un objeto <b>ServerSocket </b>enlazado a un
+determinado puerto que se quede a la espera de peticiones de conexión por parte
+de los clientes. Deberemos proporcionar el constructor de dicha clase el puerto
+en el que escuchará el <i> socket</i> servidor.</p>
+<pre class="codigo">ServerSocket server = new <b>ServerSocket</b>(6006);</pre>
+<p>Para hacer que permanezca a la espera de una petición de conexión
+utilizaremos en método <i>accept()</i>. De esta manera el programa servidor
+quedará bloqueado en este método a la espera de la llegada de una petición de
+conexión. Cuando llegue esta petición se devolverá un objeto <b>Socket</b>
+que se utilizará para la comunicación con el cliente.</p>
+<pre class="codigo">Socket sock = server.<b>accept</b>();</pre>
+<p>Este <i> socket</i> que devuelve deberá ser utilizado al igual que los <i>sockets</i>
+utilizados en el cliente.</p>
+<h3 class="subsection">2.6.4. Servidor para múltiples clientes</h3>
+<p>Si queremos hacer que un servidor pueda atender a varios clientes
+simultáneamente, tras aceptar una conexión deberá quedarse nuevamente a la
+espera de nuevas peticiones, al mismo tiempo que está atendiendo la conexión
+que ha aceptado previamente. Para poder realizar estas dos tareas
+simultáneamente deberemos utilizar hilos. El bucle típico de espera de
+conexiones en el servidor será como el siguiente:</p>
+<pre class="codigo"><b><span class="codigo">Thread</span></b><span class="codigo"> t;
+<b>Socket</b> sock;
+while(true) {
+&nbsp;&nbsp;&nbsp; sock = server.<b>accept</b>();
+&nbsp;&nbsp;&nbsp; t = new <b>HiloServidor</b>(sock);
+&nbsp;&nbsp;&nbsp; t.<b>start</b>();
+}</span></pre>
+<p>La clase <b>HiloServidor</b> será una clase definida por el usuario que
+herede de la clase <b>Thread </b>y que en el método <b>run()</b> contendrá el
+código para atender a cada cliente. Al proporcionar el <b>Socket</b> asociado a
+cada cliente en el constructor, cada hilo se comunicará con el <i> socket</i> que se
+especificó en el momento de su construcción, permitiendo así que se ejecuten
+un número indefinido de hilos simultáneamente cada uno de ellos conectado a un
+cliente distinto.</p>
+<h3 class="subsection">2.6.5. Comunicación por datagramas y por circuitos virtuales</h3>
+<p>La forma de comunicación por <i> sockets</i> que hemos visto es la denominada
+comunicación por circuitos virtuales, que sigue el protocolo <b>TCP</b>. En
+este tipo de comunicación se crea un canal permanente para la circulación de
+los datos, de forma que se garantiza de los datos enviados no se perderán y
+llegarán en el mismo orden en que se enviaron. Si embargo este mecanismo de
+comunicación tiene el inconveniente de consumir más recursos al tener que
+crear un canal permanente.</p>
+<p>Otro mecanismo de comunicación que consume menos recursos es la
+comunicación por datagramas, que sigue el protocolo <b>UDP</b>. En este caso
+cada paquete (datagrama) enviado sigue su propio camino por la red, por lo que
+puede ser que lleguen a su destino desordenados, pero no mantienen un canal
+abierto permanentemente consumiendo recursos. Tampoco se garantiza que el
+datagrama llegue a su destino.</p>
+<p>En caso de un tráfico intenso de datos será conveniente la comunicación
+por circuitos virtuales, mientras que cuando el tráfico sea escaso, y la
+ordenación o la pérdida de paquetes no sean críticas, convendrá utilizar
+datagramas.</p>
+<p>En el caso de los datagramas tendremos un único tipo de <i>socket</i>: <b>DatagramSocket</b>.
+Podremos proporcionar en el constructor el puerto en el que debe permanecer
+escuchando:</p>
+<pre class="codigo">DatagramSocket sock = new <b>DatagramSocket</b>(6006);</pre>
+<p>Si utilizamos el constructor vacío el sistema será el encargado de asignar
+el puerto en el que escuchará el <i>socket</i>.</p>
+<pre class="codigo">DatagramSocket sock = new <b>DatagramSocket</b>();</pre>
+<p>En este caso vemos que no existen cliente y servidor claramente definidos,
+pero al menos uno de los dos <i> sockets</i> que vayamos a comunicar deberá especificar
+el puerto en el que atiende para que el otro sea capaz de saber a que puerto
+debe conectarse. El <i> socket</i> del que especificamos el puerto podrá ser
+considerado servidor, mientras que el <i> socket</i> que envía información por primera
+vez conociendo el puerto que hemos especificado será el cliente.</p>
+<p>Vemos en este caso que en la creación del <i> socket</i> no se ha especificado
+ninguna dirección a la que conectarse, ya que el socket no establece ninguna
+conexión. La dirección de destino deberá ser especificada en cada datagrama
+(paquete). Estos datagramas están definidos en la clase <b>DatagramPacket</b>.
+Estos paquetes se construirán a partir de un buffer (array de bytes) que se
+utilizará para almacenar los datos recibidos o los datos a enviar:</p>
+<pre class="codigo">DatagramPacket paquete_recibido = 
+new <b>DatagramPacket</b>(buffer, buffer.length);</pre>
+<p>Cuando sea un paquete para ser enviado, además del buffer deberemos
+especificar la dirección y puerto de destino:</p>
+<pre class="codigo">DatagramPacket paquete_enviar = 
+	new <b>DatagramPacket</b>(buffer, buffer.length, direccion, puerto);</pre>
+<p>La dirección deberá ser especificada como un objeto <b>InetAddress</b>.</p>
+<p>Para enviar un datagrama utilizaremos en método <i>send() </i>del <i>socket</i>:</p>
+<pre class="codigo">sock.<strong>send</strong>(paquete_enviar);</pre>
+<p>Cuando queramos permanecer a la espera de recibir un paquete utilizaremos el
+método <i>receive()</i>:</p>
+<pre class="codigo">sock.<strong>receive</strong>(paquete_recibido);</pre>
+<p>Una vez recibido un paquete podremos obtener el puerto desde el que nos lo
+envió el remitente mediante el método <i>getPort()</i>, de esta forma sabremos
+a que dirección debemos contestar.</p>
+<pre class="codigo">int puerto = paquete_recibido.<b>getPort</b>();</pre>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<html>
+<head>
+<title>Tema 2: Caracter&iacute;sticas b&aacute;sicas</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h2><span class="section">2.2. Reflection </span> </h2>
+<p>La API de <i>Reflection</i> de Java representa (refleja) las clases,
+interfaces y objetos existentes en la actual JVM (Máquina Virtual de Java).
+Mediante este API podremos: </p>
+<ul>
+  <li>Determinar la clase a la que pertenece un objeto</li>
+  <li>Crear instancias de clases cuyo nombre no se conoce hasta tiempo de
+    ejecución</li>
+  <li>Acceder y obtener información sobre los elementos de una clase
+    (constructores, métodos, campos, superclases, etc). Podremos llamar
+    constructores de una clase, modificar valores de campos, llamar a
+    métodos... etc, en tiempo de ejecución.</li>
+</ul>
+<h3> <span class="subsection">2.2.1. Estructura de clases</span></h3>
+<p>La API de reflection se compone de las siguientes clases. Salvo las clases <i>Class</i>
+y <i>Object</i> (que están en el paquete <i>java.lang</i>), el resto pertenecen
+al paquete <b>java.lang.reflect</b>.</p>
+<ul>
+  <li><b>Array</b>: proporciona métodos para crear y acceder a arrays
+    dinámicamente</li>
+  <li><b>Class</b>: representa clases e interfaces</li>
+  <li><b>Constructor</b>: proporciona información y acceso a los constructores
+    de una clase. Permite crear instancias de una clase dinámicamente</li>
+  <li><b>Field</b>: proporciona información y acceso a los campos de una clase</li>
+  <li><b>Method</b>: proporciona información y acceso a los métodos de una
+    clase</li>
+  <li><b>Modifier</b>: proporciona información y acceso a los modificadores de
+    una clase y de sus elementos (campos, métodos, etc)</li>
+  <li><b>Object</b>: clase padre de todas las clases Java. Proporciona acceso a
+    una clase mediante su método <i>getClass()</i>.</li>
+</ul>
+<h3><span class="subsection">2.2.2. Examinar clases</span></h3>
+<p>Para cada clase e interfaz se mantiene un objeto <b>Class</b> que contiene
+información sobre la misma.</p>
+<p><b>1. Obtener objetos Class</b></p>
+<p>Podemos obtener objetos <i>Class </i>de varias formas:</p>
+<ul>
+  <li>Si tenemos un objeto, podemos utilizar el método <i>getClass()</i> del
+    objeto para acceder a su clase:</li>
+</ul>
+<blockquote>
+<pre class="codigo">Class c = unobjeto.getClass();</pre>
+</blockquote>
+<ul>
+  <li>Si sabemos el nombre de la clase en tiempo de compilaci&oacute;n, podemos 
+    acceder a su objeto <i>Class </i>poniendo &quot;<i>.class</i>&quot; al final 
+    del nombre de la clase:</li>
+</ul>
+<blockquote>
+<pre class="codigo">Class c = java.awt.Button.class;</pre>
+</blockquote>
+<ul>
+  <li>Si el nombre de la clase no se conoce en tiempo de compilación, pero sí
+    podemos acceder a él en tiempo de ejecución, podemos utilizar el método
+    estático <i>forName() </i>de <i>Class</i>, al que se le pasa como
+    parámetro el nombre de la clase que buscamos:</li>
+</ul>
+<blockquote>
+<pre class="codigo">Class c = Class.forName(&quot;java.awt.Button&quot;);</pre>
+</blockquote>
+<p><b>2. Obtener elementos de la clase </b></p>
+<p>El método <i>getName()</i> de <i>Class</i> obtiene el nombre de la clase
+cuya información se guarda en el objeto <i>Class</i>, incluyendo los paquetes y
+subpaquetes a los que pertenece, separados por '.' (por ejemplo, <i>&quot;java.awt.Button&quot;</i>):</p>
+<pre class="codigo">Class c = unobjeto.getClass();
+...
+String s = c.getName();</pre>
+<p>En <i>Class </i>también se tienen otros métodos para acceder a elementos de
+la clase, como por ejemplo <i>getSuperClass()</i> (para acceder a su
+superclase), y otros. A continuación veremos cómo acceder a algunos objetos
+específicos de una clase, mediante métodos de <i>Class.</i></p>
+<p><b>3. Campos</b></p>
+<p>Para obtener los <b>campos</b> de una clase se tienen los métodos <i>getField(),</i> 
+  <i>getFields(), getDeclaredField() </i>y <i>getDeclaredFields() </i>del objeto 
+  <i>Class</i>. El primero y tercero devuelven un campo con un nombre dado, y 
+  el segundo y cuarto devuelven un array de <i>Field</i> con los campos accesibles 
+  que tenga. Los métodos <i>...Declared...</i> obtienen todos los campos declarados 
+  en la misma clase, ya sean p&uacute;blicos o privados, pero no en las superclases 
+  que tenga, mientras que los otros dos obtienen los campos públicos que ofrece 
+  el objeto tanto si se han definido en la misma clase como en superclases de 
+  &eacute;sta.</p>
+<pre class="codigo">Class c = unobjeto.getClass();
+...
+Field campo = c.getField(&quot;nombrecampo&quot;);
+Field[] campos = c.getFields();</pre>
+<p>En la clase <b>Field</b> se tienen luego métodos para manipular cada campo.</p>
+<p><b>4. Constructores</b></p>
+<p>Para obtener los <b>constructores</b> de una clase se tienen, entre otros, 
+  los métodos <i>getConstructors() </i>y <i>getDeclaredConstructors()</i>. Con 
+  el primero obtendremos todos los constructores declarados en la misma clase, 
+  ya sean p&uacute;blicos o privados, pero no en las superclases que tenga, mientras 
+  que en el segundo obtendremos los constructures públicos que ofrece el objeto 
+  tanto si se han definido en la misma clase como en superclases de &eacute;sta:</p>
+<pre class="codigo">Class c = unobjeto.getClass();
+...
+Constructor[] constructores = c.getDeclaredConstructors();</pre>
+<p>En la clase <b>Constructor</b> se tienen luego métodos para acceder a la
+información del constructor (nombre, parámetros, tipos de los parámetros,
+etc). Con el método <b>newInstance()</b> de <i>Constructor</i> podremos crear
+objetos llamando al constructor correspondiente.</p>
+<p><b>5. Métodos</b></p>
+<p>Para obtener los <b>métodos</b> de una clase se tienen, entre otros, los métodos 
+  <i>getMethods() </i>y <i>getDeclaredMethods()</i>. Con el primero obtendremos 
+  todos los m&eacute;todos declarados en la misma clase, ya sean p&uacute;blicos 
+  o privados, pero no en las superclases que tenga, mientras que en el segundo 
+  obtendremos los m&eacute;todos públicos que ofrece el objeto tanto si se han 
+  definido en la misma clase como en superclases de &eacute;sta:</p>
+<pre class="codigo">Class c = unobjeto.getClass();
+...
+Method[] metodos = c.getDeclaredMethods();</pre>
+<p>En la clase <b>Method</b> se tienen luego métodos para acceder a la
+información del método (nombre, parámetros, tipos de los parámetros, etc).
+Con el método <b>invoke()</b> de <i>Method</i> podremos llamar al método
+correspondiente.</p>
+<p><b>6. Modificadores</b></p>
+<p>Para obtener los <b>modificadores</b> de una clase (es decir, ver si es <i>public</i>,
+<i>abstract</i>, <i>final</i>...), se tiene el método <i>getModifiers() </i>del
+objeto <i>Class</i>:</p>
+<pre class="codigo">Class c = unobjeto.getClass();
+...
+int mod = c.getModifiers();</pre>
+<p>El método devuelve un entero que codifica los modificadores de la clase.
+Luego podemos utilizar los métodos de la clase <i>Modifier</i> para ver si es <i>public</i>,
+<i>abstract</i>, etc:</p>
+<pre class="codigo">Class c = unobjeto.getClass();
+...
+int mod = c.getModifiers();
+...
+if (Modifier.isPublic(mod))
+	...
+else if (Modifier.isAbstract(mod))
+...</pre>
+<p>Podemos utilizar la clase <i>Modifier </i>para obtener los modificadores de
+campos (<i>Field</i>), constructores (<i>Constructor</i>), métodos (<i>Method</i>),
+etc, sin más que llamar al método <i>getModifiers()</i> de cada una de estas
+clases, y luego llamar a los métodos de <i>Modifier</i> para comprobar si se
+tienen cada uno de los modificadores que se quieran.<i> </i>Se tienen métodos
+en la clase <i>Modifier</i> para cada uno de los posibles modificadores:</p>
+<pre class="codigo">Class c = unobjeto.getClass();
+Method[] metodos = c.getMethods();
+int mod = metodos[0].getModifiers();
+...
+if (Modifier.isPublic(mod))
+	...
+else if (Modifier.isAbstract(mod))
+...</pre>
+<h3><span class="subsection">2.2.3. Manipular objetos</span></h3>
+<p><b>1. Crear nuevos objetos</b></p>
+<p>Si no conocemos el nombre de una clase hasta tiempo de ejecución, tendremos
+que crear los objetos de esa clase mediante <i>Reflection</i>. Distinguimos dos
+tipos de creación de objetos:</p>
+<ul>
+  <li>Crearlos con un constructor <b>sin parámetros</b>: para crear un objeto
+    utilizando un constructor sin parámetros, utilizamos el método <b>newInstance()</b>
+    de la clase <i>Class</i> que contiene su información: </li>
+</ul>
+<blockquote>
+  <pre class="codigo">Class c = Class.forName(&quot;NombreClase&quot;);
+Object o = c.newInstance();</pre>
+</blockquote>
+<ul>
+  <li>Crearlos con un constructor <b>con parámetros</b>: para crear un objeto
+    utilizando un constructor con parámetros, utilizamos el método <b>newInstance()</b>
+    de la clase <i>Constructor</i>. Primero accedemos al constructor que
+    queremos utilizar, y luego le pasamos al método <i>newInstance()</i> del
+    mismo un array de <i>Object</i>, con los parámetros que necesita (él se
+    encarga luego de convertir cada parámetro al tipo adecuado). Por ejemplo,
+    suponiendo que el constructor utiliza dos parámetros: un entero y un <i>String</i>:
+  </li>
+</ul>
+<blockquote>
+  <pre class="codigo">Class c = Class.forName(&quot;NombreClase&quot;);
+Constructor[] cons = c.getConstructors();
+Object[] parametros = new Object[2];
+parametros[0] = new Integer(2);
+parametros[1] = &quot;Hola&quot;;
+Object o = cons[0].newInstance(parametros);</pre>
+</blockquote>
+<p>Luego podemos utilizar el <i>Object</i> para llamar a métodos, convertir a
+un objeto concreto, etc.</p>
+<p><b>2. Acceso a campos</b></p>
+<p>La clase <b>Field</b> cuenta con métodos para poder obtener o modificar el
+valor de los campos de un objeto:</p>
+<pre class="codigo">Class c = Class.forName(&quot;NombreClase&quot;);
+Object o = c.newInstance();
+Field f = c.getField(&quot;campo1&quot;);
+f.set(o, new Integer(3));
+int valor = (Integer)(f.get(o));</pre>
+<p>A los métodos <i>get()</i> y <i>set()</i> se les pasa como primer parámetro
+el objeto a cuyo campo se accede. Se tienen métodos para obtener/establecer
+otros tipos de datos (<i>int, char</i>, <i>double</i>..., etc, y <i>Object</i>
+para el caso general).</p>
+<p><b>3. Invocar métodos</b></p>
+<p>El método <b>invoke() </b>de la clase <b>Method</b> permite llamar al
+método en cuestión. Se le pasan dos parámetros:</p>
+<ul>
+  <li>El primero es el objeto donde se invoca el método (un <i>Object</i>)</li>
+  <li>El segundo es un array de <i>Object</i> con los parámetros que se le
+    pasan al método (como se hacía con los constructores).</li>
+</ul>
+<p>La conversión de los <i>Object</i> que se pasan en los parámetros al tipo
+de datos adecuado se realiza automáticamente. Por ejemplo, suponiendo que
+llamamos a un método que toma un <i>String</i> y un <i>double</i>:</p>
+<pre class="codigo">Class c = Class.forName(&quot;NombreClase&quot;);
+Object o = c.newInstance();
+Method[] m = c.getMethods();
+Object[] parametros = new Object[2];
+parametros[0] = &quot;Pepe&quot;;
+parametros[1] = new Double(4.0);
+m.invoke(o, parametros);</pre>
+<p>&nbsp; </p>
+<p>NOTA: las llamadas a los métodos de <i>Reflection</i> lanzan algunas
+excepciones, dependiendo del método. Es conveniente ponerlas en bloques <i>try-catch</i>. </p>
+<p>NOTA: Hay que hacer notar que, si podemos emplear herramientas más fáciles
+que <i>Reflection</i>, debemos utilizarlas. Por ejemplo, si sabemos que vamos a
+crear un objeto de tipo <i>MiClase</i>, debemos crear este objeto en tiempo de
+compilación (con un <i>new MiClase()</i>), y no poner código <i>Reflection</i>
+para crearlo en tiempo de ejecución. </p>
+<p>&nbsp; </p>
+</body>
+</html>

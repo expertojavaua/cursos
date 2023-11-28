@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios de seguridad</title>
+                
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+         
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+ <body bgcolor="#ffffff" text="#000000">
+<h1><span class="section">Seguridad </span> </h1>
+<p><b>1.</b> El fichero <i>Ej1.java</i> contiene un <i>applet</i> que grabará 
+  un texto en un fichero de la máquina local donde se ejecute. Se pide:</p>
+   
+<blockquote>     
+  <p><i>a) </i>Compilar y ejecutar la clase <b>Ej1</b> tanto como aplicación y 
+    como <i>applet</i>. Para probar el <i>applet</i> se proporciona la página 
+    de prueba <i>Ej1.html</i>. ¿Por qué esta clase permite ser ejecutada de las 
+    dos formas? </p>
+  <p><i>b) </i>Intentar grabar el texto en un fichero en la aplicación y en el <i>applet</i>.
+  ¿Qué ocurre en cada caso? ¿Por qué?
+  </p>
+  <p><i>c) </i>Instalar un gestor de seguridad al cargar la aplicación en la
+  línea de comandos. ¿Qué ocurre en este caso?
+  </p>
+  <p><i>d</i><i>) </i>Ahora añadiremos el gestor de seguridad en el código de la aplicación (no en la línea de comandos). Ejecutar la aplicación y
+  comprobar que el comportamiento es el mismo que en el caso anterior. Pero,
+  ¿qué ocurre si ejecutamos el programa como <i>applet</i>? ¿Por qué?
+  </p>
+  <p><i>e</i><i>) </i>Si queremos permitir que el <i>applet</i> escriba en un
+  fichero, ¿qué tendremos que hacer? Otorgar los permisos necesarios y
+  comprobar que puede escribir correctamente el fichero.
+  </p>
+   </blockquote>
+   
+   
+<p><b>2.</b> <b>(CHAT)</b> Vamos a convertir nuestra aplicación cliente de chat 
+  en un <i>applet</i>. Se pide:</p>
+   
+<blockquote> 
+  <p><i>a) </i>Cambiar la clase principal de la aplicación del chat, haciendo 
+    que herede de <b>JApplet<i> </i></b>en lugar de <b>JFrame</b>. Se puede añadir 
+    un método <i>main</i> como el del ejercicio anterior para permitir que la 
+    aplicación se ejecute como aplicación y como <i>applet</i>. Crear una página 
+    HTML de prueba (<i>AppletChat.html</i>) similar a la del ejercicio anterior. 
+    Comprobar que se puede cargar correctamente de ambas formas. </p>
+  <p><i>b) </i>Vamos a probar conect&aacute;ndonos a un servidor alojado en otra 
+    m&aacute;quina. Para ello deberemos obtener la IP de la m&aacute;quina de 
+    un compa&ntilde;ero mediante el siguiente comando:</p>
+  <pre class="codigo"> ipconfig</pre>
+  <p>Una vez tenemos la IP ejecutar el servidor de chat en su m&aacute;quina, 
+    y cargar el cliente del chat en la nuestra conect&aacute;ndonos a la IP del 
+    otro equipo. Probar que carg&aacute;ndolo como aplicaci&oacute;n funciona 
+    correctamente. Ahora probar a cargarlo como <i>applet</i>, ¿qué ocurre? ¿Por 
+    qué? ¿Cómo podríamos solucionar el problema? </p>
+  <p><i>c) </i>Imaginemos que vamos a poner el chat para que cualquiera pueda 
+    acceder a &eacute;l en una web sin tener que otorgar ning&uacute;n permiso. 
+    &iquest;Qu&eacute; deberemos hacer para que esto sea posible? Debemos tener 
+    en cuenta que el usuario que se conecta a la web no sabr&aacute; cu&aacute;l 
+    es la IP del servidor para conectarse a &eacute;l. Adem&aacute;s deberemos 
+    permitir que la IP del servidor pueda cambiar, o podamos llevarnos el chat 
+    a otro servidor web sin necesidad de cambiar el c&oacute;digo fuente y recompilar. 
+    &iquest;C&oacute;mo haremos entonces para conocer la direcci&oacute;n a la 
+    que debe conectarse el <i>applet</i> cliente? (PISTA: Buscar entre los m&eacute;todos 
+    de la clase <b>Applet</b> aquel que nos proporcione la informaci&oacute;n 
+    que buscamos)</p>
+  <p>Implementar la conexi&oacute;n al servidor utilizando este m&eacute;todo. 
+    El applet deber&aacute; establecer la conexi&oacute;n con el servidor donde 
+    est&aacute; alojado en el momento de su inicializaci&oacute;n, sin tener el 
+    usuario que introducir a mano la IP y pulsar <i>conectar</i> (podemos eliminar 
+    este campo). </p>
+  <p>Ahora vamos a probar el chat tal como se ver&iacute;a desde la web. Para 
+    ello debemos instalar un servidor web, en este caso Tomcat:</p>
+  <ul>
+    <li>Descargar e instalar Apache Tomcat</li>
+    <li>Copiar nuestra aplicaci&oacute;n de chat al directorio %TOMCAT_HOME%\webapps\ROOT, 
+      de forma que la p&aacute;gina del chat se encuentre en el directorio ra&iacute;z 
+      del sitio web.</li>
+    <li>Ejecutar el servidor web (Start Tomcat)</li>
+    <li>Obtener la IP de la m&aacute;quina donde se ejecuta el servidor web.</li>
+    <li>Desde otra m&aacute;quina abrir la direcci&oacute;n <i>http://&lt;ip servidor&gt;/AplicChat.html</i></li>
+    <li>Si hemos implementado correctamente el cliente deber&aacute; conectarse 
+      a la misma m&aacute;quina donde se encuentra alojado el <i>applet</i> autom&aacute;ticamente, 
+      y ya s&oacute;lo tendremos que introducir el login y password y empezar 
+      a hablar con otros usuarios conectados.</li>
+  </ul>
+  <p>Probar a conectarse varios usuarios a una misma web desde distintas m&aacute;quinas 
+    y comprobar que el chat funciona correctamente.</p>
+</blockquote>
+<p><b>3.</b> <b>(CHAT OPTATIVO)</b> Vamos a añadir un nuevo botón a la aplicación 
+  de chat que nos permita guardar el buffer de texto en un fichero, de forma que 
+  podamos almacenar nuestras conversaciones.</p>
+   
+<blockquote>     
+  <p><i>a) </i>Añadir el botón y la función de guardar todo el texto del
+  área de texto del chat en un fichero<i>. </i>Podemos abrir un cuadro de
+  diálogo para que el usuario pueda elegir el fichero donde guardar la
+  conversación. Este cuadro de diálogo está incluido entre las clases de <i>Swing</i>,
+  buscar en la documentación la forma de crearlo y utilizarlo.
+  </p>
+  <p><i>b) </i>Probar la función de guardar el buffer ejecutándolo como
+  aplicación y comprobar que funciona correctamente.&nbsp;
+  </p>
+  <p><i>c) </i>Ejecutarlo como <i>applet</i>, ¿qué ocurre en este caso al
+  intentar grabar un fichero? Añadir los permisos necesarios para que se pueda
+  grabar cualquier fichero que quiera el usuario.
+  </p>
+   </blockquote>
+   
+            </body>
+            </html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios de JDBC</title>
+                
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+         
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+ <body bgcolor="#ffffff" text="#000000">
+<h1><span class="section">JDBC </span> </h1>
+<p><b>1.</b> Vamos a realizar un programa que acceda a nuestra base de datos de 
+  usuarios. Vamos a acceder de dos formas: mediante ODBC y mediante MySQL. La 
+  plantilla del fichero que obtiene el listado de usuarios se encuentra en el 
+  fichero <i>Ej1.java</i>. Se pide:</p>
+   
+<blockquote>     
+  <p><i>a) </i>Acceder al fichero de datos de usuarios mediante ODBC y mostrar
+el listado de usuarios desde Java. Para ello previamente deberemos instalar
+una fuente de datos ODBC que tome estos datos de nuestro fichero de texto.
+Deberemos seguir los siguientes pasos:<br>
+  </p>
+  <ul>
+    <li>Ir al <i>Panel de Control </i>y abrir <i>Fuentes de datos ODBC</i>
+.</li>
+    <li>Ahora deberemos a&ntilde;adir una nueva DSN (nombre de fuente de
+datos) de usuario, que nos permita acceder a nuestra base de datos. Dentro
+de la pesta&ntilde;a <i>DSN de usuario</i> pulsaremos <i>Agregar</i>.</li>
+    <li>Seleccionamos el driver para acceder a ficheros de texto (<i>Microsoft
+Text Driver</i>) y pulsamos <i>Aceptar</i>.</li>
+    <li>Nos pedir&aacute; un nombre del origen de datos, al que llamaremos
+      <i>paj</i>, y una descripci&oacute;n. Desmarcamos <i>Usar directorio
+actual</i> para poder seleccionar el directorio de la BD. &nbsp;Pulsamos
+      <i>Seleccionar directorio</i> y seleccionamos el directorio <i>datos</i>
+ dentro del directorio de ejercicios de la sesi&oacute;n 8, que es donde
+se encuentra el fichero de datos de usuarios.</li>
+    <li>Ahora en <i>Opciones</i>, podemos pulsar <i>Definir formato</i> para
+especificar el formato de nuestro fichero. Aqu&iacute; le diremos que queremos
+utilizar un delimitador de campos personalizado, que ser&aacute; el caracter
+':'. Pulsamos sobre <i>Estimar</i> para obtener que la BD tiene dos columnas,
+por defecto F1 y F2, y ahora deberemos especificar el nombre de cada columna
+(<i>login</i> y <i>password</i>).</li>
+    <li>Con esto tendremos una base de datos con una tabla USUARIOS que es
+el nombre del fichero, y dos columnas LOGIN y PASSWORD que tomar&aacute;n
+los datos de la primera y segunda columna respectivamente de fichero fichero.</li>
+  </ul>
+Una vez tenemos nuestra fuente de datos podremos conectarnos a ella desde JDBC.&nbsp;
+  <ul>
+    <li>Si queremos acceder mediante ODBC necesitaremos cargar el driver del puente 
+      JDBC-ODBC. A&ntilde;adir la carga de este driver al constructor de la clase 
+      <b>Ej1</b>.</li>
+    <li>Despu&eacute;s de cargar el driver, establecer la conexi&oacute;n
+con la fuente de datos <i>paj</i>. &iquest;cu&aacute;l ser&aacute; la url
+para est&aacute; base de datos? Establecer la conexi&oacute;n con dicha url
+sin especificar ni login ni password (<i>null</i>).</li>
+    <li>Capturar las excepciones necesarias durante la conexi&oacute;n a
+la BD.</li>
+  </ul>
+Compilar y probar que consiga establecer correctamente la conexi&oacute;n
+con la fuente de datos sin producirse ninguna excepci&oacute;n.
+     
+  <p><i>b)</i>  Ahora haremos que nuestro programa obtenga de la base de
+datos los datos de los usuarios y los muestre por pantalla. Para ello deberemos
+escribir el c&oacute;digo de la funci&oacute;n <i>listaUsuarios()</i>. Deberemos
+crear un objeto <b> Statement</b> sobre el que ejecutaremos nuestra consulta SQL
+  (<i>query</i>), y recorreremos el objeto <b> ResultSet</b> que nos devuelva mostrando el
+login y password de todos los usuarios.</p>
+  <p><i>c)</i> Para finalizar, vamos a cambiar el acceso a una base de datos
+MySQL. Para ello instalaremos MySQL y crearemos una nueva base de datos llamada
+  <i>paj</i>. Tendr&aacute; una tabla USUARIOS con dos columnas <i>login</i>
+ y <i>password</i> de tipo <i>varchar</i>. Para instalar y poner en marcha la
+  base de datos MySQL deberemos:</p>
+  <ul>
+    <li>Instalar MySQL, por ejemplo en <i>c:\mysql</i>.</li>
+    <li>Crear una nueva base de datos. Para esto deberemos crear un
+      subdirectorio con el nombre de la base de datos (<i>paj</i>) en <i>c:\mysql\data</i>.</li>
+    <li>Iniciamos la aplicación de administración <a href="file:///c:/mysql/bin/winmysqladmin">c:\mysql\bin\winmysqladmin</a>,
+      que nos permitirá conectar y desconectar el servidor de la base de datos
+      y ver su estado.&nbsp;</li>
+    <li>La primera vez que arranquemos esta aplicación nos pedirá login y
+      password. Si pulsamos cancelar no hará falta utilizar login y password
+      para acceder a la administración de MySQL.</li>
+    <li>Una vez hecho esto, aparecerá como un semáforo en la barra de tareas.
+      Si está en verde el servidor estará conectado. Pinchando sobre el
+      semáforo podremos abrir la aplicación y activar o desactivar el
+      servidor.&nbsp;</li>
+    <li>Ahora para mayor comodidad, podemos instalar <i>mysqlfront</i>
+      descomprimiéndolo en cualquier directorio. Se trata de un frontal de la
+      base de datos que nos permitirá manipular tablas y datos de forma visual,
+      en lugar de tener que utilizar comandos SQL. Arrancamos la aplicación y
+      creamos una nueva conexión a base de datos, indicando que nos queremos
+      conectar a la BD <i>paj</i>.</li>
+    <li>Una vez conectados podremos crear la tabla USUARIOS con sus campos, e
+      insertar algunos datos de usuarios en ella para las pruebas.&nbsp;</li>
+  </ul>
+  <p>Ahora tendremos que modificar nuestro programa para acceder a esta base de
+  datos. &iquest;Qu&eacute; driver tendremos
+que utilizar ahora? &iquest;Cu&aacute;l ser&aacute; la url de la base de
+datos? A&ntilde;adir el driver MySQL al CLASSPATH con:</p>
+  <pre class="codigo"><font size="2">SET CLASSPATH=%CLASSPATH%;<i>&lt;dir. ejercicios sesion 8&gt;</i>\<b>mm.mysql-2.0.4-bin.jar</b></font></pre>
+  <p>Modificar el driver y la url en el programa, compilar y probar, comprobando que accede correctamente a
+la base de datos que hemos creado.</p>
+   </blockquote>
+   
+<p><b>2.</b> <b> (CHAT) </b>Vamos a seguir ampliando nuestra aplicación de chat. 
+  Ahora haremos que tome los datos de los usuarios de la BD MySQL que hemos creado. 
+  Para ello tenemos la clase <b>AccesoBDUsuarios </b>en el paquete <i>usuarios</i>, 
+  de la cual podemos encontrar una plantilla en <i>usuarios\AccesoBDUsuarios.java</i>. 
+  En el fichero <i>Ej2.java</i> tenemos un conductor para probar el módulo de 
+  acceso a la BD. Se pide:</p>
+   
+  <blockquote>     
+    <p><i>a) </i>Insertar el driver y la url de la base de datos en el
+    constructor de la clase <b>AccesoBDUsuarios</b>. Compilar y probar que se
+    conecta y que valida los usuarios correctamente (el registro de usuarios
+    todavía no está implementado).</p>
+     
+    <p><i>b)</i>   Vuelve a abrir el código de la clase y mira la función <i>valida(login,password)</i>.
+    ¿Qué hace esta función? Explica qué hace para comprobar si ha encontrado
+    el login y el password en la base de datos.</p>
+     
+    <p><i>c)</i>   Por último realizaremos el registro de usuarios, para lo
+    cual la función <i>registro(login,password)</i> deberá hacer una
+    inserción en la BD después de comprobar que el login es válido. La cadena
+    <i>insert </i>contiene la sentencia SQL de la inserción que deberemos
+    ejecutar. Añade la instrucción necesaria para ejecutar esta sentencia.
+    Compilar y probar que registra usuarios correctamente.</p>
+    <p><i>d)</i>    Como último paso nos queda integrar nuestro módulo de
+    acceso a la BD en el chat. Integrar y hacer los cambios necesarios en el
+    chat para que se utilice como módulo de acceso a los usuarios la clase <b>AccesoBDUsuarios
+    </b>en lugar de <b>AccesoFicheroUsuarios</b>. (NOTA: Sólo es necesario
+    cambiar una línea de código en la clase <b>ServidorChat </b>para adaptarlo). ¿Qué cambios hemos tenido
+    que hacer? ¿Cuál es la ventaja de haber definido la interfaz <b><i>AccesoUsuarios</i></b>
+    para los módulos de acceso a los datos de los usuarios? Hacer el cambio
+    necesario y probar que el chat funciona correctamente.</p>
+   </blockquote>
+   
+            </body>
+            </html>

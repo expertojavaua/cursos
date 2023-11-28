@@ -1,0 +1,572 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+                                                            
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+                                                            
+  <meta name="Author" content="Nacho">
+                                                            
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+                                                        
+  <link rel="stylesheet" href="../apuntes.css" type="text/css">
+  <title>Anexo A: Novedades en Java 1.5</title>
+</head>
+  <body>
+      <b>      
+<h1>Anexo A. Novedades en Java 1.5</h1>
+<h2>&nbsp;</h2>
+      </b><p>En este documento se resumen las principales novedades que ofrece
+      la versión 1.5 de Java, separándolas en diferentes áreas. Para una
+      explicación más detallada, consultar la página de Sun:</p>
+      <p align="center"><a href="http://java.sun.com/j2se/1.5.0/docs/relnotes/features.html">http://java.sun.com/j2se/1.5.0/docs/relnotes/features.html</a></p>
+      <b>      
+<h2>&nbsp;</h2>
+<h2>1. Novedades en la máquina virtual</h2>
+      </b>
+      <blockquote>
+        <h4>Autoajuste de memoria mejorado</h4>
+           
+        <p>La capacidad de autoajustar la cantidad de memoria necesaria (pila,
+        recolector de basura, etc) se ve mejorada en esta versión.</p>
+        <h4>Compartir clases</h4>
+           
+        <p>Al instalar la máquina virtual, se cargan en memoria un conjunto de
+        clases del sistema, en forma de representación interna, de forma que
+        las siguientes llamadas a la máquina virtual ya encuentren estas clases
+        mapeadas en memoria, y se permita que los datos de estas clases se
+        compartan entre múltiples procesos dentro de la JVM.</p>
+        <h4>Ajuste del recolector de basura</h4>
+           
+        <p>Relacionado con el autoajuste de memoria, el recolector de basura
+        también se autoadapta a las necesidades de memoria de la aplicación,
+        para evitar que el usuario tenga que ajustar su tamaño y
+        características desde línea de comandos.</p>
+        <h4>Tratamiento de errores fatales</h4>
+           
+        <p>El mecanismo de listado de errores fatales se ha mejorado de forma
+        que se obtengan mejores diagnósticos a partir de las salidas generadas
+        por dichos errores.</p>
+        <p>&nbsp;</p>
+      </blockquote>
+      <b>      
+<h2>2. Novedades en el lenguaje</h2>
+      </b>
+      <blockquote>
+        <h4>Tipos de datos parametrizados (<i>generics</i>)</h4>
+           
+        <p>Esta mejora permite tener colecciones de tipos concretos de datos, lo
+        que permite asegurar que los datos que se van a almacenar van a ser
+        compatibles con un determinado tipo o tipos. Por ejemplo, podemos crear
+        un <i>Vector</i> que sólo almacene <i>Strings</i>, o una <i>HashMap</i>
+        que tome como claves <i>Integers</i> y como valores <i>Vectors. </i>Además,
+        con esto nos ahorramos las conversiones <i>cast</i> al tipo que
+        deseemos, puesto que la colección ya se asume que será de dicho tipo.</p>
+        <p><b>Ejemplo</b></p>
+        <pre class="codigo"><b>// Vector de cadenas</b>
+Vector&lt;String&gt; v = new Vector&lt;String&gt;();
+v.addElement(&quot;Hola&quot;);
+String s = v.getElementAt(0);
+v.addElement(new Integer(20));			// Daría error!!
+
+<b>// HashMap con claves enteras y valores de vectores</b>
+HashMap&lt;Integer, Vector&gt; hm = new HashMap&lt;Integer, Vector&gt;();
+hm.put(1, v);
+Vector v2 = hm.get(1);</pre>
+           
+        <h4><i>Autoboxing</i></h4>
+           
+        <p>Esta nueva característica evita al programador tener que establecer
+        correspondencias manuales entre los tipos simples (<i>int, double</i>,
+        etc) y sus correspondientes <i>wrappers</i> o tipos complejos (<i>Integer,
+        Double, </i>etc). Podremos utilizar un <i>int</i> donde se espere un
+        objeto complejo (<i>Integer</i>), y viceversa.</p>
+        <p><b>Ejemplo</b></p>
+        <pre class="codigo">Vector&lt;Integer&gt; v = new Vector&lt;Integer&gt;();
+v.addElement(30);
+Integer n = v.getElementAt(0);
+n = n+1;</pre>
+           
+        <h4>Mejoras en bucles</h4>
+           
+        <p>Se mejoran las posibilidades de recorrer colecciones y arrays,
+        previniendo índices fuera de rango, y pudiendo recorrer colecciones sin
+        necesidad de acceder a sus iteradores (<i>Iterator</i>).</p>
+        <p><b>Ejemplo</b></p>
+        <pre class="codigo"><b>// Recorre e imprime todos los elementos de un array</b>
+int[] arrayInt = {1, 20, 30, 2, 3, 5};
+for(int elemento: arrayInt)
+	System.out.println (elemento);
+
+<b>// Recorre e imprime todos los elementos de un </b><b>Vector</b>
+Vector&lt;String&gt; v = new Vector&lt;String&gt;();
+for(String cadena: v)
+	System.out.println (cadena);</pre>
+           
+        <h4>Tipo <i>enum</i></h4>
+           
+        <p>El tipo <i>enum</i> que se introduce permite definir un conjunto de
+        posibles valores o estados, que luego podremos utilizar donde queramos:</p>
+        <p><b>Ejemplo</b></p>
+        <pre class="codigo"><b>// Define una lista de 3 valores y luego comprueba en un switch 
+// cuál es el valor que tiene un objeto de ese tipo</b>
+enum EstadoCivil {soltero, casado, divorciado};
+EstadoCivil ec = EstadoCivil.casado;
+ec = EstadoCivil.soltero;
+switch(ec)
+{
+	case soltero:	System.out.println(&quot;Es soltero&quot;);
+			break;
+	case casado:	System.out.println(&quot;Es casado&quot;);
+			break;
+	case divorciado:System.out.println(&quot;Es divorciado&quot;);
+			break;
+}</pre>
+           
+        <h4><i>Imports</i> estáticos</h4>
+           
+        <p>Los <i>imports</i> estáticos permiten importar los elementos
+        estáticos de una clase, de forma que para referenciarlos no tengamos
+        que poner siempre como prefijo el nombre de la clase. Por ejemplo,
+        podemos utilizar las constantes de color de la clase <i>java.awt.Color</i>,
+        o bien los métodos matemáticos de la case <i>Math</i>.</p>
+        <p><b>Ejemplo</b></p>
+        <pre class="codigo">import static java.awt.Color;
+import static java.lang.Math;
+
+public class... 
+{
+...
+	JLabel lbl = new JLabel();
+	lbl.setBackground(white);		// Antes sería Color.white
+...
+	double raiz = sqrt(1252.2);		// Antes sería Math.sqrt(...)
+}</pre>
+           
+        <h4>Argumentos variables</h4>
+        <p>Ahora Java permite pasar un número variable de argumentos a una
+        función (como sucede con funciones como <i>printf</i> en C). Esto se
+        consigue mediante la expresión &quot;...&quot; a partir del momento en
+        que queramos tener un número variable de argumentos.</p>
+        <p><b>Ejemplo</b></p>
+        <pre class="codigo"><b>// Funcion que tiene un parámetro <i>String</i> obligatorio
+// y n parámetros <i>int </i>opcionales</b>
+
+public void miFunc(String param, int... args) 
+{
+...
+	// Una forma de procesar n parametros variables
+	for (int argumento: args)
+	{
+		...
+	}
+...
+}
+
+...
+miFunc(&quot;Hola&quot;, 1, 20, 30, 2);
+miFunc(&quot;Adios&quot;);</pre>
+           
+        <h4>Metainformación</h4>
+        <p>Se tiene la posibilidad de añadir ciertas anotaciones en campos,
+        métodos, clases y otros elementos, que permitan a las herramientas de
+        desarrollo o de despliegue leerlas y realizar ciertas tareas. Por
+        ejemplo, generar ficheros fuentes, ficheros XML, o un <i>Stub</i> de
+        métodos para utilizar remotamente con RMI.</p>
+        <p>Un ejemplo más claro lo tenemos en las anotaciones que ya se
+        utilizan para la herramienta Javadoc. Las marcas <i>@deprecated</i> no
+        afectan al comportamiento de los métodos que las llevan, pero previenen
+        al compilador para que muestre una advertencia indicando que el método
+        que se utiliza está desaconsejado. También se tienen otras marcas <i>@param</i>,
+        <i>@return</i>, @<i>see</i>, etc, que utiliza Javadoc para generar las
+        páginas de documentación y las relaciones entre ellas.</p>
+        <p><b>Ejemplo</b></p>
+        <pre class="codigo"><b>// Definición de una interfaz mediante metainformacion</b>
+
+public @interface MiInterfaz
+{
+	int metodo1();
+	String metodo2();
+}</pre>
+           
+      </blockquote>
+      <b>      
+<h2>3. Novedades en librerías principales</h2>
+      </b>
+      <blockquote>
+        <h4>Red</h4>
+           
+        <p>Se han añadido cambios y mejoras para el trabajo en red, como:</p>
+        <ul>
+          <li>Soporte para IPv6 en Windows XP y 2003</li>
+          <li>Establecimiento de <i>timeouts</i> para conectar y leer</li>
+          <li>API para lanzar aplicaciones RMI a través de <i>inetd</i></li>
+          <li>La clase <i>InetAddress</i> permite testear si una URL es
+            alcanzable (utilidad <i>ping</i>)</li>
+          <li>Otras mejoras en el tratamiento de cookies, servidores proxy,
+            tratamiento de URLs, etc.</li>
+        </ul>
+        <h4>Seguridad</h4>
+           
+        <p>Hay bastantes mejoras en seguridad. Se da soporte a más estándares
+        de seguridad (SASL, OCSP, TSP, etc), hay mejoras en la escalabilidad a
+        través de SSLEngine, en criptografía, etc.</p>
+      </blockquote>
+      <blockquote>
+        <h4>Internacionalización</h4>
+           
+        <p>Mediante la internacionalización podemos construir una aplicación
+        que se adapte a varios idiomas, formatos monetarios, de fecha, etc, sin
+        tener que reprogramarla. En este aspecto, se añaden mejoras en la
+        versión 1.5, relacionadas con:</p>
+        <ul>
+          <li>La gestión de juegos de caracteres se basa en el formato Unicode
+            4.0, lo que afecta a las clases <i>Character</i> y <i>String</i>,
+            entre otras.&nbsp; </li>
+          <li>La clase <i>DecimalFormat</i> se ha modificado para poder procesar
+            elementos de tipo <i>BigDecimal</i> o <i>BigInteger</i> sin perder
+            precisión</li>
+          <li>Se han añadido nuevos <i>Locales</i> soportados, como el
+            vietnamita.</li>
+        </ul>
+        <h4>Formateador</h4>
+           
+        <p>La clase <i>Formatter</i> permite dar formato (justificación y
+        alineamiento, formatos numéricos, de fecha, etc) a las cadenas y otros
+        tipos de datos, siguiendo un estilo parecido al <i>printf</i> de C.
+        También se permite mediante la interfaz <i>Formattable</i> dar formatos
+        (limitados) a tipos creados por el usuario.</p>
+        <p><b>Ejemplo</b></p>
+        <pre class="codigo"><b>// Uso de formatter para construir cadenas formateadas</b>
+StringBuilder sb = new StringBuilder();
+Formatter f = new Formatter(sb, Locale.US);
+f.format(&quot;Hola, %1$2s, esta es tu visita numero %2$d&quot;, &quot;Pepe&quot;, 20);
+<i>// Resultaría: &quot;Hola, Pepe, esta es tu visita numero 20&quot;
+
+</i><b>// También se tienen unos métodos predefinidos en ciertas clases
+</b>System.out.format(&quot;Hola, %1$2s, esta es tu visita numero %2$d&quot;, &quot;Pepe&quot;, 20);
+System.err.printf(&quot;Hola, %1$2s, esta es tu visita numero %2$d&quot;, &quot;Pepe&quot;, 20);
+String s = String.format(&quot;Hola, %1$2s&quot;, &quot;Pepe&quot;);</pre>
+           
+        <h4>Escaneador</h4>
+           
+        <p>La clase <i>Scanner</i> permite parsear un flujo de entrada (fichero,
+        cadena de texto, stream de datos, etc), y extraer tokens siguiendo un
+        determinado patrón o tipo de datos. También se permite trabajar con
+        expresiones regulares para indicar qué patrones se deben buscar.</p>
+        <p><b>Ejemplo</b></p>
+        <pre class="codigo"><b>// Lectura de enteros de la entrada estándar</b>
+Scanner sc = Scanner.create(System.in);
+int n = sc.nextInt();<i>
+
+</i><b>// Lectura de todos los doubles de un fichero
+</b>Scanner sc = Scanner.create(new File(&quot;miFich.txt&quot;));
+while (sc.hasNextDouble())
+	double d = sc.nextDouble();<i>
+
+</i><b>// Uso de otros delimitadores
+</b>String s = &quot;Esto hola es hola 1 hola ejemplo&quot;;<b>
+</b>Scanner sc = Scanner.create(s).useDelimiter(&quot;\\s*hola\\s*&quot;);
+System.out.println(sc.next());
+System.out.println(sc.next());
+System.out.println(sc.next());
+<i>// Sacaría Esto \n es \n 1</i></pre>
+           
+      <b>      
+<h4>Arquitectura de JavaBeans</h4>
+           
+      </b>
+           
+        <p>La arquitectura de JavaBeans se encuentra dentro del paquete <i>java.beans</i>.&nbsp;
+        Se ha añadido una nueva clase, <i>IndexedPropertyChangeEvent</i>,
+        subclase de <i>PropertyChangeEvent</i>, para dar soporte a eventos que
+        respondan a cambios en propiedades indexadas (propiedades que utilicen
+        un índice para identificar la parte del bean que haya cambiado).
+        También se han añadido mejoras a la hora de crear editores de
+        propiedades de beans (<i>PropertyEditor</i>), como el método <i>createPropertyEditor(...)</i>,
+        y constructores públicos para la clase <i>PropertyEditorSupport</i>.&nbsp;</p>
+      <b>      
+<h4>Arquitectura de colecciones</h4>
+           
+      </b>
+           
+        <p>Como se ha comentado antes, las colecciones (estructura que contiene
+        clases e interfaces como <i>Collection</i>, <i>Vector</i>, <i>ArrayList</i>,
+        etc) dan soporte a nuevas características del lenguaje, como el
+        autoboxing, mejoras en los bucles (<i>for</i>) , y el uso de <i>generics</i>.
+        Además, se han añadido interfaces nuevos, como <i>Queue, BlockingQueue</i>
+        y <i>ConcurrentMap</i>, con algunas implementaciones concretas de dichas
+        interfaces. Además, se tienen nuevas implementaciones de <i>List</i>, <i>Set
+        </i>y <i>Map</i>.</p>
+      <b>      
+<h4>Manipulación de bits</h4>
+           
+      </b>
+           
+        <p>Los <i>wrappers</i> de tipos simples (es decir, clases como <i>Integer,
+        Long, Double, Char</i>) soportan operaciones de bits, como <i>highestOneBit,
+        lowestOneBit, rotateLeft, rotateRight, reverse</i>, etc.&nbsp;</p>
+      <b>      
+<h4>Elementos matemáticos</h4>
+           
+      </b>
+           
+        <p>El paquete <i>java.math</i> también ha sufrido modificaciones, como
+        la adición en la clase <i>BigDecimal</i> de soporte para cálculo en
+        coma flotante de precisión fija. Clases como <i>Math</i> o <i>StrictMath</i>
+        además incluyen soporte para senos y cosenos hiperbólicos, raíces
+        cúbicas o logaritmos en base 10. Por último, también se da soporte al
+        uso de números hexadecimales con coma flotante.</p>
+      <b>      
+<h4>Serialización</h4>
+           
+      </b>
+           
+        <p>Además de corregir errores previos en la serialización, se&nbsp;da
+        soporte para serializar el nuevo tipo <i>enum</i>, aunque la forma de
+        serializarlo difiere ligeramente de los tipos tradicionales.</p>
+      <b>      
+<h4>Hilos</h4>
+           
+      </b>
+           
+        <p>Se&nbsp;han añadido los paquetes <i>java.util.concurrent</i>, <i>java.util.concurrent.atomic</i>
+        y <i>java.util.concurrent.locks</i>, que permiten crear diversas
+        infraestructuras de hilos, como pooling de hilos o colas de bloqueos,
+        liberando al programador de tener que controlar todas estas estructuras
+        &quot;a mano&quot;. En definitiva, se da soporte para automatizar la
+        programación concurrente.</p>
+        <p>Además, a la clase <i>Thread</i> se le han añadido los métodos <i>getStackTrace</i>
+        y <i>getAllStackTraces</i> para obtener la traza de los hilos en un
+        momento dado.</p>
+      <b>      
+           
+        <h4>Monitorización y gestión</h4>
+           
+      </b>
+           
+        <p>Se&nbsp;tienen mejoras en el control o la monitorización tanto de
+        las aplicaciones Java como de la máquina virtual (JVM), a través de la
+        API de JMX.</p>
+           
+      </blockquote>
+      <b>      
+<h2>4. Novedades en librerías adicionales</h2>
+      </b>
+      <blockquote>
+        <h4>RMI</h4>
+           
+        <p>Se tienen dos mejoras fundamentales en RMI: </p>
+        <ul>
+          <li>Generación dinámica de Stubs: se generan en tiempo de
+            ejecución, sin necesidad de utilizar <i>rmic</i> previamente. Sólo
+            tendremos que utilizarlo para generar <i>Stubs</i> para clientes que
+            funcionen con versiones anteriores de Java.</li>
+          <li>Lanzamiento de <i>rmid</i> o un servidor RMI Java desde <i>inetd/xinetd</i>.</li>
+        </ul>
+      </blockquote>
+      <blockquote>
+        <h4>JDBC</h4>
+           
+        <p>En Java 1.4 se introdujo la interfaz <i>RowSet</i>, que permitía
+        pasar datos entre componentes. En Java 1.5 se han desarrollado 5
+        implementaciones de dicha interfaz, para cubrir 5 posibles casos de uso: </p>
+        <ul>
+          <li><i>JdbcRowSet</i>: para encapsular un <i>ResultSet</i> o un driver
+            que utilice tecnología JDBC</li>
+          <li><i>CachedRowSet</i>: desconecta de la fuente de datos y trabaja
+            independientemente, salvo cuando esté obteniendo datos de dicha
+            fuente o volcando datos en ella.</li>
+          <li><i>FilteredRowSet</i>: hereda de la anterior, y se utiliza para
+            obtener un subconjunto de datos</li>
+          <li><i>JoinRowSet</i>: hereda de <i>CachedRowSet</i> y se emplea para
+            unir múltiples objetos <i>RowSet</i>.</li>
+          <li><i>WebRowSet</i>: hereda de <i>CachedRowSet</i> para procesar
+            datos XML.</li>
+        </ul>
+      </blockquote>
+      <blockquote>
+        <h4>JNDI</h4>
+           
+        <ul>
+          <li>Mejoras en la clase <i>javax.naming.NameClassPair</i> para poder
+            acceder al nombre completo del servicio de directorio.</li>
+          <li>Soporte para controles estándar de LDAP</li>
+          <li>Soporte para manipular nombres de LDAP</li>
+        </ul>
+      </blockquote>
+      <b>      
+<h2>5. Novedades en la interfaz de usuario</h2>
+      </b>
+      <blockquote>
+        <h4>Internacionalización</h4>
+           
+        <p>Para permitir renderizar texto multilingüe utilizando fuentes
+        lógicas, se tienen en cuenta tanto las fuentes del cliente como las del
+        <i>locale</i> que tengamos instalado. Además, AWT utiliza APIs Unicode
+        en Windows 2000 y XP, con lo que se puede manejar texto sin estar
+        limitado a la configuración de <i>locale</i> de Windows. </p>
+        <h4>Java Sound</h4>
+           
+        <p>Para el tratamiento del sonido desde Java, se tienen también los
+        siguientes cambios, principalmente: </p>
+        <ul>
+          <li>Se permite el acceso a puertos en todas las plataformas</li>
+          <li>También está disponible la entrada/salida MIDI</li>
+        </ul>
+        <h4>Java 2D</h4>
+           
+        <ul>
+          <li>Se cachean en memoria todas las imágenes construidas a partir de <i>BufferedImage</i></li>
+          <li>Métodos para controlar la aceleración hardware en imágenes</li>
+          <li>Añadido soporte para aceleración hardware con OpenGL en Solaris
+            y Linux.</li>
+          <li>Creación de fuentes a partir de ficheros y flujos de entrada</li>
+          <li>Se ha mejorado la renderización de texto.</li>
+        </ul>
+        <h4>Flujos de imágenes</h4>
+           
+        <p>Se permite, además de los formatos de imágenes ya soportados (PNG,
+        JPG, etc), leer y escribir imágenes BMP y WBMP. </p>
+        <h4>AWT</h4>
+           
+        <p>Las novedades más significativas son:</p>
+           
+        <ul>
+          <li>La clase <i>MouseInfo</i> almacena información sobre la posición
+            del ratón en el escritorio</li>
+          <li>Se tienen nuevos métodos en la clase <i>Window</i> para
+            especificar la posición para las nuevas ventanas que se creen.
+            También se tienen métodos para asegurar que una ventana permanezca
+            siempre en primer lugar (aunque esta característica no funciona
+            bien en algunas versiones de Solaris o Linux)</li>
+          <li>Nuevos métodos para acceder y notificar sobre el contenido del
+            portapapeles.</li>
+          <li>Se han corregido errores existentes en los <i>layout managers</i>:
+            <i>GridBagLayout </i>y<i> FlowLayout</i>.</li>
+          <li>Cambios y correcciones en eventos de teclado (nuevos mapeos de
+            teclas, redefinición de métodos, etc), y de acción (correcciones
+            en cuanto al uso de Enter como evento de acción).</li>
+        </ul>
+        <h4>Swing</h4>
+           
+        <p>Entre otras, se tienen las novedades:</p>
+           
+        <ul>
+          <li>Se proporcionan nuevos look &amp; feels (uno de ellos, <i>Synth</i>,
+            es <i>skinnable</i>, es decir, se puede personalizar el skin que
+            muestra)</li>
+          <li>Se añade soporte para imprimir <i>JTables</i>.</li>
+          <li>Se permite definir menús contextuales (<i>popup menus</i>) en
+            componentes, para que muestren las opciones que queramos. Para ello
+            se tiene la clase <i>JPopupMenu</i>.</li>
+          <li>Se han añadido mejoras en <i>JTextArea</i> para facilitar el
+            scroll por su contenido, y la actualización cuando se modifique su
+            texto.</li>
+          <li>Podremos utilizar el método <i>JFrame.add(...)</i>, en lugar de <i>JFrame.getContentPane().add(...)</i></li>
+        </ul>
+        <blockquote>
+          <pre class="codigo"><b>// Antes</b>
+JFrame f = new JFrame();
+f.getContentPane().add(new JButton(&quot;Hola&quot;));
+<i>
+</i><b>// Ahora</b><i>
+</i>JFrame f = new JFrame();
+f.add(new JButton(&quot;Hola&quot;));</pre>
+           
+        </blockquote>
+      </blockquote>
+      <b>      
+<h2>6. Novedades en despliegue de aplicaciones</h2>
+      </b>
+      <blockquote>
+        <h4>Despliegue general</h4>
+           
+        <p>Se tienen, entre otras, las siguientes novedades en cuanto a
+        despliegue de aplicaciones:</p>
+        <ul>
+          <li>Se ha unido gran parte de la funcionalidad entre el Java Plug-in y
+            Java Web Start, de modo que ahora tienen un <i>Java Control Panel</i>
+            común para ambos</li>
+          <li>Las aplicaciones desplegadas se pueden configurar mediante un
+            fichero de configuración, que puede ser accedido a través de una
+            URL, y establecer ciertos parámetros de la aplicación.</li>
+          <li>El formato de compresión Pack200 permite tener ficheros JAR
+            ultra-comprimidos (hasta 1/8 de su tamaño original), reduciendo los
+            tiempos de descarga, o de despliegue mediante Java Web Start.</li>
+          <li>Inclusión de marcas de tiempo (<i>timestamps</i>) en los ficheros
+            JAR firmados, de forma que se sabe cuándo se concedió el
+            certificado para el fichero, y se previene así el uso de JARs cuyo
+            permiso ya caducó.</li>
+        </ul>
+        <h4>Java Web Start</h4>
+           
+        <p>Hay también cambios específicos de Java Web Start, como son:</p>
+        <ul>
+          <li>Supresión del <i>Application Manager</i>, cuya mayor
+            funcionalidad se ha encapsulado dentro del nuevo <i>Java Control
+            Panel</i>, y el <i>JNLP Cache Viewer</i>, una nueva herramienta que
+            permite gestionar las aplicaciones descargadas.</li>
+          <li>Supersión del <i>Developer Bundle</i>, ya que Java Web Start
+            está completamente integrado con JRE y SDK, y los elementos que
+            contenía dicho <i>bundle</i> ahora están integrados en Java.</li>
+          <li>Se tiene una caché de sistema, de forma que el administrador del
+            sistema puede cargar al inicio programas en la caché de sistema, de
+            forma que sean compartidas y accesibles por múltiples usuarios.</li>
+          <li>Hay también una facilidad de importación, de forma que se
+            facilita la instalación desde CDs, donde el código se carga
+            primero desde un lugar y luego se actualiza desde otro. También
+            permite preinstalar aplicaciones y librerías en caché, sin
+            ejecutarlas.</li>
+        </ul>
+      </blockquote>
+      <b>      
+<h2>7. Novedades en herramientas</h2>
+      </b>
+      <blockquote>
+        <h4>JPDA</h4>
+           
+        <p>JPDA es un conjunto de interfaces utilizadas para depurar en entornos
+        y sistemas de desarrollo. En la versión 1.5 se tienen nuevas mejoras y
+        funcionalidades de esta herramienta. Muchas de estas nuevas
+        funcionalidades se han añadido para adaptar las nuevas características
+        de la versión 1.5 de Java, como los argumentos variables, <i>imports</i>
+        estáticos, etc.</p>
+        <h4>JVMTI</h4>
+           
+        <p>JVMTI (<i>Java Virtual Machine Tool Interface</i>) es una nueva
+        interfaz de programación nativa para utilizar en herramientas de
+        desarrollo y monitorización. Forma parte de las interfaces contenidas
+        en JPDA para depuración. Permite chequear el estado y controlar la
+        ejecución de una aplicación. </p>
+        <h4>Compilador (<i>javac</i>)</h4>
+           
+        <p>Se han añadido algunas características a la hora de utilizar el
+        compilador, como son los parámetros:</p>
+        <ul>
+          <li><i>- source 1.5</i> : habilita las nuevas características de la
+            versión 1.5 de Java, para ser tenidas en cuenta por el compilador.
+            Lleva implícito también un parámetro <i>-target 1.5</i></li>
+          <li><i>-target 1.5</i>: permite al compilador utilizar
+            características específicas de Java 1.5 en las librerías y la
+            máquina virtual.</li>
+          <li><i>-Xlint</i>: permite producir <i>warnings</i> sobre código que,
+            aunque es correcto, puede ser problemático debido a su
+            construcción.</li>
+        </ul>
+        <h4>Herramienta <i>javadoc</i></h4>
+           
+        <p align="left">Se tienen nuevas funcionalidades en la herramienta <i>javadoc</i>.
+        Como en otros elementos, muchos de los cambios dan soporte a
+        características nuevas de Java 1.5 (<i>generics</i>, tipo <i>enum</i>,
+        etc). Se tienen también marcas nuevas, como <i>regression</i> para
+        indicar funcionalidades que se desaconsejaron en versiones anteriores,
+        pero que han sido corregidas en la nueva. También se da soporte a
+        anotaciones para generar metainformación que utilizar en otros
+        programas.</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+      </blockquote>
+           
+        </body>
+        </html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+                                    
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+                                  
+  <meta name="Author" content="Nacho">
+                                   
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+                               
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+  <title>Ejercicios de Entornos de Desarrollo</title>
+</head>
+  <body>
+         
+<h1> Java y Entornos de Desarrollo</h1>
+             
+<p>
+                       <b>1. </b>Compilad el ejemplo que viene en el ZIP
+(fichero <i>Ej1.zip</i>) en los entornos de desarrollo vistos.</p>
+<p>El ejemplo tiene la siguiente estructura de ficheros y directorios:</p>
+<ul>
+  <li>Directorio <b>raíz</b>: con la clase <i>Persona</i> y el fichero JAR <i>maspersonas.jar</i>.</li>
+  <li>Paquete <b>animales</b>: con la clase <i>Elefante</i></li>
+  <li>Paquete <b>insectos</b>: con la clase <i>Mosca</i></li>
+  <li>Directorio <b>maspaquetes</b>:
+    <ul>
+      <li>Paquete <b>plantas</b>: con la clase <i>Geranio</i> y el fichero JAR <i>masplantas.jar</i>.</li>
+    </ul>
+  </li>
+</ul>
+<p>El programa principal es <i>Persona</i>, que utiliza a todos los demás. Para
+que encuentre todas las clases debemos asegurarnos de que:</p>
+<ul>
+  <li>Para las clases <i>Elefante </i>y <i>Mosca</i>, que el CLASSPATH contenga
+    al directorio raíz (no a los subdirectorios <i>animales </i>e <i>insectos</i>,
+    puesto que esos son paquetes).</li>
+  <li>Para las clases de <i>maspersonas.jar</i>, que el CLASSPATH contenga dicho
+    fichero</li>
+  <li>Para la clase <i>Geranio</i>, que el CLASSPATH contenga el directorio <i>maspaquetes
+    </i>(no el directorio <i>maspaquetes\plantas</i>, porque <i>plantas</i> es
+    un paquete).</li>
+  <li>Para las clases de <i>masplantas.jar</i>, que el CLASSPATH contenga dicho
+    fichero.</li>
+</ul>
+             
+<p>
+                       Así, el CLASSPATH deberá contener:</p>
+<ul>
+  <li>Directorio raíz del ejercicio '.'</li>
+  <li>Directorio <i>maspaquetes </i>del ejercicio</li>
+  <li>Fichero <i>maspersonas.jar</i></li>
+  <li>Fichero <i>masplantas.jar</i></li>
+</ul>
+<p> Indicad 
+la salida que muestra al ejecutar (en el fichero <i>respuestas.txt</i>), con
+cualquiera de los tres entornos de desarrollo.</p>
+<p><b>2. </b>Contestad al siguiente test (en el fichero <i>respuestas.txt</i>):
+                       </p>
+                       
+                      <blockquote>
+                        <p><b>1.</b> Vamos a ejecutar la clase Prueba 
+desde JDK. &iquest;Qu&eacute; tenemos que poner?</p>
+                         
+                        <blockquote>
+                          <p>a. <i>java Prueba.class</i><br>
+  b. <i>java prueba</i><br>
+  c. <i>java Prueba</i><br>
+ d. Todas son v&aacute;lidas<br>
+ e. S&oacute;lo b y c son v&aacute;lidas<br>
+                          </p>
+                           </blockquote>
+                        <b>2.</b> Supongamos que tenemos las clase <i>
+ Clase1</i> del paquete <i>paquete1</i> en el directorio <i>C:\clases</i>
+, de forma que el fichero <i>.class</i> est&aacute;, por tanto, en <i>C:\clases\paquete1\Clase1.class</i>
+ . Supongamos tambi&eacute;n que necesitamos tener esa clase en el CLASSPATH. 
+&iquest;C&oacute;mo la inclu&iacute;mos? <br>
+                           
+                          <blockquote>a. <i>set CLASSPATH=C:\clases</i><br>
+   b. <i>set CLASSPATH=C:\clases\paquete1</i><br>
+   c. <i>set CLASSPATH=C:\clases\paquete1\Clase1</i></blockquote>
+                        <b>3.</b> La M&aacute;quina Virtual Java permite...<br>
+                             
+                            <blockquote>a. Que mi programa Java compilado 
+funcione sin necesidad de recompilarlo en Windows y Linux<br>
+   b. Que pueda compilar mi programa Java en cualquier sistema<br>
+   c. Que no necesite un sistema operativo para ejecutar mis programas Java</blockquote>
+                        <b>4.</b> Una de las ventajas que ofrecen 
+entornos como Forte o JCreator sobre JDK es que...<br>
+                               
+                              <blockquote>a. No se requiere JDK, y se dispone 
+de un sistema m&aacute;s amigable y f&aacute;cil de usar<br>
+   b. Proporcionan una capa por encima de JDK sobre la que es m&aacute;s
+c&oacute;modo escribir programas<br>
+ c. S&oacute;lo necesitamos una peque&ntilde;a parte de JDK, el JRE, y con 
+ella y estos entornos podremos construir m&aacute;s f&aacute;cilmente los 
+programas.<br>
+                                 </blockquote>
+                        <b>5.</b> El uso de proyectos en Forte, Kawa o JCreator...<br>
+                                 
+                                <blockquote>a. Facilita compilar cualquier 
+programa Java<br>
+   b. Permite compilar y gestionar aplicaciones complejas, agrupando las
+clases y librer&iacute;as necesarias y trat&aacute;ndolas como un todo.<br>
+  c. No ofrece ninguna ventaja a&ntilde;adida, s&oacute;lo permite ver todas 
+las clases y elementos que componen una aplicaci&oacute;n.<br>
+                                   </blockquote>
+                                   </blockquote>
+                                   
+                                  <blockquote><b>6.</b> Personalmente, ¿qué
+                                    entorno de desarrollo prefieres utilizar?                        
+              
+                                      <blockquote>
+                                        <p>
+                                         <br>
+ &iquest;Por qu&eacute;?<br>
+                                        </p>
+                                         </blockquote>
+                                     </blockquote>
+                                     
+                      <p><b>Para entregar:</b> Debéis entregar un ZIP <i>e1_2.zip</i>
+                      con:</p>
+                      <ul>
+                        <li>El fichero <i>Ej1.zip</i> con las clases compiladas
+                          (con uno de los tres entornos vistos, no hace falta
+                          entregarlas por separado para los tres)</li>
+                        <li>El fichero <i>respuestas.txt</i> con las cuestiones
+                          contestadas</li>
+                      </ul>
+                                     
+                                         <br>
+                                                                        
+                      
+                                        </body>
+                                        </html>

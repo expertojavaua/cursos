@@ -1,0 +1,117 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Ejercicios de Swing</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1>Swing y Applets</h1>
+<p>
+<b>1. (CHAT) </b>El ejercicio de esta sesi&oacute;n es el mismo que el de la sesi&oacute;n
+de AWT: construir la aplicaci&oacute;n de chat. Si lo termináis y os da tiempo,
+os proponemos añadirle algunas de las
+siguientes
+mejoras:</p>
+<ul>
+<li>
+Mejorar la apariencia poniendo controles Swing: cambiar todos los controles de
+AWT (<i>Frame</i>, <i>Button</i>, <i>TextField</i>, <i>TextArea</i>, etc) por
+los respectivos controles Swing (<i>JFrame</i>, <i>JButton</i>, <i>JTextField</i>,
+<i>JTextArea</i>, etc). Tened en cuenta que el <i>JTextArea</i> tiene un
+constructor distinto, y las barras de desplazamiento se deben poner añadiendo
+el <i>JTextArea</i> sobre un <i>JScrollPane </i>(consultad la API para esta
+clase):
+<ul>
+  <li>Construir un <i>JTextArea </i>con un constructor por defecto.</li>
+  <li>Construir un <i>JScrollPane</i> pasándole como parámetro el JTextArea
+    que va a contener.</li>
+  <li>Añadir el <i>JScrollPane</i> al <i>JFrame</i>.</li>
+</ul>
+</li>
+
+</ul>
+
+<blockquote>
+  <p>Así, se sustituye el código que incluía el <i>TextArea</i>:</p>
+  <pre class="codigo">TextArea txtBuffer = new TextArea(&quot;&quot;, 5, 5, 
+		     TextArea.SCROLLBARS_BOTH);
+add(txtBuffer, BorderLayout.CENTER);</pre>
+  <p>por:</p>
+  <pre class="codigo">JTextArea txtBuffer = new JTextArea();
+JScrollPane panelBuffer = new JScrollPane(txtBuffer);
+getContentPane().add(panelBuffer, BorderLayout.CENTER);</pre>
+  Hay que tener en cuenta que para añadir elementos y cambiar algunas
+  propiedades de un <i>JFrame</i> es distinto a como se hace en un <i>Frame</i>.
+  Por ejemplo, en un <i>Frame</i> se hace:<pre class="codigo">setLayout(new BorderLayout());
+add(panelSup, BorderLayout.NORTH);</pre>
+  <p>Mientras que en un <i>JFrame</i> se hace:</p>
+  <pre class="codigo">getContentPane().setLayout(new BorderLayout());
+getContentPane().add(panelSup, BorderLayout.NORTH);</pre>
+  <p>Es decir, se obtiene el <i>ContentPane </i>(el contenedor) de la ventana, y
+  se llama a los métodos del mismo.</p>
+</blockquote>
+<ul>
+
+<li>
+Deshabilitar (mediante el método <i>setEnabled()</i>) los botones que no puedan
+pulsarse en determinados momentos:
+<ul>
+  <li>Al principio sólo se podrá pulsar el botón <i>Conectar</i>.</li>
+  <li>Una vez conectado con éxito, podrán pulsarse también los botones de <i>Registrar</i> o <i>Validar</i></li>
+  <li>Una vez que el usuario se haya validado, se puede pulsar también el botón de <i>Enviar</i>.</li>
+</ul>
+</li>
+
+<li>Permitir que se pueda enviar el mensaje al servidor también al pulsar <i>Enter</i>
+  sobre el cuadro de texto de enviar (mediante un <i>KeyListener</i> sobre el
+  cuadro de texto, comprobando que la tecla pulsada en el <i>KeyEvent</i> sea <i>KeyEvent.VK_ENTER</i>)</li>
+<li>Limpiar el cuadro de texto de enviar tras enviar cada mensaje (añadir un <i>setText(&quot;&quot;)</i>
+  en el evento de enviar el mensaje, tras enviarlo)</li>
+<li>
+  <p align="left">Colocar el password con asteriscos (mediante un <i>JPasswordField
+  </i>en lugar de un <i>JTextField</i>). Para ello se debe haber convertido la
+  aplicación a Swing previamente.</li>
+
+</ul>
+
+<blockquote>
+  <p align="left">Hay que tener en cuenta que para obtener el texto del <i>JPasswordField</i>
+  se tiene que llamar al método <i>getPassword()</i>, que devuelve un array de <i>char</i>.
+  Para convertirlo luego a cadena hay que utilizar un constructor de la clase <i>String</i>,
+  de forma que en lugar de poner:<pre class="codigo">txtPassword.getText();</pre>
+  Se pone:<pre class="codigo">new String(txtPassword.getPassword());</pre>
+  <p>(siendo el objeto <i>txtPassword</i> de tipo <i>JPasswordField </i>en este
+  último caso, y de tipo <i>JTextField</i> en el anterior).</p>
+</blockquote>
+<ul>
+
+<li>
+A&ntilde;adir alguna opci&oacute;n para guardar el texto del buffer (el
+chat) en un fichero. Se puede colocar un botón que al pulsarlo guarde el
+contenido del <i>TextArea </i>(o <i>JTextArea</i>) en un fichero.</li>
+
+<li>
+Convertir la aplicaci&oacute;n en Applet o JApplet. Para ello, siguiendo la
+estructura que tenemos, sólo hay que:
+<ul>
+  <li>Sustituir <i>Frame</i> por <i>Applet</i> (o <i>JFrame</i> por <i>JApplet</i>
+    si hemos convertido a Swing)</li>
+  <li>Quitar el método <i>main(...)</i></li>
+  <li>Crear una página HTML con el código necesario para poder ver el applet.</li>
+</ul>
+</li>
+</ul>
+
+<p><b>Para entregar:</b>   Debéis entregar un ZIP
+<i>e3_2.zip</i> con:</p>
+<ul>
+  <li>El fichero <i>AplicChat.java</i> con las mejoras realizadas</li>
+</ul>
+&nbsp;
+
+</body>
+</html>

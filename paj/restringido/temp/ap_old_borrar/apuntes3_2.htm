@@ -1,0 +1,484 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Tema 3: Interfaz Gr&aacute;fica</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+
+
+<h2>3.2. Swing</h2>
+<h3>&nbsp;
+</h3>
+<h3> 3.2.1. Introducción a Swing</h3>
+<p>
+Anteriormente se ha visto una descripci&oacute;n de los controles <i>AWT</i>
+para construir aplicaciones visuales. En cuanto a estructura, no hay mucha diferencia entre los controles proporcionados
+por <i>AWT</i> y los proporcionados por <i>Swing</i>: &eacute;stos se llaman,
+en general, igual que aqu&eacute;llos, salvo que tienen una "J" delante;
+as&iacute;, por ejemplo, la clase <i>Button</i> de <i>AWT</i> pasa a llamarse
+<i>JButton</i>
+en <i>Swing</i> , y en general la estructura del paquete <b>javax.swing</b>
+es la misma que la que tiene <i>java.awt</i>.</p>
+<p>Pero yendo m&aacute;s all&aacute; de la estructura, existen importantes
+diferencias entre los componentes <i>Swing</i> y los componentes <i>AWT</i>:
+<ul>
+<li>
+Los componentes <i>Swing</i> est&aacute;n escritos sin emplear c&oacute;digo
+nativo, con lo que ofrecen m&aacute;s versatilidad multiplataforma (podemos
+dar a nuestra aplicaci&oacute;n un aspecto que no dependa de la plataforma
+en que la estemos ejecutando).</li>
+</ul>
+
+<ul>
+<li>
+Los componentes <i>Swing</i> ofrecen m&aacute;s capacidades que los correspondientes
+<i>AWT</i>:
+los botones pueden mostrar im&aacute;genes, hay m&aacute;s facilidades
+para modificar la apariencia de los componentes, etc.</li>
+</ul>
+
+<ul>
+<li>
+Al mezclar componentes <i>Swing</i> y componentes <i>AWT</i> en una aplicaci&oacute;n,
+se debe tener cuidado de emplear contenedores <i>AWT</i> con elementos
+<i>Swing</i>,
+puesto que los contenedores pueden solapar a los elementos (se colocan
+encima).</li>
+</ul>
+
+<h2>&nbsp;
+</h2>
+
+<h3>3.2.2. Características específicas de Swing</h3>
+
+<b>Resumen de controles</b>
+<p>
+Los controles en Swing tienen en general el mismo nombre que los de AWT,
+con una "J" delante. As&iacute;, el bot&oacute;n en Swing es <i>JButton</i>
+, la etiqueta es <i>JLabel</i> , etc. Hay algunas diferencias, como por
+ejemplo <i>JComboBox</i> (el equivalente a <i>Choice</i> de AWT), y controles
+nuevos. Vemos aqu&iacute; un listado de algunos controles:</p>
+<table BORDER="1" WIDTH="562" >
+
+<tr>
+<td ALIGN=CENTER WIDTH="164"><b>JComponent</b></td>
+
+<td width="382">La clase padre para los componentes Swing es <i>JComponent</i> , paralela
+al <i>Component</i> de AWT.&nbsp;</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER width="164"><b>Botones</b>
+<br><img SRC="imagenes/awtswing/SWbuttons.gif" ALT="" NOSAVE height=113 width=131></td>
+
+<td width="382">Se tienen botones normales (<b>JButton</b>), de verificaci&oacute;n
+(<b>JCheckBox</b>), de radio (<b>JRadioButton</b>), etc, similares a los
+<i>Button</i>,
+<i>Checkbox</i>
+de AWT, pero con m&aacute;s posibilidades (se pueden a&ntilde;adir im&aacute;genes,
+etc).&nbsp;</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER width="164"><b>Etiquetas</b>
+<br><img SRC="imagenes/awtswing/SWlabel.gif" ALT="" NOSAVE height=91 width=139></td>
+
+<td width="382">Las etiquetas son <b>JLabel</b>, paralelas a las <i>Label</i> de AWT
+pero con m&aacute;s caracter&iacute;sticas propias (iconos, etc).&nbsp;</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER width="164"><b>Cuadros de texto</b>
+<br><img SRC="imagenes/awtswing/SWtextfield.gif" ALT="" NOSAVE height=100 width=124></td>
+
+<td width="382">Las clases <b>JTextField </b>y <b>JTextArea</b> representan los cuadros
+de texto en Swing, de forma parecida a los <i>TextField</i> y <i>TextArea</i>
+de AWT.</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER width="164"><b>Listas</b>
+<br><img SRC="imagenes/awtswing/SWcombo.gif" ALT="" NOSAVE height=110 width=138>
+<br><img SRC="imagenes/awtswing/SWlist.gif" ALT="" NOSAVE height=79 width=109></td>
+
+<td width="382">Las clases <b>JComboBox</b> y <b>JList</b> se emplean para lo mismo
+que <i>Choice</i> y <i>List</i> en AWT.&nbsp;</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER width="164"><b>Di&aacute;logos y ventanas</b>
+<img SRC="imagenes/awtswing/SWdialog.gif" ALT="" NOSAVE height=97 width=137>
+<br><img SRC="imagenes/awtswing/SWframe.gif" NOSAVE height=93 width=160></td>
+
+<td width="382">Las clases <b>JDialog</b> (y sus derivadas) y <b>JFrame</b> se emplean
+para definir di&aacute;logos y ventanas. Se tienen algunos cuadros de di&aacute;logo
+espec&iacute;ficos, para elegir ficheros (<i>JFileChooser</i> ), para elegir
+colores (<i>JColorChooser</i>), etc.&nbsp;</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER width="164"><b>Men&uacute;s</b>
+<br><img SRC="imagenes/awtswing/SWmenu.gif" ALT="" NOSAVE height=80 width=132></td>
+
+<td width="382">Con <b>JMenu</b>, <b>JMenuBar</b>, <b>JMenuItem</b>, se construyen
+los men&uacute;s que se construian en AWT con <i>Menu</i>, <i>MenuBar</i>
+y <i>MenuItem</i>.</td>
+</tr>
+
+</table>
+
+<h3>&nbsp;
+</h3>
+<b>Gestores de disposición y modelo de eventos</b>
+<p>
+Los gestores de disposici&oacute;n de Swing son <a href="apuntes3_1.htm#disposicion">los
+mismos</a> que los vistos en AWT.
+<br>El modelo de eventos tambi&eacute;n es&nbsp; <a href="apuntes3_1.htm#eventos">el
+mismo</a> que el visto en AWT.</p>
+<p>
+<b>Otras características</b>
+</p>
+<p>
+Swing ofrece otras posibilidades, que se comentan brevemente:</p>
+<ul>
+<li>
+Uso de <b>acciones</b>, objetos <b>Action</b> que coordinan tareas realizadas
+por distintos elementos.</li>
+
+<li>
+Uso de <b>bordes</b>, elementos que bordean los controles y ofrecen un
+mejor aspecto visual a la aplicaci&oacute;n.</li>
+
+<li>
+Uso de <b>iconos</b>: algunos componentes permiten que se les indique un
+icono a mostrar, mediante la clase <b>ImageIcon</b>.</li>
+
+<li>
+Uso de la <b>apariencia</b> (<i>look and feel</i>): podemos indicar qu&eacute;
+aspecto queremos que tenga la aplicaci&oacute;n: espec&iacute;fico de Windows,
+de Motif, etc.</li>
+
+<li>
+Uso de <b>hilos</b> para gestionar eventos: algunos eventos pueden bloquear
+componentes durante mucho tiempo, y es mejor separar el tratamiento del
+evento en un hilo para liberar el componente.</li>
+
+<li>
+Uso de <b>temporizadores</b>: con la clase <b>Timer</b> podemos definir
+acciones que queremos ejecutar en un momento determinado o con una periodicidad
+determinada.</li>
+</ul>
+
+<p><br><b>Ejemplo</b>: Vemos el aspecto de algunos componentes de Swing, paralelo al
+visto en el tema de AWT:
+
+<center>
+
+<img SRC="imagenes/awtswing/SWejemplo.jpg" NOSAVE height=298 width=398>
+<br>
+<a href="ejemplos/swing/EjemploSwing.java">C&oacute;digo</a></center>
+
+<p>&nbsp;
+<p><b>Ejemplo</b>: Vemos un ejemplo de uso de iconos y temporizadores (como icono se emplea
+<a href="ejemplos/swing/clock.gif">esta imagen</a>): <a href="ejemplos/swing/EjemploSwing2.java">C&oacute;digo</a>
+<p>&nbsp;
+<h3>3.2.3. Un ejemplo con Forte</h3>
+<p>
+Vamos a construir con Forte el ejemplo visto en el tema de AWT:
+
+</p><center>
+<img SRC="imagenes/awtswing/SWejforte.jpg" NOSAVE height=199 width=499>
+<p class="caption">Figura 1. Ejemplo de aplicaci&oacute;n</p></center>
+Para crear el formulario pinchamos en <i>File - New - GUI Forms - JFrame</i>
+. Luego le damos un nombre (<i>EjemploForte</i>, por ejemplo), e ignoramos
+el resto del proceso (luego pide elegir campos, m&eacute;todos a sobreescribir,
+etc).<p>En la pesta&ntilde;a <i>GUI Editing</i> podemos modificar el formulario,
+mediante la ventana <i>Form Editor</i>. En ella aparecen:
+<center>
+<img SRC="imagenes/awtswing/SWformeditor.jpg" NOSAVE height=434 width=537>
+<p class="caption">Figura 2. Editor de formularios en Forte</p></center>
+<ul>
+  <li>Una paleta de componentes (<i>Component Palette</i>) en la parte superior
+    izquierda, con los controles que podemos colocar</li>
+  <li>El formulario que estamos tratando (parte inferior izquierda).</li>
+  <li>El inspector de componentes (<i>Component Inspector</i>) en la parte
+    superior derecha, donde se ve en forma de árbol los componentes que tiene
+    el formulario)</li>
+  <li>La ventana de propiedades en la parte inferior derecha, con las
+    propiedades del control que se tenga actualmente seleccionado en el
+    formulario.</li>
+</ul>
+<p>Seguimos los pasos:
+<ul>
+<li>
+Primero establecemos el <i>layout</i> del formulario a <i>Absolute</i>. Pinchando con el bot&oacute;n
+derecho sobre el formulario en el <i>Component Inspector</i> podemos cambiarlo,
+eligiendo el <i>layout</i> oportuno en <i>Set Layout</i> .</li>
+</ul>
+
+<ul>
+<li>
+Despu&eacute;s colocamos todos los controles. Necesitamos:</li>
+</ul>
+
+<ul>
+<ul>
+<li>
+Tres etiquetas</li>
+</ul>
+</ul>
+
+<center><img SRC="imagenes/awtswing/SWlabelforte.jpg" NOSAVE height=26 width=28></center>
+
+<ul>
+<ul>
+<li>
+Un bot&oacute;n</li>
+</ul>
+</ul>
+
+<center><img SRC="imagenes/awtswing/SWbuttonforte.jpg" NOSAVE height=26 width=28></center>
+
+<ul>
+<ul>
+<li>
+Un combo</li>
+</ul>
+</ul>
+
+<center><img SRC="imagenes/awtswing/SWcomboforte.jpg" NOSAVE height=27 width=28></center>
+
+<ul>
+<ul>
+<li>
+Un cuadro de texto</li>
+</ul>
+</ul>
+
+<center><img SRC="imagenes/awtswing/SWtextfieldforte.jpg" NOSAVE height=26 width=26></center>
+
+<ul>Para colocar los controles los elegimos, pinchamos donde queramos ponerlos.
+Luego podemos moverlos o cambiarles el tama&ntilde;o pinchando sobre ellos
+y arrastrando. Nos queda un aspecto como:</ul>
+
+<center><img SRC="imagenes/awtswing/SWpaso1forte.jpg" NOSAVE height=308 width=392>
+<p class="caption">Figura 3. Paso 1 de la construcci&oacute;n del ejemplo con Forte</p></center>
+
+<ul>&nbsp;
+<li>
+&nbsp;Luego modificamos las propiedades de los controles, en el <i>Component
+Inspector</i>, pinchando cada control y cambiando sus propiedades:</li>
+</ul>
+
+<ul>
+<ul>
+<li>
+Para las etiquetas podemos cambiarle:</li>
+
+<ul>
+<li>
+El nombre de la variable: pinchando con el bot&oacute;n derecho sobre ella,
+elegir <i>Rename</i>.</li>
+
+<li>
+El texto de la etiqueta: en la pesta&ntilde;a Properties, el campo <i>text</i>.</li>
+
+<li>
+Luego podemos cambiar m&aacute;s cosas: bordes, iconos, etc. Pero de momento
+lo dejamos as&iacute;. Para cada etiqueta definimos, por ejemplo:</li>
+
+<ul>
+<li>
+Para la del bot&oacute;n, nombre = <i>lblBoton</i>, texto = <i>Incrementar
+1</i>.</li>
+
+<li>
+Para la del combo, nombre = <i>lblCombo</i>, texto = <i>Establecer contador</i>.</li>
+
+<li>
+Para la del cuadro de texto, nombre = <i>lblTexto</i>, texto = <i>Valor
+contador</i>.</li>
+</ul>
+</ul>
+</ul>
+</ul>
+
+<ul>
+<ul>
+<li>
+Para el bot&oacute;n tambi&eacute;n cambiamos nombre y texto, de la misma
+forma que en las etiquetas. Le ponemos nombre = <i>btnContador</i> , texto
+= <i>Pulsame</i>.</li>
+</ul>
+</ul>
+
+<ul>
+<ul>
+<li>
+Para el combo ponemos nombre = <i>comboContador</i>. Tambi&eacute;n tenemos
+que definir los elementos que contiene. Para eso vamos a la pesta&ntilde;a
+<i>Code
+Generation</i> en las propiedades y en <i>Post-Creation Code</i> ponemos:</li>
+</ul>
+
+<ul>
+<pre class="codigo">for (int i = 0; i &lt; 10; i++)
+&nbsp;&nbsp; comboContador.addItem(&quot;&quot; + i);</pre>
+</ul>
+
+<ul>
+<li>
+Para el cuadro de texto ponemos nombre = <i>txtContador</i> , texto = <i>0</i>
+(para que empiece desde cero)</li>
+
+<br>&nbsp;
+<p>Tras esto, la ventana ya tendr&aacute; una apariencia como:
+<br>&nbsp;</p>
+</ul>
+</ul>
+
+<center><img SRC="imagenes/awtswing/SWpaso2forte.jpg" NOSAVE height=307 width=391>
+<p class="caption">Figura 4. Paso 2 de la construcci&oacute;n del ejemplo con Forte</p></center>
+
+<ul>
+<li>
+Finalmente, ya s&oacute;lo queda definir los eventos:</li>
+</ul>
+
+<ul>
+<ul>
+<li>
+En el bot&oacute;n, lo seleccionamos con el bot&oacute;n derecho, y vamos
+a opci&oacute;n <i>Events</i>. Elegimos <i>Action</i> y <i>actionPerformed</i>
+, e insertamos el c&oacute;digo:</li>
+</ul>
+
+<ul>&nbsp;
+<pre class="codigo">txtContador.setText(&quot;&quot; + 
+	(Integer.parseInt(txtContador.getText()) + 1));</pre>
+</ul>
+
+<ul>
+<li>
+En el combo, lo seleccionamos con el bot&oacute;n derecho, vamos a la opci&oacute;n
+<i>Events</i>,
+elegimos <i>Item</i>, e <i>itemStateChanged</i> . Insertamos el c&oacute;digo:</li>
+</ul>
+
+<ul>&nbsp;
+<pre class="codigo">txtContador.setText(
+	(String)(comboContador.getSelectedItem()));</pre>
+</ul>
+
+<li>
+Ya tenemos todo definido. Guardamos, compilamos el ejemplo (men&uacute;
+<i>Build</i>
+opci&oacute;n <i>Compile</i>), y lo ejecutamos (men&uacute;
+<i>Build</i>
+opci&oacute;n <i>Execute</i>).</li>
+</ul>
+
+<p>&nbsp;
+
+  <h2 align="left"> 3.3. Applets</h2>
+  <p align="left">Los ejemplos vistos hasta ahora son <b>aplicaciones</b>, puesto 
+    que son instancias de la clase <b>Frame </b>o <b>JFrame</b>, y por tanto son ventanas que 
+    pueden ejecutarse independientemente. 
+  <p align="left">Un <b>applet </b>es una aplicaci&oacute;n normalmente corta 
+    (aunque no hay l&iacute;mite de tama&ntilde;o), cuya principal funcionalidad 
+    es ser accesible a un servidor Internet (una aplicaci&oacute;n que pueda visualizarse 
+    desde un navegador). 
+  <p align="left">La forma de definir un applet es muy similar a la definici&oacute;n 
+    de una aplicaci&oacute;n, salvo por algunas diferencias: 
+  <div align="left">
+    <ul>
+      <li> No se hereda de <b>Frame</b>, sino de <b>Applet</b> (clase <i>java.applet.Applet</i> 
+        )</li>
+      <li> No hay constructor, en su lugar hay un m&eacute;todo <b>init()</b> 
+        que veremos a continuaci&oacute;n</li>
+      <li> No hay m&eacute;todo <b>main()</b>, puesto que el applet no puede autoejecutarse. 
+        Lo que se ejecuta es la p&aacute;gina HTML para ver el applet en el navegador.</li>
+    </ul>
+    El <b>appletviewer </b>es un navegador m&iacute;nimo distribuido con Java, 
+    que espera como argumento un fichero HTML, que contendr&aacute; una marca 
+    indicando el c&oacute;digo que cargar&aacute; el <i>appletviewer</i> : 
+    <pre class="codigo">appletviewer &lt;fichero HTML&gt;</pre>
+    El c&oacute;digo necesario para poder cargar un applet en una p&aacute;gina 
+    HTML es: 
+    <pre class="codigo">&lt;HTML&gt;
+&nbsp; &lt;BODY&gt;
+&nbsp; ...
+&nbsp; &lt;APPLET CODE = nombre_prog.class WIDTH = 300 HEIGHT = 100&gt;
+&nbsp; &lt;/APPLET&gt;
+&nbsp; ...
+&nbsp; &lt;/BODY&gt;
+&lt;/HTML&gt;</pre>
+    Donde se indican el fichero <i> .class</i> compilado del applet, la anchura 
+    y altura. Este c&oacute;digo se coloca en un fichero HTML y puede verse desde 
+    cualquier navegador que soporte Java, o con el programa <i>appletviewer</i> 
+    . </div>
+  <p align="left">La clase <b>Applet</b> tiene unos m&eacute;todos predefinidos 
+    para controlar los applets: 
+  <div align="left">
+    <ul>
+      <li> <b>init ( )</b>: este m&eacute;todo se llama cada vez que el appletviewer 
+        carga por primera vez la clase. En &eacute;l deben inicializarse las caracter&iacute;sticas 
+        del applet que se quieran (tama&ntilde;o, im&aacute;genes, controles, 
+        valores de variables, etc).</li>
+      <li> <b>start ( )</b>: llamada para arrancar el applet cada vez que es visitado.&nbsp;</li>
+      <li> <b>stop ( )</b>: llamada para detener la ejecuci&oacute;n del applet. 
+        Se llama cuando el applet desaparece de la pantalla.&nbsp;</li>
+      <li> <b>destroy ( )</b>: se llama cuando ya no se va a usar m&aacute;s el 
+        applet, y hay que liberar los recursos dispuestos por el mismo.&nbsp;</li>
+    </ul>
+    Tambi&eacute;n se deben tener en cuenta los m&eacute;todos: 
+    <ul>
+      <li> <b>paint (Graphics g)</b>: llamada cada vez que el &aacute;rea de dibujo 
+        del applet necesita ser refrescada. La clase Applet simplemente dibuja 
+        un rect&aacute;ngulo gris en la pantalla, y es la derivada la que debe 
+        sobrecargar la funci&oacute;n para representar algo m&aacute;s. Se le 
+        pasa como par&aacute;metro un objeto tipo Graphics que delimita la zona 
+        a ser pintada.</li>
+    </ul>
+    <blockquote>Por ejemplo, si queremos dibujar una l&iacute;nea en el &aacute;rea 
+      del applet, ponemos en su m&eacute;todo paint: 
+      <pre class="codigo">public void paint (Graphics g)
+{
+&nbsp;&nbsp;&nbsp; g.drawLine(...);
+}</pre>
+    </blockquote>
+    <blockquote>Más adelante veremos con más detalle cómo dibujar con Java.
+    </blockquote>
+    <ul>
+      <li> <b>update (Graphics g)</b>: en realidad, cuando el &aacute;rea de dibujo 
+        del applet necesita refrescarse, se llama al m&eacute;todo <i>update</i> 
+        , cuya funcionalidad es llamar a <i>paint()</i>. Podemos hacer que haga 
+        todo la funci&oacute;n <i>update</i>, o limitarla a que s&oacute;lo llame 
+        a <i>paint </i>y que &eacute;sta haga todo.</li>
+      <li> <b>repaint( )</b>: este m&eacute;todo fuerza una llamada manual a <i>update</i></li>
+    </ul>
+  </div>
+<h3>3.3.1. Applets Swing</h3>
+<p>
+La &uacute;nica diferencia entre los applets construidos en <i>AWT</i>
+y los construidos con <i>Swing</i> es que &eacute;stos heredan de la clase
+<i>JApplet</i>
+en lugar de la clase <i>Applet</i>. Pero se tiene el inconveniente de que
+actualmente s&oacute;lo la utilidad <i>appletviewer</i> est&aacute; preparada
+para ejecutar applets de <i>Swing</i> con Java 1.2 o posteriores. Para
+el resto de navegadores deberemos contar con el Java Plug-in 1.1.1, que
+contiene la versi&oacute;n 1.0.3 de <i>Swing</i> . El resto de la estructura
+de los applets es la misma que para AWT.</p>
+  <p align="left">
+    <b>Ejemplo</b>: Vemos el ejemplo anterior convertido en applet. Puede verse <a href="ejemplos/swing/EjemploApplet.java">aqu&iacute;</a> el c&oacute;digo 
+    y <a href="ejemplos/swing/EjemploApplet.html">aqu&iacute;</a> la 
+    p&aacute;gina HTML con el applet.
+  <p align="left">
+    &nbsp;
+
+</body>
+</html>

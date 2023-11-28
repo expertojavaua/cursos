@@ -1,0 +1,966 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Tema 1: Introducci&oacute;n a Java</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1> 1. Introducción a Java</h1>
+             
+<h2>&nbsp;</h2>
+             
+<h2>1.1. Introducción a Java</h2>
+             
+<p><b>Java</b> es un lenguaje de programaci&oacute;n creado por <i>Sun Microsystems</i>
+         para poder funcionar en distintos tipos de procesadores. Su sintaxis es muy parecida a la de C o C++, e incorpora como propias algunas
+caracter&iacute;sticas que en otros lenguajes son extensiones: gesti&oacute;n de hilos, ejecuci&oacute;n 
+    remota, etc.   </p>
+             
+<p>El c&oacute;digo Java, una   vez compilado, puede 
+ llevarse sin modificaci&oacute;n alguna sobre   cualquier m&aacute;quina, 
+ y ejecutarlo. Esto se debe a que el c&oacute;digo se ejecuta sobre una m&aacute;quina 
+ hipot&eacute;tica o virtual, la <b>Java   Virtual Machine</b>, que se encarga 
+ de interpretar el c&oacute;digo (ficheros compilados <i>.class</i>)<i> </i>y convertirlo   a c&oacute;digo particular 
+ de la CPU que se est&eacute; utilizando (siempre que se soporte dicha m&aacute;quina
+virtual).
+</p>
+             
+<p>Cuando se programa con Java, se dispone de antemano de un conjunto de clases
+ya implementadas. Estas clases (aparte de las que pueda hacer el usuario) forman parte del propio lenguaje (lo que se conoce como <b>API</b>
+     (<i>Application Programming Interface</i>) de Java).
+</p>
+             
+<h3>&nbsp;</h3>
+<h2>1.2. Introduccion a la Programación Orientada a Objetos (POO)</h2>
+<p>&nbsp;<h3>1.2.1. Objetos y clases</h3>
+<ul>
+  <li><b>Objeto</b>: conjunto de variables junto con los
+m&eacute;todos relacionados con &eacute;stas. Contiene la <b>informaci&oacute;n</b>
+(las variables) y la forma de manipular la informaci&oacute;n (los m&eacute;todos).&nbsp;</li>
+  <li><b>Clase</b>: prototipo que define las variables y
+m&eacute;todos que va a emplear un determinado tipo de objeto.&nbsp;</li>
+</ul>
+<h3>&nbsp;</h3>
+<h3>1.2.2. Campos, métodos y constructores</h3>
+<ul>
+  <li><b>Campos</b>: contienen la informaci&oacute;n relativa
+a la clase&nbsp;</li>
+  <li><b>Métodos</b>: permiten manipular dicha informaci&oacute;n.&nbsp;</li>
+  <li><b>Constructores</b>: reservan memoria para almacenar un objeto
+de esa clase.</li>
+</ul>
+<h3>&nbsp;</h3>
+<h3>1.2.3. Herencia y polimorfismo</h3>
+<p>Con la <b>herencia</b> podemos definir una clase a partir de otra que
+ya exista, de forma que la nueva clase tendr&aacute; todas las variables
+y m&eacute;todos de la clase a partir de la que se crea, m&aacute;s las
+variables y m&eacute;todos nuevos que necesite. A la clase base a partir
+de la cual se crea la nueva clase se le llama <b>superclase</b>.
+<center><img SRC="imagenes/introduccion/herencia.jpg" NOSAVE height=113 width=354></center>
+
+
+<p class="caption">Figura 1. Ejemplo de herencia</p>
+<br>Por ejemplo, tenemos una clase gen&eacute;rica <i>Animal</i>, y heredamos
+de ella para formar clases m&aacute;s espec&iacute;ficas, como <i>Pato</i>
+, <i>Elefante</i>, o <i>Le&oacute;n</i>. Si tenemos por ejemplo el m&eacute;todo
+<i>dibuja(Animal a)</i>, podremos pasarle a este m&eacute;todo como par&aacute;metro
+tanto un <i>Animal</i> como un <i>Pato</i>, <i>Elefante, </i>etc. Esto se conoce como <b>polimorfismo</b>
+.
+<p>&nbsp;<h3>1.2.4. Clases abstractas e interfaces</h3>
+<p>Mediante las <b>clases abstractas</b> y los <b>interfaces</b> podemos
+definir el esqueleto de una familia de clases, de forma que los subtipos
+de la clase abstracta o la interfaz implementen ese esqueleto para dicho
+subtipo concreto. Por ejemplo, podemos definir en la clase <i>Animal</i>
+el m&eacute;todo <i>dibuja()</i> y el m&eacute;todo <i>imprime()</i>, y
+que <i>Animal</i> sea una clase abstracta o un interfaz.
+<center><img SRC="imagenes/introduccion/interfaz.jpg" NOSAVE height=200 width=377></center>
+
+
+<p class="caption">Figura 2. Ejemplo de interfaz y clase abstracta</p>
+<br>Vemos la diferencia entre clase, clase abstracta e interfaz con este
+esquema:
+<ul>
+<li>
+En una <b>clase</b>, al definir <i>Animal</i> tendr&iacute;amos que implementar
+los m&eacute;todos <i>dibuja()</i> e <i>imprime()</i>. Las clases hijas
+no tendr&iacute;an por qu&eacute; implementar los m&eacute;todos, a no
+ser que quieran adaptarlos a sus propias necesidades.</li>
+
+<li>
+En una <b>clase abstracta</b> podr&iacute;amos implementar los m&eacute;todos
+que nos interese, dejando sin implementar los dem&aacute;s (dej&aacute;ndolos
+como m&eacute;todos abstractos). Dichos m&eacute;todos tendr&iacute;an
+que implementarse en las clases hijas.</li>
+
+<li>
+En un <b>interfaz</b> no podemos implementar ning&uacute;n m&eacute;todo
+en la clase padre, y cada clase hija tiene que hacer sus propias implementaciones
+de los m&eacute;todos. Adem&aacute;s, las clases hija podr&iacute;an implementar
+otros interfaces.</li>
+</ul>
+
+<p>&nbsp;
+</p>
+             
+<h2>1.3. Conceptos Básicos de Java</h2>
+&nbsp;<h3>1.3.1. Componentes de un programa Java</h3>
+<p>
+En un <a href="ejemplos/introjava/MiClase.java">programa Java</a>
+podemos distinguir varios elementos:</p>
+<ul>
+<li>
+<b>Paquetes</b>: equivalentes a los "include" de C, permiten utilizar clases
+en otras, y llamarlas de forma abreviada:</li>
+</ul>
+
+<ul>
+<pre class="codigo">import java.util.*;</pre>
+</ul>
+
+<ul>
+<li>
+<b>Clases</b>:&nbsp;</li>
+</ul>
+
+<ul>
+<pre class="codigo">public class
+MiClase
+{
+&nbsp;&nbsp; ...</pre>
+</ul>
+
+<ul>
+<li>
+<b>Campos</b>: Constantes,
+variables y en general elementos de informaci&oacute;n.</li>
+</ul>
+
+<ul>
+<pre class="codigo">public int a;
+Vector v;</pre>
+</ul>
+
+<ul>
+<li>
+<b>M&eacute;todos</b>: Para las funciones que devuelvan alg&uacute;n tipo
+de valor, es imprescindible colocar una sentencia <i> return</i> en la funci&oacute;n.</li>
+</ul>
+
+<ul>
+<pre class="codigo">public void imprimirA()
+public void insertarVector(String cadena)</pre>
+</ul>
+
+<ul>
+<li>
+<b>Constructores</b>: Un
+tipo de m&eacute;todo que siempre tiene el mismo nombre que la clase. Se pueden definir uno o
+varios.&nbsp;</li>
+</ul>
+
+<ul>
+<pre class="codigo">public MiClase()</pre>
+<p>As&iacute;, podemos definir una <b>instancia</b> con <b>new</b>:
+<pre class="codigo">MiClase mc;
+mc = new MiClase ();
+mc.a++;
+mc.insertarVector(&quot;hola&quot;);</pre>
+</ul>
+
+<blockquote>
+  No tenemos que preocuparnos de liberar la memoria
+del objeto al dejar de utilizarlo. Esto lo hace autom&aacute;ticamente
+el <b>garbage collector</b>. A&uacute;n as&iacute;, podemos usar el m&eacute;todo
+<b>finalize()</b> para liberar manualmente.
+</blockquote>
+
+<p>&nbsp;<h3>1.3.2. Otras posibilidades</h3>
+<ul>
+  <li> <b>Herencia</b>: Se utiliza la palabra <b>extends</b> para decir de qu&eacute; 
+    clase se hereda. Para hacer que <i>Pato </i>herede de <i>Animal</i>:</li>
+</ul>
+
+<ul>
+<pre class="codigo">class Pato extends Animal</pre>
+</ul>
+
+<ul>
+<li>
+ <b>this</b> se usa para hacer referencia a los miembros de
+la propia clase. Se utiliza cuando hay otros elementos con el mismo nombre, para
+ distinguir :</li>
+</ul>
+
+<ul>
+<pre class="codigo">public class MiClase {
+&nbsp;&nbsp; int i;
+&nbsp;&nbsp; public MiClase (int i) {
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.i = i; 	// i de la clase = parametro i
+</b>&nbsp;&nbsp; }
+}</pre>
+</ul>
+
+<ul>
+<li>
+<b>super</b> se usa para llamar al mismo elemento en la clase padre. Si la clase
+<i>MiClase</i> tiene un método <i>Suma_a_i(...)</i>, lo llamamos con:</li>
+</ul>
+
+<ul>
+<pre class="codigo">public class MiNuevaClase extends MiClase {
+&nbsp;&nbsp; public void Suma_a_i (int j) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; i = i + (j / 2);
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; super.Suma_a_i (j);
+</b>&nbsp; }
+}</pre>
+</ul>
+
+<ul>
+<li>
+<b>Modificadores</b>:&nbsp;en algunos elementos (campos, métodos, clases, etc)
+se utilizan algunos de estos modificadores al declararlos:</li>
+</ul>
+
+<ul>
+<ul>
+<li>
+<b>public</b>:&nbsp; cualquier objeto
+puede acceder al elemento</li>
+
+<li>
+<b>protected</b>: s&oacute;lo pueden acceder las subclases de
+la clase.</li>
+
+<li>
+<b>private</b>: s&oacute;lo pueden ser accedidos desde dentro
+de la clase.</li>
+
+<li>
+<b>abstract</b>: elemento base para la herencia (los objetos
+subtipo deber&aacute;n definir este elemento).</li>
+
+<li>
+<b>static</b>: elemento compartido por todos los objetos
+de la misma clase.</li>
+
+<li>
+<b>final</b>: objeto final, no modificable ni heredable.</li>
+
+<li>
+<b>synchronized</b>: para elementos a los que no se puede acceder al mismo tiempo
+desde distintos hilos de ejecuci&oacute;n.</li>
+</ul>
+</ul>
+
+<ul>
+<li>
+<b>Clases abstractas e Interfaces</b>: si queremos definir una clase (por
+ejemplo, <i>Animal</i>), como clase abstracta o como interfaz, se declara como
+sigue (respectivamente). También se indica cómo hacer una clase o interfaz
+subtipo de la clase o interfaz padre (en este caso, la subclase es <i>Pato</i>):</li>
+<center>
+<table BORDER="1" COLS=2 WIDTH="354" >
+<caption>&nbsp;</caption>
+<tbody>
+</tbody>
+
+<tr>
+<td width="344">
+<pre class="codigo">public <b>interface</b> Animal
+{
+&nbsp;&nbsp; void dibujar ();
+&nbsp;&nbsp; void imprimir ();
+}</pre>
+</td>
+</tr>
+<tr>
+<td width="344">
+<pre class="codigo">public class Pato <b>implements</b> Animal
+{
+&nbsp;&nbsp; void dibujar() { codigo; }
+&nbsp;&nbsp; void imprimir() { codigo; }
+}</pre>
+</td>
+</tr>
+</table>
+
+<table BORDER="1" COLS=2 WIDTH="356" >
+<caption>&nbsp;</caption>
+<tbody>
+</tbody>
+
+<tr>
+<td width="346">
+<pre class="codigo">public <b>abstract</b> class Animal
+{
+&nbsp;&nbsp; abstract void dibujar ();
+&nbsp;&nbsp; void imprimir () { codigo; }
+}</pre>
+</td>
+</tr>
+<tr>
+<td width="346">
+<pre class="codigo">public class Pato <b>extends</b> Animal
+{
+&nbsp;&nbsp; void dibujar() { codigo; }
+}</pre>
+</td>
+</tr>
+</table>
+</center>
+</ul>
+
+<ul>
+<li>
+<b>Paquetes</b>: la palabra&nbsp; <b>package</b> permite agrupar clases
+e interfaces. Los nombres de los paquetes son palabras separadas por puntos,
+y se almacenan en directorios que coinciden con esos nombres. As&iacute;,
+si definimos la clase:</li>
+</ul>
+
+<ul>
+<pre class="codigo">package paquete1.subpaquete1;
+public class MiClase1_1
+...</pre>
+</ul>
+
+<blockquote>haremos que la clase <i>MiClase1_1</i> pertenezca al subpaquete <i>subpaquete1
+  </i>del paquete <i>paquete1</i>.</blockquote>
+
+<blockquote>Para utilizar las clases de un paquete utilizamos <b>import</b>:</blockquote>
+
+<ul>
+<pre class="codigo">import&nbsp; java.Date;
+import paquete1.subpaquete1.*;
+import java.awt.*;</pre>
+</ul>
+
+<blockquote>
+Para importar todas las clases del paquete se utiliza el asterisco * (aunque no
+vayamos a usarlas todas, si utilizamos varias de ellas puede ser útil
+simplificar con un asterisco). Si sólo queremos importar una o algunas pocas,
+se pone un<i> import</i> por cada una, terminando el paquete con el nombre de la
+clase en lugar del asterisco (como pasa con <i>Date</i> en el ejemplo).
+<p align="left">Al poner <i>import</i><i> </i>podemos utilizar el nombre corto
+de la clase. Es decir, si ponemos:</p>
+<pre class="codigo">import&nbsp; java.Date;
+import java.util.*;</pre>
+<p align="left">Podemos hacer referencia a un objeto <i>Date</i> o a un objeto <i>Vector
+</i>(una clase del paquete <i>java.util</i>)<i> </i>con:</p>
+<pre class="codigo">Date d = ...
+Vector v = ...</pre>
+<p align="left">Si no pusiéramos los <i>import</i>, deberíamos hacer
+referencia a los objetos con:</p>
+<pre class="codigo">java.Date d = ...
+java.util.Vector v = ...</pre>
+<p>Es decir, cada vez que queramos poner el nombre de la clase, deberíamos
+colocar todo el nombre, con los paquetes y subpaquetes.
+</p>
+</blockquote>
+
+<h3>&nbsp;</h3>
+<h3>1.3.3. Sintaxis de Java</h3>
+<blockquote>
+  <p><b>Tipos de datos</b>
+  </p>
+  <p>Se tienen los siguientes tipos de datos simples. Adem&aacute;s, se pueden
+crear complejos, todos los cuales ser&aacute;n subtipos de <b>Object</b>
+<table BORDER="1" CELLSPACING=2 CELLPADDING=2 WIDTH="477" >
+<caption>&nbsp;</caption>
+<tbody></tbody><tbody>
+</tbody>
+
+<tr>
+<td VALIGN=TOP width="71">
+<center><b><font size=-1>Tipo</font></b></center>
+</td>
+
+<td VALIGN=TOP width="151">
+<center><b><font size=-1>Tama&ntilde;o/Formato</font></b></center>
+</td>
+
+<td VALIGN=TOP width="130">
+<center><b><font size=-1>Descripci&oacute;n</font></b></center>
+</td>
+
+<td VALIGN=TOP width="89">
+<center><b><font size=-1>Ejemplos</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="71"><b><font size=-1>byte</font></b></td>
+
+<td VALIGN=TOP width="151"><font size=-1>8 bits, complemento a 2</font></td>
+
+<td VALIGN=TOP width="130"><font size=-1>Entero de 1 byte</font></td>
+
+<td VALIGN=TOP width="89">
+<center><font size=-1>210, 0x456</font></center>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="71"><b><font size=-1>short</font></b></td>
+
+<td VALIGN=TOP width="151"><font size=-1>16 bits, complemento a 2</font></td>
+
+<td VALIGN=TOP width="130"><font size=-1>Entero corto</font></td>
+
+<td VALIGN=TOP width="89">
+<center><font size=-1>"</font></center>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="71"><b><font size=-1>int</font></b></td>
+
+<td VALIGN=TOP width="151"><font size=-1>32 bits, complemento a 2</font></td>
+
+<td VALIGN=TOP width="130"><font size=-1>Entero</font></td>
+
+<td VALIGN=TOP width="89">
+<center><font size=-1>"</font></center>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="71"><b><font size=-1>long</font></b></td>
+
+<td VALIGN=TOP width="151"><font size=-1>64 bits, complemento a 2</font></td>
+
+<td VALIGN=TOP width="130"><font size=-1>Entero largo</font></td>
+
+<td VALIGN=TOP width="89">
+<center><font size=-1>"</font></center>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="71"><b><font size=-1>float</font></b></td>
+
+<td VALIGN=TOP width="151"><font size=-1>32 bits, IEEE 754</font></td>
+
+<td VALIGN=TOP width="130"><font size="-1">Real simple precisi&oacute;n</font></td>
+
+<td VALIGN=TOP width="89">
+<center><font size=-1>3.12,&nbsp; 3.2E13</font></center>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="71"><b><font size=-1>double</font></b></td>
+
+<td VALIGN=TOP width="151"><font size=-1>64 bits, IEEE 754</font></td>
+
+<td VALIGN=TOP width="130"><font size="-1">Real doble precisi&oacute;n</font></td>
+
+<td VALIGN=TOP width="89">
+<center><font size=-1>"</font></center>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="71"><b><font size=-1>char</font></b></td>
+
+<td VALIGN=TOP width="151"><font size=-1>16 bits, car&aacute;cter</font></td>
+
+<td VALIGN=TOP width="130"><font size=-1>Car&aacute;cter simple</font></td>
+
+<td VALIGN=TOP width="89">
+<center><font size=-1>'a'</font></center>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="71"><b><font size=-1>String</font></b></td>
+
+<td VALIGN=TOP width="151"></td>
+
+<td VALIGN=TOP width="130"><font size=-1>Cadena de caracteres</font></td>
+
+<td VALIGN=TOP width="89">
+<center><font size=-1>"cadena"</font></center>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="71"><b><font size=-1>boolean</font></b></td>
+
+<td VALIGN=TOP width="151"><font size=-1>true / false</font></td>
+
+<td VALIGN=TOP width="130"><font size=-1> verdadero / falso</font></td>
+
+<td VALIGN=TOP width="89">
+<center><font size=-1>true,&nbsp; false</font></center>
+</td>
+</tr>
+</table>
+
+<p><b>Arrays</b>
+<p>Se definen arrays o conjuntos de elementos de forma similar a como se hace en C.
+Hay 2 m&eacute;todos:
+<pre class="codigo">int a[] = new int [10];
+String s[] = {&quot;Hola&quot;, &quot;Adios&quot;};</pre>
+No pueden crearse arrays est&aacute;ticos en tiempo de compilaci&oacute;n (<font size=-1>int a[8];</font>), ni rellenar un array sin definir previamente
+su tama&ntilde;o con el operador <b>new</b>. La función miembro <b>length</b> se puede utilizar para conocer la longitud
+del array:
+<pre class="codigo">int a [][] = new int [10] [3];
+a.length;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Devolvería 10
+a[0].length;&nbsp;&nbsp;&nbsp;&nbsp; // Devolvería 3</pre>
+  Los arrays empiezan a numerarse desde 0, hasta el tope definido menos uno
+  (como en C).
+  <p>
+<b>Identificadores</b>
+  </p>
+<p>Nombran variables, funciones, clases y objetos. Comienzan por una letra,
+car&aacute;cter de subrayado ‘_’ o s&iacute;mbolo ‘$’. El resto de caracteres
+pueden ser letras o d&iacute;gitos (o ’_’). Se distinguen may&uacute;sculas
+de min&uacute;sculas, y no hay longitud m&aacute;xima. Las variables en
+Java s&oacute;lo son v&aacute;lidas desde el punto donde se declaran hasta
+el final de la sentencia compuesta (las llaves) que la engloba. No se puede
+declarar una variable con igual nombre que una de &aacute;mbito exterior.<p>En
+  Java se tiene también un término NULL, pero si bien el de C es con
+  mayúsculas (NULL), éste es con minúsculas (<i>null</i>):<pre class="codigo">String a = null;
+...
+if (a == null)...</pre>
+<p><b>Referencias</b>
+<p>
+En Java no existen punteros, simplemente se crea otro objeto que referencie
+al que queremos "apuntar".&nbsp;
+<table BORDER="1" COLS=2 WIDTH="482" >
+<caption></caption>
+<tbody>
+</tbody>
+
+<tr>
+<td width="276">
+<pre class="codigo">MiClase mc = new MiClase();
+MiClase mc2 = mc;</pre>
+</td>
+
+<td width="190"> mc2 y mc apuntan a la misma variable (al cambiar una cambiar&aacute;
+la otra).&nbsp;</td>
+</tr>
+
+<tr>
+<td width="276">
+<pre class="codigo">MiClase mc = new MiClase();
+MiClase mc2 = new MiClase();</pre>
+</td>
+
+<td width="190">Tendremos dos objetos apuntando a elementos diferentes en memoria.</td>
+</tr>
+</table>
+
+<p><b>Comentarios</b>
+<pre class="codigo">// comentarios para una sola línea
+
+/* comentarios de 
+   una o más líneas */
+
+/** comentarios de documentación para javadoc, 
+    de una o más líneas */</pre>
+<b>Operadores</b>
+<p>Se muestra una tabla con los operadores en orden
+de precedencia
+<table BORDER="1" CELLSPACING=2 CELLPADDING=2 WIDTH="485" >
+<caption>&nbsp;</caption>
+<tbody></tbody><tbody>
+</tbody>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><b><font size=-1>Operador</font></b></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><b><font size=-1>Ejemplo</font></b></center>
+</td>
+
+<td VALIGN=TOP width="140">
+<center><b><font size=-1>Descripci&oacute;n</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>.</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a.length</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Campo o m&eacute;todo de objeto</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>[ ]</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a[6]</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Referencia a elemento de array</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>( )</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>(a +
+b)</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Agrupaci&oacute;n de operaciones</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>++ ,&nbsp; --</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a++;
+b--</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Autoincremento / Autodecremento de 1 unidad</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>!, ~</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>!a ;
+~b</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Negaci&oacute;n / Complemento</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>instanceof</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a instanceof
+TipoDato</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Indica si <i>a </i>es del tipo <i>TipoDato</i></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>*, /, %</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a*b;
+b/c; c%a</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Multiplicaci&oacute;n, divisi&oacute;n y resto
+de divisi&oacute;n entera</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>+, -</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a+b;
+b-c</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Suma y resta</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>&lt;&lt;, >></font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a>>2;
+b&lt;&lt;1</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Desplazamiento de bits a izquierda y derecha</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>&lt;, >, &lt;=, >=, ==, !=</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a>b;
+b==c; c!=a</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Comparaciones (mayor, menor, igual, distinto...)</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>&amp;, |, ^</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a&amp;b;
+b|c</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>AND, OR y XOR l&oacute;gicas</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>&amp;&amp;, ||</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a&amp;&amp;b;
+b||c</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>AND y OR condicionales</font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>?:</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a?b:c</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Condicional: si <i>a </i>entonces <i>b</i>
+, si no <i>c</i></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="134">
+<center><font size=-1>=, +=, -=, *=, /= ...</font></center>
+</td>
+
+<td VALIGN=TOP width="183">
+<center><font face="Courier New, Courier, monospace"><font size=-1>a=b;
+b*=c</font></font></center>
+</td>
+
+<td VALIGN=TOP width="140"><font size=-1>Asignaci&oacute;n. a += b equivale a (a =
+a + b)</font></td>
+</tr>
+</table>
+
+<p><b>Control de flujo</b>
+<p>TOMA DE DECISIONES
+<p>Este tipo de sentencias definen el c&oacute;digo que debe ejecutarse
+si se cumple una determinada condici&oacute;n. Se&nbsp;
+dispone de sentencias <b>if </b>y de sentencias <b>switch</b>:
+<table BORDER="1" CELLSPACING=2 CELLPADDING=2 WIDTH="490" >
+<caption>&nbsp;</caption>
+<tbody></tbody><tbody>
+</tbody>
+
+<tr>
+<td VALIGN=TOP width="262">
+<center><b><font size=-1>Sintaxis</font></b></center>
+</td>
+
+<td VALIGN=TOP width="214">
+<center><b><font size=-1>Ejemplos</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="262">
+<pre class="codigo">if (condicion1) {
+&nbsp;&nbsp; sentencias;
+} else if (condicion2) {
+&nbsp;&nbsp; sentencias;
+&nbsp;&nbsp; ...
+} else if(condicionN) {
+&nbsp;&nbsp; sentencias;
+} else {
+&nbsp;&nbsp; sentencias;
+}</pre>
+</td>
+
+<td VALIGN=TOP width="214">
+<pre class="codigo">if
+(a == 1) {
+&nbsp;&nbsp; b++;
+} else if (b == 1) {
+&nbsp;&nbsp; c++;
+} else if (c == 1) {
+&nbsp;&nbsp; d++;
+}</pre>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="262">
+<pre class="codigo">switch (condicion) {
+&nbsp;&nbsp; case caso1: sentencias;
+&nbsp;&nbsp;&nbsp;case caso2: sentencias;
+&nbsp;&nbsp; case casoN: sentencias;
+&nbsp;&nbsp; default:&nbsp;&nbsp;&nbsp; sentencias;
+}</pre>
+</td>
+
+<td VALIGN=TOP width="214">
+<pre class="codigo">switch (a) {
+&nbsp;&nbsp; case 1: b++;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;
+&nbsp;&nbsp; case 2: c++;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;
+&nbsp;&nbsp; default:b--;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;
+}</pre>
+</td>
+</tr>
+</table>
+
+<p>BUCLES
+<p>Para repetir un conjunto de sentencias durante un determinado n&uacute;mero
+de iteraciones se tienen las sentencias <b>for</b>, <b>while</b> y <b>do...while</b>
+:
+<table BORDER="1" CELLSPACING=2 CELLPADDING=2 WIDTH="491" >
+<caption>&nbsp;</caption>
+<tbody></tbody><tbody>
+</tbody>
+
+<tr>
+<td VALIGN=TOP width="322">
+<center><b><font size=-1>Sintaxis</font></b></center>
+</td>
+
+<td VALIGN=TOP width="254">
+<center><b><font size=-1>Ejemplo</font></b></center>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="322">
+<pre class="codigo">for(inicio;condicion;
+    incremento) 
+{
+&nbsp; sentencias;
+}</pre>
+</td>
+
+<td VALIGN=TOP width="254">
+<pre class="codigo">for (i=1;i&lt;10;i++)
+{
+&nbsp;&nbsp; b = b+i;
+}</pre>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="322">
+<pre class="codigo">while (condicion){
+&nbsp;&nbsp; sentencias;
+}</pre>
+</td>
+
+<td VALIGN=TOP width="254">
+<pre class="codigo">while (i &lt; 10) {
+&nbsp;&nbsp; b += i;
+&nbsp;&nbsp; i++;
+}</pre>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP width="322">
+<pre class="codigo">do{
+&nbsp;&nbsp; sentencias;
+} while (condicion);</pre>
+</td>
+
+<td VALIGN=TOP width="254">
+<pre class="codigo">do {
+&nbsp;&nbsp; b += i;
+&nbsp;&nbsp; i++;
+} while (i &lt; 10);</pre>
+</td>
+</tr>
+</table>
+
+<p>SENTENCIAS DE RUPTURA
+  <p>Se tienen las sentencias <b>break</b> (para terminar la ejecución de un
+  bloque o saltar a una etiqueta), <b>continue </b>(para forzar una ejecución
+  más de un bloque o saltar a una etiqueta) y <b>return </b>(para salir de una
+  función devolviendo o sin devolver un valor):
+  <pre class="codigo">public int miFuncion(int n)
+{
+	int i = 0;
+  	while (i &lt; n)
+  	{
+  		i++;
+  		if (i &gt; 10)
+			// Sale del while
+			break;		
+  		if (i &lt; 5)
+			// Fuerza una iteracion mas
+  			continue;	
+  	}
+	// Devuelve lo que valga i al llegar aquí  	
+	return i;			
+}  </pre>
+
+</blockquote>
+<h3>&nbsp;</h3>
+<h3>1.3.4. Programas Básicos en Java</h3>
+<p>
+Veamos ahora algunos ejemplos de programas en Java.</p>
+<ul>
+<li>
+<b>Ejemplo</b>: El siguiente ejemplo muestra un texto por pantalla (muestra
+"Mi programa Java"): <a href="ejemplos/introjava/Ejemplo1.java">C&oacute;digo</a></li>
+
+<li>
+<b>Ejemplo</b>: El siguiente ejemplo toma dos n&uacute;meros (un entero
+y un real) y devuelve su suma: <a href="ejemplos/introjava/Ejemplo2.java">C&oacute;digo</a></li>
+
+<li>
+<b>Ejemplo</b>: El siguiente ejemplo resuelve el
+teorema de pit&aacute;goras (obtiene una hipotenusa a partir de dos catetos): <a href="ejemplos/introjava/Ejemplo3.java">C&oacute;digo</a></li>
+
+<li>
+<b>Ejemplo</b>: El siguiente ejemplo devuelve todos los n&uacute;meros
+primos que encuentra hasta un n&uacute;mero determinado: <a href="ejemplos/introjava/Ejemplo4.java">C&oacute;digo</a></li>
+
+<li>
+<b>Ejemplo</b>: El siguiente ejemplo muestra c&oacute;mo utilizar herencia
+y clases abstractas. Define una clase abstracta Persona, de la que hereda
+la clase Hombre. La clase Anciano a su vez hereda de la clase Hombre. En
+la clase <i>Ejemplo5</i> se tiene el m&eacute;todo main(), que muestra resultados
+de llamadas a todas las clases. Compilando esta clase se compila todo el
+ejemplo: <a href="ejemplos/introjava/Ejemplo5.zip">C&oacute;digo</a></li>
+</ul>
+
+<p>&nbsp;</p>
+             
+                      
+</body>
+</html>

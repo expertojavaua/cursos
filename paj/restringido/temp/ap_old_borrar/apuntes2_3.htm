@@ -1,0 +1,154 @@
+<html>
+<head>
+<title>Tema 2: Caracter&iacute;sticas b&aacute;sicas</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h2>2.3. Hilos</h2>
+<p>Un hilo es un flujo de control dentro de un programa. Creando varios hilos 
+  podremos realizar varias tareas simult&aacute;neamente. Cada hilo tendr&aacute; 
+  s&oacute;lo un contexto de ejecuci&oacute;n (contador de programa, pila de ejecuci&oacute;n). 
+  Es decir, a diferencia de los procesos UNIX, no tienen su propio espacio de 
+  memoria sino que acceden todos al mismo espacio de memoria com&uacute;n, por 
+  lo que ser&aacute; importante su sincronizaci&oacute;n cuando tengamos varios 
+  hilos accediendo a los mismos objetos.</p>
+<h3 class="subsection">2.3.1. Creaci&oacute;n de hilos</h3>
+<p>En Java los hilos est&aacute;n encapsulados en la clase <b>Thread</b>. Para crear 
+  un hilo tenemos dos posibilidades:</p>
+<ul>
+  <li>Heredar de <b> Thread</b> redefiniendo el m&eacute;todo <i>run()</i>.</li>
+  <li>Crear una clase que implemente la interfaz <b> Runnable</b> que nos obliga a definir 
+  el m&eacute;todo <i>run()</i>.</li>
+</ul>
+<p>En ambos casos debemos definir un m&eacute;todo <i> run()</i> que ser&aacute; el que 
+  contenga el c&oacute;digo del hilo. Desde dentro de este m&eacute;todo podremos 
+  llamar a cualquier otro m&eacute;todo de cualquier objeto, pero este m&eacute;todo
+<i> 
+  run()</i> ser&aacute; el m&eacute;todo que se invoque cuando iniciemos la ejecuci&oacute;n
+de un hilo. El hilo terminar&aacute; su ejecuci&oacute;n cuando termine de ejecutarse 
+  este m&eacute;todo <i>run()</i>.</p>
+<p>Para crear nuestro hilo mediante herencia haremos lo siguiente:</p>
+<pre class="codigo">public class EjemploHilo extends <strong>Thread</strong>
+{
+    public void <strong>run</strong>() {
+        // C&oacute;digo del hilo
+    }
+}</pre>
+<p>Una vez definida la clase de nuestro hilo deberemos instanciarlo y ejecutarlo 
+  de la siguiente forma:</p>
+<pre class="codigo"><strong>Thread</strong> t = new EjemploHilo();
+t.<strong>start</strong>();</pre>
+<p>Crear un hilo heredando de <b> Thread</b> tiene el problema de que al no haber herencia 
+  m&uacute;ltiple en Java, si heredamos de <b> Thread</b> no podremos heredar de ninguna 
+  otra clase, y por lo tanto un hilo no podr&iacute;a heredar de ninguna otra 
+  clase.</p>
+<p>Este problema desaparece si utilizamos la interfaz <b> Runnable</b> para crear el hilo, 
+  ya que una clase puede implementar varios interfaces. Definiremos la clase que 
+  contenga el hilo como se muestra a continuaci&oacute;n:</p>
+<pre class="codigo">public class EjemploHilo implements <strong>Runnable</strong>
+{
+    public void <strong>run</strong>() {
+        // C&oacute;digo del hilo
+    }
+}</pre>
+<p>Para instanciar y ejecutar un hilo de este tipo deberemos hacer lo siguiente:</p>
+<pre class="codigo"><strong>Thread</strong> t = new <strong>Thread</strong>(new EjemploHilo());
+t.<strong>start</strong>();</pre>
+<p>Esto es as&iacute; debido a que en este caso <b> EjemploHilo</b> no deriva 
+  de una clase <b>Thread</b>, por lo que no se puede considerar un hilo, lo &uacute;nico 
+  que estamos haciendo implementando la interfaz es asegurar que vamos a tener 
+  definido el m&eacute;todo <i>run()</i>. Con esto lo que haremos ser&aacute; 
+  proporcionar esta clase al constructor de la clase <b>Thread</b>, para que el 
+  objeto <b> Thread</b> que creemos llame al m&eacute;todo <i>run()</i> de la 
+  clase que hemos definido al iniciarse la ejecuci&oacute;n del hilo, ya que implementando 
+  la interfaz le aseguramos que esta funci&oacute;n existe.</p>
+<h3 class="subsection">2.3.2. Estado y propiedades de los hilos</h3>
+<p>Un hilo pasar&aacute; por varios estados durante su ciclo de vida. </p>
+<pre class="codigo"><strong>Thread</strong> t = new Thread(this);</pre>
+<p>Una vez se ha instanciado el objeto del hilo, diremos que est&aacute; en estado 
+  de <i> Nuevo hilo</i>.</p>
+<pre class="codigo">t.<strong>start</strong>();</pre>
+<p>Cuando invoquemos su m&eacute;todo <i>start()</i> el hilo pasar&aacute; a ser un hilo
+<i>vivo</i>, comenz&aacute;ndose a ejecutar su m&eacute;todo <i>run()</i>. Una vez haya salido 
+  de este m&eacute;todo pasar&aacute; a ser un hilo <i>muerto</i>.</p>
+<p>La &uacute;nica forma de parar un hilo es hacer que salga del m&eacute;todo <i>run()</i> de forma
+natural. Podremos conseguir esto haciendo que se cumpla la condici&oacute;n 
+  de salida del bucle principal definido dentro del <i>run()</i>. Las funciones para 
+  parar, pausar y reanudar hilos est&aacute;s desaprobadas en las versiones actuales 
+  de Java.</p>
+<p>Mientras el hilo est&eacute; <i>vivo</i>, podr&aacute; encontrarse en dos estados:
+<i> 
+  Ejecutable</i> y <i> No ejecutable</i>. El hilo pasar&aacute; de <i> Ejecutable</i> a
+<i> No ejecutable</i> 
+  en los siguientes casos:</p>
+<ul>
+  <li>Cuando se encuentre dormido por haberse llamado al m&eacute;todo <i>sleep()</i>, 
+  permanecer&aacute; <i> No ejecutable</i> hasta haber transcurrido el n&uacute;mero de 
+  milisegundos especificados.</li>
+  <li>Cuando se encuentre bloqueado en una llamada al m&eacute;todo <i>wait()</i> esperando 
+  que otro hilo lo desbloquee llamando a <i>notify()</i> o <i>notifyAll()</i>.</li>
+  <li>Cuando se encuentre bloqueado en una petici&oacute;n de E/S, hasta que se 
+  complete la operaci&oacute;n de E/S.</li>
+</ul>
+<div align="center"><img border="0" src="imagenes/basico/3-2.gif" width="405" height="154"></div>
+<p align="center" class="caption">Figura 2. Ciclo de vida de los hilos</p>
+<p>Lo &uacute;nico que podremos saber es si un hilo se encuentra vivo o no, llamando 
+  a su m&eacute;todo <i>isAlive()</i>.</p>
+<p>Adem&aacute;s, una propiedad importante de los hilos ser&aacute; su prioridad. 
+  Mientras el hilo se encuentre vivo, el <i> scheduler</i> de la m&aacute;quina virtual 
+  Java le asignar&aacute; o lo sacar&aacute; de la CPU, coordinando as&iacute; 
+  el uso de la CPU por parte de todos los hilos activos bas&aacute;ndose en su 
+  prioridad. Se puede forzar la salida de un hilo de la CPU llamando a su m&eacute;todo
+<i>yield()</i>. Tambi&eacute;n se sacar&aacute; un hilo de la CPU cuando un hilo de 
+  mayor prioridad se haga <i>Ejecutable</i>, o cuando el tiempo que se le haya asignado 
+  expire.</p>
+<p>Para cambiar la prioridad de un hilo se utiliza el m&eacute;todo <i>setPriority()</i>, 
+  al que deberemos proporcionar un valor de prioridad entre <i> MIN_PRIORITY</i> y
+<i>MAX_PRIORITY</i>.</p>
+<h3 class="subsection">2.3.3. Sincronizaci&oacute;n de hilos</h3>
+<p>Muchas veces los hilos deber&aacute;n trabajar de forma coordinada, por lo 
+  que es necesario un mecanismo de sincronizaci&oacute;n entre ellos.</p>
+<p>Un primer mecanismo de comunicaci&oacute;n es la variable cerrojo incluida 
+  en todo objeto <b>Object</b>, que permitir&aacute; evitar que m&aacute;s de un hilo 
+  entre en la secci&oacute;n cr&iacute;tica. Los m&eacute;todos declarados como <i> 
+  synchronized</i> utilizan el cerrojo de la clase a la que pertenecen evitando que 
+  m&aacute;s de un hilo entre en ellos al mismo tiempo.</p>
+<pre class="codigo">public <strong>synchronized</strong> void seccion_critica()
+{
+    // C&oacute;digo secci&oacute;n cr&iacute;tica
+}</pre>
+<p>Tambi&eacute;n podemos utilizar cualquier otro objeto para la sincronizaci&oacute;n 
+  dentro de nuestro m&eacute;todo de la siguiente forma:</p>
+<pre class="codigo"><strong>synchronized</strong> (objeto_con_cerrojo) 
+{
+    // C&oacute;digo secci&oacute;n cr&iacute;tica
+}</pre>
+<p>Adem&aacute;s podemos hacer que un hilo quede bloqueado a la espera de que 
+  otro hilo lo desbloquee cuando suceda un determinado evento. Para bloquear un 
+  hilo usaremos la funci&oacute;n <i>wait()</i>, para lo cual el hilo que llama a esta 
+  funci&oacute;n debe estar en posesi&oacute;n del monitor, cosa que ocurre dentro 
+  de un m&eacute;todo <i>synchronized</i>, por lo que s&oacute;lo podremos bloquear a 
+  un proceso dentro de estos m&eacute;todos. </p>
+<p>Para desbloquear a los hilos que haya bloqueados se utilizar&aacute; <i>notifyAll()</i>, 
+  o bien <i>notify()</i> para desbloquear s&oacute;lo uno de ellos aleatoriamente. Para 
+  invocar estos m&eacute;todos ocurrir&aacute; lo mismo, el hilo deber&aacute; 
+  estar en posesi&oacute;n del monitor.</p>
+<p>Cuando un hilo queda bloqueado liberar&aacute; el cerrojo para que otro hilo 
+  pueda entrar en la secci&oacute;n cr&iacute;tica y desbloquearlo.</p>
+<p>Por &uacute;ltimo, puede ser necesario esperar a que un determinado hilo haya 
+  finalizado su tarea para continuar. Esto lo podremos hacer llamando al m&eacute;todo
+<i>join()</i> de dicho hilo, que nos bloquear&aacute; hasta que el hilo haya finalizado.</p>
+<h3 class="subsection">2.3.4. Grupos de hilos</h3>
+<p>Los grupos de hilos nos permitir&aacute;n crear una serie de hilos y manejarlos 
+  todos a la vez como un &uacute;nico objeto. Si al crear un hilo no se especifica 
+  ning&uacute;n grupo de hilos, el hilo creado pertenecer&aacute; al grupo de 
+  hilos por defecto.</p>
+<p>Podemos crearnos nuestro propio grupo de hilos instanciando un objeto de la 
+  clase <b>ThreadGroup</b>. Para crear hilos dentro de este grupo deberemos pasar este 
+  grupo al constructor de los hilos que creemos.</p>
+<pre class="codigo"><strong>ThreadGroup</strong> grupo = new <strong>ThreadGroup</strong>(&quot;Grupo de hilos&quot;);
+<strong>Thread</strong> t = new <strong>Thread</strong>(grupo,new EjemploHilo());</pre>
+</body>
+</html>

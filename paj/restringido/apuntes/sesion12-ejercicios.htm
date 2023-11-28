@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios de ficheros JAR y extensiones</title>
+                
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+         
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+ <body bgcolor="#ffffff" text="#000000">
+<h1><span class="section">Ficheros JAR/Extensiones </span> </h1>
+<p><b>1.</b> <b>(CHAT)</b> Vamos a crear un fichero JAR que contenga nuestra aplicación 
+  de chat. Para ello deberemos recuperar todas las clases de nuestra aplicación 
+  chat (no del <i>applet</i>). Se pide:</p>
+   
+<blockquote>     
+  <p><i>a) </i>Crear un fichero JAR de nombre <i>AplicacionChat.jar </i>que
+  contenga la aplicación chat completa (cliente y servidor).
+  </p>
+  <p><i>b) </i>Ejecutar desde el JAR tanto el cliente como el servidor. Se
+  deberá probar incluyendo el JAR en el CLASSPATH, y sin incluirlo,
+  especificando el CLASSPATH directamente en la línea de comando de <i>java</i>.
+  </p>
+  <p><i>c) </i>Crear otro JAR de la aplicación completa, esta vez
+  autoejecutable. Haremos dos ejecutables: uno para el cliente (<i>AplicacionChatCliente.jar</i>)
+  y otro para el servidor (<i>AplicacionChatServidor.jar</i>). Probar a ejecutar
+  estas aplicaciones tanto desde línea de comandos como desde el explorador de
+  windows pinchando sobre ellas.
+  </p>
+   </blockquote>
+   
+   
+<p><b>2.</b> <b>(CHAT)</b> Ahora crearemos un JAR a partir del <i>applet</i> del 
+  chat. Se pide:</p>
+   
+<blockquote>     
+  <p><i>a) </i>Crear un JAR con todas las clases necesarias del <i>applet</i> de
+  nombre <i>AppletChat.jar</i>.
+  </p>
+  <p><i>b) </i>Crear una página HTML (<i>chat.html</i>) que invoque al <i>applet</i>
+  dentro de ese fichero JAR y probar su funcionamiento en un navegador y en el <i>appletviewer</i>.
+  </p>
+  <p><i>c) </i>Si queremos distribuir tanto nuestra aplicación como nuestro <i>applet</i>,
+  ¿cuál será la mejor forma de hacerlo? Comenta algunas ventajas de hacerlo
+  de esta manera.
+  </p>
+   </blockquote>
+   
+   
+<p><b>3.</b> <b>(CHAT)</b> Por último, añadiremos nuestra librería de utilidades 
+  para el chat como una extensión. Se pide:</p>
+   
+<blockquote>     
+  <p><i>a) </i>Separar la clase principal del chat de las librerías auxiliares
+  que hemos creado. Haremos un JAR con las librerías llamado <i>LibreriaChat.jar.</i>
+  </p>
+  <p><i>b) </i>Añadir el JAR al CLASSPATH y ejecutar la clase principal del
+  chat comprobando que funciona correctamente.&nbsp;
+  </p>
+  <p><i>c) </i>Ahora vamos a vaciar el CLASSPATH (<i>SET CLASSPATH=</i>) y a
+  añadir la librería como una extensión. ¿Qué tendremos que hacer con el
+  JAR para que sea reconocido como extensión de java? ¿Tendremos que añadir
+  alguna información al CLASSPATH para que localice nuestra librería? Cuando
+  el CLASSPATH está vacío, ¿donde busca java las clases? Comprobar que la
+  aplicación funciona correctamente accediendo a la librería como extensión
+  de java.
+  </p>
+  <p><i>d) </i>Si tenemos un <i>applet</i>, ¿qué tipo de extensión será más
+  conveniente utilizar? Crear una extensión de este tipo con la librería para
+  nuestro <i>applet </i>del chat y probarlo.
+  </p>
+   </blockquote>
+   
+   
+<p><b>4.</b> ¿Qué extensión utilizarías en cada uno de los siguientes casos?:</p>
+   
+<blockquote>     
+  <p><i>a) </i>Aplicación que se comunique directamente con otra máquina a
+  través del puerto serie (RS232).
+  </p>
+  <p><i>b</i><i>) </i>Programa de captura de imágenes desde una fuente de video
+  (tarjeta capturadora).
+  </p>
+  <p><i>c</i><i>) </i>Aplicación de suavizado de imágenes.
+  </p>
+  <p><i>d) </i>Sitio web que realice automáticamente un <i>mailing</i> cada
+  semana a los usuarios registrados.
+  </p>
+  <p><i>e) </i>Visor de objetos 3D en VRML.
+  </p>
+  <p><i>f) </i>Aplicación de chat que cifre el login y password que envían los
+  clientes.
+  </p>
+   </blockquote>
+
+<h1>Java 3D y JAI</h1>
+
+<p>
+<b>1. </b>Modificar la clase <i>Ej1.java</i> para construir una forma
+compleja, como por ejemplo un árbol, utilizando una caja o cilindro como tronco,
+y un cono para la copa (moviendo el cilindro y el cono para que encajen bien).
+Podéis fijaros en el <a href="ejemplos/j3d/EjemploUnivSimple.java">ejemplo</a>
+del universo simple para ver cómo colocar los componentes, y en el <a href="ejemplos/j3d/EjemploTrans.java">ejemplo</a>
+de transformaciones para ver cómo posicionarlas. Si os sirve de guía, podéis
+seguir estos pasos (todos los cambios se hacen sobre el constructor):</p>
+<ul>
+  <li>Crear un cilindro y colocarlo sin más (como la figura del ejemplo)</li>
+</ul>
+<blockquote>
+  <pre class="codigo">Cylinder cilindro = new Cylinder(0.1f, 1.0f);
+cilindro.setAppearance(apariencia);</pre>
+</blockquote>
+<ul>
+  <li>Crear un cono</li>
+</ul>
+<blockquote>
+  <pre class="codigo">Cone cono = new Cone(0.3f, 0.5f);
+cono.setAppearance(apariencia);</pre>
+</blockquote>
+<ul>
+  <li>Crear un nodo de transformación (<i>TransformGroup</i>), y aplicarle un <i>Transform3D</i>
+    que lo desplace hacia arriba (en Y) una determinada cantidad.</li>
+</ul>
+<blockquote>
+  <pre class="codigo">Transform3D t3D = new Transform3D();
+t3D.setTranslation (new Vector3f(0.0f, 0.5f, 0.0f));
+
+TransformGroup tg = new TransformGroup(t3D);</pre>
+</blockquote>
+<ul>
+  <li>Añadir el cono al objeto <i>TransfromGroup</i></li>
+</ul>
+<blockquote>
+  <pre class="codigo">tg.addChild(cono);</pre>
+</blockquote>
+<ul>
+  <li>Añadir el cilindro y el <i>TransformGroup</i> a la rama principal (<i>BranchGroup</i>)</li>
+</ul>
+<blockquote>
+  <pre class="codigo">bg.addChild(cilindro);
+bg.addChild(tg);
+...
+bg.compile();</pre>
+</blockquote>
+<p><b>2. </b>Seguimos con el ejemplo del &aacute;rbol (la misma clase <i>Ej1.java</i>). Intentad a&ntilde;adirle
+ramas. Para ello pod&eacute;is a&ntilde;adirle cilindros, o cilindros y
+conos rotados y colocados en el lugar que quer&aacute;is desde la rama
+principal.<p><b>3. </b>En el fichero <i>Ej3.java</i>, leed <a href="imagenes/jai/lena.jpg">esta imagen</a>
+y <a href="imagenes/jai/lena2.jpg">esta otra</a> y sumadlas en JAI
+(operador <i>add</i>), devolviendo el resultado. Como par&aacute;metros en el <i>ParameterBlock</i>
+sólo se necesitan las dos imágenes a sumar (a&ntilde;adidas
+con <i>addSource(...)</i>)
+<p><b>4. </b>En el fichero <i>Ej4.java</i>, aplicad un filtro de mediana (operador <i>MedianFilter</i>)
+a <a href="imagenes/jai/puentru.jpg">esta imagen</a> . Como par&aacute;metro
+obligatorio en el <i> ParameterBlock</i> se necesita la imagen (a&ntilde;adida
+con <i>addSource(...)</i>). El resto de par&aacute;metros son optativos
+y no los vamos a especificar.&nbsp;
+<p>NOTA: para los ejercicios de JAI pod&eacute;is ayudaros de los siguientes
+pasos:
+<ul>
+  <li>Leer la imagen del fichero (con <i>FileSeekableStream</i>, por ejemplo)</li>
+</ul>
+<blockquote>
+  <pre class="codigo">FileSeekableStream stream = null;
+try
+{
+	stream = new FileSeekableStream(&quot;fichero.jpg&quot;);
+} catch (IOException e) {
+	e.printStackTrace();
+	System.exit(0);
+}</pre>
+</blockquote>
+<ul>
+  <li>Guardar la imagen en un <i> RenderedOp</i></li>
+</ul>
+<blockquote>
+  <pre class="codigo">RenderedOp img1 = JAI.create(&quot;stream&quot;, stream);</pre>
+</blockquote>
+<ul>
+  <li>Definir los parámetros de la operación a aplicar (pasarle la(s)
+    imagen(es) fuente(s))</li>
+</ul>
+<blockquote>
+  <pre class="codigo">ParameterBlock params = new ParameterBlock();
+params.addSource(img1);</pre>
+</blockquote>
+<ul>
+  <li>Crear la operación que se pide, pasándole los parámetros que necesite,
+    y obtener el resultado</li>
+</ul>
+<blockquote>
+  <pre class="codigo">RenderedOp imgres = JAI.create(&quot;nombre_operacion&quot;, params);</pre>
+</blockquote>
+<ul>
+  <li>Mostrar el resultado&nbsp;</li>
+</ul>
+<blockquote>
+  <pre class="codigo">ScrollingImagePanel panel = new ScrollingImagePanel(imgres, imgres.getWidth(), imgres.getHeight());
+Frame window = new Frame(&quot;JAI Sample Program&quot;);
+window.addWindowListener(new WindowAdapter() 
+{
+	public void windowClosing(WindowEvent e)
+	{
+		System.exit(0);
+	}
+});
+window.add(panel);
+window.pack();
+window.show();</pre>
+</blockquote>
+<p>&nbsp;</p>
+<p><b>Para entregar:</b> Debéis entregar un ZIP <i>e6_2.zip</i> con:
+<ul>
+  <li>El fichero <i>Ej1.java</i> con el árbol que hayáis construido</li>
+  <li>El fichero <i>Ej3.java</i> con la suma de las dos imágenes</li>
+  <li>El fichero <i>Ej4.java</i> con el filtro de mediana aplicado a la imagen</li>
+</ul>
+
+   
+            </body>
+            </html>

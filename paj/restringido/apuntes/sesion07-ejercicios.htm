@@ -1,0 +1,292 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Ejercicios de AWT</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1>AWT</h1>
+
+<p>
+<b>1. (CHAT) </b>Como ejercicio en este tema vamos a desarrollar una
+aplicaci&oacute;n visual para&nbsp; un chat. El motor de chat se hizo ya
+en el tema anterior, cuando se vio la comunicaci&oacute;n por red y la
+entrada / salida. Aqu&iacute; ten&eacute;is un <a href="ejemplos/awt/chat.zip">ejemplo</a>
+de motor hecho, por si no os dio tiempo a terminar el vuestro.</p>
+<ul>
+<li>
+En el paquete <b>usuarios</b> se tienen clases para el registro y la gesti&oacute;n
+de usuarios:</li>
+
+<ul>
+<li>
+La clase <b>AccesoUsuarios</b> es un interfaz, que deber&aacute; implementar
+cualquier clase que se quiera utilizar para gestionar los usuarios del
+chat.</li>
+
+<li>
+La clase <b>AccesoFicheroUsuarios</b> implementa la interfaz anterior para
+gestionar los usuarios guardando sus datos en un fichero, y leyendo del
+fichero dichos datos. El fichero en cuestión es <i>datos\usuarios</i>.<b> </b>M&aacute;s adelante se gestionar&aacute;n los usuarios
+por base de datos (con lo que habr&aacute; que hacer otra clase que implemente
+la interfaz y acceda a bases de datos en lugar de a ficheros)</li>
+
+<li>
+La clase <b>LoginInvalidoException</b> es una excepcion que se lanza cuando
+el login que introduce un usuario no es v&aacute;lido.</li>
+</ul>
+
+<li>
+En el paquete <b>es</b> hay clases b&aacute;sicas para el tratamiento de
+la entrada/salida:</li>
+
+<ul>
+<li>
+La clase <b>ConexionSocket</b> define la conexi&oacute;n gen&eacute;rica
+desde un cliente a un servidor</li>
+
+<li>
+La clase <b>EntradaConsola</b> permite leer lo que el usuario introduzca
+por el teclado</li>
+</ul>
+
+<li>
+En el paquete <b>chat</b> se tienen las clases base para el chat:</li>
+
+<ul>
+<li>
+La clase <b>ClienteChat</b> define el cuerpo de cada cliente que se conecte
+a un chat</li>
+
+<li>
+La clase <b>ServidorChat</b> ser&aacute; el servidor, que acepte las peticiones
+de los clientes y gestione las conexiones</li>
+</ul>
+
+<li>
+Finalmente, la clase <b>EjemploChat</b> es un ejemplo de cliente chat en
+modo texto, que muestra las opciones y permite conectar con un <i>ServidorChat</i>.</li>
+</ul>
+
+<p>Se tienen unos scripts (BAT para Windows, SH para Linux) para poder compilar y ejecutar el
+ejemplo. Sólo hay que colocarse en el directorio donde estén y ejecutar el
+comando apropiado.
+<ul>
+  <li>El fichero <b>compilar</b> permite compilar todo el ejemplo</li>
+</ul>
+
+<blockquote>
+  <pre class="codigo">compilar		(Windows)
+. ./compilar.sh		(Linux)</pre>
+</blockquote>
+<ul>
+  <li>El fichero <b>servidor </b>ejecuta el servidor de chat</li>
+</ul>
+
+<blockquote>
+  <pre class="codigo">servidor		(Windows)
+. ./servidor.sh		(Linux)</pre>
+</blockquote>
+<ul>
+  <li>El fichero <b>cliente</b> ejecuta el cliente, pasándole como parámetro
+    la dirección IP del servidor al que conectar.</li>
+</ul>
+
+<blockquote>
+  <pre class="codigo">cliente	&lt;ip&gt;		(Windows)
+. ./cliente.sh &lt;ip&gt;	(Linux)</pre>
+</blockquote>
+
+<p>Ahora se trata de realizar un programa <b>AplicChat</b> para chatear
+en modo gr&aacute;fico:
+<center>
+<img SRC="imagenes/awtswing/AWTaplicchat.jpg" NOSAVE width="397" height="297"></center>
+
+<blockquote>&nbsp;
+  <p>Tendr&aacute; 4 zonas al menos:</p>
+<ul>
+<li>
+Una zona donde indicar la direcci&oacute;n IP a la que conectar</li>
+
+<li>
+Una zona para poder registrar nuevos usuarios, o validar los datos de un
+usuario registrado que se quiera conectar (introducir su login y password)</li>
+
+<li>
+Una zona donde ver los mensajes que se van escribiendo (buffer de mensajes)</li>
+
+<li>
+Otra zona para poder enviar mensajes al chat</li>
+</ul>
+</blockquote>
+Se os proporciona un <b>esqueleto</b>
+de aplicaci&oacute;n en el fichero <i>AplicChat.java</i>, que iremos modificando
+hasta obtener la aplicación completa.&nbsp;
+<p> La clase sólo tiene el código para
+conectar a la dirección IP del servidor (sólo tiene los controles de la parte
+superior para conectar con la IP que se escriba en el cuadro de texto. Tendréis
+que modificar el código si utilizais vuestro propio motor de chat y es distinto
+al que se os da).&nbsp;</p>
+<p> Lo que haremos será construir el resto de la aplicación (lo
+que queda abajo). Todo el código lo ten&eacute;is
+que colocar en el m&eacute;todo <b>init()</b>, puesto que luego en posteriores
+sesiones se convertir&aacute; esta aplicaci&oacute;n en applet. Aparte
+pod&eacute;is definir vuestros propios m&eacute;todos si queréis (sin tocar el <i>constructor</i>
+ni el m&eacute;todo <i>main()</i>).</p>
+<p>Todo el sistema de comunicaci&oacute;n cliente / servidor est&aacute;
+hecho en el motor ejemplo, o en el ejercicio que se hizo en el tema anterior.
+Ahora simplemente hay que hacer que <i>AplicChat </i>haga lo mismo que el <i>EjemploChat</i>
+del ejemplo proporcionado.<p><b>a) </b>Primero vamos a colocar los controles en
+la aplicación:
+<ul>
+  <li>Podemos cambiar el <i>GridLayout</i> donde están colocados los controles
+    de la IP, y hacer que sea de 3 filas,&nbsp; para que la segunda tenga el
+    login y el botón de registrar (o validar) y la tercera el password y el
+    botón de validar (o registrar):</li>
+</ul>
+<blockquote>
+  <pre class="codigo">panelSup.setLayout(new GridLayout(3, 3));</pre>
+  <p>Para colocar&nbsp; las dos filas que faltan, basta con replicar el código
+  para la línea de conexión que hay (cambiando los nombres de las variables a
+  los que nos interese), y definir el evento correspondiente para cada botón:
+  <pre class="codigo">Label lblIP = new Label (&quot;IP Servidor:&quot;);
+txtIP = new TextField();
+panelSup.add(lblIP);
+panelSup.add(txtIP);
+
+Button btnConectar = new Button (&quot;Conectar&quot;);
+btnConectar.addActionListener(new ActionListener()
+{
+	public void actionPerformed(ActionEvent e)
+	{
+		...// Codigo que se necesite
+	}
+});
+panelSup.add(btnConectar);</pre>
+</blockquote>
+<ul>
+  <li>Después colocamos un <i>TextArea </i>en la zona central, donde se mostrarán los datos
+que se reciban del servidor. Para
+construirlo podemos utilizar un constructor por defecto, pero en este caso
+cuando el texto crezca más que el cuadro no lo podremos ver. Hay que añadirle
+barras de desplazamiento, y para eso se utiliza un constructor con 4
+parámetros:
+<p align="center"><i>TextArea(String texto, int filas, int columnas, int barras)</i></p>
+<p>donde <i>barras</i> puede ser, la constante <i>TextArea.SCROLLBARS_BOTH</i>,
+que indica que se ponga tanto la barra horizontal como la vertical:</p>
+  </li>
+</ul>
+<blockquote>
+  <pre class="codigo">TextArea txtBuffer = new TextArea(&quot;&quot;, 5, 5, 
+		     TextArea.SCROLLBARS_BOTH);
+add(txtBuffer, BorderLayout.CENTER);</pre>
+</blockquote>
+<ul>
+  <li>Finalmente podemos crear un <i>GridLayout</i> para la zona Sur (de forma
+    parecida al que se ha hecho para la parte superior), de 2 filas y 1 columna,
+    y añadirle en una celda el cuadro de texto (<i>TextField</i>) para enviar
+    mensajes, y en otra el botón para enviar.</li>
+</ul>
+<blockquote>
+  <pre class="codigo">Panel panelInf = new Panel();
+panelInf.setLayout(new GridLayout(2, 1));
+		
+TextField txtMensaje = new TextField();
+panelInf.add(txtMensaje);
+		
+Button btnEnviar = new Button(&quot;Enviar&quot;);
+btnEnviar.addActionListener(new ActionListener()
+{
+	public void actionPerformed(ActionEvent e)
+	{
+		... // Codigo que se necesite
+	}
+});
+panelInf.add(btnEnviar);
+		
+add(panelInf, BorderLayout.SOUTH);		</pre>
+</blockquote>
+<p><b>b)</b>  Una vez tenemos todos los controles colocados (compilad y ejecutad
+para ver que se colocan como queríais), añadimos los eventos sobre los
+botones:
+<ul>
+  <li>Que al REGISTRAR un nuevo usuario se compruebe si los datos no son
+    correctos (utilizando los métodos del motor de chat construido previamente,
+    y capturando las excepciones adecuadas), y muestre en el cuadro de texto
+    central un mensaje de error si no son datos válidos.</li>
+</ul>
+<blockquote>
+  <pre class="codigo">try {
+	chat.registraUsuario(txtLogin.getText(), 
+			     txtPassword.getText());
+} catch(Exception ex) {
+	txtBuffer.append(&quot;Error al registrar\n&quot;);
+}</pre>
+</blockquote>
+<ul>
+  <li>Que al VALIDAR un usuario existente compruebe si los datos son correctos
+    (utilizando los métodos de validación del motor de chat construido, y
+    capturando las excepciones adecuadas), y muestre en el cuadro de texto central
+    un mensaje de error si no son datos válidos. Al validar correctamente, se
+    deben empezar a tomar los datos del servidor periódicamente, actualizando
+    el cuadro de texto central con los mensajes que vayan llegando:
+    <ul>
+      <li>Se puede utilizar un hilo para tomar continuamente los datos. Para
+        ello, podemos hacer que la clase <i>AplicChat</i> implemente <i>Runnable</i>:</li>
+    </ul>
+    <blockquote>
+  <pre class="codigo">public class AplicChat 
+extends Frame 
+implements Runnable
+...</pre>
+    </blockquote>
+  </li>
+</ul>
+<blockquote>
+  <blockquote>
+    <p>Le definimos un campo de tipo <i>Thread</i> (fuera del constructor):</p>
+  <pre class="codigo">Thread t = new Thread(this);</pre>
+    <p>Finalmente, definimos el método <i>run()</i> que se encargará de ir
+    tomando continuamente los datos del servidor. Podemos hacer que los saque al
+    cuadro de texto central llamando al método <i>append(...)</i> del mismo,
+    para no borrar el texto previo:</p>
+  <pre class="codigo">public void run() 
+{		
+   String msg = null;
+   while((msg=chat.recibeMensaje())!=null) 
+   {
+	txtBuffer.append(msg + &quot;\n&quot;);
+   }
+}</pre>
+    <p>En el evento del botón validar sólo habrá que iniciar el hilo si se
+    valida correctamente:</p>
+    <pre class="codigo">try {
+   chat.loginUsuario(txtLogin.getText(), 
+		     txtPassword.getText());
+   t.start();
+} catch(Exception ex) {
+   txtBuffer.append(&quot;Error al validar\n&quot;);
+}</pre>
+  </blockquote>
+</blockquote>
+<ul>
+  <li>ENVIAR un mensaje es simplemente enviar el contenido del cuadro de texto
+    del mensaje al servidor:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">chat.enviaMensaje(txtMensaje.getText());</pre>
+</blockquote>
+<p>Una vez esté todo colocado y compilado, a la hora de probarlo simplemente
+tenemos que ejecutar esta aplicación en lugar del <i>EjemploChat</i> o el
+programa ejemplo que estuviéramos utilizando. El servidor no cambia.</p>
+<p><b>Para entregar:</b> Debéis entregar un ZIP <i>e3_1.zip</i> con:</p>
+<ul>
+  <li>La aplicación de chat, añadiéndole el fichero <i>AplicChat.java</i> 
+    construido.</li>
+</ul>
+</body>
+</html>

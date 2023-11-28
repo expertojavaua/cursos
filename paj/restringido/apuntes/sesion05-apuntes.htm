@@ -1,0 +1,1122 @@
+<html>
+<head>
+<title>Tema 2: Caracter&iacute;sticas b&aacute;sicas</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h2><span class="section">2.4. Tipos de datos</span> </h2>
+<p>La plataforma Java nos proporciona un amplio conjunto de clases dentro del 
+  que podemos encontrar tipos de datos que nos resultar&aacute;n muy &uacute;tiles 
+  para realizar la programaci&oacute;n de aplicaciones en Java. Estos tipos de 
+  datos nos ayudar&aacute;n a generar c&oacute;digo m&aacute;s limpio de una forma 
+  sencilla. </p>
+<p>Se proporcionan una serie de operadores para acceder a los elementos de estos 
+  tipos de datos. Decimos que dichos operadores son <em>polim&oacute;rficos</em>, 
+  ya que un mismo operador se puede emplear para acceder a distintos tipos de 
+  datos. Por ejemplo, un operador <em>add</em> utilizado para a&ntilde;adir un 
+  elemento, podr&aacute; ser empleado tanto si estamos trabajando con una lista 
+  enlazada, con un array, o con un conjunto por ejemplo. </p>
+<p>Este <em>polimorfismo</em> se debe a la definici&oacute;n de interfaces que 
+  deben implementar los distintos tipos de datos. Siempre que el tipo de datos 
+  contenga una colecci&oacute;n de elementos, implementar&aacute; la interfaz 
+  <b>Collection</b>. Esta interfaz proporciona m&eacute;todos para acceder a la 
+  colecci&oacute;n de elementos, que podremos utilizar para cualquier tipo de 
+  datos que sea una colecci&oacute;n de elementos, independientemente de su implementaci&oacute;n 
+  concreta.</p>
+<p>Podemos encontrar los siguientes elementos dentro del marco de colecciones 
+  de Java:</p>
+<ul>
+  <li>Interfaces para distintos tipos de datos: Definir&aacute;n las operaciones 
+    que se pueden realizar con dichos tipos de datos. Podemos encontrar aqu&iacute; 
+    la interfaz para cualquier colecci&oacute;n de datos, y de manera m&aacute;s 
+    concreta para listas (secuencias) de datos, conjuntos, etc.</li>
+  <li>Implementaciones de tipos de datos reutilizables: Son clases que implementan 
+    tipos de datos concretos que podremos utilizar para nuestras aplicaciones, 
+    implementando algunas de las interfaces anteriores para acceder a los elementos 
+    de dicho tipo de datos. Por ejemplo, dentro de las listas de elementos, podremos 
+    encontrar distintas implementaciones de la lista como puede ser listas enlazadas, 
+    o bien arrays de capacidad variable, pero al implementar la misma interfaz 
+    podremos acceder a sus elementos mediante las mismas operaciones (polimorfismo).</li>
+  <li>Algoritmos para trabajar con dichos tipos de datos, que nos permitan realizar 
+    una ordenaci&oacute;n de los elementos de una lista, o diversos tipos de b&uacute;squeda 
+    de un determinado elemento por ejemplo.</li>
+</ul>
+<h3>2.4.1 Enumeraciones e iteradores</h3>
+<p>Antes de ver los tipos de datos vamos a ver dos elementos utilizados comunmente 
+  en Java para acceder a colecciones de datos. </p>
+<p>Las enumeraciones, definidas mediante la interfaz <strong>Enumeration</strong>, 
+  nos permiten consultar los elementos que contiene una colecci&oacute;n de datos. 
+  Muchos m&eacute;todos de clases Java que deben devolver m&uacute;ltiples valores, 
+  lo que hacen es devolvernos una enumeraci&oacute;n que podremos consultar mediante 
+  los m&eacute;todos que ofrece dicha interfaz.</p>
+<p>La enumeraci&oacute;n ir&aacute; recorriendo secuencialmente los elementos 
+  de la colecci&oacute;n. Para leer cada elemento de la enumeraci&oacute;n deberemos 
+  llamar al m&eacute;todo:</p>
+<pre class="codigo">Object item = enum.<strong>nextElement()</strong>;</pre>
+<p>Que nos proporcionar&aacute; en cada momento el siguiente elemento de la enumeraci&oacute;n 
+  a leer. Adem&aacute;s necesitaremos saber si quedan elementos por leer, para 
+  ello tenemos el m&eacute;todo:</p>
+<pre class="codigo">enum.<strong>hasMoreElements()</strong></pre>
+<p>Normalmente, el bucle para la lectura de una enumeraci&oacute;n ser&aacute; 
+  el siguiente:</p>
+<pre class="codigo">while (enum.<strong>hasMoreElements()</strong>) {
+  Object item = enum.<strong>nextElement()</strong>;
+  // Hacer algo con el item leido
+}</pre>
+<p>Vemos como en este bucle se van leyendo y procesando elementos de la enumeraci&oacute;n 
+  uno a uno mientras queden elementos por leer en ella.</p>
+<p>Otro elemento para acceder a los datos de una colecci&oacute;n son los iteradores. 
+  La diferencia est&aacute; en que los iteradores adem&aacute;s de leer los datos 
+  nos permitir&aacute;n eliminarlos de la colecci&oacute;n. Los iteradores se 
+  definen mediante la interfaz<strong> Iterator</strong>, que proporciona de forma 
+  an&aacute;loga a la enumeraci&oacute;n el m&eacute;todo:</p>
+<pre class="codigo">Object item = iter.<strong>next()</strong>;</pre>
+<p>Que nos devuelve el siguiente elemento a leer por el iterador, y para saber 
+  si quedan m&aacute;s elementos que leer tenemos el m&eacute;todo:</p>
+<pre class="codigo">iter.<strong>hasNext()</strong></pre>
+<p>Adem&aacute;s, podemos borrar el &uacute;ltimo elemento que hayamos leido. 
+  Para ello tendremos el m&eacute;todo:</p>
+<pre class="codigo">iter.<strong>remove()</strong>;</pre>
+<p>Por ejemplo, podemos recorrer todos los elementos de una colecci&oacute;n utilizando 
+  un iterador y eliminar aquellos que cumplan ciertas condiciones:</p>
+<pre class="codigo">while (iter.<strong>hasNext()</strong>)
+{ 
+	Object item = iter.<strong>next()</strong>;
+	if(condicion_borrado(item)) 
+		iter.<strong>remove()</strong>;
+}</pre>
+<p>Las enumeraciones y los iteradores no son tipos de datos, sino elementos que 
+  nos servir&aacute;n para acceder a los elementos dentro de los tipos de datos 
+  que veremos a continuaci&oacute;n.</p>
+<h3>2.4.2 Colecciones</h3>
+<p>Las colecciones representan grupos de objetos, denominados elementos. Podemos 
+  encontrar diversos tipos de colecciones, seg&uacute;n si sus elementos est&aacute;n 
+  ordenados, o si permitimos repetici&oacute;n de elementos o no.</p>
+<p>Es el tipo m&aacute;s gen&eacute;rico en cuanto a que se refiere a cualquier 
+  tipo que contenga un grupo de elementos. Viene definido por la interfaz <strong>Collection</strong>, 
+  de la cual heredar&aacute; cada subtipo espec&iacute;fico. En esta interfaz 
+  encontramos una serie de m&eacute;todos que nos servir&aacute;n para acceder 
+  a los elementos de cualquier colecci&oacute;n de datos, sea del tipo que sea. 
+  Estos m&eacute;todos generales son:</p>
+<pre class="codigo">boolean <strong>add(Object o)</strong></pre>
+<p>A&ntilde;ade un elemento (objeto) a la colecci&oacute;n. Nos devuelve<em> true</em> 
+  si tras a&ntilde;adir el elemento la colecci&oacute;n ha cambiado, es decir, 
+  el elemento se ha a&ntilde;adido correctamente, o <em>false</em> en caso contrario.</p>
+<pre class="codigo">void <strong>clear()</strong></pre>
+<p>Elimina todos los elementos de la colecci&oacute;n.</p>
+<pre class="codigo">boolean <strong>contains(Object o)</strong></pre>
+<p>Indica si la colecci&oacute;n contiene el elemento (objeto) indicado.</p>
+<pre class="codigo">boolean <strong>isEmpty()</strong></pre>
+<p>Indica si la colecci&oacute;n est&aacute; vac&iacute;a (no tiene ning&uacute;n 
+  elemento). </p>
+<pre class="codigo">Iterator <strong>iterator()</strong></pre>
+<p>Proporciona un iterador para acceder a los elementos de la colecci&oacute;n.</p>
+<pre class="codigo">boolean <strong>remove(Object o)</strong></pre>
+<p>Elimina un determinado elemento (objeto) de la colecci&oacute;n, devolviendo 
+  <em>true</em> si dicho elemento estaba contenido en la colecci&oacute;n, y <em>false</em> 
+  en caso contrario.</p>
+<pre class="codigo">int <strong>size()</strong></pre>
+<p>Nos devuelve el n&uacute;mero de elementos que contiene la colecci&oacute;n.</p>
+<pre class="codigo">Object [] <strong>toArray()</strong></pre>
+<p>Nos devuelve la colecci&oacute;n de elementos como un array de objetos. Si 
+  sabemos de antemano que los objetos de la colecci&oacute;n son todos de un determinado 
+  tipo (como por ejemplo de tipo <b>String</b>) podremos obtenerlos en un array 
+  del tipo adecuado, en lugar de usar un array de objetos gen&eacute;ricos. En 
+  este caso NO podremos hacer una conversi&oacute;n cast descendente de array 
+  de objetos a array de un tipo m&aacute;s concreto, ya que el array se habr&aacute; 
+  instanciado simplemente como array de objetos:</p>
+<pre class="codigo">String [] cadenas = (String []) coleccion.toArray(); 
+					// <b>Esto no se puede hacer!!!</b></pre>
+<p>Lo que si podemos hacer es instanciar nosotros un array del tipo adecuado y 
+  hacer una conversi&oacute;n cast ascendente (de tipo concreto a array de objetos), 
+  y utilizar el siguiente m&eacute;todo:</p>
+<pre class="codigo">String [] cadenas = new String[coleccion.size()];
+coleccion.<b>toArray</b>(cadenas);		// Esto si que funcionar&aacute;</pre>
+<p>Esta interfaz es muy gen&eacute;rica, y por lo tanto no hay ning&uacute;n tipo 
+  de datos que la implemente directamente, sino que implementar&aacute;n subtipos 
+  de ellas. A continuaci&oacute;n veremos los subtipos m&aacute;s comunes.</p>
+<h4>2.4.2.1 Listas de elementos</h4>
+<p>Este tipo de colecci&oacute;n se refiere a listas en las que los elementos 
+  de la colecci&oacute;n tienen un orden, existe una secuencia de elementos. En 
+  ellas cada elemento estar&aacute; en una determinada posici&oacute;n (&iacute;ndice) 
+  de la lista.</p>
+<p>Las listas vienen definidas en la interfaz <strong>List</strong>, que adem&aacute;s 
+  de los m&eacute;todos generales de las colecciones, nos ofrece los siguientes 
+  para trabajar con los &iacute;ndices:</p>
+<pre class="codigo">void <strong>add(int indice, Object obj)</strong></pre>
+<p>Inserta un elemento (objeto) en la posici&oacute;n de la lista dada por el 
+  &iacute;ndice indicado. </p>
+<pre class="codigo">Object <strong>get(int indice)</strong></pre>
+<p>Obtiene el elemento (objeto) de la posici&oacute;n de la lista dada por el 
+  &iacute;ndice indicado. </p>
+<pre class="codigo">int <strong>indexOf(Object obj)</strong></pre>
+<p>Nos dice cual es el &iacute;ndice de dicho elemento (objeto) dentro de la lista. 
+  Nos devuelve -1 si el objeto no se encuentra en la lista.</p>
+<pre class="codigo">Object <strong>remove(int indice)</strong></pre>
+<p>Elimina el elemento que se encuentre en la posici&oacute;n de la lista indicada 
+  mediante dicho &iacute;ndice, devolvi&eacute;ndonos el objeto eliminado.</p>
+<pre class="codigo">Object <strong>set(int indice, Object obj)</strong></pre>
+<p>Establece el elemento de la lista en la posici&oacute;n dada por el &iacute;ndice 
+  al objeto indicado, sobrescribiendo el objeto que hubiera anteriormente en dicha 
+  posici&oacute;n. Nos devolver&aacute; el elemento que hab&iacute;a previamente 
+  en dicha posici&oacute;n.</p>
+<p>Podemos encontrar diferentes implementaciones de listas de elementos en Java:</p>
+<p><strong>ArrayList</strong></p>
+<p>Implementa una lista de elementos mediante un array de tama&ntilde;o variable. 
+  Conforme se a&ntilde;aden elementos el tama&ntilde;o del array ir&aacute; creciendo 
+  si es necesario. El array tendr&aacute; una capacidad inicial, y en el momento 
+  en el que se rebase dicha capacidad, se aumentar&aacute; el tama&ntilde;o del 
+  array.</p>
+<p>Las operaciones de a&ntilde;adir un elemento al final del array (<em>add</em>), 
+  y de establecer u obtener el elemento en una determinada posici&oacute;n (<em>get</em>/<em>set</em>) 
+  tienen un coste temporal constante. Las inserciones y borrados tienen un coste 
+  lineal <em>O(n)</em>, donde <em>n</em> es el n&uacute;mero de elementos del 
+  array.</p>
+<p>Hemos de destacar que la implementaci&oacute;n de <strong>ArrayList</strong> 
+  no est&aacute; sincronizada, es decir, si m&uacute;ltiples hilos acceden a un 
+  mismo <strong>ArrayList</strong> concurrentemente podriamos tener problemas 
+  en la consistencia de los datos. Por lo tanto, deberemos tener en cuenta cuando 
+  usemos este tipo de datos que debemos controlar la concurrencia de acceso. Tambi&eacute;n 
+  podemos hacer que sea sincronizado como veremos m&aacute;s adelante.</p>
+<p><strong>Vector</strong></p>
+<p>El <strong>Vector</strong> es una implementaci&oacute;n similar al <strong>ArrayList</strong>, 
+  con la diferencia de que el <strong>Vector</strong> si que <strong>est&aacute; 
+  sincronizado</strong>. Este es un caso especial, ya que la implementaci&oacute;n 
+  b&aacute;sica del resto de tipos de datos no est&aacute; sincronizada.</p>
+<p>Esta clase existe desde las primeras versiones de Java, en las que no exist&iacute;a 
+  el marco de las colecciones descrito anteriormente. En las &uacute;ltimas versiones 
+  el <strong>Vector</strong> se ha acomodado a este marco implementando la interfaz 
+  <strong>List</strong>.</p>
+<p>Sin embargo, si trabajamos con versiones previas de JDK, hemos de tener en 
+  cuenta que dicha interfaz no exist&iacute;a, y por lo tanto esta versi&oacute;n 
+  previa del vector no contar&aacute; con los m&eacute;todos definidos en ella. 
+  Los m&eacute;todos propios del vector para acceder a su contenido, que han existido 
+  desde las primeras versiones, son los siguientes:</p>
+<pre class="codigo">void <strong>addElement(Object obj)</strong></pre>
+<p>A&ntilde;ade un elemento al final del vector.</p>
+<pre class="codigo">Object <strong>elementAt(int indice)</strong></pre>
+<p>Devuelve el elemento de la posici&oacute;n del vector indicada por el &iacute;ndice.</p>
+<pre class="codigo">void <strong>insertElementAt(Object obj, int indice)</strong></pre>
+<p>Inserta un elemento en la posici&oacute;n indicada.</p>
+<pre class="codigo">boolean <strong>removeElement(Object obj)</strong></pre>
+<p>Elimina el elemento indicado del vector, devolviendo <em>true</em> si dicho 
+  elemento estaba contenido en el vector, y <em>false</em> en caso contrario.</p>
+<pre class="codigo">void <strong>removeElementAt(int indice)</strong></pre>
+<p>Elimina el elemento de la posici&oacute;n indicada en el &iacute;ndice.</p>
+<pre class="codigo">void <strong>setElementAt(Object obj, int indice)</strong></pre>
+<p>Sobrescribe el elemento de la posici&oacute;n indicada con el objeto especificado.</p>
+<pre class="codigo">int <strong>size()</strong></pre>
+<p>Devuelve el n&uacute;mero de elementos del vector.</p>
+<p>Por lo tanto, si programamos para versiones antiguas de la m&aacute;quina virtual 
+  Java, ser&aacute; recomendable utilizar estos m&eacute;todos para asegurarnos 
+  de que nuestro programa funcione. Esto ser&aacute; importante en la programaci&oacute;n 
+  de Applets, ya que la m&aacute;quina virtual incluida en muchos navegadores 
+  corresponde a versiones antiguas.</p>
+<p>Sobre el vector se construye el tipo pila (<strong>Stack</strong>), que apoy&aacute;ndose 
+  en el tipo vector ofrece m&eacute;todos para trabajar con dicho vector como 
+  si se tratase de una pila, apilando y desapilando elementos (operaciones <em>push 
+  </em>y<em> pop</em> respectivamente). La clase <strong>Stack</strong> hereda 
+  de <strong>Vector</strong>, por lo que en realidad ser&aacute; un vector que 
+  ofrece m&eacute;todos adicionales para trabajar con &eacute;l como si fuese 
+  una pila.</p>
+<p><strong>LinkedList</strong></p>
+<p>En este caso se implementa la lista mediante una lista doblemente enlazada. 
+  Por lo tanto, el coste temporal de las operaciones ser&aacute; el de este tipo 
+  de listas. Cuando realicemos inserciones, borrados o lecturas en los extremos 
+  inicial o final de la lista el tiempo ser&aacute; constante, mientras que para 
+  cualquier operaci&oacute;n en la que necesitemos localizar un determinado &iacute;ndice 
+  dentro de la lista deberemos recorrer la lista de inicio a fin, por lo que el 
+  coste ser&aacute; lineal con el tama&ntilde;o de la lista <em>O(n)</em>, siendo 
+  <em>n </em>el tama&ntilde;o de la lista.</p>
+<p>Para aprovechar las ventajas que tenemos en el coste temporal al trabajar con 
+  los extremos de la lista, se proporcionan m&eacute;todos propios para acceder 
+  a ellos en tiempo constante:</p>
+<pre class="codigo">void <strong>addFirst(Object obj)</strong> / void <strong>addLast(Object obj)</strong></pre>
+<p>A&ntilde;ade el objeto indicado al principio / final de la lista respectivamente.</p>
+<pre class="codigo">Object <strong>getFirst()</strong> / Object <strong>getLast()</strong></pre>
+<p>Obtiene el primer / &uacute;ltimo objeto de la lista respectivamente.</p>
+<pre class="codigo">Object <strong>removeFirst()</strong> / Object <strong>removeLast()</strong></pre>
+<p>Extrae el primer / &uacute;ltimo elemento de la lista respectivamente, devolvi&eacute;ndonos 
+  dicho objeto y elimin&aacute;ndolo de la lista.</p>
+<p>Hemos de destacar que estos m&eacute;todos nos permitir&aacute;n trabajar con 
+  la lista como si se tratase de una pila o de una cola. En el caso de la pila 
+  realizaremos la inserci&oacute;n y la extracci&oacute;n de elementos por el 
+  mismo extremo, mientras que para la cola insertaremos por un extremo y extraeremos 
+  por el otro.</p>
+<h4>2.4.2.2 Conjuntos</h4>
+<p>Los conjuntos son grupos de elementos en los que no encontramos ning&uacute;n 
+  elemento repetido. Consideramos que un elemento est&aacute; repetido si tenemos 
+  dos objetos <em>o1</em> y <em>o2</em> iguales, comparandolos mediante el operador 
+  <em>o1.equals(o2)</em>. De esta forma, si el objeto a insertar en el conjunto 
+  estuviese repetido, no nos dejar&aacute; insertarlo. Recordemos que el m&eacute;todo 
+  add devolv&iacute;a un valor <em>booleano</em>, que servir&aacute; para este 
+  caso, devolviendonos <em>true</em> si el elemento a a&ntilde;adir no estaba 
+  en el conjunto y ha sido a&ntilde;adido, o <em>false</em> si el elemento ya 
+  se encontraba dentro del conjunto. Un conjunto podr&aacute; contener a lo sumo 
+  un elemento <em>null</em>.</p>
+<p>Los conjuntos se definen en la interfaz <strong>Set</strong>, a partir de la 
+  cu&aacute;l se construyen diferentes implementaciones:</p>
+<p><strong>HashSet</strong> </p>
+<p>Los objetos se almacenan en una tabla de dispersi&oacute;n (<em>hash</em>). 
+  El coste de las operaciones b&aacute;sicas (inserci&oacute;n, borrado, b&uacute;squeda) 
+  se realizan en tiempo constante siempre que los elementos se hayan dispersado 
+  de forma adecuada. La iteraci&oacute;n a trav&eacute;s de sus elementos es m&aacute;s 
+  costosa, ya que necesitar&aacute; recorrer todas las entradas de la tabla de 
+  dispersi&oacute;n, lo que har&aacute; que el coste est&eacute; en funci&oacute;n 
+  tanto del n&uacute;mero de elementos insertados en el conjunto como del n&uacute;mero 
+  de entradas de la tabla. El orden de iteraci&oacute;n puede diferir del orden 
+  en el que se insertaron los elementos.</p>
+<p><strong>LinkedHashSet</strong> </p>
+<p>Es similar a la anterior pero la tabla de dispersi&oacute;n es doblemente enlazada. 
+  Los elementos que se inserten tendr&aacute;n enlaces entre ellos. Por lo tanto, 
+  las operaciones b&aacute;sicas seguir&aacute;n teniendo coste constante, con 
+  la carga adicional que supone tener que gestionar los enlaces. Sin embargo habr&aacute; 
+  una mejora en la iteraci&oacute;n, ya que al establecerse enlaces entre los 
+  elementos no tendremos que recorrer todas las entradas de la tabla, el coste 
+  s&oacute;lo estar&aacute; en funci&oacute;n del n&uacute;mero de elementos insertados. 
+  En este caso, al haber enlaces entre los elementos, estos enlaces definir&aacute;n 
+  el orden en el que se insertaron en el conjunto, por lo que el orden de iteraci&oacute;n 
+  ser&aacute; el mismo orden en el que se insertaron.</p>
+<p><strong>TreeSet</strong> </p>
+<p>Utiliza un &aacute;rbol para el almacenamiento de los elementos. Por lo tanto, 
+  el coste para realizar las operaciones b&aacute;sicas ser&aacute; logar&iacute;tmico 
+  con el n&uacute;mero de elementos que tenga el conjunto <em>O(log n)</em>.</p>
+<h3>2.4.2.3 Mapas</h3>
+<p>Aunque muchas veces se hable de los mapas como una colecci&oacute;n, en realidad 
+  no lo son, ya que no heredan de la interfaz <strong>Collection</strong>.</p>
+<p>Los mapas se definen en la interfaz <strong>Map</strong>. Un mapa es un objeto 
+  que relaciona una clave (<em>key</em>) con un valor. Contendr&aacute; un conjunto 
+  de claves, y a cada clave se le asociar&aacute; un determinado valor. En versiones 
+  anteriores este mapeado entre claves y valores lo hac&iacute;a la clase <strong>Dictionary</strong>, 
+  que ha quedado obsoleta. Tanto la clave como el valor puede ser cualquier objeto.</p>
+<p>Los m&eacute;todos b&aacute;sicos para trabajar con estos elementos son los 
+  siguientes:</p>
+<pre class="codigo">Object <strong>get(Object clave)</strong></pre>
+<p>Nos devuelve el valor asociado a la clave indicada</p>
+<pre class="codigo">Object <strong>put(Object clave, Object valor)</strong></pre>
+<p>Inserta una nueva clave con el valor especificado. Nos devuelve el valor que 
+  ten&iacute;a antes dicha clave, o <em>null</em> si la clave no estaba en la 
+  tabla todav&iacute;a.</p>
+<pre class="codigo">Object <strong>remove(Object clave)</strong></pre>
+<p>Elimina una clave, devolviendonos el valor que ten&iacute;a dicha clave.</p>
+<pre class="codigo">Set <strong>keySet()</strong></pre>
+<p>Nos devuelve el conjunto de claves registradas</p>
+<pre class="codigo">int <strong>size()</strong></pre>
+<p>Nos devuelve el n&uacute;mero de parejas (clave,valor) registradas.</p>
+<p>Encontramos distintas implementaciones de los mapas:</p>
+<p><strong>HashMap</strong></p>
+<p>Utiliza una tabla de dispersi&oacute;n para almacenar la informaci&oacute;n 
+  del mapa. Las operaciones b&aacute;sicas (<em>get</em> y <em>put</em>) se har&aacute;n 
+  en tiempo constante siempre que se dispersen adecuadamente los elementos. Es 
+  coste de la iteraci&oacute;n depender&aacute; del n&uacute;mero de entradas 
+  de la tabla y del n&uacute;mero de elementos del mapa. No se garantiza que se 
+  respete el orden de las claves.</p>
+<p><strong>TreeMap</strong></p>
+<p>Utiliza un &aacute;rbol rojo-negro para implementar el mapa. El coste de las 
+  operaciones b&aacute;sicas ser&aacute; logar&iacute;tmico con el n&uacute;mero 
+  de elementos del mapa <em>O(log n)</em>. En este caso los elementos se encontrar&aacute;n 
+  ordenados por orden ascendente de clave.</p>
+<p><strong>Hashtable</strong></p>
+<p>Es una implementaci&oacute;n similar a <strong>HashMap</strong>, pero con alguna 
+  diferencia. Mientras las anteriores implementaciones no est&aacute;n sincronizadas, 
+  esta si que lo est&aacute;. Adem&aacute;s en esta implementaci&oacute;n, al 
+  contrario que las anteriores, no se permitir&aacute;n claves nulas (<em>null</em>). 
+  Este objeto extiende la obsoleta clase <strong>Dictionary</strong>, ya que viene 
+  de versiones m&aacute;s antiguas de JDK. Ofrece otros m&eacute;todos adem&aacute;s 
+  de los anteriores, como por ejemplo el siguiente:</p>
+<pre class="codigo">Enumeration <strong>keys()</strong></pre>
+<p>Este m&eacute;todo nos devolver&aacute; una enumeraci&oacute;n de todas las 
+  claves registradas en la tabla.</p>
+<h4>2.4.2.4 Algoritmos</h4>
+<p>Como hemos comentado anteriormente, adem&aacute;s de las interfaces y las implementaciones 
+  de los tipos de datos descritos en los apartados previos, el marco de colecciones 
+  nos ofrece una serie de algoritmos utiles cuando trabajamos con estos tipos 
+  de datos, especialmente para las listas.</p>
+<p>Estos algoritmos los podemos encontrar implementados como m&eacute;todos est&aacute;ticos 
+  en la clase <strong>Collections</strong>. En ella encontramos m&eacute;todos 
+  para la ordenaci&oacute;n de listas (<em>sort</em>), para la b&uacute;squeda 
+  binaria de elementos dentro de una lista (<em>binarySearch</em>) y otras operaciones 
+  que nos ser&aacute;n de gran utilidad cuando trabajemos con colecciones de elementos.</p>
+<h4>2.4.2.5 Wrappers</h4>
+<p>A parte de los algoritmos comentados en el apartado anterior, la clase <strong>Collections</strong> 
+  aporta otros m&eacute;todos para cambiar ciertas propiedades de las listas. 
+  Estos m&eacute;todos nos proporcionan los denominados <em>wrappers</em> de los 
+  distintos tipos de colecciones. Estos <em>wrappers</em> son objetos que 'envuelven' 
+  al objeto de nuestra colecci&oacute;n, pudiendo de esta forma hacer que la colecci&oacute;n 
+  est&eacute; sincronizada, o que la colecci&oacute;n pase a ser de solo lectura.</p>
+<p>Como dijimos anteriormente, todos los tipos de colecciones no est&aacute;n 
+  sincronizados, excepto el <b>Vector</b> que es un caso especial. Al no estar 
+  sincronizados, si m&uacute;ltiples hilos utilizan la colecci&oacute;n concurrentemente, 
+  podr&aacute;n estar ejecut&aacute;ndose simult&aacute;neamente varios m&eacute;todos 
+  de una misma colecci&oacute;n que realicen diferentes operaciones sobre ella. 
+  Esto puede provocar inconsistencias en los datos. A continuaci&oacute;n veremos 
+  un posible ejemplo de inconsistencia que se podr&iacute;a producir:</p>
+<ol>
+  <li>Tenemos un <strong>ArrayList</strong> de nombre <em>letras</em> formada 
+    por los siguiente elementos: [ &quot;A&quot;, &quot;B&quot;, &quot;C&quot;, 
+    &quot;D&quot; ]</li>
+  <li>Imaginemos que un hilo de baja prioridad desea eliminar el objeto &quot;C&quot;. 
+    Para ello har&aacute; una llamada al m&eacute;todo <em>letras.remove(&quot;C&quot;)</em>.</li>
+  <li>Dentro de este m&eacute;todo primero deber&aacute; determinar cu&aacute;l 
+    es el &iacute;ndice de dicho objeto dentro del array, para despu&eacute;s 
+    pasar a eliminarlo. </li>
+  <li>Se encuentra el objeto &quot;C&quot; en el &iacute;ndice 2 del array (recordemos 
+    que se empieza a numerar desde 0).</li>
+  <li>El problema viene en este momento. Imaginemos que justo en este momento 
+    se le asigna el procesador a un hilo de mayor prioridad, que se encarga de 
+    eliminar el elemento &quot;A&quot; del array, qued&aacute;ndose el array de 
+    la siguiente forma: [ &quot;B&quot;, &quot;C&quot;, &quot;D&quot; ]</li>
+  <li>Ahora el hilo de mayor prioridad es sacado del procesador y nuestro hilo 
+    sigue ejecut&aacute;ndose desde el punto en el que se qued&oacute;.</li>
+  <li>Ahora nuestro hilo lo &uacute;nico que tiene que hacer es eliminar el elemento 
+    del &iacute;ndice que hab&iacute;a determinado, que resulta ser &iexcl;el 
+    &iacute;ndice 2!. Ahora el &iacute;ndice 2 est&aacute; ocupado por el objeto 
+    &quot;D&quot;, y por lo tanto ser&aacute; dicho objeto el que se elimine.</li>
+</ol>
+<p>Podemos ver que haciendo una llamada a <em>letras.remove(&quot;C&quot;)</em>, 
+  al final se ha eliminado el objeto &quot;D&quot;, lo cual produce una inconsistencia 
+  de los datos con las operaciones realizadas, debido al acceso concurrente.</p>
+<p>Este problema lo evitaremos sincronizando la colecci&oacute;n. Cuando una colecci&oacute;n 
+  est&aacute; sincronizada, hasta que no termine de realizarse una operaci&oacute;n 
+  (inserciones, borrados, etc), no se podr&aacute; ejecutar otra, lo cual evitar&aacute; 
+  estos problemas.</p>
+<p>Podemos conseguir que las operaciones se ejecuten de forma sincronizada envolviendo 
+  nuestro objeto de la colecci&oacute;n con un <em>wrapper</em>, que ser&aacute; 
+  un objeto que utilice internamente nuestra colecci&oacute;n encarg&aacute;ndose 
+  de realizar la sincronizaci&oacute;n cuando llamemos a sus m&eacute;todos. Para 
+  obtener estos <em>wrappers</em> utilizaremos los siguientes m&eacute;todos est&aacute;ticos 
+  de <strong>Collections</strong>:</p>
+<pre class="codigo">Collection <strong>synchronizedCollection(Collection c)</strong>
+List <strong>synchronizedList(List l)</strong>
+Set <strong>synchronizedSet(Set s)</strong>
+Map <strong>synchronizedMap(Map m)</strong>
+SortedSet <strong>synchronizedSortedSet(SortedSet ss)</strong>
+SortedMap <strong>synchronizedSortedMap(SortedMap sm)</strong></pre>
+<p>Como vemos tenemos un m&eacute;todo para envolver cada tipo de datos. Nos devolver&aacute; 
+  un objeto con la misma interfaz, por lo que podremos trabajar con &eacute;l 
+  de la misma forma, sin embargo la implementaci&oacute;n interna estar&aacute; 
+  sincronizada.</p>
+<p>Podemos encontrar tambi&eacute;n una serie de <em>wrappers</em> para obtener 
+  versiones de s&oacute;lo lectura de nuestras colecciones. Se obtienen con los 
+  siguientes m&eacute;todos:</p>
+<pre class="codigo">Collection <strong>unmodifiableCollection(Collection c)</strong>
+List <strong>unmodifiableList(List l)</strong>
+Set <strong>unmodifiableSet(Set s)</strong>
+Map <strong>unmodifiableMap(Map m)</strong>
+SortedSet <strong>unmodifiableSortedSet(SortedSet ss)</strong>
+SortedMap <strong>unmodifiableSortedMap(SortedMap sm)</strong></pre>
+<h3>2.4.3 Wrappers de tipos b&aacute;sicos</h3>
+<p>Hemos visto que en Java cualquier tipo de datos es un objeto, excepto los tipos 
+  de datos b&aacute;sicos: <em>boolean, int, long, float, double, byte, short, 
+  char</em>. </p>
+<p>Cuando trabajamos con colecciones de datos los elementos que contienen &eacute;stas 
+  son siempre objetos, por lo que en un principio no podr&iacute;amos insertar 
+  elementos de estos tipos b&aacute;sicos. Para hacer esto posible tenemos una 
+  serie de objetos que se encargar&aacute;n de envolver a estos tipos b&aacute;sicos, 
+  permiti&eacute;ndonos tratarlos como objetos y por lo tanto insertarlos como 
+  elementos de colecciones. Estos objetos son los llamados wrappers, y las clases 
+  en las que se definen tienen nombre similares al del tipo b&aacute;sico que 
+  encapsulan, con la diferencia de que comienzan con may&uacute;scula: <strong>Boolean, 
+  Integer, Long, Float, Double, Byte, Short, Character</strong>.</p>
+<p>Estas clases, adem&aacute;s de servirnos para encapsular estos datos b&aacute;sicos 
+  en forma de objetos, nos proporcionan una serie de m&eacute;todos e informaci&oacute;n 
+  &uacute;tiles para trabajar con estos datos. Nos proporcionar&aacute;n m&eacute;todos 
+  por ejemplo para convertir cadenas a datos num&eacute;ricos de distintos tipos 
+  y viceversa, as&iacute; como informaci&oacute;n acerca del valor m&iacute;nimo 
+  y m&aacute;ximo que se puede representar con cada tipo num&eacute;rico.</p>
+<h3>2.4.4 Clases &uacute;tiles</h3>
+<p>En esta secci&oacute;n vamos a ver una serie de clases que conviene conocer 
+  ya que nos ser&aacute;n de gran utilidad para realizar nuestros programas:</p>
+<p><strong>Object</strong></p>
+<p>Esta es la clase base de todas las clases en Java, toda clase hereda en &uacute;ltima 
+  instancia de la clase <strong>Object</strong>, por lo que los m&eacute;todos 
+  que ofrece estar&aacute;n disponibles en cualquier objeto Java, sea de la clase 
+  que sea.</p>
+<p>En Java es importante distinguir claramente entre lo que es una variable, y 
+  lo que es un objeto. Las variables simplemente son referencias a objetos, mientras 
+  que los objetos son las entidades instanciadas en memoria que podr&aacute;n 
+  ser manipulados mediante las referencias que tenemos a ellos (mediante variable 
+  que apunten a ellos) dentro de nuestro programa. Cuando hacemos lo siguiente:</p>
+<pre class="codigo">new MiClase()</pre>
+<p>Se est&aacute; instanciando en memoria un nuevo objeto de clase MiClase y nos 
+  devuelve una referencia a dicho objeto. Nosotros deberemos guardarnos dicha 
+  referencia en alguna variable con el fin de poder acceder al objeto creado desde 
+  nuestro programa:</p>
+<pre class="codigo">MiClase mc = new MiClase();</pre>
+<p>Es importante declarar la referencia del tipo adecuado (en este caso tipo MiClase) 
+  para manipular el objeto, ya que el tipo de la referencia ser&aacute; el que 
+  indicar&aacute; al compilador las operaciones que podremos realizar con dicho 
+  objeto. El tipo de esta referencia podr&aacute; ser tanto el mismo tipo del 
+  objeto al que vayamos a apuntar, o bien el de cualquier clase de la que herede 
+  o interfaz que implemente nuestro objeto. Por ejemplo, si MiClase se define 
+  de la siguiente forma:</p>
+<pre class="codigo">public class MiClase extends Thread implements List {
+	...
+}</pre>
+<p>Podremos hacer referencia a ella de diferentes formas:</p>
+<pre class="codigo">MiClase mc = new MiClase();
+Thread t = new MiClase();
+List l = new MiClase();
+Object o = new MiClase();</pre>
+<p>Esto es as&iacute; ya que al heredar tanto de <strong>Thread</strong> como 
+  de <strong>Object</strong>, sabemos que el objeto tendr&aacute; todo lo que 
+  tienen estas clases m&aacute;s lo que a&ntilde;ada <strong>MiClase</strong>, 
+  por lo que podr&aacute; comportarse como cualquiera de las clases anteriores. 
+  Lo mismo ocurre al implementar una interfaz, al forzar a que se implementen 
+  sus m&eacute;todos podremos hacer referencia al objeto mediante la interfaz 
+  ya que sabemos que va a contener todos esos m&eacute;todos. Siempre vamos a 
+  poder hacer esta asignaci&oacute;n 'ascendente' a clases o interfaces de las 
+  que deriva nuestro objeto.</p>
+<p>Si hacemos referencia a un objeto <strong>MiClase</strong> mediante una referencia 
+  <strong>Object</strong> por ejemplo, s&oacute;lo podremos acceder a los m&eacute;todos 
+  de <strong>Object</strong>, aunque el objeto contenga m&eacute;todos adicionales 
+  definidos en <strong>MiClase</strong>. Si conocemos que nuestro objeto es de 
+  tipo <strong>MiClase</strong>, y queremos poder utilizarlo como tal, podremos 
+  hacer una asignaci&oacute;n 'descendente' aplicando una conversi&oacute;n cast 
+  al tipo concreto de objeto:</p>
+<pre class="codigo">Object o = new MiClase();
+...
+MiClase mc = (MiClase) o;</pre>
+<p>Si resultase que nuestro objeto no es de la clase a la que hacemos cast, ni 
+  hereda de ella ni la implementa, esta llamada resultar&aacute; en un <strong>ClassCastException</strong> 
+  indicando que no podemos hacer referencia a dicho objeto mediante esa interfaz 
+  debido a que el objeto no la cumple, y por lo tanto podr&aacute;n no estar disponibles 
+  los m&eacute;todos que se definen en ella.</p>
+<p>Una vez hemos visto la diferencia entre las variables (referencias) y objetos 
+  (entidades) vamos a ver como se har&aacute; la asignaci&oacute;n y comparaci&oacute;n 
+  de objetos. Si hiciesemos lo siguiente:</p>
+<pre class="codigo">MiClase mc1 = new MiClase();
+MiClase mc2 = mc1;</pre>
+<p>Puesto que hemos dicho que las variables simplemente son referencias a objetos, 
+  la asignaci&oacute;n estar&aacute; copiando una referencia, no el objeto. Es 
+  decir, tanto la variable <em>mc1 </em>como <em>mc2 </em>apuntar&aacute;n a un 
+  mismo objeto.</p>
+<p>Si lo que queremos es copiar un objeto, teniendo dos entidades independientes, 
+  deberemos invocar el m&eacute;todo <strong>clone</strong> del objeto a copiar:</p>
+<pre class="codigo">MiClase mc2 = <strong>(MiClase)</strong>mc1.<strong>clone()</strong>;</pre>
+<p>El m&eacute;todo <strong>clone</strong> es un m&eacute;todo de la clase <strong>Object 
+  </strong>que estar&aacute; disponible para cualquier objeto Java, y nos devuelve 
+  un <strong>Object</strong> gen&eacute;rico, ya que al ser un m&eacute;todo que 
+  puede servir para cualquier objeto nos debe devolver la copia de este tipo. 
+  De &eacute;l tendremos que hacer una conversi&oacute;n cast a la clase de la 
+  que se trate como hemos visto en el ejemplo. </p>
+<p>Por otro lado, para la comparaci&oacute;n, si hacemos lo siguiente:</p>
+<pre class="codigo">mc1 == mc2</pre>
+<p>Estaremos comparando referencias, por lo que estaremos viendo si las dos referencias 
+  apuntan a un mismo objeto, y no si los objetos a los que apuntan son iguales. 
+  Para ver si los objetos son iguales, aunque sean entidades distintas, tenemos:</p>
+<pre class="codigo">mc1.<strong>equals</strong>(mc2)</pre>
+<p>Este m&eacute;todo tambi&eacute;n es propio de la clase <strong>Object</strong>, 
+  y ser&aacute; el que se utilice para comparar internamente los objetos.</p>
+<p>Tanto <strong>clone</strong> como <strong>equals</strong>, deber&aacute;n ser 
+  redefinidos en nuestras clases para adaptarse a &eacute;stas. Deberemos especificar 
+  dentro de ellos como se copia nuestro objeto y como se compara si son iguales:</p>
+<pre class="codigo">public class Punto2D {
+
+	public int x, y;	
+
+
+	...
+
+
+	public boolean <strong>equals</strong>(Object o) {
+		Punto2D p = (Punto2D)o;
+		// Compara objeto this con objeto p
+		return (x == p.x &amp;&amp; y == p.y);
+	}
+
+	public Object <strong>clone</strong>() {
+		Punto2D p = new Punto2D();
+		// Construye nuevo objeto p 
+		// copiando los atributos de this
+		p.x = x;
+		p.y = y;
+		return p;
+	}</pre>
+<p>Un &uacute;ltimo m&eacute;todo interesante de la clase <b>Object</b> es <b>toString</b>. 
+  Este m&eacute;todo nos devuelve una cadena (<b>String</b>) que representa dicho 
+  objeto. Por defecto nos dar&aacute; un identificador del objeto, pero nosotros 
+  podemos sobrescribirla en nuestras propias clases para que genere la cadena 
+  que queramos. De esta manera podremos imprimir el objeto en forma de cadena 
+  de texto, mostrandose los datos con el formato que nosotros les hayamos dado 
+  en<b> toString</b>. Por ejemplo, si tenemos una clase <b>Punto2D</b>, ser&iacute;a 
+  buena idea hacer que su conversi&oacute;n a cadena muestre las coordenadas <i>(x,y)</i> 
+  del punto:</p>
+<pre class="codigo">public class Punto2D {
+
+	public int x,y;
+
+
+	...
+
+
+	public String <b>toString</b>() {
+		String s = &quot;(&quot; + x + &quot;,&quot; + y + &quot;)&quot;;
+		return s;
+	}
+}</pre>
+<p><strong>Properties</strong></p>
+<p>Esta clase es un subtipo de <strong>Hastable</strong>, que se encarga de almacenar 
+  una serie de propiedades asociando un valor a cada una de ellas. Estas propiedades 
+  las podremos utilizar para registrar la configuraci&oacute;n de nuestra aplicaci&oacute;n. 
+  Adem&aacute;s esta clase nos permite cargar o almacenar esta informaci&oacute;n 
+  en alg&uacute;n dispositivo, como puede ser en disco, de forma que sea persistente.</p>
+<p>Puesto que hereda de <strong>Hashtable</strong>, podremos utilizar sus m&eacute;todos, 
+  pero tambi&eacute;n aporta m&eacute;todos propios para a&ntilde;adir propiedades:</p>
+<pre class="codigo">Object <strong>setProperty(Object clave, Object valor)</strong></pre>
+<p>Equivalente al m&eacute;todo <em>put</em>.</p>
+<pre class="codigo">Object <strong>getProperty(Object clave)</strong></pre>
+<p>Equivalente al m&eacute;todo <em>get</em>.</p>
+<pre class="codigo">Object <strong>getProperty(Object clave, Object default)</strong></pre>
+<p>Esta variante del m&eacute;todo resulta &uacute;til cuando queremos que determinada 
+  propiedad devuelva alg&uacute;n valor por defecto si todav&iacute;a no se le 
+  ha asignado ning&uacute;n valor.</p>
+<p>Adem&aacute;s, como hemos dicho anteriormente, para hacer persistentes estas 
+  propiedades de nuestra aplicaci&oacute;n, se proporcionan m&eacute;todos para 
+  almacenarlas o leerlas de alg&uacute;n dispositivo de E/S:</p>
+<pre class="codigo">void <strong>load(InputStream entrada)</strong></pre>
+<p>Lee las propiedades del flujo de entrada proporcionado. Este flujo puede por 
+  ejemplo referirse a un fichero del que se leer&aacute;n los datos.</p>
+<pre class="codigo">void <strong>store(OutputStream salida, String cabecera)</strong></pre>
+<p>Almacena las informaci&oacute;n de las propiedades escribiendolas en el flujo 
+  de salida especificado. Este flujo puede por ejemplo referirse a un fichero 
+  en disco, en el que se guardar&aacute; nuestro conjunto de propiedades, pudiendo 
+  especificar una cadena que se pondr&aacute; como cabecera en el fichero, y que 
+  nos permite a&ntilde;adir alg&uacute;n comentario sobre dicho fichero.</p>
+<p><strong>System</strong></p>
+<p>Esta clase nos ofrece una serie de m&eacute;todos y campos &uacute;tiles del 
+  sistema. Esta clase no se debe instanciar, todos estos m&eacute;todos y campos 
+  son est&aacute;ticos.</p>
+<p>Podemos encontrar los objetos que encapsulan la entrada, salida y salida de 
+  error est&aacute;ndar, as&iacute; como m&eacute;todos para redireccionarlas, 
+  que veremos con m&aacute;s detalle en el tema de entrada/salida.</p>
+<p>Tambi&eacute;n nos permite acceder al gestor de seguridad instalado, como veremos 
+  en el tema sobre seguridad.</p>
+<p>Otros m&eacute;todos &uacute;tiles que encontramos son:</p>
+<pre class="codigo">void <strong>exit(int estado)</strong></pre>
+<p>Finaliza la ejecuci&oacute;n de la aplicaci&oacute;n, devolviendo un c&oacute;digo 
+  de estado. Normalmente el c&oacute;digo 0 significa que ha salido de forma normal, 
+  mientras que con otros c&oacute;digos indicaremos que se ha producido alg&uacute;n 
+  error. </p>
+<pre class="codigo">void <strong>gc()</strong></pre>
+<p>Fuerza una llamada al colector de basura para limpiar la memoria. Esta es una 
+  operaci&oacute;n costosa. Normalmente no lo llamaremos explicitamente, sino 
+  que dejaremos que Java lo invoque cuando sea necesario.</p>
+<pre class="codigo">long <strong>currentTimeMillis()</strong></pre>
+<p>Nos devuelve el tiempo medido en el n&uacute;mero de milisegundos transcurridos 
+  desde el 1 de Enero de 1970 a las 0:00.</p>
+<pre class="codigo">void <strong>arraycopy(Object fuente, int pos_fuente, 
+				Object destino, int pos_dest, int n)</strong></pre>
+<p>Copia n elementos del array fuente, desde la posici&oacute;n pos_fuente, al 
+  array destino a partir de la posici&oacute;n pos_dest.</p>
+<pre class="codigo">Properties <strong>getProperties()</strong></pre>
+<p>Devuelve un objeto Properties con las propiedades del sistema. En estas propiedades 
+  podremos encontrar la siguiente informaci&oacute;n:</p>
+<table width="91%" border="1">
+  <tr> 
+    <td><strong>Clave</strong></td>
+    <td><strong>Contenido</strong></td>
+  </tr>
+  <tr> 
+    <td><pre>file.separator</pre></td>
+    <td>Separador entre directorios en la ruta de los ficheros. Por ejemplo &quot;/&quot; 
+      en UNIX.</td>
+  </tr>
+  <tr> 
+    <td><pre>java.class.path</pre></td>
+    <td>Classpath de Java</td>
+  </tr>
+  <tr> 
+    <td><pre>java.class.version</pre></td>
+    <td>Versi&oacute;n de las clases de Java</td>
+  </tr>
+  <tr> 
+    <td><pre>java.home</pre></td>
+    <td>Directorio donde est&aacute; instalado Java</td>
+  </tr>
+  <tr> 
+    <td><pre>java.vendor</pre></td>
+    <td>Empresa desarrolladora de la implementaci&oacute;n de la plataforma Java 
+      instalada</td>
+  </tr>
+  <tr> 
+    <td><pre>java.vendor.url</pre></td>
+    <td>URL de la empresa</td>
+  </tr>
+  <tr> 
+    <td><pre>java.version</pre></td>
+    <td>Versi&oacute;n de Java</td>
+  </tr>
+  <tr> 
+    <td><pre>line.separator</pre></td>
+    <td>Separador de fin de l&iacute;neas utilizado</td>
+  </tr>
+  <tr> 
+    <td><pre>os.arch</pre></td>
+    <td>Arquitectura del sistema operativo</td>
+  </tr>
+  <tr> 
+    <td><pre>os.name</pre></td>
+    <td>Nombre del sistema operativo</td>
+  </tr>
+  <tr> 
+    <td><pre>os.version</pre></td>
+    <td>Versi&oacute;n del sistema operativo</td>
+  </tr>
+  <tr> 
+    <td><pre>path.separator</pre></td>
+    <td>Separador entre los distintos elementos de una variable de entorno tipo 
+      PATH. Por ejemplo &quot;:&quot;</td>
+  </tr>
+  <tr> 
+    <td><pre>user.dir</pre></td>
+    <td>Directorio actual</td>
+  </tr>
+  <tr> 
+    <td><pre>user.home</pre></td>
+    <td>Directorio de inicio del usuario actual</td>
+  </tr>
+  <tr> 
+    <td><pre>user.name</pre></td>
+    <td>Nombre de la cuenta del usuario actual</td>
+  </tr>
+</table>
+<p><strong>Runtime</strong></p>
+<p>Toda aplicaci&oacute;n Java tiene una instancia de la clase <strong>Runtime</strong> 
+  que se encargar&aacute; de hacer de interfaz con el entorno en el que se est&aacute; 
+  ejecutando. Para obtener este objeto debemos utilizar el siguiente m&eacute;todo 
+  est&aacute;tico:</p>
+<pre class="codigo">Runtime rt = <strong>Runtime.getRuntime()</strong>;</pre>
+<p>Una de las operaciones que podremos realizar con este objeto, ser&aacute; ejecutar 
+  comandos como si nos encontr&aacute;semos en la l&iacute;nea de comandos del 
+  sistema operativo. Para ello utilizaremos el siguiente m&eacute;todo:</p>
+<pre class="codigo">rt.<strong>exec</strong>(comando);</pre>
+<p>De esta forma podremos invocar programas externos desde nuestra aplicaci&oacute;n 
+  Java. </p>
+<p><strong>Math</strong></p>
+<p>La clase<strong> Math</strong> nos ser&aacute; de gran utilidad cuando necesitemos 
+  realizar operaciones matem&aacute;ticas. Esta clase no necesita ser instanciada, 
+  ya que todos sus m&eacute;todos son est&aacute;ticos. Entre estos m&eacute;todos 
+  podremos encontrar todas las operaciones matem&aacute;ticas b&aacute;sicas que 
+  podamos necesitar, como logaritmos, exponenciales, funciones trigonom&eacute;tricas, 
+  generaci&oacute;n de n&uacute;meros aleatorios, conversi&oacute;n entre grados 
+  y radianes, etc. Adem&aacute;s nos ofrece las constantes de los n&uacute;meros 
+  <em>PI</em> y <em>E</em>.</p>
+<p><strong>Otras clases</strong></p>
+<p>Si miramos dentro del paquete <strong>java.util</strong>, podremos encontrar 
+  una serie de clases que nos podr&aacute;n resultar &uacute;tiles para determinadas 
+  aplicaciones.</p>
+<p>Entre ellas tenemos la clase <strong>Calendar</strong>, que nos servir&aacute; 
+  cuando trabajemos con fechas y horas, para realizar operaciones con fechas, 
+  comparar fechas, u obtener distintas representaciones para mostrar la fecha 
+  en nuestra aplicaci&oacute;n. </p>
+<p>Encontramos tambi&eacute;n la clase <strong>Currency</strong> con informaci&oacute;n 
+  monetaria. La clase <strong>Locale</strong> almacena informaci&oacute;n sobre 
+  una determinada regi&oacute;n del mundo, por lo que podremos utilizar esta clase 
+  junto a las anteriores para obtener la moneda de una determinada zona, o las 
+  diferencias horarias y de representaci&oacute;n de fechas.</p>
+<h3>2.4.5 Optimizaci&oacute;n de c&oacute;digo</h3>
+<p>Hemos visto que Java nos permite escribir facilmente un c&oacute;digo limpio 
+  y mantenible. Sin embargo, en muchas ocasiones adem&aacute;s nos interesar&aacute; 
+  que el c&oacute;digo sea r&aacute;pido en determinadas funciones cr&iacute;ticas. 
+  A continuaci&oacute;n damos una serie de consejos para optimizar el c&oacute;digo 
+  Java: </p>
+<ul>
+  <li>No instanciar m&aacute;s objetos de los necesarios. Es una buena pr&aacute;ctica 
+    para la eficiencia temporal del c&oacute;digo reutilizar los objetos que tenemos 
+    ya instanciados siempre que sea posible, ya que consume tiempo tanto instanciar 
+    nuevos objetos, como despu&eacute;s limpiar de la memoria los objetos que 
+    ya no se necesiten por parte del colector de basura.</li>
+  <li>Minimizar el n&uacute;mero de llamadas a m&eacute;todos. La llamada a un 
+    m&eacute;todo para obtener una determinada propiedad de un objeto es m&aacute;s 
+    costoso computacionalmente que consultar la propiedad directamente (en el 
+    caso de que sea p&uacute;blica). Si necesitamos utilizar el valor repetidas 
+    veces es buena idea leer el valor en una variable local y utilizar dicha variable.</li>
+  <li>Es m&aacute;s r&aacute;pido acceder a un campo de un objeto directamente 
+    que llamar a un m&eacute;todo para obtener el valor de dicho campo. Acceder 
+    directamente a los campos va en contra de la encapsulaci&oacute;n, pero puede 
+    resultar conveniente en determinados casos. Si desarrollamos una librer&iacute;a 
+    con una serie de clases, podemos usar variables protegidas en lugar de privadas, 
+    para dentro de nuestra librer&iacute;a no tener que llamar a m&eacute;todos 
+    para consultar o modificar dicha informaci&oacute;n. Esto har&aacute; m&aacute;s 
+    r&aacute;pidas las llamadas internas a la librer&iacute;a.</li>
+  <li>Sustituir tipos de datos complejos por tipos de datos b&aacute;sicos. Esto 
+    va en contra de la legibilidad del c&oacute;digo, pero en caso de ser la velocidad 
+    un factor cr&iacute;tico puede ser conveniente hacer este cambio. Una vez 
+    comprobado que el programa funciona, si necesitamos m&aacute;s velocidad podemos 
+    cambiar tipos de datos como Vectores por un array b&aacute;sico cuyo acceso 
+    resulta m&aacute;s r&aacute;pido.</li>
+  <li>Cuando trabajemos con cadenas grandes, es conveniente utilizar la clase 
+    <b>StringBuffer</b> en lugar de <b>String</b>, ya permite ser modificada sin 
+    necesidad de instanciar nuevos objetos, lo cual har&aacute; la manipulaci&oacute;n 
+    de estas cadenas mucho m&aacute;s eficiente.</li>
+</ul>
+<p>&nbsp;</p>
+
+<h2>2.5. Entrada/salida</h2>
+
+<p>Los programas muy a menudo necesitan enviar datos a un determinado destino, o
+bien leerlos de una determinada fuente externa, como por ejemplo puede ser un
+fichero para almacenar datos de forma permanente, o bien enviar datos a través
+de la red, a memoria, o a otros programas. Esta entrada/salida de datos en Java
+la realizaremos por medio de <i>flujos (streams)</i> de datos, a través de los
+cuales un programa podrá recibir o enviar datos en serie.&nbsp;</p>
+<h3 class="subsection">2.5.1 Flujos de datos de entrada/salida</h3>
+<p>Existen varios objetos que hacen de flujos de datos, y que se distinguen por
+la finalidad del flujo de datos y por el tipo de datos que viajen a través de
+ellos. Según el tipo de datos&nbsp; que transporten podemos distinguir:</p>
+<ul>
+  <li>Flujos de caracteres</li>
+  <li>Flujos de bytes</li>
+</ul>
+<p>Dentro de cada uno de estos grupos tenemos varios pares de objetos, de los
+cuales uno nos servirá para leer del flujo y el otro para escribir en él. Cada
+par de objetos será utilizado para comunicarse con distintos elementos
+(memoria, ficheros, red u otros programas). Estas clases, según sean de entrada
+o salida y según sean de caracteres o de bytes llevarán distintos sufijos,
+según se muestra en la siguiente tabla:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%">&nbsp;</td>
+    <td width="33%"><b>Flujo de entrada / lector</b></td>
+    <td width="34%"><b>Flujo de salida / escritor</b></td>
+  </tr>
+  <tr>
+    <td width="33%"><b>Caractéres</b></td>
+    <td width="33%">XXXXReader</td>
+    <td width="34%">XXXXWriter</td>
+  </tr>
+  <tr>
+    <td width="33%"><b>Bytes</b></td>
+    <td width="33%">XXXXInputStream</td>
+    <td width="34%">XXXXOutputStream</td>
+  </tr>
+</table>
+<p>Donde XXXX se referirá a la fuente o sumidero de los datos que puede tomar
+valores como los que se muestran a continuación:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="18%"><b>File</b></td>
+    <td width="82%">Acceso a ficheros</td>
+  </tr>
+  <tr>
+    <td width="18%"><b>Piped</b></td>
+    <td width="82%">Comunicación entre programas mediante tuberías (pipes)</td>
+  </tr>
+  <tr>
+    <td width="18%"><b>String</b></td>
+    <td width="82%">Acceso a una cadena en memoria (solo caracteres)</td>
+  </tr>
+  <tr>
+    <td width="18%"><b>CharArray</b></td>
+    <td width="82%">Acceso a un array de caracteres en memoria (solo caracteres)</td>
+  </tr>
+  <tr>
+    <td width="18%"><b>ByteArray</b></td>
+    <td width="82%">Acceso a un array de bytes en memoria (solo bytes)</td>
+  </tr>
+</table>
+<p>Además podemos distinguir los flujos de datos según su propósito, pudiendo
+ser:</p>
+<ul>
+  <li>Canales de datos, simplemente para leer o escribir datos directamente en
+    una fuente o sumidero externo.</li>
+  <li>Flujos de procesamiento, que además de enviar o recibir datos realizan
+    algún procesamiento con ellos. Tenemos por ejemplo flujos que realizan un
+    filtrado de los datos que viajan a través de ellos (con prefijo Filter),
+    conversores datos (con prefijo Data), bufferes de datos (con prefijo
+    Buffered), preparados para la impresión de elementos (con prefijo Print), etc.</li>
+</ul>
+<p>Un tipo de filtros de procesamiento a destacar son aquellos que nos permiten
+convertir un flujo de bytes a flujo de caracteres. Estos objetos son <b>InputStreamReader</b>
+y <b>OutputStreamWriter</b>. Como podemos ver en su sufijo, son flujos de
+caracteres, pero se construyen a partir de flujos de bytes, permitiendo de esta
+manera acceder a nuestro flujo de bytes como si fuese un flujo de caracteres.</p>
+<p>Para cada uno de los tipos básicos de flujo que hemos visto existe una
+superclase, de la que heredaran todos sus subtipos, y que contienen una serie de
+métodos que serán comunes a todos ellos. Entre estos métodos encontramos los
+métodos básicos para leer o escribir caracteres o bytes en el flujo a bajo
+nivel. En la siguiente tabla se muestran los métodos más importantes de cada
+objeto:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="29%"><b>InputStream</b></td>
+    <td width="71%"><b>read</b>(), <b>reset</b>(), <b>available</b>(), <b>close</b>()</td>
+  </tr>
+  <tr>
+    <td width="29%"><b>OutputStream</b></td>
+    <td width="71%"><b>write</b>(int b), <b>flush</b>(), <b>close</b>()</td>
+  </tr>
+  <tr>
+    <td width="29%"><b>Reader</b></td>
+    <td width="71%"><b>read</b>(), <b>reset</b>(), <b>close</b>()</td>
+  </tr>
+  <tr>
+    <td width="29%"><b>Writer</b></td>
+    <td width="71%"><b>write</b>(int c), <b>flush</b>(), <b>close</b>()</td>
+  </tr>
+</table>
+<p>A parte de estos métodos podemos encontrar variantes de los métodos de
+lectura y escritura, otros métodos, y además cada tipo específico de flujo
+contendrá sus propios métodos. Todas estas clases se encuentran en el paquete <b>java.io</b>.
+Para más detalles sobre ellas se puede consultar la especificación de la API
+de Java.</p>
+<h3 class="subsection">2.5.2. Entrada, salida y salida de error estándar</h3>
+<p>Al igual que en C, en Java también existen los conceptos de entrada, salida,
+y salida de error estándar. La entrada estándar normalmente se refiere a lo
+que el usuario escribe en la consola, aunque el sistema operativo puede hacer
+que se tome de otra fuente. De la misma forma la salida y la salida de error
+estándar lo que hacen normalmente es mostrar los mensajes y los errores del
+programa respectivamente en la consola, aunque el sistema operativo también
+podrá redirigirlas a otro destino.</p>
+<p>En Java esta entrada, salida y salida de error estándar se tratan de la
+misma forma que cualquier otro flujo de datos, estando estos tres elementos
+encapsulados en tres objetos de flujo de datos que se encuentran como
+propiedades estáticas de la clase <b>System</b>:</p>
+<table border="1" width="61%">
+  <tr>
+    <td width="52%">&nbsp;</td>
+    <td width="23%"><b>Tipo</b></td>
+    <td width="25%"><b>Objeto</b></td>
+  </tr>
+  <tr>
+    <td width="52%"><b>Entrada estándar</b></td>
+    <td width="23%">InputStream</td>
+    <td width="25%">System.<b>in</b></td>
+  </tr>
+  <tr>
+    <td width="52%"><b>Salida estándar</b></td>
+    <td width="23%">PrintStream</td>
+    <td width="25%">System.<b>out</b></td>
+  </tr>
+  <tr>
+    <td width="52%"><b>Salida de error estándar</b></td>
+    <td width="23%">PrintStream</td>
+    <td width="25%">System.<b>err</b></td>
+  </tr>
+</table>
+<p>Para la entrada estándar vemos que se utiliza un objeto <b>InputStream</b>
+básico, sin embargo para la salida se utilizan objetos <b>PrintWriter</b> que
+facilitan la impresión de texto ofreciendo a parte del método común de bajo
+nivel <i>write(int b)</i> <b> </b>para escribir bytes, dos métodos más: <i>print(s)</i> <b> </b>y
+<i>println(s)</i>. Estas funciones nos permitirán escribir cualquier cadena, tipo
+básico, o bien cualquier objeto que defina el método <i>toString()</i> que
+devuelva una representación del objeto en forma de cadena. La única diferencia
+entre los dos métodos es que el segundo añade automáticamente un salto de
+línea al final del texto impreso, mientras que en el primero deberemos
+especificar explícitamente este salto.</p>
+<p>Para escribir texto en la consola normalmente utilizaremos:</p>
+<pre class="codigo">System.out.println(&quot;Hola mundo&quot;);</pre>
+<p>En el caso de la impresión de errores por la salida de error de estándar,
+deberemos utilizar:&nbsp;</p>
+<pre class="codigo">System.err.println(&quot;Error: Se ha producido un error&quot;);</pre>
+<p>Además la clase <b>System</b> nos permite sustituir estos
+flujos por defecto por otros flujos, cambiando de esta forma la entrada, salida
+y salida de error estándar.</p>
+<h3 class="subsection">2.5.3. Acceso a ficheros</h3>
+<p>Podremos acceder a ficheros bien por caracteres, o bien de forma binaria (por
+bytes). Las clases que utilizaremos en cada caso son:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%">&nbsp;</td>
+    <td width="33%"><b>Lectura</b></td>
+    <td width="34%"><b>Escritura</b></td>
+  </tr>
+  <tr>
+    <td width="33%"><b>Caracteres</b></td>
+    <td width="33%">FileReader</td>
+    <td width="34%">FileWriter</td>
+  </tr>
+  <tr>
+    <td width="33%"><b>Binarios</b></td>
+    <td width="33%">FileInputStream</td>
+    <td width="34%">FileOutputStream</td>
+  </tr>
+</table>
+<p>Para crear un lector o escritor de ficheros deberemos proporcionar al
+constructor el fichero del que queremos leer o en el que queramos escribir.
+Podremos proporcionar esta información bien como una cadena de texto con el
+nombre del fichero, o bien construyendo un objeto <b>File</b> representando al
+fichero al que queremos acceder. Este objeto nos permitirá obtener información
+adicional sobre el fichero, a parte de permitirnos realizar operaciones sobre el
+sistema de ficheros.</p>
+<p>A continuación vemos un ejemplo simple de la copia de un fichero carácter a
+carácter:</p>
+<pre class="codigo">public void copia_fichero() {
+&nbsp;&nbsp;&nbsp; int c;
+&nbsp;&nbsp;&nbsp; try {
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <b>FileReader</b> in = new <b>FileReader</b>(&quot;fuente.txt&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp; <b>&nbsp;&nbsp;&nbsp;FileWriter</b> out = new <b>FileWriter</b>(&quot;destino.txt&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while( (c = in.<b>read</b>()) != -1)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; out.write(c);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; in.<b>close</b>();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; out.<b>close</b>();
+&nbsp;&nbsp;&nbsp; } catch(<b>FileNotFoundException</b> e1) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.err.println(&quot;Error: No se encuentra el fichero&quot;);
+&nbsp;&nbsp;&nbsp; } catch(<b>IOException</b> e2) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.err.println(&quot;Error leyendo/escribiendo fichero&quot;);
+&nbsp;&nbsp;&nbsp; }
+}</pre>
+<p>
+En el ejemplo podemos ver que para el acceso a un fichero es necesario
+capturar dos excepciones, para el caso de que no exista el fichero al que
+queramos acceder y por si se produce un error en la E/S.</p>
+<p>Para la escritura podemos
+utilizar el método anterior, aunque muchas veces nos
+resultará mucho más cómodo utilizar un objeto <b>PrintWriter </b>con el que
+podamos escribir directamente líneas de texto:</p>
+<pre class="codigo">public void escribe_fichero() {
+&nbsp;&nbsp;&nbsp; <b>FileWriter</b> out = null;
+&nbsp;&nbsp;&nbsp; <b>PrintWriter</b> p_out = null;
+&nbsp;&nbsp;&nbsp; try {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; out = new <b>FileWriter</b>(&quot;result.txt&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; p_out = new <b>PrintWriter</b>(out);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; p_out.<b>println</b>(
+            &quot;Este texto será escrito en el fichero de salida&quot;);
+&nbsp;&nbsp;&nbsp; } catch(<b>IOException</b> e) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.err.println(&quot;Error al escribir en el fichero&quot;);
+&nbsp;&nbsp;&nbsp; } finally {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; p_out.<b>close</b>();
+&nbsp;&nbsp;&nbsp; }
+}</pre>
+<h3 class="subsection">2.5.4. Lectura de tokens</h3>
+<p>Hemos visto como leer un fichero carácter a carácter, pero en el caso de
+ficheros con una gramática medianamente compleja, esta lectura a bajo nivel
+hará muy difícil el análisis de este fichero de entrada. Necesitaremos leer
+del fichero elementos de la gramática utilizada, los llamados <b>tokens</b>,
+como pueden ser palabras, número y otros símbolos.</p>
+<p>La clase <b>StreamTokenizer </b>se encarga de partir la entrada en <b>tokens</b>
+y nos permitirá realizar la lectura del fichero directamente como una secuencia
+de <b>tokens</b>. Esta clase tiene una serie de constantes identificando los
+tipos de <b>tokens</b> que puede leer:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="28%">StreamTokenizer.<b>TT_WORD</b></td>
+    <td width="72%">Palabra</td>
+  </tr>
+  <tr>
+    <td width="28%">StreamTokenizer.<b>TT_NUMBER</b></td>
+    <td width="72%">Número real o entero</td>
+  </tr>
+  <tr>
+    <td width="28%">StreamTokenizer.<b>TT_EOL</b></td>
+    <td width="72%">Fin de línea</td>
+  </tr>
+  <tr>
+    <td width="28%">StreamTokenizer.<b>TT_EOF</b></td>
+    <td width="72%">Fin de fichero</td>
+  </tr>
+  <tr>
+    <td width="28%">Carácter de comillas establecido</td>
+    <td width="72%">Cadena de texto encerrada entre comillas</td>
+  </tr>
+  <tr>
+    <td width="28%">Símbolos</td>
+    <td width="72%">Vendrán representados por el código del carácter ASCII
+      del símbolo</td>
+  </tr>
+</table>
+<p>Dado que un <b>StreamTokenizer </b>se utiliza para analizar un fichero de
+texto, siempre habrá que crearlo a partir de un objeto <b>Reader</b> (o
+derivados).</p>
+<pre class="codigo">StreamTokenizer st = new StreamTokenizer(reader);</pre>
+<p>El método <b>nextToken() </b>leerá el siguiente token que encuentre en el
+fichero y nos devolverá el tipo de <b> token</b> del que se trata. Según este tipo
+podremos consultar las propiedades <b>sval </b>o <b>nval</b> para ver qué
+cadena o número respectivamente se ha leído del fichero. Tanto cuando se lea
+un <b> token</b> de tipo <b>TT_WORD </b>como de tipo cadena de texto entre comillas el
+valor de este <b> token</b> estará almacenado en <b>sval</b>. En caso de la lectura de
+un número, su valor se almacenará en <b>nval </b>que es de tipo <b>double</b>.
+Como los demás símbolos ya devuelven el código del símbolo como tipo de <b>
+token</b> no será necesario acceder a su valor por separado. Podremos consultar el
+tipo del último <b> token</b> leído en la propiedad <b>ttype</b>.</p>
+<p>Un bucle de procesamiento básico será el siguiente:</p>
+<pre class="codigo">while(st.<b>nextToken</b>() != StreamTokenizer.<b>TT_EOF</b>) {
+&nbsp;&nbsp;&nbsp; switch(st.<b>ttype</b>) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case StreamTokenizer.<b>TT_WORD</b>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(&quot;Leida cadena: &quot; + st.<b>sval</b>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case StreamTokenizer.<b>TT_NUMBER</b>:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println(&quot;Leido numero: &quot; + st.<b>nval</b>);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;
+&nbsp;&nbsp;&nbsp; }
+}&nbsp;</pre>
+<p>Podemos distinguir tres tipos de caracteres:</p>
+<table border="1" width="100%" height="71">
+  <tr>
+    <td width="36%" height="17">Ordinarios (<b>ordinaryChars</b>)</td>
+    <td width="64%" height="17">Caracteres que forman parte de los <i>tokens</i>.</td>
+  </tr>
+  <tr>
+    <td width="36%" height="18">De palabra (<b>wordChars</b>)</td>
+    <td width="64%" height="18">Una secuencia formada enteramente por este tipo
+      de caracteres se considerará una palabra.</td>
+  </tr>
+  <tr>
+    <td width="36%" height="18">De espacio en blanco (<b>whitespaceChars</b>)</td>
+    <td width="64%" height="18">Estos caracteres no son interpretados como <i>tokens</i>, simplemente se utilizan para separar
+      <i>tokens</i>. Normalmente estos
+      caracteres son el espacio, tabulador, y salto de línea.</td>
+  </tr>
+</table>
+<p>Para establecer qué caracteres pertenecerán a cada uno de estos tipos
+utilizaremos los métodos <i>ordinaryChars</i>, <i>wordChars</i> y <i>whitespaceChars</i>
+del objeto <b>StreamTokenizer<i> </i></b>respectivamente. A cada uno de estos
+métodos le pasamos un rango de caracteres (según su código ASCII), que serán
+establecidos al tipo correspondiente al método que hayamos llamado. Por
+ejemplo, si queremos que una palabra sea una secuencia de cualquier carácter
+imprimible (con códigos ASCII desde 32 a 127) haremos lo siguiente:</p>
+<pre class="codigo">st.<strong>wordChars</strong>(32,127);</pre>
+<p>Los caracteres pueden ser especificados tanto por su código ASCII numérico
+como especificando ese carácter entre comillas simples. Si ahora queremos hacer
+que las palabras sean separadas por el caracter ':' (dos puntos) hacemos la
+siguiente llamada:</p>
+<pre class="codigo">st.<strong>whitespaceChars</strong>(':', ':');</pre>
+<p>De esta forma, si hemos hecho las llamadas anteriores el <i>tokenizer</i>
+leerá palabras formadas por cualquier carácter imprimible separadas por los
+dos puntos ':'. Al querer cambiar un único carácter, como siempre deberemos
+especificar un rango, deberemos especificar un rango formado por ese único
+carácter como inicial y final del rango. Si además quisieramos utilizar el
+guión '-' para separar palabras, no siendo caracteres consecutivos guión y dos
+puntos en la tabla ASCII, tendremos que hacer una tercera llamada:</p>
+<pre class="codigo">st.<strong>whitespaceChars</strong>('-', '-');</pre>
+<p>Así tendremos tanto el guión como los dos puntos como separadores, y el
+resto de caracteres imprimibles serán caracteres de palabra. Podemos ver que el
+<b>StreamTokenizer</b> internamente implementa una tabla, en la que asocia a
+cada carácter uno de los tres tipos mencionados. Al llamar a cada uno de los
+tres métodos cambiará el tipo de todo el rango especificado al tipo
+correspondiente al método. Por ello es importante el orden en el que invoquemos
+este método. Si en el ejemplo en el que hemos hecho estas tres llamadas las
+hubiésemos hecho en orden inverso, al establecer todo el rango de caracteres
+imprimibles como <i>wordChars</i> hubiésemos sobrescrito el resultado de las
+otras dos llamadas y por lo tanto el guión y los dos puntos no se
+considerarían separadores.</p>
+<p>Podremos personalizar el <i> tokenizer</i> indicando para cada carácter a que tipo
+pertenece. Además de con los tipos anteriores, podemos especificar el carácter que se utilice para encerrar
+las cadenas de texto (<b>quoteChar</b>), mediante el método <i>quoteChar</i>, y el carácter para los comentarios (<b>commentChar</b>),
+mediante <i>commentChar</i>. Esto nos permitirá definir comentarios de una
+línea que comiencen por un determinado carácter, como por ejemplo los
+comentarios estilo Pascal comenzados por el carácter almohadilla ('#'). Además
+tendremos otros métodos para activar comentarios tipo C como los comentarios <i>barra-barra
+</i>(<i>//</i>)<i> </i>y <i>barra-estrella </i>(<i>/* */</i>).</p>
+<h3 class="subsection">2.5.5. Serialización de objetos</h3>
+<p>Si queremos enviar un objeto a través de un flujo de datos, deberemos
+convertirlo en una serie de bytes. Esto es lo que se conoce como serialización
+de objetos, que nos permitirá leer y escribir objetos. </p>
+<p>Para leer o escribir objetos podemos utilizar los objetos <b>ObjectInputStream
+</b>y <b>ObjectOutputStream</b> que incorporan los métodos <b>readObject() </b>y
+<b>writeObject(Object obj) </b>respectivamente. Los objetos que escribamos en
+dicho flujo deben tener la capacidad de ser <i>serializables</i>. </p>
+<p>Serán <i>serializables </i>aquellos objetos que implementan la interfaz <b>Serializable</b>.
+Cuando queramos hacer que una clase definida por nosotros sea <i>serializable </i>deberemos
+implementar dicho interfaz, que no define ninguna función, sólo se utiliza
+para identificar las clases que son <i>serializables</i>. Para que nuestra clase
+pueda ser <i>serializable</i>, todas sus propiedades deberán ser de tipos de
+datos básicos o bien objetos que también sean<i><b> </b>serializables</i>. </p>
+
+</body>
+</html>

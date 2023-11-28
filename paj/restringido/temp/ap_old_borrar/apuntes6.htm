@@ -1,0 +1,958 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Tema 6: Extensiones</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1><span class="section">6. Extensiones</span> </h1>
+<p>A partir de JDK 1.2 se incorpora un mecanismo de extensiones que permite 
+a&ntilde;adir nuevas funcionalidades al n&uacute;cleo de la plataforma Java.
+Existen extensiones desarrolladas por Sun, como Java 3D y Javamail, pero
+adem&aacute;s cualquier usuario puede desarrollar sus propias extensiones. 
+ </p>
+<h2 class="subsection">6.1. Mecanismo de extensiones de Java </h2>
+<p>El mecanismo de extensiones proporciona escalabilidad a Java, permitiendo 
+hacer que nuestra propia API est&eacute; disponible para cualquier aplicaci&oacute;n. 
+</p>
+ <p>Las extensiones son grupos de paquetes y clases que a&ntilde;aden funcionalidades 
+a la plataforma Java, y que ser&aacute;n incluidas mediante el mecanismo de
+extensiones de Java. Este mecanismo permite que las extensiones definidas 
+sean accesibles por cualquier aplicaci&oacute;n sin necesidad de establecer 
+el CLASSPATH, como si se tratase de las clases del n&uacute;cleo de Java. De
+hecho, estas extensiones lo que hacen es extender la API del n&uacute;cleo. 
+</p>
+<p>Gracias a este mecanismo podremos obtener e instalar extensiones que amplíen
+la API del n&uacute;cleo de la plataforma Java, bien sean extensiones desarrolladas
+por Sun o por terceros, o bien crear nuestras propias extensiones. Esto nos
+permitir&aacute; ampliar la API seg&uacute;n nuestras necesidades, y adem&aacute;s
+facilitar&aacute; la distribuci&oacute;n de nuestras propias librer&iacute;as
+de clases, que cualquier usuario podr&aacute; instalar y utilizar fácilmente
+sin preocuparse del lugar donde ubicar las clases y de establecer las variables
+de entorno necesarias. </p>
+<p>Para la creaci&oacute;n de nuestras propias extensiones necesitaremos empaquetar
+todas las clases de nuestra extensi&oacute;n en un fichero JAR, por lo que
+a continuaci&oacute;n veremos como trabajar con este tipo de ficheros.  </p>
+<h2 class="subsection">6.2. Ficheros JAR </h2>
+<p>A parte de permitirnos crear extensiones de Java, los ficheros JAR tienen 
+varias ventajas: </p>
+<ul>
+  <li> <b>Seguridad</b>: Los ficheros JAR pueden estar <i>firmados</i> digitalmente, 
+    de forma que cuando el usuario confíe en la firma podr&aacute; otorgar permisos 
+    a la aplicaci&oacute;n.</li>
+  <li> <b>Descarga</b>: Al estar contenidas todas las clases en un &uacute;nico 
+    fichero el tiempo de descarga disminuye, ya que no necesita establecer una 
+    conexi&oacute;n por cada fichero por separado. Adem&aacute;s es posible <b> 
+    comprimir</b> el contenido del fichero JAR siendo esto totalmente transparente 
+    a la hora de usar las clases contenidas en &eacute;l.</li>
+  <li> <b>Versiones</b>: Los ficheros JAR permiten incluir informaci&oacute;n 
+    sobre la versi&oacute;n. Adem&aacute;s podemos <b>sellar</b> los paquetes 
+    contenidos en el fichero JAR, de forma que todo el contenido del paquete deber&aacute; 
+    estar dentro del fichero JAR, asegurando as&iacute; la consistencia en las 
+    versiones.</li>
+  <li> <b>Portabilidad</b>: Al ser el mecanismo de los ficheros JAR un est&aacute;ndar 
+    de la plataforma Java estos ficheros ser&aacute;n portable a cualquier sistema 
+    que cuente con Java.
+	</li>
+</ul>
+<p>Los ficheros JAR utilizan el formato ZIP, por lo que podremos 
+    abrirlos con cualquier aplicaci&oacute;n que trabaje con ficheros ZIP. De 
+    todas formas Java incorpora una herramienta para trabajar con estos ficheros 
+    JAR, llamada <i>jar</i>. Con ella podremos empaquetar o extraer el contenido 
+    de un fichero JAR, y realizar otras operaciones propias de este formato. Para 
+    empaquetar una serie de ficheros de entrada en un JAR haremos lo siguiente: 
+</p>
+ <pre class="codigo">jar cvf fichero_jar ficheros_de_entrada</pre>
+Los par&aacute;metros utilizados significan los siguiente: <br>
+&nbsp; 
+  <table border="1" width="92%">
+ <tbody>
+      <tr>
+ <td><b>c</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+  <td>Indica que la acci&oacute;n a realizar es comprimir (empaquetar) una 
+serie de ficheros en un JAR.</td>
+ </tr>
+  <tr>
+ <td><b>v</b></td>
+  <td>Verbose. Provoca que muestre por pantalla las operaciones que vaya realizando.</td>
+ </tr>
+  <tr>
+ <td><b>f</b></td>
+  <td>Indica que la salida debe ir a un fichero en lugar de a la salida est&aacute;ndar. 
+Este fichero es el que especificamos como par&aacute;metro fichero_jar.</td>
+ </tr>
+ 
+    </tbody>
+  </table>
+  
+  <p>Ahora podemos visualizar el contenido de nuestro fichero JAR cambiando 
+el par&aacute;metro de la acci&oacute;n a realizar por <b>t</b>. </p>
+  
+<pre class="codigo">jar tf fichero_jar</pre>
+<table border="1" width="93%">
+ <tbody>
+        <tr>
+ <td><b>t&nbsp;&nbsp; &nbsp; &nbsp;</b></td>
+  <td>Indica que la acci&oacute;n a realizar es comprobar (test) el contenido 
+del JAR, mostrando todos los ficheros que contiene.</td>
+ </tr>
+ 
+      </tbody>
+    </table>
+  
+    <p>Si hacemos esto veremos que adem&aacute;s de los ficheros especificados 
+dentro del JAR de ha incluido el fichero <b>META-INF/MANIFEST.MF</b>. Este 
+fichero de <i>manifiesto</i> est&aacute; incluido en todos los JAR, y contiene 
+informaci&oacute;n sobre su contenido. </p>
+    <p>Podemos ahora extraer todo el contenido del JAR cambiando el comando 
+de acci&oacute;n por <b>x</b>. </p>
+    
+<pre class="codigo">jar xvf fichero_jar</pre>
+<table border="1" width="93%">
+ <tbody>
+          <tr>
+ <td><b>x&nbsp;</b></td>
+  <td>Indica que la acci&oacute;n a realizar es extraer el contenido del JAR.</td>
+ </tr>
+ 
+        </tbody>
+      </table>
+  
+      <p>Con esto se extraer&aacute;n todos los ficheros, incluido el <i>
+manifiesto</i>, pudiendo as&iacute; editar dicho fichero con cualquier editor
+ASCII. En este caso veremos el <i>manifiesto</i> por defecto que se incluye
+en los ficheros JAR. Podemos a&ntilde;adir l&iacute;neas al <i>manifiesto</i>
+, para ello deberemos crear un fichero con la informaci&oacute;n que queramos 
+a&ntilde;adir, e incluirlo al crear el JAR para que a la l&iacute;neas por
+defecto, a&ntilde;ada los datos que nosotros hayamos incluido. Esto lo haremos
+con: </p>
+      
+<pre class="codigo">jar cmf fichero_manifiesto fichero_jar ficheros_de_entrada</pre>
+Para trabajar con <i>manifiestos </i>tenemos los siguientes par&aacute;metros: 
+        <br>
+&nbsp; 
+        <table border="1" width="94%">
+ <tbody>
+            <tr>
+ <td width="5%"><b>M</b>&nbsp;</td>
+  <td width="95%">Indica que no se debe incluir el <i>manifiesto</i> por defecto.</td>
+ </tr>
+  <tr>
+ <td><b>m</b></td>
+  <td>Indica que se deben a&ntilde;adir las líneas del fichero <i>manifiesto</i> que especifique 
+el usuario.</td>
+ </tr>
+ 
+          </tbody>
+        </table>
+  
+        
+<p>Una vez tengamos nuestras clases empaquetadas en un fichero JAR, para utilizarlas 
+  bastar&aacute; con tener incluido el fichero JAR en el CLASSPATH. De esta forma 
+  las clases ser&aacute;s accesibles de la misma forma que si estuviesen directamente 
+  en el CLASSPATH sin empaquetar. Para a&ntilde;adir un fichero JAR al CLASSPATH 
+  tendremos que incluir el fichero JAR con su ruta absoluta en esta variable de 
+  entorno:</p>
+<pre class="codigo">SET CLASSPATH=%CLASSPATH%;c:\ruta\fichero.jar</pre>
+<p>Tambi&eacute;n podemos indicar el CLASSPATH del fichero JAR directamente en 
+  la l&iacute;nea de comandos al ejecutar nuestra aplicaci&oacute;n <b>ClasePrincipal</b>:</p>
+<pre class="codigo">java -cp c:\ruta\fichero.jar ClasePrincipal</pre>
+<p>En el caso de que empaquetemos una aplicaci&oacute;n, podremos definir una 
+  clase principal de forma que el fichero JAR sea autoejecutable simplemente escribiendo: 
+</p>
+        
+<pre class="codigo">java -jar fichero_jar</pre>
+<p>Adem&aacute;s, en Windows al hacer doble click sobre este fichero JAR tambi&eacute;n 
+se ejecutar&aacute;, ya que este tipo de ficheros estar&aacute;n asociados 
+con el int&eacute;rprete Java. Para hacer este JAR ejecutable deberemos definir
+cu&aacute;l es la clase principal que se va a ejecutar, cosa que haremos
+en el fichero <i>manifiesto</i>. Para ello deberemos incluir un fichero <i>
+manifiesto</i> que a&ntilde;ada la l&iacute;nea: </p>
+          
+<pre class="codigo">Main-Class: MiClasePrincipal</pre>
+<p>En el caso de los <i>Applets</i>, para cargar un <i>Applet</i> desde un JAR deberemos 
+especificar el fichero JAR en el atributo ARCHIVE del tag APPLET, como se muestra 
+a continuaci&oacute;n: </p>
+<pre class="codigo">&lt;applet code=MiApplet.class
+		archive=&quot;AppletJAR.jar&quot;&gt;
+&lt;/applet&gt;</pre>
+<div class="subsection">
+  <h2>6.3. Creación de nuestras propias extensiones</h2>
+</div>
+  
+              <p>Lo primero que deberemos hacer cuando queramos crear un
+extensi&oacute;n es seleccionar todos los paquetes y clases que formar&aacute;n
+parte de la API de nuestra extensi&oacute;n y empaquetarlos en un &uacute;nico
+fichero JAR. </p>
+              <p>Una vez tengamos el fichero JAR, deberemos a&ntilde;adirlo
+como extensi&oacute;n, teniendo dos alternativas para ello: <br>
+&nbsp; </p>
+              <ul>
+ <li> Incluir el JAR en el directorio de extensiones, con lo que la plataforma 
+localizar&aacute; el fichero en el directorio e incluir&aacute; la API contenida
+en &eacute;l al n&uacute;cleo de Java. Esta ser&aacute; una extensi&oacute;n 
+                  <i>instalada</i>.</li>
+  <li> Otra posibilidad es hacer referencia al fichero JAR desde un <i>manifiesto</i>
+, en este caso ser&aacute; una extensi&oacute;n <i>descargada</i>.</li>
+ 
+              </ul>
+<p>En el caso de las extensiones <i>instaladas</i>, deberemos copiar el JAR 
+dentro del directorio del JRE (Java Runtime Environment), en el subdirectorio <i>lib/ext</i>. JDK incluye JRE como un subdirectorio suyo, por lo que en este caso
+la ruta completa donde habr&aacute; que incluir los JAR ser&aacute;: </p>
+              
+<pre class="codigo">{java.home}/jre/lib/ext/</pre>
+<p>Con esto la extensi&oacute;n se habr&aacute; incluido en la plataforma Java
+instalada en nuestra m&aacute;quina, permitiendo que cualquier programa Java
+que se ejecute en ella pueda utilizarla directamente. </p>
+                <p>Sin embargo, pensemos en el caso de un <i>Applet</i> que necesita
+utilizar una determinada extensi&oacute;n. En este caso no podemos suponer
+que cualquiera que visite dicho <i>Applet</i> va a tener instalada la extensi&oacute;n
+necesaria. En este caso ser&aacute; m&aacute;s apropiado utilizar extensiones
+                <i>descargadas</i>. Para utilizar una extensi&oacute;n <i>
+descargada</i>, deberemos incluir en el <i>manifiesto</i> del JAR que contiene
+el <i>Applet</i> la siguiente l&iacute;nea: </p>
+                
+<pre class="codigo">Class-Path: fichero_jar</pre>
+<p>De esta forma sabr&aacute; que para ejecutar el <i>Applet</i> deber&aacute; descargar 
+la extensi&oacute;n especificada en esta l&iacute;nea. </p>
+                  <p>Para la carga de clases, Java buscar&aacute; en el siguiente
+orden: </p>
+                  <ol>
+ <li> Clases principales de Java (rt.jar, i18n.jar).</li>
+  <li> Extensiones instaladas</li>
+  <li> Classpath</li>
+ 
+                  </ol>
+  
+                  <div class="subsection">
+  <h2>6.4. Extensiones existentes</h2>
+</div>
+  
+                  <p>En la p&aacute;gina de Sun podemos encontrar una larga
+lista de extensiones de Java desarrolladas por ellos, que podremos descargar
+e instalar ampliando de esta manera la API de Java. A continuaci&oacute;n
+veremos las principales extensiones disponibles y una descripci&oacute;n
+de cada una de ellas: </p>
+                  <ul>
+ <li><b>Java Communications</b>: Esta API puede ser utilizada para hacer
+aplicaciones de comunicaciones (voz, fax, etc) independientes de la plataforma.
+Nos permitir&aacute; el acceso a los puertos serie y paralelo.</li>
+                    <li><b>Javamail</b>: Proporciona una serie de clases
+que permitir&aacute;n construir nuestro propio sistema de correo y mensajer&iacute;a
+utilizando tecnolog&iacute;a Java. Incorpora un proveedor de servicio POP3.</li>
+                    <li><b>Java 3D</b>: Nos permitir&aacute; incluir de forma
+sencilla e independiente de la plataforma gr&aacute;ficos 3D en nuestras
+aplicaciones. Incorpora una sencilla interfaz de alto nivel que nos permitir&aacute;
+definir mundos 3D y controlar el render y la conducta de los objetos 3D.</li>
+                    <li><b>Java Media Framework</b>: Permite incorporar a
+nuestras aplicaciones y <i>Applets</i> elementos multimedia, como puede ser audio
+y video. Con esta API podremos reproducir, capturar y trabajar con flujos
+(streaming) de varios tipos de medios.</li>
+                    <li><b>Java Advanced Imaging</b>: Esta API proporciona
+funcionalidades para el procesamiento de im&aacute;genes con un alto rendimiento,
+de forma independiente a la plataforma. Proporciona una interfaz orientada
+a objetos que permite manipular im&aacute;genes de forma sencilla.</li>
+                    <li><b>JavaBeans Activation Framework</b>: Permite averiguar
+el tipo de unos datos determinados (por ejemplo una imagen), encapsular el
+acceso a estos datos y averiguar las operaciones que podemos hacer con ellos,
+pudiendo instanciar el <i>bean </i>correspondiente para realizar estas operaciones.</li>
+                    <li><b>Infobus</b>: Permite la comunicaci&oacute;n entre
+JavaBeans, definiendo una serie de interfaces entre los <i>beans </i>que
+colaboran y un protocolo de comunicaciones para estas interfaces.</li>
+                    <li><b>Java Cryptography Extension</b>: Consiste en una
+serie de paquetes que proporcionan funcionalidades de encriptaci&oacute;n
+y generaci&oacute;n de claves.</li>
+                    <li><b>JavaHelp</b>: Permite a los desarrolladores incorporar
+ayuda en l&iacute;nea a los programas que realicen, de forma independiente
+de la plataforma.</li>
+ 
+                  </ul>
+
+<h2>6.5. Java 3D y JAI</h2>
+
+<h3>6.5.1. Java 3D</h3>
+<p><b>Introducción</b></p>
+<p>
+<b>Java 3D</b> es una extensi&oacute;n de Java utilizada para desarrollar
+aplicaciones que incorporen <b>gr&aacute;ficos tridimensionales</b> . Se
+construyen con ella objetos geom&eacute;tricos y se colocan en un <b>universo
+virtual</b>, que luego es renderizado.</p>
+<p>Los objetos de un programa Java 3D se colocan en una <b>estructura de
+tipo &aacute;rbol</b>, llamada <b>grafo de escena</b>, que define un <b>universo
+virtual</b>:
+<div align="center"><img SRC="imagenes/j3d/sencillo.gif" NOSAVE height=381 width=574></div>
+
+
+<p class="caption">Figura 1. Grafo de escena en Java 3D
+<p>El grafo tiene como ra&iacute;z un <b>universo virtual</b> (<i>VirtualUniverse</i>
+o <i>SimpleUniverse</i>) . El <i>Locale</i> define un <b>sistema de coordenadas</b>.
+De este objeto parten <b>nodos de grupo</b> (<i> BranchGroup</i> ), que
+nos definen un subgrafo. Los <b>nodos de transformaci&oacute;n</b> (<i>TransformGroup</i>)
+permiten aplicar transformaciones (<i> Transform3D</i> ) a sus hijos. Los
+<b>nodos hojas</b> ser&aacute;n los objetos 3D. Podr&aacute;n ser <b>formas
+geom&eacute;tricas</b> (<i>Shape3D</i> ), <b>puntos de vista de la c&aacute;mara</b>,
+etc. Podemos definir tanto la geometr&iacute;a como la apariencia de los
+objetos. Los nodos de <b>comportamiento</b> (<i>Behavior</i> ) pueden o
+no aparecer, y permiten la interacci&oacute;n y el movimiento de los objetos.
+La <b>plataforma de vista </b>(<i> ViewPlatform</i> ) permite tratar la
+posici&oacute;n del observador.
+<p>&nbsp;
+<p><b>Pasos para construir un mundo 3D</b>
+<p>
+A la hora de generar nuestro mundo virtual 3D, el resultado ser&aacute;
+un conjunto de elementos&nbsp; interconectados formando el mundo. El proceso
+de creaci&oacute;n del mundo consta de varios pasos.
+Si el universo no es demasiado complejo podemos utilizar un objeto <b>SimpleUniverse</b>,
+que simplifica bastante la tarea de definir el mundo virtual, aunque
+no permite tener varias vistas simult&aacute;neas.&nbsp; Vemos <b>ejemplos</b>
+de construcci&oacute;n de cada universo:</p>
+<table BORDER=0 CELLSPACING=2 CELLPADDING=2 WIDTH="83%" >
+<tbody>
+</tbody>
+
+<tr>
+<td VALIGN=TOP>
+<center><b>Universo Complejo</b>
+<p><a href="ejemplos/j3d/EjemploUnivComplejo.java">C&oacute;digo</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ejemplos/j3d/EjemploUnivComplejo.html">
+Applet</a></center>
+</td>
+
+<td VALIGN=TOP>
+<center><b>Universo Simple</b>
+<p><a href="ejemplos/j3d/EjemploUnivSimple.java">C&oacute;digo</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ejemplos/j3d/EjemploUnivSimple.html">
+Applet</a></center>
+</td>
+</tr>
+</table>
+
+&nbsp;
+<p><b>Objetos primitivos</b></p>
+<p>
+Java 3D incorpora una serie de objetos primitivos, descendientes de la
+clase objeto geom&eacute;trico gen&eacute;rica (<b>Shape3D</b>). Dichos
+elementos son:</p>
+<table BORDER=0 CELLSPACING=2 CELLPADDING=2 WIDTH="83%" >
+<tbody>
+</tbody>
+
+<tr>
+<td VALIGN=TOP>
+<center><img SRC="imagenes/j3d/caja.gif" ALT="" NOSAVE height=84 width=86></center>
+
+<br>&nbsp;</td>
+
+<td VALIGN=TOP>La<b> caja (Box)</b>: define un cubo indicando las longitudes
+de las aristas X, Y y Z:&nbsp;
+<pre class="codigo">Box(float dimX, float dimY, float dimZ)</pre>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><img SRC="imagenes/j3d/cono.gif" ALT="" NOSAVE height=79 width=81></center>
+
+<br>&nbsp;</td>
+
+<td VALIGN=TOP>El <b>cono (Cone)</b>: define un cono dados un radio (radio
+de la base) y una altura&nbsp;
+<pre class="codigo">Cone(float radio, float altura)</pre>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><img SRC="imagenes/j3d/cilindro.gif" ALT="" NOSAVE height=90 width=82></center>
+
+<br>&nbsp;</td>
+
+<td VALIGN=TOP>El <b>cilindro (Cylinder)</b>: define un cilindro, dados
+un radio y una altura&nbsp;
+<pre class="codigo">Cylinder(float radio, float altura)</pre>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><img SRC="imagenes/j3d/esfera.gif" ALT="" NOSAVE height=87 width=83></center>
+
+<br>&nbsp;</td>
+
+<td VALIGN=TOP>La <b>esfera (Sphere)</b>: define una esfera, dado un radio&nbsp;
+<pre class="codigo">Sphere(float radio)</pre>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<center><img SRC="imagenes/j3d/cubocolor.gif" ALT="" NOSAVE height=87 width=88></center>
+
+<br>&nbsp;</td>
+
+<td VALIGN=TOP>El <b>cubo de color (ColorCube)</b>: define un cubo con
+un color en cada cara. Se pasa como par&aacute;metro una escala con respecto
+a un tama&ntilde;o de arista de 2 metros.&nbsp;
+<pre class="codigo">ColorCube(double escala)</pre>
+</td>
+</tr>
+</table>
+
+<p>Se pueden construir objetos complejos combinando estos objetos simples.
+Adem&aacute;s, Java 3D permite a&ntilde;adir texto 2D, texto 3D, pol&iacute;gonos
+y otras figuras.
+<br>&nbsp;
+<p><b>Transformaciones en objetos</b>
+<p>
+Un <b>sistema de coordenadas</b> en Java 3D es como sigue: el eje <b>X</b>
+es positivo hacia la derecha, el eje <b>Y</b> es positivo hacia arriba
+y el eje <b>Z</b> es positivo hacia el observador. Las distancias se miden
+en <b>metros</b> y los &aacute;ngulos en <b>radianes</b> .</p>
+<p>Los objetos <b>Transform3D</b> representan transformaciones geom&eacute;tricas
+3D, que pueden ser traslaciones, rotaciones, escalados o una combinaci&oacute;n
+de estos. Internamente, es una matriz de 4x4 <i>doubles</i>.&nbsp; Se
+tienen, entre otros, los m&eacute;todos:
+<table BORDER CELLSPACING=2 CELLPADDING=2 WIDTH="90%" >
+<caption></caption>
+<tbody>
+</tbody>
+
+<tr>
+<td VALIGN=TOP WIDTH="46%">
+<pre class="codigo">void rotX(double angulo)
+void rotY(double angulo)
+void rotZ(double angulo)</pre>
+</td>
+
+<td width="54%" VALIGN=TOP>Especifican una <b>rotaci&oacute;n </b>en sentido antihorario
+sobre el eje que se indica (&aacute;ngulo en radianes entre 0 y 2 PI)</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<pre class="codigo">void setTranslation(
+        Vector3f traslacion)</pre>
+</td>
+
+<td VALIGN=TOP>Indica una <b>traslaci&oacute;n</b> , indicando directamente
+el vector de traslaci&oacute;n (componentes X, Y y Z)</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP>
+<pre class="codigo">void setScale(double escala)
+void setScale(Vector3d escala)</pre>
+</td>
+
+<td VALIGN=TOP>Se emplean para <b>escalados</b> (bien uniforme, bien definiendo
+una escala para cada dimensi&oacute;n)</td>
+</tr>
+</table>
+
+<p>Mediante el m&eacute;todo <b>mul(...)</b>  de <i>Transform3D </i>podremos formar transformaciones
+complejas multiplicando las simples.
+<p>Los objetos <b>TransformGroup</b> son contenedores de transformaciones
+geom&eacute;tricas, de modo que a todos los nodos contenidos en un nodo
+<i>TransformGroup</i> se les aplica dicha transformaci&oacute;n. Podemos
+indicar qu&eacute; transformaci&oacute;n aplicar con el m&eacute;todo:
+<pre class="codigo">void setTransform(Transform3D trans)</pre>
+El siguiente <b>ejemplo</b> muestra un cubo rotado en X e Y, y desplazado
+en X:
+<center>
+<p><a href="ejemplos/j3d/EjemploTrans.java">C&oacute;digo</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ejemplos/j3d/EjemploTrans.html">
+Applet</a></center>
+
+<p><b>Otras características</b></p>
+<p>
+Java 3D permite a&ntilde;adir a nuestros mundos virtuales otras posibilidades,
+que comentamos aqu&iacute; brevemente:</p>
+<ul>
+<li>
+Podemos definir la <b>apariencia </b>de los objetos: colores, forma de
+dibujar los pol&iacute;gonos, atributos para aristas, v&eacute;rtices,
+etc, mediante la clase <i>Appearance</i>.</li>
+
+<li>
+Podemos <b>interactuar </b>con el mundo, y movernos por &eacute;l, o mover
+objetos.</li>
+
+<li>
+Podemos realizar <b>animaciones</b>, y mover objetos o cambiarles caracter&iacute;sticas.</li>
+
+<li>
+Podemos a&ntilde;adir <b>luces </b>al mundo virtual.</li>
+
+<li>
+Podemos pegar <b>texturas </b>a los objetos y darles as&iacute; mayor riqueza.</li>
+</ul>
+
+<table BORDER=0 CELLSPACING=2 CELLPADDING=2 >
+<caption></caption>
+<tbody>
+</tbody>
+
+<tr>
+<td VALIGN=TOP WIDTH="318">
+<center><img SRC="imagenes/j3d/j3dfly.jpg" ALT="" NOSAVE height=217 width=297></center>
+
+<div class="caption"></div>
+
+<p class="caption">Figura 2. Ejemplo de aplicaci&oacute;n de Sun</p></td>
+
+<td VALIGN=TOP WIDTH="230">
+<br>En este ejemplo pod&eacute;is ver algunas de las caracter&iacute;sticas
+de Java 3D. Es una aplicaci&oacute;n <b>desarrollada por Sun</b>, que permite
+navegar por mundos 3D:&nbsp;
+<p>Pod&eacute;is descargar <a href="ejemplos/j3d/j3dfly-1_0-beta-win.exe">aqu&iacute;</a>
+la aplicaci&oacute;n y <a href="ejemplos/j3d/j3dfly-1_0-beta-src.zip">aqu&iacute;</a>
+el c&oacute;digo fuente.&nbsp;
+<br>&nbsp;
+<br>&nbsp;</td>
+</tr>
+</table>
+
+<h2>
+</h2>
+
+<h3>6.5.2. JAI (Java Advanced Imaging)</h3>
+<b>Introducción</b>
+<p>
+<b>JAI</b> (<i>Java Advanced Imaging</i>) es una librer&iacute;a est&aacute;ndar
+de Java para la manipulaci&oacute;n y el tratamiento de im&aacute;genes.
+Extiende la plataforma Java permitiendo a&ntilde;adir procesamiento de
+im&aacute;genes sofisticado y de alto nivel. Puede encontrarse informaci&oacute;n
+actualizada sobre JAI en:</p>
+<p>
+<center><a href="http://www.java.sun.com/products/java-media/jai/">http://www.java.sun.com/products/java-media/jai/</a></center>
+
+</p>
+
+<p><br>JAI pretende ser una librer&iacute;a que soporte casi cualquier
+tipo de procesamiento de im&aacute;genes. Ofrece algunas ventajas con respecto
+a otras librer&iacute;as de procesamiento de im&aacute;genes:
+<ul>
+<li>
+Al estar hecha en Java, proporciona <b>independencia de la plataforma</b>
+.</li>
+
+<li>
+Est&aacute; preparada para funcionar en <b>arquitecturas cliente-servidor</b>
+mediante RMI.</li>
+
+<li>
+Es <b>flexible</b> y <b>extensible</b>.</li>
+
+<li>
+Es <b>independiente del dispositivo</b> de captura que podamos tener.</li>
+
+<li>
+Permite <b>tratar im&aacute;genes divididas en regiones</b> (tiles).</li>
+</ul>
+<p>En JAI se unifican los conceptos de imagen y operador, haci&eacute;ndolos
+subclases de una misma clase padre. Un objeto de tipo operador tomar&aacute;
+una o m&aacute;s im&aacute;genes fuente, y otros par&aacute;metros, y generar&aacute;
+un resultado. Este mismo operador puede convertirse en una fuente para
+otro operador, formando as&iacute; un <b>grafo del procesamiento</b> de
+im&aacute;genes.</p>
+<p><b>Ejemplo: </b>El siguiente <a href="ejemplos/jai/EjemploJAI1.java">ejemplo</a>
+lee una <a href="ejemplos/jai/earth.jpg">imagen</a>, la escala al doble de
+su tama&ntilde;o y muestra el resultado.
+<p>&nbsp;</p>
+<p><b>Tratamiento de imágenes</b></p>
+<p>
+JAI soporta 3 modelos de im&aacute;genes:</p>
+<ul>
+<li>
+El modelo <b>productor/consumidor</b> (push), el modelo b&aacute;sico de
+AWT.&nbsp; En este modelo un objeto de tipo <i>Image</i> se emplea para
+obtener una referencia a un productor (<b> ImageProducer</b>). Estos objetos
+est&aacute;n asociados a su vez a consumidores (<b>ImageConsumer</b>).
+Los filtros implementan ambas interfaces.</li>
+</ul>
+
+<ul>
+<li>
+El modelo de <b>modo inmediato</b>, un modelo avanzado de AWT.&nbsp; Este
+modelo mantiene algunas de las caracter&iacute;sticas del modelo anterior,
+pero a&ntilde;ade conceptos como un conjunto de filtros para im&aacute;genes
+2D, m&aacute;s variedad de formatos de datos, etc. Se introduce el concepto
+de <b>independencia del renderizado</b> , el describir una imagen tal y
+como queremos verla, sin una instancia espec&iacute;fica de la misma. Se
+a&ntilde;aden las capas:</li>
+</ul>
+
+<ul>
+<ul>
+<li>
+<b>Renderable</b>, con la que podemos manejar im&aacute;genes independientemente
+del renderizado, que s&oacute;lo renderizan la imagen ante una petici&oacute;n
+concreta. Las clases <b>RenderableImage</b> y <b>RenderableImageOp</b>
+permiten definir im&aacute;genes y operadores de este tipo, respectivamente.</li>
+</ul>
+</ul>
+
+<ul>
+<ul>
+<li>
+<b>Rendered</b>, con la que se obtienen im&aacute;genes para un contexto
+dado. Las clases <b>RenderedImage</b> y <b>RenderedImageOp</b> permiten,
+respectivamente, definir im&aacute;genes y operadores en esta capa.</li>
+</ul>
+</ul>
+
+<ul>
+<li>
+El modelo de <b>tuber&iacute;a</b> (pull), el modelo propio de JAI. Se
+vale del modelo anterior, proporcionando clases que extienden de Renderable
+y Rendered.</li>
+</ul>
+
+<h3>&nbsp;
+</h3>
+<b>Programar con JAI</b>
+<p>
+Una operaci&oacute;n de procesado de imagen en JAI puede resumirse en los
+pasos:</p>
+<ul>
+<li>
+<b>Obtener la imagen</b> o im&aacute;genes que se van a manipular (las
+fuentes). Podemos obtenerlas de un fichero (GIF, JPEG, etc), de un servidor
+remoto, o generar la imagen.</li>
+
+<li>
+Definir el <b>grafo de procesamiento de im&aacute;genes</b> . Esto consiste
+en definir qu&eacute; operadores utilizar y c&oacute;mo conectarlos (qu&eacute;
+imagenes preceden a qu&eacute; otras)</li>
+
+<li>
+<b>Procesar el resultado</b>:guardar la imagen en un fichero, mostrarla
+por pantalla, etc.</li>
+</ul>
+
+<blockquote>
+<o:p></o:p><o:p></o:p>
+<p><b>Obtención de imágenes</b></p>
+<p>Veremos c&oacute;mo leer im&aacute;genes de ficheros.
+Tenemos 3 alternativas:</p>
+<ul>
+<li>
+Leer im&aacute;genes cualesquiera (con un formato soportado por JAI, como
+GIF, JPEG, BMP, etc), mediante un <b>stream</b> de datos. Aplicamos el
+operador <i>"stream"</i>, pasando un <i>SeekableStream</i> del que leer
+la imagen:</li>
+</ul>
+
+  <ul>
+    <pre class="codigo">FileSeekableStream stream = 
+		new FileSeekableStream(&quot;img.jpg&quot;);
+RenderedOp img1 = JAI.create(&quot;stream&quot;, stream);</pre>
+  </ul>
+
+<ul>
+<li>
+Leer im&aacute;genes con <b>FileLoad</b> , aplicamos el operador del mismo
+nombre (siempre que el formato sea soportado por JAI):</li>
+</ul>
+
+  <ul>
+    <pre class="codigo">RenderedImage r=
+    (RenderedImage)JAI.create(&quot;fileload&quot;,&quot;f.gif&quot;);</pre>
+  </ul>
+
+<ul>
+<li>
+Leer im&aacute;genes con un <b>formato concreto</b> (por ejemplo, un fichero
+PNG). Se utiliza el operador correspondiente, con los par&aacute;metros
+que necesiten:</li>
+</ul>
+
+<ul>
+<pre class="codigo">InputStream is = new FileInputStream(&quot;imagen.png&quot;);
+ParameterBlock pb = new ParameterBlock();
+pb.add(is);
+RedenderedOp op = JAI.create(&quot;PNG&quot;, pb);</pre>
+</ul>
+
+<h3>&nbsp;
+</h3>
+<o:p></o:p><o:p></o:p><b>El grafo de procesamiento</b>
+<p>Veamos ahora c&oacute;mo componer grafos de procesamiento.
+Los nodos son las im&aacute;genes / operadores que intervienen en el proceso.
+Se tienen 2 tipos de grafos:</p>
+<p>Los grafos <b>renderizados</b> son la forma m&aacute;s simple de renderizado.
+Son necesarios cuando se requiere trabajar directamente con los p&iacute;xeles.
+Se componen de objetos <b>Rendered</b> , que normalmente son instancias
+de la clase <b>RenderedOp</b> . Las im&aacute;genes fuente son objetos
+<b>RenderedImage</b> .
+<p><b>Ejemplo:</b> El siguiente <a href="ejemplos/jai/EjemploJAI2.java">ejemplo</a>
+crea dos im&aacute;genes constantes y las suma:
+<pre class="codigo">ParameterBlock param1 = new ParameterBlock();
+ParameterBlock param2 = new ParameterBlock();
+...
+RenderedOp im0 = JAI.create(&quot;constant&quot;, param1);
+RenderedOp im1 = JAI.create(&quot;constant&quot;, param2);
+RenderedOp im2 = JAI.create(&quot;add&quot;, im0, im1);</pre>
+<p>Los grafos <b>renderizables</b> se eval&uacute;an m&aacute;s tarde, cuando exista 
+  alguna petici&oacute;n de renderizado. Se construyen con nodos <b>RenderableImage</b>, 
+  que normalmente son instancias de la clase <b>RenderableOp</b> . </p>
+  <p><b>Ejemplo:</b> El siguiente <a href="ejemplos/jai/EjemploJAI3.java">ejemplo</a>
+lee una imagen, invierte los valores de los p&iacute;xeles y a&ntilde;ade
+un valor constante a los mismos.
+<pre class="codigo">RenderableImage ren = JAI.createRenderable(&quot;renderable&quot;, pb);
+<b>// Operación de inversión
+</b>ParameterBlock pb1 = new ParameterBlock();
+pb1.addSource(ren);
+RenderableOp Op1 = JAI.createRenderable(&quot;invert&quot;, pb1);
+<b>// Operación de suma de constante
+</b>ParameterBlock pb2 = new ParameterBlock();
+pb2.addSource(Op1);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+pb2.add(2.0f);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+RenderableOp Op2 = JAI.createRenderable(&quot;addconst&quot;, pb2);</pre>
+</blockquote>
+
+<h3>&nbsp;
+</h3>
+
+<p>
+<b>Operaciones</b></p>
+
+<div class="Section1">
+<blockquote>
+<o:p></o:p><o:p></o:p><b>Operadores JAI</b>
+<p>A continuaci&oacute;n se muestran algunos de los
+operadores de JAI para procesamiento de im&aacute;genes, separados en categor&iacute;as:</p>
+<p><b>1. Operadores de punto</b>
+<p>Estos operadores transforman una imagen de entrada en una de salida
+de forma que cada p&iacute;xel de salida depende &uacute;nicamente del
+correspondiente p&iacute;xel de entrada. Se tienen, entre muchas otras,
+las operaciones:
+    <table BORDER WIDTH="84%" >
+      <caption></caption>
+<tbody>
+</tbody>
+
+<tr>
+<td WIDTH="30%">
+<center><b>Add, Substract, Multiply, Divide</b></center>
+</td>
+
+<td WIDTH="84%">Suman / restan / multiplican / dividen dos im&aacute;genes&nbsp;</td>
+</tr>
+
+<tr>
+<td WIDTH="16%">
+<center><b>And, Or, Not, Xor</b></center>
+</td>
+
+<td WIDTH="84%">Realizan operaciones l&oacute;gicas con im&aacute;genes</td>
+</tr>
+
+<tr>
+<td WIDTH="16%">
+<center><b>Constant</b></center>
+</td>
+
+<td WIDTH="84%">Forma im&aacute;genes con valores constantes</td>
+</tr>
+</table>
+
+<p><b>2. Operadores de &aacute;rea</b>
+<p>Estos operadores transforman una imagen de entrada en una de salida
+de forma que cada p&iacute;xel de salida depende del correspondiente p&iacute;xel
+de entrada y una regi&oacute;n de p&iacute;xeles a su alrededor. Se tienen,
+entre otras, las operaciones:
+<table BORDER WIDTH="84%" >
+<caption></caption>
+<tbody>
+</tbody>
+
+<tr>
+<td WIDTH="16%">
+<center><b>BoxFilter</b></center>
+</td>
+
+<td WIDTH="84%">Aplica un filtro de media con los puntos de una vecindad</td>
+</tr>
+
+<tr>
+<td WIDTH="16%">
+<center><b>Convolve</b></center>
+</td>
+
+<td WIDTH="84%">Aplica una convoluci&oacute;n con un n&uacute;cleo determinado&nbsp;</td>
+</tr>
+
+<tr>
+<td WIDTH="16%">
+<center><b>MedianFilter</b></center>
+</td>
+
+<td WIDTH="84%">Aplica un filtro de mediana con los puntos de una vecindad</td>
+</tr>
+</table>
+
+<p><b>3. Operadores geom&eacute;tricos</b>
+<p>Estos operadores permiten modificar la orientaci&oacute;n, tama&ntilde;o
+y forma de una imagen. Se tienen, entre otras, las operaciones:
+<table BORDER WIDTH="84%" >
+<caption></caption>
+<tbody>
+</tbody>
+
+<tr>
+<td WIDTH="30%">
+<center><b>Rotate, Scale, Translate</b></center>
+</td>
+
+<td WIDTH="84%">Aplican rotaciones / escalados / traslaciones a las im&aacute;genes</td>
+</tr>
+</table>
+
+<p><b>4. Operadores de ficheros</b>
+<p>Estos operadores se usan para leer o escribir ficheros de im&aacute;genes.
+Se tienen, entre muchas otras, las operaciones:
+<table BORDER WIDTH="84%" >
+<caption></caption>
+<tbody>
+</tbody>
+
+<tr>
+<td WIDTH="30%">
+<center><b>Stream</b></center>
+</td>
+
+<td WIDTH="84%">Lee una imagen a partir de un&nbsp;<i> SeekableStream</i>
+.</td>
+</tr>
+
+<tr>
+<td WIDTH="16%">
+<center><b>FileLoad, FileStore</b></center>
+</td>
+
+<td WIDTH="84%">Para leer / guardar una imagen de un fichero</td>
+</tr>
+
+<tr>
+<td WIDTH="16%">
+<center><b>GIF, JPEG, PNG, BMP</b></center>
+</td>
+
+<td WIDTH="84%">Para leer im&aacute;genes GIF / JPEG / PNG / BMP</td>
+</tr>
+</table>
+
+<p><b>5. Otros operadores</b>
+<p>Se tienen otros muchos operadores adem&aacute;s de los vistos: operadores
+para convertir entre dominio espacial y frecuencial (mediante transformadas
+de Fourier), operadores estad&iacute;sticos (para histogramas, medias),
+etc.
+<h3>&nbsp;
+</h3>
+</blockquote>
+
+<blockquote><b>Invocar operaciones</b>
+  <p>Para poder llamar a los operadores:</p>
+</blockquote>
+</div>
+
+<blockquote> 
+  <div class="Section1"> 
+    <ul>
+      <li> Para grafos <b>renderizables</b> se tienen, entre otros, los m&eacute;todos:</li>
+    </ul>
+  </div>
+</blockquote>
+<blockquote> 
+  <blockquote> 
+    <div class="Section1"> 
+      <table BORDER CELLSPACING=2 CELLPADDING=2 WIDTH="74%" >
+        <tbody>
+        </tbody>
+        <tr> 
+          <td VALIGN=TOP> <pre class="codigo">createRenderable (String name, 
+                      ParameterBlock pBlock)</pre> </td>
+        </tr>
+        <tr> 
+          <td VALIGN=TOP> <pre class="codigo">createRenderableCollection (String name, 
+                      ParameterBlock pBlock)</pre> </td>
+        </tr>
+      </table>
+    </div>
+  </blockquote>
+</blockquote>
+<blockquote> 
+  <ul>
+    <li> Para grafos <b>renderizados</b> se tienen, entre otros, los m&eacute;todos:</li>
+  </ul>
+  <blockquote> 
+    <table BORDER CELLSPACING=2 CELLPADDING=2 WIDTH="74%" >
+      <tbody>
+      </tbody>
+      <tr> 
+        <td VALIGN=TOP> <pre class="codigo">create (String name, ParameterBlock pBlock, 
+             RenderingHints hints)</pre> </td>
+      </tr>
+      <tr> 
+        <td VALIGN=TOP> <pre class="codigo">create (String name, RenderedImage renderedImage, 
+             Object param, Object param2 ...)</pre> </td>
+      </tr>
+    </table>
+  </blockquote>
+  Podremos invocar as&iacute; a las operaciones anteriores, por ejemplo: 
+  <pre class="codigo">RenderableOp im = JAI.createRenderable(&quot;nombre&quot;,paramBlock);
+RenderedOp im2 = JAI.create (&quot;nombre&quot;,imagen param1,param2)</pre>
+  <h3>&nbsp; </h3>
+  <o:p></o:p><o:p></o:p><b>Bloques de parámetros</b> 
+  <p>Los par&aacute;metros que necesitan los operadores se pasan mediante objetos 
+    <b>ParameterBlock</b> o <b>ParameterBlockJAI</b> . El bloque de par&aacute;metros 
+    contiene la imagen o im&aacute;genes fuente de la operaci&oacute;n, y un conjunto 
+    de par&aacute;metros utilizados por dicha operaci&oacute;n, que son objetos.</p>
+  <p>Para <b>a&ntilde;adir una imagen fuente</b> a un bloque de par&aacute;metros 
+    se emplea el m&eacute;todo: <br>
+    &nbsp; 
+  <pre class="codigo">addSource()</pre>
+  Para <b>a&ntilde;adir el resto de par&aacute;metros</b>, debemos distinguir 
+  entre las clases <i>ParameterBlock</i> y <i>ParameterBlockJAI</i>: 
+  <ul>
+    <li> En la clase <i>ParameterBlock</i> , a&ntilde;adiremos par&aacute;metros 
+      con el m&eacute;todo:</li>
+  </ul>
+  <blockquote> 
+    <pre class="codigo">add()</pre>
+  </blockquote>
+  <ul>
+    <li> Con <i>ParameterBlockJAI</i> se emplean los m&eacute;todos <i>set( )</i>:</li>
+  </ul>
+  <blockquote> 
+    <table BORDER=0 CELLSPACING=2 CELLPADDING=2 WIDTH="72%" >
+      <tbody>
+      </tbody>
+      <tr> 
+        <td width="50%" VALIGN=TOP> <pre class="codigo">set(char c,
+    String param)</pre> </td>
+        <td width="50%" VALIGN=TOP> <pre class="codigo">set(double f,
+    String param)</pre> </td>
+      </tr>
+      <tr> 
+        <td VALIGN=TOP> <pre class="codigo">set(int i,
+    String param)</pre> </td>
+        <td VALIGN=TOP> <pre class="codigo">set(Object obj,
+    String param)</pre> </td>
+      </tr>
+    </table>
+  </blockquote>
+  Un ejemplo: aplicamos una rotaci&oacute;n que requiere 4 par&aacute;metros: 
+  la X origen, Y origen, &aacute;ngulo de rotaci&oacute;n e interpolaci&oacute;n. 
+  Los dos primeros valores tienen por defecto 0.0F, y no los vamos a especificar. 
+  <pre class="codigo">interp = Interpolation.create(Interpolation.INTERP_NEAREST);
+ParameterBlockJAI pb = new ParameterBlockJAI();
+pb.addSource(im);
+pb.set(1.2F, “angle”);
+pb.set(interp, “interpolation”);</pre>
+</blockquote>
+
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Ejercicios de Conceptos B&aacute;sicos</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1>Conceptos Básicos de Java</h1>
+<p>
+<b>1. </b>Contestad al siguiente test (en el fichero <i>respuestas.txt</i>):</p>
+<blockquote>
+  <p><b>1.</b> Una clase es...</p>
+<blockquote>a. Un objeto en memoria
+<br>b. La definici&oacute;n de un objeto, especificando campos y m&eacute;todos
+<br>c. Un constructor especial</blockquote>
+  <b>2.</b> Los campos definen el estado, los m&eacute;todos definen funciones
+o cambios, y los constructores definen...
+<blockquote>a. C&oacute;mo construir un objeto como instancia de una clase
+<br>b. Propiedades para poder eliminar luego el objeto de la memoria
+<br>c. Un m&eacute;todo est&aacute;tico que se llama en tiempo de ejecuci&oacute;n
+<br>d. Todas las anteriores</blockquote>
+  <b>3.</b> &iquest;Para qu&eacute; sirven los modificadores?
+<blockquote>a. Indican permisos de lectura o escritura
+<br>b. Indican al compilador si otros paquetes o clases tienen acceso a
+la variable o m&eacute;todo que est&aacute;n modificando
+<br>c. Indican si un objeto realiza una copia del elemento que modifican,
+o si comparten su valor</blockquote>
+  <b>4.</b> Si creamos un subtipo de la clase A, dicho subtipo hereda...
+<blockquote>a. Los m&eacute;todos de A
+<br>b. Los m&eacute;todos de A y de todas las clases de las que herede
+A</blockquote>
+  <b>5.</b> El m&eacute;todo <i>main()</i> de una aplicaci&oacute;n debe
+ir...
+<blockquote>a. En todas las clases de la aplicaci&oacute;n
+<br>b. S&oacute;lo en la clase principal, la que se vaya a ejecutar
+<br>c. En la &uacute;ltima clase instanciada</blockquote>
+</blockquote>
+
+<p><br><b>2.</b> Realizad los siguientes cambios sobre el ejercicio <i>Ej2.java</i>
+(que es el mismo que el ejemplo de cálculo de la hipotenusa), y decid qu&eacute; pasa en el programa
+y por qu&eacute;, contestando en el fichero <i>respuestas.txt</i>. Los cambios no son acumulativos (se realiza cada uno
+sobre el ejemplo base).
+<blockquote>
+  <p><b>a)</b> Si intentamos cambiar uno de los catetos, haciendo CATETO1 = 70,
+  (en el método <i>main()</i>, no directamente sobre la constante):</p>
+  <pre class="codigo">CATETO1 = 70;</pre>
+  <p>&iquest;qu&eacute; pasa en el programa? &iquest;Por qu&eacute;? &iquest;Qu&eacute;
+soluci&oacute;n hay?</p>
+  <b>b)</b> Si quitamos el modificador <i>static</i> del m&eacute;todo <i>hipotenusa(...)</i>
+&iquest;Qu&eacute; sucede? &iquest;Por qu&eacute;? &iquest;Qu&eacute; soluci&oacute;n
+hay?
+  <p><b>c)</b> A la vista de los resultados anteriores, indicad en qu&eacute; condiciones
+y por qu&eacute; funcionan o no funcionan las siguientes llamadas:
+  <pre class="codigo">hipotenusa(CATETO1, CATETO2);
+
+Ej2.hipotenusa(CATETO1, CATETO2);
+
+Ej2 e2 = new Ej2();
+e2.hipotenusa(CATETO1, CATETO2);</pre>
+</blockquote>
+<p><br><b>3.</b> Añadid a la clase <i>Ej3.java</i> el código necesario
+(dentro del método <i>solucion(...)</i>) para que resuelva una ecuaci&oacute;n
+de segundo grado <i>ax&sup2; + bx + c = 0</i>, siendo la f&oacute;rmula
+general:
+<center><img SRC="imagenes/introduccion/ecuacion.jpg" ALT="" height=68 width=142></center><p>El
+método <i>solucion(...)</i> devuelve un array de dos doubles, que son las dos
+soluciones al sistema. Si no hubiese solución, se devolvería <i>null</i>.<pre class="codigo">public double[] solucion(...)
+{
+   double []sol = new double[2];
+   ... //Codigo para resolver el sistema
+   return sol;
+}</pre>
+<p>Probad que el ejemplo funciona para cada
+uno de los casos:
+<ul>
+<li>
+a = 4, b = 1, c = -6</li>
+
+<li>
+a = 4, b = 1, c = 6</li>
+
+<li>
+a = 0, b = 3, c = -1</li>
+
+<li>
+a = 2, b = 0, c = -1</li>
+
+<li>
+a = 2, b = 2, c = 0</li>
+</ul>
+
+<p>Algunos no tienen soluciones reales, otros tienen coeficientes cero que
+pueden dar problemas al dividir, etc. Controlar o no cada uno de estos casos se
+deja como optativo.
+
+<p><br><b>4</b>. Añadid a la clase <i>Ej4.java</i> el código necesario para
+que calcule el factorial de un n&uacute;mero.
+Intentad hacer tanto la versi&oacute;n recursiva como la iterativa:
+<ul>
+<li>
+La versi&oacute;n recursiva (en el método <i>factorialRec()</i>) consiste en un m&eacute;todo que se llama a
+s&iacute; mismo hasta completar el resultado:</li>
+</ul>
+
+<center><i>factorialRec(n) = n &middot; factorialRec(n - 1)</i></center>
+
+<blockquote>
+  <p>Cuando n sea 0 se devuelve 1 y se termina la recursividad.</p>
+</blockquote>
+
+<ul>
+<li>
+La versi&oacute;n iterativa (en el método <i>factorialIter()</i>) consiste en realizar un bucle que vaya acumulando
+el resultado.</li>
+</ul>
+Comprobad que los programas devuelven lo mismo, dejando en el <i>main()</i>
+el código necesario para ver el resultado de los factoriales
+de 30, 5, 1 y 0, por ejemplo.
+<br>&nbsp;<p><b>5.</b> Realizad los siguientes cambios sobre los ficheros de <i>Ej5.zip</i>
+(que es el ejemplo de herencia de clases visto antes). Los cambios no son acumulativos (se
+realiza cada uno sobre el ejemplo base).
+<blockquote>
+  &nbsp;<p><b>a)</b> Si intentamos hacer en el main:</p>
+  <pre class="codigo">System.out.println (&quot;p.edad() = &quot; + p.edad());</pre>
+  <p>&iquest;qu&eacute; sucede? &iquest;Por
+qu&eacute;?</p>
+  <b>b)</b> Si intentamos hacer en el <i>main()</i>:<pre class="codigo">Persona p2 = new Persona();</pre>
+  <p>&iquest;qu&eacute;
+sucede? &iquest;Por qu&eacute;?</p>
+  <p><b>c)</b> Intentad hacer conversiones <i>cast</i> (como la que hay de <i>Persona</i>):
+</blockquote>
+
+<ul>
+<ul>
+<li>
+Convertid el Anciano en Hombre.&nbsp;</li>
+</ul>
+</ul>
+
+<blockquote>
+<pre class="codigo">System.out.println (&quot;A-H &quot; + ((Hombre)a).edad());</pre>
+<blockquote>
+ &iquest;Cu&aacute;l es la edad que muestra
+para esta conversi&oacute;n?&iquest;Por qu&eacute;?
+</blockquote>
+</blockquote>
+
+<ul>
+<ul>
+<li>
+Convertid el Hombre en Anciano.&nbsp;</li>
+</ul>
+</ul>
+
+<blockquote>
+<pre class="codigo">System.out.println (&quot;H-A&quot; + ((Anciano)h).edad());</pre>
+<blockquote>
+ &iquest;Qu&eacute; sucede? &iquest;Por
+qu&eacute;?
+</blockquote>
+<p>
+<b>d)</b> Convertid el ejemplo para utilizar interfaces en lugar de clases abstractas.
+Es decir:</p>
+<ul>
+  <li>Haced que <i> Persona</i> sea una interfaz (para ello no deberá
+    implementar ningún método, sino dejarlos definidos)</li>
+  <li>Indicad los cambios que
+sufren las clases Hombre y Anciano con eso. Probad el ejemplo con los cambios
+y comprobad que el resultado que devuelve es el mismo.</li>
+</ul>
+</blockquote>
+
+<br><b>Para entregar:</b> Debéis entregar un ZIP <i>e1_1.zip</i> con:
+<ul>
+  <li>El fichero <i>respuestas.txt</i> con las cuestiones contestadas</li>
+  <li>El fichero <i>Ej3.java</i> (algoritmo para la ecuación de segundo grado)</li>
+  <li>El fichero <i>Ej4.java</i> (algoritmos para el factorial)</li>
+  <li>El fichero <i>Ej5.java</i> convertido a uso de interfaces en lugar de
+    clases abstractas</li>
+</ul>
+<p>&nbsp;
+<br>&nbsp;</p>
+</body>
+</html>
