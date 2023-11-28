@@ -1,0 +1,2160 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  <meta name="Author" content="Nacho">
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+  <title>Tema 1: Introducci&oacute;n a Java</title>
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+<!-- OneStat -->
+<!--ONESTAT SCRIPTCODE START-->
+<script type="text/javascript">
+<!--
+// Account ID : 221957
+// Website URL: http://www.jtech.ua.es
+// Copyright (C) 2002-2005 OneStat.com All Rights Reserved
+function OneStat_Pageview()
+{
+    var d=document;
+    var sid="221957";
+    var CONTENTSECTION="";
+    var CUSTOMDATA="";
+    var osp_URL=d.URL;
+    var osp_Title=d.title;
+    var t=new Date();
+    var p="http"+(d.URL.indexOf('https:')==0?'s':'')+"://stat.onestat.com/stat.aspx?tagver=2&sid="+sid;
+    p+="&url="+escape(osp_URL);
+    p+="&ti="+escape(osp_Title);
+    p+="&section="+escape(CONTENTSECTION);
+    p+="&custom="+escape(CUSTOMDATA);
+    p+="&rf="+escape(parent==self?window.document.referrer:top.document.referrer);
+    p+="&tz="+escape(t.getTimezoneOffset());
+    p+="&ch="+escape(t.getHours());
+    p+="&js=1";
+    p+="&ul="+escape(navigator.appName=="Netscape"?navigator.language:navigator.userLanguage);
+    if(osp_URL!=d.URL) p+="&ol="+escape(d.URL);
+    if(typeof(screen)=="object"){
+       p+="&sr="+screen.width+"x"+screen.height;p+="&cd="+screen.colorDepth;
+       p+="&jo="+(navigator.javaEnabled()?"Yes":"No");
+    }
+    d.write('<img id="ONESTAT_TAG" border="0" width="1" height="1" src="'+p+'" />');
+}
+
+OneStat_Pageview();
+//-->
+</script>
+<noscript>
+<a href="http://www.onestat.com"><img border="0" width="1" height="1" src="http://stat.onestat.com/stat.aspx?tagver=2&amp;sid=221957&amp;js=No&amp;" ALT="OneStat Web Analytics"></a>
+</noscript>
+<!--ONESTAT SCRIPTCODE END-->
+<h1> 1 Introducci&oacute;n a Java</h1>
+<h2>1.1 Compilaci&oacute;n y ejecuci&oacute;n de programas Java</h2>
+<h3><b>1.1.1 Java como lenguaje interpretado</b></h3>
+<b>Java</b> es un lenguaje de programaci&oacute;n creado por <i>Sun
+Microsystems</i> para poder funcionar en distintos tipos de
+procesadores. Es un lenguaje orientado a objetos. Su sintaxis es muy
+parecida a la de C o C++, e incorpora
+como propias algunas
+caracter&iacute;sticas que en otros lenguajes son extensiones:
+gesti&oacute;n de hilos, ejecuci&oacute;n remota, etc.
+<p>El c&oacute;digo Java, una vez compilado, puede llevarse sin
+modificaci&oacute;n alguna sobre cualquier sistema operativo (Windows,
+Linux, Mac OS X, IBM, ...), y ejecutarlo all&iacute;. Esto se debe a
+que el c&oacute;digo se compila a un lenguaje intermedio (llamado
+bytecodes) independiente de la m&aacute;quina. Este lenguaje intermedio
+es interpretado por el int&eacute;rprete Java, denominado Java Virtual
+Machine (JVM), que deber&aacute; existir en la plataforma en la que
+queramos ejecutar el c&oacute;digo. La siguiente figura ilustra el
+proceso.</p>
+<center>
+  <img src="imagenes/introduccion/bytecodes.png" height="461"
+ width="396"> 
+</center>
+<p class="caption">Figura 1.1.1.1 Proceso de compilaci&oacute;n y
+ejecuci&oacute;n de un programa Java </p>
+<p>El hecho de que la ejecuci&oacute;n de los programas Java sea
+realizada por un int&eacute;rprete, en lugar de ser c&oacute;digo
+nativo, ha generado la suposici&oacute;n de que los programas Java son
+m&aacute;s lentos que programas escritos en otros lenguajes compilados
+(como C o C++). Aunque esto es cierto en algunos casos, se ha avanzado
+mucho en la tecnolog&iacute;a de interpretaci&oacute;n de bytecodes y
+en cada nueva versi&oacute;n de Java se introducen optimizaciones en
+este funcionamiento. En la &uacute;ltima versi&oacute;n de Java, 1.5
+(ahora todav&iacute;a en beta), se introduce una nueva JVM servidora
+que queda residente en el sistema. Esta m&aacute;quina virtual permite
+ejecutar m&aacute;s de un programa Java al mismo tiempo, mejorando
+mucho el manejo de la memoria. Por &uacute;ltimo, es posible encontrar
+bastantes benchmarks en donde los programas Java son m&aacute;s
+r&aacute;pidos que programas C++ en algunos aspectos.</p>
+<h4>Programas Java</h4>
+<p>Los ficheros fuente de Java tienen la extensi&oacute;n <code>.java</code>. 
+  Cada fichero <code>.java</code> define una clase Java p&uacute;blica (y, posiblemente, 
+  m&aacute;s de una clase privada usada por la clase p&uacute;blica). En el apartado 
+  siguiente realizaremos una introducci&oacute;n a la programaci&oacute;n orientada 
+  a objetos (OO). Los ficheros bytecodes generados por la compilaci&oacute;n tienen 
+  la extensi&oacute;n <code>.class</code>. Un fichero <code>.java</code> puede 
+  generar m&aacute;s de un fichero <code>.class</code>, si en el fichero <code>.java</code> 
+  se define m&aacute;s de una clase. El nombre del fichero .java debe corresponder 
+  con el nombre de la clase p&uacute;blica definida en &eacute;l.</p>
+<p>Las clases (ficheros <code>.class</code>) se organizan en paquetes. Un paquete 
+  contiene un conjunto de clases. A su vez, un paquete puede contener a otros 
+  paquetes. La estructura es similar a la de los directorios y ficheros. De hecho, 
+  puedes entender el nombre <em>package</em> como sin&oacute;nimo de <em>directorio</em>. 
+  Los ficheros hacen el papel de las clases Java y los directorios hacen el papel 
+  de paquetes. La estructura de directorios en la que se organizan los ficheros 
+  <code>.class</code> (estructura f&iacute;sica del sistema operativo) debe corresponderse 
+  con la estructura de paquetes definida en los ficheros fuente <code>.java</code>. 
+</p>
+<p>Por ejemplo, supongamos el siguiente fichero llamado <code>Punto2D.java:</code></p>
+<pre class="codigo">
+package simuladorRobot.geometria;
+
+public class Punto2D {
+    double x;
+    double y;
+
+    Punto2D() {
+        x = 0;
+        y = 0;
+    }
+
+    Punto2D(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    void traslada(double incX, double incY) {
+        x = x + incX;
+        y = y + incY;
+    }
+
+}
+</pre>
+<p>En &eacute;l estamos declarando la clase Java <code>Punto2D</code> en el paquete 
+  <code>simuladorRobot.geometria</code>. Esto obliga a que el fichero <code>Punto2D.java</code> 
+  est&eacute; situado en el directorio <code>geometria</code> que, a su vez, deber&aacute; 
+  residir en el directorio <code>simuladorRobot</code>. Esto es, el fichero Punto2D.java 
+  debe tener como path:</p>
+<pre class="codigo">
+simuladorRobot/geometria/Punto2D.java (en Linux)
+simuladorRobot\geometria\Punto2D.java (en Windows)
+</pre>
+<p>&iquest;D&oacute;nde colocar el directorio <code>simuladorRobot</code> para 
+  que el int&eacute;rprete de la m&aacute;quina virtual Java lo encuentre? El 
+  directorio se puede colocar en un directorio est&aacute;ndar de la distribuci&oacute;n 
+  de Java en el que la m&aacute;quina virtual busca las clases. O tambi&eacute;n 
+  se puede colocar en un directorio cualquiera e indicar a la m&aacute;quina virtual 
+  que en ese directorio se encuentra un paquete Java. Para ello se utiliza la 
+  variable del entorno <strong>CLASSPATH</strong>.</p>
+<p>Los directorios de paquetes y los ficheros de clases pueden compactarse en 
+  ficheros JAR (por ejemplo <code>simuladorRobot.jar</code>). Un fichero JAR es 
+  un fichero de archivo (como ZIP o TAR) que contiene comprimidos un conjunto 
+  de directorios y ficheros, o sea un conjunto de paquetes y clases. Es normal 
+  comprimir toda una librer&iacute;a de clases y paquetes comunes en un &uacute;nico 
+  fichero JAR. Ya veremos m&aacute;s adelante c&oacute;mo crear ficheros JAR.</p>
+<p>Para que el compilador y el int&eacute;rprete pueda usar las clases de un fichero 
+  JAR, hay que incluir su camino (incluyendo el nombre del propio fichero JAR) 
+  en el <span style="font-weight: bold;">CLASSPATH</span>.</p>
+<h4>API de Java</h4>
+<p>Cuando se programa con Java, se dispone de antemano de un conjunto
+de clases
+ya implementadas. Estas clases (aparte de las que pueda hacer el
+usuario) forman parte del propio lenguaje (lo que se conoce como <b>API</b>
+(<i>Application Programming Interface</i>) de Java).
+</p>
+<p>Una herramienta muy &uacute;til son las p&aacute;ginas HTML con la documentaci&oacute;n 
+  del API de Java. Puedes encontrar estas p&aacute;ginas en los recursos del curso. 
+  Vamos a usar en concreto la versi&oacute;n 1.4.2 de Java.</p>
+<p>Si consultamos la p&aacute;gina principal de la
+documentaci&oacute;n, veremos el enlace "Java 2 Platform API
+Specification" dentro del apartado "API &amp; Language Documentation".
+Siguiendo ese enlace, aparece la siguiente p&aacute;gina HTML. Es una
+p&aacute;gina con tres frames. En la zona superior del lateral
+izquierdo se listan todos los paquetes de la versi&oacute;n 1.4.2 de
+Java. La zona inferior muestra una lista con todas las clases
+existentes en el API. La zona principal describe todos los paquetes
+existentes en la plataforma.</p>
+<center>
+  <img src="imagenes/introduccion/api-java1.png" height="470"
+ width="500"> 
+</center>
+<p class="caption">Figura 1.1.1.2 El API de Java 1.4.2</p>
+<p>Si seleccionamos un paquete, por ejemplo <code>java.rmi</code>,
+aparece la siguiente p&aacute;gina HTML. En el frame inferior izquierdo
+aparecen los elementos que constituyen el paquete: las clases,
+interfaces y excepciones definidas en el mismo. En el frame principal
+se describen con m&aacute;s detalle estos elementos. Todos los
+elementos est&aacute;n enlazados a la p&aacute;gina en la que se
+detalla la clase, el interface o la excepci&oacute;n.</p>
+<center>
+  <img src="imagenes/introduccion/api-java2.png" height="470"
+ width="500"> 
+</center>
+<p class="caption">Figura 1.1.1.3 Descripci&oacute;n de un paquete</p>
+<p>Cuando escogemos una clase, por ejemplo la clase <code>Integer</code>
+del paquete <code>java.lang</code>, aparece una p&aacute;gina como la
+siguiente. En la ventana principal se muestra la jerarqu&iacute;a de la
+clase, todas las interfaces que implementa la clase y sus elementos
+constituyentes: campos, constructores y m&eacute;todos (ver figura
+1.1.1.5). En este caso, la clase <code>Integer</code> hereda de la
+clase <code>Number</code> (en el paquete <code>java.lang</code>), la
+cual hereda de la clase <code>Object</code> (tambi&eacute;n en el
+paquete <code>java.lang</code>). La clase <code>Integer</code>
+implementa la interfaz <code>Comparable</code> y la interfaz <code>Serializable</code>
+(porque es implementada por la clase <code>Number</code>).</p>
+<center>
+  <img src="imagenes/introduccion/api-java3.png" height="428"
+ width="500"> 
+</center>
+<p class="caption">Figura 1.1.1.4 Descripci&oacute;n de una clase</p>
+<p>En la figura siguiente se detallan algunos elementos que componen la
+clase <code>Integer</code>. </p>
+<center>
+  <img src="imagenes/introduccion/api-java4.png" height="438"
+ width="500"> 
+</center>
+<p class="caption">Figura 1.1.1.5 Elementos de una clase</p>
+<h3>1.1.2 Interpretaci&oacute;n y compilaci&oacute;n con JDK</h3>
+<p>Para compilar y ejecutar programas Java necesitamos la
+distribuci&oacute;n <b>JDK</b> (<i>Java Development Kit</i>)
+de <i>Sun. </i>Es necesario tener instalada esta distribuci&oacute;n
+para poder trabajar con otros entornos de desarrollo, puesto que dichos
+entornos se apoyan en la API de clases que viene con JDK.</p>
+<p>La <b>instalaci&oacute;n </b>es bastante sencilla (tanto en
+Windows como en Linux). En windows habr&aacute; que elegir el
+directorio donde instalar, y en Linux en general se descomprime en el
+lugar que se quiera. Tambi&eacute;n es recomendable instalar
+(descomprimir) la <b>documentaci&oacute;n</b> de la API</p>
+<h4>Variables de entorno</h4>
+<p>Para su correcto funcionamiento, Java necesita tener establecidas
+algunas variables de entorno: las variables <b>PATH</b> y <b>CLASSPATH</b>.
+</p>
+<p>La variable de entorno del sistema <b>PATH</b>
+deber&aacute;
+contener la ruta donde se encuentren los programas para compilar y
+ejecutar con JDK (<i>javac </i>y <i>java</i>, respectivamente). Por
+ejemplo: </p>
+<pre class="codigo"><font face="Courier New,Courier">set PATH=%PATH%;C:\j2sdk1.4.2_02\bin (Windows)<br>export PATH=$PATH:/j2sdk1.4.2_02/bin (Linux)</font></pre>
+<p>Con la variable <b>CLASSPATH</b> indicamos en qu&eacute;
+directorios debe buscar el int&eacute;rprete de Java las clases
+compiladas. Por defecto, si CLASSPATH no est&aacute; definido, las
+busca en el directorio actual. Puede haber m&aacute;s de un directorio,
+separando sus caminos por el separador del sistema operativo (";" en
+Windows y ":" en Linux). Por
+ejemplo, si las clases que queremos usar est&aacute;n en <font
+ size="-1">\misclases</font>:&nbsp; </p>
+<pre class="codigo">set CLASSPATH=.;C:\misclases (Windows)<br>export CLASSPATH=.:/misclases </pre>
+<p> Si las clases pertenecen a un paquete concreto, se debe apuntar al
+directorio a partir del cual comienzan los directorios del paquete. Por
+ejemplo, si la clase <i>MiClase</i> est&aacute; en el paquete <i>unpaquete</i>,
+dentro de <i>\mispaquetes</i> (<i>\mispaquetes\unpaquete\MiClase.class</i>):</p>
+<pre class="codigo">set CLASSPATH=.;C:\misclases;C:\mispaquetes (Windows)<br>export CLASSPATH=.:/misclases:/mispaquetes (Linux)</pre>
+<p>Si las clases est&aacute;n empaquetadas en un fichero&nbsp;<i>JAR</i>,
+se tendr&aacute; que hacer referencia a dicho fichero. Por ejemplo: </p>
+<pre class="codigo">set CLASSPATH=.;C:\misclases\misclases.jar (Windows)<br>export CLASSPATH=.:/misclases/misclases.jar (Linux)</pre>
+Para hacer estos cambios permanentes deberemos modificar los ficheros
+de autoarranque de cada sistema operativo, a&ntilde;adiendo las
+l&iacute;neas correspondientes en <i>autoexec.bat</i> (para Windows) o
+<i>.profile</i> (para Linux).
+<p>La forma de establecer las variables cambia en funci&oacute;n de la
+versi&oacute;n de Windows o Linux. Por ejemplo, en Windows 2000 o XP se
+pueden establecer variables de entorno directamente desde el panel de
+control. Y en versiones distintas de Linux se utilizan distintos shells
+con comandos de establecimiento distintos al <i>export</i> (ver
+informaci&oacute;n m&aacute;s detallada en el ap&eacute;ndice 2).</p>
+<h3><b>Compilar y ejecutar clases</b></h3>
+<p><span style="font-weight: bold;"></span>Para compilar y ejecutra las
+clases Java se usan los programas <span style="font-weight: bold;">javac</span>
+y <span style="font-weight: bold;">java</span> <code></code>que
+proporciona el SDK.</p>
+<p>Veamos el siguiente programa Java. Se trata de un sencillo programa
+ejemplo en el que se define una clase <code>Persona</code> con varios
+m&eacute;todos. Uno de ellos es el constructor (crea objetos de tipo <code>Persona</code>)
+y otro es el m&eacute;todo est&aacute;tico <code>main</code> que hace
+que la clase sea ejecutable directamente por el int&eacute;rprete Java.</p>
+<pre class="codigo">/**<br> * Ejemplo de clase Java<br> */<br>public class Persona {<br>    public String nombre;<br>    int edad;<br><br>    /**<br>     * Constructor<br>     */<br>    public Persona() {<br>        nombre = "Pepe";<br>        edad = 33;<br>    }<br><br>    public void setNombre(String nombre) {<br>        this.nombre = nombre;<br>    }<br> <br>    public String getNombre() {<br>        return nombre;<br>    }<br>    <br>    public int getEdad() {<br>        return edad;<br>    }<br><br>    public static void main(String[] args) {<br>        // Datos de la persona<br>        Persona p = new Persona();<br>        System.out.println("Nombre de persona: " + p.getNombre());<br>        p.setNombre("Maria");<br>        System.out.println("Nombre de persona: " + p.getNombre());<br>        System.out.println("Edad de persona: " + p.getEdad());<br>        // al ser el campo nombre publico, tambien puedo <br>        // cambiarlo y leerlo accediendo directamente<br>        p.nombre = "Pepa";<br>        System.out.println("Nombre de persona: " + p.nombre);<br>    }<br>}<br></pre>
+El fichero lo puedes encontrar en <a
+ href="ejemplos/introjava/Persona.java">este enlace</a>. Si queremos
+compilarlo debemos llamar a <b>javac</b>:
+<pre class="codigo">javac Persona.java</pre>
+<p>Tras haber compilado el ejemplo se tendr&aacute; un fichero <code>Persona.class</code>
+. Ejecutamos el programa con <b>java</b> : </p>
+<pre class="codigo">java Persona</pre>
+<p>Si se quisieran pasar par&aacute;metros a un programa Java (no es el
+caso del ejemplo anterior), se pasan despu&eacute;s de la
+clase:</p>
+<pre class="codigo">java Persona 20 56 Hola</pre>
+<p>Tambi&eacute;n podemos ejecutar un fichero JAR, si contiene una
+clase principal. Para ello pondremos:</p>
+<pre class="codigo">java -jar Fichero.jar</pre>
+<p>Veamos otro ejemplo. Supongamos los siguientes ficheros:</p>
+<pre>./Persona.java<br>./animales/Elefante.class<br>./insectos/Mosca.class<br>./maspersonas.jar</pre>
+<p>Vemos que s&oacute;lo tenemos el c&oacute;digo fuente de una clase (<code>Persona.java</code>)
+y el resto son clases compiladas (la clase <code>Elefante</code> en el
+paquete <code>animales</code>, la clase <code>Mosca</code> en el
+paquete <code>insectos</code> y el fichero JAR <code>maspersonas.jar</code>
+que contiene la clase <code>OtraPersona</code>). Puedes obtener un
+fichero ZIP con todos estos ficheros en <a
+ href="ejemplos/introjava/animales.zip">este enlace</a>. Para compilar
+la clase <code>Persona.java</code> ver&aacute;s que no hace falta
+tener los c&oacute;digos fuentes de las otras clases, s&oacute;lo sus
+ficheros compilados. Hay que incluir en el CLASSPATH el directorio
+actual y el fichero JAR:</p>
+<pre class="codigo">set CLASSPATH=.:.\maspersonas.jar (Windows)<br>export CLASSPATH=.:./maspersonas.jar (Linux)</pre>
+Luego se compila y ejecuta igual que en el ejemplo anterior. <span
+ style="font-weight: bold;"></span><br>
+<p>Notar que para compilar se pone la extensi&oacute;n del fichero (<i>.java</i>
+), pero para ejecutar no se pone la extensi&oacute;n <i>.class, </i>ya
+que para ejecutar una clase Java hay que pasarle al int&eacute;rprete
+el nombre de una clase, no el nombre del fichero de bytecodes. Los
+nombres de ficheros que pasemos para compilar y ejecutar <b>deben
+coincidir en may&uacute;sculas y min&uacute;sculas</b> con los nombres
+reales.&nbsp;</p>
+<h2>1.2. Introduccion a la Programaci&oacute;n Orientada a Objetos (POO)</h2>
+<p>En Programaci&oacute;n Orientada a Objetos (POO) un programa es un conjunto 
+  de objetos interactuando entre si. Cada objeto (tambi&eacute;n denominado <em>instancia</em>) 
+  guarda un estado (mediante sus campos, tambi&eacute;n llamados variables de 
+  instancia) y proporciona un conjunto de m&eacute;todos con los que puede ejecutar 
+  una conducta. Tanto los m&eacute;todos como los campos de un objeto vienen definidas 
+  en su clase.</p>
+<p>Supongamos la clase Persona definida en el ejemplo anterior. En esa clase se 
+  definen los campos <code>nombre</code> y <code>edad</code>. Tambi&eacute;n se 
+  definen los m&eacute;todos <code>Persona</code> (es el constructor, que sirve 
+  para crear nuevos objetos de esta clase), <code>getNombre()</code> y <code>getEdad()</code> 
+  que devuelven la informaci&oacute;n del objeto y por &uacute;ltimo los m&eacute;todos 
+  <code>setNombre(nombre)</code> y <code>setEdad(edad)</code> que modifican la 
+  informaci&oacute;n del objeto. </p>
+<p>En POO debemos pensar que los objetos encapsulan (contienen) tanto los datos 
+  como los m&eacute;todos que modifican estos datos. As&iacute;, una instancia 
+  de la clase <code>Persona</code> contiene los datos <code>nombre</code> y <code>edad</code> 
+  y los m&eacute;todos <code>getNombre</code>, <code>getEdad</code>, <code>setNombre</code> 
+  y <code>setEdad</code>. El siguiente c&oacute;digo crea un objeto de la clase 
+  <code>Persona</code> y lo guarda en la variable <code>unaPersona</code>. Despu&eacute;s 
+  se llama al m&eacute;todo <code>setNombre</code> y <code>setEdad</code> del 
+  objeto reci&eacute;n creado.</p>
+<pre class="codigo">
+Persona unaPersona = new Persona();
+unaPersona.setNombre("Juan Pérez");
+unaPersona.setEdad(12);</pre>
+<p>Despu&eacute;s de ejecutar el c&oacute;digo, el objeto <code>unaPersona</code> 
+  tendr&aacute; como nombre el <em>String</em> &quot;Juan P&eacute;rez&quot; (otro 
+  objeto) y como edad el entero (<em>int</em>) 12. En Java existen datos primitivos 
+  que no son objetos, como por ejemplo <em>double</em>, <em>int</em>, <em>char</em>, 
+  etc. Se pueden reconocer porque el nombre del tipo no comienza por may&uacute;scula.</p>
+<p>Un &uacute;ltimo punto a resaltar del ejemplo anterior. Fij&eacute;monos en 
+  la primera instrucci&oacute;n del ejemplo anterior:</p>
+<pre class="codigo">
+Persona unaPersona = new Persona();</pre>
+<p>Hemos dicho que en esta instrucci&oacute;n el objeto de tipo <code>Persona</code> 
+  reci&eacute;n creado <em>se guarda en la variable </em><code>unaPersona</code>. 
+  En POO tambi&eacute;n podemos ver la asignaci&oacute;n de otra forma. Podemos 
+  ver esta instrucci&oacute;n como una forma de definir un identificador que va 
+  a designar el objeto reci&eacute;n creado. Estar&iacute;amos entonces diciendo 
+  que el identificador del objeto reci&eacute;n creado es <code>unaPersona</code>. 
+  En esta interpretaci&oacute;n, entonces, las asignaciones se convierten en definiciones 
+  de identificadores (etiquetas) de objetos. Por ejemplo, si tuvi&eacute;ramos 
+  el c&oacute;digo</p>
+<pre class="codigo">
+Persona otraPersona = unaPersona;
+</pre>
+<p>estar&iacute;amos dando al objeto con el identificador &quot;unaPersona&quot; 
+  otro nombre adicional. As&iacute;, los nombres &quot;otraPersona&quot; y &quot;unaPersona&quot; 
+  se referir&iacute;an al mismo objeto. </p>
+<p>Esta interpretaci&oacute;n de pensar en nombres (identificadores) de objetos, 
+  en lugar de en variables te ser&aacute; de mucha utilidad en el futuro, si te 
+  embarcas en proyectos de programaci&oacute;n de componentes distribuidos con 
+  Java. Pero esto queda fuera del alcance de este curso.</p>
+<h3>1.2.1. Objetos y clases</h3>
+<ul>
+  <li><b>Objeto</b>: conjunto de variables junto con los
+m&eacute;todos relacionados con &eacute;stas. Contiene la <b>informaci&oacute;n</b>
+(las variables) y la forma de manipular la informaci&oacute;n (los
+m&eacute;todos).&nbsp;</li>
+  <li><b>Clase</b>: prototipo que define las variables y
+m&eacute;todos que va a emplear un determinado tipo de objeto. <br>
+  </li>
+  <li><b>Campos</b>: contienen la informaci&oacute;n relativa
+a la clase&nbsp;</li>
+  <li><b>M&eacute;todos</b>: permiten manipular dicha
+informaci&oacute;n.&nbsp;</li>
+  <li><b>Constructores</b>: reservan memoria para almacenar un objeto
+de esa clase.</li>
+</ul>
+La forma de especificar estos elementos en un <a
+ href="ejemplos/introjava/MiClase.java">programa Java</a> es la
+siguiente:
+<ul>
+  <li> <b>Paquetes</b>: equivalentes a los "include" de C, permiten
+utilizar clases
+en otras, y llamarlas de forma abreviada:</li>
+</ul>
+<ul>
+  <pre class="codigo">import java.util.*;</pre>
+</ul>
+<ul>
+  <li> <b>Clases</b>:&nbsp;</li>
+</ul>
+<ul>
+  <pre class="codigo">public class<br>MiClase<br>{<br>&nbsp;&nbsp; ...</pre>
+</ul>
+<ul>
+  <li> <b>Campos</b>: Constantes,
+variables y en general elementos de informaci&oacute;n.</li>
+</ul>
+<ul>
+  <pre class="codigo">public int a;<br>Vector v;</pre>
+</ul>
+<ul>
+  <li> <b>M&eacute;todos</b>: Para las funciones que devuelvan
+alg&uacute;n tipo
+de valor, es imprescindible colocar una sentencia <i> return</i> en la
+funci&oacute;n.</li>
+</ul>
+<ul>
+  <pre class="codigo">public void imprimirA()<br>public void insertarVector(String cadena)</pre>
+</ul>
+<ul>
+  <li> <b>Constructores</b>: Un
+tipo de m&eacute;todo que siempre tiene el mismo nombre que la clase.
+Se pueden definir uno o
+varios.&nbsp;</li>
+</ul>
+<ul>
+  <pre class="codigo">public MiClase()</pre>
+  <p>As&iacute;, podemos definir una <b>instancia</b> con <b>new</b>:
+  </p>
+  <pre class="codigo">MiClase mc;<br>mc = new MiClase ();<br>mc.a++;<br>mc.insertarVector("hola");</pre>
+</ul>
+No tenemos que preocuparnos de liberar la memoria
+del objeto al dejar de utilizarlo. Esto lo hace autom&aacute;ticamente
+el <b>garbage collector</b>. A&uacute;n as&iacute;, podemos usar el
+m&eacute;todo <b>finalize()</b> para liberar manualmente.
+<h3>1.2.2. Herencia y polimorfismo</h3>
+<p>Con la <b>herencia</b> podemos definir una clase a partir de otra
+que
+ya exista, de forma que la nueva clase tendr&aacute; todas las
+variables
+y m&eacute;todos de la clase a partir de la que se crea, m&aacute;s las
+variables y m&eacute;todos nuevos que necesite. A la clase base a
+partir
+de la cual se crea la nueva clase se le llama <b>superclase</b>.
+</p>
+<center>
+  <img src="imagenes/introduccion/herencia.jpg" nosave=""
+ height="79" width="250"> 
+</center>
+<p class="caption">Figura 1.2.2.1 Ejemplo de herencia</p>
+<br>
+Por ejemplo, tenemos una clase gen&eacute;rica <i>Animal</i>, y
+heredamos
+de ella para formar clases m&aacute;s espec&iacute;ficas, como <i>Pato</i>
+, <i>Elefante</i>, o <i>Le&oacute;n</i>. Si tenemos por ejemplo el
+m&eacute;todo
+<i>dibuja(Animal a)</i>, podremos pasarle a este m&eacute;todo como
+par&aacute;metro
+tanto un <i>Animal</i> como un <i>Pato</i>, <i>Elefante, </i>etc.
+Esto se conoce como <b>polimorfismo</b>
+. <br>
+<ul>
+  <li> <b>Herencia</b>: Se utiliza la palabra <b>extends</b> para
+decir de qu&eacute; clase se hereda. Para hacer que <i>Pato </i>herede
+de <i>Animal</i>:</li>
+</ul>
+<ul>
+  <pre class="codigo">class Pato extends Animal</pre>
+</ul>
+<ul>
+  <li> <b>this</b> se usa para hacer referencia al objeto que est&aacute; ejecutando 
+    el m&eacute;todo :</li>
+</ul>
+<ul>
+  <pre class="codigo">public class MiClase {<br>&nbsp;&nbsp; int i;<br>&nbsp;&nbsp; public MiClase (int i) {<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.i = i; 	// i de la clase = parametro i<br></b>&nbsp;&nbsp; }<br>}</pre>
+</ul>
+<ul>
+  <li> <b>super</b> se usa para hacer referencia al objeto que est&aacute; ejecutando 
+    el m&eacute;todo <em>entendido como un objeto de la clase padre</em>. Si la 
+    clase <i>MiClase</i> tiene un m&eacute;todo <i>Suma_a_i(...)</i>, lo llamamos 
+    con:</li>
+</ul>
+<ul>
+  <pre class="codigo">public class MiNuevaClase extends MiClase {<br>&nbsp;&nbsp; public void Suma_a_i (int j) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; i = i + (j / 2);<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; super.Suma_a_i (j);<br></b>&nbsp; }<br>}</pre>
+</ul>
+<br>
+<h3>1.2.4. Clases abstractas e interfaces</h3>
+<p>Mediante las <b>clases abstractas</b> y los <b>interfaces</b> podemos definir 
+  el esqueleto de una familia de clases, de forma que los subtipos de la clase 
+  abstracta o la clase que implemente la interfaz implementen ese esqueleto para 
+  dicho subtipo concreto. Por ejemplo, podemos definir en la clase <code>Animal</code> 
+  el m&eacute;todo <code>dibuja()</code> y el m&eacute;todo <code>imprime()</code>, 
+  y que <code>Animal</code> sea una clase abstracta o un interfaz. </p>
+<center>
+  <img src="imagenes/introduccion/interfaz.jpg" nosave=""
+ height="132" width="250"> 
+</center>
+<p class="caption">Figura 1.2.4.1 Ejemplo de interfaz y clase abstracta</p>
+<br>
+Vemos la diferencia entre clase, clase abstracta e interfaz con este
+esquema:
+<ul>
+  <li>En una <b>clase</b>, al definir <code>Animal</code>
+tendr&iacute;amos que implementar los m&eacute;todos <code>dibuja()</code>
+e <code>imprime()</code>. Las clases hijas no tendr&iacute;an por
+qu&eacute; implementar los m&eacute;todos, a no ser que quieran
+adaptarlos a sus propias necesidades.</li>
+  <li>En una <b>clase abstracta</b> podr&iacute;amos implementar los
+m&eacute;todos que nos interese, dejando sin implementar los
+dem&aacute;s (dej&aacute;ndolos como m&eacute;todos abstractos). Dichos
+m&eacute;todos tendr&iacute;an que implementarse en las clases hijas.</li>
+  <li>En un <b>interfaz</b> no podemos implementar ning&uacute;n
+m&eacute;todo en la clase padre, y cada clase hija tiene que hacer sus
+propias implementaciones de los m&eacute;todos. Adem&aacute;s, las
+clases hija podr&iacute;an implementar otros interfaces.</li>
+</ul>
+<p>La especificaci&oacute;n en Java es como sigue. </p>
+<p>Si queremos definir una clase (por ejemplo, <code>Animal</code>),
+como clase abstracta y otra clase (por ejemplo, <code>Pato</code>) que
+hereda de esta clase, debemos declararlo as&iacute;: </p>
+<center>
+<table border="1" cols="2" width="356">
+  <caption>&nbsp; </caption> <tbody>
+  </tbody> <tbody>
+    <tr>
+      <td width="346">
+      <pre class="codigo">public <b>abstract</b> class Animal<br>{<br>&nbsp;&nbsp; abstract void dibujar ();<br>&nbsp;&nbsp; void imprimir () { codigo; }<br>}</pre>
+      </td>
+    </tr>
+    <tr>
+      <td width="346">
+      <pre class="codigo">public class Pato <b>extends</b> Animal<br>{<br>&nbsp;&nbsp; void dibujar() { codigo; }<br>}</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</center>
+<p>Si en lugar de definir <code>Animal</code> como clase abstracta, lo
+definimos como <strong>interfaz</strong>, debemos declarar que la
+clase <code>Pato</code> <strong>implementa la interfaz</strong>, y
+debemos escribir el c&oacute;digo de esa implementaci&oacute;n en la
+clase <code>Pato</code>:</p>
+<center>
+<table border="1" cols="2" width="354">
+  <caption>&nbsp; </caption> <tbody>
+  </tbody> <tbody>
+    <tr>
+      <td width="344">
+      <pre class="codigo">public <b>interface</b> Animal<br>{<br>&nbsp;&nbsp; void dibujar ();<br>&nbsp;&nbsp; void imprimir ();<br>}</pre>
+      </td>
+    </tr>
+    <tr>
+      <td width="344">
+      <pre class="codigo">public class Pato <b>implements</b> Animal<br>{<br>&nbsp;&nbsp; void dibujar() { codigo; }<br>&nbsp;&nbsp; void imprimir() { codigo; }<br>}</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</center>
+<p>La diferencia fundamental es que la clase <code>Pato</code> puede
+implementar m&aacute;s de un interfaz, mientras que s&oacute;lo es
+posible heredar de una clase padre (en Java no existe la herencia
+m&uacute;ltiple):</p>
+<pre class="codigo">public class Pato <b>implements</b> Animal, Volador<br>{<br>   void dibujar() { codigo; }  // viene de la interfaz Animal<br>   void imprimir() { codigo; } // viene de la interfaz Animal<br>   void vuela() { codigo; }    // viene de la interfaz Volador<br>}</pre>
+<ul>
+  <li> <b>Modificadores</b>:&nbsp;en algunos elementos (campos,
+m&eacute;todos, clases, etc)
+se utilizan algunos de estos modificadores al declararlos:</li>
+</ul>
+<ul>
+  <ul>
+    <li> <b>public</b>:&nbsp; cualquier objeto puede acceder al
+elemento</li>
+    <li> <b>protected</b>: s&oacute;lo pueden acceder las subclases de
+la clase.</li>
+    <li> <b>private</b>: s&oacute;lo pueden ser accedidos desde dentro
+de la clase.</li>
+    <li> <b>abstract</b>: elemento base para la herencia (los objetos
+subtipo deber&aacute;n definir este elemento).</li>
+    <li> <b>static</b>: elemento compartido por todos los objetos de
+la misma clase. <br>
+      <br>
+Si se define <strong>static</strong> en un m&eacute;todo estamos
+definiendo un m&eacute;todo est&aacute;tico que puede ser llamado
+usando la misma clase sin crear ning&uacute;n objeto (por ejemplo, el
+m&eacute;todo <code>random()</code> de la clase <code>java.lang.Math</code>).
+Para ejecutar un m&eacute;todo est&aacute;tico de una clase debemos
+usar la misma sintaxis que para ejecutar un m&eacute;todo de un objeto
+(el operador punto "."), pero ahora sobre la propia clase, en lugar de
+sobre un objeto:<br>
+      <pre class="codigo">hipotenusa = Math.sqrt (Math.pow(cat1,2), Math.pow(cateto2,2));</pre>
+Si se define <strong>static</strong> en un campo, estamos declarando
+una variable de clase, accesible por todos los objetos (en el caso de
+ser public) o s&oacute;lo por los objetos de la clase (en el caso de
+ser private).<br>
+    </li>
+    <li> <b>final</b>: objeto final, no modificable ni heredable.</li>
+    <li> <b>synchronized</b>: para elementos a los que no se puede
+acceder al mismo tiempo desde distintos hilos de ejecuci&oacute;n.</li>
+  </ul>
+</ul>
+<ul>
+  <li> <b>Paquetes</b>: la palabra&nbsp; <b>package</b> permite
+agrupar clases e interfaces. Los nombres de los paquetes son palabras
+separadas por puntos, y se almacenan en directorios que coinciden con
+esos nombres. As&iacute;, si definimos la clase <code>MiClase1_1</code>
+de la siguiente forma:</li>
+</ul>
+<ul>
+  <pre class="codigo">package paquete1.subpaquete1;<br>public class MiClase1_1<br>...</pre>
+</ul>
+haremos que la clase <i>MiClase1_1</i> pertenezca al
+subpaquete <i>subpaquete1 </i>del paquete <i>paquete1</i>.
+Para utilizar las clases de un paquete utilizamos <b>import</b>:
+<ul>
+  <pre class="codigo">import java.Date;<br>import paquete1.subpaquete1.*;<br>import java.awt.*;</pre>
+</ul>
+Para importar todas las clases del paquete se utiliza el asterisco *
+(aunque no
+vayamos a usarlas todas, si utilizamos varias de ellas puede ser
+&uacute;til
+simplificar con un asterisco). Si s&oacute;lo queremos importar una o
+algunas pocas,
+se pone un<i> import</i> por cada una, terminando el paquete con el
+nombre de la
+clase en lugar del asterisco (como pasa con <i>Date</i> en el
+ejemplo).
+<p align="left">Al poner <i>import</i><i> </i>podemos utilizar el
+nombre corto
+de la clase. Es decir, si ponemos:</p>
+<pre class="codigo">import&nbsp; java.Date;<br>import java.util.*;</pre>
+<p align="left">Podemos hacer referencia a un objeto <i>Date</i> o a
+un objeto <i>Vector </i>(una clase del paquete <i>java.util</i>)<i> </i>con:</p>
+<pre class="codigo">Date d = ...<br>Vector v = ...</pre>
+<p align="left">Si no pusi&eacute;ramos los <i>import</i>,
+deber&iacute;amos hacer
+referencia a los objetos con:</p>
+<pre class="codigo">java.Date d = ...<br>java.util.Vector v = ...</pre>
+<p>Es decir, cada vez que queramos poner el nombre de la clase,
+deber&iacute;amos
+colocar todo el nombre, con los paquetes y subpaquetes. </p>
+<h2>1.3 Sintaxis de Java</h2>
+<p><b>Tipos de datos</b> </p>
+<p>Se tienen los siguientes tipos de datos simples. Adem&aacute;s, se
+pueden
+crear complejos, todos los cuales ser&aacute;n subtipos de <b>Object</b>
+<table border="1" cellpadding="2" cellspacing="2" width="477">
+  <caption>&nbsp;</caption> <tbody>
+  </tbody><tbody>
+  </tbody> <tbody>
+    <tr>
+      <td valign="top" width="71">
+      <center><b><font size="-1">Tipo</font></b></center>
+      </td>
+      <td valign="top" width="151">
+      <center><b><font size="-1">Tama&ntilde;o/Formato</font></b></center>
+      </td>
+      <td valign="top" width="130">
+      <center><b><font size="-1">Descripci&oacute;n</font></b></center>
+      </td>
+      <td valign="top" width="89">
+      <center><b><font size="-1">Ejemplos</font></b></center>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" width="71"><b><font size="-1">byte</font></b></td>
+      <td valign="top" width="151"><font size="-1">8 bits,
+complemento a 2</font></td>
+      <td valign="top" width="130"><font size="-1">Entero de 1 byte</font></td>
+      <td valign="top" width="89">
+      <center><font size="-1">210, 0x456</font></center>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" width="71"><b><font size="-1">short</font></b></td>
+      <td valign="top" width="151"><font size="-1">16 bits,
+complemento a 2</font></td>
+      <td valign="top" width="130"><font size="-1">Entero corto</font></td>
+      <td valign="top" width="89">
+      <center><font size="-1">"</font></center>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" width="71"><b><font size="-1">int</font></b></td>
+      <td valign="top" width="151"><font size="-1">32 bits,
+complemento a 2</font></td>
+      <td valign="top" width="130"><font size="-1">Entero</font></td>
+      <td valign="top" width="89">
+      <center><font size="-1">"</font></center>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" width="71"><b><font size="-1">long</font></b></td>
+      <td valign="top" width="151"><font size="-1">64 bits,
+complemento a 2</font></td>
+      <td valign="top" width="130"><font size="-1">Entero largo</font></td>
+      <td valign="top" width="89">
+      <center><font size="-1">"</font></center>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" width="71"><b><font size="-1">float</font></b></td>
+      <td valign="top" width="151"><font size="-1">32 bits, IEEE 754</font></td>
+      <td valign="top" width="130"><font size="-1">Real simple
+precisi&oacute;n</font></td>
+      <td valign="top" width="89">
+      <center><font size="-1">3.12,&nbsp; 3.2E13</font></center>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" width="71"><b><font size="-1">double</font></b></td>
+      <td valign="top" width="151"><font size="-1">64 bits, IEEE 754</font></td>
+      <td valign="top" width="130"><font size="-1">Real doble
+precisi&oacute;n</font></td>
+      <td valign="top" width="89">
+      <center><font size="-1">"</font></center>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" width="71"><b><font size="-1">char</font></b></td>
+      <td valign="top" width="151"><font size="-1">16 bits,
+car&aacute;cter</font></td>
+      <td valign="top" width="130"><font size="-1">Car&aacute;cter
+simple</font></td>
+      <td valign="top" width="89">
+      <center><font size="-1">'a'</font></center>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" width="71"><b><font size="-1">String</font></b></td>
+      <td valign="top" width="151"><br>
+      </td>
+      <td valign="top" width="130"><font size="-1">Cadena de
+caracteres</font></td>
+      <td valign="top" width="89">
+      <center><font size="-1">"cadena"</font></center>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" width="71"><b><font size="-1">boolean</font></b></td>
+      <td valign="top" width="151"><font size="-1">true / false</font></td>
+      <td valign="top" width="130"><font size="-1"> verdadero / falso</font></td>
+      <td valign="top" width="89">
+      <center><font size="-1">true,&nbsp; false</font></center>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</p>
+<p><b>Arrays</b> </p>
+<p>Se definen arrays o conjuntos de elementos de forma similar a como
+se hace en C.
+Hay 2 m&eacute;todos: </p>
+<pre class="codigo">int a[] = new int [10];<br>String s[] = {"Hola", "Adios"};</pre>
+No pueden crearse arrays est&aacute;ticos en tiempo de
+compilaci&oacute;n (<font size="-1">int a[8];</font>), ni rellenar un
+array sin definir previamente
+su tama&ntilde;o con el operador <b>new</b>. La funci&oacute;n miembro
+<b>length</b> se puede utilizar para conocer la longitud
+del array:
+<pre class="codigo">int a [][] = new int [10] [3];<br>a.length;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Devolver&iacute;a 10<br>a[0].length;&nbsp;&nbsp;&nbsp;&nbsp; // Devolver&iacute;a 3</pre>
+Los arrays empiezan a numerarse desde 0, hasta el tope definido menos
+uno (como en C).
+<p><b>Identificadores</b> </p>
+<p>Nombran variables, funciones, clases y objetos. Comienzan por una
+letra,
+car&aacute;cter de subrayado &#8216;_&#8217; o s&iacute;mbolo &#8216;$&#8217;. El resto de
+caracteres
+pueden ser letras o d&iacute;gitos (o &#8217;_&#8217;). Se distinguen
+may&uacute;sculas
+de min&uacute;sculas, y no hay longitud m&aacute;xima. Las variables en
+Java s&oacute;lo son v&aacute;lidas desde el punto donde se declaran
+hasta
+el final de la sentencia compuesta (las llaves) que la engloba. No se
+puede
+declarar una variable con igual nombre que una de &aacute;mbito
+exterior.</p>
+<p>En Java se tiene tambi&eacute;n un t&eacute;rmino NULL, pero si
+bien el de C es con may&uacute;sculas (NULL), &eacute;ste es con
+min&uacute;sculas (<i>null</i>):</p>
+<pre class="codigo">String a = null;<br>...<br>if (a == null)...</pre>
+<p><b>Referencias</b> </p>
+<p>En Java no existen punteros, simplemente se crea otro objeto que
+referencie
+al que queremos "apuntar".&nbsp;
+<table border="1" cols="2" width="482">
+  <caption><br>
+  </caption><tbody>
+  </tbody> <tbody>
+    <tr>
+      <td width="276">
+      <pre class="codigo">MiClase mc = new MiClase();<br>MiClase mc2 = mc;</pre>
+      </td>
+      <td width="190"> mc2 y mc apuntan a la misma variable (al
+cambiar una cambiar&aacute;
+la otra).&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="276">
+      <pre class="codigo">MiClase mc = new MiClase();<br>MiClase mc2 = new MiClase();</pre>
+      </td>
+      <td width="190">Tendremos dos objetos apuntando a elementos
+diferentes en memoria.</td>
+    </tr>
+  </tbody>
+</table>
+</p>
+<p><b>Comentarios</b> </p>
+<pre class="codigo">// comentarios para una sola l&iacute;nea<br><br>/* comentarios de <br>   una o m&aacute;s l&iacute;neas */<br><br>/** comentarios de documentaci&oacute;n para javadoc, <br>    de una o m&aacute;s l&iacute;neas */</pre>
+<b>Operadores</b>
+<p>Se muestra una tabla con los operadores en orden
+de precedencia
+<table border="1" cellpadding="2" cellspacing="2" width="485">
+  <caption>&nbsp;</caption> <tbody>
+  </tbody><tbody>
+  </tbody> <tbody>
+    <tr>
+      <td valign="top" width="134">
+      <center><b><font size="-1">Operador</font></b></center>
+      </td>
+      <td valign="top" width="183">
+      <center><b><font size="-1">Ejemplo</font></b></center>
+      </td>
+      <td valign="top" width="140">
+      <center><b><font size="-1">Descripci&oacute;n</font></b></center>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" width="134">
+      <center><font size="-1">.</font></center>
+      </td>
+      <td valign="top" width="183">
+      <center><font face="Courier New, Courier, monospace"><font
+ size="-1">a.length</font></font></center>
+      </td>
+      <td valign="top" width="140"><font size="-1">Campo o
+m&eacute;todo de objeto</font></td>
+    </tr>
+    <tr>
+      <td valign="top" width="134">
+      <center><font size="-1">[ ]</font></center>
+      </td>
+      <td valign="top" width="183">
+      <center><font face="Courier New, Courier, monospace"><font
+ size="-1">a[6]</font></font></center>
+      </td>
+      <td valign="top" width="140"><font size="-1">Referencia a
+elemento de array</font></td>
+    </tr>
+    <tr>
+      <td valign="top" width="134">
+      <center><font size="-1">( )</font></center>
+      </td>
+      <td valign="top" width="183">
+      <center><font face="Courier New, Courier, monospace"><font
+ size="-1">(a +
+b)</font></font></center>
+      </td>
+      <td valign="top" width="140"><font size="-1">Agrupaci&oacute;n
+de operaciones</font></td>
+    </tr>
+    <tr>
+      <td valign="top" width="134">
+      <center><font size="-1">++ ,&nbsp; --</font></center>
+      </td>
+      <td valign="top" width="183">
+      <center><font face="Courier New, Courier, monospace"><font
+ size="-1">a++;
+b--</font></font></center>
+      </td>
+      <td valign="top" width="140"><font size="-1">Autoincremento /
+Autodecremento de 1 unidad</font></td>
+    </tr>
+    <tr>
+      <td valign="top" width="134">
+      <center><font size="-1">!, ~</font></center>
+      </td>
+      <td valign="top" width="183">
+      <center><font face="Courier New, Courier, monospace"><font
+ size="-1">!a ;
+~b</font></font></center>
+      </td>
+      <td valign="top" width="140"><font size="-1">Negaci&oacute;n /
+Complemento</font></td>
+    </tr>
+    <tr>
+      <td valign="top" width="134">
+      <center><font size="-1">instanceof</font></center>
+      </td>
+      <td valign="top" width="183">
+      <center><font face="Courier New, Courier, monospace"><font
+ size="-1">a instanceof
+TipoDato</font></font></center>
+      </td>
+      <td valign="top" width="140"><font size="-1">Indica si <i>a </i>es
+del tipo <i>TipoDato</i></font></td>
+    </tr>
+    <tr>
+      <td valign="top" width="134">
+      <center><font size="-1">*, /, %</font></center>
+      </td>
+      <td valign="top" width="183">
+      <center><font face="Courier New, Courier, monospace"><font
+ size="-1">a*b;
+b/c; c%a</font></font></center>
+      </td>
+      <td valign="top" width="140"><font size="-1">Multiplicaci&oacute;n,
+divisi&oacute;n y resto
+de divisi&oacute;n entera</font></td>
+    </tr>
+    <tr>
+      <td valign="top" width="134">
+      <center><font size="-1">+, -</font></center>
+      </td>
+      <td valign="top" width="183">
+      <center><font face="Courier New, Courier, monospace"><font
+ size="-1">a+b;
+b-c</font></font></center>
+      </td>
+      <td valign="top" width="140"><font size="-1">Suma y resta</font></td>
+    </tr>
+    <tr>
+      <td valign="top" width="134">
+      <center><font size="-1">&lt;&lt;, &gt;&gt;</font></center>
+      </td>
+      <td valign="top" width="183">
+      <center><font face="Courier New, Courier, monospace"><font
+ size="-1">a&gt;&gt;2;
+b&lt;&lt;1</font></font></center>
+      </td>
+      <td valign="top" width="140"><font size="-1">Desplazamiento de
+bits a izquierda y derecha</font></td>
+    </tr>
+    <tr>
+      <td valign="top" width="134">
+      <center><font size="-1">&lt;, &gt;, &lt;=, &gt;=, ==, !=</font></center>
+      </td>
+      <td valign="top" width="183">
+      <center><font face="Courier New, Courier, monospace"><font
+ size="-1">a&gt;b;
+b==c; c!=a</font></font></center>
+      </td>
+      <td valign="top" width="140"><font size="-1">Comparaciones
+(mayor, menor, igual, distinto...)</font></td>
+    </tr>
+    <tr>
+      <td valign="top" width="134">
+      <center><font size="-1">&amp;, |, ^</font></center>
+      </td>
+      <td valign="top" width="183">
+      <center><font face="Courier New, Courier, monospace"><font
+ size="-1">a&amp;b;
+b|c</font></font></center>
+      </td>
+      <td valign="top" width="140"><font size="-1">AND, OR y XOR
+l&oacute;gicas</font></td>
+    </tr>
+    <tr>
+      <td valign="top" width="134">
+      <center><font size="-1">&amp;&amp;, ||</font></center>
+      </td>
+      <td valign="top" width="183">
+      <center><font face="Courier New, Courier, monospace"><font
+ size="-1">a&amp;&amp;b;
+b||c</font></font></center>
+      </td>
+      <td valign="top" width="140"><font size="-1">AND y OR
+condicionales</font></td>
+    </tr>
+    <tr>
+      <td valign="top" width="134">
+      <center><font size="-1">?:</font></center>
+      </td>
+      <td valign="top" width="183">
+      <center><font face="Courier New, Courier, monospace"><font
+ size="-1">a?b:c</font></font></center>
+      </td>
+      <td valign="top" width="140"><font size="-1">Condicional: si <i>a
+      </i>entonces <i>b</i>
+, si no <i>c</i></font></td>
+    </tr>
+    <tr>
+      <td valign="top" width="134">
+      <center><font size="-1">=, +=, -=, *=, /= ...</font></center>
+      </td>
+      <td valign="top" width="183">
+      <center><font face="Courier New, Courier, monospace"><font
+ size="-1">a=b;
+b*=c</font></font></center>
+      </td>
+      <td valign="top" width="140"><font size="-1">Asignaci&oacute;n.
+a += b equivale a (a =
+a + b)</font></td>
+    </tr>
+  </tbody>
+</table>
+</p>
+<p><b>Control de flujo</b> </p>
+<p>TOMA DE DECISIONES </p>
+<p>Este tipo de sentencias definen el c&oacute;digo que debe
+ejecutarse
+si se cumple una determinada condici&oacute;n. Se&nbsp;
+dispone de sentencias <b>if </b>y de sentencias <b>switch</b>:
+<table border="1" cellpadding="2" cellspacing="2" width="490">
+  <caption>&nbsp;</caption> <tbody>
+  </tbody><tbody>
+  </tbody> <tbody>
+    <tr>
+      <td valign="top" width="262">
+      <center><b><font size="-1">Sintaxis</font></b></center>
+      </td>
+      <td valign="top" width="214">
+      <center><b><font size="-1">Ejemplos</font></b></center>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" width="262">
+      <pre class="codigo">if (condicion1) {<br>&nbsp;&nbsp; sentencias;<br>} else if (condicion2) {<br>&nbsp;&nbsp; sentencias;<br>&nbsp;&nbsp; ...<br>} else if(condicionN) {<br>&nbsp;&nbsp; sentencias;<br>} else {<br>&nbsp;&nbsp; sentencias;<br>}</pre>
+      </td>
+      <td valign="top" width="214">
+      <pre class="codigo">if<br>(a == 1) {<br>&nbsp;&nbsp; b++;<br>} else if (b == 1) {<br>&nbsp;&nbsp; c++;<br>} else if (c == 1) {<br>&nbsp;&nbsp; d++;<br>}</pre>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" width="262">
+      <pre class="codigo">switch (condicion) {<br>&nbsp;&nbsp; case caso1: sentencias;<br>&nbsp;&nbsp;&nbsp;case caso2: sentencias;<br>&nbsp;&nbsp; case casoN: sentencias;<br>&nbsp;&nbsp; default:&nbsp;&nbsp;&nbsp; sentencias;<br>}</pre>
+      </td>
+      <td valign="top" width="214">
+      <pre class="codigo">switch (a) {<br>&nbsp;&nbsp; case 1: b++;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp; case 2: c++;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp; default:b--;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>}</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</p>
+<p>BUCLES </p>
+<p>Para repetir un conjunto de sentencias durante un determinado
+n&uacute;mero
+de iteraciones se tienen las sentencias <b>for</b>, <b>while</b> y <b>do...while</b>
+:
+<table border="1" cellpadding="2" cellspacing="2" width="491">
+  <caption>&nbsp;</caption> <tbody>
+  </tbody><tbody>
+  </tbody> <tbody>
+    <tr>
+      <td valign="top" width="322">
+      <center><b><font size="-1">Sintaxis</font></b></center>
+      </td>
+      <td valign="top" width="254">
+      <center><b><font size="-1">Ejemplo</font></b></center>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" width="322">
+      <pre class="codigo">for(inicio;condicion;<br>    incremento) <br>{<br>&nbsp; sentencias;<br>}</pre>
+      </td>
+      <td valign="top" width="254">
+      <pre class="codigo">for (i=1;i&lt;10;i++)<br>{<br>&nbsp;&nbsp; b = b+i;<br>}</pre>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" width="322">
+      <pre class="codigo">while (condicion){<br>&nbsp;&nbsp; sentencias;<br>}</pre>
+      </td>
+      <td valign="top" width="254">
+      <pre class="codigo">while (i &lt; 10) {<br>&nbsp;&nbsp; b += i;<br>&nbsp;&nbsp; i++;<br>}</pre>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" width="322">
+      <pre class="codigo">do{<br>&nbsp;&nbsp; sentencias;<br>} while (condicion);</pre>
+      </td>
+      <td valign="top" width="254">
+      <pre class="codigo">do {<br>&nbsp;&nbsp; b += i;<br>&nbsp;&nbsp; i++;<br>} while (i &lt; 10);</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</p>
+<p>SENTENCIAS DE RUPTURA </p>
+<p>Se tienen las sentencias <b>break</b> (para terminar la
+ejecuci&oacute;n de un bloque o saltar a una etiqueta), <b>continue </b>(para
+forzar una ejecuci&oacute;n m&aacute;s de un bloque o saltar a una
+etiqueta) y <b>return </b>(para salir de una funci&oacute;n
+devolviendo o sin devolver un valor): </p>
+<pre class="codigo">public int miFuncion(int n)<br>{<br>	int i = 0;<br>  	while (i &lt; n)<br>  	{<br>  		i++;<br>  		if (i &gt; 10)<br>			// Sale del while<br>			break;		<br>  		if (i &lt; 5)<br>			// Fuerza una iteracion mas<br>  			continue;	<br>  	}<br>	// Devuelve lo que valga i al llegar aqu&iacute;  	<br>	return i;			<br>}  &nbsp;</pre>
+<h3>1.3.4. Programas B&aacute;sicos en Java</h3>
+<p>
+Veamos ahora algunos ejemplos de programas en Java.</p>
+<ul>
+  <li> <b>Ejemplo</b>: El siguiente ejemplo muestra un texto por
+pantalla
+(muestra
+"Mi programa Java"): <a href="ejemplos/introjava/Ejemplo1.java">C&oacute;digo</a></li>
+  <li> <b>Ejemplo</b>: El siguiente ejemplo toma dos n&uacute;meros
+(un
+entero
+y un real) y devuelve su suma: <a
+ href="ejemplos/introjava/Ejemplo2.java">C&oacute;digo</a></li>
+  <li> <b>Ejemplo</b>: El siguiente ejemplo resuelve el
+teorema de pit&aacute;goras (obtiene una hipotenusa a partir de dos
+catetos): <a href="ejemplos/introjava/Ejemplo3.java">C&oacute;digo</a></li>
+  <li> <b>Ejemplo</b>: El siguiente ejemplo devuelve todos los
+n&uacute;meros
+primos que encuentra hasta un n&uacute;mero determinado: <a
+ href="ejemplos/introjava/Ejemplo4.java">C&oacute;digo</a></li>
+  <li> <b>Ejemplo</b>: El siguiente ejemplo muestra c&oacute;mo
+utilizar
+herencia
+y clases abstractas. Define una clase abstracta Persona, de la que
+hereda
+la clase Hombre. La clase Anciano a su vez hereda de la clase Hombre.
+En
+la clase <i>Ejemplo5</i> se tiene el m&eacute;todo main(), que muestra
+resultados
+de llamadas a todas las clases. Compilando esta clase se compila todo
+el
+ejemplo: <a href="ejemplos/introjava/Ejemplo5.zip">C&oacute;digo</a></li>
+</ul>
+<h2>1.4 Eclipse: un entorno gr&aacute;fico para desarrollo Java</h2>
+<p>Eclipse es una herramienta que permite integrar diferentes tipos de <b>aplicaciones</b>.
+La aplicaci&oacute;n principal es el JDT (<i>Java Development Tooling</i>),
+un IDE para crear programas en Java. Otras aplicaciones, que no vienen
+con la distribuci&oacute;n est&aacute;ndar de Eclipse, se a&ntilde;aden
+al mismo en forma de <b><i>plugins</i></b>, y son reconocidos
+autom&aacute;ticamente por la plataforma.</p>
+<p>Adem&aacute;s, Eclipse tiene su propio mecanismo de gesti&oacute;n
+de <b>recursos</b>. Los recursos son ficheros en el disco duro, que se
+encuentran alojados en un espacio de trabajo (<i>workspace</i>), un
+directorio especial en el sistema. As&iacute;, si una aplicaci&oacute;n
+de Eclipse modifica un recurso, dicho cambio es notificado al resto de
+aplicaciones de Eclipse, para que lo tengan en cuenta.</p>
+<h3>1.4.1 Instalaci&oacute;n y ejecuci&oacute;n</h3>
+<p>Para instalar Eclipse se <b>requiere</b>:</p>
+<ul>
+  <li>Sistema operativo Windows, Linux, Solaris, QNX o Mac OS/X, con
+256 MB de RAM preferiblemente.</li>
+  <li>JDK o JRE versi&oacute;n 1.3 o posterior. Se recomienda al menos
+la versi&oacute;n 1.4.1.</li>
+  <li>Los archivos de eclipse para instalar (en un archivo ZIP, o como
+vengan distribuidos)</li>
+</ul>
+<p>Para la <b>instalaci&oacute;n</b>, se siguen los pasos:</p>
+<ul>
+  <li>Instalar JRE o JDK</li>
+  <li>Descomprimir los archivos de Eclipse al lugar deseado del disco
+duro (p. ej, a <i>C:\eclipse</i>). El directorio en que se instale lo
+identificaremos de ahora en adelante como <i>ECLIPSE_HOME</i>. En
+Windows Eclipse detecta autom&aacute;ticamente un JRE o JDK instalado,
+aunque tambi&eacute;n se lo podemos proporcionar copiando el directorio
+    <i>jre</i> en <i>ECLIPSE_HOME</i>. Otra opci&oacute;n es
+proporcionar, al ejecutar Eclipse, la ruta hacia JRE o JDK, mediante
+una opci&oacute;n <i>&#8211;vm</i>:</li>
+</ul>
+<pre class="codigo">eclipse &#8211;vm ruta_jdk_jre</pre>
+<p>Para arrancar Eclipse se tiene el ejecutable <i>eclipse.exe</i> o <i>eclipse.sh</i>
+en <i>ECLIPSE_HOME</i>. La pantalla inicial de Eclipse
+aparecer&aacute; tras unos segundos:</p>
+<center>
+  <img src="imagenes/introduccion/eclipse_inicial.gif" border="0"
+ height="373" width="500"> 
+</center>
+<p class="caption">Figura 1.4.1.1 Pantalla inicial de Eclipse</p>
+<p>Veremos las opciones principales con detalle m&aacute;s adelante. De
+los men&uacute;s, entre otros, pueden resultar interesantes:</p>
+<ul>
+  <li><b>File</b>:
+    <ul>
+      <li><b>New</b>: para crear nuevos proyectos, paquetes, clases
+Java, etc.</li>
+      <li><b>Import / Export</b>: para importar o exportar recursos con
+un determinado formato (por ejemplo, exportar un proyecto como un
+fichero JAR).</li>
+    </ul>
+  </li>
+  <li><b>Project</b>:
+    <ul>
+      <li><b>Open / Close Project</b>: para abrir o cerrar el proyecto
+actual</li>
+      <li><b>Rebuild Project</b>: recompila el proyecto actual</li>
+      <li><b>Rebuild All</b>: recompila todos los proyectos</li>
+      <li><b>Generate Javadoc</b>: genera el <i>javadoc</i> para las
+clases del proyecto</li>
+    </ul>
+  </li>
+  <li><b>Run</b>:&nbsp;
+    <ul>
+      <li><b>Run As</b>: permite indicar c&oacute;mo queremos ejecutar
+un proyecto (por ejemplo, como una aplicaci&oacute;n Java normal, como
+un applet, como un test de JUnit, etc).</li>
+      <li><b>Run</b>: ejecuta el proyecto de la forma que hayamos
+indicado en <i>Run As</i>. Permite seleccionar la clase principal a
+ejecutar, los par&aacute;metros del <i>main(...)</i>, etc</li>
+    </ul>
+  </li>
+  <li><b>Window</b>:
+    <ul>
+      <li><b>Open Perspective</b>: para abrir una determinada
+perspectiva (por ejemplo, la perspectiva <i>Java</i>, que ser&aacute;
+la que nos interese normalmente).</li>
+      <li><b>Show View</b>: permite a&ntilde;adir/quitar vistas a la
+perspectiva actual. Lo veremos tambi&eacute;n m&aacute;s adelante.</li>
+      <li><b>Preferences</b>: opciones de configuraci&oacute;n general.
+Algunas de ellas se explicar&aacute;n con detalle m&aacute;s adelante.</li>
+    </ul>
+  </li>
+</ul>
+<h3>1.4.2 Configuraci&oacute;n visual<b>: perspectivas, vistas y
+editores</b></h3>
+<p>El usuario trabaja con Eclipse mediante el entorno gr&aacute;fico
+que se le presenta. Seg&uacute;n la perspectiva que elija, se
+establecer&aacute; la apariencia de dicho entorno. Entendemos por <b><i>perspectiva</i></b>
+una colecci&oacute;n de <b><i>vistas</i></b> y <b><i>editores</i></b>,
+con sus correspondientes acciones especiales en men&uacute;s y barras
+de herramientas. Algunas vistas muestran informaci&oacute;n especial
+sobre los recursos, y dependiendo de las mismas, en ocasiones
+s&oacute;lo se mostrar&aacute;n algunas partes o relaciones internas de
+dichos recursos. Un editor trabaja directamente sobre un recurso, y
+s&oacute;lo cuando grabe los cambios sobre el recurso se
+notificar&aacute; al resto de aplicaciones de Eclipse sobre estos
+cambios. Las vistas especiales se pueden conectar a editores (no a
+recursos), por ejemplo, la vista de estructura (<i>outline view</i>) se
+puede conectar al editor Java. De este modo, una de las
+caracter&iacute;sticas importantes de Eclipse es la flexibilidad para
+combinar vistas y editores.</p>
+<p>Si queremos <b>abrir una determinada perspectiva</b>, vamos a <i>Window
+-&gt; Open Perspective</i>. Eligiendo luego <i>Other</i> podemos
+elegir entre todas las perspectivas disponibles:</p>
+<p> </p>
+<center>
+  <img src="imagenes/introduccion/eclipse_perspectiva_abrir.gif"
+ border="0" height="200" width="156"> 
+</center>
+<p class="caption">Figura 1.4.2.1 Abrir una perspectiva en Eclipse</p>
+<p>Para <b>a&ntilde;adir vistas a una perspectiva</b>, primero abrimos
+la perspectiva, y luego vamos a <i>Window -&gt; Show View </i>y
+elegimos la que queramos cargar:</p>
+<p> </p>
+<center>
+  <img src="imagenes/introduccion/eclipse_vistas.gif" border="0"
+ height="231" width="300"> 
+</center>
+<p class="caption">Figura 1.4.2.2 Elegir una vista en una perspectiva</p>
+<p><b>Apariencia</b></p>
+<p>Arrastrando la barra de t&iacute;tulo de una vista o editor, podemos
+moverlo a otro lugar de la ventana (lo podremos colocar en las zonas
+donde el cursor del rat&oacute;n cambie a una flecha negra), o
+tabularlo con otras vistas o editores (arrastrando hasta el
+t&iacute;tulo de dicha vista o editor, el cursor cambia de aspecto, y
+se ve como una lista de carpetas, soltando ah&iacute; la vista o editor
+que arrastramos, se tabula con la(s) que hay donde hemos soltado).</p>
+<h3>1.4.3 Configuraci&oacute;n general</h3>
+<p>Desde el men&uacute; <b>Window - Preferences </b>podemos
+establecer opciones de configuraci&oacute;n de los distintos aspectos
+de Eclipse:</p>
+<p> </p>
+<center>
+  <img src="imagenes/introduccion/eclipse_config.gif" border="0"
+ height="344" width="401"> 
+</center>
+<p class="caption">Figura 1.4.3.1 Configuraci&oacute;n general de
+Eclipse</p>
+<h4>Establecer directorios para ficheros fuente o ficheros objeto</h4>
+<p>Podemos elegir entre tener nuestro c&oacute;digo fuente en el mismo
+lugar que nuestras clases objeto compiladas, o bien elegir directorios
+diferentes para fuentes y objetos. Para ello tenemos, dentro del
+men&uacute; de configuraci&oacute;n anterior, la opci&oacute;n <i>Java
+- New Project</i>. En el cuadro <i>Source and output folder</i>
+podremos indicar si queremos colocarlo todo junto (marcando <i>Project</i>)
+o indicar un directorio para cada cosa (marcando <i>Folders</i>, y
+eligiendo el subdirectorio adecuado para cada uno):</p>
+<p> </p>
+<center>
+  <img src="imagenes/introduccion/eclipse_directorios.gif"
+ border="0" height="395" width="450"> 
+</center>
+<p class="caption">Figura 1.4.3.2. Establecimiento de los directorios
+fuente y objeto</p>
+<h4>Establecer la versi&oacute;n de JDK o JRE</h4>
+<p>Para cambiar el compilador a una versi&oacute;n concreta de Java,
+elegimos la opci&oacute;n de <i>Java</i> y luego <i>Compiler</i>.
+Pulsamos en la pesta&ntilde;a <i>Compliance and Classfiles</i> y
+elegimos la opci&oacute;n <i>1.4</i> (o la que sea) de la lista <i>Compiler
+compliance level</i>:</p>
+<p> </p>
+<center>
+  <img src="imagenes/introduccion/eclipse_jdk.gif" border="0"
+ height="430" width="500"> 
+</center>
+<p class="caption">Figura 1.4.3.3 Establecer la versi&oacute;n del
+compilador</p>
+<p>Tambi&eacute;n podemos utilizar JDK en lugar de JRE para ejecutar
+los programas. Para ello vamos a <i>Java - Installed JREs</i>,
+elegimos la l&iacute;nea <i>Standard VM</i> y pulsamos en <i>Edit </i>o
+en <i>Add</i>, seg&uacute;n si queremos modificar el que haya
+establecido, o a&ntilde;adir nuevas opciones.</p>
+<p> </p>
+<center>
+  <img src="imagenes/introduccion/eclipse_jdk2.gif" border="0"
+ height="431" width="500"> 
+</center>
+<p class="caption">Figura 1.4.3.4 Establecer el compilador, o
+a&ntilde;adir nuevos</p>
+<p>Se nos abre un cuadro de di&aacute;logo para editar valores.
+Pulsando en <i>Browse</i> elegimos el directorio de JDK (por ejemplo, <i>C:\j2sdk1.4.0</i>).</p>
+<p> </p>
+<center>
+  <img src="imagenes/introduccion/eclipse_jdk3.gif" border="0"
+ height="404" width="400"> 
+</center>
+<p class="caption">Figura 1.4.3.5 Editar los valores de JDK o JRE</p>
+<h4>Especificar variables de entorno (CLASSPATH)</h4>
+<p>Podemos a&ntilde;adir variables de entorno en Eclipse, cada una
+conteniendo un directorio, fichero JAR o fichero ZIP. Para
+a&ntilde;adir variables vamos a la opci&oacute;n&nbsp; <i>Java</i> - <i>Classpath
+Variables</i>.</p>
+<p> </p>
+<center>
+  <img src="imagenes/introduccion/eclipse_classpath1.gif"
+ border="0" height="396" width="450"> 
+</center>
+<p class="caption">Figura 1.4.3.6 Variables de classpath</p>
+<p>Pulsamos el bot&oacute;n de <i>New</i> para a&ntilde;adir una
+nueva, y le damos un nombre, y elegimos el fichero JAR o ZIP (pulsando
+en <i>File</i>) o el directorio (pulsando en <i>Folder</i>).</p>
+<p> </p>
+<center>
+  <img src="imagenes/introduccion/eclipse_classpath2.gif"
+ border="0" height="147" width="300"> 
+</center>
+<p class="caption">Figura 1.4.3.7 Establecer el valor de la nueva
+variable</p>
+<h3>1.4.4 Espacio de trabajo</h3>
+<p>Por defecto el espacio de trabajo (<i>workspace</i>) para Eclipse es
+el directorio <i>ECLIPSE_HOME/workspace</i>. Podemos elegir un
+directorio arbitrario lanzando eclipse con una opci&oacute;n <i>&#8211;data</i>
+que indique cu&aacute;l es ese directorio, por ejemplo:</p>
+<pre class="codigo">eclipse &#8211;data C:\misTrabajos</pre>
+<p>Tambi&eacute;n podemos crear nuestros proyectos y trabajos fuera del
+<i>workspace</i> si queremos, podemos tomarlo simplemente como un
+directorio opcional donde organizar nuestros proyectos.</p>
+<h3>1.4.5 Proyectos Java</h3>
+<p>Para crear un nuevo proyecto Java vamos a <i>File -&gt; New -&gt;
+Project</i>. Despu&eacute;s en el cuadro que aparece elegimos el
+proyecto que sea (normalmente, un <i>Java Project </i>en el grupo <i>Java</i>):</p>
+<p> </p>
+<center>
+  <img src="imagenes/introduccion/eclipse_newproject1.gif"
+ border="0" height="351" width="350"> 
+</center>
+<p class="caption">Figura 1.4.4.1 Crear un nuevo proyecto en Eclipse</p>
+<p>Despu&eacute;s nos aparece otra ventana para elegir el nombre del
+proyecto, y d&oacute;nde guardarlo (por defecto en el espacio de
+trabajo de Eclipse):</p>
+<p> </p>
+<center>
+  <img src="imagenes/introduccion/eclipse_newproject2.gif"
+ border="0" height="348" width="350"> 
+</center>
+<p class="caption">Figura 1.4.4.2 Asignar nombre y ubicaci&oacute;n al
+proyecto</p>
+<p>Si pulsamos en <i>Next</i> podemos especificar otras opciones del
+proyecto en otro panel:</p>
+<p> </p>
+<center>
+  <img src="imagenes/introduccion/eclipse_newproject4.gif"
+ border="0" height="340" width="299"> 
+</center>
+<p class="caption">Figura 1.4.4.3 Otras opciones para el proyecto</p>
+<p>donde podremos indicar qu&eacute; carpetas tienen el c&oacute;digo
+del proyecto (<i>Source</i>), el directorio donde sacar las clases
+compiladas (<i>Default output folder</i>), el classpath (<i>Libraries</i>),
+etc. Una vez rellenas las opciones a nuestro gusto, ya tendremos el
+proyecto creado:</p>
+<p> </p>
+<center>
+  <img src="imagenes/introduccion/eclipse_newproject3.gif"
+ border="0" height="259" width="300"> 
+</center>
+<p class="caption">Figura 1.4.4.4 Proyecto creado</p>
+<h4>Buildpath de un proyecto</h4>
+<p>Desde el <i>buildpath</i> de un proyecto se establecen las clases
+que debe compilar, los recursos (directorios, ficheros JAR, etc) que
+debe tener en cuenta para compilarlo, etc. Para establecerlo, hacemos
+click con el bot&oacute;n derecho sobre el proyecto, y vamos a <i>Properties</i>.</p>
+<p> </p>
+<center>
+  <img src="imagenes/introduccion/eclipse_classpath3.gif"
+ border="0" height="304" width="200"> 
+</center>
+<p class="caption">Figura 1.4.4.5 Establecer el buildpath de un proyecto</p>
+<p>Nos aparecer&aacute; un cuadro con varias pesta&ntilde;as:</p>
+<p> </p>
+<center>
+  <img src="imagenes/introduccion/eclipse_classpath4.gif"
+ border="0" height="347" width="450"> 
+</center>
+<p class="caption">Figura 1.4.4.6 Opciones del buildpath</p>
+<ul>
+  <li>En <i>Source</i> se indican las carpetas donde hay o puede haber
+c&oacute;digo fuente del proyecto</li>
+  <li>En <i>Projects </i>podemos indicar qu&eacute; otros proyectos
+queremos tener en cuenta a la hora de compilar el actual (el compilador
+buscar&aacute; clases en estos proyectos, si las necesita).</li>
+  <li>En <i>Libraries</i> podemos a&ntilde;adir al classpath ficheros
+JAR que est&eacute;n dentro del proyecto (<i>Add JARs</i>), ficheros
+JAR externos al proyecto (<i>Add External JARs</i>), o variables que
+contengan un directorio, JAR o ZIP determinado (<i>Add Variable</i>),
+que hayamos definido desde <i>Window -&gt; Preferences</i>.</li>
+  <li>En <i>Order and Export</i> podemos cambiar el orden en que se
+buscan las clases.</li>
+  <li>En el cuadro inferior <i>Default output folder</i> indicamos
+d&oacute;nde se colocar&aacute;n las clases compiladas del proyecto.</li>
+</ul>
+<h3>1.4.6 El editor de c&oacute;digo</h3>
+<p>El editor de c&oacute;digo de Eclipse es bastante sencillo de usar,
+y dispone de una ayuda contextual que permite autocompletar las
+sentencias de c&oacute;digo que vayamos escribiendo. Por ejemplo, si
+escribimos un nombre de campo, tras el punto nos mostrar&aacute; las
+opciones que podemos escribir despu&eacute;s:</p>
+<p> </p>
+<center>
+  <img src="imagenes/introduccion/eclipse_editor.gif" border="0"
+ height="190" width="500"> 
+</center>
+<p class="caption">Figura 1.4.6.1 Editor de c&oacute;digo de Eclipse</p>
+<p>&nbsp;</p>
+<h3>1.4.7 Plugins en Eclipse</h3>
+<p>Para <b>instalar nuevos plugins</b>, simplemente hay que copiarlos
+en el directorio <i>ECLIPSE_HOME/plugins.</i> Despu&eacute;s
+habr&aacute; que reiniciar Eclipse para que pueda tomar los nuevos
+plugins instalados.</p>
+<p> </p>
+<center>
+  <img src="imagenes/introduccion/eclipse_plugins.gif"
+ border="0" height="352" width="400"> 
+</center>
+<p class="caption">Figura 1.4.7.1 Plugins en Eclipse</p>
+<p>Existen gran cantidad de plugins desarrollados. Por ejemplo el plugin <b>EclipseUML</b> 
+  de Omondo para realizar dise&ntilde;o UML (diagramas de clases, de paquetes, 
+  etc) en un determinado proyecto, o el plugin <b>Lomboz</b> para realizar proyectos 
+  J2EE.</p>
+<p>Eclipse no es &uacute;nico entorno integrado para trabajar con Java. Otro entorno 
+  de c&oacute;digo abierto igualmente recomendable es <strong>NetBeans</strong>, 
+  proporcionado por Sun.</p>
+<h2>1.5 Introducci&oacute;n a los Applets</h2>
+<p> Un <b>applet </b>es una aplicaci&oacute;n Java normalmente corta (aunque no 
+  hay l&iacute;mite de tama&ntilde;o), cuya principal funcionalidad es estar disponible 
+  en Internet para ser ejecutada por un navegador que contenga la m&aacute;quina 
+  virtual Java. Para ello se hacer referencia a la clase del applet en un fichero 
+  HTML, mediante c&oacute;digo como:</p>
+<pre class="codigo">&lt;HTML&gt;<br>&lt;BODY&gt;<br>...<br>&lt;APPLET CODE = nombre_prog.class WIDTH = 300 HEIGHT = 100&gt;<br>&lt;/APPLET&gt;<br>...<br>&lt;/BODY&gt;<br>&lt;/HTML&gt;</pre>
+Aqu&iacute; tenemos un ejemplo:
+<center>
+<p><a href="ejemplos/entornos/EjemploApplet.java">C&oacute;digo</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="ejemplos/entornos/EjemploApplet.html" target="_blank">Applet</a>
+</p>
+</center>
+<p>El <b>appletviewer </b>es un navegador m&iacute;nimo proporcionado
+con Java, que espera como argumento el fichero HTML donde est&aacute;
+el applet que se cargar&aacute;: </p>
+<pre class="codigo">appletviewer nombre_prog.html</pre>
+<h2>1.6 Tipos de datos </h2>
+<p>La plataforma Java nos proporciona un amplio conjunto de clases
+dentro del que podemos encontrar tipos de datos que nos
+resultar&aacute;n muy &uacute;tiles para realizar la
+programaci&oacute;n de aplicaciones en Java. Estos tipos de datos nos
+ayudar&aacute;n a generar c&oacute;digo m&aacute;s limpio de una forma
+sencilla. </p>
+<p>Se proporcionan una serie de operadores para acceder a los elementos
+de estos tipos de datos. Decimos que dichos operadores son <em>polim&oacute;rficos</em>,
+ya que un mismo operador se puede emplear para acceder a distintos
+tipos de datos. Por ejemplo, un operador <em>add</em> utilizado para
+a&ntilde;adir un elemento, podr&aacute; ser empleado tanto si estamos
+trabajando con una lista enlazada, con un array, o con un conjunto por
+ejemplo. </p>
+<p>Este <em>polimorfismo</em> se debe a la definici&oacute;n de
+interfaces que deben implementar los distintos tipos de datos. Siempre
+que el tipo de datos contenga una colecci&oacute;n de elementos,
+implementar&aacute; la interfaz <b>Collection</b>. Esta interfaz
+proporciona m&eacute;todos para acceder a la colecci&oacute;n de
+elementos, que podremos utilizar para cualquier tipo de datos que sea
+una colecci&oacute;n de elementos, independientemente de su
+implementaci&oacute;n concreta.</p>
+<p>Podemos encontrar los siguientes elementos dentro del marco de
+colecciones de Java:</p>
+<ul>
+  <li>Interfaces para distintos tipos de datos: Definir&aacute;n las
+operaciones que se pueden realizar con dichos tipos de datos. Podemos
+encontrar aqu&iacute; la interfaz para cualquier colecci&oacute;n de
+datos, y de manera m&aacute;s concreta para listas (secuencias) de
+datos, conjuntos, etc.</li>
+  <li>Implementaciones de tipos de datos reutilizables: Son clases que
+implementan tipos de datos concretos que podremos utilizar para
+nuestras aplicaciones, implementando algunas de las interfaces
+anteriores para acceder a los elementos de dicho tipo de datos. Por
+ejemplo, dentro de las listas de elementos, podremos encontrar
+distintas implementaciones de la lista como puede ser listas enlazadas,
+o bien arrays de capacidad variable, pero al implementar la misma
+interfaz podremos acceder a sus elementos mediante las mismas
+operaciones (polimorfismo).</li>
+  <li>Algoritmos para trabajar con dichos tipos de datos, que nos
+permitan realizar una ordenaci&oacute;n de los elementos de una lista,
+o diversos tipos de b&uacute;squeda de un determinado elemento por
+ejemplo.</li>
+</ul>
+<h3>1.6.1 Enumeraciones e iteradores</h3>
+<p>Antes de ver los tipos de datos vamos a ver dos elementos utilizados
+comunmente en Java para acceder a colecciones de datos. </p>
+<p>Las enumeraciones, definidas mediante la interfaz <strong>Enumeration</strong>,
+nos permiten consultar los elementos que contiene una colecci&oacute;n
+de datos. Muchos m&eacute;todos de clases Java que deben devolver
+m&uacute;ltiples valores, lo que hacen es devolvernos una
+enumeraci&oacute;n que podremos consultar mediante los m&eacute;todos
+que ofrece dicha interfaz.</p>
+<p>La enumeraci&oacute;n ir&aacute; recorriendo secuencialmente los
+elementos de la colecci&oacute;n. Para leer cada elemento de la
+enumeraci&oacute;n deberemos llamar al m&eacute;todo:</p>
+<pre class="codigo">Object item = enum.<strong>nextElement()</strong>;</pre>
+<p>Que nos proporcionar&aacute; en cada momento el siguiente elemento
+de la enumeraci&oacute;n a leer. Adem&aacute;s necesitaremos saber si
+quedan elementos por leer, para ello tenemos el m&eacute;todo:</p>
+<pre class="codigo">enum.<strong>hasMoreElements()</strong></pre>
+<p>Normalmente, el bucle para la lectura de una enumeraci&oacute;n
+ser&aacute; el siguiente:</p>
+<pre class="codigo">while (enum.<strong>hasMoreElements()</strong>) {<br>  Object item = enum.<strong>nextElement()</strong>;<br>  // Hacer algo con el item leido<br>}</pre>
+<p>Vemos como en este bucle se van leyendo y procesando elementos de la
+enumeraci&oacute;n uno a uno mientras queden elementos por leer en ella.</p>
+<p>Otro elemento para acceder a los datos de una colecci&oacute;n son
+los iteradores. La diferencia est&aacute; en que los iteradores
+adem&aacute;s de leer los datos nos permitir&aacute;n eliminarlos de la
+colecci&oacute;n. Los iteradores se definen mediante la interfaz<strong>
+Iterator</strong>, que proporciona de forma an&aacute;loga a la
+enumeraci&oacute;n el m&eacute;todo:</p>
+<pre class="codigo">Object item = iter.<strong>next()</strong>;</pre>
+<p>Que nos devuelve el siguiente elemento a leer por el iterador, y
+para saber si quedan m&aacute;s elementos que leer tenemos el
+m&eacute;todo:</p>
+<pre class="codigo">iter.<strong>hasNext()</strong></pre>
+<p>Adem&aacute;s, podemos borrar el &uacute;ltimo elemento que hayamos
+leido. Para ello tendremos el m&eacute;todo:</p>
+<pre class="codigo">iter.<strong>remove()</strong>;</pre>
+<p>Por ejemplo, podemos recorrer todos los elementos de una
+colecci&oacute;n utilizando un iterador y eliminar aquellos que cumplan
+ciertas condiciones:</p>
+<pre class="codigo">while (iter.<strong>hasNext()</strong>)<br>{ <br>	Object item = iter.<strong>next()</strong>;<br>	if(condicion_borrado(item)) <br>		iter.<strong>remove()</strong>;<br>}</pre>
+<p>Las enumeraciones y los iteradores no son tipos de datos, sino
+elementos que nos servir&aacute;n para acceder a los elementos dentro
+de los tipos de datos que veremos a continuaci&oacute;n.</p>
+<h3>1.6.2 Colecciones</h3>
+<p>Las colecciones representan grupos de objetos, denominados
+elementos. Podemos encontrar diversos tipos de colecciones,
+seg&uacute;n si sus elementos est&aacute;n ordenados, o si permitimos
+repetici&oacute;n de elementos o no.</p>
+<p>Es el tipo m&aacute;s gen&eacute;rico en cuanto a que se refiere a
+cualquier tipo que contenga un grupo de elementos. Viene definido por
+la interfaz <strong>Collection</strong>, de la cual heredar&aacute;
+cada subtipo espec&iacute;fico. En esta interfaz encontramos una serie
+de m&eacute;todos que nos servir&aacute;n para acceder a los elementos
+de cualquier colecci&oacute;n de datos, sea del tipo que sea. Estos
+m&eacute;todos generales son:</p>
+<pre class="codigo">boolean <strong>add(Object o)</strong></pre>
+<p>A&ntilde;ade un elemento (objeto) a la colecci&oacute;n. Nos devuelve<em>
+true</em> si tras a&ntilde;adir el elemento la colecci&oacute;n ha
+cambiado, es decir, el elemento se ha a&ntilde;adido correctamente, o <em>false</em>
+en caso contrario.</p>
+<pre class="codigo">void <strong>clear()</strong></pre>
+<p>Elimina todos los elementos de la colecci&oacute;n.</p>
+<pre class="codigo">boolean <strong>contains(Object o)</strong></pre>
+<p>Indica si la colecci&oacute;n contiene el elemento (objeto) indicado.</p>
+<pre class="codigo">boolean <strong>isEmpty()</strong></pre>
+<p>Indica si la colecci&oacute;n est&aacute; vac&iacute;a (no tiene
+ning&uacute;n elemento). </p>
+<pre class="codigo">Iterator <strong>iterator()</strong></pre>
+<p>Proporciona un iterador para acceder a los elementos de la
+colecci&oacute;n.</p>
+<pre class="codigo">boolean <strong>remove(Object o)</strong></pre>
+<p>Elimina un determinado elemento (objeto) de la colecci&oacute;n,
+devolviendo <em>true</em> si dicho elemento estaba contenido en la
+colecci&oacute;n, y <em>false</em> en caso contrario.</p>
+<pre class="codigo">int <strong>size()</strong></pre>
+<p>Nos devuelve el n&uacute;mero de elementos que contiene la
+colecci&oacute;n.</p>
+<pre class="codigo">Object [] <strong>toArray()</strong></pre>
+<p>Nos devuelve la colecci&oacute;n de elementos como un array de
+objetos. Si sabemos de antemano que los objetos de la colecci&oacute;n
+son todos de un determinado tipo (como por ejemplo de tipo <b>String</b>)
+podremos obtenerlos en un array del tipo adecuado, en lugar de usar un
+array de objetos gen&eacute;ricos. En este caso NO podremos hacer una
+conversi&oacute;n cast descendente de array de objetos a array de un
+tipo m&aacute;s concreto, ya que el array se habr&aacute; instanciado
+simplemente como array de objetos:</p>
+<pre class="codigo">String [] cadenas = (String []) coleccion.toArray(); <br>					// <b>Esto no se puede hacer!!!</b></pre>
+<p>Lo que si podemos hacer es instanciar nosotros un array del tipo
+adecuado y hacer una conversi&oacute;n cast ascendente (de tipo
+concreto a array de objetos), y utilizar el siguiente m&eacute;todo:</p>
+<pre class="codigo">String [] cadenas = new String[coleccion.size()];<br>coleccion.<b>toArray</b>(cadenas);		// Esto si que funcionar&aacute;</pre>
+<p>Esta interfaz es muy gen&eacute;rica, y por lo tanto no hay
+ning&uacute;n tipo de datos que la implemente directamente, sino que
+implementar&aacute;n subtipos de ellas. A continuaci&oacute;n veremos
+los subtipos m&aacute;s comunes.</p>
+<h4>1.6.2.1 Listas de elementos</h4>
+<p>Este tipo de colecci&oacute;n se refiere a listas en las que los
+elementos de la colecci&oacute;n tienen un orden, existe una secuencia
+de elementos. En ellas cada elemento estar&aacute; en una determinada
+posici&oacute;n (&iacute;ndice) de la lista.</p>
+<p>Las listas vienen definidas en la interfaz <strong>List</strong>,
+que adem&aacute;s de los m&eacute;todos generales de las colecciones,
+nos ofrece los siguientes para trabajar con los &iacute;ndices:</p>
+<pre class="codigo">void <strong>add(int indice, Object obj)</strong></pre>
+<p>Inserta un elemento (objeto) en la posici&oacute;n de la lista dada
+por el &iacute;ndice indicado. </p>
+<pre class="codigo">Object <strong>get(int indice)</strong></pre>
+<p>Obtiene el elemento (objeto) de la posici&oacute;n de la lista dada
+por el &iacute;ndice indicado. </p>
+<pre class="codigo">int <strong>indexOf(Object obj)</strong></pre>
+<p>Nos dice cual es el &iacute;ndice de dicho elemento (objeto) dentro
+de la lista. Nos devuelve -1 si el objeto no se encuentra en la lista.</p>
+<pre class="codigo">Object <strong>remove(int indice)</strong></pre>
+<p>Elimina el elemento que se encuentre en la posici&oacute;n de la
+lista indicada mediante dicho &iacute;ndice, devolvi&eacute;ndonos el
+objeto eliminado.</p>
+<pre class="codigo">Object <strong>set(int indice, Object obj)</strong></pre>
+<p>Establece el elemento de la lista en la posici&oacute;n dada por el
+&iacute;ndice al objeto indicado, sobrescribiendo el objeto que hubiera
+anteriormente en dicha posici&oacute;n. Nos devolver&aacute; el
+elemento que hab&iacute;a previamente en dicha posici&oacute;n.</p>
+<p>Podemos encontrar diferentes implementaciones de listas de elementos
+en Java:</p>
+<p><strong>ArrayList</strong></p>
+<p>Implementa una lista de elementos mediante un array de tama&ntilde;o
+variable. Conforme se a&ntilde;aden elementos el tama&ntilde;o del
+array ir&aacute; creciendo si es necesario. El array tendr&aacute; una
+capacidad inicial, y en el momento en el que se rebase dicha capacidad,
+se aumentar&aacute; el tama&ntilde;o del array.</p>
+<p>Las operaciones de a&ntilde;adir un elemento al final del array (<em>add</em>),
+y de establecer u obtener el elemento en una determinada
+posici&oacute;n (<em>get</em>/<em>set</em>) tienen un coste temporal
+constante. Las inserciones y borrados tienen un coste lineal <em>O(n)</em>,
+donde <em>n</em> es el n&uacute;mero de elementos del array.</p>
+<p>Hemos de destacar que la implementaci&oacute;n de <strong>ArrayList</strong>
+no est&aacute; sincronizada, es decir, si m&uacute;ltiples hilos
+acceden a un mismo <strong>ArrayList</strong> concurrentemente
+podriamos tener problemas en la consistencia de los datos. Por lo
+tanto, deberemos tener en cuenta cuando usemos este tipo de datos que
+debemos controlar la concurrencia de acceso. Tambi&eacute;n podemos
+hacer que sea sincronizado como veremos m&aacute;s adelante.</p>
+<p><strong>Vector</strong></p>
+<p>El <strong>Vector</strong> es una implementaci&oacute;n similar al <strong>ArrayList</strong>,
+con la diferencia de que el <strong>Vector</strong> si que <strong>est&aacute;
+sincronizado</strong>. Este es un caso especial, ya que la
+implementaci&oacute;n b&aacute;sica del resto de tipos de datos no
+est&aacute; sincronizada.</p>
+<p>Esta clase existe desde las primeras versiones de Java, en las que
+no exist&iacute;a el marco de las colecciones descrito anteriormente.
+En las &uacute;ltimas versiones el <strong>Vector</strong> se ha
+acomodado a este marco implementando la interfaz <strong>List</strong>.</p>
+<p>Sin embargo, si trabajamos con versiones previas de JDK, hemos de
+tener en cuenta que dicha interfaz no exist&iacute;a, y por lo tanto
+esta versi&oacute;n previa del vector no contar&aacute; con los
+m&eacute;todos definidos en ella. Los m&eacute;todos propios del vector
+para acceder a su contenido, que han existido desde las primeras
+versiones, son los siguientes:</p>
+<pre class="codigo">void <strong>addElement(Object obj)</strong></pre>
+<p>A&ntilde;ade un elemento al final del vector.</p>
+<pre class="codigo">Object <strong>elementAt(int indice)</strong></pre>
+<p>Devuelve el elemento de la posici&oacute;n del vector indicada por
+el &iacute;ndice.</p>
+<pre class="codigo">void <strong>insertElementAt(Object obj, int indice)</strong></pre>
+<p>Inserta un elemento en la posici&oacute;n indicada.</p>
+<pre class="codigo">boolean <strong>removeElement(Object obj)</strong></pre>
+<p>Elimina el elemento indicado del vector, devolviendo <em>true</em>
+si dicho elemento estaba contenido en el vector, y <em>false</em> en
+caso contrario.</p>
+<pre class="codigo">void <strong>removeElementAt(int indice)</strong></pre>
+<p>Elimina el elemento de la posici&oacute;n indicada en el
+&iacute;ndice.</p>
+<pre class="codigo">void <strong>setElementAt(Object obj, int indice)</strong></pre>
+<p>Sobrescribe el elemento de la posici&oacute;n indicada con el objeto
+especificado.</p>
+<pre class="codigo">int <strong>size()</strong></pre>
+<p>Devuelve el n&uacute;mero de elementos del vector.</p>
+<p>Por lo tanto, si programamos para versiones antiguas de la
+m&aacute;quina virtual Java, ser&aacute; recomendable utilizar estos
+m&eacute;todos para asegurarnos de que nuestro programa funcione. Esto
+ser&aacute; importante en la programaci&oacute;n de Applets, ya que la
+m&aacute;quina virtual incluida en muchos navegadores corresponde a
+versiones antiguas.</p>
+<p>Sobre el vector se construye el tipo pila (<strong>Stack</strong>),
+que apoy&aacute;ndose en el tipo vector ofrece m&eacute;todos para
+trabajar con dicho vector como si se tratase de una pila, apilando y
+desapilando elementos (operaciones <em>push </em>y<em> pop</em>
+respectivamente). La clase <strong>Stack</strong> hereda de <strong>Vector</strong>,
+por lo que en realidad ser&aacute; un vector que ofrece m&eacute;todos
+adicionales para trabajar con &eacute;l como si fuese una pila.</p>
+<p><strong>LinkedList</strong></p>
+<p>En este caso se implementa la lista mediante una lista doblemente
+enlazada. Por lo tanto, el coste temporal de las operaciones
+ser&aacute; el de este tipo de listas. Cuando realicemos inserciones,
+borrados o lecturas en los extremos inicial o final de la lista el
+tiempo ser&aacute; constante, mientras que para cualquier
+operaci&oacute;n en la que necesitemos localizar un determinado
+&iacute;ndice dentro de la lista deberemos recorrer la lista de inicio
+a fin, por lo que el coste ser&aacute; lineal con el tama&ntilde;o de
+la lista <em>O(n)</em>, siendo <em>n </em>el tama&ntilde;o de la
+lista.</p>
+<p>Para aprovechar las ventajas que tenemos en el coste temporal al
+trabajar con los extremos de la lista, se proporcionan m&eacute;todos
+propios para acceder a ellos en tiempo constante:</p>
+<pre class="codigo">void <strong>addFirst(Object obj)</strong> / void <strong>addLast(Object obj)</strong></pre>
+<p>A&ntilde;ade el objeto indicado al principio / final de la lista
+respectivamente.</p>
+<pre class="codigo">Object <strong>getFirst()</strong> / Object <strong>getLast()</strong></pre>
+<p>Obtiene el primer / &uacute;ltimo objeto de la lista respectivamente.</p>
+<pre class="codigo">Object <strong>removeFirst()</strong> / Object <strong>removeLast()</strong></pre>
+<p>Extrae el primer / &uacute;ltimo elemento de la lista
+respectivamente, devolvi&eacute;ndonos dicho objeto y
+elimin&aacute;ndolo de la lista.</p>
+<p>Hemos de destacar que estos m&eacute;todos nos permitir&aacute;n
+trabajar con la lista como si se tratase de una pila o de una cola. En
+el caso de la pila realizaremos la inserci&oacute;n y la
+extracci&oacute;n de elementos por el mismo extremo, mientras que para
+la cola insertaremos por un extremo y extraeremos por el otro.</p>
+<h4>1.6.2.2 Conjuntos</h4>
+<p>Los conjuntos son grupos de elementos en los que no encontramos
+ning&uacute;n elemento repetido. Consideramos que un elemento
+est&aacute; repetido si tenemos dos objetos <em>o1</em> y <em>o2</em>
+iguales, comparandolos mediante el operador <em>o1.equals(o2)</em>. De
+esta forma, si el objeto a insertar en el conjunto estuviese repetido,
+no nos dejar&aacute; insertarlo. Recordemos que el m&eacute;todo add
+devolv&iacute;a un valor <em>booleano</em>, que servir&aacute; para
+este caso, devolviendonos <em>true</em> si el elemento a a&ntilde;adir
+no estaba en el conjunto y ha sido a&ntilde;adido, o <em>false</em> si
+el elemento ya se encontraba dentro del conjunto. Un conjunto
+podr&aacute; contener a lo sumo un elemento <em>null</em>.</p>
+<p>Los conjuntos se definen en la interfaz <strong>Set</strong>, a
+partir de la cu&aacute;l se construyen diferentes implementaciones:</p>
+<p><strong>HashSet</strong> </p>
+<p>Los objetos se almacenan en una tabla de dispersi&oacute;n (<em>hash</em>).
+El coste de las operaciones b&aacute;sicas (inserci&oacute;n, borrado,
+b&uacute;squeda) se realizan en tiempo constante siempre que los
+elementos se hayan dispersado de forma adecuada. La iteraci&oacute;n a
+trav&eacute;s de sus elementos es m&aacute;s costosa, ya que
+necesitar&aacute; recorrer todas las entradas de la tabla de
+dispersi&oacute;n, lo que har&aacute; que el coste est&eacute; en
+funci&oacute;n tanto del n&uacute;mero de elementos insertados en el
+conjunto como del n&uacute;mero de entradas de la tabla. El orden de
+iteraci&oacute;n puede diferir del orden en el que se insertaron los
+elementos.</p>
+<p><strong>LinkedHashSet</strong> </p>
+<p>Es similar a la anterior pero la tabla de dispersi&oacute;n es
+doblemente enlazada. Los elementos que se inserten tendr&aacute;n
+enlaces entre ellos. Por lo tanto, las operaciones b&aacute;sicas
+seguir&aacute;n teniendo coste constante, con la carga adicional que
+supone tener que gestionar los enlaces. Sin embargo habr&aacute; una
+mejora en la iteraci&oacute;n, ya que al establecerse enlaces entre los
+elementos no tendremos que recorrer todas las entradas de la tabla, el
+coste s&oacute;lo estar&aacute; en funci&oacute;n del n&uacute;mero de
+elementos insertados. En este caso, al haber enlaces entre los
+elementos, estos enlaces definir&aacute;n el orden en el que se
+insertaron en el conjunto, por lo que el orden de iteraci&oacute;n
+ser&aacute; el mismo orden en el que se insertaron.</p>
+<p><strong>TreeSet</strong> </p>
+<p>Utiliza un &aacute;rbol para el almacenamiento de los elementos. Por
+lo tanto, el coste para realizar las operaciones b&aacute;sicas
+ser&aacute; logar&iacute;tmico con el n&uacute;mero de elementos que
+tenga el conjunto <em>O(log n)</em>.</p>
+<h4>1.6.2.3 Mapas</h4>
+<p>Aunque muchas veces se hable de los mapas como una colecci&oacute;n,
+en realidad no lo son, ya que no heredan de la interfaz <strong>Collection</strong>.</p>
+<p>Los mapas se definen en la interfaz <strong>Map</strong>. Un mapa
+es un objeto que relaciona una clave (<em>key</em>) con un valor.
+Contendr&aacute; un conjunto de claves, y a cada clave se le
+asociar&aacute; un determinado valor. En versiones anteriores este
+mapeado entre claves y valores lo hac&iacute;a la clase <strong>Dictionary</strong>,
+que ha quedado obsoleta. Tanto la clave como el valor puede ser
+cualquier objeto.</p>
+<p>Los m&eacute;todos b&aacute;sicos para trabajar con estos elementos
+son los siguientes:</p>
+<pre class="codigo">Object <strong>get(Object clave)</strong></pre>
+<p>Nos devuelve el valor asociado a la clave indicada</p>
+<pre class="codigo">Object <strong>put(Object clave, Object valor)</strong></pre>
+<p>Inserta una nueva clave con el valor especificado. Nos devuelve el
+valor que ten&iacute;a antes dicha clave, o <em>null</em> si la clave
+no estaba en la tabla todav&iacute;a.</p>
+<pre class="codigo">Object <strong>remove(Object clave)</strong></pre>
+<p>Elimina una clave, devolviendonos el valor que ten&iacute;a dicha
+clave.</p>
+<pre class="codigo">Set <strong>keySet()</strong></pre>
+<p>Nos devuelve el conjunto de claves registradas</p>
+<pre class="codigo">int <strong>size()</strong></pre>
+<p>Nos devuelve el n&uacute;mero de parejas (clave,valor) registradas.</p>
+<p>Encontramos distintas implementaciones de los mapas:</p>
+<p><strong>HashMap</strong></p>
+<p>Utiliza una tabla de dispersi&oacute;n para almacenar la
+informaci&oacute;n del mapa. Las operaciones b&aacute;sicas (<em>get</em>
+y <em>put</em>) se har&aacute;n en tiempo constante siempre que se
+dispersen adecuadamente los elementos. Es coste de la iteraci&oacute;n
+depender&aacute; del n&uacute;mero de entradas de la tabla y del
+n&uacute;mero de elementos del mapa. No se garantiza que se respete el
+orden de las claves.</p>
+<p><strong>TreeMap</strong></p>
+<p>Utiliza un &aacute;rbol rojo-negro para implementar el mapa. El
+coste de las operaciones b&aacute;sicas ser&aacute; logar&iacute;tmico
+con el n&uacute;mero de elementos del mapa <em>O(log n)</em>. En este
+caso los elementos se encontrar&aacute;n ordenados por orden ascendente
+de clave.</p>
+<p><strong>Hashtable</strong></p>
+<p>Es una implementaci&oacute;n similar a <strong>HashMap</strong>,
+pero con alguna diferencia. Mientras las anteriores implementaciones no
+est&aacute;n sincronizadas, esta si que lo est&aacute;. Adem&aacute;s
+en esta implementaci&oacute;n, al contrario que las anteriores, no se
+permitir&aacute;n claves nulas (<em>null</em>). Este objeto extiende la
+obsoleta clase <strong>Dictionary</strong>, ya que viene de versiones
+m&aacute;s antiguas de JDK. Ofrece otros m&eacute;todos adem&aacute;s
+de los anteriores, como por ejemplo el siguiente:</p>
+<pre class="codigo">Enumeration <strong>keys()</strong></pre>
+<p>Este m&eacute;todo nos devolver&aacute; una enumeraci&oacute;n de
+todas las claves registradas en la tabla.</p>
+<h4>1.6.2.4 Algoritmos</h4>
+<p>Como hemos comentado anteriormente, adem&aacute;s de las interfaces
+y las implementaciones de los tipos de datos descritos en los apartados
+previos, el marco de colecciones nos ofrece una serie de algoritmos
+utiles cuando trabajamos con estos tipos de datos, especialmente para
+las listas.</p>
+<p>Estos algoritmos los podemos encontrar implementados como
+m&eacute;todos est&aacute;ticos en la clase <strong>Collections</strong>.
+En ella encontramos m&eacute;todos para la ordenaci&oacute;n de listas (<em>sort</em>),
+para la b&uacute;squeda binaria de elementos dentro de una lista (<em>binarySearch</em>)
+y otras operaciones que nos ser&aacute;n de gran utilidad cuando
+trabajemos con colecciones de elementos.</p>
+<h4>1.6.2.5 Wrappers</h4>
+<p>A parte de los algoritmos comentados en el apartado anterior, la
+clase <strong>Collections</strong> aporta otros m&eacute;todos para
+cambiar ciertas propiedades de las listas. Estos m&eacute;todos nos
+proporcionan los denominados <em>wrappers</em> de los distintos tipos
+de colecciones. Estos <em>wrappers</em> son objetos que 'envuelven' al
+objeto de nuestra colecci&oacute;n, pudiendo de esta forma hacer que la
+colecci&oacute;n est&eacute; sincronizada, o que la colecci&oacute;n
+pase a ser de solo lectura.</p>
+<p>Como dijimos anteriormente, todos los tipos de colecciones no
+est&aacute;n sincronizados, excepto el <b>Vector</b> que es un caso
+especial. Al no estar sincronizados, si m&uacute;ltiples hilos utilizan
+la colecci&oacute;n concurrentemente, podr&aacute;n estar
+ejecut&aacute;ndose simult&aacute;neamente varios m&eacute;todos de una
+misma colecci&oacute;n que realicen diferentes operaciones sobre ella.
+Esto puede provocar inconsistencias en los datos. A continuaci&oacute;n
+veremos un posible ejemplo de inconsistencia que se podr&iacute;a
+producir:</p>
+<ol>
+  <li>Tenemos un <strong>ArrayList</strong> de nombre <em>letras</em>
+formada por los siguiente elementos: [ "A", "B", "C", "D" ]</li>
+  <li>Imaginemos que un hilo de baja prioridad desea eliminar el objeto
+"C". Para ello har&aacute; una llamada al m&eacute;todo <em>letras.remove("C")</em>.</li>
+  <li>Dentro de este m&eacute;todo primero deber&aacute; determinar
+cu&aacute;l es el &iacute;ndice de dicho objeto dentro del array, para
+despu&eacute;s pasar a eliminarlo. </li>
+  <li>Se encuentra el objeto "C" en el &iacute;ndice 2 del array
+(recordemos que se empieza a numerar desde 0).</li>
+  <li>El problema viene en este momento. Imaginemos que justo en este
+momento se le asigna el procesador a un hilo de mayor prioridad, que se
+encarga de eliminar el elemento "A" del array, qued&aacute;ndose el
+array de la siguiente forma: [ "B", "C", "D" ]</li>
+  <li>Ahora el hilo de mayor prioridad es sacado del procesador y
+nuestro hilo sigue ejecut&aacute;ndose desde el punto en el que se
+qued&oacute;.</li>
+  <li>Ahora nuestro hilo lo &uacute;nico que tiene que hacer es
+eliminar el elemento del &iacute;ndice que hab&iacute;a determinado,
+que resulta ser &iexcl;el &iacute;ndice 2!. Ahora el &iacute;ndice 2
+est&aacute; ocupado por el objeto "D", y por lo tanto ser&aacute; dicho
+objeto el que se elimine.</li>
+</ol>
+<p>Podemos ver que haciendo una llamada a <em>letras.remove("C")</em>,
+al final se ha eliminado el objeto "D", lo cual produce una
+inconsistencia de los datos con las operaciones realizadas, debido al
+acceso concurrente.</p>
+<p>Este problema lo evitaremos sincronizando la colecci&oacute;n.
+Cuando una colecci&oacute;n est&aacute; sincronizada, hasta que no
+termine de realizarse una operaci&oacute;n (inserciones, borrados,
+etc), no se podr&aacute; ejecutar otra, lo cual evitar&aacute; estos
+problemas.</p>
+<p>Podemos conseguir que las operaciones se ejecuten de forma
+sincronizada envolviendo nuestro objeto de la colecci&oacute;n con un <em>wrapper</em>,
+que ser&aacute; un objeto que utilice internamente nuestra
+colecci&oacute;n encarg&aacute;ndose de realizar la
+sincronizaci&oacute;n cuando llamemos a sus m&eacute;todos. Para
+obtener estos <em>wrappers</em> utilizaremos los siguientes
+m&eacute;todos est&aacute;ticos de <strong>Collections</strong>:</p>
+<pre class="codigo">Collection <strong>synchronizedCollection(Collection c)</strong><br>List <strong>synchronizedList(List l)</strong><br>Set <strong>synchronizedSet(Set s)</strong><br>Map <strong>synchronizedMap(Map m)</strong><br>SortedSet <strong>synchronizedSortedSet(SortedSet ss)</strong><br>SortedMap <strong>synchronizedSortedMap(SortedMap sm)</strong></pre>
+<p>Como vemos tenemos un m&eacute;todo para envolver cada tipo de
+datos. Nos devolver&aacute; un objeto con la misma interfaz, por lo que
+podremos trabajar con &eacute;l de la misma forma, sin embargo la
+implementaci&oacute;n interna estar&aacute; sincronizada.</p>
+<p>Podemos encontrar tambi&eacute;n una serie de <em>wrappers</em>
+para obtener versiones de s&oacute;lo lectura de nuestras colecciones.
+Se obtienen con los siguientes m&eacute;todos:</p>
+<pre class="codigo">Collection <strong>unmodifiableCollection(Collection c)</strong><br>List <strong>unmodifiableList(List l)</strong><br>Set <strong>unmodifiableSet(Set s)</strong><br>Map <strong>unmodifiableMap(Map m)</strong><br>SortedSet <strong>unmodifiableSortedSet(SortedSet ss)</strong><br>SortedMap <strong>unmodifiableSortedMap(SortedMap sm)</strong></pre>
+<h3>1.6.3 Wrappers de tipos b&aacute;sicos</h3>
+<p>Hemos visto que en Java cualquier tipo de datos es un objeto,
+excepto los tipos de datos b&aacute;sicos: <em>boolean, int, long,
+float, double, byte, short, char</em>. </p>
+<p>Cuando trabajamos con colecciones de datos los elementos que
+contienen &eacute;stas son siempre objetos, por lo que en un principio
+no podr&iacute;amos insertar elementos de estos tipos b&aacute;sicos.
+Para hacer esto posible tenemos una serie de objetos que se
+encargar&aacute;n de envolver a estos tipos b&aacute;sicos,
+permiti&eacute;ndonos tratarlos como objetos y por lo tanto insertarlos
+como elementos de colecciones. Estos objetos son los llamados wrappers,
+y las clases en las que se definen tienen nombre similares al del tipo
+b&aacute;sico que encapsulan, con la diferencia de que comienzan con
+may&uacute;scula: <strong>Boolean, Integer, Long, Float, Double, Byte,
+Short, Character</strong>.</p>
+<p>Estas clases, adem&aacute;s de servirnos para encapsular estos datos
+b&aacute;sicos en forma de objetos, nos proporcionan una serie de
+m&eacute;todos e informaci&oacute;n &uacute;tiles para trabajar con
+estos datos. Nos proporcionar&aacute;n m&eacute;todos por ejemplo para
+convertir cadenas a datos num&eacute;ricos de distintos tipos y
+viceversa, as&iacute; como informaci&oacute;n acerca del valor
+m&iacute;nimo y m&aacute;ximo que se puede representar con cada tipo
+num&eacute;rico.</p>
+<h3>1.7.4 Clases &uacute;tiles</h3>
+<p>En esta secci&oacute;n vamos a ver una serie de clases que conviene
+conocer ya que nos ser&aacute;n de gran utilidad para realizar nuestros
+programas:</p>
+<p><strong>Object</strong></p>
+<p>Esta es la clase base de todas las clases en Java, toda clase hereda
+en &uacute;ltima instancia de la clase <strong>Object</strong>, por lo
+que los m&eacute;todos que ofrece estar&aacute;n disponibles en
+cualquier objeto Java, sea de la clase que sea.</p>
+<p>En Java es importante distinguir claramente entre lo que es una
+variable, y lo que es un objeto. Las variables simplemente son
+referencias a objetos, mientras que los objetos son las entidades
+instanciadas en memoria que podr&aacute;n ser manipulados mediante las
+referencias que tenemos a ellos (mediante variable que apunten a ellos)
+dentro de nuestro programa. Cuando hacemos lo siguiente:</p>
+<pre class="codigo">new MiClase()</pre>
+<p>Se est&aacute; instanciando en memoria un nuevo objeto de clase
+MiClase y nos devuelve una referencia a dicho objeto. Nosotros
+deberemos guardarnos dicha referencia en alguna variable con el fin de
+poder acceder al objeto creado desde nuestro programa:</p>
+<pre class="codigo">MiClase mc = new MiClase();</pre>
+<p>Es importante declarar la referencia del tipo adecuado (en este caso
+tipo MiClase) para manipular el objeto, ya que el tipo de la referencia
+ser&aacute; el que indicar&aacute; al compilador las operaciones que
+podremos realizar con dicho objeto. El tipo de esta referencia
+podr&aacute; ser tanto el mismo tipo del objeto al que vayamos a
+apuntar, o bien el de cualquier clase de la que herede o interfaz que
+implemente nuestro objeto. Por ejemplo, si MiClase se define de la
+siguiente forma:</p>
+<pre class="codigo">public class MiClase extends Thread implements List {<br>	...<br>}</pre>
+<p>Podremos hacer referencia a ella de diferentes formas:</p>
+<pre class="codigo">MiClase mc = new MiClase();<br>Thread t = new MiClase();<br>List l = new MiClase();<br>Object o = new MiClase();</pre>
+<p>Esto es as&iacute; ya que al heredar tanto de <strong>Thread</strong>
+como de <strong>Object</strong>, sabemos que el objeto tendr&aacute;
+todo lo que tienen estas clases m&aacute;s lo que a&ntilde;ada <strong>MiClase</strong>,
+por lo que podr&aacute; comportarse como cualquiera de las clases
+anteriores. Lo mismo ocurre al implementar una interfaz, al forzar a
+que se implementen sus m&eacute;todos podremos hacer referencia al
+objeto mediante la interfaz ya que sabemos que va a contener todos esos
+m&eacute;todos. Siempre vamos a poder hacer esta asignaci&oacute;n
+'ascendente' a clases o interfaces de las que deriva nuestro objeto.</p>
+<p>Si hacemos referencia a un objeto <strong>MiClase</strong> mediante
+una referencia <strong>Object</strong> por ejemplo, s&oacute;lo
+podremos acceder a los m&eacute;todos de <strong>Object</strong>,
+aunque el objeto contenga m&eacute;todos adicionales definidos en <strong>MiClase</strong>.
+Si conocemos que nuestro objeto es de tipo <strong>MiClase</strong>, y
+queremos poder utilizarlo como tal, podremos hacer una
+asignaci&oacute;n 'descendente' aplicando una conversi&oacute;n cast al
+tipo concreto de objeto:</p>
+<pre class="codigo">Object o = new MiClase();<br>...<br>MiClase mc = (MiClase) o;</pre>
+<p>Si resultase que nuestro objeto no es de la clase a la que hacemos
+cast, ni hereda de ella ni la implementa, esta llamada resultar&aacute;
+en un <strong>ClassCastException</strong> indicando que no podemos
+hacer referencia a dicho objeto mediante esa interfaz debido a que el
+objeto no la cumple, y por lo tanto podr&aacute;n no estar disponibles
+los m&eacute;todos que se definen en ella.</p>
+<p>Una vez hemos visto la diferencia entre las variables (referencias)
+y objetos (entidades) vamos a ver como se har&aacute; la
+asignaci&oacute;n y comparaci&oacute;n de objetos. Si hiciesemos lo
+siguiente:</p>
+<pre class="codigo">MiClase mc1 = new MiClase();<br>MiClase mc2 = mc1;</pre>
+<p>Puesto que hemos dicho que las variables simplemente son referencias
+a objetos, la asignaci&oacute;n estar&aacute; copiando una referencia,
+no el objeto. Es decir, tanto la variable <em>mc1 </em>como <em>mc2 </em>apuntar&aacute;n
+a un mismo objeto.</p>
+<p>Si lo que queremos es copiar un objeto, teniendo dos entidades
+independientes, deberemos invocar el m&eacute;todo <strong>clone</strong>
+del objeto a copiar:</p>
+<pre class="codigo">MiClase mc2 = <strong>(MiClase)</strong>mc1.<strong>clone()</strong>;</pre>
+<p>El m&eacute;todo <strong>clone</strong> es un m&eacute;todo de la
+clase <strong>Object </strong>que estar&aacute; disponible para
+cualquier objeto Java, y nos devuelve un <strong>Object</strong>
+gen&eacute;rico, ya que al ser un m&eacute;todo que puede servir para
+cualquier objeto nos debe devolver la copia de este tipo. De &eacute;l
+tendremos que hacer una conversi&oacute;n cast a la clase de la que se
+trate como hemos visto en el ejemplo. </p>
+<p>Por otro lado, para la comparaci&oacute;n, si hacemos lo siguiente:</p>
+<pre class="codigo">mc1 == mc2</pre>
+<p>Estaremos comparando referencias, por lo que estaremos viendo si las
+dos referencias apuntan a un mismo objeto, y no si los objetos a los
+que apuntan son iguales. Para ver si los objetos son iguales, aunque
+sean entidades distintas, tenemos:</p>
+<pre class="codigo">mc1.<strong>equals</strong>(mc2)</pre>
+<p>Este m&eacute;todo tambi&eacute;n es propio de la clase <strong>Object</strong>,
+y ser&aacute; el que se utilice para comparar internamente los objetos.</p>
+<p>Tanto <strong>clone</strong> como <strong>equals</strong>,
+deber&aacute;n ser redefinidos en nuestras clases para adaptarse a
+&eacute;stas. Deberemos especificar dentro de ellos como se copia
+nuestro objeto y como se compara si son iguales:</p>
+<pre class="codigo">public class Punto2D {<br><br>	public int x, y;	<br><br><br>	...<br><br><br>	public boolean <strong>equals</strong>(Object o) {<br>		Punto2D p = (Punto2D)o;<br>		// Compara objeto this con objeto p<br>		return (x == p.x &amp;&amp; y == p.y);<br>	}<br><br>	public Object <strong>clone</strong>() {<br>		Punto2D p = new Punto2D();<br>		// Construye nuevo objeto p <br>		// copiando los atributos de this<br>		p.x = x;<br>		p.y = y;<br>		return p;<br>	}</pre>
+<p>Un &uacute;ltimo m&eacute;todo interesante de la clase <b>Object</b>
+es <b>toString</b>. Este m&eacute;todo nos devuelve una cadena (<b>String</b>)
+que representa dicho objeto. Por defecto nos dar&aacute; un
+identificador del objeto, pero nosotros podemos sobrescribirla en
+nuestras propias clases para que genere la cadena que queramos. De esta
+manera podremos imprimir el objeto en forma de cadena de texto,
+mostrandose los datos con el formato que nosotros les hayamos dado en<b>
+toString</b>. Por ejemplo, si tenemos una clase <b>Punto2D</b>,
+ser&iacute;a buena idea hacer que su conversi&oacute;n a cadena muestre
+las coordenadas <i>(x,y)</i> del punto:</p>
+<pre class="codigo">public class Punto2D {<br><br>	public int x,y;<br><br><br>	...<br><br><br>	public String <b>toString</b>() {<br>		String s = "(" + x + "," + y + ")";<br>		return s;<br>	}<br>}</pre>
+<p><strong>Properties</strong></p>
+<p>Esta clase es un subtipo de <strong>Hastable</strong>, que se
+encarga de almacenar una serie de propiedades asociando un valor a cada
+una de ellas. Estas propiedades las podremos utilizar para registrar la
+configuraci&oacute;n de nuestra aplicaci&oacute;n. Adem&aacute;s esta
+clase nos permite cargar o almacenar esta informaci&oacute;n en
+alg&uacute;n dispositivo, como puede ser en disco, de forma que sea
+persistente.</p>
+<p>Puesto que hereda de <strong>Hashtable</strong>, podremos utilizar
+sus m&eacute;todos, pero tambi&eacute;n aporta m&eacute;todos propios
+para a&ntilde;adir propiedades:</p>
+<pre class="codigo">Object <strong>setProperty(Object clave, Object valor)</strong></pre>
+<p>Equivalente al m&eacute;todo <em>put</em>.</p>
+<pre class="codigo">Object <strong>getProperty(Object clave)</strong></pre>
+<p>Equivalente al m&eacute;todo <em>get</em>.</p>
+<pre class="codigo">Object <strong>getProperty(Object clave, Object default)</strong></pre>
+<p>Esta variante del m&eacute;todo resulta &uacute;til cuando queremos
+que determinada propiedad devuelva alg&uacute;n valor por defecto si
+todav&iacute;a no se le ha asignado ning&uacute;n valor.</p>
+<p>Adem&aacute;s, como hemos dicho anteriormente, para hacer
+persistentes estas propiedades de nuestra aplicaci&oacute;n, se
+proporcionan m&eacute;todos para almacenarlas o leerlas de alg&uacute;n
+dispositivo de E/S:</p>
+<pre class="codigo">void <strong>load(InputStream entrada)</strong></pre>
+<p>Lee las propiedades del flujo de entrada proporcionado. Este flujo
+puede por ejemplo referirse a un fichero del que se leer&aacute;n los
+datos.</p>
+<pre class="codigo">void <strong>store(OutputStream salida, String cabecera)</strong></pre>
+<p>Almacena las informaci&oacute;n de las propiedades escribiendolas en
+el flujo de salida especificado. Este flujo puede por ejemplo referirse
+a un fichero en disco, en el que se guardar&aacute; nuestro conjunto de
+propiedades, pudiendo especificar una cadena que se pondr&aacute; como
+cabecera en el fichero, y que nos permite a&ntilde;adir alg&uacute;n
+comentario sobre dicho fichero.</p>
+<p><strong>System</strong></p>
+<p>Esta clase nos ofrece una serie de m&eacute;todos y campos
+&uacute;tiles del sistema. Esta clase no se debe instanciar, todos
+estos m&eacute;todos y campos son est&aacute;ticos.</p>
+<p>Podemos encontrar los objetos que encapsulan la entrada, salida y
+salida de error est&aacute;ndar, as&iacute; como m&eacute;todos para
+redireccionarlas, que veremos con m&aacute;s detalle en el tema de
+entrada/salida.</p>
+<p>Tambi&eacute;n nos permite acceder al gestor de seguridad instalado,
+como veremos en el tema sobre seguridad.</p>
+<p>Otros m&eacute;todos &uacute;tiles que encontramos son:</p>
+<pre class="codigo">void <strong>exit(int estado)</strong></pre>
+<p>Finaliza la ejecuci&oacute;n de la aplicaci&oacute;n, devolviendo un
+c&oacute;digo de estado. Normalmente el c&oacute;digo 0 significa que
+ha salido de forma normal, mientras que con otros c&oacute;digos
+indicaremos que se ha producido alg&uacute;n error. </p>
+<pre class="codigo">void <strong>gc()</strong></pre>
+<p>Fuerza una llamada al colector de basura para limpiar la memoria.
+Esta es una operaci&oacute;n costosa. Normalmente no lo llamaremos
+explicitamente, sino que dejaremos que Java lo invoque cuando sea
+necesario.</p>
+<pre class="codigo">long <strong>currentTimeMillis()</strong></pre>
+<p>Nos devuelve el tiempo medido en el n&uacute;mero de milisegundos
+transcurridos desde el 1 de Enero de 1970 a las 0:00.</p>
+<pre class="codigo">void <strong>arraycopy(Object fuente, int pos_fuente, <br>				Object destino, int pos_dest, int n)</strong></pre>
+<p>Copia n elementos del array fuente, desde la posici&oacute;n pos_fuente, al 
+  array destino a partir de la posici&oacute;n pos_dest.</p>
+<p><strong>Runtime</strong></p>
+<p>Toda aplicaci&oacute;n Java tiene una instancia de la clase <strong>Runtime</strong>
+que se encargar&aacute; de hacer de interfaz con el entorno en el que
+se est&aacute; ejecutando. Para obtener este objeto debemos utilizar el
+siguiente m&eacute;todo est&aacute;tico:</p>
+<pre class="codigo">Runtime rt = <strong>Runtime.getRuntime()</strong>;</pre>
+<p>Una de las operaciones que podremos realizar con este objeto,
+ser&aacute; ejecutar comandos como si nos encontr&aacute;semos en la
+l&iacute;nea de comandos del sistema operativo. Para ello utilizaremos
+el siguiente m&eacute;todo:</p>
+<pre class="codigo">rt.<strong>exec</strong>(comando);</pre>
+<p>De esta forma podremos invocar programas externos desde nuestra
+aplicaci&oacute;n Java. </p>
+<p><strong>Math</strong></p>
+<p>La clase<strong> Math</strong> nos ser&aacute; de gran utilidad
+cuando necesitemos realizar operaciones matem&aacute;ticas. Esta clase
+no necesita ser instanciada, ya que todos sus m&eacute;todos son
+est&aacute;ticos. Entre estos m&eacute;todos podremos encontrar todas
+las operaciones matem&aacute;ticas b&aacute;sicas que podamos
+necesitar, como logaritmos, exponenciales, funciones
+trigonom&eacute;tricas, generaci&oacute;n de n&uacute;meros aleatorios,
+conversi&oacute;n entre grados y radianes, etc. Adem&aacute;s nos
+ofrece las constantes de los n&uacute;meros <em>PI</em> y <em>E</em>.</p>
+<p><strong>Otras clases</strong></p>
+<p>Si miramos dentro del paquete <strong>java.util</strong>, podremos
+encontrar una serie de clases que nos podr&aacute;n resultar
+&uacute;tiles para determinadas aplicaciones.</p>
+<p>Entre ellas tenemos la clase <strong>Calendar</strong>, que nos
+servir&aacute; cuando trabajemos con fechas y horas, para realizar
+operaciones con fechas, comparar fechas, u obtener distintas
+representaciones para mostrar la fecha en nuestra aplicaci&oacute;n. </p>
+<p>Encontramos tambi&eacute;n la clase <strong>Currency</strong> con
+informaci&oacute;n monetaria. La clase <strong>Locale</strong>
+almacena informaci&oacute;n sobre una determinada regi&oacute;n del
+mundo, por lo que podremos utilizar esta clase junto a las anteriores
+para obtener la moneda de una determinada zona, o las diferencias
+horarias y de representaci&oacute;n de fechas.</p>
+<h2>1.7 Algunos consejos</h2>
+<p>Hemos visto que Java nos permite escribir facilmente un c&oacute;digo limpio 
+  y mantenible. Sin embargo, en muchas ocasiones adem&aacute;s nos interesar&aacute; 
+  que el c&oacute;digo sea r&aacute;pido en determinadas funciones cr&iacute;ticas. 
+  A continuaci&oacute;n damos una serie de consejos para optimizar el c&oacute;digo 
+  Java: </p>
+<ul>
+  <li>No instanciar m&aacute;s objetos de los necesarios. Es una buena
+pr&aacute;ctica para la eficiencia temporal del c&oacute;digo
+reutilizar los objetos que tenemos ya instanciados siempre que sea
+posible, ya que consume tiempo tanto instanciar nuevos objetos, como
+despu&eacute;s limpiar de la memoria los objetos que ya no se necesiten
+por parte del colector de basura.</li>
+  <li>Minimizar el n&uacute;mero de llamadas a m&eacute;todos. La
+llamada a un m&eacute;todo para obtener una determinada propiedad de un
+objeto es m&aacute;s costoso computacionalmente que consultar la
+propiedad directamente (en el caso de que sea p&uacute;blica). Si
+necesitamos utilizar el valor repetidas veces es buena idea leer el
+valor en una variable local y utilizar dicha variable.</li>
+  <li>Es m&aacute;s r&aacute;pido acceder a un campo de un objeto
+directamente que llamar a un m&eacute;todo para obtener el valor de
+dicho campo. Acceder directamente a los campos va en contra de la
+encapsulaci&oacute;n, pero puede resultar conveniente en determinados
+casos. Si desarrollamos una librer&iacute;a con una serie de clases,
+podemos usar variables protegidas en lugar de privadas, para dentro de
+nuestra librer&iacute;a no tener que llamar a m&eacute;todos para
+consultar o modificar dicha informaci&oacute;n. Esto har&aacute;
+m&aacute;s r&aacute;pidas las llamadas internas a la librer&iacute;a.</li>
+  <li>Sustituir tipos de datos complejos por tipos de datos
+b&aacute;sicos. Esto va en contra de la legibilidad del c&oacute;digo,
+pero en caso de ser la velocidad un factor cr&iacute;tico puede ser
+conveniente hacer este cambio. Una vez comprobado que el programa
+funciona, si necesitamos m&aacute;s velocidad podemos cambiar tipos de
+datos como Vectores por un array b&aacute;sico cuyo acceso resulta
+m&aacute;s r&aacute;pido.</li>
+  <li>Cuando trabajemos con cadenas grandes, es conveniente utilizar la
+clase <b>StringBuffer</b> en lugar de <b>String</b>, ya permite ser
+modificada sin necesidad de instanciar nuevos objetos, lo cual
+har&aacute; la manipulaci&oacute;n de estas cadenas mucho m&aacute;s
+eficiente.</li>
+</ul>
+</body>
+</html>

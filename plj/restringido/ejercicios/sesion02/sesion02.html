@@ -1,0 +1,873 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!Doctype html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<title>Sesión 2: Programación Orientada a Objetos I</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css" />
+</head>
+<body>
+
+<h1>Sesión 2. Programación Orientada a Objetos </h1>
+
+<h2> Introducción </h2>
+<p>Antes de empezar a hablar de Programación Orientada a Objetos,
+vamos a continuar con algún ejercicio básico de Java. Nos va a servir
+para comprobar cómo usar en Java elementos muy útiles como los arrays
+o los parámetros de entrada de un programa. También vamos a aprovechar
+este primer ejercicio para incorporar al proyecto <code>modulo1</code>
+algunas clases que hemos dejado en la web como material de la sesión.</p>
+
+<h3>Ejercicio 1: Algún ejercicio más de programación básica en Java </h3>
+
+<ol>
+  <li>
+    <p>Lo primero es incorporar al proyecto actual las clases Java que
+    te proporcionamos en esta sesión de ejercicios.</p>
+
+    <p>Primero descarga y descomprime el
+    fichero <code>sesion2.zip</code>, que está en página de ejercicios
+    de la web del curso. Verás que contiene una carpeta con el
+    nombre <code>sesion2</code> y, dentro de ella, algunas clases
+    Java. Son las clases iniciales que vas a usar en esta sesión de
+    ejercicios.<p>
+
+    <p>Vamos a arrastrar esas clases al proyecto actual de Eclipse. En
+    el sistema operativo abre una ventana del explorador de ficheros y
+    busca la carpeta <code>sesion2</code> que acabas de descargar y
+    descomprimir.  Arrastra esa carpeta a la ventana de explorador de
+    paquetes de Eclipse. Verás que Eclipse incorpora la carpeta en el
+    proyecto, creando un nuevo paquete Java. La vista tendrá el
+    siguiente aspecto (no te fijes demasiado en el nombre de las
+    clases, puede que haya alguna más o menos de las que realmente
+    tienes):
+
+    <p><img src="images/paquete-sesion2.png" alt="Paquete sesion2"
+    width="300" border="1" /></p>
+  </li>
+
+  <li> 
+    <p>Veamos en primer lugar un programa que escribe en la salida
+    estándar los argumentos que se le pasan, separados por dos puntos
+    ":".</p>
+
+<pre class="codigo">
+package sesion2;
+
+public class Echo {
+    public static void main(String[] args) {
+        int i=0;
+        while (i &lt; args.length){
+            System.out.print(args[i]);
+            System.out.print(":");
+            i++;
+        }
+        System.out.println();
+    }
+}</pre>
+    <p>Ejecuta este programa en Eclipse. Para lanzar la clase, deberás
+    pasarle al intérprete los argumentos de entrada. Eso es muy
+    sencillo cuando estás usando la línea de comandos:</p>
+
+<pre class="codigo">
+>java Echo hola que tal
+hola:que:tal
+</pre>
+
+    <p>Pero, ¿cómo lanzar un programa con argumentos en la línea de
+    comandos desde Eclipse? Para esto es necesario crear
+    una <em>configuración de ejecución</em>, un elemento muy útil de
+    Eclipse.  Selecciona en el menú la opción <code>Run > Run
+    ...</code> (o <code>Run As > Run...</code> si eres de los que te
+    gusta ahorar tiempo y usar el botón derecho). Aparecerá la ventana
+    de gestión de configuraciones de ejecución, en la que podrás crear
+    y guardar con un nombre una configuración de ejecución. Dale a
+    esta configuración el nombre <code>conf1, </code>selecciona
+    como <code>Main class</code> la clase <code>Echo</code> y dale los
+    valores que quieras a los argumentos del programa. Puedes guardar
+    la configuración con la opción <code>Apply</code> y ejecutarla
+    con <code>Run</code>. La configuración queda guardada y puedes
+    lanzarla cuando quieras, por ejemplo después de realizar
+    modificaciones en el programa principal. </p>
+  </li>
+
+  <li> 
+    <p>Escribe un programa <code>Reverse</code> que escriba en la
+    salida estándar los argumentos que se le pasa al intérprete Java,
+    pero invertidos y separados por dos puntos ":". Si lo ejecutáramos
+    desde la línea de comando aparecería lo siguiente.</p>
+
+<pre class="codigo">
+>java Reverse Hola que tal
+tal:que:Hola
+</pre>
+  </li>
+
+  <li>
+    <p>Escribe un último programa <code>Reverse2</code> que invierta
+    también los caracteres de cadaa palabra. Para ello, puedes acceder
+    al carácter i-ésimo de una palabra usando el
+    método <code>charAt</code> de la clase <code>String</code>. Por
+    ejemplo <code>str.charAt(0) </code>devuelve el carácter 0 (el
+    primero) del objeto <code>String</code> que está en la
+    variable <code>str</code>. También necesitas saber la longitud de
+    una palabra. Puedes obtener la longitud de un <code>String
+    str</code>, llamando al método <code>length</code>
+    así: <code>str.length()</code>. </p>
+
+<pre class="codigo">
+>java Reverse2 Hola que tal
+lat:euq:aloH:
+</pre>
+
+  </li>
+</ol>
+
+<h2>Programación Orientada a Objetos</h2>
+
+<p>En Programación Orientada a Objetos (POO) un programa es un
+conjunto de objetos interactuando entre si. Cada objeto (también
+denominado <em>instancia</em>) guarda un estado (mediante sus campos,
+también llamados variables de instancia) y proporciona un conjunto de
+métodos con los que puede ejecutar una conducta. Tanto los métodos
+como los campos de un objeto vienen definidas en su clase.</p>
+
+<p>Supongamos la siguiente clase <code>Persona</code>, definida en un
+paquete llamado <code>base</code></p>
+
+<pre class="codigo">
+package base;
+
+public class Persona {
+    String nombre;
+    public int edad;
+
+    public Persona() {
+        nombre = "Pepe";
+        edad = 18;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+ 
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public int getEdad() {
+        return edad;
+    }
+}
+</pre>
+
+<p> En esa clase se definen los campos <code>nombre</code>
+y <code>edad</code>. También se definen los
+métodos <code>Persona</code> (es el constructor, que sirve para crear
+nuevos objetos de esta clase), <code>getNombre()</code>
+y <code>getEdad()</code> que devuelven la información del objeto y por
+último los métodos <code>setNombre(nombre)</code>
+y <code>setEdad(edad)</code> que modifican la información del
+objeto. </p>
+
+<p>Supongamos ahora la siguiente clase <code>TestPersona</code> que
+contiene un método <code>main</code>. Supongamos que se encuentra
+definida en un paquete distinto del paquete <code>base</code>, por
+ejemplo el paquete <code>test</code>. En este caso habrá que importar
+la clase anterior (por estar en un paquete distinto):</p>
+
+<pre class="codigo">
+package test;
+import base.Persona;
+
+public class TestPersona {
+   public static void main(String[] args) {
+      Persona p = new Persona();
+      System.out.println("Nombre de persona: " + p.getNombre());
+      p.setNombre("Maria");
+      System.out.println("Nombre de persona: " + p.getNombre());
+      System.out.println("Edad de persona: " + p.getEdad());
+      p.edad = 9;
+      System.out.println("Edad de persona: " + p.getEdad());
+   }
+}
+</pre>
+
+<p>El test debería dar los siguientes resultados. </p>
+
+<pre class="codigo">
+Nombre de persona: Pepe
+Nombre de persona: Maria
+Edad de persona: 18
+Edad de persona: 9
+</pre>
+
+<p>En POO debemos pensar que los objetos encapsulan (contienen) tanto
+los datos como los métodos que modifican y acceden a estos datos. Así,
+una instancia de la clase <code>Persona</code> contiene los
+datos <code>nombre</code> y <code>edad</code> y los
+métodos <code>getNombre</code>, <code>getEdad</code>
+y <code>setNombre</code>. Es posible acceder a un método o una
+variable de instancia de un objeto usando el operador ".". Por ejemplo:</p>
+
+<pre class="codigo">
+p.setNombre("Maria");
+p.edad = 9;
+</pre>
+
+<p>Podemos usar <em>modificadores de acceso</em> para configurar los
+permisos de acceso a los elementos. En el ejemplo anterior todos los
+métodos y la variable de instancia <code>edad</code> tienen el
+modificador <code>public</code>. La variable de
+instancia <code>nombre</code> tiene el nivel de acceso por defecto. En
+este nivel, se puede acceder al elemento desde clases definidas en el
+mismo paquete, pero no en otros paquetes.</p>
+
+<p>Lo normal es restringir el acceso a las variables de instancia de
+un objeto y no hacerlas públicas, sino que todos los accesos externos
+a los datos de un objeto sean a través de métodos. Es el caso de la
+variable <code>nombre</code> del ejemplo. La
+variable <code>edad</code> la hemos hecho pública para mostrar que
+también es posible. Hablaremos más sobre los selectores de acceso en
+la siguiente sesión.</p>
+
+<p> Veamos ahora el siguiente código. Crea un objeto de la
+clase <code>Persona</code> y lo guarda en la
+variable <code>unaPersona</code>. Después se llama al
+método <code>setNombre</code> y se modifica la edad del objeto recién
+creado.</p>
+
+<pre class="codigo">
+Persona unaPersona = new Persona();
+unaPersona.setNombre("Juan Pérez");
+unaPersona.edad = 12;
+</pre>
+
+<p>Después de ejecutar el código, el objeto <code>unaPersona</code>
+tendrá como nombre el <em>String</em> "Juan Pérez" (otro objeto, por
+cierto) y como edad el entero (<em>int</em>) 12. En Java existen datos
+primitivos que no son objetos, como por
+ejemplo <em>double</em>, <em>int</em>, <em>char</em>, etc. Se pueden
+reconocer porque el nombre del tipo no comienza por mayúscula.</p>
+
+<p>Otra cosa a resaltar del ejemplo anterior. Fijémonos en la
+primera instrucción del ejemplo anterior:</p>
+
+<pre class="codigo">
+Persona unaPersona = new Persona();</pre>
+
+<p>Hemos dicho que en esta instrucción el objeto de
+tipo <code>Persona</code> recién creado <em>se guarda en la
+variable </em><code>unaPersona</code>. En POO también podemos ver la
+asignación de otra forma. Podemos ver esta instrucción como una forma
+de definir un identificador que va a designar el objeto recién
+creado. Estaríamos entonces diciendo que el identificador del objeto
+recién creado es <code>unaPersona</code>. En esta interpretación,
+entonces, las asignaciones se convierten en definiciones de
+identificadores (etiquetas) de objetos. Por ejemplo, si tuviéramos el
+código</p>
+
+<pre class="codigo">
+Persona otraPersona = unaPersona;
+</pre>
+
+<p>estaríamos dando al objeto con el identificador
+"<code>unaPersona</code>" otro identificador adicional. Así, los
+identificadores "<code>otraPersona</code>" y "<code>unaPersona</code>"
+se referirían al mismo objeto.</p>
+
+<p>Esta interpretación de pensar en identificadores de objetos, en
+lugar de en variables te será de mucha utilidad en el futuro, si te
+embarcas en proyectos de programación de componentes distribuidos con
+Java. Pero esto queda fuera del alcance de este curso.</p>
+
+<p>Una última consideración. ¿Qué sucede cuando pasamos un objeto como
+parámetro de una función?. Supongamos que añadimos el siguiente método
+en la clase Persona:</p>
+
+<pre class="codigo">
+public void copiarEn(Persona p) {
+   p.edad = this.edad;
+   p.nombre = this.nombre;
+}
+</pre>
+
+<p>Y supongamos que escribimos el siguiente método main:</p>
+
+<pre class="codigo">
+public static void main(String[] args) {
+   Persona p1, p2;
+
+   p1 = new Persona();
+   p1.setNombre(&quot;Pepe&quot;);
+   p1.edad =40;
+   p2 = new Persona();
+   p2.setNombre("Juan");
+   p2.edad = 10;
+  <strong> p1.copiarEn(p2);</strong>
+   System.out.println(p2.getNombre());
+   System.out.println(p2.edad);
+}
+</pre>
+
+<p>Cuando llamamos al método <code>copiarEn</code> del
+objeto <code>p1</code>, le pasamos como parámetro el
+objeto <code>p2</code>. Tenemos que entender que le estamos pasando al
+método una referencia (&iexcl;no una copia!) al
+objeto <code>p2</code>. Así, cuando se dentro del
+método <code>copiarEn</code> modificamos el objeto que se pasa como
+parámetro estamos modificando el objeto <code>p2</code>. Por esto la
+salida del ejemplo sería:</p>
+
+<pre class="codigo">
+Pepe
+40
+</pre>
+
+<p>Repasamos a continuación de forma concisa algunos de estos
+conceptos fundamentales de POO, incluyendo ejemplos adicionales:</p>
+
+<ul>
+  <li><b>Objeto</b>: conjunto de variables junto con los métodos relacionados 
+    con éstas. Contiene la <b>información</b> (las variables) y 
+    la forma de manipular la información (los métodos).&nbsp;</li>
+  <li><b>Clase</b>: prototipo que define las variables y métodos que va 
+    a emplear un determinado tipo de objeto. </li>
+  <li><b>Campos</b>: contienen la información relativa a la clase&nbsp;</li>
+  <li><b>Métodos</b>: permiten manipular dicha información.&nbsp;</li>
+  <li><b>Constructores</b>: reservan memoria para almacenar un objeto de esa clase.</li>
+</ul>
+
+<p>Supongamos el siguiente programa Java</p>
+
+<pre class="codigo">
+import java.util.*;
+
+public class MiClase
+{
+   public int a;
+   ArrayList v;
+
+   public MiClase()
+   {
+      a = 0;
+      v = new ArrayList();
+   }
+
+   public void imprimirA()
+   {
+      System.out.println (a);
+   }
+
+   public void insertar(String cadena)
+   {
+      v.add(cadena);
+   }
+}
+</pre>
+
+<p>La forma de especificar los elementos en el programa es la
+siguiente: </p>
+
+<ul>
+  <li> 
+    <p><b>Paquetes</b>: equivalentes a los "include" de C, permiten
+    utilizar clases en otras, y llamarlas de forma abreviada:</p>
+
+<pre class="codigo">import java.util.*;</pre></p>
+  </li>
+
+  <li><p><b>Clases</b>:&nbsp;</p>
+
+ <pre class="codigo">public class MiClase {
+&nbsp;&nbsp; ...
+}</pre>
+  </li>
+
+  <li><p><b>Campos</b>: Constantes, variables y en general elementos de información.</p>
+
+<pre class="codigo">public int a;
+ArrayList v;</pre>
+  </li>
+
+  <li><p><b>Métodos</b>: Para las funciones que devuelvan algún tipo
+  de valor, es imprescindible colocar una sentencia <i> return</i> en
+  la función.</p>
+
+<pre class="codigo">public void imprimirA() {
+   // implementación del método
+   System.out.println(a);
+}
+
+public void insertar(String cadena) {
+   // implementacion del metodo
+   v.add(cadena);
+}</pre>
+  </li>
+
+  <li><p><b>Constructores</b>: Un tipo de método que siempre tiene el
+  mismo nombre que la clase. Se pueden definir uno o varios.&nbsp;No
+  devuelve nada; se llama automáticamente cada vez que se crea un
+  objeto de la clase, para inicializar sus variables de instancia.</p>
+
+<pre class="codigo">
+public MiClase() {
+    // inicializo las variables de instancia del objeto MiClase
+    a = 0;
+    v = new ArrayList();
+}</pre>
+
+  <p>Así, podemos definir una <b>instancia</b> con <b>new</b>: </p>
+
+<pre class="codigo">
+MiClase mc;
+mc = new MiClase ();
+mc.a++;
+mc.insertar("hola");
+</pre>
+  </li>
+</ul>
+
+<p>No tenemos que preocuparnos de liberar la memoria del objeto al
+dejar de utilizarlo. Esto lo hace automáticamente el <b>garbage
+collector</b>. </p>
+
+ <hr>
+<h3>Ejercicio 2: Clases, objetos y variables</h3>
+<ul>
+</ul>
+
+<ol>
+  <li>
+    <p>Fíjate ahora en las clases <code>Punto</code>
+    y <code>Segmento</code> que estaban entre los materiales de la
+    sesión. Escribe (en el paquete <code>sesion2</code>) una clase
+    llamada <code>TestGeom</code> que contenga un
+    método <code>main</code> y que pruebe estas clases.</p>
+  </li>
+
+  <li>
+    <p>Añade en la clase <code>Punto</code> un
+    metodo <code>traslada(incX, incY)</code> que añade los incrementos
+    en <em>x</em> e <em>y</em> a las coordenadas correspondientes del
+    punto. Prueba a crear un segmento entro dos puntos
+    dados <code>p1</code> y <code>p2</code> y a trasladar alguno de
+    ellos. ¿Qué pasa con el segmento? ¿Cambia sus coordenadas? ¿Cambia
+    su longitud? (incluye la prueba en la clase <code>TestGeom</code>
+    y contesta en un fichero <code>respuestas.txt</code> que debe
+    estar en el paquete <code>sesion2</code>). </p>
+  </li>
+
+  <li>
+    <p>Añade las clases <code>Circulo</code>
+    y <code>Rectangulo</code>. Defínelas e impleméntalas como te
+    parezca más adecuado. La única restricción es que debes definir en
+    la clase <code>Rectangulo</code> un
+    método <code>intersecta(Rectangulo otroRect)</code> y otro
+    método <code>rectInterseccion(Rectangulo otroRect)</code>. El
+    primero devuelve un booleano y comprueba si intersectan el
+    rectángulo que ejecuta el método con otro que se le pasa como
+    parámetro. El segundo método devuelve el rectángulo de
+    intersección entre los dos rectángulos y <code>null</code> si
+    ambos no intersectan.</p>
+
+    <p>Modifica el programa <code>TestGeom</code> para comprobar estas
+    operaciones.</p>
+  </li>
+
+  <li>
+    <p>Escribe un programa llamado <code>MuchosRectangulos</code> que
+    haga lo siguiente:</p>
+    <ul>
+      <li>Pide por la entrada estandar un número al usuario.</li>
+      <li>Genera ese número de rectángulos aleatorios, los guarda en
+      un array y muestra sus coordenadas por la salida estándar. Las
+      coordenadas de los puntos deben estar entre 0 y 800, por ejemplo.</li>
+      <li>Comprueba qué rectángulos intersectan y muestra por la
+      salida estándar el número de rectángulos que han intersectados y
+      toda la información sobre las intersecciones: coordenadas de los
+      rectángulos que intersectan y coordenadas del rectángulo
+      resultante de la intersección.</li>
+    </ul>
+    <p> Como ejemplo puedes mirar el siguiente código, que pide un
+    número al usuario, guarda en un array esa cantidad de números
+    aleatorios y escribe por la salida estándar los números generados
+    que son pares.</p>
+    </p>
+
+<pre class="codigo">
+package sesion2;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Numeros {
+   static int[] numeros;
+
+   public static void main(String[] args) {
+      int i, j;
+      String line;
+      
+      // Leo el número escrito por el usuario
+      do {
+         System.out.print("Cuántos números?: ");
+         BufferedReader in = new BufferedReader(
+               new InputStreamReader(System.in));
+         try {
+            line = in.readLine();
+            i = Integer.parseInt(line);
+         } catch (IOException e) {
+            i = 0;
+            System.out.println("IOException: "+ e);
+         }
+      } while (i > 100);
+
+      numeros = new int[i];
+
+      for (j = 0; j < i; j++) {
+         double d = Math.random() * 800;
+         System.out.println(d);
+         numeros[j] = (int) d;
+      }
+      int nPares = 0;
+      for (j = 0; j < numeros.length; j++) {
+         int n = numeros[j];
+         if (n % 2 == 0) {
+            System.out.println(n);
+            nPares++;
+         }
+      }
+      System.out.println("Total pares: " + nPares);
+   }
+}
+</pre>
+  </li>
+
+</ol>
+
+<hr>
+
+<h2>Variables y métodos de clase: el modificador static</h2>
+
+<p>Los campos y los métodos de una clases pueden tener el
+modificador <code>static</code>, como ya has visto en todas las
+funciones <code>main</code> que hemos escrito hasta ahora. ¿Qué
+significa esa palabra?.</p>
+
+<p>Sencillamente, es la forma en Java de indicar que un elemento
+(campo o método) corresponde a la clase y no a las instancias de esa
+clase. Se usa para definir variables y métodos de clase. El elemento
+declarado como <code>static</code> corresponde a la clase en la que se
+define y todas los objetos de esa clase lo comparten. Es más, no es
+necesario crear ningún objeto de la clase para acceder a ese elemento,
+sino que se accede mediante el propio nombre de la clase.</p>
+<p> Por ejemplo, si declaramos lo siguiente:</p>
+
+<pre class="codigo">
+public class Trabajador {
+   public static double sueldoBase;
+}
+</pre>
+
+<p> estamos declarando una variable de clase de la
+clase <code>Trabajador</code>. Al ser <code>public</code> podemos
+acceder a ella desde cualquier clase y paquete. Para acceder a la
+variable habría que referenciarla a través del propio nombre de la
+clase:</p>
+
+<pre class="codigo">
+   ...
+   double sueldo = Trabajador.sueldoBase;
+   ...
+</pre>
+
+<p>Con los métodos de clase sucede igual. Por ejemplo, la
+clase <code>Math</code> contiene una gran cantidad de métodos
+estáticos. Todos son del estilo siguiente: </p>
+
+<pre class="codigo">
+public class Math {
+   public static double cos(double arg0) {
+      ...
+   }
+   ...
+}
+</pre>
+
+<p> Para llamar a un método de clase hay que usar el nombre de la
+clase. No es necesario crear ningún objeto de esa clase.</p>
+
+<pre class="codigo">
+   ...
+   double coseno = Math.cos(alfa);
+   ...
+</pre>
+
+<p> Por último, si añadimos a una variable de clase el
+modificador <code>final</code> estamos indicando que esa variable no
+se va a poder modificar. Es la forma de declarar constantes en
+Java. En el siguiente ejemplo se está definiendo la
+constante <code>Trabajador.sueldoBase</code>:</p>
+
+<pre class="codigo">
+public class Trabajador {
+   public final static double sueldoBase = 550.40;
+}
+</pre>
+
+<p>Como curiosidad, el orden en el que se declaran los modificadores
+es indiferente. Podríamos haber escrito:</p>
+
+<pre class="codigo">
+public class Trabajador {
+   double static final public sueldoBase = 550.40;
+}
+</pre>
+  <p>Vamos con un ejercicio en el que comprobar estos conceptos.</p>
+
+<hr>
+<h3>Ejercicio 3: Contadores</h3>
+
+<p>Todas las clases las vamos a definir en el
+paquete <code>sesion2</code>. Se encuentran en la plantilla de
+ejercicios de la sesión 2.</p>
+
+<p>Supongamos las siguientes clases <code>Contador</code>
+y <code>ContadorTest</code></p>
+
+<pre class="codigo">package sesion2;
+public class Contador {
+    static int acumulador = 0;
+    int valor;
+    
+    static public int acumulador() {
+        return acumulador;
+    }
+
+    public Contador(int valor) {
+        this.valor = valor;
+        acumulador += valor;
+    }    
+    
+    public void inc() {
+       valor++;
+       acumulador++;
+    }
+    
+    public int getValor(){
+        return valor;
+    }
+}
+</pre>
+
+<pre class="codigo">
+package sesion2;
+public class ContadorTest {
+
+    public static void main(String[] args) {
+        Contador c1, c2;
+        
+        System.out.println(Contador.acumulador());     
+        c1 = new Contador(3);
+        c2 = new Contador(10);
+        c1.inc();
+        c1.inc();
+        c2.inc();
+        System.out.println(c1.getValor());
+        System.out.println(c2.getValor());
+        System.out.println(Contador.acumulador);        
+    }
+}
+</pre>
+
+<ol>
+  <li>
+    <p>Compila las clases y pruébalas. Responde a las siguientes
+    preguntas en el fichero <code>respuestas.txt</code></p>
+
+    <ul>
+      <li> 
+        <p>¿Se pueden realizar las siguientes modificaciones en el
+        código de la clase <code>Contador</code>, sin que cambie el
+        funcionamiento de la clase? ¿Por qué?</p>
+        <ol>
+          <li>Cambiar "<code>acumulador += valor</code>" en el
+            constructor Contador por "<code>this.acumulador +=
+            valor</code>".</li>
+          <li>Cambiar "<code>acumulador += valor</code>" en el
+            constructor Contador por "<code>Contador.acumulador +=
+            valor</code>".</li>
+          <li>Cambiar "<code>valor++</code>" por
+            "<code>this.valor++</code>" en el método <code>inc()</code>.</li>
+        </ol>
+      </li>
+      <li><p>¿Qué valores imprime el
+      programa <code>ContadorTest</code>?</p></li>
+      <li><p>Si cambiamos en la clase Contador la línea "<code>static
+        int acumulador = 0</code>" por "<code>private static int
+        acumulador = 0</code>", ¿aparece algún error? ¿por
+        qué?</p></li>
+      <li><p>¿Qué sucede si no inicializamos el valor del campo
+        <code>acumulador</code>?</p></li>
+    </ul>
+  </li>
+
+  <li> 
+    <p>Vamos a complicar un poco más el código
+    de <code>Contador</code>, añadiendo una constante
+    (<code>VALOR_INICIAL</code>) a la clase y otro nuevo constructor.
+    El código es el que sigue (en negrita lo que se ha añadido).  El
+    modificador final indica que el valor asignado
+    a <code>VALOR_INICIAL</code> no puede modificarse.</p>
+
+<pre class="codigo">
+package sesion2;
+
+public class Contador {
+    static int acumulador;
+<strong>    final static int VALOR_INICIAL=10;</strong>
+    int valor;
+    
+    static public int acumulador() {
+        return acumulador;
+    }
+
+    public Contador(int valor) {
+        this.valor = valor;
+        acumulador += valor;
+    }    
+    
+<strong>    public Contador(){
+        this(Contador.VALOR_INICIAL);
+    }
+</strong>
+    public void inc() {
+       this.valor++;
+       acumulador++;
+    }
+    
+    public int getValor(){
+        return this.valor;
+    }
+}
+</pre>
+
+    <p> Fíjate en la llamada
+    "<code>this(Contador.VALOR_INICIAL)</code>". ¿Qué hace? Escribe un
+    programa ejemplo <code>ContadorTest2</code> que compruebe el
+    funcionamiento de la clase modificada. Por último, una pregunta
+    algo complicada: ¿Qué sucede si cambiamos la línea
+    "<code>this(Contador.VALOR_INICIAL)</code>" por "<code>new
+    Contador(Contador.VALOR_INICIAL)</code>"?</p>
+  </li>
+
+  <li>
+    <p>Por último, realiza las siguientes modificaciones en la
+    clase <code>Contador</code>:</p>
+    <ul>
+      <li>Añade una variable de clase <code>nContadores</code> que contenga 
+        el número de contadores creados</li>
+      <li>Añade una variable de clase <code>valores</code> que contenga 
+        un array con los valores de los contadores creados.</li>
+      <li>Añade un metodo <code>getValores</code> que devuelva un array 
+        con los valores de los contadores creados.</li>
+    </ul>
+  </li>
+</ol>
+
+<hr>
+<h2>La documentación del API de Java</h2>
+<p>Cuando se programa con Java, se dispone de antemano de un conjunto de clases 
+  ya implementadas. Estas clases (aparte de las que pueda hacer el usuario) forman 
+  parte del propio lenguaje (lo que se conoce como <b>API</b> (<i>Application 
+  Programming Interface</i>) de Java). </p>
+<p>Una herramienta muy útil son las páginas HTML con la documentación 
+  del API de Java. Puedes encontrar estas páginas en los recursos del curso. 
+  Vamos a usar en concreto la versión 1.4.2 de Java.</p>
+<p>Si consultamos la página principal de la documentación, veremos 
+  el enlace "Java 2 Platform API Specification" dentro del apartado "API &amp; 
+  Language Documentation". Siguiendo ese enlace, aparece la siguiente página 
+  HTML. Es una página con tres frames. En la zona superior del lateral 
+  izquierdo se listan todos los paquetes de la versión 1.4.2 de Java. La 
+  zona inferior muestra una lista con todas las clases existentes en el API. La 
+  zona principal describe todos los paquetes existentes en la plataforma.</p>
+<center>
+  <img src="images/api-java1.png" height="470"
+ width="500" /> 
+</center>
+<p>Si seleccionamos un paquete, por ejemplo <code>java.rmi</code>, aparece la 
+  siguiente página HTML. En el frame inferior izquierdo aparecen los elementos 
+  que constituyen el paquete: las clases, interfaces y excepciones definidas en 
+  el mismo. En el frame principal se describen con más detalle estos elementos. 
+  Todos los elementos están enlazados a la página en la que se detalla 
+  la clase, el interface o la excepción.</p>
+<center>
+  <img src="images/api-java2.png" height="470"
+ width="500" /> 
+</center>
+<p>Cuando escogemos una clase, por ejemplo la clase <code>Integer</code> del paquete 
+  <code>java.lang</code>, aparece una página como la siguiente. En la ventana 
+  principal se muestra la jerarquía de la clase, todas las interfaces que 
+  implementa la clase y sus elementos constituyentes: campos, constructores y 
+  métodos (ver figura 1.1.1.5). En este caso, la clase <code>Integer</code> 
+  hereda de la clase <code>Number</code> (en el paquete <code>java.lang</code>), 
+  la cual hereda de la clase <code>Object</code> (también en el paquete 
+  <code>java.lang</code>). La clase <code>Integer</code> implementa la interfaz 
+  <code>Comparable</code> y la interfaz <code>Serializable</code> (porque es implementada 
+  por la clase <code>Number</code>).</p>
+<center>
+  <img src="images/api-java3.png" height="428"
+ width="500" /> 
+</center>
+<p>En la figura siguiente se detallan algunos elementos que componen la clase 
+  <code>Integer</code>. </p>
+<center>
+  <p><img src="images/api-java4.png" height="438"
+ width="500" /> </p>
+</center>
+
+<hr>
+<h3>Ejercicio 4: El API de Java</h3>
+<ol>
+  <li>
+    <p>Busca en el API de Java el
+    paquete <code>java.util.zip</code>. Consultando la página HTML que
+    describe el paquete, contesta en el
+    fichero <code>respuestas.txt</code> las siguientes preguntas:</p>
+
+    <ul>
+      <li> ¿Para qué es el paquete?</li>
+      <li>¿Qué interfaces, clases y excepciones se declaran en el 
+        paquete?</li>
+    </ul>
+  </li>
+
+  <li><p>Busca en el API la clase <code>Stack</code>. Contesta en el
+  fichero <code>respuestas.txt</code> las siguientes
+  preguntas:</p></li>
+
+  <ul>
+    <li>¿En qué paquete se encuentra la clase <code>Stack</code>? ¿Qué 
+      instrucción <code>import</code> tendrías que definir para usar la clase 
+      <code>Stack</code>?</li>
+    <li>¿Qué constructores tiene la clase?</li>
+    <li>¿Qué métodos modifican el estado de un objeto <code>Stack</code>?</li>
+    <li>¿De qué clase son los objetos que puedes añadir y obtener de un 
+      stack?</li>
+    <li>El siguiente código no es correcto en Java 1.4.2, ¿por qué?
+      (consulta el apartado 1.7.3 de los apuntes) ¿Cuál sería el
+      código correcto?
+      <pre class="codigo">int i = 10;
+Stack pila = new Stack();
+pila.add(i);</pre> </li>
+    <li>¿Ese código sería correcto en Java 5.0?</li>
+  </ul>
+</ol>
+<hr>
+<h2>&nbsp;</h2>
+<p>&nbsp;</p>
+</body>
+</html>
+

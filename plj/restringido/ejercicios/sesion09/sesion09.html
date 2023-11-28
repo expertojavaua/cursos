@@ -1,0 +1,1115 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Tema 3: Interfaz Gr&aacute;fica</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+<!-- OneStat -->
+<!--ONESTAT SCRIPTCODE START-->
+<script type="text/javascript">
+<!--
+// Account ID : 221957
+// Website URL: http://www.jtech.ua.es
+// Copyright (C) 2002-2005 OneStat.com All Rights Reserved
+function OneStat_Pageview()
+{
+    var d=document;
+    var sid="221957";
+    var CONTENTSECTION="";
+    var CUSTOMDATA="";
+    var osp_URL=d.URL;
+    var osp_Title=d.title;
+    var t=new Date();
+    var p="http"+(d.URL.indexOf('https:')==0?'s':'')+"://stat.onestat.com/stat.aspx?tagver=2&sid="+sid;
+    p+="&url="+escape(osp_URL);
+    p+="&ti="+escape(osp_Title);
+    p+="&section="+escape(CONTENTSECTION);
+    p+="&custom="+escape(CUSTOMDATA);
+    p+="&rf="+escape(parent==self?window.document.referrer:top.document.referrer);
+    p+="&tz="+escape(t.getTimezoneOffset());
+    p+="&ch="+escape(t.getHours());
+    p+="&js=1";
+    p+="&ul="+escape(navigator.appName=="Netscape"?navigator.language:navigator.userLanguage);
+    if(osp_URL!=d.URL) p+="&ol="+escape(d.URL);
+    if(typeof(screen)=="object"){
+       p+="&sr="+screen.width+"x"+screen.height;p+="&cd="+screen.colorDepth;
+       p+="&jo="+(navigator.javaEnabled()?"Yes":"No");
+    }
+    d.write('<img id="ONESTAT_TAG" border="0" width="1" height="1" src="'+p+'" />');
+}
+
+OneStat_Pageview();
+//-->
+</script>
+<noscript>
+<a href="http://www.onestat.com"><img border="0" width="1" height="1" src="http://stat.onestat.com/stat.aspx?tagver=2&amp;sid=221957&amp;js=No&amp;" ALT="OneStat Web Analytics"></a>
+</noscript>
+<!--ONESTAT SCRIPTCODE END-->
+
+<h1>Sesi&oacute;n 9. Introducción a Swing</h1>
+<h2> AWT</h2>
+
+<p><b>AWT</b> (<i>Abstract Windows Toolkit</i>) es la parte de Java
+que se emplea para construir <b>interfaces gr&aacute;ficas</b> de usuario.
+Este paquete ha estado presente desde la primera versi&oacute;n (la 1.0),
+aunque con la 1.1 sufri&oacute; un cambio notable. En la versi&oacute;n
+1.2 se incorpor&oacute; tambi&eacute;n a Java una librer&iacute;a adicional,
+<b>Swing</b>,
+que enriquece a AWT en la construcci&oacute;n de aplicaciones gr&aacute;ficas.
+<br>&nbsp;
+<h3>Resumen de controles AWT </h3>
+AWT proporciona una serie de <b>controles</b> que podremos colocar en
+las aplicaciones visuales que implementemos. Dichos controles son subclases
+de la clase <b>Component</b>, y forman parte del paquete
+<b>java.awt</b>. Las m&aacute;s comunes son:
+
+</p>
+<center>
+<img SRC="images/AWTcontroles.jpg" ALT="" WIDTH="100%" NOSAVE></center>
+
+
+<p>Los controles s&oacute;lo se ver&aacute;n si los a&ntilde;adimos sobre
+un contenedor (un elemento de tipo <i>Container</i>, o cualquiera de sus
+subtipos). Para ello
+utilizamos el m&eacute;todo <b>add(...)</b> del contenedor para a&ntilde;adir
+el control. Por ejemplo, si queremos a&ntilde;adir un bot&oacute;n a un
+<i>Panel</i>:
+<pre class="codigo">Button boton = new Button(&quot;Pulsame&quot;);
+Panel panel = new Panel();
+...
+panel.add(boton);</pre>
+<p>A continuaci&oacute;n vamos a ver una descripci&oacute;n de cada uno de los controles que ofrece AWT.</p>
+
+<center><table BORDER="1" WIDTH="548" >
+<caption>&nbsp;
+
+</caption><center>
+<tbody>
+</tbody></center>
+
+<tr>
+<td ALIGN=CENTER><b>Component</b></td>
+
+<td>La clase padre <i>Component</i> no se puede utilizar directamente.
+Es una clase abstracta, que proporciona algunos m&eacute;todos &uacute;tiles
+para sus subclases.&nbsp;</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER><b>Botones</b>
+<br><img SRC="images/AWTbutton.jpg" ALT="" NOSAVE ></td>
+
+<td>Para emplear la clase <b>Button</b>, en el constructor simplemente
+indicamos el texto que queremos que tenga :&nbsp;
+<pre class="codigo">Button boton = new Button(&quot;Pulsame&quot;);</pre>
+</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER><b>Etiquetas</b>
+<br><img SRC="images/AWTlabel.jpg" ALT="" NOSAVE></td>
+
+<td>Para utilizar <b>Label</b>, el uso es muy similar al bot&oacute;n:
+se crea el objeto con el texto que queremos darle:&nbsp;
+<pre class="codigo">Label etiq = new Label(&quot;Etiqueta&quot;);</pre>
+</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER><b>Areas de dibujo</b></td>
+
+<td>La clase <b>Canvas</b> se emplea para heredar de ella y crear componentes
+personalizados.&nbsp;
+<br>Accediendo al objeto <i>Graphics</i> de los elementos podremos darle
+la apariencia que queramos: dibujar l&iacute;neas, pegar im&aacute;genes,
+etc:
+<pre class="codigo">Panel p = new Panel();
+p.getGraphics().drawLine(0, 0, 100, 100);
+p.getGraphics().drawImage(...);</pre>
+</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER><b>Casillas de verificaci&oacute;n</b>
+<br><img SRC="images/AWTcheckbox.jpg" ALT="" NOSAVE></td>
+
+<td><b>Checkbox</b> se emplea para marcar o desmarcar opciones. Podremos
+tener controles aislados, o grupos de <i>Checkboxes </i>en un objeto <b>CheckboxGroup</b>, de forma que s&oacute;lo una de las casillas del grupo pueda&nbsp; marcarse
+cada vez.&nbsp;
+<pre class="codigo">Checkbox cb = new Checkbox
+              (&quot;Mostrar subdirectorios&quot;, 
+              false);
+System.out.println (&quot;Esta marcada: &quot; + 
+                    cb.getState());</pre>
+</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER><b>Listas</b>
+<br><img SRC="images/AWTchoice.jpg" ALT="" NOSAVE>
+<br><img SRC="images/AWTlist.jpg" ALT="" NOSAVE></td>
+
+<td>Para utilizar una <b>lista desplegable</b> (objeto <b>Choice</b> ),
+se crea el objeto y se a&ntilde;aden, con el m&eacute;todo <b>addItem(...)</b>
+, los elementos que queramos a la lista:&nbsp;
+<pre class="codigo">Choice ch = new Choice();
+ch.addItem(&quot;Opcion 1&quot;);
+ch.addItem(&quot;Opcion 2&quot;);
+...
+int i = ch.getSelectedIndex();</pre>
+Para utilizar <b>listas fijas</b> (objeto <b>List</b>), en el constructor
+indicamos cu&aacute;ntos elementos son visibles. Tambi&eacute;n podemos
+indicar si se permite seleccionar varios elementos a la vez. Dispone de
+muchos de los m&eacute;todos que tiene <i>Choice</i> para a&ntilde;adir
+y consultar elementos.&nbsp;
+<pre class="codigo">List lst = new List(3, true);
+lst.addItem(&quot;Opcion 1&quot;);
+lst.addItem(&quot;Opcion 2&quot;);</pre>
+</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER><b>Cuadros de texto</b>
+<br><img SRC="images/AWTtextfield.jpg" ALT="" NOSAVE>
+<img SRC="images/AWTtextarea.jpg" ALT="" NOSAVE></td>
+
+<td>Al trabajar con <b>TextField</b> o <b>TextArea</b>, se indica opcionalmente
+en el constructor el n&uacute;mero de columnas (y filas en el caso de <i>TextArea</i>)
+que se quieren en el cuadro de texto.&nbsp;
+<pre class="codigo">TextField tf = new TextField(30);
+TextArea ta = new TextArea(5, 40);
+...
+tf.setText(&quot;Hola&quot;);
+ta.appendText(&quot;Texto 2&quot;);
+String texto = ta.getText();</pre>
+</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER><b>Men&uacute;s</b>
+<br><img SRC="images/AWTmenu.jpg" ALT="" NOSAVE></td>
+
+<td>Para utilizar men&uacute;s, se emplea la clase <b>MenuBar</b> (para
+definir la barra de men&uacute;), <b>Menu</b> (para definir cada men&uacute;),
+y <b>MenuItem</b> (para cada opci&oacute;n en un men&uacute;). Un men&uacute;
+podr&aacute; contener a su vez submen&uacute;s (objetos de tipo <i>Menu</i>
+). Tambi&eacute;n est&aacute; la clase <b>CheckboxMenuItem</b> para definir
+opciones de men&uacute; que son casillas que se marcan o desmarcan.&nbsp;
+<pre class="codigo">MenuBar mb = new MenuBar();
+Menu m1 = new Menu &quot;Menu 1&quot;);
+Menu m11 = new Menu (&quot;Menu 1.1&quot;);
+Menu m2 = new Menu (&quot;Menu 2&quot;);
+MenuItem mi1 = new MenuItem (&quot;Item 1.1&quot;);
+MenuItem mi11=new MenuItem (&quot;Item 1.1.1&quot;);
+CheckboxMenuItem mi2 = 
+   new CheckboxMenuItem(&quot;Item 2.1&quot;);
+mb.add(m1);
+mb.add(m2);
+m1.add(mi1);
+m1.add(m11);
+m11.add(mi11);
+m2.add(mi2);</pre>
+Mediante el m&eacute;todo <i>setMenuBar(...)</i> de Frame podremos a&ntilde;adir
+un men&uacute; a una ventana:
+<pre class="codigo">Frame f = new Frame();
+f.setMenuBar(mb);</pre>
+</td>
+</tr>
+</table>
+</center>
+
+<h2>Swing</h2>
+<p> Como se ha comentado, en versiones posteriores de Java se introdujo una nueva librer&iacute;a gr&aacute;fica m&aacute;s potente, que es Swing. Anteriormente se ha visto una descripci&oacute;n de los controles <i>AWT</i> para construir aplicaciones visuales. En cuanto a estructura, no hay mucha diferencia entre los controles proporcionados por <i>AWT</i> y los proporcionados por <i>Swing</i>: &eacute;stos se llaman, en general, igual que aqu&eacute;llos, salvo que tienen una "J" delante; as&iacute;, por ejemplo, la clase <i>Button</i> de <i>AWT</i> pasa a llamarse <i>JButton</i> en <i>Swing</i> , y en general la estructura del paquete de Swing (<b>javax.swing</b>) es la misma que la que tiene <i>java.awt</i>.</p>
+<p>Pero yendo m&aacute;s all&aacute; de la estructura, existen importantes diferencias entre los componentes <i>Swing</i> y los componentes <i>AWT</i>: 
+<ul>
+  <li> Los componentes <i>Swing</i> est&aacute;n escritos sin emplear c&oacute;digo nativo, con lo que ofrecen m&aacute;s versatilidad multiplataforma (podemos dar a nuestra aplicaci&oacute;n un aspecto que no dependa de la plataforma en que la estemos ejecutando).</li>
+</ul>
+<ul>
+  <li> Los componentes <i>Swing</i> ofrecen m&aacute;s capacidades que los correspondientes <i>AWT</i>: los botones pueden mostrar im&aacute;genes, hay m&aacute;s facilidades para modificar la apariencia de los componentes, etc.</li>
+</ul>
+<ul>
+  <li> Al mezclar componentes <i>Swing</i> y componentes <i>AWT</i> en una aplicaci&oacute;n, se debe tener cuidado de emplear contenedores <i>AWT</i> con elementos <i>Swing</i>, puesto que los contenedores pueden solapar a los elementos (se colocan encima y no dejan ver el componente).</li>
+</ul>
+<h3>Resumen de controles Swing </h3>
+<p> Los controles en Swing tienen en general el mismo nombre que los de AWT, con una "J" delante. As&iacute;, el bot&oacute;n en Swing es <i>JButton</i> , la etiqueta es <i>JLabel</i> , etc. Hay algunas diferencias, como por ejemplo <i>JComboBox</i> (el equivalente a <i>Choice</i> de AWT), y controles nuevos. Vemos aqu&iacute; un listado de algunos controles:</p>
+<center>
+<table BORDER="1" WIDTH="562" >
+  <tr>
+    <td ALIGN=CENTER WIDTH="164"><b>JComponent</b></td>
+    <td width="382">La clase padre para los componentes Swing es <i>JComponent</i> , paralela al <i>Component</i> de AWT.&nbsp;</td>
+  </tr>
+  <tr>
+    <td ALIGN=CENTER width="164"><b>Botones</b> <br>
+        <img SRC="images/SWbuttons.gif" ALT="" NOSAVE height=113 width=131></td>
+    <td width="382">Se tienen botones normales (<b>JButton</b>), de verificaci&oacute;n (<b>JCheckBox</b>), de radio (<b>JRadioButton</b>), etc, similares a los <i>Button</i>, <i>Checkbox</i> de AWT, pero con m&aacute;s posibilidades (se pueden a&ntilde;adir im&aacute;genes, etc).&nbsp;</td>
+  </tr>
+  <tr>
+    <td ALIGN=CENTER width="164"><b>Etiquetas</b> <br>
+        <img SRC="images/SWlabel.gif" ALT="" NOSAVE height=91 width=139></td>
+    <td width="382">Las etiquetas son <b>JLabel</b>, paralelas a las <i>Label</i> de AWT pero con m&aacute;s caracter&iacute;sticas propias (iconos, etc).&nbsp;</td>
+  </tr>
+  <tr>
+    <td ALIGN=CENTER width="164"><b>Cuadros de texto</b> <br>
+        <img SRC="images/SWtextfield.gif" ALT="" NOSAVE height=100 width=124></td>
+    <td width="382">Las clases <b>JTextField </b>y <b>JTextArea</b> representan los cuadros de texto en Swing, de forma parecida a los <i>TextField</i> y <i>TextArea</i> de AWT.</td>
+  </tr>
+  <tr>
+    <td ALIGN=CENTER width="164"><b>Listas</b> <br>
+        <img SRC="images/SWcombo.gif" ALT="" NOSAVE height=110 width=138> <br>
+        <img SRC="images/SWlist.gif" ALT="" NOSAVE height=79 width=109></td>
+    <td width="382">Las clases <b>JComboBox</b> y <b>JList</b> se emplean para lo mismo que <i>Choice</i> y <i>List</i> en AWT.&nbsp;</td>
+  </tr>
+  <tr>
+    <td ALIGN=CENTER width="164"><b>Di&aacute;logos y ventanas</b> <img SRC="images/SWdialog.gif" ALT="" NOSAVE height=97 width=137> <br>
+        <img SRC="images/SWframe.gif" NOSAVE height=93 width=160></td>
+    <td width="382">Las clases <b>JDialog</b> (y sus derivadas) y <b>JFrame</b> se emplean para definir di&aacute;logos y ventanas. Se tienen algunos cuadros de di&aacute;logo espec&iacute;ficos, para elegir ficheros (<i>JFileChooser</i> ), para elegir colores (<i>JColorChooser</i>), etc.&nbsp;</td>
+  </tr>
+  <tr>
+    <td ALIGN=CENTER width="164"><b>Men&uacute;s</b> <br>
+        <img SRC="images/SWmenu.gif" ALT="" NOSAVE height=80 width=132></td>
+    <td width="382">Con <b>JMenu</b>, <b>JMenuBar</b>, <b>JMenuItem</b>, se construyen los men&uacute;s que se construian en AWT con <i>Menu</i>, <i>MenuBar</i> y <i>MenuItem</i>.</td>
+  </tr>
+</table>
+</center>
+<h2>Gestores de disposición</h2>
+<p align="left">Para colocar los controles Java en los contenedores se hace uso de un determinado <b>gestor de disposici&oacute;n</b>. Dicho gestor indica c&oacute;mo se colocar&aacute;n los controles en el contenedor, siguiendo una determinada distribuci&oacute;n. Para establecer qu&eacute; gestor queremos, se emplea el m&eacute;todo <i> setLayout(...)</i> del contenedor. Los gestores de disposici&oacute;n se encuentran dentro del paquete <strong>java.awt</strong>, pero nos servir&aacute;n indistintamente para controles AWT y Swing. Por ejemplo:</p>
+<pre class="codigo">Panel panel = new Panel(); <br>panel.setLayout(new BorderLayout());<br><br>JPanel p2 = new JPanel();<br>p2.setLayout(new BorderLayout());
+</pre>
+    <p>Veremos ahora los gestores m&aacute;s importantes: </p>
+	<center>
+    <table BORDER="1" WIDTH="552" >
+      <caption></caption>
+      <tbody> </tbody> 
+      <tr> 
+        <td ALIGN=CENTER><b>BorderLayout</b> <br>
+          <img SRC="images/AWTborderlayout.jpg" ALT="" NOSAVE> 
+          <br>
+          (gestor por defecto para contenedores tipo <i>Window</i>)</td>
+        <td>Divide el &aacute;rea del contenedor en 5 zonas: Norte (<i> NORTH</i> 
+          ), Sur (<i>SOUTH</i>), Este (<i>EAST</i>), Oeste (<i>WEST</i>) y Centro 
+          (<i>CENTER</i>), de forma que al colocar los componentes deberemos indicar 
+          en el m&eacute;todo <i>add(...)</i> en qu&eacute; zona colocarlo:&nbsp;
+          <pre class="codigo">panel.setLayout(new BorderLayout());
+Button btn = new Button(&quot;Pulsame&quot;);
+panel.add(btn, BorderLayout.SOUTH);</pre>
+          Al colocar un componente en una zona, se colocar&aacute; sobre el que 
+          existiera anteriormente en dicha zona (lo tapa).&nbsp;</td>
+      </tr>
+      <tr> 
+        <td ALIGN=CENTER><b>FlowLayout</b> <br>
+          <img SRC="images/AWTflowlayout.jpg" ALT="" NOSAVE> 
+          <br>
+          (gestor por defecto para contenedores de tipo <i>Panel</i>)</td>
+        <td>Con este gestor, se colocan los componentes en fila, uno detr&aacute;s 
+          de otro, con el tama&ntilde;o preferido (<i>preferredSize</i> ) que 
+          se les haya dado. Si no caben en una fila, se utilizan varias.&nbsp; 
+          <pre class="codigo">panel.setLayout(new FlowLayout());
+panel.add(new Button(&quot;Pulsame&quot;));</pre>
+        </td>
+      </tr>
+      <tr> 
+        <td ALIGN=CENTER><b>GridLayout</b> <br>
+          <img SRC="images/AWTgridlayout.jpg" ALT="" NOSAVE></td>
+        <td>Este gestor sit&uacute;a los componentes en forma de tabla, dividiendo 
+          el espacio del contenedor en celdas del mismo tama&ntilde;o, de forma 
+          que el componente ocupa todo el tama&ntilde;o de la celda.&nbsp; <br>
+          Se indica en el constructor el n&uacute;mero de filas y de columnas. 
+          Luego, al colocarlo, va por orden (rellenando filas de izquierda a derecha).&nbsp; 
+          <pre class="codigo">panel.setLayout(new GridLayout(2,2));
+panel.add(new Button(&quot;Pulsame&quot;));
+panel.add(new Label(&quot;Etiqueta&quot;));</pre>
+        </td>
+      </tr>
+      <tr> 
+        <td ALIGN=CENTER><b>Sin gestor</b></td>
+        <td>Si especificamos un gestor <b><i>null</i></b>, podremos colocar a 
+          mano los componentes en el contenedor, con m&eacute;todos como <b>setBounds(...)</b> 
+          , o <b>setLocation(...)</b>:&nbsp; 
+          <pre class="codigo">panel.setLayout(null);
+Button btn = new Button (&quot;Pulsame&quot;);
+btn.setBounds(0, 0, 100, 30);
+panel.add(btn);</pre>
+        </td>
+      </tr>
+    </table>
+	</center>
+  <h3>Diferencias entre AWT y Swing en la disposici&oacute;n de elementos</h3>
+  <p align="left">Hay una diferencia en los gestores de disposici&oacute;n en Swing: para ciertos contenedores (<em>JFrames</em> y <em>JDialogs</em>), se debe acceder al <em>getContentPane()</em> del contenedor, antes de llamar a su m&eacute;todo <em>setLayout </em>para establecer el gestor, y tambi&eacute;n antes de llamar a su m&eacute;todo <em>add </em>para a&ntilde;adirle elementos.  No ocurre as&iacute; para los <em>JPanel. </em>Veamos algunos ejemplos:
+  <pre class="codigo">JPanel panel = new JPanel(); <br>panel.setLayout(new BorderLayout());
+panel.add(new JButton(&quot;Hola&quot;));<br><br>JFrame f = new JFrame();<br>f.getContentPane().setLayout(new BorderLayout());
+f.getContentPane().add(new JButton(&quot;Hola&quot;));<br><br>JDialog d = new JDialog();<br>d.getContentPane().setLayout(new FlowLayout());<br>d.getContentPane().add(new JButton("Hola"));
+</pre>
+  <p align="left">Esta diferencia desaparece con la versi&oacute;n 1.5 de Java, pero deberemos tenerla presente en versiones anteriores. 
+  <p align="left"><b>Ejemplo</b>: Vemos el aspecto de algunos componentes de Swing, 
+  y el uso de gestores de disposici&oacute;n en este ejemplo:   
+  <center>
+    <img SRC="images/SWejemplo.jpg" NOSAVE height=298 width=398> <br>
+    <a href="examples/EjemploSwing.java">C&oacute;digo</a>
+  </center>
+  <p align="left">El código nos muestra cómo se crea una clase que es una
+    ventana principal (hereda de <i>JFrame</i>), y define un gestor que es un <i>GridLayout</i>,
+    con 4 filas y 2 columnas. En ellas vamos colocando etiquetas (<i>JLabel</i>),
+    botones (<i>JButton</i>), casillas de verificación (<i>JCheckbox</i>), listas
+    desplegables (<i>JComboBox</i>) y cuadros de texto (<i>JTextField</i>). Además,
+  se crea un menú con diferentes opciones. El ejemplo ser&iacute;a muy similar en AWT, simplemente cambiando los controles por los equivalentes en AWT, y haciendo alg&uacute;n retoque a la hora de establecer gestores de disposici&oacute;n y a&ntilde;adir elementos a la ventana principal. Aqu&iacute; tendr&iacute;amos el ejemplo en AWT: 
+  <div align="center"><img SRC="images/AWTejemplo.jpg" NOSAVE height=317 width=399> </div>
+  <div align="center"><a href="examples/EjemploAWT.java">C&oacute;digo</a></div>
+  <p align="left">Observad las diferencias entre una y otra aplicaci&oacute;n, en cuanto a c&oacute;mo se programan, y c&oacute;mo se ven los componentes en pantalla (debido a la independencia de plataforma de Swing).  
+  <hr>
+  <h3>Ejercicio 1: Nuestra primera aplicaci&oacute;n AWT </h3>
+  <p>En la plantilla ten&eacute;is la clase <em>sesion09.Calculadora</em>. Pretendemos que sea una calculadora muy simplificada, con la siguiente apariencia:</p>
+  <p align="center"><img SRC="images/ejercicio1.gif" NOSAVE> </p>
+  <p align="left">En la casilla del primer operando pondremos la primera cifra para operar, despu&eacute;s en el desplegable <em>Operador</em> elegiremos la operaci&oacute;n a realizar (sumar, restar, multiplicar o dividir), y en la casilla del segundo operando pondremos el segundo operando de la operaci&oacute;n. Finalmente, pulsando el bot&oacute;n de <em>Calcular</em>, en el &uacute;ltimo cuadro de texto (junto al bot&oacute;n) nos pondr&aacute; el resultado.</p>
+  <p align="left">En este ejercicio UNICAMENTE vamos a dejar puestos los controles, para que queden como en la imagen. Ver&aacute;s que la clase es un subtipo de <i>Frame</i>, y tiene un constructor vac&iacute;o, y un m&eacute;todo <i>main</i> que crea un objeto de ese tipo y lo muestra (m&eacute;todo <i>show</i>). Nos falta completar el constructor para definir la ventana que se mostrar&aacute;.</p>
+  <ul>
+    <li>Lo primero de todo es definir la ventana sobre la que van a ir los controles: crearemos una ventana de 300 de ancho por 150 de alto, con un gestor de tipo <i>GridLayout</i>, con 4 filas y 2 columnas (como se ve en la figura superior):
+    </li>
+  </ul>
+  <blockquote>
+    <pre class="codigo">public Calculadora()
+{
+<b>   setSize(300, 150);
+   setLayout(new GridLayout(4, 2));</b></pre>
+  </blockquote>
+  <ul>
+    <li>Despu&eacute;s colocamos los componentes, por orden, en la rejilla: primero la etiqueta y el cuadro de texto del primer operando, despu&eacute;s la etiqueta y el desplegable... etc:
+    </li>
+  </ul>
+  <blockquote>
+    <pre class="codigo"><b>// Primer operando
+</b>Label lblOp1 = new Label(&quot;Primer operando:&quot;);
+TextField txtOp1 = new TextField();
+add(lblOp1);
+add(txtOp1);
+<b>		
+// Operador
+</b>Label lblOper = new Label (&quot;Operador:&quot;);
+Choice operadores = new Choice();
+operadores.addItem(&quot;+&quot;);
+operadores.addItem(&quot;-&quot;);
+operadores.addItem(&quot;*&quot;);
+add(lblOper);
+add(operadores);
+<b>		
+// Segundo operando
+</b>Label lblOp2 = new Label(&quot;Segundo operando:&quot;);
+TextField txtOp2 = new TextField();
+add(lblOp2);
+add(txtOp2);
+<b>		
+// Boton de calcular y cuadro de resultado
+</b>Button btnRes = new Button (&quot;Calcular&quot;);
+TextField txtRes = new TextField();
+add(btnRes);
+add(txtRes);<b>
+</b>}</pre>
+  </blockquote>
+  <ul>
+    <li>Llegados a este punto, compila y ejecuta el programa, para comprobar que no hay errores en el c&oacute;digo, y para asegurarte de que el programa va a tener la misma apariencia que el de la figura 1 (l&oacute;gicamente el programa a&uacute;n no har&aacute; nada, s&oacute;lo ver&aacute;s la ventana).</li>
+  </ul>
+  <hr/>
+  <h3>Ejercicio 2: Nuestra primera aplicaci&oacute;n Swing </h3>
+  <p>La plantilla tambi&eacute;n tiene la clase <em>sesion09.JCalculadora</em>. Vamos a hacer algo parecido a lo que hemos hecho en el ejercicio anterior, pero en este caso para hacer una aplicaci&oacute;n Swing.</p>
+  <p align="center"><img border="0" src="images/ejercicio2.gif" width="291" height="115"></p>
+  <ul>
+    <li>Lo primero que hay que hacer es importar el paquete adecuado (adem&aacute;s de los de AWT, que NO hay que quitar, porque el modelo de eventos y los gestores de disposici&oacute;n son los mismos).
+    </li>
+  </ul>
+  <blockquote>
+    <pre class="codigo">import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+<b>import javax.swing.*;
+</b>
+public class JCalculadora ...</pre>
+  </blockquote>
+  <ul>
+    <li>Despu&eacute;s vamos cambiando los componentes de AWT por los correspondientes de Swing.<br>
+      <ul>
+        <li>En primer lugar, la clase ya no heredar&aacute; de <i>Frame</i>, sino de su hom&oacute;logo <i>JFrame</i></li>
+      </ul>
+      <blockquote>
+        <pre class="codigo">public class JCalculadora <b>extends JFrame</b>
+{
+	...</pre>
+      </blockquote>
+      <ul>
+        <li>Despu&eacute;s sustituimos cada control de AWT por el correspondiente de Swing, es decir, las l&iacute;neas:
+        </li>
+      </ul>
+      <blockquote>
+        <pre class="codigo">TextField txtOp1 = new TextField();
+...
+Choice operadores = new Choice();
+...
+TextField txtOp2 = new TextField();
+...
+TextField txtRes = new TextField();
+...
+Label lblOp1 = new Label(&quot;Primer operando:&quot;);
+...
+Label lblOp2 = new Label(&quot;Segundo operando:&quot;);
+...
+Label lblOper = new Label(&quot;Operador:&quot;);
+...
+Button btnRes = new Button(&quot;Primer operando:&quot;);
+...</pre>
+        <p>Por las correspondientes clases Swing:</p>
+        <pre class="codigo"><b>JTextField</b> txtOp1 = new <b>JTextField</b>();
+...
+<b>JComboBox</b> operadores = new <b>JComboBox</b>();
+...
+<b>JTextField</b> txtOp2 = new <b>JTextField</b>();
+...
+<b>JTextField</b> txtRes = new <b>JTextField</b>();
+...
+<b>JLabel</b> lblOp1 = new <b>JLabel</b>(&quot;Primer operando:&quot;);
+...
+<b>JLabel</b> lblOp2 = new <b>JLabel</b>(&quot;Segundo operando:&quot;);
+...
+<b>JLabel</b> lblOper = new <b>JLabel</b>(&quot;Operador:&quot;);
+...
+<b>JButton</b> btnRes = new <b>JButton</b>(&quot;Primer operando:&quot;);
+...</pre>
+      </blockquote>
+      <ul>
+        <li>Prueba a compilar y ejecutar la clase... dar&aacute; error si lo est&aacute;s ejecutando con una versi&oacute;n inferior a Java 1.5. &iquest;A qu&eacute; se debe el error?</li>
+        <li>Como se explica en la parte de teor&iacute;a, en Swing algunos m&eacute;todos de <i>JFrame</i> no pueden ser accedidos directamente, como ocurr&iacute;a con <i>Frame</i> en AWT. Estos m&eacute;todos son, entre otros, <i>setLayout</i> y <i>add</i>. As&iacute;, para solucionar el error anterior, deber&aacute;s anteponer el m&eacute;todo <i>getContentPane()</i> antes de cada m&eacute;todo <i>setLayout</i> o <i>add</i> del <i>JFrame</i>:
+        </li>
+      </ul>
+      <blockquote>
+        <pre class="codigo"><b>getContentPane()</b>.setLayout(new GridLayout(4, 2));
+...
+<b>getContentPane()</b>.add(lblOp1);
+<b>getContentPane()</b>.add(txtOp1);
+...
+<b>getContentPane()</b>.add(lblOper);
+<b>getContentPane()</b>.add(operadores);
+...
+<b>getContentPane()</b>.add(lblOp2);
+<b>getContentPane()</b>.add(txtOp2);
+...
+<b>getContentPane()</b>.add(btnRes);
+<b>getContentPane()</b>.add(txtRes);
+...</pre>
+      </blockquote>
+      <ul>
+        <li>Compila y comprueba que el programa se muestra como debe, aunque su apariencia sea distinta.</li>
+      </ul>
+    </li>
+  </ul>
+  <p>En el siguiente ejercicio completaremos este ejercicio para hacer que el programa &quot;haga algo&quot; (calcule las operaciones), aparte de mostrarse. </p>
+  <hr/>
+  <h2>Modelo de Eventos en Java</h2>
+  <p align="left">Hasta ahora hemos visto qué tipos de elementos podemos colocar
+en una aplicación visual con AWT o Swing, y cómo colocarlos sobre los distintos
+contenedores que nos ofrece la librería. Pero sólo con esto nuestra
+aplicación no hace nada: no sabemos cómo emitir una determinada respuesta al
+pulsar un botón, o realizar una acción al seleccionar una opción del menú.
+Para definir todo esto se utilizan los llamados <b>eventos</b>.</p>
+  <p align="left"> Entendemos por <b>evento</b> una acci&oacute;n o cambio en 
+    una aplicaci&oacute;n que permite que dicha aplicaci&oacute;n produzca una 
+    respuesta.&nbsp; El <b>modelo de eventos</b> de AWT y Swing se descompone en dos grupos 
+    de elementos: las fuentes y los oyentes de eventos. Las <b>fuentes</b> son 
+    los elementos que generan los eventos (un bot&oacute;n, un cuadro de texto, 
+    etc), mientras que los <b>oyentes</b> son elementos que est&aacute;n a la 
+    espera de que se produzca(n) determinado(s) tipo(s) de evento(s) para emitir 
+    determinada(s) respuesta(s).</p>
+  <p align="left">Para poder gestionar eventos, necesitamos definir el <b>manejador 
+    de eventos</b> correspondiente, un elemento que act&uacute;e de oyente sobre 
+    las fuentes de eventos que necesitemos considerar. Cada tipo de evento tiene 
+    asignada una <b>interfaz</b>, de modo que para poder gestionar dicho evento, 
+    el manejador deber&aacute; implementar la interfaz asociada. Los oyentes m&aacute;s 
+    comunes son: 
+  <div align="left">
+    <table BORDER="1" WIDTH="83%" >
+      <caption></caption>
+      <tbody> </tbody> 
+      <tr> 
+        <td WIDTH="19%"> 
+          <center>
+            <b>ActionListener</b>
+          </center>
+        </td>
+        <td WIDTH="81%">Para eventos de acci&oacute;n (pulsar un <i>JButton</i> 
+          , por ejemplo)</td>
+      </tr>
+      <tr> 
+        <td WIDTH="19%"> 
+          <center>
+            <b>ItemListener</b>
+          </center>
+        </td>
+        <td WIDTH="81%">Cuando un elemento (<i>JCheckbox</i>, <i>Choice</i> , etc), 
+          cambia su estado</td>
+      </tr>
+      <tr> 
+        <td WIDTH="19%"> 
+          <center>
+            <b>KeyListener</b>
+          </center>
+        </td>
+        <td WIDTH="81%">Indican una acci&oacute;n sobre el teclado: pulsar una 
+          tecla, soltarla, etc.</td>
+      </tr>
+      <tr> 
+        <td WIDTH="19%"> 
+          <center>
+            <b>MouseListener</b>
+          </center>
+        </td>
+        <td WIDTH="81%">Indican una acci&oacute;n con el rat&oacute;n que no implique 
+          movimiento del mismo: hacer click, presionar un bot&oacute;n, soltarlo, 
+          entrar / salir...</td>
+      </tr>
+      <tr> 
+        <td WIDTH="19%"> 
+          <center>
+            <b>MouseMotionListener</b>
+          </center>
+        </td>
+        <td WIDTH="81%">Indican una acci&oacute;n con el rat&oacute;n relacionada 
+          con su movimiento: moverlo por una zona determinada, o arrastrar el 
+          rat&oacute;n.</td>
+      </tr>
+      <tr> 
+        <td WIDTH="19%"> 
+          <center>
+            <b>WindowListener</b>
+          </center>
+        </td>
+        <td WIDTH="81%">Indican el estado de una ventana</td>
+      </tr>
+    </table>
+  </div>
+<p align="left">Cada uno de estos tipos de evento puede ser producido por diferentes 
+    fuentes.&nbsp;Por ejemplo, los <i>ActionListeners</i> pueden producirse al
+pulsar un botón, elegir una opción de un menú, o pulsar Intro. Los <i>MouseListener</i>
+se producen al pulsar botones del ratón, etc.
+<p align="left">Toda la gestión
+de eventos se lleva a cabo desde el paquete <b>java.awt.event</b>. Al igual que con los gestores de disposici&oacute;n, podemos utilizarlos indistintamente para AWT y para Swing. Adem&aacute;s, Swing incorpora nuevos gestores de eventos en su paquete <strong>javax.swing.event</strong>, para implementar ciertas funcionalidades espec&iacute;ficas s&oacute;lo de Swing. 
+<p align="left"> 
+<p align="left"><b>Modos de definir un oyente</b></p>
+<p align="left">Supongamos que queremos realizar una acci&oacute;n determinada 
+    al pulsar un bot&oacute;n. En este caso, tenemos que asociar un <i>ActionListener</i> 
+    a un objeto <i>Button </i>o <em>JButton</em>, e indicar dentro de dicho <i>ActionListener</i>
+qué queremos hacer al pulsar el botón. Veremos que hay varias formas de hacerlo:</p>
+  <p align="left"><b>1. Que la propia clase que usa el control implemente el oyente</b> 
+  <div align="left">
+    <pre class="codigo">class MiClase implements ActionListener
+{
+&nbsp;&nbsp;&nbsp; public MiClase()
+&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JButton btn = new JButton(&quot;Boton&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btn.addActionListener(this);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; public void actionPerformed(ActionEvent e)
+&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Aqui va el codigo de la accion
+&nbsp;&nbsp;&nbsp; }
+}</pre>
+    <b>2. Definir otra clase aparte que implemente el oyente</b> 
+    <pre class="codigo">class MiClase
+{
+&nbsp;&nbsp;&nbsp;&nbsp; public MiClase()
+&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JButton btn = new JButton(&quot;Boton&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btn.addActionListener(new MiOyente());
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp; }
+}
+
+class MiOyente implements ActionListener
+{
+&nbsp;&nbsp;&nbsp;&nbsp; public void actionPerformed(ActionEvent e)
+&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Aqui va el codigo de la accion
+&nbsp;&nbsp;&nbsp;&nbsp; }
+}</pre>
+    <b>3. Definir una instancia interna del oyente</b> 
+    <pre class="codigo">class MiClase
+{
+&nbsp;&nbsp;&nbsp;&nbsp; public MiClase()
+&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JButton btn = new JButton(&quot;Boton&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btn.addActionListener(new ActionListener()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void actionPerformed(ActionEvent e)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Aqui va el codigo de la accion
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp; }
+}</pre>
+<b>Uso de los &quot;adapters&quot;</b></div>
+  <p align="left"> Algunos de los oyentes disponibles (como por ejemplo <i>MouseListener,
+</i>consultad su API) tienen varios m&eacute;todos que hay que implementar si queremos definir 
+    el oyente. Este trabajo puede ser bastante pesado e innecesario si sólo queremos 
+    usar algunos métodos. Por ejemplo, si sólo queremos hacer algo al hacer
+click con el ratón, deberemos redefinir el método <i>mouseClicked</i>, pero
+deberíamos escribir también los métodos <i>mousePressed, mouseReleased</i>,
+etc, y dejarlos vacíos.</p>
+  <p align="left">Una soluci&oacute;n a esto es el uso de los <i>adapters</i>. 
+    Asociado a cada oyente con m&aacute;s de un m&eacute;todo hay una clase ...<i>Adapter</i> 
+    (para <i>MouseListener</i> est&aacute; <i>MouseAdapter</i> , para <i>WindowListener</i> 
+    est&aacute; <i>WindowAdapter</i>, etc). Estas clases implementan las interfaces 
+    con las que se asocian, de forma que se tienen los m&eacute;todos implementados 
+    por defecto, y s&oacute;lo tendremos que sobreescribir los que queramos modificar. 
+  <p align="left">Veamos la diferencia con el caso de <i>MouseListener</i>, suponiendo 
+    que queremos asociar un evento de rat&oacute;n a un <i>JPanel</i> para que 
+    haga algo al hacer click sobre &eacute;l. 
+  <p align="left"><b>1. Mediante Listener:</b> 
+  <div align="left">
+    <pre class="codigo">class MiClase&nbsp;
+{
+&nbsp;&nbsp;&nbsp;&nbsp; public MiClase()
+&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JPanel panel = new JPanel();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; panel.addMouseListener(new MouseListener()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void mouseClicked(MouseEvent e)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Aqui va el codigo de la accion
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void mouseEntered(MouseEvent e)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // ... No se necesita
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void mouseExited(MouseEvent e)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // ... No se necesita
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void mousePressed(MouseEvent e)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // ... No se necesita
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void mouseReleased(MouseEvent e)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // ... No se necesita
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp; }
+}</pre>
+    Vemos que hay que definir todos los m&eacute;todos, aunque muchos queden vac&iacute;os 
+    porque no se necesitan. </div>
+  <p align="left"><b>2. Mediante Adapter:</b> 
+  <div align="left">
+    <pre class="codigo">class MiClase&nbsp;
+{
+&nbsp;&nbsp;&nbsp;&nbsp; public MiClase()
+&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JPanel panel = new JPanel();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; panel.addMouseListener(new MouseAdapter()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void mouseClicked(MouseEvent e)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Aqui va el codigo de la accion
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp; }
+}</pre>
+    Vemos que aqu&iacute; s&oacute;lo se a&ntilde;aden los m&eacute;todos necesarios, 
+    el resto ya est&aacute;n implementados en <i> MouseAdapter</i> (o en el <i>adapter</i> 
+    que corresponda), y no hace falta ponerlos. </div>
+  <p align="left"><b>Ejemplo</b>: Vemos el uso de oyentes en este ejemplo: 
+<div align="center"><img SRC="images/SWejemplo2.jpg" NOSAVE> </div>
+  <div align="center"><a href="examples/EjemploSwing2.java">C&oacute;digo</a></div>  
+
+  <div align="left">&nbsp;</div>
+  <div align="left">La aplicación muestra distintos tipos de eventos que
+    podemos definir sobre una aplicación:&nbsp;</div>
+  <div align="left">
+    <ul>
+      <li>Tenemos una etiqueta llamada <i>lblCont</i>. Tiene definido un evento
+        de tipo <i>MouseListener</i> para que, cuando el ratón esté dentro de
+        la etiqueta, muestre un texto, cuando esté fuera, muestre otro.</li>
+      <li>Por otra parte, tenemos un botón (variable <i>btn</i>) con un evento
+        de tipo <i>ActionListener</i> para que, al pulsar sobre él, se
+        incremente en 1 un contador que hay en un cuadro de texto.</li>
+      <li>También tenemos una lista desplegable (variable <i>ch</i>) que tiene
+        un evento de tipo <i>ItemListener</i> para que, al cambiar el elemento
+        seleccionado, se actualiza el valor del contador del cuadro de texto a
+        dicho elemento seleccionado.</li>
+      <li>Finalmente, la ventana principal tiene un evento de tipo <i>WindowListener</i>
+        para que, al pulsar el botón de cerrar la ventana, se finalice la
+        aplicación (son las últimas líneas de código del constructor).</li>
+    </ul>
+    <hr/>
+    <h3>Ejercicio 3: Haciendo funcionar nuestra aplicaci&oacute;n Swing </h3>
+    <p>Retomemos la clase <em>sesion09.JCalculadora</em> que hemos empezado a hacer en un ejercicio previo. Ya tenemos puestos todos los controles, lo que nos queda es &quot;hacer que el programa haga algo&quot;. Para ello vamos a definir los eventos. </p>
+    <ul>
+      <li>Definimos un evento sobre el bot&oacute;n, para que, al pulsarlo, tome los dos operandos y el operador seleccionado, y muestre el resultado en el cuadro correspondiente:</li>
+    </ul>
+    <blockquote>
+      <pre class="codigo"><b>// Evento sobre el bot&oacute;n
+</b>btnRes.addActionListener(new ActionListener()
+{
+    public void actionPerformed(ActionEvent e)
+    {
+        int op1, op2;
+        try
+        {
+            <b>// Tomar los dos operandos</b>
+            op1 = Integer.parseInt(txtOp1.getText());
+            op2 = Integer.parseInt(txtOp2.getText());	
+					
+            <strong>/</strong><b>/ Hacer la operacion segun el operador seleccionado</b>
+            if (((String)(operadores.getSelectedItem())).equals(&quot;+&quot;))
+                txtRes.setText(&quot;&quot; + (op1 + op2));
+            else if (((String)(operadores.getSelectedItem())).equals(&quot;-&quot;))
+                txtRes.setText(&quot;&quot; + (op1 - op2));
+            else if (((String)(operadores.getSelectedItem())).equals(&quot;*&quot;))
+                 txtRes.setText(&quot;&quot; + (op1 * op2));
+        } catch (Exception ex) {
+            txtRes.setText(&quot;ERROR EN LOS OPERANDOS&quot;);
+        }
+    }
+});	</pre>
+    </blockquote>
+    <ul>
+      <li>El otro evento lo definimos sobre la ventana (el <i>Frame</i>) para hacer que se cierre y termine el programa cuando pulsemos el bot&oacute;n de cerrar: </li>
+    </ul>
+    <blockquote>
+      <pre class="codigo">this.addWindowListener(new WindowAdapter()
+{
+   public void windowClosing(WindowEvent e)
+   {
+      System.exit(0);
+   }
+});</pre>
+    </blockquote>
+    <ul>
+      <li>Compila el programa... te dar&aacute; errores de compilaci&oacute;n. </li>
+      <li>Los errores del paso anterior se deben a que, si accedemos a un control desde dentro de un evento (como por ejemplo a los controles <i>txtOp1, txtOp2</i>, <i>txtRes&nbsp; </i>o la lista <i>operadores</i>, en el evento del bot&oacute;n), dichos controles no pueden ser variables locales normales. El error de compilaci&oacute;n dice que deben declararse variables finales, u otra posibilidad es ponerlas como variables globales de la clase. Es decir, podemos hacer lo siguiente:<br>
+          <br>
+        Sustituir estas l&iacute;neas: 
+        <pre class="codigo">public JCalculadora()
+{
+	...
+	JTextField txtOp1 = new JTextField();
+	...
+	JComboBox operadores = new JComboBox();
+	...
+	JTextField txtOp2 = new JTextField();
+	...
+	JTextField txtRes = new JTextField();
+	...
+}</pre>
+        <p>Por estas:</p>
+        <pre class="codigo">public JCalculadora()
+{
+   ...
+   <b>final </b>JTextField txtOp1 = new JTextField();
+   ...
+   <b>final </b>JComboBox operadores = new JComboBox();
+   ...
+   <b>final </b>JTextField txtOp2 = new JTextField();
+   ...
+   <b>final </b>JTextField txtRes = new JTextField();
+   ...
+}</pre>
+        <p>O bien colocarlas fuera del constructor, como variables globales:</p>
+        <pre class="codigo">public class JCalculadora ...
+{
+   JTextField txtOp1 = new JTextField();
+   JComboBox operadores = new JComboBox();
+   JTextField txtOp2 = new JTextField();
+   JTextField txtRes = new JTextField();<br><br>   public JCalculadora()
+   {
+      ...
+   }
+   ...
+}</pre>
+      </li>
+      <li>Compila y ejecuta el programa. Prueba su funcionamiento con algunos ejemplos que se te ocurran. Observa tambi&eacute;n los ficheros <i>.class</i> que se generan: adem&aacute;s del principal (<i>Calculadora.class</i>), aparecen dos m&aacute;s (<i>Calculadora$1.class</i> y <i>Calculadora$2.class</i>). &iquest;Sabr&iacute;as decir qu&eacute; son? (AYUDA: observa que aparecen tantos ficheros adicionales como eventos has definido en la aplicaci&oacute;n...)</li>
+    </ul>
+    <hr/>
+    <h2>Otras caracter&iacute;sticas de Swing</h2>
+    <p> Swing ofrece otras posibilidades, que se comentan brevemente:</p>
+    <ul>
+      <li> Uso de <b>acciones</b>, objetos <b>Action</b> que coordinan tareas realizadas por distintos elementos.</li>
+      <li> Uso de <b>bordes</b>, elementos que bordean los controles y ofrecen un mejor aspecto visual a la aplicaci&oacute;n.</li>
+      <li> Uso de <b>iconos</b>: algunos componentes permiten que se les indique un icono a mostrar, mediante la clase <b>ImageIcon</b>.</li>
+      <li> Uso de la <b>apariencia</b> (<i>look and feel</i>): podemos indicar qu&eacute; aspecto queremos que tenga la aplicaci&oacute;n: espec&iacute;fico de Windows, de Motif, etc.</li>
+      <li> Uso de <b>hilos</b> para gestionar eventos: algunos eventos pueden bloquear componentes durante mucho tiempo, y es mejor separar el tratamiento del evento en un hilo para liberar el componente.</li>
+      <li> Uso de <b>temporizadores</b>: con la clase <b>Timer</b> podemos definir acciones que queremos ejecutar en un momento determinado o con una periodicidad determinada.</li>
+    </ul>
+    <p><br>
+    <b>Ejemplo</b>: Vemos un ejemplo de uso de iconos y temporizadores (como icono se emplea <a href="examples/clock.gif">esta imagen</a>): 
+    <div align="center"><img SRC="images/SWejemplo3.jpg" NOSAVE> </div>
+    <div align="center"><a href="examples/EjemploSwing3.java">C&oacute;digo</a></div>
+    <p>Para utilizar los iconos se utiliza un objeto de tipo <b>ImageIcon</b> y se dice cu&aacute;l es el fichero de la imagen. Para el temporizador, se utiliza un objeto de tipo <b>Timer</b>. Vemos que se define un <i>ActionListener</i>, que se ejecuta cada X milisegundos (1000, en este caso), ejecutando as&iacute; un trabajo peri&oacute;dico (mediante el m&eacute;todo <i>setRepeats</i> del <i>Timer</i> indicamos que el listener se ejecute peri&oacute;dicamente, o no).    
+    <p>NOTA: en este caso se ha puesto un gif animado haciendo de reloj, pero la animaci&oacute;n que tiene es independiente del <em>Timer</em> que hay en el programa, que s&oacute;lo se utiliza para actualizar el valor del contador. Por casualidad, da el efecto de que se &quot;animan&quot; los dos a la vez. 
+</div>
+
+<h2>Pasos generales para construir una aplicación gráfica </h2>
+
+<p>Con todo lo visto hasta ahora, ya deberíamos ser capaces de construir
+aplicaciones más o menos completas con AWT o Swing. Para ello, los pasos a seguir son:
+<p><b>1.
+Definir la clase principal, que será la ventana principal de la aplicación</b>
+<p>Cualquier
+aplicación  debe tener una ventana principal que sea de tipo <b>Frame</b>(AWT) o <strong>JFrame</strong> (Swing)  .
+Así pues lo primero que debemos hacer es definir qué clase hará de <i>Frame</i> o <em>JFrame</em>:
+<pre class="codigo">import java.awt.*;
+import java.awt.event.*;<br>import javax.swing.*;
+
+public class MiAplicacion extends JFrame
+{
+&nbsp;&nbsp;&nbsp;&nbsp; public MiAplicacion()
+&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; getContentPane().setSize(500, 400);
+         getContentPane().setLayout(new GridLayout(1, 1));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp; }
+}</pre>
+<p>podemos definir un constructor, y dentro hacer algunas inicializaciones como
+el tamaño de la ventana, el gestor de disposición, etc.<p><b>2. Colocar los
+controles en la ventana</b><p>Una vez definida la clase, e inicializada la
+ventana, podemos colocar los componentes en ella:
+<pre class="codigo">&nbsp;&nbsp;&nbsp;&nbsp; public MiAplicacion()
+&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+         <strong>J</strong><b>Button btn = new JButton(&quot;Hola&quot;);
+         this.add(btn);
+
+         JPanel p = new JPanel();
+         JLabel l = new JLabel(&quot;Etiqueta&quot;);
+         JLabel l2 = new JLabel (&quot;Otra etiqueta&quot;);
+         p.add(l);
+         p.add(l2);
+         getContentPane().add(p);</b>
+&nbsp;&nbsp;&nbsp;&nbsp; }
+}</pre>
+<p>En nuestro caso añadimos un botón, y un panel con 2 etiquetas.<p><b>3.
+Definir los eventos que sean necesarios</b><p>Escribimos el código de los
+eventos para los controles sobre los que vayamos a actuar:
+<pre class="codigo">&nbsp;&nbsp;&nbsp;&nbsp; public MiAplicacion()
+&nbsp;&nbsp;&nbsp;&nbsp; {
+         ...<br><br>         <b>btn.addActionListener(new ActionListener()
+         {
+             public void actionPerformed(ActionEvent e)
+             {
+                 System.out.println (&quot;Boton pulsado&quot;);
+             }
+         });
+
+         addWindowListener(new WindowAdapter()
+         {
+             public void windowClosing (WindowEvent e)
+             {
+                 System.exit(0);
+             }
+         });</b>
+&nbsp;&nbsp;&nbsp;&nbsp; }
+}</pre>
+<p>
+<br><b>4. Mostrar la ventana</b><p>Desde el método <i>main</i> de nuestra clase
+principal podemos hacer que se muestre la ventana:
+<pre class="codigo">
+public class MiAplicacion extends JFrame
+{
+&nbsp;&nbsp;&nbsp;&nbsp; public MiAplicacion()
+&nbsp;&nbsp;&nbsp;&nbsp; {
+         ...
+&nbsp;&nbsp;&nbsp;&nbsp; }
+
+<b>     public static void main(String[] args)
+     {
+         MiAplicacion ma = new MiAplicacion();
+         ma.show();
+     }
+</b>}</pre>
+<p><b>5</b><b>. Definir otras subventanas o diálogos</b>
+<p>Aparte de la clase
+principal, podemos definir otros <i>Frames</i> o <em>JFrames </em>en otras clases, e
+interrelacionarlos. También podemos definir diálogos (<i>Dialogs</i> o <em>JDialogs</em>) que
+dependan de una ventana principal  y que se muestren en un momento
+dado.
+
+
+<hr/>
+<h3>Ejercicio 4: Una aplicaci&oacute;n m&aacute;s compleja y completa </h3>
+<p>Para terminar, vamos a construir una aplicaci&oacute;n que toque un poco de casi todo lo que hemos estado viendo en estas sesiones.</p>
+<p>Vamos a hacer una aplicaci&oacute;n Swing que nos sirva como agenda de contactos. Utilizaremos la clase <em>datos.Persona</em> que vimos en la sesi&oacute;n 7 para guardar los datos b&aacute;sicos de cada uno de nuestros contactos (nombre, apellido1, apellido2, direccion y tel&eacute;fono), y los guardaremos en un fichero, ayud&aacute;ndonos de la clase <em>io.LeeGuardaPersona</em>, que hicimos en la sesi&oacute;n 8.</p>
+<p>Lo que haremos en esta sesi&oacute;n es darle una apariencia gr&aacute;fica a todo: construiremos una ventana (<em>JFrame</em>) en la clase <strong><em>gui.Agenda </em></strong>de la plantilla, que muestre todas las personas que tenemos guardadas en un determinado fichero (el fichero se lo pasaremos como par&aacute;metro a la aplicaci&oacute;n a trav&eacute;s de su m&eacute;todo <em>main</em>).</p>
+<p>La ventana podr&iacute;a tener una apariencia como la siguiente:</p>
+<p align="center"><img SRC="images/ejercicio4.gif" NOSAVE></p>
+<p>En la ventana, arriba tendremos una lista con nombres de personas, y al seleccionar alguna, abajo en los cuadros de texto aparecer&aacute; desglosada la informaci&oacute;n sobre &eacute;l. En la parte inferior tendremos una serie de botones que nos servir&aacute;n para diferentes tareas:</p>
+<ul>
+  <li><strong>Ver Datos</strong>: al pulsarlo mostrar&aacute; en los cuadros de texto centrales los datos desglosados de la persona que tengamos seleccionada arriba.</li>
+  <li><strong>Modificar Datos</strong>: al pulsarlo modificar&aacute; los datos que hay guardados de la persona seleccionada, por los que hay en ese momento en  los cuadros de texto.</li>
+  <li><strong>A&ntilde;adir Persona</strong>: a&ntilde;adir&aacute; una nueva persona en la lista, con los datos que haya escritos en los cuadros de texto.</li>
+  <li><strong>Quitar Persona</strong>: eliminar&aacute; de la lista la persona actualmente seleccionada, con todos sus datos</li>
+  <li><strong>Guardar Fichero</strong>: guardar&aacute; en el mismo fichero que se le pase como entrada los datos actualizados de la lista de personas.</li>
+  <li><strong>Borrar Cuadros</strong>: pondr&aacute; en blanco los cuadros de texto centrales, para cuando queramos introducir nueva informaci&oacute;n </li>
+</ul>
+<p>Se os da libertad para que configur&eacute;is la apariencia como quer&aacute;is, siempre que el programa tenga las siguientes funcionalidades:</p>
+<ol>
+  <li>Abrir correctamente el fichero de personas que se le pasa como par&aacute;metro. Deber&aacute; leer las personas del fichero, guardarlas en un <em>ArrayList</em> o estructura similar, y mostrar un listado de nombre y primer apellido en un combo, lista fija, o control similar.</li>
+  <li>Cuando se seleccione un nombre de la lista, se deber&aacute;n mostrar en una serie de cuadros de texto todos los valores almacenados de esa persona (nombre, apellido1, apellido2, direcci&oacute;n y tel&eacute;fono), para que se puedan modificar. Para mostrar estos datos, pod&eacute;is hacer que se muestren cuando se pulse un bot&oacute;n, o directamente cuando se seleccione a alguien en la lista, como mejor sep&aacute;is.</li>
+  <li>Podremos modificar los datos de las personas seleccionadas en los cuadros de texto, y pulsando en un bot&oacute;n de <em>Modificar</em>, modificar dichos datos de la persona, y que se queden as&iacute; guardados en el <em>ArrayList</em>.</li>
+  <li>Tambi&eacute;n podremos a&ntilde;adir personas nuevas, y quitar existentes, de la lista, mediante botones para a&ntilde;adir y quitar.</li>
+  <li>Finalmente, podremos volver a guardar en el mismo fichero que se pas&oacute; como par&aacute;metro al principio los datos actualizados que haya en el <em>ArrayList </em>en un momento dado.</li>
+</ol>
+<p>A partir de aqu&iacute;, daremos algunas indicaciones de c&oacute;mo hacer la aplicaci&oacute;n, por si no sab&eacute;is por d&oacute;nde empezar, o c&oacute;mo hacer determinados apartados. En cualquier caso, pod&eacute;is implementar la aplicaci&oacute;n como quer&aacute;is. Y si quer&eacute;is, pod&eacute;is a&ntilde;adir contenidos opcionales, como los que se proponen al final del ejercicio. Si no quer&eacute;is seguir la gu&iacute;a para probar vosotros mismos, seguid leyendo por <a href="#final">aqu&iacute;</a></p>
+<p>NOTA IMPORTANTE: se obviar&aacute;n algunas cosas, como los paquetes que se necesitan para usar algunas clases. Deber&aacute;s importar los paquetes que necesites para poder trabajar con todas las clases que se proponen. </p>
+<p><strong>C&oacute;mo dar apariencia a la aplicaci&oacute;n</strong></p>
+<p>Vamos a dar unas recomendaciones para que la aplicaci&oacute;n quede visualmente como la de la imagen superior. </p>
+<ul>
+  <li>En primer lugar, comprobamos que la clase herede de <strong>JFrame</strong>, y debemos definir unas variables globales de la clase, que ser&aacute;n las que utilicemos despu&eacute;s en diferentes eventos y funciones. Dichas variables son los cuadros de texto, y el desplegable. El resto de etiquetas y botones s&oacute;lo los referenciaremos en el constructor, y no hace falta hacerlos globales.</li>
+</ul>
+<blockquote>
+  <pre class="codigo">
+public class Agenda <strong>extends JFrame</strong>
+{<br><strong>    JComboBox personas = new JComboBox();<br>    JTextField txtNombre = new JTextField();<br>    JTextField txtApellido1 = new JTextField();<br>    JTextField txtApellido2 = new JTextField();<br>    JTextField txtDireccion = new JTextField();<br>    JTextField txtTelefono = new JTextField();<br></strong>
+    public Agenda(String fich)
+    {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+}
+</pre>
+</blockquote>
+<ul>
+  <li>Ahora definiremos un tama&ntilde;o para la misma, de 400 x 300, a&ntilde;adiremos una l&iacute;nea que podemos usar en <em>JFrame</em>, para hacer que se cierre la ventana cuando pulsemos el bot&oacute;n de cerrar (as&iacute; nos ahorramos definir el evento para cerrar la ventana, es una de la ventajas de Swing):</li>
+</ul>
+<blockquote>
+  <pre class="codigo">public Agenda(String fich)
+{<br>   <strong>setSize(400, 300);<br>   setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);<br></strong>&nbsp;&nbsp; ...</pre>
+  <p>Hay que tener en cuenta que, por defecto, el <em>JFrame</em> tiene un gestor del tipo <em>BorderLayout</em>, que ser&aacute; el que utilicemos para colocar los componentes a continuaci&oacute;n.</p>
+</blockquote>
+<ul><li>Colocamos ahora los controles. Definiremos 3 zonas:
+    <ul>
+      <li>Una zona superior, que contendr&aacute; el desplegable (zona NORTE) </li>
+      <li>Una zona central, con todos los cuadros de texto y etiquetas (zona CENTRO) </li>
+      <li>Una zona inferior, con los botones (zona SUR) </li>
+    </ul>
+  </li>
+  <blockquote>
+    <p>Para la zona superior, definimos un subpanel, que ser&aacute; un <em>GridLayout</em> de una sola celda, ponemos el desplegable dentro. Podr&iacute;amos directamente a&ntilde;adir el desplegable en la zona norte del <em>JFrame</em>, pero lo hacemos as&iacute; para que el desplegable ocupe todo el espacio, si no su tama&ntilde;o ser&iacute;a m&aacute;s estrecho, y no se ver&iacute;a como en la figura. </p>
+    <pre class="codigo">public Agenda(String fich)
+{<br>&nbsp;&nbsp; ...<br><strong>   JPanel panelSup = new JPanel();<br>   panelSup.setLayout(new GridLayout(1, 1));		<br>   panelSup.add(personas);<br></strong>   ...</pre>
+    <p>Para la zona central, definimos otro panel que ser&aacute; un <em>GridLayout</em> de 5 filas y 2 columnas, para almacenar las 5 etiquetas que hay, y sus correspondientes 5 cuadros de texto: </p>
+    <pre class="codigo">public Agenda(String fich)
+{<br>&nbsp;&nbsp; ...<br><strong>		JPanel panelCen = new JPanel();<br>		panelCen.setLayout(new GridLayout(5, 2));<br>		<br>		panelCen.add(new JLabel(&quot;Nombre:&quot;));<br>		panelCen.add(txtNombre);<br>		panelCen.add(new JLabel(&quot;Apellido 1:&quot;));<br>		panelCen.add(txtApellido1);<br>		panelCen.add(new JLabel(&quot;Apellido 2:&quot;));<br>		panelCen.add(txtApellido2);<br>		panelCen.add(new JLabel(&quot;Direccion:&quot;));<br>		panelCen.add(txtDireccion);<br>		panelCen.add(new JLabel(&quot;Telefono:&quot;));<br>		panelCen.add(txtTelefono);<br></strong>   ...</pre>
+    <p>Finalmente, para la zona inferior definimos otro panel, con un GridLayout de 2 filas y 3 columnas, donde poner todos los botones que hemos visto. Crearemos una variable bot&oacute;n en el constructor para cada uno, y luego m&aacute;s adelante ya le pondremos los eventos.</p>
+    <pre class="codigo">public Agenda(String fich)
+{<br>&nbsp;&nbsp; ...<br><strong>   JPanel panelInf = new JPanel();
+   panelInf.setLayout(new GridLayout(2, 3));
+
+   JButton btnVer = new JButton ("Ver Datos");
+   JButton btnGuardar = new JButton ("Modificar Datos");
+   JButton btnAnadir = new JButton ("Añadir Persona");
+   JButton btnQuitar = new JButton ("Quitar Persona");
+   JButton btnGuardarFich = new JButton ("Guardar Fichero");
+   JButton btnBorrarCuadros = new JButton ("Borrar Cuadros");
+		
+   panelInf.add(btnVer);
+   panelInf.add(btnGuardar);
+   panelInf.add(btnAnadir);
+   panelInf.add(btnQuitar);
+   panelInf.add(btnGuardarFich);
+   panelInf.add(btnBorrarCuadros);JPanel panelSup = new JPanel();<br></strong>   ...</pre>
+    <p>Finalmente, a&ntilde;adimos cada uno de los subpaneles a la zona que le corresponde:</p>
+    <pre class="codigo">public Agenda(String fich)
+{<br>&nbsp;&nbsp; ...<br><strong>   getContentPane().add(panelSup, BorderLayout.NORTH);<br>   getContentPane().add(panelCen, BorderLayout.CENTER);<br>   getContentPane().add(panelInf, BorderLayout.SOUTH);<br></strong>   ...</pre>
+    <p>Llegados a este punto, compila y ejecuta el programa, para ver si te funciona. P&aacute;sale como par&aacute;metro cualquier nombre de fichero, porque a&uacute;n no lo utiliza para nada. </p>
+  </blockquote>
+</ul>
+<p><strong>La lista de personas</strong></p>
+<p>Veamos ahora c&oacute;mo gestionar la lista de personas. Para almacenarla en memoria, vamos a hacernos una variable global (junto con los cuadros de texto y el desplegable), de tipo <em>ArrayList</em>, que nos servir&aacute; de almac&eacute;n temporal. Tambi&eacute;n conviene que guardemos en variable global el nombre de fichero que pasamos como par&aacute;metro, para poderlo utilizar en eventos y otros m&eacute;todos.</p>
+<pre class="codigo">
+public class Agenda <strong>extends JFrame</strong>
+{<br>    <strong>ArrayList listaPersonas = new ArrayList();</strong><br>    <strong>String fichero = null;</strong><br>    JComboBox personas = new JComboBox();<br>&nbsp;&nbsp;&nbsp;&nbsp; ...
+}</pre>
+<p>Despu&eacute;s, al final del constructor, una vez est&eacute;n todos los controles puestos, cargamos los datos en la lista, y los volcamos en el desplegable.</p>
+<p>Para cargar los datos en la lista, utilizamos el m&eacute;todo <strong>io.LeeGuardaPersona.leePersonas</strong> que implementaste en la sesi&oacute;n anterior. Le pasaremos como par&aacute;metro el fichero que le pasamos como par&aacute;metro al constructor:</p>
+<pre class="codigo">public Agenda(String fich)
+{<br>   <strong>fichero = fich;</strong><br>&nbsp;&nbsp; ...<br><strong>   listaPersonas = io.LeeGuardaPersona.leePersonas(fichero);</strong><br>}</pre>
+<p><strong>IMPORTANTE: </strong>Pod&eacute;is utilizar para probar el fichero <strong>ficheroPersonas.dat</strong> que se tiene en la plantilla, con varias personas ya guardadas. As&iacute; podr&eacute;is comprobar si funciona vuestro c&oacute;digo. </p>
+<p>A lo largo del programa, mantendremos actualizado el <em>ArrayList</em> en todo momento, con inserciones, borrados y modificaciones. Por lo tanto, el desplegable no s&oacute;lo vamos a necesitar actualizarlo ahora, al inicio, sino que despu&eacute;s en cada inserci&oacute;n o borrado de personas lo necesitaremos reactualizar. Para volcar en cualquier momento la informaci&oacute;n actualizada en el desplegable, conviene que nos hagamos un m&eacute;todo al que podamos llamar siempre que lo necesitemos. En este m&eacute;todo hacemos un bucle donde recorremos el <em>ArrayList</em>, sacamos el nombre y primer apellido de cada persona y los a&ntilde;adimos concatenados al desplegable:</p>
+<pre class="codigo">private void actualizaLista()<br>{<br>   personas.removeAllItems();<br>		<br>   for (int i = 0; i &lt; listaPersonas.size(); i++)<br>   {<br>      Persona p = (Persona)(listaPersonas.get(i));<br>      personas.addItem(p.getNombre() + &quot; &quot; + p.getApellido1());<br>   }<br>}</pre>
+<p>Al principio del m&eacute;todo limpiamos el desplegable, para que no se acumulen resultados en cada actualizaci&oacute;n. </p>
+<p>Ahora s&oacute;lo nos queda llamar a este m&eacute;todo tras cargar por primera vez las personas del fichero, y as&iacute; tendremos el desplegable actualizado al inicio:</p>
+<pre class="codigo">public Agenda(String fich)
+{<br>&nbsp;&nbsp; ...<br>   listaPersonas = io.LeeGuardaPersona.leePersonas(fichero);<br><strong>   actualizaLista();<br></strong>}</pre>
+<p>Aunque ahora no lo necesitemos, tambi&eacute;n nos interesar&aacute; hacernos otro m&eacute;todo que nos devuelva el &iacute;ndice de la lista (<em>ArrayList</em>) donde se encuentra la persona actualmente seleccionada en el desplegable, con el fin de poder sacar su objeto <em>Persona</em> en cualquier momento, o borrar ese &iacute;ndice, o cualquier operaci&oacute;n. Podemos hacer algo como: </p>
+<pre class="codigo">private int buscaPersona()<br>{<br>   String cad = (String)(personas.getSelectedItem());<br>   int indice = 0;<br>   for (int i = 0; i &lt; listaPersonas.size(); i++)<br>   {<br>      Persona p = (Persona)(listaPersonas.get(i));<br>      if (cad.equals(p.getNombre() + &quot; &quot; + p.getApellido1()))<br>      {<br>         indice = i;<br>         break;<br>      }<br>   }<br>   return indice;		<br>}</pre>
+<p>Asumimos que la persona SIEMPRE se va a encontrar. Se deja como optativo controlar qu&eacute; hacer si la persona no se encuentra. Observa c&oacute;mo se busca a la persona en la lista, concatenando nombre y apellido1 y compar&aacute;ndolo con lo que hay en el desplegable seleccionado. </p>
+<p><strong>Los eventos del programa</strong></p>
+<p><strong>a) Ver los datos de la persona seleccionada</strong></p>
+<p>Para que en los cuadros de texto centrales nos aparezcan los datos de la persona que seleccionemos en el desplegable, rellenamos el evento para el bot&oacute;n de <em>Ver Datos</em> (variable <em>btnVer</em> en el constructor). Vamos al final del constructor, y a&ntilde;adimos un evento para este bot&oacute;n.</p>
+<p>Lo que tendr&aacute; que hacer ser&aacute; tomar el objeto <em>Persona</em> de la persona que haya seleccionada en este momento (utilizaremos el m&eacute;todo <em>buscaPersona</em> que hemos hecho antes, para que nos d&eacute; el &iacute;ndice de la persona), y luego volcar sus datos en los campos de texto. </p>
+<pre class="codigo">public Agenda(String fich)
+{<br>&nbsp;&nbsp; ...<br>   btnVer.addActionListener(new ActionListener()<br>   {<br>      public void actionPerformed(ActionEvent e)<br>      {<br>         <strong>// Buscar en la lista la persona que coincida con el nombre y apellidos seleccionados</strong><br>         indice = buscaPersona();<br><br>         <strong>// Quedarnos con los datos de la persona encontrada</strong>				<br>         Persona p = (Persona)(listaPersonas.get(indice));<br><br>         <strong>// Actualizar los cuadros de texto con el dato correspondiente de la persona seleccionada</strong><br>         txtNombre.setText(p.getNombre());<br>         txtApellido1.setText(p.getApellido1());<br>         txtApellido2.setText(p.getApellido2());<br>         txtDireccion.setText(p.getDireccion());<br>         txtTelefono.setText(p.getTelefono());				<br>      }<br>   });<br>}</pre>
+<p><strong>b) Borrar todos los cuadros de texto </strong></p>
+<p>Para que los cuadros de texto centrales puedan borrarse de forma c&oacute;moda (para escribir datos nuevos, o para lo que sea), tenemos el bot&oacute;n <em>Borrar Cuadros </em> (variable <em>btnBorrarCuadros</em> en el constructor). A&ntilde;&aacute;dele un evento muy sencillo: tienes que tomar cada uno de los cuadros de texto, y hacerle un <em>setText(&quot;&quot;)</em> para borrarlo. Como puede ser una operaci&oacute;n que se realice desde otras (por ejemplo, poner los cuadros en blanco despu&eacute;s de borrar a una persona, o de a&ntilde;adirla), es mejor que hagas un m&eacute;todo aparte que ponga los cuadros en blanco, y que desde el evento llames al m&eacute;todo:</p>
+<pre class="codigo">private void borraCampos()<br>{<br>   ... // Rellena esto como creas conveniente<br>}</pre>
+<pre class="codigo">btnBorrarcampos.addActionListener(new ActionListener()<br>{<br>      public void actionPerformed(ActionEvent e)<br>      {<br>         borraCampos();<br>      }<br>}</pre>
+<p><strong>c) A&ntilde;adir una nueva persona a la lista</strong></p>
+<p>Cuando pulsemos el bot&oacute;n de <em>A&ntilde;adir Persona</em>, los datos que haya escritos en los cuadros de texto se a&ntilde;adir&aacute;n como un nuevo objeto <em>Persona</em> a la lista de personas. As&iacute; que en el evento de este bot&oacute;n (variable <em>btnAnadir</em> del constructor) simplemente construir&aacute; un nuevo objeto <em>Persona</em> con los datos de los cuadros de texto, y lo a&ntilde;adir&aacute; a la lista. Despu&eacute;s, llamar&aacute; al m&eacute;todo <em>actualizaLista</em> que hemos hecho antes, para mantener actualizado el desplegable con la nueva inserci&oacute;n. Opcionalmente, podemos volver a dejar los cuadros de texto en blanco, para que quede mejor est&eacute;ticamente. </p>
+<pre class="codigo">public Agenda(String fich)
+{<br>&nbsp;&nbsp; ...<br>   btnAnadir.addActionListener(new ActionListener()<br>   {<br>      public void actionPerformed(ActionEvent e)<br>      {<br>         Persona p = new Persona(txtNombre.getText(), txtApellido1.getText(), txtApellido2.getText(),<br>                                               txtDireccion.getText(), txtTelefono.getText());<br>         listaPersonas.add(p);<br>         actualizaLista();<br>         borraCampos()<br>      }<br>   });<br>}</pre>
+<p><strong>d) Quitar una persona de la lista</strong></p>
+<p>Cuando pulsemos el bot&oacute;n de <em>Quitar Persona</em>, se eliminar&aacute; del desplegable, y tambi&eacute;n del <em>ArrayList </em>interno. En el evento de este bot&oacute;n (variable <em>btnQuitar</em> del constructor) buscaremos la persona en la lista (con nuestro m&eacute;todo <em>buscaPersona</em>), eliminaremos de la lista el &iacute;ndice seleccionado, y actualizaremos despu&eacute;s el desplegable con los cambios. Tambi&eacute;n opcionalmente, podemos volver a dejar los cuadros de texto en blanco, para que quede mejor. </p>
+<pre class="codigo">public Agenda(String fich)
+{<br>&nbsp;&nbsp; ...<br>   btnQuitar.addActionListener(new ActionListener()<br>   {<br>      public void actionPerformed(ActionEvent e)<br>      {<br>         int indice = buscaPersona();<br>         listaPersonas.remove(indice);<br>         actualizaLista();<br>         borraCampos();<br>      }<br>   });<br>}</pre>
+<p><strong>e) Modificar una persona de la lista</strong></p>
+<p>Cuando pulsemos el bot&oacute;n de <em>Modificar Datos</em>, se actualizar&aacute;n los datos de la persona que hay actualmente en el desplegable, con los que haya en el cuadro de texto. En el evento de este bot&oacute;n (variable <em>btnGuardar</em> del constructor) buscaremos la persona en la lista (con nuestro m&eacute;todo <em>buscaPersona</em>), actualizaremos los datos del objeto <em>Persona</em> utilizando sus m&eacute;todos <em>setXXX()</em>, y actualizaremos despu&eacute;s el desplegable con los cambios. Tambi&eacute;n opcionalmente, podemos volver a dejar los cuadros de texto en blanco, para que quede mejor. </p>
+<pre class="codigo">public Agenda(String fich)
+{<br>&nbsp;&nbsp; ...<br>   btnGuardar.addActionListener(new ActionListener()<br>   {<br>      public void actionPerformed(ActionEvent e)<br>      {<br>         int indice = buscaPersona();<br>         Persona p = (Persona)(listaPersonas.get(indice));<br>         p.setNombre(txtNombre.getText());<br>         p.setApellido1(txtApellido1.getText());<br>         p.setApellido2(txtApellido2.getText());<br>         p.setDireccion(txtDireccion.getText());<br>         p.setTelefono(txtTelefono.getText());<br>         actualizaLista();<br>         borraCampos();<br>      }<br>   });<br>}</pre>
+<p>Observa cuando lo ejecutes c&oacute;mo los datos se modifican en la lista directamente, no hace falta llamar a <em>listaPersonas.set(...)</em> en el c&oacute;digo. Asumimos que los cuadros de texto estar&aacute;n debidamente rellenos. Dejamos como opcional controlar que lo est&eacute;n. </p>
+<p><strong>f) Guardar en fichero los datos</strong></p>
+<p>Cuando pulsemos el bot&oacute;n de <em>Guardar Fichero </em>, se deber&aacute;n volcar al fichero los datos de las personas en el <em>ArrayList</em>. Para ello, utilizaremos el m&eacute;todo <strong>io.LeeGuardaPersona.guardaPersonas(...)</strong> que hiciste en la sesi&oacute;n anterior. Le pasaremos como par&aacute;metro el nombre del fichero que tiene como par&aacute;metro el constructor, y que guardamos en la variable global <em>fichero.</em></p>
+<pre class="codigo">public Agenda(String fich)
+{<br>&nbsp;&nbsp; ...<br>   btnGuardarFich.addActionListener(new ActionListener()<br>   {<br>      public void actionPerformed(ActionEvent e)<br>      {<br>			LeeGuardaPersona.guardaPersonas(fichero, listaPersonas);<br>      }<br>   });<br>}</pre>
+<p>Observa que, si no hubi&eacute;semos guardado el fichero en la variable global, ahora no podr&iacute;amos acceder a su nombre, puesto que desde este evento no es visible el par&aacute;metro del constructor.</p>
+<p><A name="final"></A> Hasta aqu&iacute; llega la parte obligatoria de la aplicaci&oacute;n. Prueba que funciona correctamente, y comenta en el fichero de respuestas qu&eacute; te ha parecido hacerla, y qu&eacute; ventajas e inconvenientes le ves a los pasos indicados en esta gu&iacute;a, si es que los has seguido. </p>
+<p><strong>(OPCIONAL)</strong> Adem&aacute;s, si quer&eacute;is pod&eacute;is a&ntilde;adir cualquier caracter&iacute;stica adicional que se os ocurra. Aqu&iacute; proponemos algunas: </p>
+<ul>
+  <li>Pasa a men&uacute;s las opciones que ofrece el programa en forma de botones: 
+    <ul>
+      <li><em>Ver</em> los datos de una persona</li>
+      <li><em>A</em><em>&ntilde;adir </em> una nueva persona</li>
+      <li><em>Q</em><em>uitar </em>una persona</li>
+      <li><em>Guardar</em> los datos modificados de la persona </li>
+      <li><em>Guardar</em> los datos de todos en el mismo fichero de entrada. </li>
+    </ul>
+  </li>
+  <li>En lugar de pasar como par&aacute;metro en el <em>main</em> el fichero con las personas, utiliza la clase <em>JFileChooser</em> de Swing para abrir y guardar ficheros. As&iacute; no necesitar&aacute;s pasar nada como par&aacute;metro, incluso podr&aacute;s crear ficheros nuevos de personas desde el programa. Mira el API para ver c&oacute;mo utilizarla. Te ser&aacute;n de utilidad sus m&eacute;todos <em>showOpenDialog</em> y <em>showSaveDialog</em>.</li>
+  <li>Incluye una especie de &quot;barra de herramientas&quot;, con botones para abrir y guardar ficheros, pero que en lugar de texto tengan los t&iacute;picos iconos de abrir y guardar, y que al pulsarlos se llame a las opciones de <em>JFileChooser</em> del punto anterior. Puedes encontrar los iconos de abrir y guardar en casi cualquier aplicaci&oacute;n de Windows, por ejemplo el Word o el WordPad. Captura un pantallazo del programa, recorta los iconos y gu&aacute;rdalos como im&aacute;genes para poderlos utilizar. Despu&eacute;s, c&aacute;rgalos en los botones utilizando objetos <em>ImageIcon</em>.</li>
+  <li>Ordenar los nombres en la lista, seg&uacute;n el criterio de ordenaci&oacute;n que hicisteis para la clase <em>Persona</em> en la sesi&oacute;n 7.</li>
+  <li>Controlar todo tipo de errores: al leer el fichero de entrada, al escribir mal los datos en los cuadros de texto, etc. Para sacar mensajes de error en una ventana, os interesar&aacute; utilizar la clase <strong>JOptionPane</strong> de Swing, y sus m&eacute;todos <strong>showMessageDialog</strong> y similares. </li>
+</ul>
+<p>Comenta en el fichero de respuestas las caracter&iacute;sticas opcionales que hayas implementado. </p>
+<hr/>
+<p><b>PARA ENTREGAR</b></p>
+<p>Guarda en la carpeta <strong>modulo3</strong> de tu CVS los siguientes elementos para esta sesi&oacute;n: </p>
+<ul>
+  <li>Todos los ficheros fuente (<b>sesion09.Calculadora</b> y <strong>sesion09.JCalculadora</strong>, y tambi&eacute;n <strong>gui.Agenda</strong> con la aplicaci&oacute;n final hecha). Los otros paquetes y clases necesarias para esta aplicaci&oacute;n (<strong>datos.Persona</strong> e <strong>io.LeeGuardaPersona</strong>), ya los tendr&aacute;s a&ntilde;adidos de sesiones anteriores, si no los has modificado en esta. </li>
+  <li>El fichero de entrada <strong>ficheroPersonas.dat</strong> que se ha proporcionado. </li>
+  <li>Fichero de texto <b>respuestas.txt</b> de esta sesi&oacute;n contestando a todas las preguntas formuladas.</li>
+</ul>
+<h2>&nbsp;</h2>
+
+
+</body>
+</html>

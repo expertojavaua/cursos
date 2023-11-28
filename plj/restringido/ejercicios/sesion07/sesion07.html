@@ -1,0 +1,415 @@
+<html>
+<head>
+<title>Tema 2: Caracter&iacute;sticas b&aacute;sicas</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<!-- OneStat -->
+<!--ONESTAT SCRIPTCODE START-->
+<script type="text/javascript">
+<!--
+// Account ID : 221957
+// Website URL: http://www.jtech.ua.es
+// Copyright (C) 2002-2005 OneStat.com All Rights Reserved
+function OneStat_Pageview()
+{
+    var d=document;
+    var sid="221957";
+    var CONTENTSECTION="";
+    var CUSTOMDATA="";
+    var osp_URL=d.URL;
+    var osp_Title=d.title;
+    var t=new Date();
+    var p="http"+(d.URL.indexOf('https:')==0?'s':'')+"://stat.onestat.com/stat.aspx?tagver=2&sid="+sid;
+    p+="&url="+escape(osp_URL);
+    p+="&ti="+escape(osp_Title);
+    p+="&section="+escape(CONTENTSECTION);
+    p+="&custom="+escape(CUSTOMDATA);
+    p+="&rf="+escape(parent==self?window.document.referrer:top.document.referrer);
+    p+="&tz="+escape(t.getTimezoneOffset());
+    p+="&ch="+escape(t.getHours());
+    p+="&js=1";
+    p+="&ul="+escape(navigator.appName=="Netscape"?navigator.language:navigator.userLanguage);
+    if(osp_URL!=d.URL) p+="&ol="+escape(d.URL);
+    if(typeof(screen)=="object"){
+       p+="&sr="+screen.width+"x"+screen.height;p+="&cd="+screen.colorDepth;
+       p+="&jo="+(navigator.javaEnabled()?"Yes":"No");
+    }
+    d.write('<img id="ONESTAT_TAG" border="0" width="1" height="1" src="'+p+'" />');
+}
+
+OneStat_Pageview();
+//-->
+</script>
+<noscript>
+<a href="http://www.onestat.com"><img border="0" width="1" height="1" src="http://stat.onestat.com/stat.aspx?tagver=2&amp;sid=221957&amp;js=No&amp;" ALT="OneStat Web Analytics"></a>
+</noscript>
+<!--ONESTAT SCRIPTCODE END-->
+<h1>Sesi&oacute;n 7. Colecciones </h1>
+<p>
+  <script type="text/javascript">
+<!--
+// Account ID : 221957
+// Website URL: http://www.jtech.ua.es
+// Copyright (C) 2002-2005 OneStat.com All Rights Reserved
+function OneStat_Pageview()
+{
+    var d=document;
+    var sid="221957";
+    var CONTENTSECTION="";
+    var CUSTOMDATA="";
+    var osp_URL=d.URL;
+    var osp_Title=d.title;
+    var t=new Date();
+    var p="http"+(d.URL.indexOf('https:')==0?'s':'')+"://stat.onestat.com/stat.aspx?tagver=2&sid="+sid;
+    p+="&url="+escape(osp_URL);
+    p+="&ti="+escape(osp_Title);
+    p+="&section="+escape(CONTENTSECTION);
+    p+="&custom="+escape(CUSTOMDATA);
+    p+="&rf="+escape(parent==self?window.document.referrer:top.document.referrer);
+    p+="&tz="+escape(t.getTimezoneOffset());
+    p+="&ch="+escape(t.getHours());
+    p+="&js=1";
+    p+="&ul="+escape(navigator.appName=="Netscape"?navigator.language:navigator.userLanguage);
+    if(osp_URL!=d.URL) p+="&ol="+escape(d.URL);
+    if(typeof(screen)=="object"){
+       p+="&sr="+screen.width+"x"+screen.height;p+="&cd="+screen.colorDepth;
+       p+="&jo="+(navigator.javaEnabled()?"Yes":"No");
+    }
+    d.write('<img id="ONESTAT_TAG" border="0" width="1" height="1" src="'+p+'" />');
+}
+
+OneStat_Pageview();
+//-->
+  </script>
+  Esta sesi&oacute;n la vamos a dedicar a estudiar las diferentes formas que tenemos en Java de almacenar conjuntos de objetos, para luego recorrerlos, modificar los elementos del conjunto, reordenarlos, etc. En definitiva, vamos a hablar de los distintos tipos de <strong>colecciones</strong>. </p>
+<p>Todo el marco de colecciones est&aacute; formado por clases e interfaces que se encuentran dentro del paquete <strong>java.util</strong>. Distinguimos las siguientes subcategor&iacute;as:</p>
+<p align="center"><img src="images/esquema.jpg" width="100%"></p>
+<p>Veremos que hay dos tipos de colecciones principales: </p>
+<ul>
+  <li>Las <strong>colecciones</strong> propiamente dichas, que son grupos de elementos, y que parten de una interfaz padre que es <strong>java.util.Collection</strong>. Dentro de este grupo, distinguimos dos subtipos:
+    <ul>
+      <li>Las <strong>listas</strong>, que son secuencias de elementos. Todas parten de una interfaz padre, <strong>java.util.List</strong>, y dependiendo de la implementaci&oacute;n de dicha secuencia, tendremos un tipo concreto de lista, como los <em>ArrayLists</em>, los <em>Vectores</em>, etc. </li>
+      <li>Los <strong>conjuntos</strong>, que son agrupaciones de elementos donde no puede haber repetidos. Tambi&eacute;n parten de una interfaz padre, <strong>java.util.Set</strong>, y seg&uacute;n el tipo de implementaci&oacute;n, tambi&eacute;n tendremos tipos concretos de conjuntos, que veremos a continuaci&oacute;n. </li>
+    </ul>
+  </li>
+  <li>Los <strong>mapas</strong>, son asociaciones de valores a claves, de forma que se tiene una secuencia de elementos <em>clave=valor</em>. Se tiene una interfaz padre, que es <strong>java.util.Map</strong>, y dependiendo de la implementaci&oacute;n tambi&eacute;n tendremos subtipos concretos, como por ejemplo las tablas hash. </li>
+</ul>
+<p>Las distintas interfaces de las que parten los tipos concretos proporcionan m&eacute;todos para acceder a la colecci&oacute;n de elementos, o al mapa, y que podremos utilizar para cualquier tipo de datos que implemente la correspondiente interfaz.  Esto provoca un <em>polimorfismo </em>en la estructura, puesto que se proporciona una serie de m&eacute;todos que pueden ser utilizados para acceder a distintos tipos de datos. Por ejemplo, un operador <em>add</em> utilizado para a&ntilde;adir un elemento, podr&aacute; ser empleado tanto si estamos trabajando con una lista enlazada, con un array, o con un conjunto. </p>
+<p>Podemos encontrar los siguientes elementos dentro del marco de colecciones de Java:</p>
+<ul>
+  <li>Interfaces para distintos tipos de datos: Definir&aacute;n las operaciones que se pueden realizar con dichos tipos de datos. Podemos encontrar aqu&iacute; la interfaz para cualquier colecci&oacute;n de datos, y de manera m&aacute;s concreta para listas (secuencias) de datos, conjuntos, etc.</li>
+  <li>Implementaciones de tipos de datos reutilizables: Son clases que implementan tipos de datos concretos que podremos utilizar para nuestras aplicaciones, implementando algunas de las interfaces anteriores para acceder a los elementos de dicho tipo de datos. Por ejemplo, dentro de las listas de elementos, podremos encontrar distintas implementaciones de la lista como puede ser listas enlazadas, o bien arrays de capacidad variable, pero al implementar la misma interfaz podremos acceder a sus elementos mediante las mismas operaciones (polimorfismo).</li>
+  <li>Algoritmos para trabajar con dichos tipos de datos, que nos permitan realizar una ordenaci&oacute;n de los elementos de una lista, o diversos tipos de b&uacute;squeda de un determinado elemento por ejemplo.</li>
+</ul>
+<h2>Enumeraciones e iteradores</h2>
+<p>Antes de ver los distintos tipos de elementos que ofrece el marco de colecciones, comenzaremos viendo  dos elementos utilizados comunmente en Java para acceder a colecciones de datos. El primero de ellos es la <strong>enumeraci&oacute;n</strong>, definida mediante la interfaz <strong>Enumeration</strong>, nos permite consultar los elementos que contiene una colecci&oacute;n de datos. Muchos m&eacute;todos de clases Java que deben devolver m&uacute;ltiples valores, lo que hacen es devolvernos una enumeraci&oacute;n que podremos consultar mediante los m&eacute;todos que ofrece dicha interfaz.</p>
+<p>La enumeraci&oacute;n ir&aacute; recorriendo secuencialmente los elementos de la colecci&oacute;n. Para leer cada elemento de la enumeraci&oacute;n deberemos llamar al m&eacute;todo:</p>
+<pre class="codigo">Object item = enum.<strong>nextElement()</strong>;</pre>
+<p>Que nos proporcionar&aacute; en cada momento el siguiente elemento de la enumeraci&oacute;n a leer. Adem&aacute;s necesitaremos saber si quedan elementos por leer, para ello tenemos el m&eacute;todo:</p>
+<pre class="codigo">enum.<strong>hasMoreElements()</strong></pre>
+<p>Normalmente, el bucle para la lectura de una enumeraci&oacute;n ser&aacute; el siguiente:</p>
+<pre class="codigo">while (enum.<strong>hasMoreElements()</strong>) <br>{<br>  Object item = enum.<strong>nextElement()</strong>;<br>  // Hacer algo con el item leido
+}</pre>
+<p>Vemos como en este bucle se van leyendo y procesando elementos de la enumeraci&oacute;n uno a uno mientras queden elementos por leer en ella. Notar tambi&eacute;n que el m&eacute;todo <em>nextElement</em> devuelve un objeto <em>Object</em> gen&eacute;rico, que nosotros deberemos convertir (mediante cast) al tipo de datos que estemos manejando:</p>
+<pre class="codigo">TuClase item = (TuClase)(enum.nextElement());</pre>
+<p>Otro elemento para acceder a los datos de una colecci&oacute;n son los <strong>iteradores</strong>. La diferencia est&aacute; en que los iteradores adem&aacute;s de leer los datos nos permitir&aacute;n eliminarlos de la colecci&oacute;n. Los iteradores se definen mediante la interfaz<strong> Iterator</strong>, que proporciona de forma an&aacute;loga a la enumeraci&oacute;n el m&eacute;todo:</p>
+<pre class="codigo">Object item = iter.<strong>next()</strong>;</pre>
+<p>Que nos devuelve el siguiente elemento a leer por el iterador. Al igual que en el caso de la enumeraci&oacute;n, deberemos convertir lo que devuelve al tipo de datos que nos interese. Para saber si quedan m&aacute;s elementos que leer tenemos el m&eacute;todo:</p>
+<pre class="codigo">iter.<strong>hasNext()</strong></pre>
+<p>Adem&aacute;s, podemos borrar el &uacute;ltimo elemento que hayamos leido. Para ello tendremos el m&eacute;todo:</p>
+<pre class="codigo">iter.<strong>remove()</strong>;</pre>
+<p>Por ejemplo, podemos recorrer todos los elementos de una colecci&oacute;n utilizando un iterador y eliminar aquellos que cumplan ciertas condiciones:</p>
+<pre class="codigo">while (iter.<strong>hasNext()</strong>)
+{ 
+  Object item = iter.<strong>next()</strong>;
+  if(condicion_borrado(item)) 
+    iter.<strong>remove()</strong>;
+}</pre>
+<p>Las enumeraciones y los iteradores no son tipos de datos, sino estructuras que nos servir&aacute;n para acceder a los elementos dentro de los tipos de datos que veremos a continuaci&oacute;n.</p>
+<h2>Colecciones gen&eacute;ricas</h2>
+<p>Las colecciones representan grupos de objetos, denominados elementos. Podemos encontrar diversos tipos de colecciones, seg&uacute;n si sus elementos est&aacute;n ordenados, o si permitimos repetici&oacute;n de elementos o no.</p>
+<p>El tipo m&aacute;s gen&eacute;rico en cuanto a que se refiere a cualquier tipo que contenga un grupo de elementos viene definido por la interfaz <strong>Collection</strong>, de la cual heredar&aacute; cada subtipo espec&iacute;fico. En esta interfaz encontramos una serie de m&eacute;todos que nos servir&aacute;n para acceder a los elementos de cualquier colecci&oacute;n de datos, sea del tipo que sea. Estos m&eacute;todos generales son:</p>
+<pre class="codigo">boolean <strong>add(Object o)</strong></pre>
+<p>A&ntilde;ade un elemento (objeto) a la colecci&oacute;n. Nos devuelve<em> true</em> si tras a&ntilde;adir el elemento la colecci&oacute;n ha cambiado, es decir, el elemento se ha a&ntilde;adido correctamente, o <em>false</em> en caso contrario.</p>
+<pre class="codigo">void <strong>clear()</strong></pre>
+<p>Elimina todos los elementos de la colecci&oacute;n.</p>
+<pre class="codigo">boolean <strong>contains(Object o)</strong></pre>
+<p>Indica si la colecci&oacute;n contiene el elemento (objeto) indicado.</p>
+<pre class="codigo">boolean <strong>isEmpty()</strong></pre>
+<p>Indica si la colecci&oacute;n est&aacute; vac&iacute;a (no tiene ning&uacute;n elemento). </p>
+<pre class="codigo">Iterator <strong>iterator()</strong></pre>
+<p>Proporciona un iterador para acceder a los elementos de la colecci&oacute;n.</p>
+<pre class="codigo">boolean <strong>remove(Object o)</strong></pre>
+<p>Elimina un determinado elemento (objeto) de la colecci&oacute;n, devolviendo <em>true</em> si dicho elemento estaba contenido en la colecci&oacute;n, y <em>false</em> en caso contrario.</p>
+<pre class="codigo">int <strong>size()</strong></pre>
+<p>Nos devuelve el n&uacute;mero de elementos que contiene la colecci&oacute;n.</p>
+<pre class="codigo">Object [ ] <strong>toArray()</strong></pre>
+<p>Nos devuelve la colecci&oacute;n de elementos como un array de objetos. Si sabemos de antemano que los objetos de la colecci&oacute;n son todos de un determinado tipo (como por ejemplo de tipo <b>String</b>) podremos obtenerlos en un array del tipo adecuado, en lugar de usar un array de objetos gen&eacute;ricos. En este caso NO podremos hacer una conversi&oacute;n cast descendente de array de objetos a array de un tipo m&aacute;s concreto, ya que el array se habr&aacute; instanciado simplemente como array de objetos:</p>
+<pre class="codigo">String [ ] cadenas = (String [ ]) coleccion.toArray();	// <b>Esto no se puede hacer!!!</b></pre>
+<p>Lo que si podemos hacer es instanciar nosotros un array del tipo adecuado y hacer una conversi&oacute;n cast ascendente (de tipo concreto a array de objetos), y utilizar el siguiente m&eacute;todo:</p>
+<pre class="codigo">String [ ] cadenas = new String[coleccion.size()];
+coleccion.<b>toArray</b>(cadenas);                                <strong>// Esto si que funcionar&aacute;</strong></pre>
+<p>Esta interfaz es muy gen&eacute;rica, y por lo tanto no hay ning&uacute;n tipo de datos que la implemente directamente, sino que implementar&aacute;n subtipos de ellas. A continuaci&oacute;n veremos los subtipos m&aacute;s comunes.</p>
+<h2>Listas de elementos</h2>
+<p>Este tipo de colecci&oacute;n se refiere a listas en las que los elementos de la colecci&oacute;n tienen un orden, existe una secuencia de elementos. En ellas cada elemento estar&aacute; en una determinada posici&oacute;n (&iacute;ndice) de la lista.</p>
+<p>Las listas vienen definidas en la interfaz <strong>List</strong>, que adem&aacute;s de los m&eacute;todos generales de las colecciones, nos ofrece los siguientes para trabajar con los &iacute;ndices:</p>
+<pre class="codigo">void <strong>add(int indice, Object obj)</strong></pre>
+<p>Inserta un elemento (objeto) en la posici&oacute;n de la lista dada por el &iacute;ndice indicado. </p>
+<pre class="codigo">Object <strong>get(int indice)</strong></pre>
+<p>Obtiene el elemento (objeto) de la posici&oacute;n de la lista dada por el &iacute;ndice indicado. </p>
+<pre class="codigo">int <strong>indexOf(Object obj)</strong></pre>
+<p>Nos dice cual es el &iacute;ndice de dicho elemento (objeto) dentro de la lista. Nos devuelve -1 si el objeto no se encuentra en la lista.</p>
+<pre class="codigo">Object <strong>remove(int indice)</strong></pre>
+<p>Elimina el elemento que se encuentre en la posici&oacute;n de la lista indicada mediante dicho &iacute;ndice, devolvi&eacute;ndonos el objeto eliminado.</p>
+<pre class="codigo">Object <strong>set(int indice, Object obj)</strong></pre>
+<p>Establece el elemento de la lista en la posici&oacute;n dada por el &iacute;ndice al objeto indicado, sobrescribiendo el objeto que hubiera anteriormente en dicha posici&oacute;n. Nos devolver&aacute; el elemento que hab&iacute;a previamente en dicha posici&oacute;n.</p>
+<pre class="codigo">int <strong>size()</strong></pre>
+<p>Obtiene el n&uacute;mero de elementos que hay en la lista.</p>
+<p>Podemos encontrar diferentes implementaciones de listas de elementos en Java:</p>
+<h3>ArrayList</h3>
+<p>Implementa una lista de elementos mediante un array de tama&ntilde;o variable. Conforme se a&ntilde;aden elementos el tama&ntilde;o del array ir&aacute; creciendo si es necesario. El array tendr&aacute; una capacidad inicial, y en el momento en el que se rebase dicha capacidad, se aumentar&aacute; el tama&ntilde;o del array.</p>
+<p>Las operaciones de a&ntilde;adir un elemento al final del array (<em>add</em>), y de establecer u obtener el elemento en una determinada posici&oacute;n (<em>get</em>/<em>set</em>) tienen un coste temporal constante. Las inserciones y borrados tienen un coste lineal <em>O(n)</em>, donde <em>n</em> es el n&uacute;mero de elementos del array.</p>
+<p>Hemos de destacar que la implementaci&oacute;n de <strong>ArrayList</strong> no est&aacute; sincronizada, es decir, si m&uacute;ltiples hilos acceden a un mismo <strong>ArrayList</strong> concurrentemente podriamos tener problemas en la consistencia de los datos. Por lo tanto, deberemos tener en cuenta cuando usemos este tipo de datos que debemos controlar la concurrencia de acceso. Tambi&eacute;n podemos hacer que sea sincronizado como veremos m&aacute;s adelante.</p>
+<h3>Vector</h3>
+<p>El <strong>Vector</strong> es una implementaci&oacute;n similar al <strong>ArrayList</strong>, con la diferencia de que el <strong>Vector</strong> si que <strong>est&aacute; sincronizado</strong>. Este es un caso especial, ya que la implementaci&oacute;n b&aacute;sica del resto de tipos de datos no est&aacute; sincronizada.</p>
+<p>Esta clase existe desde las primeras versiones de Java, en las que no exist&iacute;a el marco de las colecciones descrito anteriormente. En las &uacute;ltimas versiones el <strong>Vector</strong> se ha acomodado a este marco implementando la interfaz <strong>List</strong>.</p>
+<p>Sin embargo, si trabajamos con versiones previas de JDK, hemos de tener en cuenta que dicha interfaz no exist&iacute;a, y por lo tanto esta versi&oacute;n previa del vector no contar&aacute; con los m&eacute;todos definidos en ella. Adem&aacute;s de los nuevos m&eacute;todos que incorpor&oacute; de <em>List</em>, los m&eacute;todos propios del vector para acceder a su contenido, que han existido desde las primeras versiones, son los siguientes:</p>
+<pre class="codigo">void <strong>addElement(Object obj)</strong></pre>
+<p>A&ntilde;ade un elemento al final del vector.</p>
+<pre class="codigo">Object <strong>elementAt(int indice)</strong></pre>
+<p>Devuelve el elemento de la posici&oacute;n del vector indicada por el &iacute;ndice.</p>
+<pre class="codigo">void <strong>insertElementAt(Object obj, int indice)</strong></pre>
+<p>Inserta un elemento en la posici&oacute;n indicada.</p>
+<pre class="codigo">boolean <strong>removeElement(Object obj)</strong></pre>
+<p>Elimina el elemento indicado del vector, devolviendo <em>true</em> si dicho elemento estaba contenido en el vector, y <em>false</em> en caso contrario.</p>
+<pre class="codigo">void <strong>removeElementAt(int indice)</strong></pre>
+<p>Elimina el elemento de la posici&oacute;n indicada en el &iacute;ndice.</p>
+<pre class="codigo">void <strong>setElementAt(Object obj, int indice)</strong></pre>
+<p>Sobrescribe el elemento de la posici&oacute;n indicada con el objeto especificado.</p>
+<pre class="codigo">int <strong>size()</strong></pre>
+<p>Devuelve el n&uacute;mero de elementos del vector. Este m&eacute;todo lo incorpora tambi&eacute;n la interfaz <em>List</em>, pero ya exist&iacute;a previamente en <em>Vector</em>.</p>
+<p>Por lo tanto, si programamos para versiones antiguas de la m&aacute;quina virtual Java, ser&aacute; recomendable utilizar estos m&eacute;todos para asegurarnos de que nuestro programa funcione. Esto ser&aacute; importante en la programaci&oacute;n de Applets, ya que la m&aacute;quina virtual incluida en muchos navegadores corresponde a versiones antiguas.</p>
+<p>Sobre el vector se construye el tipo pila (<strong>Stack</strong>), que apoy&aacute;ndose en el tipo vector ofrece m&eacute;todos para trabajar con dicho vector como si se tratase de una pila, apilando y desapilando elementos (operaciones <em>push </em>y<em> pop</em> respectivamente). La clase <strong>Stack</strong> hereda de <strong>Vector</strong>, por lo que en realidad ser&aacute; un vector que ofrece m&eacute;todos adicionales para trabajar con &eacute;l como si fuese una pila.</p>
+<hr>
+<h3>Ejercicio 1: Recorrido de vectores y listas </h3>
+<p>La clase <i>sesion07.Ej1</i> de la plantilla tiene un m&eacute;todo <em>main</em>, donde hemos creado un objeto de tipo <em>Vector</em>, y le hemos a&ntilde;adido 10 cadenas: <em>Hola0, Hola1, Hola2...Hola9</em>. Con este vector deber&aacute;s hacer lo siguiente:</p>
+<ul>
+  <li>Primero, recorrerlo mediante el objeto <em>Enumeration</em> que puedes obtener del propio vector. Si observas la API de <em>Vector</em>, ver&aacute;s que tiene un m&eacute;todo:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">Enumeration elements();</pre>
+  <p>que devuelve un <em>Enumeration</em> para poder recorrer los elementos del vector. Se trata de que obtengas esa enumeraci&oacute;n, y formes un bucle como se ha explicado en los apuntes, para recorrerla de principio a fin. Para cada elemento, saca su valor por pantalla (imprime la cadena).</p>
+</blockquote>
+<ul>
+  <li> A continuaci&oacute;n de lo anterior, haz otro recorrido del vector, pero esta vez utilizando su <em>Iterator</em>. Ver&aacute;s tambi&eacute;n en la API que el objeto <em>Vector</em> tiene un m&eacute;todo:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">Iterator iterator();</pre>
+  <p>que devuelve un <em>Iterator</em> para poder recorrer los elementos del vector. Haz ahora otro bucle como el que se explica en los apuntes, para recorrer los elementos del vector, esta vez con el <em>Iterator</em>. Para cada elemento, vuelve a imprimir su valor por pantalla.</p>
+</blockquote>
+<ul>
+  <li> Finalmente, tras los dos bucles anteriores, a&ntilde;ade un tercer bucle, donde a mano vayas recorriendo todo el vector, accediendo a sus elementos, y sac&aacute;ndolos por pantalla. En este caso, ya no podr&aacute;s utilizar los m&eacute;todos <em>nextElement</em>, <em>hasNext</em>, ni similares que has utilizado en los bucles anteriores. Deber&aacute;s ir posici&oacute;n por posici&oacute;n, accediendo al valor de esa posici&oacute;n del vector (puedes utilizar el m&eacute;todo que prefieras: <em>get</em> o <em>elementAt</em>), y sacando el valor obtenido por pantalla. </li>
+</ul>
+<p>Una vez tengas los tres bucles hechos, ejecuta el programa, y observa lo que saca cada uno de los bucles por pantalla. &iquest;Encuentras alguna diferencia en el comportamiento de cada uno? &iquest;Qu&eacute; forma de recorrer el vector te resulta m&aacute;s c&oacute;moda de programar y por qu&eacute;? </p>
+<p>NOTA: algunas de las t&eacute;cnicas que has utilizado para recorrer el vector se pueden utilizar de la misma forma para recorrer otros tipos de listas. Por ejemplo, puedes obtener el <em>Iterator </em>de un <em>ArrayList </em> y recorrerlo, o ir elemento por elemento... </p>
+<hr>
+<h3>LinkedList</h3>
+<p>En este caso se implementa la lista mediante una lista doblemente enlazada. Por lo tanto, el coste temporal de las operaciones ser&aacute; el de este tipo de listas. Cuando realicemos inserciones, borrados o lecturas en los extremos inicial o final de la lista el tiempo ser&aacute; constante, mientras que para cualquier operaci&oacute;n en la que necesitemos localizar un determinado &iacute;ndice dentro de la lista deberemos recorrer la lista de inicio a fin, por lo que el coste ser&aacute; lineal con el tama&ntilde;o de la lista <em>O(n)</em>, siendo <em>n </em>el tama&ntilde;o de la lista.</p>
+<p>Para aprovechar las ventajas que tenemos en el coste temporal al trabajar con los extremos de la lista, se proporcionan m&eacute;todos propios para acceder a ellos en tiempo constante:</p>
+<pre class="codigo">void <strong>addFirst(Object obj)</strong> / void <strong>addLast(Object obj)</strong></pre>
+<p>A&ntilde;ade el objeto indicado al principio / final de la lista respectivamente.</p>
+<pre class="codigo">Object <strong>getFirst()</strong> / Object <strong>getLast()</strong></pre>
+<p>Obtiene el primer / &uacute;ltimo objeto de la lista respectivamente.</p>
+<pre class="codigo">Object <strong>removeFirst()</strong> / Object <strong>removeLast()</strong></pre>
+<p>Extrae el primer / &uacute;ltimo elemento de la lista respectivamente, devolvi&eacute;ndonos dicho objeto y elimin&aacute;ndolo de la lista.</p>
+<p>Hemos de destacar que estos m&eacute;todos nos permitir&aacute;n trabajar con la lista como si se tratase de una pila o de una cola. En el caso de la pila realizaremos la inserci&oacute;n y la extracci&oacute;n de elementos por el mismo extremo, mientras que para la cola insertaremos por un extremo y extraeremos por el otro.</p>
+<hr>
+<h3>Ejercicio 2: Pruebas de eficiencia </h3>
+<p>La clase <i>sesion07.Ej2</i> contiene un m&eacute;todo <em>main </em> que a su vez llama a dos m&eacute;todos de la propia clase:</p>
+<ul>
+  <li>El m&eacute;todo <em>creaYBorraEnmedio</em> crea un <em>Vector</em> de 10.000 cadenas, y una <em>LinkedList</em> con otras 10.000 cadenas. Despu&eacute;s, hace N inserciones y borrados en la parte <strong>media</strong> del <em>Vector</em> y del <em>LinkedList</em>, y compara los tiempos que se ha tardado en uno y otro tipo de datos en hacer todas las operaciones.</li>
+  <li> El m&eacute;todo <em>creaYBorraFinal</em> crea un <em>Vector</em> de 10.000 cadenas, y una <em>LinkedList</em> con otras 10.000 cadenas. Despu&eacute;s, hace N inserciones y borrados en la parte <strong>final</strong> del <em>Vector</em> y del <em>LinkedList</em>, y compara los tiempos que se ha tardado en uno y otro tipo de datos en hacer todas las operaciones.</li>
+</ul>
+<p>El m&eacute;todo <em>main</em> prueba el primer m&eacute;todo con N = 10.000 operaciones, y el segundo con N = 1.000.000 operaciones. Se pide:</p>
+<ul>
+  <li>Ejecuta el programa y observa los tiempos de ejecuci&oacute;n  de <em>creaYBorraEnmedio</em>. &iquest;Qu&eacute; conclusiones sacas?</li>
+  <li>Observa tambi&eacute;n los tiempos de ejecuci&oacute;n de <em>creaYBorraFinal</em>. &iquest;Qu&eacute; conclusiones sacas en este otro caso?</li>
+  <li>A la vista de los resultados... &iquest;en qu&eacute; casos crees que es mejor utilizar <em>LinkedList</em>, y en qu&eacute; otros no es aconsejable hacerlo?</li>
+  <li>Finalmente, a&ntilde;ade un tercer m&eacute;todo <em>creaYBorraInicio</em> que haga lo mismo que los anteriores, pero haciendo las N inserciones y borrados por el <strong>inicio</strong> del <em>Vector</em> y de la <em>LinkedList </em>(para &eacute;sta, utiliza los m&eacute;todos <em>addFirst </em>y <em>removeFirst</em>). Para este caso, haz que N sea de 1.000.000. &iquest;Qu&eacute; conclusiones obtienes al ejecutar este tercer m&eacute;todo? </li>
+</ul>
+<hr>
+<h2>Conjuntos</h2>
+<p>Los conjuntos son grupos de elementos en los que no encontramos ning&uacute;n elemento repetido. Consideramos que un elemento est&aacute; repetido si tenemos dos objetos <em>o1</em> y <em>o2</em> iguales, comparandolos mediante el operador <em>o1.equals(o2)</em>. De esta forma, si el objeto a insertar en el conjunto estuviese repetido, no nos dejar&aacute; insertarlo. Recordemos que el m&eacute;todo add devolv&iacute;a un valor <em>booleano</em>, que servir&aacute; para este caso, devolviendonos <em>true</em> si el elemento a a&ntilde;adir no estaba en el conjunto y ha sido a&ntilde;adido, o <em>false</em> si el elemento ya se encontraba dentro del conjunto. Un conjunto podr&aacute; contener a lo sumo un elemento <em>null</em>.</p>
+<p>Los conjuntos se definen en la interfaz <strong>Set</strong>, a partir de la cual se construyen diferentes implementaciones. Todas tienen m&eacute;todos gen&eacute;ricos basados en la interfaz padre:</p>
+<pre class="codigo">boolean <strong>add</strong>(Object o)</pre>
+<p>A&ntilde;ade el objeto al conjunto y devuelve si lo ha podido a&ntilde;adir (<em>true</em>) o no (<em>false</em>), porque ya exist&iacute;a, o por otra raz&oacute;n.</p>
+<pre class="codigo">boolean <strong>addAll</strong>(Collection c)</pre>
+<p>A&ntilde;ade todos los elementos de la colecci&oacute;n que se le pasa como par&aacute;metro al conjunto. Devuelve si los ha podido a&ntilde;adir (<em>true</em>) o no (<em>false</em>). Notar que as&iacute; podemos pasar cualquier tipo de colecci&oacute;n (<em>Vector, ArrayList</em>, incluso otros tipos de conjuntos) a otros conjuntos. </p>
+<pre class="codigo">void<strong> clear</strong>()</pre>
+<p>Borra todos los elementos del conjunto.</p>
+<pre class="codigo">boolean <strong>contains</strong>(Object o)</pre>
+<p>Devuelve <em>true</em> si el objeto <em>o</em> est&aacute; en el conjunto, y <em>false</em> si no. </p>
+<pre class="codigo">boolean <strong>remove</strong>(Object o)</pre>
+<p>Elimina el objeto del conjunto y devuelve si lo ha podido borrar (<em>true</em>) o no (<em>false</em>).</p>
+<p>Existen otros m&eacute;todos que tambi&eacute;n se ten&iacute;an en <em>Collection</em>, como <em>size, iterator, etc</em>. Consultad el API para una visi&oacute;n m&aacute;s detallada. A continuaci&oacute;n explicamos por encima algunos subtipos de conjuntos. </p>
+<h3>HashSet</h3>
+<p>Los objetos se almacenan en una tabla de dispersi&oacute;n (<em>hash</em>). El coste de las operaciones b&aacute;sicas (inserci&oacute;n, borrado, b&uacute;squeda) se realizan en tiempo constante siempre que los elementos se hayan dispersado de forma adecuada. La iteraci&oacute;n a trav&eacute;s de sus elementos es m&aacute;s costosa, ya que necesitar&aacute; recorrer todas las entradas de la tabla de dispersi&oacute;n, lo que har&aacute; que el coste est&eacute; en funci&oacute;n tanto del n&uacute;mero de elementos insertados en el conjunto como del n&uacute;mero de entradas de la tabla. El orden de iteraci&oacute;n puede diferir del orden en el que se insertaron los elementos.</p>
+<h3>LinkedHashSet</h3>
+<p>Es similar a la anterior pero la tabla de dispersi&oacute;n es doblemente enlazada. Los elementos que se inserten tendr&aacute;n enlaces entre ellos. Por lo tanto, las operaciones b&aacute;sicas seguir&aacute;n teniendo coste constante, con la carga adicional que supone tener que gestionar los enlaces. Sin embargo habr&aacute; una mejora en la iteraci&oacute;n, ya que al establecerse enlaces entre los elementos no tendremos que recorrer todas las entradas de la tabla, el coste s&oacute;lo estar&aacute; en funci&oacute;n del n&uacute;mero de elementos insertados. En este caso, al haber enlaces entre los elementos, estos enlaces definir&aacute;n el orden en el que se insertaron en el conjunto, por lo que el orden de iteraci&oacute;n ser&aacute; el mismo orden en el que se insertaron.</p>
+<h3>TreeSet</h3>
+<p>Utiliza un &aacute;rbol para el almacenamiento de los elementos. Por lo tanto, el coste para realizar las operaciones b&aacute;sicas ser&aacute; logar&iacute;tmico con el n&uacute;mero de elementos que tenga el conjunto <em>O(log n)</em>.</p>
+<hr>
+<h3>Ejercicio 3: Trabajar con conjuntos </h3>
+<p>Aunque tienen su utilidad, normalmente los tipos de conjuntos no se suelen emplear demasiado a la hora de programar. Su programaci&oacute;n es muy similar a la que pueda tener un <em>ArrayList</em> o un <em>Vector</em>, y siempre se tiende a utilizar estos, porque sus clases son m&aacute;s conocidas. Sin embargo, los conjuntos tienen su verdadera utilidad cuando queremos tener listas de elementos no repetidos. Muchos programadores tienden a hacer ellos &quot;a mano&quot; la comprobaci&oacute;n de si est&aacute; o no repetido, y con estas clases se facilitar&iacute;a bastante la tarea.</p>
+<p>La clase <i>sesion07.Ej3</i> recibe una cadena (sin espacios) como par&aacute;metro, y la a&ntilde;ade dentro de sus campos <em>Vector </em>y <em>HashSet</em>. Dichos campos ya tienen insertadas las cadenas &quot;a1&quot;, &quot;a2&quot; y &quot;a3&quot;. </p>
+<ul>
+  <li>Rellena los m&eacute;todos <em>anyadeVector</em> y <em>anyadeConjunto</em> para que a&ntilde;adan al vector o al conjunto, respectivamente, el elemento que se les pasa como par&aacute;metro, SIEMPRE QUE NO EXISTA YA. Tras insertarlo, deber&aacute;n imprimir por pantalla su contenido actualizado (para recorrer el conjunto <em>HashSet</em> deber&aacute;s acceder a su <em>Iterator</em>, probablemente).</li>
+  <li>Prueba a ejecutar el programa, pas&aacute;ndole como par&aacute;metro tanto una cadena que no exista (&quot;b1&quot;, por ejemplo), como otra que s&iacute; (&quot;a2&quot;, por ejemplo). Comprueba que en los dos casos se hace la inserci&oacute;n cuando toca, y se sacan bien los datos por pantalla. &iquest;Observas alguna diferencia en el orden en que se muestran los datos por pantalla cuando se hacen nuevas inserciones? &iquest;A qu&eacute; crees que puede deberse? </li>
+  <li>Comenta las ventajas e inconvenientes que encuentres a la hora de programar con tipos conjunto como <em>HashSet</em> frente a tipos lista como <em>Vector.</em></li>
+</ul>
+<hr>
+<h2>Mapas</h2>
+<p>Aunque muchas veces se hable de los mapas como una colecci&oacute;n, en realidad no lo son, ya que no implementan la interfaz <strong>Collection</strong>, tal y como puede verse en el esquema planteado al inicio de esta sesi&oacute;n. </p>
+<p>Los mapas se definen en la interfaz <strong>Map</strong>. Un mapa es un objeto que relaciona una clave (<em>key</em>) con un valor. Contendr&aacute; un conjunto de claves, y a cada clave se le asociar&aacute; un determinado valor. En versiones anteriores este mapeado entre claves y valores lo hac&iacute;a la clase <strong>Dictionary</strong>, que ha quedado obsoleta. Tanto la clave como el valor puede ser cualquier objeto.</p>
+<p>Los m&eacute;todos b&aacute;sicos para trabajar con estos elementos son los siguientes:</p>
+<pre class="codigo">Object <strong>get(Object clave)</strong></pre>
+<p>Nos devuelve el valor asociado a la clave indicada, o <em>null</em> si no existe dicha clave. </p>
+<pre class="codigo">Object <strong>put(Object clave, Object valor)</strong></pre>
+<p>Inserta una nueva clave con el valor especificado. Nos devuelve el valor que ten&iacute;a antes dicha clave, o <em>null</em> si la clave no estaba en la tabla todav&iacute;a.</p>
+<pre class="codigo">Object <strong>remove(Object clave)</strong></pre>
+<p>Elimina una clave, devolviendonos el valor que ten&iacute;a dicha clave, o <em>null</em> si no exist&iacute;a. </p>
+<pre class="codigo">Set <strong>keySet()</strong></pre>
+<p>Nos devuelve el conjunto de claves registradas</p>
+<pre class="codigo">int <strong>size()</strong></pre>
+<p>Nos devuelve el n&uacute;mero de parejas (clave,valor) registradas.</p>
+<p>Encontramos distintas implementaciones de los mapas:</p>
+<h3>HashMap</strong></h3>
+<p>Utiliza una tabla de dispersi&oacute;n para almacenar la informaci&oacute;n del mapa. Las operaciones b&aacute;sicas (<em>get</em> y <em>put</em>) se har&aacute;n en tiempo constante siempre que se dispersen adecuadamente los elementos. Es coste de la iteraci&oacute;n depender&aacute; del n&uacute;mero de entradas de la tabla y del n&uacute;mero de elementos del mapa. No se garantiza que se respete el orden de las claves.</p>
+<h3>TreeMap</strong></h3>
+<p>Utiliza un &aacute;rbol rojo-negro para implementar el mapa. El coste de las operaciones b&aacute;sicas ser&aacute; logar&iacute;tmico con el n&uacute;mero de elementos del mapa <em>O(log n)</em>. En este caso los elementos se encontrar&aacute;n ordenados por orden ascendente de clave.</p>
+<h3>Hashtable</strong></h3>
+<p>Es una implementaci&oacute;n similar a <strong>HashMap</strong>, pero con alguna diferencia. Mientras las anteriores implementaciones no est&aacute;n sincronizadas, esta si que lo est&aacute;. Adem&aacute;s en esta implementaci&oacute;n, al contrario que las anteriores, no se permitir&aacute;n claves nulas (<em>null</em>). Este objeto extiende la obsoleta clase <strong>Dictionary</strong>, ya que viene de versiones m&aacute;s antiguas de JDK. Ofrece otros m&eacute;todos adem&aacute;s de los anteriores, como por ejemplo el siguiente:</p>
+<pre class="codigo">Enumeration <strong>keys()</strong></pre>
+<p>Este m&eacute;todo nos devolver&aacute; una enumeraci&oacute;n de todas las claves registradas en la tabla.</p>
+<hr>
+<h3>Ejercicio 4: Ventajas de los mapas </h3>
+<p>Trabajar con mapas es la forma m&aacute;s eficiente y c&oacute;moda de almacenar pares <em>clave=valor</em>. La clase <i>sesion07.Ej4</i> contiene una subclase llamada <em>Parametro</em>, que utilizamos para guardar ciertos par&aacute;metros de configuraci&oacute;n, y sus valores. Ver&aacute;s que esta clase tiene un campo <em>nombre</em> donde pondremos el nombre del par&aacute;metro, y otro <em>valor</em> con su valor.</p>
+<p>La clase principal Ej4 crea muchos par&aacute;metros de este tipo, y los almacena en un <em>ArrayList</em>. Finalmente, busca en dicho <em>ArrayList</em> el valor del par&aacute;metro cuya clave se le pasa en el <em>main</em>. Saca un mensaje indicando en qu&eacute; posici&oacute;n lo encontr&oacute;, y luego imprime todos los <em>Parametros </em> por pantalla, sacando su nombre y su valor. </p>
+<ul>
+  <li>Haz una clase <em>sesion07.Ej4Hash</em>  que haga lo mismo, pero utilizando una <em>Hashtable</em> en lugar de un <em>ArrayList</em>. Debes tener en cuenta lo siguiente:
+    <ul>
+      <li>En esta clase no tendr&aacute;s que usar la subclase <em>Parametro</em>, ya que podr&aacute;s almacenar el nombre por un lado y el valor por el otro dentro de la tabla hash. Es decir, donde antes hac&iacute;as:</li>
+    </ul>
+    <blockquote>
+      <pre class="codigo">ArrayList al = new ArrayList();<br>...<br>al.add(new Parametro(&quot;Clave1&quot;, &quot;Valor1&quot;));<strong></strong></pre>
+      <p>ahora har&aacute;s:</p>
+      <pre class="codigo">Hashtable ht = new Hashtable();<br>...<br>ht.put(&quot;Clave1&quot;, &quot;Valor1&quot;);</pre>
+    </blockquote>
+    <ul>
+      <li>A la hora de buscar el elemento en la hash ya no necesitas ning&uacute;n bucle. El m&eacute;todo <em>get</em> de la <em>Hashtable</em> te permite obtener un valor si le das el nombre con que lo guardaste. Te devolver&aacute; el objeto asociado a ese nombre (como un <em>Object</em> que deber&aacute;s convertir al tipo adecuado), o <em>null</em> si no lo encontr&oacute;.</li>
+    </ul>
+    <blockquote>
+      <pre class="codigo">String valor = (String)(ht.get(nombre));<strong><br></strong>if (valor == null) ... else ...</pre>
+      <p>En este caso no hace falta que indiques en qu&eacute; posici&oacute;n encontraste al elemento, puesto que, como ver&aacute;s despu&eacute;s, las tablas hash no mantienen las posiciones como te esperas. </p>
+    </blockquote>
+    <ul>
+      <li>A la hora de imprimir todos los elementos por pantalla, una opci&oacute;n es obtener todo el listado de claves, y luego para cada una ir sacando su valor, e imprimir ambos. Para obtener un listado de todas las claves, tienes el siguiente m&eacute;todo en <em>Hashtable</em>:
+        <pre class="codigo">Enumeration keys();<strong></strong></pre>
+        <p>te devuelve una enumeraci&oacute;n de las claves. Luego util&iacute;zala para recorrerlas, y con cada una sacar su valor e imprimirlo:</p>
+        <pre class="codigo">Enumeration en = ht.keys();<strong><br></strong>while (en.hasMoreElements())<br>{<br>   String clave = (String)(en.nextElement());<br>   String valor = (String)(ht.get(clave));<br>   ... // Imprimir clave y valor por pantalla<br>}
+</pre>
+      </li>
+    </ul>
+  </li>
+  <li>Comenta las conclusiones que obtienes tras haber hecho este ejercicio, y qu&eacute; ventajas e inconvenientes encuentras a la hora de a&ntilde;adir elementos en la hash, y de recuperarlos.</li>
+  <li>Observa c&oacute;mo se imprimen los valores de la hash al sacarlos por pantalla. &iquest;Conservan el orden en que se introdujeron? &iquest;A qu&eacute; crees que puede deberse? </li>
+  <li>Si en lugar de trabajar con listas o tablas hash de 10 elementos fuesen de 1.000.000 de elementos, &iquest;qui&eacute;n se comportar&iacute;a m&aacute;s eficientemente (<em>ArrayList </em>o <em>Hashtable</em>) y por qu&eacute;? No hace falta que lo pruebes, haz una estimaci&oacute;n bas&aacute;ndote en lo que has visto hasta ahora. </li>
+</ul>
+<hr>
+<h2>Algoritmos con colecciones </h2>
+<p>Como hemos comentado anteriormente, adem&aacute;s de las interfaces y las implementaciones de los tipos de datos descritos en los apartados previos, el marco de colecciones nos ofrece una serie de algoritmos &uacute;tiles cuando trabajamos con estos tipos de datos, especialmente para las listas.</p>
+<p>Estos algoritmos los podemos encontrar implementados como m&eacute;todos est&aacute;ticos en la clase <strong>Collections</strong>. En ella encontramos m&eacute;todos para la ordenaci&oacute;n de listas (<em>sort</em>), para la b&uacute;squeda binaria de elementos dentro de una lista (<em>binarySearch</em>) y otras operaciones que nos ser&aacute;n de gran utilidad cuando trabajemos con colecciones de elementos.</p>
+<h3>Ordenar colecciones</h3>
+<p>Supongamos que queremos ordenar una lista <em>List</em>, que ya tengamos previamente creada y llena de elementos del tipo <em>String</em>. Har&iacute;amos algo como lo siguiente: </p>
+<pre class="codigo">List miLista = new List();<br>miLista.add(&quot;Hola&quot;);
+miLista.add(&quot;Adios&quot;);
+miLista.add(&quot;Hasta luego&quot;);
+<strong>Collections.sort</strong>(miLista);</pre>
+<p>Y obtendr&iacute;amos el orden siguiente: &quot;Adios&quot;, &quot;Hasta luego&quot;, &quot;Hola&quot;. </p>
+<p>Podremos ordenar una lista de cualquier tipo de datos, incluso de objetos definidos por nosotros. Lo &uacute;nico que se necesita para que Java la sepa ordenar autom&aacute;ticamente es que el tipo de datos de la lista tenga m&eacute;todos que permitan comparar elementos entre s&iacute;. &iquest;C&oacute;mo hacer eso? Basta con hacer que el tipo de datos implemente la interfaz <strong>Comparable</strong>, y que definamos en su clase un m&eacute;todo <strong>compareTo</strong>, que indique, dados dos elementos, cu&aacute;l es mayor, menor, o igual.</p>
+<p>Por ejemplo, supongamos que tenemos objetos de tipo <em>MiClase</em>:</p>
+<pre class="codigo">class MiClase<br>{<br>   String valor;<br><br>   public MiClase(String v)<br>   {
+      valor = v;<br>   }<br>}<strong></strong></pre>
+<p>Luego hacemos una lista con objetos de este tipo, y queremos que se ordene alfab&eacute;ticamente, seg&uacute;n el campo <em>valor</em>:</p>
+<pre class="codigo">List miLista = new List();<br>miLista.add(new MiClase(&quot;AAA&quot;));
+miLista.add(new MiClase(&quot;FFF&quot;);
+miLista.add(new MiClase(&quot;DDD&quot;);
+<strong>Collections.sort</strong>(miLista);</pre>
+<p>Si probamos un c&oacute;digo como este, la ordenaci&oacute;n no funcionar&aacute;, porque Java no sabe c&oacute;mo queremos ordenar los objetos de tipo <em>MiClase</em>. Para solucionarlo, hacemos que <em>MiClase</em> implemente la interfaz <em>Comparable</em>, y definimos un m&eacute;todo <em>compareTo (Object o)</em> que:</p>
+<ul>
+  <li>devolver&aacute; -1 si el objeto actual (this) es menor que el objeto o (seg&uacute;n el criterio que nosotros elijamos, por ejemplo, comparar por el campo <em>valor</em> alfab&eacute;ticamente).</li>
+  <li>devolver&aacute; 0 si el objeto actual es igual que el objeto o (seg&uacute;n el mismo criterio).</li>
+  <li>devolver&aacute; 1 si el objeto actual es mayor que el objeto o (seg&uacute;n el mismo criterio). </li>
+</ul>
+<p>En nuestra clase, quedar&iacute;a de la siguiente forma:  </p>
+<pre class="codigo">class MiClase <strong>implements Comparable</strong><br>{<br>   String valor;<br><br>   public MiClase(String v)<br>   {
+      valor = v;<br>   }<br><br><strong>   public int compareTo(Object o)<br>   </strong><strong>{<br>      MiClase mcAux = (MiClase)o;<br>      return this.valor.compareTo(mcAux.valor);<br>   }</strong><br>}<strong></strong></pre>
+<p>Notar que la clase <em>String</em> ya implementa la interfaz <em>Comparable</em>, y por tanto podemos comparar cadenas entre s&iacute; llamando a su <em>compareTo</em>. Por tanto, podemos aprovechar lo que devuelva esta llamada entre los dos campos <em>valor</em>, para devolver lo mismo en nuestra <em>MiClase</em>. A fin de cuentas, el orden que tendr&aacute;n estos objetos <em>MiClase</em> ser&aacute; el mismo que internamente tengan los objetos <em>valor.</em></p>
+<p>Una vez hayamos hecho estas modificaciones, el m&eacute;todo <em>sort</em> que utiliz&aacute;bamos antes funcionar&aacute; autom&aacute;ticamente, puesto que ya sabr&aacute; qu&eacute; criterio seguir para comparar y ordener objetos de tipo <em>MiClase</em>.</p>
+<hr>
+<h3>Ejercicio 5: Ordenar tus propios datos </h3>
+<p>La clase <i>datos.Persona</i> de la plantilla almacena los datos generales de una persona, como son su nombre, primer apellido, segundo apellido, direcci&oacute;n y tel&eacute;fono. Tiene un constructor que se encarga de asignar todos esos campos, y m&eacute;todos <em>get </em>y <em>set</em> para obtener sus valores o cambiarlos, respectivamente. </p>
+<p>Adem&aacute;s, al final tiene un m&eacute;todo <em>main</em> que crea varios objetos de tipo <em>Persona</em>, los coloca en un <em>ArrayList</em>, y luego intenta ordenarlos llamando al m&eacute;todo <em>Collections.sort</em>. Sin embargo, de momento el m&eacute;todo no funciona (probablemente salte una excepci&oacute;n, porque no sabe c&oacute;mo comparar los elementos de la lista). </p>
+<p>Haz las modificaciones necesarias en la clase para que el m&eacute;todo ordene correctamente. Queremos que se siga el siguiente criterio de ordenaci&oacute;n:</p>
+<ul>
+  <li>Ordenar de menor a mayor, seg&uacute;n el primer apellido</li>
+  <li>Si el primer apellido coincide, ordenar de menor a mayor seg&uacute;n el segundo apellido</li>
+  <li>Si tambi&eacute;n coincide, ordenar de menor a mayor por el nombre. Si tambi&eacute;n coinciden, se considerar&aacute; que los nombres son iguales en orden. </li>
+</ul>
+<p>Comprueba, una vez lo tengas hecho, que la secuencia que saca el programa tras ordenar es la correcta:</p>
+<pre class="codigo">Elemento 1: &quot;Bravo Murillo, Manuel, C/La Huerta - 22, 965123456&quot;<br>Elemento 2: &quot;Garc&iacute;a Hern&aacute;ndez, Marta, C/Aloma - 22, 634253456&quot;<br>Elemento 3: &quot;Garc&iacute;a Hern&aacute;ndez, Rafael, C/Aloma - 1, 601123546&quot;<br>Elemento 4: &quot;Garc&iacute;a Rodr&iacute;guez, Carolina, Avda. Doctor Rico - 25, 661228844&quot;<br>Elemento 5: &quot;Sim&oacute;n Mas, Eva, Camino del Prado - 30, 966124627&quot;
+</pre>
+<p>Imagina que queremos cambiar el criterio de ordenaci&oacute;n, y ahora queremos ordenar de mayor a menor por el nombre. &iquest;Qu&eacute; cambios tendr&iacute;amos que hacer? No los hagas, simplemente d&eacute;jalos indicados en la respuesta a esta pregunta. </p>
+<hr>
+<h3>Wrappers</h3>
+<p>Ya hemos visto con anterioridad que ciertos objetos de Java llevan asociado un <em>wrapper</em>, es decir, otra clase u objeto que los encapsula, y que permite trabajar con ellos en otros &aacute;mbitos. </p>
+<p>Aparte de los algoritmos comentados en el apartado anterior, la clase <strong>Collections</strong> aporta otros m&eacute;todos para cambiar ciertas propiedades de las listas. Estos m&eacute;todos nos los proporcionan los denominados <em>wrappers</em> de los distintos tipos de colecciones. Estos <em>wrappers</em> son objetos que 'envuelven' al objeto de nuestra colecci&oacute;n, pudiendo de esta forma hacer que la colecci&oacute;n est&eacute; sincronizada, o que la colecci&oacute;n pase a ser de solo lectura.</p>
+<p>Como dijimos anteriormente, todos los tipos de colecciones no est&aacute;n sincronizados, excepto el <b>Vector</b> que es un caso especial. Al no estar sincronizados, si m&uacute;ltiples hilos utilizan la colecci&oacute;n concurrentemente, podr&aacute;n estar ejecut&aacute;ndose simult&aacute;neamente varios m&eacute;todos de una misma colecci&oacute;n que realicen diferentes operaciones sobre ella. Esto puede provocar inconsistencias en los datos. A continuaci&oacute;n veremos un posible ejemplo de inconsistencia que se podr&iacute;a producir:</p>
+<ol>
+  <li>Tenemos un <strong>ArrayList</strong> de nombre <em>letras</em> formada por los siguiente elementos: [ &quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot; ]</li>
+  <li>Imaginemos que un hilo de baja prioridad desea eliminar el objeto &quot;C&quot;. Para ello har&aacute; una llamada al m&eacute;todo <em>letras.remove(&quot;C&quot;)</em>.</li>
+  <li>Dentro de este m&eacute;todo primero deber&aacute; determinar cu&aacute;l es el &iacute;ndice de dicho objeto dentro del array, para despu&eacute;s pasar a eliminarlo. </li>
+  <li>Se encuentra el objeto &quot;C&quot; en el &iacute;ndice 2 del array (recordemos que se empieza a numerar desde 0).</li>
+  <li>El problema viene en este momento. Imaginemos que justo en este momento se le asigna el procesador a un hilo de mayor prioridad, que se encarga de eliminar el elemento &quot;A&quot; del array, qued&aacute;ndose el array de la siguiente forma: [ &quot;B&quot;, &quot;C&quot;, &quot;D&quot; ]</li>
+  <li>Ahora el hilo de mayor prioridad es sacado del procesador y nuestro hilo sigue ejecut&aacute;ndose desde el punto en el que se qued&oacute;.</li>
+  <li>Ahora nuestro hilo lo &uacute;nico que tiene que hacer es eliminar el elemento del &iacute;ndice que hab&iacute;a determinado, que resulta ser &iexcl;el &iacute;ndice 2!. Ahora el &iacute;ndice 2 est&aacute; ocupado por el objeto &quot;D&quot;, y por lo tanto ser&aacute; dicho objeto el que se elimine.</li>
+</ol>
+<p>Podemos ver que haciendo una llamada a <em>letras.remove(&quot;C&quot;)</em>, al final se ha eliminado el objeto &quot;D&quot;, lo cual produce una inconsistencia de los datos con las operaciones realizadas, debido al acceso concurrente.</p>
+<p>Este problema lo evitaremos sincronizando la colecci&oacute;n. Cuando una colecci&oacute;n est&aacute; sincronizada, hasta que no termine de realizarse una operaci&oacute;n (inserciones, borrados, etc), no se podr&aacute; ejecutar otra, lo cual evitar&aacute; estos problemas.</p>
+<p>Podemos conseguir que las operaciones se ejecuten de forma sincronizada envolviendo nuestro objeto de la colecci&oacute;n con un <em>wrapper</em>, que ser&aacute; un objeto que utilice internamente nuestra colecci&oacute;n encarg&aacute;ndose de realizar la sincronizaci&oacute;n cuando llamemos a sus m&eacute;todos. Para obtener estos <em>wrappers</em> utilizaremos los siguientes m&eacute;todos est&aacute;ticos de <strong>Collections</strong>:</p>
+<pre class="codigo">Collection <strong>synchronizedCollection(Collection c)</strong>
+List <strong>synchronizedList(List l)</strong>
+Set <strong>synchronizedSet(Set s)</strong>
+Map <strong>synchronizedMap(Map m)</strong>
+SortedSet <strong>synchronizedSortedSet(SortedSet ss)</strong>
+SortedMap <strong>synchronizedSortedMap(SortedMap sm)</strong></pre>
+<p>Como vemos tenemos un m&eacute;todo para envolver cada tipo de datos. Nos devolver&aacute; un objeto con la misma interfaz, por lo que podremos trabajar con &eacute;l de la misma forma, sin embargo la implementaci&oacute;n interna estar&aacute; sincronizada.</p>
+<p>Podemos encontrar tambi&eacute;n una serie de <em>wrappers</em> para obtener versiones de s&oacute;lo lectura de nuestras colecciones. Se obtienen con los siguientes m&eacute;todos:</p>
+<pre class="codigo">Collection <strong>unmodifiableCollection(Collection c)</strong>
+List <strong>unmodifiableList(List l)</strong>
+Set <strong>unmodifiableSet(Set s)</strong>
+Map <strong>unmodifiableMap(Map m)</strong>
+SortedSet <strong>unmodifiableSortedSet(SortedSet ss)</strong>
+SortedMap <strong>unmodifiableSortedMap(SortedMap sm)</strong></pre>
+<hr/>
+<p><b>PARA ENTREGAR</b></p>
+<p>Guarda en la carpeta <strong>modulo3</strong> de tu CVS los siguientes elementos para esta sesi&oacute;n: </p>
+<ul>
+  <li>Todos los ficheros fuente (<b>sesion07.Ej1, sesion07.Ej2, sesion07.Ej3, sesion07.Ej4 </b>y <strong>datos.Persona</strong>), dentro de los paquetes correspondientes, cada uno con las modificaciones que se han ido solicitando.</li>
+  <li>Fichero de texto <b>respuestas.txt</b> de esta sesi&oacute;n contestando a todas las preguntas formuladas.</li>
+</ul>
+</body>
+</html>

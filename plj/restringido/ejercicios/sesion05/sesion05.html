@@ -1,0 +1,363 @@
+<html>
+<head>
+<title>Tema 2: Caracter&iacute;sticas b&aacute;sicas</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<!-- OneStat -->
+<!--ONESTAT SCRIPTCODE START-->
+<script type="text/javascript">
+<!--
+// Account ID : 221957
+// Website URL: http://www.jtech.ua.es
+// Copyright (C) 2002-2005 OneStat.com All Rights Reserved
+function OneStat_Pageview()
+{
+    var d=document;
+    var sid="221957";
+    var CONTENTSECTION="";
+    var CUSTOMDATA="";
+    var osp_URL=d.URL;
+    var osp_Title=d.title;
+    var t=new Date();
+    var p="http"+(d.URL.indexOf('https:')==0?'s':'')+"://stat.onestat.com/stat.aspx?tagver=2&sid="+sid;
+    p+="&url="+escape(osp_URL);
+    p+="&ti="+escape(osp_Title);
+    p+="&section="+escape(CONTENTSECTION);
+    p+="&custom="+escape(CUSTOMDATA);
+    p+="&rf="+escape(parent==self?window.document.referrer:top.document.referrer);
+    p+="&tz="+escape(t.getTimezoneOffset());
+    p+="&ch="+escape(t.getHours());
+    p+="&js=1";
+    p+="&ul="+escape(navigator.appName=="Netscape"?navigator.language:navigator.userLanguage);
+    if(osp_URL!=d.URL) p+="&ol="+escape(d.URL);
+    if(typeof(screen)=="object"){
+       p+="&sr="+screen.width+"x"+screen.height;p+="&cd="+screen.colorDepth;
+       p+="&jo="+(navigator.javaEnabled()?"Yes":"No");
+    }
+    d.write('<img id="ONESTAT_TAG" border="0" width="1" height="1" src="'+p+'" />');
+}
+
+OneStat_Pageview();
+//-->
+</script>
+<noscript>
+</noscript>
+<!--ONESTAT SCRIPTCODE END-->
+<h1>Sesi&oacute;n 5. Hilos</h1>
+<p>Un hilo es un flujo de control dentro de un programa que permite realizar una
+tarea separada. Es decir, creando varios hilos 
+  podremos realizar varias tareas simult&aacute;neamente. Cada hilo tendr&aacute; 
+  s&oacute;lo un contexto de ejecuci&oacute;n (contador de programa, pila de ejecuci&oacute;n). 
+  Es decir, a diferencia de los procesos UNIX, no tienen su propio espacio de 
+  memoria sino que acceden todos al mismo espacio de memoria com&uacute;n, por 
+  lo que ser&aacute; importante su sincronizaci&oacute;n cuando tengamos varios 
+  hilos accediendo a los mismos objetos.</p>
+<h2 class="subsection">Creaci&oacute;n de hilos</h2>
+<p>En Java los hilos est&aacute;n encapsulados en la clase <b>Thread</b>. Para 
+  crear un hilo tenemos dos posibilidades:</p>
+<ul>
+  <li>Heredar de <b> Thread</b> redefiniendo el m&eacute;todo <i>run()</i>.</li>
+  <li>Crear una clase que implemente la interfaz <b> Runnable</b> que nos obliga 
+    a definir el m&eacute;todo <i>run()</i>.</li>
+</ul>
+<p>En ambos casos debemos definir un m&eacute;todo <i> run()</i> que ser&aacute; 
+  el que contenga el c&oacute;digo del hilo. Desde dentro de este m&eacute;todo 
+  podremos llamar a cualquier otro m&eacute;todo de cualquier objeto, pero este 
+  m&eacute;todo <i> run()</i> ser&aacute; el m&eacute;todo que se invoque cuando 
+  iniciemos la ejecuci&oacute;n de un hilo. El hilo terminar&aacute; su ejecuci&oacute;n 
+  cuando termine de ejecutarse este m&eacute;todo <i>run()</i>.</p>
+<p>Para crear nuestro hilo mediante herencia haremos lo siguiente:</p>
+<pre class="codigo">public class EjemploHilo extends <strong>Thread</strong>
+{
+    public void <strong>run</strong>() {
+        // Código del hilo
+    }
+}</pre>
+<p>Una vez definida la clase de nuestro hilo deberemos instanciarlo y ejecutarlo 
+  de la siguiente forma:</p>
+<pre class="codigo"><strong>Thread</strong> t = new EjemploHilo();
+t.<strong>start</strong>();</pre>
+<p>Al llamar al método <i>start </i>del hilo, comenzará ejecutarse su método <i>run </i>(notar que no se llama a <em>run</em> directamente).
+Crear un hilo heredando de <b> Thread</b> tiene el problema de que al no haber 
+  herencia m&uacute;ltiple en Java, si heredamos de <b> Thread</b> no podremos 
+  heredar de ninguna otra clase, y por lo tanto un hilo no podr&iacute;a heredar 
+  de ninguna otra clase.</p>
+<p>Este problema desaparece si utilizamos la interfaz <b> Runnable</b> para crear 
+  el hilo, ya que una clase puede implementar varios interfaces. Definiremos la 
+  clase que contenga el hilo como se muestra a continuaci&oacute;n:</p>
+<pre class="codigo">public class EjemploHilo implements <strong>Runnable</strong>
+{
+    public void <strong>run</strong>() {
+        // Código del hilo
+    }
+}</pre>
+<p>Para instanciar y ejecutar un hilo de este tipo deberemos hacer lo siguiente:</p>
+<pre class="codigo"><strong>Thread</strong> t = new <strong>Thread</strong>(new EjemploHilo());
+t.<strong>start</strong>();</pre>
+<p>Esto es as&iacute; debido a que en este caso <b> EjemploHilo</b> no deriva 
+  de una clase <b>Thread</b>, por lo que no se puede considerar un hilo, lo &uacute;nico 
+  que estamos haciendo implementando la interfaz es asegurar que vamos a tener 
+  definido el m&eacute;todo <i>run()</i>. Con esto lo que haremos ser&aacute; 
+  proporcionar esta clase al constructor de la clase <b>Thread</b>, para que el 
+  objeto <b> Thread</b> que creemos llame al m&eacute;todo <i>run()</i> de la 
+  clase que hemos definido al iniciarse la ejecuci&oacute;n del hilo, ya que implementando 
+  la interfaz le aseguramos que esta funci&oacute;n existe.</p>
+<h2 class="subsection">Estado y propiedades de los hilos</h2>
+<p>Un hilo pasar&aacute; por varios estados durante su ciclo de vida. </p>
+<pre class="codigo"><strong>Thread</strong> t = new Thread(this);</pre>
+<p>Una vez se ha instanciado el objeto del hilo, diremos que est&aacute; en estado 
+  de <i> Nuevo hilo</i>.</p>
+<pre class="codigo">t.<strong>start</strong>();</pre>
+<p>Cuando invoquemos su m&eacute;todo <i>start()</i> el hilo pasar&aacute; a ser 
+  un hilo <i>vivo</i>, comenz&aacute;ndose a ejecutar su m&eacute;todo <i>run()</i>. 
+  Una vez haya salido de este m&eacute;todo pasar&aacute; a ser un hilo <i>muerto</i>.</p>
+<p>La &uacute;nica forma de parar un hilo es hacer que salga del m&eacute;todo 
+  <i>run()</i> de forma natural. Podremos conseguir esto haciendo que se cumpla
+una condici&oacute;n de salida de <i>run() </i>(lógicamente, la condición que
+se nos ocurra dependerá del tipo de programa que estemos haciendo). 
+  Las funciones para parar, pausar y reanudar hilos est&aacute;n desaprobadas 
+  en las versiones actuales de Java.</p>
+<p>Mientras el hilo est&eacute; <i>vivo</i>, podr&aacute; encontrarse en dos estados: 
+  <i> Ejecutable</i> y <i> No ejecutable</i>. El hilo pasar&aacute; de <i> Ejecutable</i> 
+  a <i> No ejecutable</i> en los siguientes casos:</p>
+<ul>
+  <li>Cuando se encuentre dormido por haberse llamado al m&eacute;todo <i>sleep()</i>, 
+    permanecer&aacute; <i> No ejecutable</i> hasta haber transcurrido el n&uacute;mero 
+    de milisegundos especificados.</li>
+  <li>Cuando se encuentre bloqueado en una llamada al m&eacute;todo <i>wait()</i> 
+    esperando que otro hilo lo desbloquee llamando a <i>notify()</i> o <i>notifyAll()</i>.
+    Veremos cómo utilizar estos métodos más adelante.</li>
+  <li>Cuando se encuentre bloqueado en una petici&oacute;n de E/S, hasta que se 
+    complete la operaci&oacute;n de E/S.</li>
+</ul>
+<div align="center"><img border="0" src="images/ciclohilo.gif" width="405" height="154"></div>
+<p>Lo &uacute;nico que podremos saber es si un hilo se encuentra vivo o no, llamando 
+  a su m&eacute;todo <i>isAlive()</i>.</p>
+<h3 class="subsection">Prioridades de los hilos</h3>
+<p>Adem&aacute;s, una propiedad importante de los hilos ser&aacute; su prioridad. 
+  Mientras el hilo se encuentre vivo, el <i> scheduler</i> de la m&aacute;quina 
+  virtual Java le asignar&aacute; o lo sacar&aacute; de la CPU, coordinando as&iacute; 
+  el uso de la CPU por parte de todos los hilos activos bas&aacute;ndose en su 
+  prioridad. Se puede forzar la salida de un hilo de la CPU llamando a su m&eacute;todo 
+  <i>yield()</i>. Tambi&eacute;n se sacar&aacute; un hilo de la CPU cuando un 
+  hilo de mayor prioridad se haga <i>Ejecutable</i>, o cuando el tiempo que se 
+  le haya asignado expire.</p>
+<p>Para cambiar la prioridad de un hilo se utiliza el m&eacute;todo <i>setPriority()</i>, 
+  al que deberemos proporcionar un valor de prioridad entre <i> MIN_PRIORITY</i> 
+  y <i>MAX_PRIORITY</i> (tenéis constantes de prioridad disponibles dentro de
+la clase <i>Thread</i>, consultad el API de Java para ver qué valores de
+constantes hay).</p>
+<h3 class="subsection">Hilo actual</h3>
+<p>En cualquier parte de nuestro código Java podemos llamar al método <i>currentThread</i>
+de la clase <i>Thread</i>, que nos devuelve un objeto hilo con el hilo que se
+encuentra actualmente ejecutando el código donde está introducido ese método.
+Por ejemplo, si tenemos un código como:</p>
+<pre class="codigo">public class EjemploHilo implements Runnable
+{
+    public EjemploHilo()
+    {
+        ...
+        int i = 0;
+        Thread t = Thread.currentThread();
+         t.sleep(1000);
+    }
+}</pre>
+<p>La llamada a <i>currentThread</i> dentro del constructor de la clase nos
+devolverá el hilo que corresponde con el programa principal (puesto que no
+hemos creado ningún otro hilo, y si lo creáramos, no ejecutaría nada que no
+estuviese dentro de un método <i>run.</i></p>
+<p>Sin embargo, en este otro caso:</p>
+<pre class="codigo">public class EjemploHilo implements Runnable
+{
+    public EjemploHilo()
+    {
+        Thread t1 = new Thread(this);
+        Thread t2 = new Thread(this);
+         t1.start();
+         t2.start();
+    }
+
+    public void run()
+    {
+        int i = 0;
+        Thread t = Thread.currentThread();
+        t.sleep(1000);
+    }
+}</pre>
+<p>Lo que hacemos es crear dos hilos auxiliares, y la llamada a <i>currentThread</i>
+se produce dentro del <i>run</i>, con lo que se aplica a los hilos auxiliares,
+que son los que ejecutan el <i>run: </i>primero devolverá un hilo auxiliar (el
+que primero entre, t1 o t2), y luego el otro (t2 o t1).</p>
+<h3 class="subsection">Dormir hilos</h3>
+<p>Como hemos visto en los ejemplos anteriores, una vez obtenemos el hilo que
+queremos, el método <i>sleep</i> nos sirve para dormirlo, durante los
+milisegundos que le pasemos como parámetro (en los casos anteriores, dormían
+durante 1 segundo). El tiempo que duerme el hilo, deja libre el procesador para
+que lo ocupen otros hilos. Es una forma de no sobrecargar mucho de trabajo a la
+CPU con muchos hilos intentando entrar sin descanso.</p>
+<hr>
+<h3>Ejercicio 1: Hilos y prioridades</h3>
+<p>Implementaremos ahora un ejercicio para practicar diferentes aspectos sobre hilos y multiprogramaci&oacute;n. Echa un vistazo a la clase <em>sesion05.</em><i>Ej2</i> que se proporciona en la plantilla de la sesi&oacute;n. Ver&aacute;s que tiene una subclase llamada <i>MiHilo </i>que es un hilo. Tiene un campo <i>nombre </i>que sirve para dar nombre al hilo, y un campo <i>contador</i>. Tambi&eacute;n hay un m&eacute;todo <i>run</i> que itera el contador del 1 al 1000; en cada iteraci&oacute;n hace un <i>System.gc()</i>, es decir, llama al recolector de basura de Java, que se encarga de liberar memoria no usada. Lo hacemos para consumir algo de tiempo en cada iteraci&oacute;n.<br>
+  <br>
+Desde la clase principal (<i>Ej2</i>), se crea un hilo de este tipo, y se ejecuta (en el constructor). Tambi&eacute;n en el constructor hacemos un bucle <b>do...while</b>, donde el programa principal va examinando qu&eacute; valor tiene el contador del hilo en cada momento, y luego duerme un tiempo hasta la pr&oacute;xima comprobaci&oacute;n, mientras el hilo siga vivo.</p>
+<ul>
+  <li>Compila y prueba el funcionamiento de la clase, comprobando que el hilo se lanza y ejecuta sus 1000 iteraciones.
+  </li>
+</ul>
+<blockquote>
+  <p>&iquest;Cu&aacute;ntos hilos o flujos de ejecuci&oacute;n hay en total? &iquest;Qu&eacute; hace cada uno? (AYUDA: en todo programa al menos hay UN flujo de ejecuci&oacute;n, que no es otro que el programa principal. Aparte, podemos tener los flujos secundarios (hilos) que queramos). &iquest;Qu&eacute; pasar&iacute;a si no estuviese el bucle <em>do...while</em> en el constructor del programa principal?</p>
+</blockquote>
+<ul>
+  <li>A&ntilde;ade y lanza dos hilos m&aacute;s de tipo <i>MiHilo </i>en la clase <i>Ej2. </i>Para ello puedes copiar y pegar el c&oacute;digo que crea y lanza el primer hilo, para hacer otros dos nuevo. Modifica tambi&eacute;n el bucle <b>do...while</b> para que muestre cu&aacute;nto vale el contador de cada hilo cada vez. </li>
+</ul>
+<blockquote>
+  <p>Ejecuta despu&eacute;s el programa varias veces (3 o 4), y comprueba el orden en el que terminan los hilos. &iquest;Existe mucha diferencia de tiempo entre la finalizaci&oacute;n de &eacute;stos? &iquest;Por qu&eacute;?</p>
+</blockquote>
+<ul>
+  <li>Vamos a modificar la prioridad de los hilos, para hacer que terminen en orden inverso al que se lanzan. Para ello utiliza el m&eacute;todo <em>setPriority </em>y da al hilo 3 la m&aacute;xima prioridad (MAX_PRIORITY), al hilo 2 una prioridad normal (NORM_PRIORITY), y al hilo 1 una prioridad m&iacute;nima (MIN_PRIORITY). Esto deber&aacute;s hacerlo despu&eacute;s de crear cada uno, justo antes de llamar a su m&eacute;todo <em>start</em>.</li>
+</ul>
+<blockquote>
+  <p> Observa si los hilos terminan en el orden establecido. &iquest;Existe esta vez m&aacute;s diferencia de tiempos en el orden de finalizaci&oacute;n?</p>
+</blockquote>
+<ul>
+  <li>Observa los campos locales de la clase <i>MiHilo</i>: la variable <i>contador</i> y el campo <i>nombre</i>. A juzgar por lo que has visto en la ejecuci&oacute;n de los hilos: &iquest;Podr&iacute;a modificar el hilo t2 el valor de estos campos para el hilo t3, es decir, comparten los diferentes hilos estos campos, o cada uno tiene los suyos propios? &iquest;Qu&eacute; pasar&iacute;a si los tres hilos intentasen modificar el campo <i>valor</i> de la clase principal <i>Ej2</i>, tambi&eacute;n tendr&iacute;an una copia cada uno o acceder&iacute;an los tres a la misma variable?</li>
+</ul>
+<ul>
+  <li>Crea una clase <strong>Ej2b</strong> similar a la anterior en el paquete <strong>sesion05</strong>, pero en la que no sea el programa principal quien active los 3 hilos, sino que cada uno de los 3, el empezar a funcionar, cree e inicie el hilo siguiente (hasta un total de 3 hilos). De esta forma, se ejecutar&aacute;n en paralelo, pero no ser&aacute; el programa principal quien los lance. Este s&oacute;lo lanzar&aacute; un hilo, que ser&aacute; el responsable de seguir la cadena.</li>
+</ul>
+<hr>
+<h2 class="section">Sincronizaci&oacute;n de hilos</h2>
+<p>Muchas veces los hilos deber&aacute;n trabajar de forma coordinada, por ejemplo para acceder a una misma variable, o a un mismo fichero, por lo 
+  que es necesario un mecanismo de sincronizaci&oacute;n entre ellos.</p>
+<p>Un primer mecanismo de comunicaci&oacute;n es una variable <strong>cerrojo</strong> incluida 
+  en todo objeto <b>Object</b>, que permitir&aacute; evitar que m&aacute;s de 
+  un hilo entre en una determinada secci&oacute;n cr&iacute;tica de c&oacute;digo para un objeto determinado. Los m&eacute;todos declarados 
+  como <strong><i> synchronized</i></strong> utilizan el cerrojo del objeto al que pertenecen 
+  evitando que m&aacute;s de un hilo entre en ellos al mismo tiempo.</p>
+<pre class="codigo">public <strong>synchronized</strong> void seccion_critica()
+{
+    // Código sección crítica
+}</pre>
+<p>Todos los métodos <i>synchronized</i> de un mismo objeto (no clase, sino
+objeto de esa clase), comparten el mismo cerrojo, y es distinto al cerrojo de
+otros objetos (de la misma clase, o de otras).</p>
+<p>Tambi&eacute;n podemos utilizar cualquier otro objeto para la sincronizaci&oacute;n 
+  dentro de nuestro m&eacute;todo de la siguiente forma:</p>
+<pre class="codigo"><strong>synchronized</strong> (objeto_con_cerrojo) 
+{
+    // Código sección crítica
+}</pre>
+<p>de esta forma sincronizaríamos el código que escribiésemos dentro, con el
+código <i>synchronized</i> del objeto <i>objeto_con_cerrojo</i>. </p>
+<p>Adem&aacute;s podemos hacer que un hilo quede bloqueado a la espera de que 
+  otro hilo lo desbloquee cuando suceda un determinado evento. Para bloquear un 
+  hilo usaremos la funci&oacute;n <strong><i>wait()</i></strong>, para lo cual el hilo que llama 
+  a esta funci&oacute;n debe estar en posesi&oacute;n del monitor, cosa que ocurre 
+  dentro de un m&eacute;todo <i>synchronized</i>, por lo que s&oacute;lo podremos 
+  bloquear a un proceso dentro de estos m&eacute;todos. Cuando un hilo queda bloqueado liberar&aacute; el cerrojo para que otro hilo pueda entrar en la secci&oacute;n cr&iacute;tica del objeto y desbloquearlo.</p>
+<p>Para desbloquear a los hilos que haya bloqueados se utilizar&aacute; <strong><i>notifyAll()</i></strong>, 
+  o bien <strong><i>notify()</i></strong> para desbloquear s&oacute;lo uno de ellos aleatoriamente. 
+  Para invocar estos m&eacute;todos ocurrir&aacute; lo mismo, el hilo deber&aacute; 
+  estar en posesi&oacute;n del monitor. Notar que con <em>notifyAll</em> se despertar&aacute;n todos, y &quot;luchar&aacute;n&quot; por ver qui&eacute;n entra primero en el cerrojo. Notar tambi&eacute;n que no existen m&eacute;todos para despertar un hilo concreto, sino que se despertar&aacute;n todos (<em>notifyAll</em>), o bien uno al azar (<em>notify</em>).</p>
+<p>Por &uacute;ltimo, puede ser necesario esperar a que un determinado hilo haya 
+  finalizado su tarea para continuar. Esto lo podremos hacer llamando al m&eacute;todo 
+  <strong><i>join()</i></strong> de dicho hilo, que nos bloquear&aacute; hasta que el hilo haya 
+  finalizado. Por ejemplo, si queremos esperar a que el hilo <em>t </em>termine para seguir con nuestro c&oacute;digo, haremos algo como:</p>
+<pre class="codigo">t.join();</pre>
+<hr>
+<h3>Ejercicio 2: Sincronización de hilos</h3>
+<p>En este ejercicio vamos a practicar con la sincronizaci&oacute;n entre m&uacute;ltiples hilos, resolviendo el problema de los productores y los consumidores. Vamos a definir 3 clases: el hilo <b> Productor</b>, el hilo <b>Consumidor</b>, y el objeto <b>Recipiente </b>donde el productor deposita el valor producido, y de donde el consumidor extrae los datos. </p>
+<p>Echa un vistazo a la clase <em>sesion05.</em><i>Ej3</i> que se proporciona en la plantilla de la sesi&oacute;n. Ver&aacute;s que tiene 3 subclases: una llamada <i>Productor</i>, que ser&aacute;n los hilos que se encarguen de producir valores, otra llamada <i>Consumidor</i>, que ser&aacute;n los hilos que se encargar&aacute;n de consumir los valores producidos por los primeros, y una tercera llamada <i>Recipiente</i>, donde los <i>Productores</i> depositar&aacute;n los valores producidos, y los <i>Consumidores</i> retirar&aacute;n dichos valores.</p>
+<ul>
+  <li>Los valores producidos no son m&aacute;s que n&uacute;meros enteros, que los productores generar&aacute;n y los consumidores leer&aacute;n.&nbsp;</li>
+  <li> Si miramos el c&oacute;digo de los hilos <i>Productores</i>, vemos (m&eacute;todo <i>run</i>) que los valores que producen van de 0 a 9, y entre cada producci&oacute;n duermen una cantidad aleatoria, entre 1 y 2 segundos.</li>
+  <li>En cuanto a los <i>Consumidores</i>, vemos que entre cada consumici&oacute;n tambi&eacute;n duermen una cantidad aleatoria entre 1 y 2 segundos, y luego consumen el valor.</li>
+  <li>Para producir y para consumir se utilizan los m&eacute;todos <i>produce</i> y <i>consume</i>, respectivamente, de la clase <i>Recipiente</i>.</li>
+</ul>
+<p>A continuaci&oacute;n sincronizaremos productores y consumidores para que funcionen adecuadamente. </p>
+<ul>
+  <li>Compila y prueba varias veces (3 o 4) el funcionamiento de la clase. &iquest;Funciona bien el programa? &iquest;Qu&eacute; anomal&iacute;a(s) detectas?</li>
+</ul>
+<ul>
+  <li>Como habr&aacute;s podido comprobar, el programa no funciona correctamente: hay iteraciones en las que el hilo <i>Consumidor</i> consume ANTES de que el <i>Productor</i> produzca el nuevo valor, o el <i>Productor</i> produce dos valores seguidos sin que el <i>Consumidor</i> los consuma.&nbsp;Es necesario sincronizarlos de forma que el <i>Consumidor </i>se espere a que el <i>Productor</i> produzca, y luego el <i>Productor</i> espere a que el <i>Consumidor</i> consuma, antes de generar otro nuevo valor. Es decir, el funcionamiento correcto deber&iacute;a ser que el consumidor consuma exactamente los mismos valores que el productor ha producido, sin saltarse ninguno ni repetirlos.  </li>
+</ul>
+<ul>
+    <li>A&ntilde;ade el c&oacute;digo necesario en los m&eacute;todos <i>produce </i>y <i>consume</i> para sincronizar el acceso a ellos. El comportamiento deber&iacute;a ser el siguiente:    
+      <ul>
+        <li>Si queremos producir y todav&iacute;a hay datos disponibles en el recipiente, esperaremos hasta que se saquen, si no produciremos y avisamos a posibles consumidores que est&eacute;n a la espera. </li>
+      </ul>
+      <blockquote>
+        <pre class="codigo">public void produce(int valor) 
+{
+<b>   /* Si hay datos disponibles esperar a que se consuman */
+</b>
+   ... // Comprueba aqu&iacute; si hay datos disponibles, y si los hay llama al m&eacute;todo para esperar
+<br>   <strong>/* Producir */</strong>
+   this.valor = valor;
+
+<b>   /* Ya hay datos disponibles */
+</b><b>   /* Notificar de la llegada de datos a consumidores a la espera */
+</b>   ... // Haz aqu&iacute; las modificaciones necesarias para indicar que ya hay datos disponibles nuevamente,<br>   // y para notificar a los dem&aacute;s hilos que lo necesiten de que ya pueden pasar a consumir<br>
+}</pre>
+        <p>&iquest;Qu&eacute; papel puede tener el m&eacute;todo <i>wait</i> en este c&oacute;digo?<br>
+&iquest;Para qu&eacute; se utiliza el flag <i>disponible</i>?<br>
+&iquest;Qu&eacute; efecto puede tener la llamada a <i>notifyAll</i>?&iquest;Qu&eacute; pasar&iacute;a si no se llamase a este m&eacute;todo?</p>
+      </blockquote>
+      <ul>
+        <li>Si queremos consumir y no hay datos disponibles en el recipiente, esperaremos hasta que se produzcan, si no consumimos el valor disponible y avisamos a posibles productores que est&eacute;n a la espera.
+          <pre class="codigo">public int consume()
+{
+<b>   /* Si no hay datos disponibles esperar a que se produzcan */
+</b>
+   ... // Comprueba aqu&iacute; si hay datos disponibles, y si no llama al m&eacute;todo para esperar<br><br><b>   /* Ya no hay datos disponibles */
+</b><b>   /* Notificar de que el recipiente esta libre a productores en espera */
+</b>
+   ... // Haz aqu&iacute; las modificaciones necesarias para indicar que ya NO hay datos disponibles,<br>   // y para notificar a los dem&aacute;s hilos que lo necesiten de que ya pueden pasar a producir m&aacute;s<br>
+
+   return valor;
+}</pre>
+        </li>
+      </ul>
+    </li>
+    <li>Compilad y ejecutad el programa. &iquest;Qu&eacute; excepci&oacute;n o error da? &iquest;A qu&eacute; puede deberse?</li>
+</ul>
+<ul>
+  <li>Observad que  no podemos llamar a los m&eacute;todos <i>wait</i> o <i>notify/notifyAll</i> si no tenemos la variable cerrojo. Dicha variable se consigue dentro de bloques de c&oacute;digo <i>synchronized</i>, de forma que el primer hilo que entra es quien tiene el cerrojo, y hasta que no salga o se ponga a esperar, no lo liberar&aacute;. A&ntilde;ade la marca <em>synchronized </em>a los m&eacute;todos <em>produce </em>y <em>consume</em> para solucionarlo. </li>
+</ul>
+<ul>
+  <li>Compilar y comprobar que el programa funciona correctamente. Si lo ejecut&aacute;is varias veces, podr&iacute;a darse el caso de que a&uacute;n salgan mensajes de consumici&oacute;n ANTES de que se muestren los de producci&oacute;n respectivos, por ejemplo: </li>
+</ul>
+<blockquote>
+  <pre class="codigo">Produce 0
+Consume 0
+<b>Consume 1
+Produce 1
+</b>Produce 2
+Consume 2
+...</pre>
+  <p>... pero a&uacute;n as&iacute; el programa es correcto. &iquest;A qu&eacute; se debe entonces que puedan salir los mensajes en orden inverso? (AYUDA: observad el m&eacute;todo <i>System.out.println(...)</i> que hay al final de los m&eacute;todos <i>run</i> de <i>Productor</i> y <i>Consumidor</i>, que es el que muestra estos mensajes)</p>
+</blockquote>
+<hr>
+<h2 class="section">Grupos de hilos</h2>
+<p>Los grupos de hilos nos permitir&aacute;n crear una serie de hilos y manejarlos 
+  todos a la vez como un &uacute;nico objeto. Si al crear un hilo no se especifica 
+  ning&uacute;n grupo de hilos, el hilo creado pertenecer&aacute; al grupo de 
+  hilos por defecto.</p>
+<p>Podemos crearnos nuestro propio grupo de hilos instanciando un objeto de la 
+  clase <b>ThreadGroup</b>. Para crear hilos dentro de este grupo deberemos pasar 
+  este grupo al constructor de los hilos que creemos.</p>
+<pre class="codigo"><strong>ThreadGroup</strong> grupo = new <strong>ThreadGroup</strong>(&quot;Grupo de hilos&quot;);
+<strong>Thread</strong> t = new <strong>Thread</strong>(grupo,new EjemploHilo());</pre>
+<hr>
+<p><b>PARA ENTREGAR</b></p>
+<p>Guarda en la carpeta <strong>modulo2</strong> de tu CVS los siguientes elementos para esta sesi&oacute;n: </p>
+<ul>
+  <li>Todos los ficheros fuente (<b>Ej2</b> y <strong>Ej3</strong>), dentro del paquete <strong>sesion05</strong>, cada uno con las modificaciones que se han ido solicitando.</li>
+  <li>Fichero de texto <b>respuestas.txt</b> de esta sesi&oacute;n contestando a todas las preguntas formuladas.</li>
+</ul>
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,419 @@
+<html>
+<head>
+<title>Tema 2: Caracter&iacute;sticas b&aacute;sicas</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<!-- OneStat -->
+<!--ONESTAT SCRIPTCODE START-->
+<script type="text/javascript">
+<!--
+// Account ID : 221957
+// Website URL: http://www.jtech.ua.es
+// Copyright (C) 2002-2005 OneStat.com All Rights Reserved
+function OneStat_Pageview()
+{
+    var d=document;
+    var sid="221957";
+    var CONTENTSECTION="";
+    var CUSTOMDATA="";
+    var osp_URL=d.URL;
+    var osp_Title=d.title;
+    var t=new Date();
+    var p="http"+(d.URL.indexOf('https:')==0?'s':'')+"://stat.onestat.com/stat.aspx?tagver=2&sid="+sid;
+    p+="&url="+escape(osp_URL);
+    p+="&ti="+escape(osp_Title);
+    p+="&section="+escape(CONTENTSECTION);
+    p+="&custom="+escape(CUSTOMDATA);
+    p+="&rf="+escape(parent==self?window.document.referrer:top.document.referrer);
+    p+="&tz="+escape(t.getTimezoneOffset());
+    p+="&ch="+escape(t.getHours());
+    p+="&js=1";
+    p+="&ul="+escape(navigator.appName=="Netscape"?navigator.language:navigator.userLanguage);
+    if(osp_URL!=d.URL) p+="&ol="+escape(d.URL);
+    if(typeof(screen)=="object"){
+       p+="&sr="+screen.width+"x"+screen.height;p+="&cd="+screen.colorDepth;
+       p+="&jo="+(navigator.javaEnabled()?"Yes":"No");
+    }
+    d.write('<img id="ONESTAT_TAG" border="0" width="1" height="1" src="'+p+'" />');
+}
+
+OneStat_Pageview();
+//-->
+</script>
+<noscript>
+<a href="http://www.onestat.com"><img border="0" width="1" height="1" src="http://stat.onestat.com/stat.aspx?tagver=2&amp;sid=221957&amp;js=No&amp;" ALT="OneStat Web Analytics"></a>
+</noscript>
+<!--ONESTAT SCRIPTCODE END-->
+<h1>Sesi&oacute;n 6. Utilidades </h1>
+<p>La plataforma Java nos proporciona un amplio conjunto de clases dentro del que podemos encontrar tipos de datos que nos resultar&aacute;n muy &uacute;tiles para realizar la programaci&oacute;n de aplicaciones en Java. Estos tipos de datos nos ayudar&aacute;n a generar c&oacute;digo m&aacute;s limpio de una forma sencilla. </p>
+<h2>Wrappers</h2>
+<p>Un <em>wrapper</em> es un objeto que se utiliza para envolver a otro. De esta forma, podemos &quot;encapsular&quot; un objeto dentro de otro, y acceder al objeto encapsulado a trav&eacute;s del objeto que lo encapsula. Veremos durante el curso que en Java se utilizan Wrappers en diferentes &aacute;mbitos.</p>
+<h3>Wrappers de tipos b&aacute;sicos</h3>
+<p>Hemos visto que en Java cualquier tipo de datos es un objeto, excepto los tipos de datos b&aacute;sicos: <em>boolean, int, long, float, double, byte, short, char</em>. </p>
+<p>Si queremos agrupar diferentes elementos de estos tipos en un solo objeto, la &uacute;nica forma aparente de hacerlo es crear un array de ese tipo (por ejemplo, un array de <em>int[ ]</em>). Pero tenemos el inconveniente de que los arrays deben tener un tama&ntilde;o est&aacute;tico. &iquest;Qu&eacute; pasa si queremos tener una lista o colecci&oacute;n de estos elementos, que vaya variando su tama&ntilde;o? Cuando trabajamos con colecciones o listas de datos los elementos que contienen &eacute;stas son siempre objetos, por lo que en un principio no podr&iacute;amos insertar elementos de estos tipos b&aacute;sicos. Para hacer esto posible tenemos una serie de objetos que se encargar&aacute;n de envolver a estos tipos b&aacute;sicos, permiti&eacute;ndonos tratarlos como objetos y por lo tanto insertarlos como elementos de listas. Estos objetos son los llamados wrappers, y las clases en las que se definen tienen nombre similares al del tipo b&aacute;sico que encapsulan, con la diferencia de que comienzan con may&uacute;scula: <strong>Boolean, Integer, Long, Float, Double, Byte, Short, Character</strong>.</p>
+<p>Estas clases, adem&aacute;s de servirnos para encapsular estos datos b&aacute;sicos en forma de objetos, nos proporcionan una serie de m&eacute;todos e informaci&oacute;n &uacute;tiles para trabajar con estos datos. Nos proporcionar&aacute;n m&eacute;todos por ejemplo para convertir cadenas a datos num&eacute;ricos de distintos tipos y viceversa, as&iacute; como informaci&oacute;n acerca del valor m&iacute;nimo y m&aacute;ximo que se puede representar con cada tipo num&eacute;rico.</p>
+<p>Ejemplos:</p>
+<pre class="codigo">String unNumero = &quot;123&quot;;<br>String otroNumero = &quot;145.5&quot;;<br>int elNumero = <strong>Integer.parseInt</strong>(unNumero);<br>double elOtroNumero = <strong>Double.parseDouble</strong>(otroNumero);</pre>
+<p>esto ser&iacute;a &uacute;til por ejemplo para tomar valores num&eacute;ricos de par&aacute;metros del programa, y pasarlos a un valor num&eacute;rico verdadero para poder operar con &eacute;l.</p>
+<p>Tambi&eacute;n podemos encapsular un valor simple dentro de su wrapper, y luego a&ntilde;adirlo a una lista (veremos las listas y colecciones m&aacute;s adelante):</p>
+<pre class="codigo">int miNumero = 20;<br>Vector v = new Vector();<br><br>v.add(miNumero);                                          <strong>// No est&aacute; permitido!! No podemos poner tipos simples en Vectores<br></strong>Integer intobj = new Integer(miNumero);
+v.add(intobj);                                                 <strong>// Esto s&iacute; est&aacute; permitido
+
+// &iquest;C&oacute;mo recuperamos luego el entero?
+</strong>Integer elemento = (Integer)(v.elementAt(0));      <strong>// Sacamos el wrapper del vector
+</strong>int miValor = elemento.intValue();                     <strong>// Y luego sacamos el valor del wrapper</strong></pre>
+<p>esto lo utilizaremos cuando veamos las colecciones, para a&ntilde;adir a ellas tipos simples y luego recuperarlos.</p>
+<hr>
+<h3>Ejercicio 1: Trabajando con wrappers</h3>
+<p>Utiliza la clase <i>sesion06.Ej4</i> que se proporciona en la plantilla para construir un programa que tome como par&aacute;metro (en el <em>main</em>) dos valores reales (<em>doubles</em>), y Muestre por pantalla el producto del primero y el segundo.</p>
+<p>Captura la(s) excepcion(es) que consideres adecuadas para asegurarte de que el dato que se pasa como par&aacute;metro es num&eacute;rico. </p>
+<p>AYUDAS: utiliza la clase <strong>Double</strong>, y mira entre sus m&eacute;todos cu&aacute;les pueden servirte para convertir los par&aacute;metros a n&uacute;meros reales. Echa un vistazo a la clase Ej1 que hiciste en la sesi&oacute;n de excepciones. Puede que te d&eacute; alguna pista de c&oacute;mo hacer este otro ejercicio. </p>
+<hr>
+<h2>La clase Object</h2>
+<p>Esta es la clase base de todas las clases en Java, toda clase hereda en &uacute;ltima instancia de la clase <strong>Object</strong>, por lo que los m&eacute;todos que ofrece estar&aacute;n disponibles en cualquier objeto Java, sea de la clase que sea.</p>
+<p>En Java es importante distinguir claramente entre lo que es una variable, y lo que es un objeto. Las variables simplemente son referencias a objetos, mientras que los objetos son las entidades instanciadas en memoria que podr&aacute;n ser manipulados mediante las referencias que tenemos a ellos (mediante variable que apunten a ellos) dentro de nuestro programa. Cuando hacemos lo siguiente:</p>
+<pre class="codigo">new MiClase()</pre>
+<p>Se est&aacute; instanciando en memoria un nuevo objeto de clase MiClase y nos devuelve una referencia a dicho objeto. Nosotros deberemos guardarnos dicha referencia en alguna variable con el fin de poder acceder al objeto creado desde nuestro programa:</p>
+<pre class="codigo">MiClase mc = new MiClase();</pre>
+<p>Es importante declarar la referencia del tipo adecuado (en este caso tipo MiClase) para manipular el objeto, ya que el tipo de la referencia ser&aacute; el que indicar&aacute; al compilador las operaciones que podremos realizar con dicho objeto. El tipo de esta referencia podr&aacute; ser tanto el mismo tipo del objeto al que vayamos a apuntar, o bien el de cualquier clase de la que herede o interfaz que implemente nuestro objeto. Por ejemplo, si MiClase se define de la siguiente forma:</p>
+<pre class="codigo">public class MiClase extends Thread implements List {
+	...
+}</pre>
+<p>Podremos hacer referencia a ella de diferentes formas:</p>
+<pre class="codigo">MiClase mc = new MiClase();
+Thread t = new MiClase();
+List l = new MiClase();
+Object o = new MiClase();</pre>
+<p>Esto es as&iacute; ya que al heredar tanto de <strong>Thread</strong> como de <strong>Object</strong>, sabemos que el objeto tendr&aacute; todo lo que tienen estas clases m&aacute;s lo que a&ntilde;ada <strong>MiClase</strong>, por lo que podr&aacute; comportarse como cualquiera de las clases anteriores. Lo mismo ocurre al implementar una interfaz, al forzar a que se implementen sus m&eacute;todos podremos hacer referencia al objeto mediante la interfaz ya que sabemos que va a contener todos esos m&eacute;todos. Siempre vamos a poder hacer esta asignaci&oacute;n 'ascendente' a clases o interfaces de las que deriva nuestro objeto.</p>
+<p>Si hacemos referencia a un objeto <strong>MiClase</strong> mediante una referencia <strong>Object</strong> por ejemplo, s&oacute;lo podremos acceder a los m&eacute;todos de <strong>Object</strong>, aunque el objeto contenga m&eacute;todos adicionales definidos en <strong>MiClase</strong>. Si conocemos que nuestro objeto es de tipo <strong>MiClase</strong>, y queremos poder utilizarlo como tal, podremos hacer una asignaci&oacute;n 'descendente' aplicando una conversi&oacute;n cast al tipo concreto de objeto:</p>
+<pre class="codigo">Object o = new MiClase();
+...
+MiClase mc = (MiClase) o;</pre>
+<p>Si resultase que nuestro objeto no es de la clase a la que hacemos cast, ni hereda de ella ni la implementa, esta llamada resultar&aacute; en un <strong>ClassCastException</strong> indicando que no se puede hacer la conversi&oacute;n del tipo: no podemos hacer referencia a dicho objeto mediante esa interfaz debido a que el objeto no la cumple, y por lo tanto podr&aacute;n no estar disponibles los m&eacute;todos que se definen en ella.</p>
+<p>Una vez hemos visto la diferencia entre las variables (referencias) y objetos (entidades) vamos a ver como se har&aacute; la asignaci&oacute;n y comparaci&oacute;n de objetos. Si hiciesemos lo siguiente:</p>
+<pre class="codigo">MiClase mc1 = new MiClase();
+MiClase mc2 = mc1;</pre>
+<p>Puesto que hemos dicho que las variables simplemente son referencias a objetos, la asignaci&oacute;n estar&aacute; copiando una referencia, no el objeto. Es decir, tanto la variable <em>mc1 </em>como <em>mc2 </em>apuntar&aacute;n a un mismo objeto.</p>
+<p>Si lo que queremos es copiar un objeto, teniendo dos entidades independientes, deberemos invocar el m&eacute;todo <strong>clone</strong> del objeto a copiar:</p>
+<pre class="codigo">MiClase mc2 = <strong>(MiClase)</strong>mc1.<strong>clone()</strong>;</pre>
+<p>El m&eacute;todo <strong>clone</strong> es un m&eacute;todo de la clase <strong>Object </strong>que estar&aacute; disponible para cualquier objeto Java, y nos devuelve un <strong>Object</strong> gen&eacute;rico, ya que al ser un m&eacute;todo que puede servir para cualquier objeto nos debe devolver la copia de este tipo. De &eacute;l tendremos que hacer una conversi&oacute;n cast a la clase de la que se trate como hemos visto en el ejemplo. </p>
+<p>Por otro lado, para la comparaci&oacute;n, si hacemos lo siguiente:</p>
+<pre class="codigo">mc1 == mc2</pre>
+<p>Estaremos comparando referencias, por lo que estaremos viendo si las dos referencias apuntan a un mismo objeto, y no si los objetos a los que apuntan son iguales. Para ver si los objetos son iguales, aunque sean entidades distintas, tenemos:</p>
+<pre class="codigo">mc1.<strong>equals</strong>(mc2)</pre>
+<p>Este m&eacute;todo tambi&eacute;n es propio de la clase <strong>Object</strong>, y ser&aacute; el que se utilice para comparar internamente los objetos.</p>
+<p>Tanto <strong>clone</strong> como <strong>equals</strong>, deber&aacute;n ser redefinidos en nuestras clases para adaptarse a &eacute;stas. Deberemos especificar dentro de ellos como se copia nuestro objeto y como se compara si son iguales:</p>
+<pre class="codigo">public class Punto2D {
+
+	public int x, y;	
+
+
+	...
+
+
+	public boolean <strong>equals</strong>(Object o) {
+		Punto2D p = (Punto2D)o;
+		// Compara objeto this con objeto p
+		return (x == p.x &amp;&amp; y == p.y);
+	}
+
+	public Object <strong>clone</strong>() {
+		Punto2D p = new Punto2D();
+		// Construye nuevo objeto p 
+		// copiando los atributos de this
+		p.x = x;
+		p.y = y;
+		return p;
+	}</pre>
+<p>Un &uacute;ltimo m&eacute;todo interesante de la clase <b>Object</b> es <b>toString</b>. Este m&eacute;todo nos devuelve una cadena (<b>String</b>) que representa dicho objeto. Por defecto nos dar&aacute; un identificador del objeto, pero nosotros podemos sobrescribirla en nuestras propias clases para que genere la cadena que queramos. De esta manera podremos imprimir el objeto en forma de cadena de texto, mostrandose los datos con el formato que nosotros les hayamos dado en<b> toString</b>. Por ejemplo, si tenemos una clase <b>Punto2D</b>, ser&iacute;a buena idea hacer que su conversi&oacute;n a cadena muestre las coordenadas <i>(x,y)</i> del punto:</p>
+<pre class="codigo">public class Punto2D {
+
+	public int x,y;
+
+
+	...
+
+
+	public String <b>toString</b>() {
+		String s = &quot;(&quot; + x + &quot;,&quot; + y + &quot;)&quot;;
+		return s;
+	}
+}</pre>
+<p>La cadena que devuelve este m&eacute;todo puede utilizarse despu&eacute;s en la salida que queramos: sacarla por pantalla (con <em>System.out.println</em>), volcarla a un cuadro de texto... etc. </p>
+<hr>
+<h3>Ejercicio 2: Aprovechando los elementos de Object </h3>
+<p>Echa un vistazo a la clase <i>sesion06.Ej5</i> de la plantilla. Ver&aacute;s que hay una clase interna llamada <strong>MiObject </strong>que contiene un valor entero y una cadena. Tiene un constructor para poder asignar valor a cada campo. Despu&eacute;s, desde la clase principal <em>Ej5</em> se crean varios objetos de este tipo, cada uno con un valor entero y una cadena. Despu&eacute;s se utiliza el m&eacute;todo <em>equals</em> para compararlos entre s&iacute;, e indicar si son iguales o no. Finalmente, se imprime por pantalla cada uno de los objetos creados.</p>
+<p>Asumismos que dos objetos de tipo <em>MiObject</em> son iguales si sus campos enteros son iguales, y si sus cadenas tambi&eacute;n son iguales. Teniendo en cuenta todo esto:</p>
+<ul>
+  <li>Ejecuta el programa. &iquest;Funcionan bien las comparaciones? &iquest;Qu&eacute; resultados obtienes con ellas?</li>
+  <li> &iquest;Qu&eacute; texto aparece cuando imprimes los objetos m1, m2 y m3? &iquest;Te resultan entendibles? </li>
+</ul>
+<p>Probablemente habr&aacute;s descubierto que las comparaciones no funcionan del todo bien: m1 y m2 son aparentemente iguales, y sin embargo dice que son diferentes. Tambi&eacute;n habr&aacute;s visto que a la hora de imprimir el objeto saca una ristra de caracteres que no se entienden. Vamos a corregir todo esto por separado.</p>
+<ul>
+  <li>Para poder comparar bien los objetos <em>MiObject</em> entre s&iacute; necesitamos definir en esta clase su propio m&eacute;todo <em>equals</em>, que redefina el que viene heredado de <em>Object</em>. As&iacute; que coloca un m&eacute;todo <em>equals</em> en esta clase:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">public boolean equals(Object o)<br>{<br>   ...<br>}</pre>
+  <p>y rell&eacute;nalo de forma adecuada para que devuelva <em>true</em> si el objeto <em>o</em> es igual al actual (<em>this</em>), es decir, si tiene su campo entero y su campo cadena igual al actual.</p>
+  <p>AYUDA: observa que tendr&aacute;s que convertir el objeto <em>o</em> a tipo <em>MiObject</em> para poder comparar. El m&eacute;todo <em>equals</em> exige que el objeto que se le pasa como par&aacute;metro sea SIEMPRE de tipo <em>Object</em>, para poder hacer bien la herencia y sobreescritura del m&eacute;todo <em>equals </em>original. Despu&eacute;s, en el c&oacute;digo, deberemos convertir este objeto al tipo concreto con que trabajemos:</p>
+  <pre class="codigo">MiObject mo = (MiObject) o;</pre>
+</blockquote>
+<ul>
+  <li>Para poder imprimir algo entendible al indicar que se imprima el objeto, debemos redefinir su m&eacute;todo <em>toString</em>. A&ntilde;ade un m&eacute;todo <em>toString</em> al c&oacute;digo de <em>MiObject</em>: </li>
+</ul>
+<blockquote>
+  <pre class="codigo">public String toString()<br>{<br>   ...<br>}</pre>
+  <p>y haz que devuelva una cadena conteniendo el n&uacute;mero entero, una coma, y la cadena del objeto <em>MiObject</em>.</p>
+</blockquote>
+<ul>
+  <li>Ejecuta de nuevo el programa, y comprueba que funciona correctamente. </li>
+</ul>
+<hr>
+<h2>La clase System</h2>
+<p>Esta clase nos ofrece una serie de m&eacute;todos y campos &uacute;tiles del sistema. Esta clase no se debe instanciar, todos estos m&eacute;todos y campos son est&aacute;ticos.</p>
+<p>Podemos encontrar los objetos que encapsulan la entrada, salida y salida de error est&aacute;ndar, as&iacute; como m&eacute;todos para redireccionarlas, que veremos con m&aacute;s detalle en el tema de entrada/salida.</p>
+<p>Otros m&eacute;todos &uacute;tiles que encontramos son:</p>
+<pre class="codigo">void <strong>exit(int estado)</strong></pre>
+<p>Finaliza la ejecuci&oacute;n de la aplicaci&oacute;n, devolviendo un c&oacute;digo de estado. Normalmente el c&oacute;digo 0 significa que ha salido de forma normal, mientras que con otros c&oacute;digos indicaremos que se ha producido alg&uacute;n error. </p>
+<pre class="codigo">void <strong>gc()</strong></pre>
+<p>Fuerza una llamada al colector de basura para limpiar la memoria. Esta es una operaci&oacute;n costosa. Normalmente no lo llamaremos explicitamente, sino que dejaremos que Java lo invoque cuando sea necesario.</p>
+<pre class="codigo">long <strong>currentTimeMillis()</strong></pre>
+<p>Nos devuelve el tiempo medido en el n&uacute;mero de milisegundos transcurridos desde el 1 de Enero de 1970 a las 0:00.</p>
+<pre class="codigo">void <strong>arraycopy(Object fuente, int pos_fuente, 
+				Object destino, int pos_dest, int n)</strong></pre>
+<p>Copia <em>n</em> elementos del array <em>fuente</em>, desde la posici&oacute;n <em>pos_fuente</em>, al array <em>destino</em> a partir de la posici&oacute;n <em>pos_dest</em>.</p>
+<pre class="codigo">String <strong>getProperty(String propiedad)</strong></pre>
+<p>El sistema tiene una serie de propiedades, identificadas por un nombre. A continuaci&oacute;n mostramos una lista con diferentes nombres de propiedades del sistema, y qu&eacute; significan:</p>
+<table width="91%" border="1">
+  <tr>
+    <td><strong>Clave</strong></td>
+    <td><strong>Contenido</strong></td>
+  </tr>
+  <tr>
+    <td><pre>file.separator</pre></td>
+    <td>Separador entre directorios en la ruta de los ficheros. Por ejemplo &quot;/&quot; en UNIX.</td>
+  </tr>
+  <tr>
+    <td><pre>java.class.path</pre></td>
+    <td>Classpath de Java</td>
+  </tr>
+  <tr>
+    <td><pre>java.class.version</pre></td>
+    <td>Versi&oacute;n de las clases de Java</td>
+  </tr>
+  <tr>
+    <td><pre>java.home</pre></td>
+    <td>Directorio donde est&aacute; instalado Java</td>
+  </tr>
+  <tr>
+    <td><pre>java.vendor</pre></td>
+    <td>Empresa desarrolladora de la implementaci&oacute;n de la plataforma Java instalada</td>
+  </tr>
+  <tr>
+    <td><pre>java.vendor.url</pre></td>
+    <td>URL de la empresa</td>
+  </tr>
+  <tr>
+    <td><pre>java.version</pre></td>
+    <td>Versi&oacute;n de Java</td>
+  </tr>
+  <tr>
+    <td><pre>line.separator</pre></td>
+    <td>Separador de fin de l&iacute;neas utilizado</td>
+  </tr>
+  <tr>
+    <td><pre>os.arch</pre></td>
+    <td>Arquitectura del sistema operativo</td>
+  </tr>
+  <tr>
+    <td><pre>os.name</pre></td>
+    <td>Nombre del sistema operativo</td>
+  </tr>
+  <tr>
+    <td><pre>os.version</pre></td>
+    <td>Versi&oacute;n del sistema operativo</td>
+  </tr>
+  <tr>
+    <td><pre>path.separator</pre></td>
+    <td>Separador entre los distintos elementos de una variable de entorno tipo PATH. Por ejemplo &quot;:&quot;</td>
+  </tr>
+  <tr>
+    <td><pre>user.dir</pre></td>
+    <td>Directorio actual</td>
+  </tr>
+  <tr>
+    <td><pre>user.home</pre></td>
+    <td>Directorio de inicio del usuario actual</td>
+  </tr>
+  <tr>
+    <td><pre>user.name</pre></td>
+    <td>Nombre de la cuenta del usuario actual</td>
+  </tr>
+</table>
+<p>Por ejemplo, si hacemos:</p>
+<pre class="codigo">String barra = <strong>System.getProperty(&quot;file.separator&quot;);</strong></pre>
+<p>estaremos obteniendo el s&iacute;mbolo con el que el sistema operativo separa los nombres de carpetas, subcarpetas y ficheros (ser&aacute; &quot;/&quot; en Linux y &quot;\&quot; en Windows).</p>
+<p>Otro ejemplo:</p>
+<pre class="codigo">System.out.println(<strong>System.getProperty(&quot;line.separator&quot;)</strong>)<strong>;</strong></pre>
+<p>en este caso, estamos sacando por pantalla el salto de l&iacute;nea propio del sistema operativo. Esto puede sernos &uacute;til si, como veremos m&aacute;s adelante, imprimimos este s&iacute;mbolo en un fichero, para as&iacute; hacer los saltos de l&iacute;nea de acuerdo con el sistema operativo en el que estemos. Si abr&iacute;s un fichero de texto Windows en Linux, ver&eacute;is que los finales de l&iacute;nea contienen caracteres extra&ntilde;os (una M may&uacute;scula con con otro color). Esto es porque la secuencia de caracteres que emplea Windows para indicar fin de l&iacute;nea es diferente a la empleada en Linux, y los caracteres que no reconoce los muestra. </p>
+<p>Podemos obtener todas las propiedades del sistema en un objeto <em>Properties</em>:</p>
+<pre class="codigo">Properties <strong>getProperties()</strong></pre>
+<p>Este objeto, que veremos al hablar de entrada/salida, contiene una lista de elementos, en este caso las propiedades del sistema, que podemos f&aacute;cilmente guardar y leer. En el tema de entrada/salida se explicar&aacute; c&oacute;mo trabajar con este tipo de datos. </p>
+<h2>La clase Runtime</h2>
+<p>Toda aplicaci&oacute;n Java tiene una instancia de la clase <strong>Runtime</strong> que se encargar&aacute; de hacer de interfaz con el entorno en el que se est&aacute; ejecutando. Para obtener este objeto debemos utilizar el siguiente m&eacute;todo est&aacute;tico:</p>
+<pre class="codigo">Runtime rt = <strong>Runtime.getRuntime()</strong>;</pre>
+<p>Una de las operaciones que podremos realizar con este objeto, ser&aacute; ejecutar comandos como si nos encontr&aacute;semos en la l&iacute;nea de comandos del sistema operativo. Para ello utilizaremos el siguiente m&eacute;todo:</p>
+<pre class="codigo">rt.<strong>exec</strong>(comando);</pre>
+<p>donde <em>comando </em>puede ser una cadena con el comando entero (incluyendo par&aacute;metros) que queremos ejecutar, o un array donde se separen el comando y cada par&aacute;metro, u otras posibilidades (consultad el API para ver todas las variantes). De esta forma podremos invocar programas externos desde nuestra aplicaci&oacute;n Java. </p>
+<hr>
+<h3>Ejercicio 3: Ejecutando otros programas </h3>
+<p>En la clase <i>sesion06.Ej6</i> vamos a ejecutar una aplicaci&oacute;n externa a Java. Por ejemplo, vamos a abrir el navegador Internet Explorer, y el bloc de notas. </p>
+<ul>
+  <li>Para ello, en el <em>main</em> (podr&iacute;a ser en cualquier m&eacute;todo, pero aprovecharemos este, ya que lo tenemos), deberemos crearnos un objeto de tipo <em>Runtime</em>, de la forma que hemos explicado antes en los apuntes. </li>
+  <li> Despu&eacute;s, deberemos localizar d&oacute;nde est&aacute; el ejecutable que lanza el navegador, y el del bloc de notas. Normalmente se encuentan, respectivamente, en:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">C:\Archivos de programa\Internet Explorer\iexplore.exe<br>C:\Windows\notepad.exe
+</pre>
+  <p>(la carpeta <em>C:/Windows</em> puede ser <em>C:/Winnt</em> si est&aacute;s trabajando con Windows 2000 o NT). Guadaremos cada ruta en una cadena:</p>
+  <pre class="codigo">String ruta = &quot;C:\\Archivos de programa\\Internet Explorer\\iexplore.exe&quot;;<br>String ruta2 = &quot;C:\\Windows\\notepad.exe&quot;;</pre>
+  <p>Observa que las barras invertidas \ se deben poner dobles en las variables String (es una secuencia de escape para guardar la barra, igual que \n guarda un salto de l&iacute;nea). Tambi&eacute;n funcionar&aacute; si en lugar de barras invertidas ponemos barras simples &quot;/&quot;, y en este caso no hace falta duplicar:</p>
+  <pre class="codigo">String ruta = &quot;C:/Archivos de programa/Internet Explorer/iexplore.exe&quot;;<br>String ruta2 = &quot;C:/Windows/notepad.exe&quot;;</pre>
+</blockquote>
+<ul>
+  <li>Despu&eacute;s, utilizaremos el m&eacute;todo <em>exec</em> del <em>Runtime</em> para que ejecute primero un comando y despu&eacute;s el otro (pondremos dos l&iacute;neas <em>exec</em>, una para cada comando, y una a continuaci&oacute;nm de la otra). Probablemente necesites capturar alguna excepci&oacute;n cuando ejecutes los<em> exec</em>.</li>
+  <li>Cuando lo tengas todo, ejecuta el programa, y comprueba si se abren las aplicaciones. &iquest;Se abren las dos a la vez o primero una, y cuando la cierras, la otra? </li>
+  <li>Observa que la aplicaci&oacute;n Java TERMINA despu&eacute;s de abrir las ventanas de los programas que le hemos dicho. Esto es porque se crean hilos independientes para lanzar estas aplicaciones, y como el hilo principal ya no tiene nada m&aacute;s que hacer, termina.</li>
+  <li>Si queremos secuenciar la ejecuci&oacute;n de programas externos (es decir, que no empiece uno hasta que no haya terminado el anterior), debemos valernos de lo siguiente:</li>
+</ul>
+<blockquote>
+  <p>Supongamos que tenemos un objeto <em>Runtime</em> creado, y listo para ejecutar dos comandos guardados en las cadenas <em>com1</em> y <em>com2</em>: </p>
+  <pre class="codigo">Runtime rt = Runtime.getRuntime();<br>String com1 = &quot;C:/comando1.exe&quot;;<br>String com2 = &quot;C:/comando2.exe&quot;;</pre>
+  <p>Si hacemos un <em>exec</em> con el primero y luego un <em>exec</em> con el segundo, se ejecutar&aacute;n los dos a la vez, como habr&aacute;s podido comprobar: </p>
+  <pre class="codigo">rt.exec(com1);<br>rt.exec(com2);
+</pre>
+  <p>Observa que la llamada a <em>exec</em> realmente devuelve un objeto de tipo <em>Process</em> (consulta el API). Podemos quedarnos con este objeto, y hacer que el programa actual (el hilo principal de Java) espere a que termine ese proceso <em>Process</em> antes de pasar a la siguiente l&iacute;nea de c&oacute;digo: </p>
+  <pre class="codigo"><strong>Process p</strong> = rt.exec(com1);<br><strong>p.waitFor();<br></strong>rt.exec(com2);
+</pre>
+  <p>Aplica este esquema sobre el ejercicio, para que primero se abra el navegador, y cuando lo cierres, se abra el bloc de notas. Captura, como antes, las excepciones que se te pidan al compilar. </p>
+</blockquote>
+<hr>
+<h2>La clase Math</h2>
+<p>La clase<strong> Math</strong> nos ser&aacute; de gran utilidad cuando necesitemos realizar operaciones matem&aacute;ticas. Esta clase no necesita ser instanciada, ya que todos sus m&eacute;todos son est&aacute;ticos. Entre estos m&eacute;todos podremos encontrar todas las operaciones matem&aacute;ticas b&aacute;sicas que podamos necesitar, como logaritmos, exponenciales, funciones trigonom&eacute;tricas, generaci&oacute;n de n&uacute;meros aleatorios, conversi&oacute;n entre grados y radianes, etc. Adem&aacute;s nos ofrece las constantes de los n&uacute;meros <em>PI</em> y <em>E</em>.</p>
+<h2>Fechas y horas </h2>
+<p>La clase <strong>java.util.Date</strong> nos servir&aacute; para almacenar una determinada fecha y hora, que podr&aacute;n ser las actuales, o las de un momento determinado (por ejemplo, el 3 de junio de 2002, a las 13:32 horas). </p>
+<p>Si queremos obtener la fecha actual, construimos un objeto <em>Date </em>sin par&aacute;metros y ya est&aacute;:</p>
+<pre class="codigo">Date d = new Date()<strong></strong>;</pre>
+<p>Si queremos construir una fecha y hora concretas, indicando d&iacute;a, mes, a&ntilde;o, hora, minuto o segundo, ver&eacute;is en la API que la clase <em>Date</em> tiene constructores y m&eacute;todos para establecer todos estos valores por separado:</p>
+<pre class="codigo">public Date(int a&ntilde;o, int mes, int dia)<strong></strong>;<br>public Date(int a&ntilde;o, int mes, int dia, int hora, int minuto, int segundo)<strong></strong>;<br>public void setYear(int a&ntilde;o);<br>public void setHours(int hora);<br>...
+</pre>
+<p>y construir as&iacute; una fecha diferente. Sin embargo, consultando la API, ver&eacute;is que todos estos m&eacute;todos est&aacute;n <strong>deprecated</strong> (desaconsejados), y la documentaci&oacute;n indica que Date s&oacute;lo debe utilizarse para obtener la fecha actual (de la forma que hemos visto antes), y se debe utilizar la clase <strong>java.util.Calendar</strong> para especificar otras fechas concretas. Adem&aacute;s, la clase <strong>Calendar</strong> nos servir&aacute; para realizar operaciones con fechas, comparar fechas, u obtener distintas representaciones para mostrar la fecha en nuestra aplicaci&oacute;n. </p>
+<p>Para ello, primero deberemos obtener una instancia de un objeto de tipo <em>Calendar</em>, con:</p>
+<pre class="codigo">Calendar c = Calendar.getInstance()<strong></strong>;</pre>
+<p>Una vez obtenido, el objeto <em>Calendar</em> almacenar&aacute; la fecha y hora actuales, pero luego podremos construir una fecha propia utilizando m&eacute;todos como:</p>
+<pre class="codigo">void set(int a<strong></strong>nyo, int mes, int dia, int hora, int minuto, int segundo)</pre>
+<p>y otros similares. Ver&eacute;is que hay varias modalidades del m&eacute;todo <em>set</em>, y otros alternativos, como <em>setTime</em>, <em>setTimeInMillis</em>, etc.</p>
+<p>Tambi&eacute;n podremos obtener por partes los elementos de la fecha, llamando al m&eacute;todo <em>get</em>, e indic&aacute;ndole como par&aacute;metro qu&eacute; parte queremos obtener. Para ello, la clase <em>Calendar</em> dispone de varias constantes para indicar cada una de las partes por separado.</p>
+<pre class="codigo">int anyo = c.get(Calendar.YEAR);<br>int mes = c.get(Calendar.MONTH) + 1;<br>int dia = c.get(Calendar.DAY_OF_MONTH);<br>int hora = c.get(Calendar.HOUR_OF_DAY);<br>int minuto = c.get(Calendar.MINUTE);<br>int segundo = c.set(Calendar.SECOND);<br><br>System.out.println (&quot;La fecha es &quot; + dia + &quot;/&quot; + mes + &quot;/&quot; + anyo + &quot;, &quot; + hora + &quot;:&quot; + minuto + &quot;:&quot; + segundo);</pre>
+<p>Observa que luego podemos tomar las partes que necesitemos y representarlas como queramos. Observa tambi&eacute;n que cuando obtenemos el mes a trav&eacute;s de la constante <em>Calendar.MONTH</em>, el mes se nos devuelve con valores entre 0 y 11, por lo que le deberemos sumar 1 para poner el n&uacute;mero de mes correcto.</p>
+<h2>Dando formato </h2>
+<p>Muchas veces queremos sacar por pantalla o en un cuadro de texto un valor num&eacute;rico, o una fecha, y no tenemos forma c&oacute;moda de espec&iacute;ficar con qu&eacute; formato queremos mostrarlos: si con 2 decimales, o si poniendo el a&ntilde;o con 4 d&iacute;gitos... etc.</p>
+<p>Para esto Java pone a nuestra disposici&oacute;n clases como <strong>java.text.NumberFormat</strong> (para formatear n&uacute;meros) o <strong>java.text.DateFormat</strong> (para formatear fechas).</p>
+<h3>Formateando n&uacute;meros</h3>
+<p>Para poder formatear n&uacute;meros, primero debemos obtener una instancia del objeto <em>NumberFormat . </em>Normalmente suele hacerse con:</p>
+<pre class="codigo"><strong>NumberFormat</strong> nf = NumberFormat.<strong>getInstance</strong>();</pre>
+<p>Una vez obtenido, la clase <em>NumberFormat</em> tiene diversos m&eacute;todos para indicar c&oacute;mo queremos que salga el n&uacute;mero. Por ejemplo:</p>
+<pre class="codigo">setMinimumIntegerDigits(int n)<strong></strong>;</pre>
+<p>Establece que el m&iacute;nimo n&uacute;mero de cifras enteras que hay que mostrar sea de <em>n</em> cifras. Si por ejemplo n fuese 4, y queremos sacar un n&uacute;mero como 23, lo que se mostrar&iacute;a finalmente ser&iacute;a &quot;0023&quot;. </p>
+<pre class="codigo">setMaximumIntegerDigits(int n)<strong></strong>;</pre>
+<p>Parecido al anterior, pero a la inversa: establece que el m&aacute;ximo n&uacute;mero de cifras enteras que hay que mostrar sea de <em>n</em> cifras. Si queremos mostrar 4567 y n es 3, en este caso mostrar&iacute;a &quot;567&quot;.</p>
+<pre class="codigo">setMinimumFractionDigits(int n)<strong></strong>;<br>setMaximumFractionDigits(int n);</pre>
+<p>Similares a los dos m&eacute;todos anteriores, pero para establecer cu&aacute;ntas cifras decimales queremos que tenga el n&uacute;mero como m&iacute;nimo y como m&aacute;ximo.</p>
+<pre class="codigo">setGroupingUsed(boolean grouping)<strong></strong>;</pre>
+<p>El <em>grouping used</em> indica si queremos que se agrupen los d&iacute;gitos para indicar los miles, millones, etc, o si queremos simplemente mostrar la secuencia de d&iacute;gitos que componen el n&uacute;mero. Si le pasamos <em>true</em> a este m&eacute;todo, un n&uacute;mero como 4567 se representar&aacute; como &quot;4.567&quot;, y si le pasamos <em>false</em> lo representar&aacute; tal cual est&aacute;, como &quot;4567&quot;. Podemos ver si est&aacute; activado o no este flag booleano en cada momento, con:</p>
+<pre class="codigo">boolean isGroupingUsed(boolean grouping)<strong></strong>;</pre>
+<p>La idea es llamar a estos m&eacute;todos despu&eacute;s de haber instanciado nuestro objeto <em>NumberFormat</em>, y una vez lo tengamos todo configurado, formatear el n&uacute;mero o n&uacute;meros que queramos llamando al m&eacute;todo <em>format</em> de <em>NumberFormat</em> (ver&eacute;is que hay varias formas de utilizarlo en el API). Por ejemplo:</p>
+<pre class="codigo">double num1 = 1623<strong></strong>.5;<br><br>NumberFormat nf = NumberFormat.getInstance();<br><br>nf.setMinimumFractionDigits(3);<br>nf.setMinimumIntegerDigits(5);<br>nf.setGroupingUsed(true);<br><br>String valorFormateado vf = <strong>nf.format</strong>(num1);<br>System.out.println(vf);</pre>
+<p>mostrar&iacute;a por pantalla el n&uacute;mero &quot;01.623,500&quot;.</p>
+<h3>Formateando fechas </h3>
+<p>Al igual que con <em>NumberFormat</em>, para poder formatear fechas tambi&eacute;n deberemos obtener previamente una instancia de objeto <em>DateFormat</em>. Podr&iacute;amos utilizar el m&eacute;todo <em>getInstance() </em>de <em>DateFormat</em>, al igual que hacemos con <em>NumberFormat</em>. Sin embargo, nos vamos a valer de la subclase <strong>java.text.SimpleDateFormat</strong>, que nos permitir&aacute; dar un formato m&aacute;s c&oacute;modo a las fechas:</p>
+<pre class="codigo"><strong>DateFormat df = new SimpleDateFormat(String patron)</strong>;</pre>
+<p>El <em>patron</em> es una cadena de texto que indicar&aacute; c&oacute;mo se debe presentar la fecha. Algunos ejemplos:</p>
+<pre class="codigo">&quot;dd / MM / yyyy&quot;</pre>
+<p>muestra el d&iacute;a con dos d&iacute;gitos, una barra, el mes con dos d&iacute;gitos, una barra y el a&ntilde;o con 4 d&iacute;gitos. </p>
+<pre class="codigo">&quot;dd - MMMMM - yyyy, hh:mm:ss&quot;</pre>
+<p>muestra el d&iacute;a con dos d&iacute;gitos, un gui&oacute;n, el mes con letras, un gui&oacute;n, el a&ntilde;o con 4 d&iacute;gitos, coma, y luego la hora actual, dos puntos, minutos actuales, dos puntos y segundos actuales.</p>
+<p>A la luz de los anteriores ejemplos, podemos extraer que, dentro de la cadena del patr&oacute;n:</p>
+<ul>
+  <li><strong>d</strong> la utilizaremos para colocar el d&iacute;a de la fecha. Pondremos tantas <em>d</em> como d&iacute;gitos queramos que tenga (como m&iacute;nimo) el d&iacute;a. </li>
+  <li><strong>M</strong> la utilizaremos para colocar el mes de la fecha. Pondremos tantas <em>M </em> como d&iacute;gitos queramos que tenga (como m&iacute;nimo) el mes. Si ponemos 3 o m&aacute;s <em>M</em>, el mes no se representar&aacute; mediante d&iacute;gitos, sino mediante su nombre (enero, febrero, en lugar de 01, 02...)</li>
+  <li><strong>y</strong> la utilizamos para colocar el a&ntilde;o de la fecha. Pondremos tantas  como d&iacute;gitos queramos que tenga (como m&iacute;nimo) el a&ntilde;o. </li>
+  <li><strong>h</strong> la utilizamos para colocar la hora actual.</li>
+  <li><strong>m</strong> la utilizamos para colocar los minutos actuales (no confundir con M may&uacute;scula, utilizada para el mes)</li>
+  <li><strong>s</strong> la utilizamos para colocar los segundos.</li>
+</ul>
+<p>Pod&eacute;is consultar la API de <em>SimpleDateFormat</em> para m&aacute;s informaci&oacute;n sobre otros posibles caracteres. Aqu&iacute; ponemos un ejemplo de uso, combinando lo anterior:</p>
+<pre class="codigo">DateFormat df = new SimpleDateFormat(&quot;dd - MMMMM - yyyy, hh:mm:ss&quot;);<br><br><strong>// Fecha actual<br></strong>Date d = new Date();  <br>
+<strong>// Sacar&aacute; la fecha actual con el formato indicado, por ejemplo: &quot;05 - julio - 2005, 12:54:23&quot;<br></strong>System.out.println (df.format(d));</pre>
+<hr>
+<h3>Ejercicio 4: Practicar con Math y formatear n&uacute;meros</h3>
+<p>Utiliza el m&eacute;todo <em>main </em>de la clase <i>sesion06.Ej7</i> de la plantilla para calcular el logaritmo neperiano del n&uacute;mero real (<em>double</em>) que se le pase como par&aacute;metro. Guarda ese n&uacute;mero en una variable de tipo <em>double</em> y utiliza despu&eacute;s un <em>NumberFormat </em>para mostrarla por pantalla, con un m&iacute;nimo de 3 cifras decimales y un m&aacute;ximo de 5, y sin punto para separar los miles (es decir, sin <em>grouping used</em>). </p>
+<p>AYUDA: para calcular el logaritmo deber&aacute;s utilizar el m&eacute;todo <em>log</em> de la clase <em>Math</em>.</p>
+<hr>
+<h3>Ejercicio 5: Practicar con fechas </h3>
+<p>Haz que la clase <i>sesion06.Ej8</i> lance un hilo que cada 200 ms est&eacute; calculando la fecha actual, y guard&aacute;ndola en la variable global <em>Calendar </em>que tiene <em>Ej8</em>. El hilo principal (<em>Ej8</em>) estar&aacute; en un bucle infinito donde dormir&aacute; 1 segundo, y luego mostrar&aacute; por pantalla la fecha que tenga su campo <em>Calendar</em>, con el siguiente formato:</p>
+<pre class="codigo">&lt;d&iacute;a&gt; del &lt;mes_en_cifra&gt; de &lt;a&ntilde;o&gt;, a las &lt;hora&gt;:&lt;minuto&gt;:&lt;segundo&gt;</pre>
+<p>por ejemplo:</p>
+<pre class="codigo">23 del 03 de 2005, a las 21:15:23</pre>
+<p>AYUDA: para colocar texto dentro del patr&oacute;n de la fecha (por ejemplo, 'del', o 'a las'), col&oacute;calo con comillas simples, insert&aacute;ndolo dentro del patr&oacute;n con comillas dobles. Por ejemplo: </p>
+<pre class="codigo">&quot;dd 'del' MM 'de' yyyy&quot;</pre>
+<p>El funcionamiento del hilo principal, una vez lanzado el segundo hilo, deber&aacute; ser el siguiente:</p>
+<pre class="codigo">while (true)<br>{<br>   dormir 1000 milisegundos<br>   imprimir por pantalla la fecha del campo c (el otro hilo se encargar&aacute; de actualizarla), formateada como se indica en el ejercicio<br>}
+</pre>
+<p>Este c&oacute;digo deber&aacute; estar en el constructor de <em>Ej8</em>, justo despu&eacute;s de crear y lanzar un hilo (<em>Thread</em>), que en su m&eacute;todo <em>run</em> har&aacute; lo siguiente: </p>
+<pre class="codigo">while (true)<br>{<br>   dormir 200 milisegundos<br>   actualizar el valor del campo c<br>}
+</pre>
+<p>recuerda que para poder trabajar con el hilo, deber&aacute;s hacer que la clase principal implemente <em>Runnable</em>, y luego definir un m&eacute;todo <em>run</em> con el c&oacute;digo del segundo hilo, tal y como se ha indicado antes. </p>
+<p>NOTAS:</p>
+<ul>
+  <li>Para actualizar el valor del campo c en el hilo secundario, simplemente obtendremos una nueva instancia de <em>Calendar</em>:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">c = Calendar.getInstance();</pre>
+</blockquote>
+<ul>
+  <li>Para imprimir la fecha formateada por pantalla, haremos algo como lo siguiente:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">DateFormat df = ... // configurar el formato del DateFormat<br>...<br>System.out.print(df.format(c.getTime()) + &quot;\r&quot;); </pre>
+  <p>El colocar el &quot;\r&quot; al final har&aacute; que al volver a imprimir machaque la misma l&iacute;nea una y otra vez, con lo que quedar&aacute; m&aacute;s elegante que ver cada vez una l&iacute;nea m&aacute;s abajo en la pantalla. Esta caracter&iacute;stica no funcionar&aacute; bien si la salida la veis en la consola de Eclipse, donde probablemente sacar&aacute; una l&iacute;nea para cada nueva fecha. No os preocup&eacute;is por eso, simplemente probad que el programa funciona.</p>
+  </blockquote>
+<hr>
+<h2>Otras clases</h2>
+<p>Si miramos dentro del paquete <strong>java.util</strong>, podremos encontrar una serie de clases que nos podr&aacute;n resultar &uacute;tiles para determinadas aplicaciones.</p>
+Por ejemplo, podemos encontrar la clase <strong>Currency</strong> con informaci&oacute;n monetaria. La clase <strong>Locale</strong> almacena informaci&oacute;n sobre una determinada regi&oacute;n del mundo, por lo que podremos utilizar esta clase junto a las anteriores para obtener la moneda de una determinada zona, o las diferencias horarias y de representaci&oacute;n de fechas.
+<h2>Optimizaci&oacute;n de c&oacute;digo</h2>
+<p>Hemos visto que Java nos permite escribir facilmente un c&oacute;digo limpio y mantenible. Sin embargo, en muchas ocasiones adem&aacute;s nos interesar&aacute; que el c&oacute;digo sea r&aacute;pido en determinadas funciones cr&iacute;ticas. A continuaci&oacute;n damos una serie de consejos para optimizar el c&oacute;digo Java: </p>
+<ul>
+  <li>No instanciar (crear) m&aacute;s objetos de los necesarios. Es una buena pr&aacute;ctica para la eficiencia temporal del c&oacute;digo reutilizar los objetos que tenemos ya instanciados siempre que sea posible, ya que consume tiempo tanto instanciar nuevos objetos, como despu&eacute;s limpiar de la memoria los objetos que ya no se necesiten por parte del colector de basura.</li>
+  <li>Minimizar el n&uacute;mero de llamadas a m&eacute;todos. La llamada a un m&eacute;todo para obtener una determinada propiedad de un objeto es m&aacute;s costoso computacionalmente que consultar la propiedad directamente (en el caso de que sea p&uacute;blica). Si necesitamos utilizar el valor repetidas veces es buena idea leer el valor en una variable local y utilizar dicha variable.</li>
+  <li>Es m&aacute;s r&aacute;pido acceder a un campo de un objeto directamente que llamar a un m&eacute;todo para obtener el valor de dicho campo. Acceder directamente a los campos va en contra de la encapsulaci&oacute;n, pero puede resultar conveniente en determinados casos. Si desarrollamos una librer&iacute;a con una serie de clases, podemos usar variables protegidas en lugar de privadas, para dentro de nuestra librer&iacute;a no tener que llamar a m&eacute;todos para consultar o modificar dicha informaci&oacute;n. Esto har&aacute; m&aacute;s r&aacute;pidas las llamadas internas a la librer&iacute;a.</li>
+  <li>Sustituir tipos de datos complejos por tipos de datos b&aacute;sicos. Esto va en contra de la legibilidad del c&oacute;digo, pero en caso de ser la velocidad un factor cr&iacute;tico puede ser conveniente hacer este cambio. Una vez comprobado que el programa funciona, si necesitamos m&aacute;s velocidad podemos cambiar tipos de datos como Vectores por un array b&aacute;sico cuyo acceso resulta m&aacute;s r&aacute;pido.</li>
+  <li>Cuando trabajemos con cadenas grandes, es conveniente utilizar la clase <b>StringBuffer</b> en lugar de <b>String</b>, ya permite ser modificada sin necesidad de instanciar nuevos objetos, lo cual har&aacute; la manipulaci&oacute;n de estas cadenas mucho m&aacute;s eficiente.</li>
+</ul>
+<p></p>
+<hr>
+<p><b>PARA ENTREGAR</b></p>
+<p>Guarda en la carpeta <strong>modulo2</strong> de tu CVS los siguientes elementos para esta sesi&oacute;n: </p>
+<ul>
+  <li>Todos los ficheros fuente (<b>Ej4, Ej5, Ej6, Ej7 </b>y <strong>Ej8</strong>), dentro del paquete <strong>sesion06</strong>, cada uno con las modificaciones que se han ido solicitando.</li>
+  <li>Fichero de texto <b>respuestas.txt</b> de esta sesi&oacute;n contestando a todas las preguntas formuladas.</li>
+</ul>
+<p>&nbsp;</p>
+
+<h2>&nbsp;</h2>
+</body>
+</html>

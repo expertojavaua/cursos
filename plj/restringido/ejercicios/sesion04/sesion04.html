@@ -1,0 +1,410 @@
+<html>
+<head>
+<title>Tema 2: Caracter&iacute;sticas b&aacute;sicas</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<!-- OneStat -->
+<!--ONESTAT SCRIPTCODE START-->
+<script type="text/javascript">
+<!--
+// Account ID : 221957
+// Website URL: http://www.jtech.ua.es
+// Copyright (C) 2002-2005 OneStat.com All Rights Reserved
+function OneStat_Pageview()
+{
+    var d=document;
+    var sid="221957";
+    var CONTENTSECTION="";
+    var CUSTOMDATA="";
+    var osp_URL=d.URL;
+    var osp_Title=d.title;
+    var t=new Date();
+    var p="http"+(d.URL.indexOf('https:')==0?'s':'')+"://stat.onestat.com/stat.aspx?tagver=2&sid="+sid;
+    p+="&url="+escape(osp_URL);
+    p+="&ti="+escape(osp_Title);
+    p+="&section="+escape(CONTENTSECTION);
+    p+="&custom="+escape(CUSTOMDATA);
+    p+="&rf="+escape(parent==self?window.document.referrer:top.document.referrer);
+    p+="&tz="+escape(t.getTimezoneOffset());
+    p+="&ch="+escape(t.getHours());
+    p+="&js=1";
+    p+="&ul="+escape(navigator.appName=="Netscape"?navigator.language:navigator.userLanguage);
+    if(osp_URL!=d.URL) p+="&ol="+escape(d.URL);
+    if(typeof(screen)=="object"){
+       p+="&sr="+screen.width+"x"+screen.height;p+="&cd="+screen.colorDepth;
+       p+="&jo="+(navigator.javaEnabled()?"Yes":"No");
+    }
+    d.write('<img id="ONESTAT_TAG" border="0" width="1" height="1" src="'+p+'" />');
+}
+
+OneStat_Pageview();
+//-->
+</script>
+<noscript>
+<a href="http://www.onestat.com"><img border="0" width="1" height="1" src="http://stat.onestat.com/stat.aspx?tagver=2&amp;sid=221957&amp;js=No&amp;" ALT="OneStat Web Analytics"></a>
+</noscript>
+<!--ONESTAT SCRIPTCODE END-->
+<h1>Sesi&oacute;n 4. Excepciones </h1>
+<p>Las excepciones son eventos que ocurren durante la ejecuci&oacute;n de un programa 
+  y hacen que &eacute;ste salga de su flujo normal de instrucciones. Este mecanismo 
+  permite tratar los errores de una forma elegante, ya que separa el c&oacute;digo 
+  para el tratamiento de errores del c&oacute;digo normal del programa. Se 
+  dice que una excepci&oacute;n es <i>lanzada</i> cuando se produce un error, 
+  y esta excepci&oacute;n puede ser <i>capturada</i> para tratar dicho error.</p>
+<h2 class="section">Tipos de excepciones</h2>
+<p>Tenemos diferentes tipos de excepciones dependiendo del tipo de error que representen. 
+  Todas ellas descienden de la clase <b>Throwable</b>, la cual tiene dos descendientes 
+  directos:</p>
+<ul>
+  <li> <b>Error</b>: Se refiere a errores graves en la m&aacute;quina virtual de Java, 
+    como por ejemplo fallos al enlazar con alguna librer&iacute;a. Normalmente en los programas 
+    Java no se tratar&aacute;n este tipo de errores.</li>
+  <li><b>Exception</b>: Representa errores que no son críticos y por lo tanto pueden ser 
+    tratados y continuar la ejecuci&oacute;n de la aplicaci&oacute;n. La mayor&iacute;a 
+    de los programas Java utilizan estas excepciones para el tratamiento de los 
+    errores que puedan ocurrir durante la ejecuci&oacute;n del c&oacute;digo.</li>
+</ul>
+<p>Dentro de <b>Exception</b>, cabe destacar una subclase especial de excepciones 
+  denominada <b>RuntimeException</b>, de la cual derivar&aacute;n todas aquellas 
+  excepciones referidas a los errores que com&uacute;nmente se pueden producir 
+  dentro de cualquier fragmento de c&oacute;digo, como por ejemplo hacer una referencia 
+  a un puntero <i>null</i>, o acceder fuera de los l&iacute;mites de un <i>array</i>. 
+</p>
+<p>Estas <b>RuntimeException</b> se diferencian del resto de excepciones en que 
+  <strong>no son de tipo <i>checked</i></strong>. Una excepci&oacute;n de tipo <i>checked</i> debe 
+  ser capturada o bien especificar que puede ser lanzada de forma obligatoria, 
+  y si no lo hacemos obtendremos un error de compilaci&oacute;n. Dado que las 
+  <b>RuntimeException</b> pueden producirse en cualquier fragmento de c&oacute;digo, 
+  ser&iacute;a impensable tener que a&ntilde;adir manejadores de excepciones y 
+  declarar que &eacute;stas pueden ser lanzadas en todo nuestro c&oacute;digo.</p>
+<div align="center"><img src="images/excepcion.png" width="491" height="254"></div>
+<p>Dentro de estos grupos principales de excepciones podremos encontrar tipos 
+  concretos de excepciones o bien otros grupos que a su vez pueden contener m&aacute;s 
+  subgrupos de excepciones, hasta llegar a tipos concretos de ellas. Cada tipo 
+  de excepci&oacute;n guardar&aacute; informaci&oacute;n relativa al tipo de error 
+  al que se refiera, adem&aacute;s de la informaci&oacute;n com&uacute;n a todas 
+  las excepciones. Por ejemplo, una <b>ParseException</b>  se suele utilizar al
+procesar un fichero. Adem&aacute;s de almacenar 
+  un mensaje de error, guardar&aacute; la l&iacute;nea en la que el <i>parser</i> 
+  encontr&oacute; el error.</p>
+<h2 class="section">Captura de excepciones</h2>
+<p>Cuando un fragmento de c&oacute;digo sea susceptible de lanzar una excepci&oacute;n 
+  y queramos tratar el error producido o bien por ser una excepci&oacute;n de 
+  tipo <i>checked</i> debamos capturarla, podremos hacerlo mediante la estructura 
+  <i>try-catch-finally</i>, que consta de tres bloques de c&oacute;digo:</p>
+<ul>
+  <li> Bloque <i>try</i>: Contiene el c&oacute;digo  de nuestro programa 
+    que puede producir una excepci&oacute;n en caso de error.</li>
+  <li>Bloque <i>catch</i>: Contiene el c&oacute;digo con el que trataremos el 
+    error en caso de producirse (por ejemplo, sacar un mensaje de error, salir de la aplicaci&oacute;n, etc). </li>
+  <li>Bloque <i>finally</i>: Este bloque contiene el c&oacute;digo que se ejecutar&aacute; 
+    al final tanto si se ha producido una excepci&oacute;n como si no lo ha hecho. 
+    Este bloque se utiliza para, por ejemplo, cerrar alg&uacute;n fichero que 
+    haya podido ser abierto dentro del c&oacute;digo  del programa, de 
+    manera que nos aseguremos que tanto si se ha producido un error como si no 
+    este fichero se cierre. </li>
+</ul>
+<p>Podemos poner un bloque <em>try</em> sin <em>catch</em> pero con <em>finally, </em>ya que cuando la excepci&oacute;n no es de tipo <em>checked </em>no es obligatorio capturarla en <em>catch</em>, pero puede haber cosas que queramos hacer tanto si se produce como si no. Tambi&eacute;n podemos poner un bloque <em>try</em> con <em>catch</em> y sin <em>finally, </em>cuando queremos capturar la excepci&oacute;n, y no hay ning&uacute;n c&oacute;digo que necesitemos que se ejecute inexorablemente. </p>
+<p>Para el bloque <i>catch</i> adem&aacute;s deberemos especificar el tipo o grupo 
+  de excepciones que tratamos en dicho bloque, pudiendo incluir varios bloques <i>catch</i>, cada uno de ellos para un tipo/grupo de excepciones distinto.  </p>
+<p>La sintaxis gen&eacute;rica de <em>try - catch - finally </em>ser&aacute; la siguiente (luego podemos omitir las partes que no necesitemos):</p>
+<pre class="codigo"><b><span class="codigo">try</span></b><span class="codigo"> {
+	// Código regular del programa
+	// Puede producir excepciones
+} <b>catch(TipoDeExcepcion1 e1)</b> {
+	// Código que trata las excepciones de tipo 
+	// TipoDeExcepcion1 o subclases de ella.
+	// Los datos sobre la excepción los encontraremos 
+	// en el objeto e1.
+} <b>catch(TipoDeExcepcion2 e2)</b> {
+</span><span class="codigo">	// Código que trata las excepciones de tipo 
+	// TipoDeExcepcion2 o subclases de ella.
+	// Los datos sobre la excepción los encontraremos 
+	// en el objeto e2.
+...
+} <b>catch(TipoDeExcepcionN eN)</b> {
+</span><span class="codigo">	// Código que trata las excepciones de tipo 
+	// TipoDeExcepcionN o subclases de ella.
+	// Los datos sobre la excepción los encontraremos 
+	// en el objeto eN.
+} <b>finally</b> {
+	// Código de finalización <br>}</span></pre>
+<p>
+Si como tipo de excepci&oacute;n especificamos un grupo de excepciones este 
+  bloque se encargar&aacute; de la captura de todos los subtipos de excepciones 
+  de este grupo. Por lo tanto, si especificamos <b>Exception</b> capturaremos 
+  cualquier excepci&oacute;n de tipo <em>Exception </em> y sus subtipos, es decir, todas las excepciones existentes. Y si ponemos <strong>Throwable </strong>capturaremos cualquier tipo de error o excepci&oacute;n, ya que es el elemento padre de todos los errores y excepciones.
+
+</p>
+<p>
+En el bloque <i>catch</i> pueden ser útiles algunos métodos de la excepción
+(que podemos ver en la API de la clase padre <i>Exception</i>):
+
+</p>
+  <pre class="codigo">String getMessage()
+void printStackTrace()</pre>
+<p>con <b>getMessage()</b> obtenemos una cadena descriptiva del error (si la
+hay). Con <b>printStackTrace()</b> se muestra por la salida estándar la traza
+de errores que se han producido (en ocasiones la traza es muy larga y no puede
+seguirse toda en pantalla con algunos sistemas operativos).
+
+</p>
+<p>Unos ejemplos de uso:
+
+</p>
+<pre class="codigo">try
+{
+	... // Aqui va el codigo que puede lanzar una excepcion
+} catch (Exception e) {
+	System.out.println (&quot;El error es: &quot; + e.getMessage());
+	e.printStackTrace();
+}<br><br>try<br>{<br>	... // Aqu&iacute; va un c&oacute;digo que puede lanzar una excepci&oacute;n que no es obligatorio capturar<br>} finally {<br>	... // Aqu&iacute; pondremos  lo que queramos que se haga salte o no salte la excepci&oacute;n.<br>}
+</pre>
+<hr>
+<h3>Ejercicio 1: Captura de excepciones</h3>
+<p>Echa un vistazo a la clase <i>sesion04.Ej1</i> que se proporciona en la plantilla. Ver&aacute;s que calcula la divisi&oacute;n de dos n&uacute;meros (en el m&eacute;todo <i>divide</i>), y se ejecuta dicha divisi&oacute;n en el m&eacute;todo <i>main</i>, pas&aacute;ndole los dos n&uacute;meros como argumentos en el par&aacute;metro <i>args</i> de dicho m&eacute;todo.</p>
+<p>Compila y prueba el funcionamiento de la clase, ejecutando una divisi&oacute;n sencilla, como por ejemplo 20 / 4, de la siguiente forma:</p>
+<pre class="codigo">java sesion04.Ej1 20 4</pre>
+<p>Observa que la clase no realiza ciertos controles: no se comprueba si se le han pasado par&aacute;metros al <i>main</i> al ejecutar, ni si dichos par&aacute;metros son n&uacute;meros correctos, ni si se puede realizar la divisi&oacute;n (no se podr&iacute;a dividir por un n&uacute;mero que fuese cero, por ejemplo). Vamos a ir controlando dichos errores mediante lanzamiento y captura de excepciones, en los siguientes pasos.</p>
+<ul>
+  <li>Primero comprobaremos que al programa se le han pasado 2 par&aacute;metros. Para ello, captura una excepci&oacute;n de tipo <b>ArrayIndexOutOfBoundsException</b>, al acceder al par&aacute;metro <i>args</i>:
+    <pre class="codigo">public static void main(String[] args)
+{
+<b>  try
+  {</b>
+    param1 = args[0];
+    param2 = args[1];
+<b>  } catch (ArrayIndexOutOfBoundsException e) {<br>    ...
+  }
+</b><strong>  ...</strong>
+}</pre>
+    <p>En el bloque<em> catch </em> pon el mensaje de error que consideres oportuno (por ejemplo, &quot;Faltan par&aacute;metros&quot;), y sal del programa (con <em>System.exit(-1)</em>). Prueba despu&eacute;s la excepci&oacute;n capturada, ejecutando el programa con algo como:</p>
+    <pre class="codigo">java sesion04.Ej1 20 </pre>
+  
+    <p>Deber&iacute;a capturar la excepci&oacute;n y mostrar por pantalla el mensaje &quot;<i>Faltan parametros</i>&quot; (o el que hayas elegido). </p>
+  </li>
+  <li>Ahora vamos a comprobar que los dos par&aacute;metros son num&eacute;ricos. Para esto captura una excepci&oacute;n de tipo <b>NumberFormatException</b> si falla el m&eacute;todo de conversi&oacute;n a entero de los par&aacute;metros de tipo <i>String</i> (es decir, capturaremos la excepci&oacute;n al llamar a <i>Integer.parseInt(...)</i>):          
+    <p>Pon el mensaje de error que quieras en el bloque <em>catch </em>(por ejemplo, &quot;Formato incorrecto del par&aacute;metro&quot;), y prueba despu&eacute;s la excepci&oacute;n capturada, ejecutando el programa con algo como:</p>
+    <pre class="codigo">java sesion04.Ej1 20 hola</pre>
+    <p>Deber&iacute;a capturar la excepci&oacute;n y mostrar por pantalla el mensaje &quot;<i>Formato incorrecto del parametro</i>&quot;, o el que hayas elegido.</p>
+  </li>
+  <li>Observa que se puede poner todo junto, ahorr&aacute;ndonos las variables <i>param1</i> y <i>param2</i>, y capturando las dos excepciones en un solo bloque:
+    <pre class="codigo">public static void main(String[] args)
+{
+  int dividendo=0, divisor=0;
+  <b>try
+  {
+    </b>dividendo = Integer.parseInt(args[0]);
+    divisor = Integer.parseInt(args[1]);
+<b>  } catch (ArrayIndexOutOfBoundsException e) {
+    ...
+</b>  <b>} catch (NumberFormatException e2) {
+    ...
+  }</b>
+
+  System.out.println (&quot;Resultado: &quot; + divide(dividendo, divisor));
+}</pre>
+  Modifica el m&eacute;todo <i>main</i> para dejarlo todo en un solo bloque <i>try</i>, y vuelve a probar los distintos casos de fallo indicados antes, para ver que el programa sigue comport&aacute;ndose igual. </li>
+</ul>
+<hr>
+
+<h2 class="section">Lanzamiento de excepciones</h2>
+<p>Hemos visto cómo capturar excepciones que se produzcan en el c&oacute;digo, 
+  pero en lugar de capturarlas tambi&eacute;n podemos hacer que se propaguen al 
+  m&eacute;todo de nivel superior (desde el cual se ha llamado al método actual). Para esto,
+en el método donde se vaya a lanzar la excepción, se siguen 2 pasos:</p>
+<ul>
+  <li>Indicar en el m&eacute;todo que determinados tipos 
+  de excepciones o grupos de ellas pueden ser lanzados, cosa que haremos de la siguiente
+    forma, por ejemplo:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">public void lee_fichero() <b>
+throws </b>IOException, FileNotFoundException
+{
+    // Cuerpo de la función
+}</pre>
+<p>Podremos indicar tantos tipos de excepciones como queramos en la claúsula <i><b>throws</b></i>. 
+  Si alguna de estas clases de excepciones tiene subclases, tambi&eacute;n se 
+  considerar&aacute; que puede lanzar todas estas subclases.</p>
+</blockquote>
+<ul>
+  <li> Para lanzar la excepci&oacute;n (dentro del m&eacute;todo) utilizamos la instrucci&oacute;n <i><b>throw</b></i>, proporcion&aacute;ndole un objeto correspondiente 
+  al tipo de excepci&oacute;n que deseamos lanzar. Por ejemplo:</li>
+</ul><blockquote>
+  <pre class="codigo"><b>throw</b> new IOException(mensaje_error);</pre>
+</blockquote>
+<ul>
+  <li>Juntando estos dos pasos:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">public void lee_fichero() <b>
+throws </b>IOException, FileNotFoundException
+{
+    ...
+    throw new IOException(mensaje_error);
+    ...
+}</pre>
+</blockquote>
+<p>Podremos lanzar así excepciones en nuestras funciones para indicar 
+  que algo no es como debiera ser a las funciones llamadoras. Por ejemplo, si
+estamos procesando un fichero que debe tener un determinado formato, ser&iacute;a 
+  buena idea lanzar excepciones de tipo <b> ParseException</b> en caso de que la sintaxis 
+  del fichero de entrada no sea correcta.&nbsp;</p>
+<pre class="codigo">public void leeFich() <b>
+throws </b>ParseException
+{
+    ...
+    throw new ParseException(&quot;Error al procesar el fichero&quot;);
+    ...
+}
+
+...
+
+public void otroMetodo()
+{
+    try
+    {
+        leeFich();
+    } catch (ParseException e) {
+        System.out.println (&quot;Se ha producido un error al leer el fichero&quot;);
+        System.out.println (&quot;El mensaje es: &quot; + e.getMessage());
+    }
+}</pre>
+<p>NOTA: para las excepciones que no son de tipo <i> checked</i> no har&aacute; falta
+la cláusula <i>throws</i> en la declaración del método, pero seguir&aacute;n el mismo comportamiento que el resto, si 
+  no son capturadas pasar&aacute;n al método de nivel superior, y seguir&aacute;n 
+  as&iacute; hasta llegar a la funci&oacute;n principal, momento en el que si 
+  no se captura provocar&aacute; el error 
+  correspondiente.</p>
+<hr>
+<h3>Ejercicio 2: Lanzamiento de excepciones</h3>
+<p>Sigamos con la clase <i>Ej1.java</i> vista antes. Una vez tenemos comprobado que se pasan 2 par&aacute;metros, y que &eacute;stos son num&eacute;ricos, s&oacute;lo nos falta comprobar que se puede realizar una divisi&oacute;n correcta, es decir, que no se va a dividir por cero. Eso lo vamos a comprobar dentro del m&eacute;todo <i>divide.</i></p>
+<p>Al principio del m&eacute;todo, comprobamos si el segundo par&aacute;metro del mismo (el divisor) es cero, si lo es, lanzaremos una excepci&oacute;n indicando que el par&aacute;metro no es correcto. Dentro de los subtipos de excepciones de <b>RuntimeException</b>, tenemos una llamada <b>IllegalArgumentException</b> que nos puede ayudar. Probamos a poner estas l&iacute;neas al principio del m&eacute;todo <i>divide</i>:</p>
+<pre class="codigo">public static int divide(int dividendo, int divisor)
+{
+	<b>if (divisor == 0)
+		throw new IllegalArgumentException (&quot;Divisor incorrecto&quot;);
+
+	...</b>
+}</pre>
+<p>Compila y ejecuta la clase. Prueba con algo como:
+</p>
+<pre class="codigo">java sesion04.Ej1 20 0</pre>
+<p>&iquest;Qu&eacute; mensaje aparece? &iquest;Qu&eacute; significa?</p>
+<p>  Captura la excepci&oacute;n en el <i>main</i> y muestra la traza del error con <em>printStackTrace</em>. Observa que capturar la excepci&oacute;n y hacer <em>printStackTrace</em> produce casi el mismo resultado que no capturarla. Esta t&eacute;cnica se utiliza en la fase de depurado para corregir errores del programa. Una vez depurado, ya se muestran mensajes de error m&aacute;s &quot;amigables&quot;.</p>
+<hr>
+<h2 class="section">Creaci&oacute;n de nuevas excepciones</h2>
+<p>Adem&aacute;s de utilizar los tipos de excepciones contenidos en la distribuci&oacute;n 
+  de Java, podremos crear nuevos tipos que se adapten a nuestros problemas.</p>
+<p>Para crear un nuevo tipo de excepciones simplemente deberemos crear una clase 
+  que herede de <b> Exception</b> o cualquier otro subgrupo de excepciones existente. 
+  En esta clase podremos a&ntilde;adir m&eacute;todos y propiedades para almacenar 
+  informaci&oacute;n relativa a nuestro tipo de error. Por ejemplo:</p>
+<pre class="codigo">public class MiExcepcion extends Exception
+{
+	public MiExcepcion (String mensaje)
+	{
+		super(mensaje);
+	}
+}</pre>
+<p>Adem&aacute;s podremos crear subclases de nuestro nuevo tipo de excepci&oacute;n, 
+  creando de esta forma grupos de excepciones. Para utilizar estas excepciones
+(capturarlas y/o lanzarlas) hacemos lo mismo que lo explicado antes para las
+excepciones que se tienen definidas en Java. Por ejemplo:</p>
+
+<pre class="codigo">public void unMetodo() <b>
+throws MiException</b>
+{
+    ...
+    throw new MiException(&quot;Error en el metodo&quot;);
+    ...
+}
+
+...
+
+public void otroMetodo()
+{
+    try
+    {
+        unMetodo();
+    } catch (<b>MiException e</b>) {
+        ...
+    }
+}</pre>
+<hr>
+<h3>Ejercicio 3: Creaci&oacute;n de excepciones</h3>
+<p>Vamos a terminar con la clase <i>Ej1.java</i> que estamos completando. Vamos a a&ntilde;adir una &uacute;ltima excepci&oacute;n al m&eacute;todo <i>divide</i> para comprobar que se realiza una divisi&oacute;n de n&uacute;meros naturales (es decir, enteros mayores que 0). </p>
+<ul>
+  <li>Para ello vamos a crear una excepci&oacute;n propia, llamada <b>NumeroNaturalException</b>, en el paquete <strong>sesion04</strong>, como la siguiente:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">public class NumeroNaturalException extends Exception
+{
+	public NumeroNaturalException(String mensaje)
+	{
+		super(mensaje);
+	}
+}</pre>
+  <p>&iquest;Para qu&eacute; sirve la llamada a <i>super</i> en el constructor en este caso?</p>
+</blockquote>
+<ul>
+  <li>Ahora a&ntilde;adiremos el lanzamiento de esta excepci&oacute;n en el m&eacute;todo <i>divide</i>, comprobando antes de dividir que tanto dividendo como divisor son positivos:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">public static int divide(int dividendo, int divisor) <b>
+</b>{<br>   ...
+   <b>if (dividendo &lt; 0 || divisor &lt; 0)
+		throw new NumeroNaturalException(&quot;La division no es natural&quot;);</b>
+<b>
+   ...</b>
+}</pre>
+  <p>Prueba a compilar la clase. &iquest;Qu&eacute; error te da? &iquest;A qu&eacute; puede deberse?</p>
+</blockquote>
+<ul>
+  <li>Para subsanarlo, hay que indicar en el m&eacute;todo <i>divide</i> que dicho m&eacute;todo puede lanzar excepciones de tipo <b>NumeroNaturalException</b>. Eso se hace mediante una cl&aacute;usula <i>throws</i> en la declaraci&oacute;n del m&eacute;todo: </li>
+</ul>
+<blockquote>
+  <pre class="codigo">public static nt divide(int dividendo, int divisor) <b>
+throws NumeroNaturalException</b>
+{<b>
+		...</b>
+}</pre>
+  <p>NOTA: esta cl&aacute;usula s&oacute;lo hay que introducirla para excepciones que sean de tipo <i>checked</i>, es decir, que se pueda predecir que pueden pasar al ejecutar un programa.&nbsp; Dichas excepciones son los subtipos fuera de <b>RuntimeException</b>, y cualquier excepci&oacute;n que podamos crear nosotros. Por eso antes cuando utilizamos <em>IllegalArgumentException </em>no hemos tenido que a&ntilde;adirla, porque pertenece a <em>RuntimeException</em>.</p>
+  <p>Prueba a compilar la clase. &iquest;Qu&eacute; error te da ahora? &iquest;Por qu&eacute;?</p>
+</blockquote>
+<ul>
+  <li>Para terminar de corregir la clase, captura la excepci&oacute;n que se lanza en el m&eacute;todo <i>divide, </i>cuando utilizamos dicho m&eacute;todo en el <i>main</i>.</li>
+</ul>
+<ul>
+  <li>&iquest;Para qu&eacute; sirve la llamada a &quot;getMessage()&quot; (qu&eacute; texto obtenemos con esa llamada)?</li>
+</ul>
+<ul>
+  <li>Crea una nueva excepci&oacute;n <strong>DivideParException</strong> en el paquete <strong>sesion04</strong>, que controle si se va a dividir un n&uacute;mero impar entre 2. En ese caso, deber&aacute; lanzar una excepci&oacute;n indicando que la divisi&oacute;n no es exacta. A&ntilde;ade el c&oacute;digo necesario al programa principal para controlar esta excepci&oacute;n nueva. </li>
+</ul>
+<ul>
+  <li>Compila y ejecuta el programa de las siguientes formas, observando que da la salida adecuada:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">java sesion04.Ej1 20 4          <b>// 5
+</b>java sesion04.Ej1 20             <b>// &quot;Faltan parametros&quot;
+</b>java sesion04.Ej1 20 hola      <b>// &quot;Formato incorrecto del parametro&quot;
+</b>java sesion04.Ej1 20 0          <b>// Excepci&oacute;n de tipo IllegalArgumentException
+</b>java sesion04.Ej1 20 -1         <b>// &quot;Error: La division no es natural&quot;<br></b>java sesion04.Ej1 5 2           <strong>// &quot;Error: La divisi&oacute;n entre 2 no es exacta&quot;</strong></pre>
+</blockquote>
+<p></p>
+<hr>
+<p><b>PARA ENTREGAR</b></p>
+<p>Guarda en la carpeta <strong>modulo2</strong> de tu CVS los siguientes elementos para esta sesi&oacute;n: </p>
+<ul>
+  <li>Todos los ficheros fuente (<b>Ej1, NumeroNaturalException </b>y <strong>DivideParException</strong>), dentro del paquete <strong>sesion04</strong>, cada uno con las modificaciones que se han ido solicitando.</li>
+  <li>Fichero de texto <b>respuestas.txt</b> de esta sesi&oacute;n contestando a todas las preguntas formuladas.</li>
+</ul>
+<p>&nbsp;</p>
+
+<h2>&nbsp;</h2>
+</body>
+</html>

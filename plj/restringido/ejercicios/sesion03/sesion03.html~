@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!Doctype html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Sesi&oacute;n 3: Programaci&oacute;n Orientada a Objetos II</title>
+
+<link rel="stylesheet" href="../apuntes.css" type="text/css" />
+</head>
+<body>
+
+<h1>Sesión 3. Programación Orientada a Objetos II</h1>
+
+<h2>Herencia y polimorfismo</h2>
+
+<p>Con la <b>herencia</b> podemos definir una clase a partir de otra
+que ya exista, de forma que la nueva clase tendr&aacute; todas las
+variables y m&eacute;todos de la clase a partir de la que se crea,
+m&aacute;s las variables y m&eacute;todos nuevos que necesite. A la
+clase base a partir de la cual se crea la nueva clase se le
+llama <b>superclase</b>. A las clases hijas se les
+llama <b>subclases</b>.</p>
+
+<p>  <img src="images/herencia.jpg" nosave="" height="79" width="250" /> </p>
+
+<p>Por ejemplo, tenemos una clase gen&eacute;rica <i>Animal</i>, y
+heredamos de ella para formar clases m&aacute;s espec&iacute;ficas,
+como <i>Pato</i> , <i>Elefante</i>, o <i>Le&oacute;n</i>. Si tenemos
+por ejemplo el m&eacute;todo <i>dibuja(Animal a)</i>, podremos pasarle
+a este m&eacute;todo como par&aacute;metro tanto un <i>Animal</i> como
+un <i>Pato</i>, <i>Elefante, </i>etc. Esto se conoce
+como <b>polimorfismo</b>. </p>
+
+<p>Las flechas hacia arriba indican una relación <b>ES-UN</b>:</p>
+
+<ul>
+  <li>Una subclase A hereda de una superclase B si pasa el <strong>test ES-UN</strong>. 
+    Este test consiste, sencillamente, en comprobar que A <strong>ES-UN</strong> 
+    B. Por ejemplo, un Sonar <strong>ES-UN</strong> Sensor. O tambi&eacute;n, 
+    un Perro <strong>ES-UN</strong> Animal. O tambi&eacute;n, un Empleado <strong>ES-UNA</strong> 
+    Persona. Pero un Animal no <strong>ES-UN</strong> Naturaleza (por lo que Animal 
+    no puede ser subclase de Naturaleza).</li>
+  <li>Construye una subclase s&oacute;lo cuando necesites hacer una versi&oacute;n 
+    <strong>m&aacute;s espec&iacute;fica</strong> de una clase y necesites sobrecargar 
+    o a&ntilde;adir nuevas conductas.</li>
+</ul>
+
+<ul>
+  <li> <b>Herencia</b>: Se utiliza la palabra <b>extends</b> para decir de qu&eacute; 
+    clase se hereda. Para hacer que <i>Pato </i>herede de <i>Animal</i>:</li>
+</ul>
+<ul>
+  <pre class="codigo">class Pato extends Animal</pre>
+</ul>
+<ul>
+  <li> <b>this</b> se usa para hacer referencia al objeto que est&aacute; ejecutando 
+    el m&eacute;todo :</li>
+</ul>
+<ul>
+  <pre class="codigo">public class MiClase {<br />&nbsp;&nbsp; int i;<br />&nbsp;&nbsp; public MiClase (int i) {<br /><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.i = i; 	// i de la clase = parametro i<br /></b>&nbsp;&nbsp; }<br />}</pre>
+</ul>
+<ul>
+  <li> <b>super</b> se usa para hacer referencia al objeto que est&aacute; ejecutando 
+    el m&eacute;todo <em>entendido como un objeto de la clase padre</em>. Si la 
+    clase <i>MiClase</i> tiene un m&eacute;todo <i>Suma_a_i(...)</i>, lo llamamos 
+    con:</li>
+</ul>
+<ul>
+  <pre class="codigo">public class MiNuevaClase extends MiClase {<br />&nbsp;&nbsp; public void Suma_a_i (int j) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; i = i + (j / 2);<br /><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; super.Suma_a_i (j);<br /></b>&nbsp; }<br />}</pre>
+</ul>
+<h2> Clases abstractas e interfaces</h2>
+<p>Mediante las <b>clases abstractas</b> y los <b>interfaces</b> podemos definir 
+  el esqueleto de una familia de clases, de forma que los subtipos de la clase 
+  abstracta o la clase que implemente la interfaz implementen ese esqueleto para 
+  dicho subtipo concreto. Por ejemplo, podemos definir en la clase <code>Animal</code> 
+  el m&eacute;todo <code>dibuja()</code> y el m&eacute;todo <code>imprime()</code>, 
+  y que <code>Animal</code> sea una clase abstracta o un interfaz. </p>
+
+<p>Usa una clase abstracta cuando quieras definir
+una <strong>plantilla</strong> para para un grupo de subclases, y
+tengas alg&uacute;n c&oacute;digo de implementaci&oacute;n que todas
+las clases puedan usar. Haz la clase abstracta cuando quieras
+garantizar que nadie va a hacer objetos de esa clase.</li>
+
+<p>  <img src="images/interfaz.jpg" nosave="" height="132" width="250" /> </p>
+
+<p>Vemos la diferencia entre clase, clase abstracta e interfaz con este esquema: </p>
+<ul>
+  <li>En una <b>clase</b>, al definir <code>Animal</code> tendr&iacute;amos que 
+    implementar los m&eacute;todos <code>dibuja()</code> e <code>imprime()</code>. 
+    Las clases hijas no tendr&iacute;an por qu&eacute; implementar los m&eacute;todos, 
+    a no ser que quieran adaptarlos a sus propias necesidades.</li>
+  <li>En una <b>clase abstracta</b> podr&iacute;amos implementar los m&eacute;todos 
+    que nos interese, dejando sin implementar los dem&aacute;s (dej&aacute;ndolos 
+    como m&eacute;todos abstractos). Dichos m&eacute;todos tendr&iacute;an que 
+    implementarse en las clases hijas.</li>
+  <li>En un <b>interfaz</b> no podemos implementar ning&uacute;n m&eacute;todo 
+    en la clase padre, y cada clase hija tiene que hacer sus propias implementaciones 
+    de los m&eacute;todos. Adem&aacute;s, las clases hija podr&iacute;an implementar 
+    otros interfaces.</li>
+</ul>
+<p>La especificaci&oacute;n en Java es como sigue. </p>
+<p>Si queremos definir una clase (por ejemplo, <code>Animal</code>), como clase 
+  abstracta y otra clase (por ejemplo, <code>Pato</code>) que hereda de esta clase, 
+  debemos declararlo as&iacute;: </p>
+<center>
+  <table border="1" cols="2" width="356">
+    <caption>&nbsp;
+    </caption>
+    <tbody>
+    </tbody>
+    <tbody>
+      <tr> 
+        <td width="346"> <pre class="codigo">public <b>abstract</b> class Animal<br />{<br />&nbsp;&nbsp; abstract void dibujar ();<br />&nbsp;&nbsp; void imprimir () { codigo; }<br />}</pre> 
+        </td>
+      </tr>
+      <tr> 
+        <td width="346"> <pre class="codigo">public class Pato <b>extends</b> Animal<br />{<br />&nbsp;&nbsp; void dibujar() { codigo; }<br />}</pre> 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</center>
+<p>Si en lugar de definir <code>Animal</code> como clase abstracta, lo definimos 
+  como <strong>interfaz</strong>, debemos declarar que la clase <code>Pato</code> 
+  <strong>implementa la interfaz</strong>, y debemos escribir el c&oacute;digo 
+  de esa implementaci&oacute;n en la clase <code>Pato</code>:</p>
+<center>
+  <table border="1" cols="2" width="354">
+    <caption>&nbsp;
+    </caption>
+    <tbody>
+    </tbody>
+    <tbody>
+      <tr> 
+        <td width="344"> <pre class="codigo">public <b>interface</b> Animal<br />{<br />&nbsp;&nbsp; void dibujar ();<br />&nbsp;&nbsp; void imprimir ();<br />}</pre> 
+        </td>
+      </tr>
+      <tr> 
+        <td width="344"> <pre class="codigo">public class Pato <b>implements</b> Animal<br />{<br />&nbsp;&nbsp; void dibujar() { codigo; }<br />&nbsp;&nbsp; void imprimir() { codigo; }<br />}</pre> 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</center>
+<p>La diferencia fundamental es que la clase <code>Pato</code> puede implementar 
+  m&aacute;s de un interfaz, mientras que s&oacute;lo es posible heredar de una 
+  clase padre (en Java no existe la herencia m&uacute;ltiple):</p>
+<pre class="codigo">public class Pato <b>implements</b> Animal, Volador<br />{<br />   void dibujar() { codigo; }  // viene de la interfaz Animal<br />   void imprimir() { codigo; } // viene de la interfaz Animal<br />   void vuela() { codigo; }    // viene de la interfaz Volador<br />}</pre>
+<ul>
+</ul>
+
+<hr />
+<h3>Ejercicio 1. Un ejemplo de herencia </h3>
+    <p> Considera la siguiente clase <code>ObjetoGeometrico</code></p>
+
+<pre class="codigo">
+package sesion3;
+
+public class ObjetoGeometrico {
+   double xMin, yMin;
+   
+   public ObjetoGeometrico(double xMin, double yMin){
+      this.xMin = xMin;
+      this.yMin = yMin;
+   }
+   
+   public Punto puntoInicial() {
+      return new Punto(xMin, yMin);
+   }
+}
+</pre>
+
+<p>Estamos definiendo un <code>ObjetoGeometrico</code> como algo que
+contiene una coordenada <em>x</em> (la coordenada <em>x</em> más
+pequeña del objeto geométrico) y una coordenada <em>y</em> (la
+coordenada y más pequeña del objeto geométrico). Esta es una
+característica común de todos los objetos geométricos.</p>
+
+<p> La clase tiene el método <code>puntoInicial()</code> que devuelve
+un objeto <code>Punto</code> creado a partir de las coordenadas
+mínimas <em>x</em> e <em>y</em> del objeto geométrico.</p>
+
+<p> Vamos a comenzar con el ejercicio. </p>
+
+<ol>
+  <li>
+    <p>Copia todas las clases geométricas
+    (<code>Punto</code>, <code>Segmento</code>, <code>Circulo</code>
+    y <code>Rectangulo</code>) del paquete <code>sesion2</code>
+    al <code>sesion3</code>. Crea en este paquete la
+    clase <code>ObjetoGeometrico</code> anterior. Haz que todas las
+    clases geométricas sean subclases de ella. Verás que aparecen
+    errores en los constructores de las clases
+    geométricas. Corrígelos. </p>
+
+    <p> Un truco de Eclipse muy útil: cuando Eclipse detecta un error
+    aparece un indicador rojo en el editor a la izquierda de la línea
+    donde se ha producido el error. Si posicionas el ratón sobre el
+    indicador rojo aparece un mensaje indicando cuál es el error. Más
+    aún: si en el indicador de error hay un pequeño icono con una
+    bombilla es porque Eclipse cree que puede corregir el error. Haz
+    un click (¡sólo uno!) en la bombilla y Eclipse te ofrecerá más de
+    una opción para solucionar el error. Haz un doble click en la que
+    creas más oportuno (normalmente la primera es la correcta)
+    y <em>Eclipse corregirá el error</em>. Así de sencillo.</p>
+
+    <p>Copia la clase <code>TestGeom</code> del
+    paquete <code>sesion2</code> al <code>sesion3</code>. Añade en
+    esta clase algunas sentencias para probar los cambios que acabas
+    de hacer y responde las siguientes preguntas en el
+    fichero <code>respuestas.txt</code> (nuevo fichero en el paquete
+    correspondiente a la sesión actual), después de haber hecho las
+    pruebas oportunas:</p>
+
+    <ul>
+      <li>¿Se pueden crear objetos de la clase <code>ObjetoGeometrico</code>?</li>
+      <li>¿Un objeto de cualquiera de las subclases geométricas es
+      también un objeto de la
+      clase <code>ObjetoGeometrico</code>? ¿Cómo lo has comprobado?</li>
+    </ul>
+  </li>
+
+  <li>
+    <p>Añade a la clase <code>ObjetoGeometrico</code> el siguiente método abstracto </p>
+
+<pre class="codigo">
+public abstract double area();
+</pre>
+    <p>Responde en <code>respuestas.txt</code>:
+    <ul>
+      <li> ¿Qué cambio adicional hay que hacer para que la
+      clase <code>ObjetoGeometrico</code> no tenga errores?</li>
+      <li> ¿Se pueden ahora crear objetos de esa clase?</li>
+      <li> ¿Qué error aparece en las subclases de <code>ObjetoGeometrico</code>?
+    </ul>
+
+    <p>Modifica todas las subclases de <code>ObjetoGeometrico</code>
+    para corregir el error. <p>
+  </li>
+
+  <li>
+    <p>Añade a la clase <code>ObjetoGeometrico</code> el método
+    abstracto <code>abstract Rectangulo limites();</code> que devuelve
+    el rectángulo que limita (de forma estricta) al objeto.</p>
+
+    <p>Prueba el nuevo método con alguna prueba en la
+    clase <code>TestGeom</code>.</p>
+  </li>
+
+  <li>
+    <p>Añade e implementa en la clase <code>ObjetoGeometrico</code> el
+    método siguiente</p>
+
+<pre class="codigo">
+public boolean posibleInterseccion(ObjetoGeometrico objGeom2) {
+   // añadir aquí la implementación
+}
+</pre>
+
+    <p>Este método debe devolver <code>true</code> cuando intersectan
+    los rectángulos límites de los objetos geométricos y false en otro
+    caso.</p>
+
+    <p>Prueba el método en la clase de pruebas.</code>
+  </li>
+  <li> 
+     <p>Por último, escribe en la clase <code>TestGeom</code> un
+     método que haga la siguiente prueba: crear algunos objetos
+     geométricos, guardarlos todos en un array (el mismo array para
+     todos) y recorrer el array imprimiendo por la salida estándar el
+     tipo de objeto geometrico y su área:</p>
+
+<pre class="codigo">
+El objeto 1 es un circulo de área 3.453245
+El objeto 2 es un segmento de área 0.0
+El objeto 3 es un punto de área 0.0
+...
+</pre>
+
+    <p>Haz que el método principal de <code>TestGeom</code> termine
+    llamando a esta prueba.</p>
+  </li>
+</ol>
+
+<h3>Ejercicio 2. Crea una jerarqu&iacute;a de clases</h3>
+<ol>
+  <li><p>Define e implementa un ejemplo de jerarqu&iacute;a de
+  clases. Define una clase ejecutable <code>Test</code> que realice
+  unas pruebas para comprobar que el ejemplo funciona
+  correctamente.</p></li>
+</ol>
+
+<h3>Ejercicio 3. Un ejemplo de interfaces </h3>
+
+<p>En este ejercicio vamos a continuar con el ejemplo de las figuras
+geométricas, definiendo las interfaces <code>Imprimible</code>
+y <code>Dibujable</code>.</p>
+
+<ol>
+  <li> 
+    <p>Vamos a empezar por crear una interfaz en Eclipse. Pincha en el
+    paquete <code>sesion3</code> y escoge la opción <code>New >
+    Interface</code>. Escribe <code>Imprimible</code> como nombre de
+    la interfaz.</p>
+
+    <p>Escribe el siguiente código:</p>
+
+<pre class="codigo">
+package sesion3;
+
+public interface Dibujable {
+   public void draw();
+}
+</pre>
+
+    <p>Fíjate que una interfaz define un conjunto de métodos pero no
+    proporciona la implementación. La implementación debe estar en la
+    clase que implementa la interfaz. De esta forma, cualquier objeto
+    de una clase que implementa la interfaz <code>Dibujable</code> va
+    a poder responder al método <code>draw()</code>.</p>
+
+    <p>Ahora modifica las
+    clases <code>Segmento</code>, <code>Circulo</code>
+    y <code>Rectangulo</code> para que implementen la
+    interfaz <code>Dibujable</code>. Puedes poner como implementación
+    de los métodos <code>draw()</code> que se escriba un mensaje en la
+    salida estándar.</p>
+
+    <p>Añade a la clase <code>TestGeom</code> el
+    método <code>testInterfazDraw()</code> en el que se pruebe la
+    interfaz. Llama a ese método en el último paso de la ejecución
+    de <code>TestGeom</code>.</p>
+
+  </li>
+  <li>
+    <p>Vamos a complicar un poco el ejemplo. Supongamos la interfaz <code>Medible</code> definida de la siguiente forma:</p>
+
+  </li>  
+
+</ol>
+<hr />
+
+<h2>Modificadores de acceso </h2>
+<p>Un elemento (m&eacute;todo, variable de clase o variable de instancia) de una 
+  clase tiene asociado unas condiciones de acceso seg&uacute;n el modificador 
+  de acceso que definamos en el mismo. El modificador de acceso define desde qu&eacute; 
+  clases se va a poder acceder al elemento. As&iacute;, por ejemplo, un m&eacute;todo 
+  con modificador de acceso <code>public</code> permite que desde <em>cualquier</em> 
+  otra clase se realice una llamada al mismo.</p>
+<p>En Java existen cuatro posibles niveles de acceso: <code>private</code>, <em>vac&iacute;o</em> 
+  (cuando no declaramos nada), <code>protected</code>, <code>public</code>. Estos 
+  cuatro niveles tienen la siguiente pol&iacute;tica de acceso:</p>
+<ul>
+  <li><span style="font-weight: bold;"><code>private</code></span>: no se permite 
+    el acceso al elemento, ni siquiera para las subclases. <span
+ style="font-weight: bold;">S&oacute;lo se puede acceder al elemento <em>desde 
+    la misma clase</em></span>. Si, por ejemplo, declaramos un m&eacute;todo A 
+    de una superclase Super como private, ese m&eacute;todo A no es heredado por 
+    las subclases de Super.</li>
+  <li><span style="font-weight: bold;"><em>vac&iacute;o</em></span>: es el nivel 
+    de acceso que tiene un elemento si no declaramos nada. <span
+ style="font-weight: bold;">Se puede acceder al elmento <em>desde cualquier clase 
+    del mismo paquete</em></span>. Si, por ejemplo, el campo A de la clase Clase1 
+    que est&aacute; en el paquete <code>sesion2</code> no tiene modificador de 
+    acceso (tiene un acceso por defecto), cualquier clase <em>de este paquete</em> 
+    va a poder acceder a su valor.</li>
+  <li><strong><code>protected</code></strong>: puede ser que una subclase no est&eacute; 
+    en el mismo paquete que la superclase. Si un elemento tiene el modificador 
+    protected, <strong>se puede acceder a &eacute;l desde el mismo paquete y desde 
+    cualquier subclase, aunque la subclase no est&eacute; en el mismo paquete</strong>.</li>
+  <li><strong><code>public</code></strong>: un elemento public <strong>es accesible 
+    desde cualquier otra clase</strong> sin ninguna restricci&oacute;n.</li>
+</ul>
+<p>Vamos a con un peque&ntilde;o ejercicio para comprobar los modificadores de 
+  acceso de Java</p>
+<hr/>
+<h3>Ejercicio 4: Modificadores de acceso</h3>
+<ol>
+  <li>
+    <p>Supongamos la siguiente clase en el paquete <code>modulo1.sesion5</code></p>
+    <pre class="codigo">package modulo1.sesion5;
+public class Acceso {
+    public int valorPublico;
+    int valorDefecto;
+    protected int valorProtected;
+    private int valorPrivate;
+}</pre>
+    <p>y ahora supongamos las dos siguientes clases que van a comprobar el acceso 
+      a los campos de Acceso:</p>
+    <pre class="codigo">package modulo1.sesion5;
+public class TestAcceso{
+    public void testeador() {
+        int i;
+        
+        Acceso acceso = new Acceso();
+        i = acceso.valorPrivado;
+        i = acceso.valorDefecto;
+        i = acceso.valorProtected;
+        i = acceso.valorPublico;
+    }
+}</pre>
+    <pre class="codigo">package modulo1.sesion5;
+public class TestAccesoSubclase extends Acceso{
+    public void testeador() {
+        int i;
+       
+        i = this.valorPrivado;
+        i = this.valorDefecto;
+        i = this.valorProtected;
+        i = this.valorPublico;
+    }
+}
+</pre>
+    <p>La primera clase es una clase normal que est&aacute; en el mismo paquete 
+      y la segunda es una subclase de Acceso. Contesta a las siguientes preguntas 
+      en el fichero <strong>respuestas.txt</strong>:</p>
+    <ul>
+      <li>&iquest;En qu&eacute; campos de la clase <code>TestAcceso</code> hay 
+        un error?</li>
+      <li>&iquest;En qu&eacute; campos de la clase <code>TestAccesoSubclase</code> 
+        hay un error?</li>
+    </ul>
+  </li>
+  <li>Copia ahora ambas clases de prueba en el paquete <code>modulo1.sesion4</code>, 
+    modificando la instrucci&oacute;n package y a&ntilde;adiendo el import de 
+    la clase <code>modulo1.sesion5.Acceso</code>: 
+    <pre class="codigo">package modulo1.sesion4;
+import modulo1.sesion5.Acceso;</pre>
+    <p>&iquest;Qu&eacute; ha cambiado ahora? &iquest;Qu&eacute; componentes son 
+      accesibles? </p>
+  </li>
+</ol>
+
+<h3>Ejercicio 5: Un ejemplo completo</h3>
+<hr/>
+
+</body>
+</html>
+

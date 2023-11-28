@@ -1,0 +1,1017 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!Doctype html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1" />
+  <title>Sesión 1: Comenzando a programar en Java</title>
+
+<link rel="stylesheet" href="../apuntes.css" type="text/css" />
+</head>
+<body>
+
+<h1>Sesión 1. Comenzando a programar en Java</h1>
+<h2>El lenguaje Java</h2>
+
+<p>Java es un lenguaje de programación orientado a objetos que nace en
+1995 en un grupo de trabajo de Sun Microsystems liderado por James
+Gosling. Con una sintaxis similar a C y una filosofía orientada a
+objetos como Smalltalk, muy pronto se convirtió en un lenguaje muy
+popular. Hoy es uno de los lenguajes más usados en todos los entornos
+de programación, desde móviles hasta servidores UNIX,
+pasandos por dispositivos multimedia y ordenadores personales.</p>
+
+<p>La plataforma Java consta de tres partes fundamentales:</p>
+
+<ul>
+  <li>El lenguaje de programación mismo.</li>
+  <li>La máquina virtual de Java, que permite la portabilidad en ejecución.</li>
+  <li>Un conjunto de APIs, bibliotecas estándar para el lenguaje.</li>
+</ul>
+
+<p>Una de las ideas fundamentales de Java es la portabilidad. Una de
+las frases más conocidas sobre Java es la máxima WORE (Write Once Run
+Everywhere, escribe una vez y ejecuta en cualquier lugar). Para
+conseguir esto es fundamental el carácter interpretado del lenguaje. A
+diferencia de otros lenguajes como C o C++, el compilador de Java no
+produce código máquina de un procesador dado, sino que produce
+un <code>código intermedio</code> o <em>bytecode</em> que es ejecutado por
+una <code>máquina virtual java</code> (JVM). Esta máquina virtual
+garantiza la portabilidad. Cualquier sistema operativo para el que se
+haya desarrollado una máquina virtual Java (como Windows, Linux, Mac
+OS X, Solaris, ...) puede ejecutar cualquier programa Java compilado a
+<em>bytecodes</em>. Y no sólo eso, sino que también existen máquinas virtuales
+para dispositivos como teléfonos móviles o descodificadores de
+televisión digital. En estas plataformas también se pueden ejecutar
+los programas Java.</p>
+
+<p>La siguiente figura muestra el proceso de compilación y ejecución
+de un programa Java:</p>
+
+<center>
+  <img src="images/bytecodes.png" alt="Compilación y ejecución de
+ programas Java."  width="396" height="461" />
+</center>
+
+<p>El hecho de que la ejecución de los programas Java sea realizada
+por un intérprete, en lugar de ser código nativo, ha generado la
+suposición de que los programas Java son más lentos que programas
+escritos en otros lenguajes compilados (como C o C++). Aunque esto es
+cierto en algunos casos, se ha avanzado mucho en la tecnología de
+interpretación de <em>bytecodes</em> y en cada nueva versión de Java se
+introducen optimizaciones en este funcionamiento. En la última versión
+de Java se introduce una nueva JVM servidora que queda residente en el
+sistema. Esta máquina virtual permite ejecutar más de un programa Java
+al mismo tiempo, mejorando mucho el manejo de la memoria. Por último,
+es posible encontrar bastantes benchmarks en donde los programas Java
+son más rápidos que programas C++ en algunos aspectos.</p>
+
+<p>El tirón final en la popularidad de Java se debió a Internet y la
+World Wide Web. La JVM se incorporó a los navegadores web más
+populares de la época (Mosaic y Netscape) y posibilitó la distribución
+por Internet de programas Java y la ejecución de estos programas en
+los navegadores web. Estos programas se
+denominaron <code>Applets</code>. Hoy en día los applets han caído en
+desuso, pero Java sigue presente en Internet en forma de JavaScript,
+páginas JSP, servlets, Enterprise JavaBeans, servicios web y otras
+muchas tecnologías. </p>
+
+<p>El lenguaje de programación Java ha ido sufriendo distintos cambios
+a lo largo de su historia. La última versión estable se denomina Java
+5.0. El desarrollo del lenguaje y de las API (Interfaces de
+Programación) se realiza por comités en los que participan, a parte de
+Sun Microsystems, representantes de las más importantes empresas
+tecnológicas, así como usuarios destacados del lenguaje. El proceso en
+el que se propone un tema de innovación en el lenguaje, se forma un
+grupo de trabajo y se elabora y aprueba una propuesta final se
+denomina JCP (Java Community Process).</p>
+
+<p>Otra característica fundamental de Java es el extenso número de
+APIs (definidas por clases y paquetes) desarrallodas para el
+lenguaje. Estas APIs se definen y desarrollan bajo el modelo de
+JCP y, cuando están maduras, se incorporan en el lenguaje. Por
+ejemplo, en la edición 5.0 de Java se incorporan paquetes: </p>
+
+<ul>
+   <li><code>javax.crypto</code>: conjunto de clases e interfaces para
+   operaciones de criptografía.</li>
+   <li><code>java.sql</code>: API para acceder y procesar datos
+   almacenados en una fuente de datos (normalmente una base de datos
+   relacional).</li>
+   <li><code>java.awt</code> y <code>javax.swing</code>: clases e interfaces
+   para escribir programas de interfaz gráfica.</li>
+</ul>
+
+<p>Se han definido varias distribuciones de Java orientadas a
+distintos tipos de aplicaciones. Todas ellas tienen como núcleo el
+lenguaje de programación, pero se diferencian en las APIs
+incluídas. Las más importantes son:</p>
+
+<ul>
+   <li>J2ME: Java 2 Micro Edition. Distribución de Java orientada a
+   aplicaciones para dispositivos móviles como teléfonos móviles o
+   PDAs.</li>
+   <li>J2SE: Java 2 Standard Edition. Edición de Java orientada a
+   aplicaciones de escritorio en ordenadores personales.</li>
+   <li>J2EE: Java 2 Enterprise Edition. Distribución de Java orientada
+   a aplicaciones distribuidas que se ejecutan en red.</li>
+</ul>
+
+<hr>
+<h3>Ejercicio 1: Búsqueda en Web sobre Tecnologías Java</h3>
+<ol>
+   <li>Busca en Google el nombre de 3 dispositivos (distintos de un
+   ordenador) en donde se puedan ejecutar programas Java. Describe
+   brevemente cada uno de ellos.</li>
+
+   <li>Busca en <code>java.sun.com</code> y encuentra 4 APIs que se
+   incluyan en Java 5.0 (distintas de las que hemos comentado
+   anteriormente). Indica el nombre del paquete (o paquetes) y
+   descríbe cada uno en un par de frases.</li>
+
+   <li>Busca en internet el nombre de 2 JSR de Java que están en
+   desarrollo en la actualidad o que se han cerrado
+   recientemente. Puedes usar como palabra de búsqueda JSR y "public
+   review". El estado de "Public Review" de una especificación se
+   refiere a una especificación que se ha cerrado y que se ofrece al
+   público para recibir comentarios.</li>
+   <li>Escribe las respuestas en un fichero de texto, con el nombre
+   de <code>respuestas.txt</code>.</li>
+</ol>
+
+<hr>
+
+<h2>Compilación y ejecución de programas Java</h2>
+
+<p>Para programar en Java es necesario el compilador y la máquina
+virtual. Ambos programas están incluídos en el JDK (Java Development
+Kit, kit de desarrollo de Java) que distribuye Sun. Existen otros
+compiladores y máquinas virtuales desarrollados por otras empresas
+como IBM o BEA weblogic. Pero todos ellos son compatibles con las
+especificaciones de Java.</p>
+
+<p>El nombre del compilador Java es <code>javac</code>, y el de la máquina
+virtual java es <code>java</code>. Se les invoca desde línea de comando de
+la siguiente forma:<p>
+
+<pre class="codigo">
+&gt; javac Ejemplo.java
+&gt; java Ejemplo
+</pre>
+
+<p> Los programas <code>javac</code> y <code>java</code> se encuentran en el
+JDK. En el ejercicio siguiente vamos a instalarlos en el ordenador. </p>
+
+<hr>
+<h3>Ejercicio 2: Instalación del JDK de Sun</h3>
+<ol>
+  <li>
+  <p>Instala el JDK (Java Developer Kit) 5.0 (se encuentra
+  en la sección de <code>recursos</code> de la web del curso). Es el
+  conjunto de herramientas que Sun proporciona para desarrollar en
+  Java. Acepta las opciones por defecto que te propone la
+  instalación.</p>
+  </li>
+
+  <li>
+  <p>Comprueba que la instalación ha funcionado correctamente. Para
+  ello abre una ventana del sistema operativo y prueba a ejecutar el
+  compilador de Java. </p></li>
+
+<pre class="codigo">
+> C:\Archivos de programa\Java\jdk1.5.0_04\bin\javac
+</pre>
+
+  <li>
+  <p>Para hacer más sencillas las llamadas a los comandos, actualiza
+  la variable de entorno <code>PATH</code>, añadiendo el
+  directorio <code>C:\Archivos de programa\Java\jdk1.5.0_04\bin</code>
+  </li>
+
+<pre class="codigo">
+> set PATH=%PATH%;\Archivos de programa\Java\jdk1.5.0_04\bin
+</pre>
+
+  <li><p>Comprueba que todo funciona bien escribiendo:</p>
+  </li>
+
+<pre class="codigo">> java -version</pre>
+
+</ol>
+<hr>
+
+<p>Los ficheros fuente de Java tienen la extensión <code>.java</code>.
+Cada fichero <code>.java</code> define una clase Java pública (y,
+posiblemente, más de una clase privada usada por la clase pública).
+Los ficheros de código intermedio generados por la compilación tienen
+la extensión <code>.class</code>. La compilación de un
+fichero <code>.java</code> puede generar más de un
+fichero <code>.class</code>, si en el fichero <code>.java</code> se
+define más de una clase.</p>
+
+</p>Un detalle muy importante es que el nombre del
+fichero <code>.java</code> debe corresponder con el nombre de la clase
+pública definida en él. Si no es así, el compilador dará un error de
+compilación.</p>
+
+<p>Para ejecutar un programa Java, debes invocar con la JVM una clase
+que contenga un método estático llamado <code>main</code>. Este es el
+método que se ejecutará. Ya explicaremos más adelante qué es un método
+estático.<p>
+
+<p>Veamos el primer ejemplo, el típico programa <em>Hola
+mundo</em> que escribe una frase en la salida estándar: </p>
+
+<pre class="codigo">
+public class HolaMundo {
+   public static void main(String[] args) {
+      System.out.println("Hola mundo");
+   }
+}
+</pre>
+
+<p>El programa debe escribirse en un fichero que tenga el mismo nombre
+que la clase que se define. En este caso, debe
+llamarse <code>HolaMundo.java</code>. En la clase se define un método
+estático llamado <code>main</code> que es el que se ejecuta cuando se
+invoca la clase con la máquina virtual java usando el comando: </p>
+
+<pre class="codigo">
+>java HolaMundo
+</pre>
+
+<p>Vamos a probarlo en el siguiente ejercicio.</p>
+
+<hr>
+<h3>Ejercicio 3: Primeros programas Java</h3>
+
+<ol>
+  <li><p>Crea el directorio <code>sesion1</code>, este va a ser el
+  directorio de trabajo donde vas a guardar los programas ejemplo de
+  esta primera sesión. Escribe el siguiente programa Java en un
+  fichero de texto con un editor de texto cualquiera, como
+  el <code>Notepad</code>. Graba el programa con el
+  nombre <code>HolaMundo.java</code> (es importante la "H"
+  mayúscula).</p>
+  
+<pre class="codigo">
+public class HolaMundo {
+   public static void main(String[] args) {
+      System.out.println("Hola mundo");
+   }
+}
+</pre>
+
+  <p>Compila la clase, lista los ficheros del directorio y verás que
+  se ha generado el fichero <code>HolaMundo.class</code> que contiene
+  los <em>bytecodes</em>:</p>
+
+<pre class="codigo">
+&gt; javac HolaMundo.java
+&gt; dir 
+
+. &lt;DIR&gt; 16/06/04 1:59a .
+.. &lt;DIR&gt; 16/06/04 1:59a ..
+EJEMPL~1 CLA 433 16/06/04 2:07a HolaMundo.class
+EJEMPL~1 JAV 130 16/06/04 1:59a HolaMundo.java 
+</pre>
+
+  <p>El fichero <code>HolaMundo.class</code> es el que se va a
+  ejecutar en la máquina virtual java (JVM). Llama a la JVM pasándole
+  como argumento el nombre de la clase (<code>HolaMundo</code>) y
+  verás como aparece el mensaje "Hola mundo" por la salida
+  estándar. No es demasiado espectacular, pero has conseguido compilar
+  y ejecutar tu primer programa Java:</p>
+
+<pre class="codigo">
+&gt;java HolaMundo
+Hola mundo</pre></li>
+
+  <li>Vamos ahora a ver un ejemplo un poco más atractivo. Escribe
+  ahora el siguiente programa, y sálvalo con el nombre
+  de <code>Ejemplo2.java</code>.
+
+<pre class="codigo">import java.awt.*;
+import java.awt.event.ActionEvent;
+import javax.swing.*;
+
+public class MiPrimerGUI {
+    public static void main(String[] args) {
+    	// Defino la accion a ejecutar
+    	Action action = new AbstractAction("Hola mundo") {
+            public void actionPerformed(ActionEvent evt) {
+               System.out.println("Hola mundo");
+            }
+        };
+
+        JButton button = new JButton(action);
+        JFrame frame = new JFrame();
+
+        // Añado el boton al marco
+        frame.getContentPane().add(button, BorderLayout.CENTER);
+
+        // Dimensiones del marco
+        int frameWidth = 100;
+        int frameHeight = 100;
+        frame.setSize(frameWidth, frameHeight);
+
+        // Muestro el marco
+        frame.setVisible(true);
+
+        // Le digo al frame que salga de la aplicacion
+        // cuando se cierre
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+}</pre></li>
+
+  <li> <p>Compila el programa y dará un mensaje de error. ¿Cuál es el
+   error? ¿Cómo corregirlo? (contestalo en el mismo fichero <code>
+   respuestas.txt</code> del ejercicio anterior). Corrige el error y
+   ejecuta la clase. Deberá aparecer la siguiente ventana, y cada vez
+   que pinches en el botón debería aparecer "Hola mundo" en la salida
+   estándar.</p>
+
+   <p><img src="images/boton.png" height="100" width="144" /> </p>
+
+   <p>No intentes entender el código. En la última sesión del curso
+   veremos una introducción a la programación de interfaces de usuario
+   en Java.</li>
+
+</ol>
+<hr>
+
+<h2>Definición de paquetes</h2>
+
+<p>Las clases Java se organizan en paquetes. Un paquete contiene un
+conjunto de clases y también puede contener otros paquetes. Es una
+estructura similar a la de los directorios y ficheros. De hecho, ya
+que las clases y paquetes deben residir en la estructura de ficheros
+del sistema operativo, los paquetes se definen como directorios del
+sistema operativo. </p>
+
+<p>Existe el convenio de que los nombres de los paquetes deben tener
+letras minúsculas, mientras que los nombres de las clases deben
+comenzar siempre con mayúscula.</p>
+
+<p> En la figura siguiente vemos que las
+clases <code>Punto2D</code>, <code>Segmento2D</code>, <code>Angulo</code>
+y <code>Dibujo</code> residen en el directorio <code>geometria</code>
+que a su vez reside en el directorio <code>simulador</code>. Esto
+define el paquete <code>simulador.geometria</code></code>. </p>
+
+<p> <img border="1" src="images/directorios.png" </p>
+
+<p>Hay que indicar en todos los ficheros java en qué paquete se
+encuentran usando la plabra <code>package</code>. Las rutas de
+paquetes se separan con puntos ".". Así, por ejemplo, para declarar
+que la clase <code>Punto2D</code> se encuentra en el directorio
+<code>geometria</code> del directorio <code>simulador</code> hay
+que comenzar el fichero <code>Punto2D.java</code> con la siguiente
+línea:</p>
+
+<pre class="codigo">
+package simulador.geometria;
+</pre>
+
+<p>En esta línea estamos declarando que la clase
+Java <code>Punto2D</code> se encuentra en el
+paquete <code>simulador.geometria</code>. Esto obliga a que el
+fichero <code>Punto2D.java</code> esté situado en el
+directorio <code>geometria</code> que, a su vez, deberá residir en el
+directorio <code>simulador</code>. Esto es, el fichero <code>Punto2D.java</code>
+debe tener como path:</p>
+
+<pre class="codigo">
+simulador/geometria/Punto2D.java (en Linux)
+simulador\geometria\Punto2D.java (en Windows)
+</pre>
+
+<p>Para referirse a una clase hay que indicar su ruta completa,
+incluyendo el nombre del paquete en el que reside. Así, el nombre
+de la clase <code>Punto2D</code> será: </p>
+
+<pre class="codigo">
+simulador.geometria.Punto2D
+</pre>
+
+<hr>
+<h3>Ejercicio 4: Uso de paquetes</h3>
+
+<ol>
+   <li> 
+   <p>Vamos a declarar que la clase <code>HolaMundo</code> se defina en
+   el paquete <code>sesion1</code>. Para eso debemos cambiar
+   el código fuente de la siguiente forma.</p>
+
+<pre class="codigo">
+package sesion1; 
+
+public class HolaMundo {
+   public static void main(String[] args) {
+      System.out.println("Hola mundo");
+   }
+}
+</pre>
+
+   <p>Compila el programa. Verás que aunque el directorio
+   <code>sesion1</code> no esté creados, la compilación no produce
+   ningún error. Intenta ahora ejecutar el programa de la misma forma
+   que lo hiciste en el ejercicio anterior. Verás que ahora sí que se
+   produce un error, porque la clase <code>HolaMundo</code> no reside
+   en el paquete declarado.</p>
+
+   <p> Para solucionar el error deberás crear la estructura de
+   directorios del paquete. En este caso sólo hay que crear el
+   directorio <code>sesion1</code> y colocar allí la clase
+   compilada. Puedes hacerlo (en MS-DOS) con: </p>
+
+<pre class="codigo">
+> javac HolaMundo.java
+> mkdir sesion1
+> copy HolaMundo.class sesion1
+> del HolaMundo.class
+</pre>
+
+  <p>Por último, para ejecutar el programa recién compilado hay que
+  llamar a la clase indicando todo su camino 
+  (<code>sesion1.HolaMundo</code>). </p>
+
+<pre class="codigo">
+> java sesion1.HolaMundo
+</pre>
+
+  <p>Una forma más directa de hacer lo mismo es usando la
+  directiva <code>-d </code>del compilador de Java. Esta directiva
+  permite indicarle al compilador un directorio en el que vamos a
+  dejar los ficheros <code>.class</code> generados. Si los
+  ficheros <code>.class</code> están en un package, el compilador se
+  encargará de crear los directorios necesarios:</p>
+
+  <p>Borra los directorios que acabas de crear, incluyendo el
+  fichero <code>HolaMundo.class</code> y vuelve a compilar el
+  fichero <code>HolaMundo.java</code></p>
+
+<pre class="codigo">
+> deltree sesion1
+> javac HolaMundo.java -d .
+> java sesion1.HolaMundo
+</pre>
+  </li>
+
+  <li>Un par de preguntas que debes contestar en el
+  fichero <code>respuestas.txt</code>:
+
+  <ul> 
+     <li><p>Supongamos que quisieras crear la
+     clase <code>HolaMundo</code> en el
+     paquete <code>plj.sesion1</code>. ¿Qué tendrías que hacer?</p></li>
+
+     <li><p>¿Qué tipos de clases pondrías en el
+     paquete <code>plj</code>? Escribe 2 nombres de clases que piensas
+     que podrían ir bien en este paquete.</p></li>
+  </ul>
+
+</ol>
+<hr>
+
+<h2>La variable de entorno <code>CLASSPATH</code></h2>
+
+<p>¿Dónde colocar el directorio <code>simulador</code> para que el
+intérprete de la máquina virtual Java lo encuentre? El directorio se
+puede colocar en un directorio estándar de la distribución de Java en
+el que la máquina virtual busca las clases. O también se puede colocar
+en un directorio cualquiera e indicar a la máquina virtual que en ese
+directorio se encuentra un paquete Java. Para ello se utiliza la
+variable del entorno <code>CLASSPATH</code>. Si la variable no está
+definida, se buscan las clases en el directorio actual y en el
+directorio estándar de clases de Java (el cual depende del sistema
+operativo en el que estemos ejecutando Java).</p>
+
+<p>Los directorios de paquetes y los ficheros de clases pueden
+compactarse en ficheros JAR (por
+ejemplo <code>simulador.jar</code>). Un fichero JAR es un fichero de
+archivo (como ZIP o TAR) que contiene comprimidos un conjunto de
+directorios y ficheros, o sea un conjunto de paquetes y clases. Es
+normal comprimir toda una librería de clases y paquetes comunes en un
+único fichero JAR. Ya veremos más adelante cómo crear ficheros
+JAR.</p>
+
+<p>Para que el compilador y el intérprete pueda usar las clases de un
+fichero JAR, hay que incluir su camino (incluyendo el nombre del
+propio fichero JAR) en el <code>CLASSPATH</code>.</p>
+
+<hr>
+<h3>Ejercicio 5: Definiendo la variable <code>CLASSPATH</code></h3>
+
+<ol>
+  <li>
+    <p>Supongamos que estamos en el
+    directorio <code>C:\cursojava</code>, en el que se encuentra el
+    paquete <code>sesion1</code> y, dentro de él, la clase
+    compilada <code>HolaMundo.class</code>. Probemos de nuevo que la
+    JVM encuentra la clase:</p>
+
+<pre class="codigo">
+C:\cursojava> java sesion1.HolaMundo
+Hola mundo</pre>
+
+   <p>La clase se encuentra porque, al no estar definida la variable
+   de entorno <code>CLASSPATH</code> se toma el directorio actual como
+   el directorio en el que buscar las clases. Supongamos que nos
+   movemos al directorio padre y que intentamos ejecutar desde allí la
+   clase <code>sesion1.HolaMundo</code>. Obtendremos un mensaje de
+   error:</p>
+
+<pre class="codigo">
+C:\cursojava> cd ..
+C:\> java sesion1.HolaMundo
+&lt;MENSAJE DE ERROR&gt;
+</pre>
+
+  <p> Si actualizamos el <code>CLASSPATH</code> de la siguiente
+  forma, <code>java</code> podrá encontrar de nuevo la
+  clase <code>HolaMundo</code></p>
+
+<pre class="codigo">
+C:\> set CLASSPATH=C:\cursojava
+C:\> java sesion1.HolaMundo
+HolaMundo
+</pre>
+  </li>
+  
+  <li> <p>Contesta las siguientes preguntas en el
+  fichero <code>respuestas.txt</code>.<p>
+  <ul>
+   <li><p>¿Qué sucede si actualizas el <code>CLASSPATH</code> de la siguiente forma?:</p>
+
+<pre class="codigo">
+set CLASSPATH=C:\
+</pre>
+   <p>¿Funciona la llamada a la clase <code>HolaMundo</code> desde el
+   directorio <code>C:\cursojava</code>?</p>
+
+   <li><p>¿Se arregla la llamada cuando actualizas el <code>CLASSPATH</code> así?:</p>
+<pre class="codigo">
+set CLASSPATH=.;C:\
+</pre>
+  <p>¿Por qué? </p>
+  </ul>
+  </li> 
+
+  <li> 
+  <p>Por último, vamos a crear un fichero JAR en el que se incluya la
+  clase <code>HolaMundo</code> y el paquete en el que reside: </p>
+
+<pre class="codigo">
+C:\cursojava> jar cvf ejemplo.jar sesion1
+manifest agregado
+agregando: sesion1/(entrada = 0) (salida= 0)(almacenado 0%)
+agregando: sesion1/HolaMundo.class(entrada = 442) 
+   (salida= 305)(desinflado 30%)
+</pre>
+
+  <p> Actualizamos el <code>CLASSPATH</code> con el camino del fichero JAR y ya
+  podemos llamar al intérprete</p>
+
+<pre class="codigo">
+C:\cursojava> set CLASSPATH=C:\cursojava\ejemplo.jar
+C:\cursojava> deltree sesion1
+C:\cursojava> java sesion1.HolaMundo
+Hola mundo
+</pre>
+
+  </li>
+  <li> Contesta en el fichero <code>respuestas.txt</code> las
+    siguientes preguntas. 
+
+    <ul>
+      <li><p>¿Qué valor deberías poner en el <code>CLASSPATH</code>
+      para poder usar la clase <code>misclases.utils.Robot</code> que
+      tiene siguiente PATH en el sistema
+      operativo: <code>C:\java\lib\misclases\utils\Robot.class</code>?</p></li>
+
+      <li><p>¿Y si la clase se encuentra en el mismo paquete dentro
+      del fichero JAR <code>misclases.jar</code>, que tiene
+      el <code>PATH</code>: <code>C:\java\lib\misclases.jar</code>? </p></li>
+    </ul>
+  </li>
+
+</ol>
+<hr>
+
+<h2>Entornos integrados de desarrollo para Java</h2>
+
+<p>Java es un lenguaje enormemente complicado (cuando vas a
+desarrollar un gran proyecto) como para poder dominarlo usando
+el <em>Notepad</em>. Para programar en Java es conveniente utilizar un
+IDE (entorno integrado de desarrollo, en inglés).</p>
+
+<p> Hace algunos años, era difícil encontrar IDEs de código abierto
+que compitieran con los IDEs comerciales que distribuían Borland y
+otras casas. Hoy es al revés. Existen dos IDEs de libre distribución
+que tienen una potencia difícilmente alcanzable por el resto. Se trata
+de <em>Eclipse</em> y <em>NetBeans</em>.</p>
+
+<p> Eclipse está desarrollado por un consorcio en el que se incluyen
+IBM y otras importantes empresas relacionadas con el mundo de Java
+para entornos UNIX. </p>
+
+<p> NetBeans está desarrollado por Sun y es el IDE <em>oficial</em>
+propuesto por Sun.</p>
+
+<p> Nosotros vamos a utilizar en el curso Eclipse, por considerar que
+es algo más robusto y por que está más extendido que NetBeans. Pero
+cada vez más gente le está echando un ojo a NetBeans. Sobre todo los
+que hacen aplicaciones J2EE (Java Enterprise Edition) y desarrollan
+páginas JSP, servlets o componentes distribuidos.</p>
+
+<hr>
+<h3>Ejercicio 6: Instalación de Eclipse </h3>
+
+<ol>
+
+  <li>
+
+  <p>Descomprime el fichero Eclipse (se encuentra en la
+  sección <code>recursos</code> de la web del curso) correspondiente a
+  tu sistema operativo en algún directorio del sistema. El fichero es
+  un archivo ZIP que contiene todos sus ficheros bajo el
+  directorio <code>eclipse</code>. Por ejemplo, en Windows
+  descomprímelo en <code>C:\</code> y en Linux lo puedes descomprimir
+  en <code>/usr/local/</code> (si tienes permiso de super usuario; si
+  no, lo puedes descomprimir en <code>/home/&lt;user&gt;/</code>). En
+  Mac OS X debes descomprimir el fichero y arrastrar la aplicación
+  Eclipse a la carpeta de aplicaciones.</p>
+  </li>
+
+  <li>
+  <p>Arranca Eclipse haciendo doble click sobre la aplicación o, si
+  estás en Linux, actualizando el <code>PATH</code> para incluir el
+  nuevo directorio recién creado <code>eclipse/bin</code> y ejecutando
+  el comando <code>eclipse</code>.</p>
+
+  <p> Eclipse es un programa escrito en Java y debes tener instalado
+  el JDK, como has hecho en un ejercicio anterior, para que
+  funcione. Cuando Eclipse arranca por primera vez pide el directorio
+  de trabajo. Puedes aceptar el que te sugiere
+  (<code>eclipse\workspace</code>), o indicarle alguno
+  propio.</p>
+  </li>
+
+  <li>
+  <p>Cuando aceptes el directorio de trabajo, aparecerá la siguiente
+  ventana de presentación.</p>
+
+  <p><img border="1" src="images/eclipse1.png" width="400"> </p>
+
+  <p>Desde esta ventana de presentación puedes ver tutoriales,
+  ejemplos o entrar directactemente en la zona de trabajo (esquina
+  superior derecha). Haz esto último para comenzar a trabajar en
+  Eclipse. Podrás volver a la ventana de presentación en cualquier
+  momento con la opción <em>Help &gt; Welcome</em>). Quédate por
+  ahora en la zona de trabajo:</p>
+
+  <p><img border="1" src="images/eclipse2.png" width="400"> </p>
+
+  </li>
+</ol>
+<hr>
+<p>Una vez instalado Eclipse vamos a compilar en él las clases que hemos compilado antes en línea de comando. <p>
+<hr>
+<h3>Ejercicio 7: Compilación y ejecución en Eclipse </h3>
+
+<ol>
+  <li>
+  <p>Crea un nuevo proyecto Java. Para ello situa el ratón en
+  la <em>vista</em> <code>Package Explorer</code>, pulsa el botón
+  derecho y escoge la opción <code>New project</code> (también puedes
+  crearlo con la opción <code>File &gt; New &gt;
+  Project</code>). Selecciona el <em>wizard</em> <code>Java Project</code>:<p>
+
+<p><img border="1" src="images/eclipse-new-project.png" width="300"></p>
+
+  <p>Llama al proyecto <code>modulo1</code> y escoge como <code>JDK
+  compliance</code> la opción 5.0. Esto significa que el editor Java
+  de Eclipse va aceptar código de la versión 5.0 de Java (también
+  llamada versión 1.5). La mayoría del código que vamos a escribir en
+  el curso es propiamente de Java 1.4.2, pero al usar esta opción
+  también podemos escribir código que sea específico de la última
+  versión de Java.</p>
+
+<p><img border="1" src="images/eclipse-java-project.png" width="300"></p>
+
+  <p>Pulsa <code>Finish</code> y se creará el proyecto.</p>
+
+<p><img border="1" src="images/eclipse-project-workspc.png" width="500"></p>
+
+  <p> Abre otra ventana con el explorador del sistema de ficheros (o
+  un terminal) y lista los ficheros del directorio de trabajo de
+  Eclipse. Verás que se ha creado un nuevo directorio con el mismo
+  nombre que el proyecto que acabas de crear.</p>
+ 
+  <p>En un proyecto se agrupan un conjunto de clases y paquetes. Vamos
+    a usar este proyecto recién creado para todos los ejercicios de este 
+  primer módulo, separándolos en un paquete por sesión.</p>
+  </li>
+
+  <li> 
+  <p> Crea el paquete <code>sesion1</code>. Para ello pincha el
+  paquete <code>modulo1</code>, pulsa el botón derecho y
+  escoge <code>New > Package</code>. Aparecerá una ventana de diálogo
+  en la que deberás escribir el nombre del
+  paquete. Escribe <code>sesion1</code>.</p>
+  </li>
+
+  <li> 
+  <p>Vamos ahora a crear la clase <code>HolaMundo</code> que ya
+  conocemos.  Selecciona el paquete recién creado y, con el botón
+  derecho, escoge la opción <code>New > Class</code>. Dale el
+  nombre <code>HolaMundo</code> y activa la opción para que cree un
+  esqueleto del método "<code>public static void main (String[]
+  args)</code>".</p>
+
+<p><img border="1" src="images/eclipse-new-class.png" width="300"></p>
+
+  <p> Pulsa en <code>Finish</code> y aparecerá el editor de Eclipse
+  con un esqueleto de la clase. Al crear la clase, Eclipse introduce
+  automáticamente el nombre del paquete en el que se encuentra y
+  también añade comentarios con tareas por hacer que puedes ver en la
+  vista <code>Tasks</code>. Puedes borrar estos comentarios y se
+  borran automáticamente las tareas. Escribe en este fichero el
+  programa <code>HolaMundo</code> del ejercicio anterior. Durante la
+  escritura podrás comprobar que el editor chequea la sintaxis,
+  indicándote si hay un error, y también te ayuda a completar las
+  llamadas a los métodos.</p>
+
+  <p> <img border="1" src="images/eclipse-hola-mundo.png" width="500"></p>
+
+  <p>Una vez escrita la clase, vamos a ejecutarla. Para ello, pincha
+  el nombre de la clase en la vista del explorador de paquetes y, con
+  el botón derecho, escoge la opción <code>Run As > Java
+  Application</code> (también puedes seleccionar en el menú la
+  opción <code>Run As > Java Application</code>). Aparecerá la
+  vista <code>Console</code> con la salida de la ejecución del
+  programa.</p>
+  </li>
+
+  <p> <img border="1" src="images/eclipse-run-hola-mundo.png" width="500"></p>
+
+  <li> 
+  <p>Si examinas en el explorador del sistema de ficheros o en una
+  terminal el directorio <code>modulo1</code> creado en el espacio de
+  trabajo de Eclipse, verás que se encuentra el
+  fichero <code>HolaMundo.java</code> y el fichero
+  compilado <code>HolaMundo.class</code>. Eclipse ha compilado
+  automáticamente el fichero java. Puedes examinar los ficheros del
+  sistema proyecto cambiando a la
+  perspectiva <code>Resource</code>. Para ello debes pinchar en el
+  icono junto al nombre <code>Java</code> que hay en la esquina superior
+  derecha. Selecciona la opción <code>Other...</code> y escoge la perspectiva
+  <code>Resource</code>. Podrás explorar en la vista de explorador de
+  paquetes y aparecerá algo como esto:</p>
+
+  <p> <img border="1" src="images/eclipse-resource.png" width="500"></p>
+
+  <p>Para volver a la perspectiva Java debes pulsar en la
+  pestaña <code>Java</code>.</p>
+  </li>
+  <li>
+  <p>Escribe y ejecuta la clase <code>MiPrimerGUI</code> en el
+  paquete <code>sesion1</code>. La perspectiva de Eclipse deberá tener el
+  siguiente aspecto al terminar:</p>
+  </li>  
+  <p> <img border="1" src="images/eclipse-primer-gui.png" width="500"></p>
+  <li>
+  <p>Ejecuta la clase de la misma forma que el
+  programa <code>HolaMundo</code>. Puedes comprobar que no hay nada
+  raro en tener dos clases <em>ejecutables</em> en el mismo proyecto y
+  en el mismo paquete.
+  </li>
+</ol>
+<hr>
+
+<p>Vamos ahora a un ejercicio en el que compilarás un programa algo más 
+  completo. </p>
+
+<hr>
+<h3>Ejercicio 8: El juego de los números</h3>
+
+<ol>
+  <li>
+  <p>Vamos a ver un ejemplo algo más completo, en el que se utilizan
+  objetos y clases definidas por el usuario. Escribe y compila la
+  siguiente clase, es una clase con un único método
+  (<code>startGame</code>). Lo siguiente es una imagen, por lo que
+  tendrás que teclearlo todo. Corrige los errores (seguro que tendrás
+  más de uno al copiar!) hasta que los únicos errores pendientes sean
+  los derivados de que la clase <code>Player</code> no está definida
+  (6 errores). Hazlo todo en el paquete ya
+  creado <code>sesion1</code>.</p>
+  </li>
+
+<p> <img border="1" src="images/guessgame.png" width="500"> </p>
+
+  <li>
+  <p>Escribe y compila la clase <code>Player</code> en el mismo
+  paquete para que el programa funcione correctamente. Como verás,
+  ninguna clase tiene el método <code>main</code>, por lo que no se
+  puede lanzar el programa; escribe la
+  clase <code>GameLauncher</code>, con el método main que lance el
+  programa. El resultado que aparece en la salida estándar debe ser
+  algo como:</p>
+
+<pre class="codigo">
+Estoy pensando un numero entre 0 y 9 ...
+El numero a adivinar es: 2
+Yo digo: 0
+Yo digo: 6
+Yo digo: 2
+El jugador 1 dice: 0
+El jugador 2 dice: 6
+El jugador 3 dice: 2
+Tenemos un ganador!
+El jugador 1 ha hacertado?: false
+El jugador 2 ha hacertado?: false
+El jugador 3 ha hacertado?: true
+</pre>
+
+   <p> Y la apariencia de Eclipse después de crear todas las clases
+   debe ser algo así: </p>
+
+<p> <img border="1" src="images/eclipse-guessgame.png" width="500" </p>
+  </li>
+</ol>
+<hr>
+
+<h2> El sistema CVS </h2>
+
+<p> Ya estamos a punto de terminar. El último ejercicio es una pequeña
+guía para publicar todo lo que has hecho durante esta sesión en el
+repositorio CVS. Pero antes de realizarlo, vamos a saber un poco más
+qué es eso de CVS.</p>
+
+<p>CVS viene de las iniciales en inglés de <em>Sistema de Versiones
+Concurrente</em>. Se trata de una implementación de un sistema de
+control de versiones: mantiene todos los cambios de un conjunto de
+ficheros, como un proyecto de software y permite que varios
+desarrolladores colaboren en el mismo proyecto. CVS se ha hecho muy
+popular en el mundo de código abierto.</p>
+
+<p> CVS utiliza una arquitectura cliente-servidor. Un servidor
+almacena el repositorio con las versiones actuales del proyecto y la
+historia de cambios. Los clientes se conectan para obtener
+(<em>check-out</em>) una copia completa del proyecto, trabajar en la
+copia y a continuación publicar (<em>check-in</em>) los
+cambios. Existen clientes de CVS en todos los sistemas
+operativos. Nostros vamos a usar el cliente que lleva incorporado
+Eclipse. Es un cliente muy fácil de usar con una interfaz gráfica muy
+clara y está totalmente integrado en el entorno de programación.</p>
+
+<p>Varios clientes pueden editar las copias del proyecto
+concurrentemente. Cuando se publican los cambios, el servidor intenta
+actualiza los ficheros del proyecto. Si se produce un fallo, por
+ejemplo debido a que dos clientes han modificado el mismo fichero, el
+servidor deniega la segunda operación de publicación e informa al
+cliente del conflicto. El usuario debe corregir el conflicto a mano y
+volver a publicar. Si la operación tiene éxito, los números de versión
+de todos los ficheros involucrados se incrementa automáticamente y el
+servidor CVS guarda una descripción del cambio proporcionada por el
+usuario, la fecha y el nombre del autor en los ficheros de log.</p>
+
+<p>Los clientes pueden también comparar diferentes versiones de los
+ficheros, solicitar una historia completa de los cambios o también
+pueden obtener una instantánea histórica del proyecto tal y como
+estaba en una fecha dada o en un número de versión dado.</p>
+
+<p>Los clientes pueden también usar el comando actualizar
+(<em>update</em>) para poner al día la copia local del proyecto y
+bajarse las últimas modificaciones publicadas por otros clientes.</p>
+
+<p>CVS puede también mantener distintas <em>ramas</em> de un
+proyecto. Por ejemplo, una versión lanzada de un proyecto software
+puede tener más de una rama y cada rama tener una control separado de
+cambios.</p>
+
+<p>Nosotros vamos a usar sólo una mínima parte de las funcionalidades
+de CVS. Lo vamos a usar para publicar los ejercicios en un repositorio
+común. Cada alumno va a tener su directorio CVS independiente en el que
+publicar los ejercicios. Los profesores también tendremos acceso a
+esos directorios y podremos corregir fácilmente los ejercicios
+entregados. Lo vamos a ver paso a paso en el siguiente (último)
+ejercicio.</p>
+
+<hr>
+<h3>Ejercicio 9: Publicación en el repositorio CVS</h3>
+<hr>
+
+<p>Vamos a terminar la sesión de hoy publicando todos los ejercicios
+en el repositorio CVS. </p>
+
+<ol>
+
+  <li>
+  <p>Lo primero es incorporar el fichero <code>respuestas.txt</code>
+  al proyecto de Eclipse. Abre un explorador del sistema de ficheros
+  en el que puedas ver el
+  fichero <code>respuestas.txt</code>. Arrástralo a la ventana de
+  eclipse, sobre el explorador de paquetes y en el
+  módulo <code>sesion1</code>. Debe quedar así:</p>
+  
+  <p> <img border="1" src="images/arrastrar-fichero.png" width="500"
+  alt="Fichero respuestas.txt en Eclipse"> </p>
+
+  </li>
+
+  <li><p>Pincha el nombre del proyecto y pulsa el botón
+  derecho. Selecciona la opción <code>Team > Share
+  project...</code>:</p>
+
+  <p> <img border="1" src="images/cvs-share-project.png" width="500"
+  alt="Publicando el en repositorio CVS"> </p>
+  
+  <p> Introduce los datos del repositorio CVS: </p>
+  <ul>
+     <li>Servidor: <code>www.jtech.ua.es</code></li>
+     <li>Ruta del repositorio: <code>/usr/local/cvs-plj</code></li>
+     <li>Usuario: tu nombre de usuario en la web de PLJ</li>
+     <li>Contraseña: tu contraseña de usuario en la web de PLJ </li>
+     <li>Tipo de conexión: <code>extssh</code></li>
+   </ul>
+
+  <p> <img border="1" src="images/cvs-conf.png" width="300"
+  alt="Configuración repositorio CVS"></p>
+
+  <p>Ahora debes seleccionar el directorio del repositorio CVS en el
+  que publicar los ficheros del proyecto. Debes pinchar la última
+  opción (<code>Use an existing module ...</code>) para que puedas
+  desplegar los distintos directorios del repositorio en la ventana
+  del asistente. Habrá un directorio por alumno del curso. Abre la
+  carpeta con tu nombre de usuario y verás que contiene a su vez otras
+  tres carpetas. Selecciona la primera de ellas
+  (<code>modulo1</code>).</p>
+
+  <p> <img border="1" src="images/cvs-module-name.png" width="300"
+  alt="Introducción nombre de módulo"></p>
+
+  <p> Acepta las ventanas que aparecen y llegarás a una ventana en la
+  que Eclipse resume las acciones que van a realizarse en el
+  repositorio CVS. En este caso se van a añadir (de ahí el signo "+"
+  en la flecha) al repositorio todos los ficheros del proyecto.</p>
+
+  <p> <img border="1" src="images/cvs-confirm.png" width="300"
+  alt="Confirmación acciones CVS"></p>
+
+  <p> Por último, cuando pulses <code>Finish</code> Eclipse publicará
+  los cambios en el repositorio. Te permite escribir un mensaje con la
+  indicación de qué cambios has realizado. En este caso puedes
+  escribir "versión inicial", o algo similar. Una vez publicados los
+  ficheros, cambiarán los iconos que aparecen en el explorador de paquetes.</p>
+
+  <p> <img border="1" src="images/cvs-package-explorer.png"
+   width="300" alt="Nuevos iconos explorador de paquetes CVS"></p>
+
+  </li>
+
+  <li><p>Por último, vamos a probar a realizar un cambio en algún
+  fichero y a actualizar el repositorio con este cambio. Modifica uno
+  de los ficheros, por ejemplo el
+  fichero <code>respuestas.txt</code>. Verás que aparece un símbolo
+  ">" junto a él, para indicar que está modificado con respecto a la
+  versión del repositorio.</p>
+
+  <p> <img border="1" src="images/cvs-fichero-modificado.png"
+   width="300" alt="Cambios en fichero local"></p>
+
+  <p>Pulsa el proyecto y selecciona con el botón derecho la
+  opción <code>Team > Synchronize with repository</code>. Eclipse te
+  consulta si quieres cambiar a la perspectiva <code>Team
+  Synchronizing</code>. Dile que sí y aparecerá una vista como la
+  siguiente.</p>
+
+  <p> <img border="1" src="images/cvs-sincronizando.png"
+   width="300" alt="Vista Team Synchronizing"></p>
+
+  <p>En la ventana se muestran los cambios de la copia local respecto
+  al repositorio. En este caso se indica que para realizar una
+  sincronización hay que subir (flecha hacia la derecha) al
+  repositorio los cambios del fichero <code>respuestas.txt</code>. Si
+  hubiera algún cambio en el repositorio con respecto a la copia local
+  también aparecería mostrado, en este caso con una flecha hacia la
+  izquierda. Esto sucederá cuando el profesor corrija los
+  ejercicios. En este caso, puedes publicar los cambios pulsando en el
+  icono que aparece resaltado y que tiene la flecha amarilla hacia la
+  derecha. Es la forma gráfica de hacer un <em>commit</em> en el
+  repositorio CVS. Puedes escribir un comentario sobre los cambios que
+  has realizado.</p>
+  </li>
+
+  <p> <img border="1" src="images/cvs-commit.png" width="300"
+   alt="Commit de un cambio"></p>
+
+  <p>Pulsa <code>Finish</code> y se publicará el cambio. Termina
+  cambiando a la perspectiva Java y cerrando Eclipse.</p>
+
+</ol>
+</body>
+</html>
+
