@@ -1,0 +1,97 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Anexo A: Ejercicios</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1> A. Ejercicios</h1>
+             
+<h2>A.1. Entornos de desarrollo</h2>
+<p><strong>1.1.</strong> Abrir la herramienta <code>ktoolbar</code> de WTK 1.0.4. 
+  Abrir desde ella alguna de las aplicaciones de ejemplo que tenemos disponibles 
+  (<code>UIDemo</code>, <code>demos</code> o <code>games</code>). Probar a compilar 
+  estas aplicaciones y ejecutarlas en distintos emuladores (creando el paquete 
+  en caso necesario). Observar las diferencias que encontramos de unos emuladores 
+  a otros.</p>
+<p><strong>1.2.</strong> Vamos a hacer nuestra primera aplicaci&oacute;n <em>&quot;Hola 
+  mundo&quot;</em> en J2ME. Para ello debemos:</p>
+<p><em>a)</em> Crear un nuevo proyecto con WTK 1.0.4. El proyecto se llamar&aacute; 
+  <code>PruebaAplicacion</code> y el MIDlet principal ser&aacute; <code>es.ua.j2ee.prueba.MIDletPrueba</code>. 
+</p>
+<p><em>b)</em> Una vez creado abriremos el proyecto desde Eclipse, crearemos la 
+  clase del MIDlet principal, e introduciremos en ella el siguiente c&oacute;digo:</p>
+<pre class="codigo">package es.ua.j2ee.prueba;<br><br>import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;<br><br>public class MIDletPrueba extends MIDlet {<br><br>    protected void startApp() throws MIDletStateChangeException {
+        Form f = new Form(&quot;Hola mundo&quot;);
+        Display d = Display.getDisplay(this);
+        d.setCurrent(f);
+    }<br><br>    protected void pauseApp() {
+    }<br><br>    protected void destroyApp(boolean incondicional) <br>        throws MIDletStateChangeException    {
+    }
+}</pre>
+<p><em>c)</em> Guardar el fichero y desde WTK compilar y ejecutar la aplicaci&oacute;n 
+  en emuladores, comprobando que funciona correctamente.</p>
+<p><strong>1.3. </strong>A&ntilde;adir un fichero <code>build.xml</code> al proyecto 
+  en Eclipse para poderlo compilar y ejecutar desde este mismo entorno. Compilar 
+  y ejecutar desde este entorno.</p>
+<p><strong>1.4.</strong> Vamos a a&ntilde;adir recursos a nuestra aplicaci&oacute;n. 
+  Mostraremos una imagen en la pantalla, introduciendo el siguiente c&oacute;digo 
+  en el m&eacute;todo <code>startApp</code> de nuestro MIDlet:</p>
+<pre class="codigo">protected void startApp() throws MIDletStateChangeException {
+    Form f = new Form(&quot;Hola mundo&quot;);
+    try {
+        f.append(Image.createImage(&quot;/logo.png&quot;));
+    } catch(Exception e) {}
+   
+    Display d = Display.getDisplay(this);
+    d.setCurrent(f);
+}</pre>
+<p>Para poder mostrar esta imagen deberemos a&ntilde;adirla como recurso a la 
+  <em>suite</em>. A&ntilde;adir una imagen con nombre <code>logo.png</code> al 
+  directorio de recursos. </p>
+<p>Compilar y ejecutar la aplicaci&oacute;n para comprobar que la imagen se muestra 
+  correctamente. Utilizar para ello tanto <code>ktoolbar</code> como la herramienta 
+  <em>ant</em> desde Eclipse.</p>
+<p><strong>1.5.</strong> Ahora a&ntilde;adiremos sonido a la aplicaci&oacute;n. 
+  Para ello deberemos utilizar la API multimedia que es una API adicional. Deberemos:</p>
+<p><em>a)</em> Incorporar la librer&iacute;a MMAPI a nuestro proyecto en Eclipse. 
+  Podemos localizar esta librer&iacute;a dentro del directorio de los emuladores 
+  que soporten esta API (normalmente en el subdirectorio <code>lib</code>). Podremos 
+  obtenerla por ejemplo de los emuladores de la Serie 60 de Nokia, o del MMEmulator 
+  de Sun. </p>
+<p><em>b)</em> Una vez hecho esto podremos utilizar esta API multimedia en el 
+  editor de Eclipse sin que nos muestre errores en el c&oacute;digo. Modificaremos 
+  el c&oacute;digo del MIDlet de la siguiente forma:</p>
+<pre class="codigo">package es.ua.j2ee.prueba;<br><br>import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+<strong>import javax.microedition.media.*;</strong><br><br>public class MIDletPrueba extends MIDlet {<br><br>    protected void startApp() throws MIDletStateChangeException {
+        Form f = new Form(&quot;Hola mundo&quot;);
+        try {
+            f.append(Image.createImage(&quot;/logo.png&quot;));
+        } catch(Exception e) {}<br><br>        <strong>try {
+            Manager.playTone(80, 1000, 100);
+        } catch(MediaException e) {}</strong>
+   
+        Display d = Display.getDisplay(this);
+        d.setCurrent(f);
+    }<br><br>    protected void pauseApp() {
+    }<br><br>    protected void destroyApp(boolean incondicional)<br>        throws MIDletStateChangeException {
+    }
+}</pre>
+<p><em>c)</em> Guardar y compilar desde WTK. Compilar seleccionando distintos 
+  emuladores distintos. &iquest;Con cu&aacute;les funciona y con cu&aacute;les 
+  obtenemos errores de compilaci&oacute;n? &iquest;Por qu&eacute;?</p>
+<p><em>d)</em> Modificar ahora el fichero <code>build.xml</code> para que compile 
+  utilizando esta API multimedia. Comprobar que compila y ejecuta correctamente 
+  el ejemplo.</p>
+<p> <strong>1.6. </strong>Crear un proyecto con NetBeans. Utilizar la plantilla 
+  <code>HelloMIDlet</code> para crear el MIDlet principal de nuestra <em>suite</em>. 
+  Compilar y ejecutar el proyecto desde este entorno. Depurar la aplicaci&oacute;n 
+  estableciendo un <em>breakpoint</em> al comienzo del m&eacute;todo <code>startApp</code>.</p>
+</body>
+</html>

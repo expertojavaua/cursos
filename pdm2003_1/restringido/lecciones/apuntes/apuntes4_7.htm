@@ -1,0 +1,774 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Tema 4: Desarrollo de aplicaciones con J2ME</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+<h2> 4.7. Red y E/S</h2>
+<p>En J2SE tenemos una gran cantidad de clases en el paquete<code> java.net </code>para 
+  permitir establecer distintos tipos de conexiones en red. Sin embargo, el soportar 
+  esta gran API no es viable en la configuraci&oacute;n CLDC dedicada a dispositivos 
+  muy limitados. Por lo tanto en CLDC se sustituye esta API por el marco de conexiones 
+  gen&eacute;ricas (GCF, <em>Generic Connection Framework</em>), con el que se 
+  pretenden cubrir todas las necesidades de conectividad de estos dispositivos 
+  a trav&eacute;s de una API sencilla.</p>
+<h3>4.7.1. Marco de conexiones gen&eacute;ricas</h3>
+<p>Los distintos dispositivos m&oacute;viles pueden utilizar distintos tipos de 
+  redes para conectarse. Algunos utilizan redes de conmutaci&oacute;n de circuitos, 
+  orientadas a conexi&oacute;n, que necesitar&aacute;n protocolos como TCP. Otros 
+  utilizan redes de transmisi&oacute;n de paquetes en las que no se establece 
+  una conexi&oacute;n permanente, y con las que deberemos trabajar con protocolos 
+  como por ejemplo UDP. Incluso otros dispositivos podr&iacute;an utilizar otras 
+  redes distintas en las que debamos utilizar otro tipo de protocolos. </p>
+<p>El marco de conexiones gen&eacute;ricas (GFC) har&aacute; que esta red m&oacute;vil 
+  subyacente sea transparente para el usuario, proporcionando a &eacute;ste protocolos 
+  est&aacute;ndar de comunicaciones. La API de GFC se encuentra en el paquete 
+  <code>javax.microedition.io</code>. Esta API utilizar&aacute; un &uacute;nico 
+  m&eacute;todo que nos servir&aacute; para establecer cualquier tipo de conexi&oacute;n 
+  que queramos, por esta raz&oacute;n recibe el nombre de marco de conexiones 
+  gen&eacute;ricas, lo cu&aacute;l adem&aacute;s lo hace extensible para incorporar 
+  nuevos tipos de conexiones. Para crear la conexi&oacute;n utilizaremos el siguiente 
+  m&eacute;todo:</p>
+<pre class="codigo">Connection con = Connector.<strong>open</strong>(url);</pre>
+<p> En el que deberemos especificar una URL como par&aacute;metro con el siguiente 
+  formato:</p>
+<p><code>protocolo:direccion;par&aacute;metros</code></p>
+<p>Cambiando el protocolo podremos especificar distintos tipos de conexiones. 
+  Por ejemplo, podr&iacute;amos utilizar las siguientes URLs:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="43%" valign="top"><code>&quot;http://j2ee.ua.es/pdm&quot;</code></td>
+    <td width="57%">Abre una conexi&oacute;n HTTP.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>&quot;datagram://192.168.0.4:6666&quot;</code></td>
+    <td>Abre una conexi&oacute;n por datagramas.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>&quot;socket://192.168.0.4:4444&quot;</code></td>
+    <td>Abre una conexi&oacute;n por <em>sockets</em>.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>&quot;comm:0;baudrate=9600&quot;</code></td>
+    <td>Abre una conexi&oacute;n a trav&eacute;s de un puerto de comunicaciones.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>&quot;file:/fichero.txt&quot;</code></td>
+    <td>Abre un fichero.</td>
+  </tr>
+</table>
+<p>Cuando especifiquemos uno de estos protocolos, la clase <code>Connector</code> 
+  buscar&aacute; en tiempo de ejecuci&oacute;n la clase que implemente dicho tipo 
+  de conexi&oacute;n, y si la encuentra nos devolver&aacute; un objeto que implemente 
+  la interfaz <code>Connection</code> que nos permitir&aacute; comunicarnos a 
+  trav&eacute;s de dicha conexi&oacute;n.</p>
+<p>CLDC nos proporciona interfaces para cada tipo gen&eacute;rico de conexi&oacute;n, 
+  pero las implementaciones reales de los protocolos pertenecen a los perfiles.</p>
+<div align="center"><img src="imagenes/red/jerarquia.gif" width="497" height="312"> 
+</div>
+<p class="caption">Figura 28. Componentes de GCF</p>
+<p>El &uacute;nico protocolo que la especificaci&oacute;n de MIDP exige que se 
+  implemente es el protocolo HTTP. Este protocolo pertenece a MIDP, y no a CLDC 
+  como era el caso de las clases gen&eacute;ricas anteriores. Distintos modelos 
+  de dispositivos pueden soportar otro tipo de conexiones, pero si queremos hacer 
+  aplicaciones portables deberemos utilizar HTTP.</p>
+<h3>4.7.2. Conexi&oacute;n HTTP</h3>
+<p>La conexi&oacute;n mediante el protocolo HTTP es el &uacute;nico tipo de conexi&oacute;n 
+  que sabemos que va a estar soportado por todos los dispositivos MIDP. Este protocolo 
+  podr&aacute; ser implementado en cada modelo de m&oacute;vil bien utilizando 
+  protocolos IP como TCP/IP o bien protocolos no IP como WAP o i-Mode. </p>
+<div align="center"><img src="imagenes/red/gateway.gif" width="352" height="188"> 
+</div>
+<p class="caption">Figura 29. Gateway para protocolos no IP</p>
+<p>De esta forma nosotros podremos utilizar directamente HTTP de una forma est&aacute;ndar 
+  sin importarnos el tipo de red que el m&oacute;vil tenga por debajo.</p>
+<p>Cuando establezcamos una conexi&oacute;n mediante protocolo HTTP, podemos hacer 
+  una conversi&oacute;n <em>cast</em> del objeto <code>Connection</code> devuelto 
+  a un subtipo <code>HttpConnection</code> especializado en conexiones HTTP:</p>
+<pre class="codigo">HttpConnection con = 
+    (HttpConnection)Connector.<strong>open</strong>(&quot;http://j2ee.ua.es/datos.txt&quot;);</pre>
+<p>Este objeto <code>HttpConnection</code> contiene gran cantidad de m&eacute;todos 
+  dedicados a trabajar con el protocolo HTTP, lo cu&aacute;l facilitar&aacute; 
+  en gran medida el trabajo de los desarrolladores.</p>
+<p>HTTP es un protocolo de petici&oacute;n/respuesta. El cliente crea un mensaje 
+  de petici&oacute;n y lo env&iacute;a a una determinada URL. El servidor analizar&aacute; 
+  esta petici&oacute;n y le devolver&aacute; una respuesta al cliente. Estos mensajes 
+  de petici&oacute;n y respuesta se compondr&aacute;n de una serie de cabeceras 
+  y del bloque de contenido. Cada cabecera tendr&aacute; un nombre y un valor. 
+  El contenido podr&aacute; contener cualquier tipo de informaci&oacute;n (texto, 
+  HTML, im&aacute;genes, mensajes codificados en binario, etc). Tendremos una 
+  serie de cabeceras est&aacute;ndar con las que podremos intercambiar datos sobre 
+  el cliente o el servidor, o bien sobre la informaci&oacute;n que estamos transmitiendo. 
+  Tambi&eacute;n podremos a&ntilde;adir nuestras propias cabeceras para intercambiar 
+  datos propios.</p>
+<p>Una vez creada la conexi&oacute;n, &eacute;sta pasar&aacute; por tres estados:</p>
+<ul>
+  <li><strong>Configuraci&oacute;n</strong>: No se ha establecido la conexi&oacute;n, 
+    todav&iacute;a no se ha enviado el mensaje de petici&oacute;n. Este ser&aacute; 
+    el momento en el que deberemos a&ntilde;adir la informaci&oacute;n necesaria 
+    a las cabeceras del mensaje de petici&oacute;n.<br>
+  </li>
+  <li><strong>Conectada</strong>: El mensaje de petici&oacute;n ya se ha enviado, 
+    y se espera recibir una respuesta. En este momento podremos leer las cabeceras 
+    o el contenido de la respuesta.<br>
+  </li>
+  <li><strong>Cerrada</strong>: La conexi&oacute;n se ha cerrado y ya no podemos 
+    hacer nada con ella.</li>
+</ul>
+<p>La conexi&oacute;n nada m&aacute;s crearse se encuentra en estado de configuraci&oacute;n. 
+  Pasar&aacute; autom&aacute;ticamente a estado conectada cuando solicitemos cualquier 
+  informaci&oacute;n sobre la respuesta.</p>
+<p><strong>Lectura de la respuesta</strong></p>
+<p>Vamos a comenzar viendo c&oacute;mo leer el contenido de una URL. En este caso 
+  no vamos a a&ntilde;adir ninguna informaci&oacute;n al mensaje de petici&oacute;n, 
+  ya que no es necesario. S&oacute;lo queremos obtener el contenido del recurso 
+  solicitado en la URL. </p>
+<p>Imaginemos que queremos leer el fichero en la URL <code>http://j2ee.ua.es/datos.txt</code>. 
+  Como primer paso deberemos crear una conexi&oacute;n con dicha URL como hemos 
+  visto anteriormente. Una vez tengamos este objeto <code>HttpConnection</code> 
+  abriremos un flujo de entrada para leer su contenido de la siguiente forma:</p>
+<pre class="codigo">InputStream in = con.<strong>openInputStream</strong>();</pre>
+<p>Una vez hecho esto, la conexi&oacute;n pasar&aacute; a estado conectada, ya 
+  que estamos solicitando leer su contenido. Por lo tanto en este momento ser&aacute; 
+  cuando env&iacute;e el mensaje de petici&oacute;n al servidor, y se quede esperando 
+  a recibir la respuesta. Con el flujo de datos obtenido podremos leer el contenido 
+  de la misma, al igual que leemos cualquier otro flujo de datos en Java.</p>
+<p>Dado que en este momento ya se ha enviado el mensaje de petici&oacute;n, ya 
+  no tendr&aacute; sentido realizar modificaciones en la petici&oacute;n. Es por 
+  esta raz&oacute;n por lo que la creaci&oacute;n del mensaje de petici&oacute;n 
+  debe hacerse en el estado de configuraci&oacute;n.</p>
+<p>Una vez hayamos terminado de leer la respuesta, deberemos cerrar el flujo y 
+  la conexi&oacute;n:</p>
+<pre class="codigo">in.close();<br>con.<strong>close</strong>();</pre>
+<p>Con esto la conexi&oacute;n pasar&aacute; a estado cerrada, liberando todos 
+  los recursos.</p>
+<p><strong>Mensaje de petici&oacute;n</strong></p>
+<p>En muchos casos podemos necesitar enviar informaci&oacute;n al servidor, como 
+  por ejemplo el <em>login</em> y el <em>password</em> del usuario para autentificarse 
+  en la aplicaci&oacute;n web. Esta informaci&oacute;n deberemos incluirla en 
+  el mensaje de petici&oacute;n. Existen distintas formas de enviar informaci&oacute;n 
+  en la petici&oacute;n.</p>
+<p>Encontramos los diferentes tipos de mensajes de petici&oacute;n soportados 
+  por MIDP:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="30%" valign="top"><code>HttpConnection.GET</code></td>
+    <td width="70%"><p>Los datos que se env&iacute;an al servidor se incluyen 
+        en la misma URL. Por ejemplo, podemos mandar un par&aacute;metro <code>login</code> 
+        en la petici&oacute;n de la siguiente forma: <code><br>
+        </code><code>http://j2ee.ua.es/pdm?login=miguel</code></p>
+      </td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>HttpConnection.POST</code></td>
+    <td>Los datos que se env&iacute;an al servidor se incluyen como contenido 
+      del mensaje. Tiene la ventaja de que se puede enviar la cantidad de datos 
+      que queramos, a diferencia del m&eacute;todo GET en el que esta cantidad 
+      puede estar limitada. Adem&aacute;s los datos no ser&aacute;n visibles en 
+      la misma URL, ya que se incluyen como contenido del mensaje.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>HttpConnection.HEAD</code></td>
+    <td>No se solicita el contenido del recurso al servidor, s&oacute;lo informaci&oacute;n 
+      sobre &eacute;ste, es decir, las cabeceras HTTP.</td>
+  </tr>
+</table>
+<p>Podemos establecer uno de estos tipos utilizando el m&eacute;todo <code>setRequestMethod</code>, 
+  por ejemplo para utilizar una petici&oacute;n POST haremos lo siguiente:</p>
+<pre class="codigo">con.<strong>setRequestMethod</strong>(HttpConnection.POST);</pre>
+<p>Adem&aacute;s podremos a&ntilde;adir cabeceras a la petici&oacute;n con el 
+  siguiente m&eacute;todo:</p>
+<pre class="codigo">con.<strong>setRequestProperty</strong>(nombre, valor);</pre>
+<p>Por ejemplo, podemos mandar las siguiente cabeceras:</p>
+<pre class="codigo">c.setRequestProperty(&quot;IF-Modified-Since&quot;, 
+    &quot;22 Sep 2002 08:00:00 GMT&quot;);
+c.setRequestProperty(&quot;User-Agent&quot;,
+    &quot;Profile/MIDP-1.0 Configuration/CLDC-1.0&quot;);
+c.setRequestProperty(&quot;Content-Language&quot;, &quot;es-ES&quot;);
+</pre>
+<p>Con esto estaremos diciendo al servidor que queremos que nos devuelva una respuesta 
+  s&oacute;lo si ha sido modificada desde la fecha indicada, y adem&aacute;s le 
+  estamos comunicando datos sobre el cliente. Indicamos mediante estas cabeceras 
+  est&aacute;ndar que el cliente es una aplicaci&oacute;n MIDP, y que el lenguaje 
+  es espa&ntilde;ol de Espa&ntilde;a. </p>
+<p><strong>Mensajes POST</strong></p>
+<p>Si utilizamos una petici&oacute;n POST, deberemos incluir la informaci&oacute;n 
+  que enviemos al servidor como contenido del mensaje. </p>
+<p>Deberemos especificar el tipo MIME del contenido que vamos a a&ntilde;adir. 
+  Esto lo haremos mediante una cabecera est&aacute;ndar de HTTP. Por ejemplo, 
+  si a&ntilde;adimos texto ASCII, podemos establecer la siguiente cabecera:</p>
+<pre class="codigo">con.<strong>setRequestProperty</strong>(&quot;Content-Type&quot;, &quot;text/plain&quot;);</pre>
+<p>Para escribir en el contenido del mensaje de petici&oacute;n deberemos abrir 
+  un flujo de salida de la siguiente forma:</p>
+<pre class="codigo">OutputStream out = con.<strong>openOutputStream</strong>();</pre>
+<p>Podremos escribir en este flujo de salida igual que lo hacemos en cualquier 
+  otro flujo de salida, con lo que de esta forma podremos escribir cualquier contenido 
+  en el mensaje de petici&oacute;n.</p>
+<p>Al abrir el flujo para escribir en la petici&oacute;n provocaremos que se pase 
+  a estado conectado. Por lo tanto deberemos haber establecido el tipo de petici&oacute;n 
+  y todas las cabeceras previamente a la apertura de este flujo, cuando todav&iacute;a 
+  est&aacute;bamos en estado de configuraci&oacute;n.</p>
+<p><strong>Tipo y cabeceras de la respuesta</strong></p>
+<p>En estado conectado, adem&aacute;s del contenido del mensaje de la respuesta, 
+  podemos obtener el estado de la respuesta y sus cabeceras. Los estados de respuesta 
+  se componen de un c&oacute;digo y un mensaje y nos permitir&aacute;n saber si 
+  la petici&oacute;n ha podido atenderse correctamente o si por el contrario ha 
+  habido alg&uacute;n tipo de error. Por ejemplo, posibles estados son:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="51%"><code>HttpConnection.HTTP_OK</code></td>
+    <td width="7%">200 </td>
+    <td width="42%">OK</td>
+  </tr>
+  <tr> 
+    <td><code>HttpConnection.HTTP_BAD_REQUEST</code></td>
+    <td>400 </td>
+    <td>Bad Request</td>
+  </tr>
+  <tr> 
+    <td><code>HttpConnection.HTTP_INTERNAL_ERROR</code></td>
+    <td>500</td>
+    <td>Internal Server Error</td>
+  </tr>
+</table>
+<p>Este mensaje de estado encabeza el mensaje de respuesta. Si el servidor nos 
+  devuelve un mensaje con c&oacute;digo 200 como el siguiente:</p>
+<pre>HTTP/1.1 200 OK</pre>
+<p>Es que se ha procesado correctamente la petici&oacute;n y nos devuelve su respuesta. 
+  Si ha ocurrido un error, nos mandar&aacute; el c&oacute;digo y mensaje de error 
+  correspondiente. Por ejemplo, el error 400 indica que el servidor no ha entendido 
+  la petici&oacute;n que hemos hecho, posiblemente porque la hemos escrito incorrectamente. 
+  El error 500 nos dice que se trata de un error interno del servidor, no de la 
+  petici&oacute;n realizada.</p>
+<p>Podemos obtener tanto el c&oacute;digo como el mensaje de estado con los siguientes 
+  m&eacute;todos:</p>
+<pre class="codigo">int cod = con.<strong>getResponseCode</strong>(); <br>String msg = con.<strong>getResponseMessage</strong>();</pre>
+<p>Los c&oacute;digos de estado podemos encontrarlos como constantes de la clase 
+  <code>HttpConnection</code> como hemos visto para los tres c&oacute;digos anteriores.</p>
+<p>Tambi&eacute;n podemos utilizar este objeto para leer las cabeceras que nos 
+  ha devuelto la respuesta. Nos ofrece m&eacute;todos para leer una serie de cabeceras 
+  est&aacute;ndar de HTTP como los siguientes:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="22%" valign="top"><code>getLength</code></td>
+    <td width="24%" valign="top"><code>content-length</code></td>
+    <td width="54%">Longitud del contenido, o <code>-1</code> si la longitud es 
+      desconocida</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>getType</code></td>
+    <td valign="top"><code>content-type</code></td>
+    <td>Tipo MIME del contenido devuelto</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>getEncoding</code></td>
+    <td valign="top"><code>content-encoding</code></td>
+    <td>Codificaci&oacute;n del contenido</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>getExpiration</code></td>
+    <td valign="top"><code>expires</code></td>
+    <td>Fecha de expiraci&oacute;n del recurso</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>getDate</code></td>
+    <td valign="top"><code>date</code></td>
+    <td>Fecha de env&iacute;o del recurso</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>getLastModified</code></td>
+    <td valign="top"><code>last-modified</code></td>
+    <td>Fecha de &uacute;ltima modificaci&oacute;n del recurso</td>
+  </tr>
+</table>
+<p>Puede ser que queramos obtener otras cabeceras, como por ejemplo cabeceras 
+  propias no est&aacute;ndar. Para ello tendremos una serie de m&eacute;todos 
+  que obtendr&aacute;n las cabeceras directamente por su nombre:</p>
+<pre class="codigo">String valor = con.<strong>getHeaderField</strong>(nombre);
+int valor = con.<strong>getHeaderFieldInt</strong>(nombre);
+long valor = con.<strong>getHeaderFieldDate</strong>(nombre);</pre>
+<p>De esta forma podemos obtener el valor de la cabecera o bien como una cadena, 
+  o en los datos que sean de tipo fecha (valor <code>long</code>) o enteros tambi&eacute;n 
+  podremos obtener su valor directamente en estos tipos de datos.<br>
+  <br>
+  Podremos acceder a las cabeceras tambi&eacute;n a partir de su &iacute;ndice:</p>
+<pre class="codigo">String valor = con.<strong>getHeaderField</strong>(int indice);
+String nombre = con.<strong>getHeaderFieldKey</strong>(int indice);</pre>
+<p>Podemos obtener de esta forma tanto el nombre como el valor de la cabecera 
+  que ocupa un determinado &iacute;ndice.</p>
+<p>Tanto los m&eacute;todos que obtienen un flujo para leer o escribir en la conexi&oacute;n, 
+  como estos m&eacute;todos que acabamos de ver para obtener informaci&oacute;n 
+  sobre la respuesta producir&aacute;n una transici&oacute;n al estado conectado.</p>
+<h3>4.7.3. Front-ends de aplicaciones corporativas</h3>
+<p>El poder establecer conexiones en red nos permitir&aacute; acceder a aplicaciones 
+  web corporativas desde el m&oacute;vil. De esta forma, podremos hacer que estos 
+  dispositivos m&oacute;viles se comporten como <em>front-end </em>de estas aplicaciones 
+  corporativas.</p>
+<p>Desde los PCs de sobremesa normalmente accedemos a estas aplicaciones utilizando 
+  un navegador web. La aplicaci&oacute;n web genera de forma din&aacute;mica la 
+  presentaci&oacute;n en el servidor en forma de un documento HTML que ser&aacute; 
+  mostrado en los navegadores de los clientes. Podemos aplicar este mismo sistema 
+  al caso de los m&oacute;viles, generando nuestra aplicaci&oacute;n web la respuesta 
+  en forma de alg&uacute;n tipo de documento que pueda ser interpretado y mostrado 
+  en un navegador de tel&eacute;fono m&oacute;vil. Por ejemplo estos documentos 
+  pueden estar en formato WML, cHTML o XHTML. Esto puede ser suficiente para acceder 
+  a algunas aplicaciones desde los m&oacute;viles.</p>
+<p>Utilizar J2ME para realizar este <em>front-end</em> aporta una serie de ventajas 
+  sobre el paradigma anterior, como por ejemplo las siguientes:</p>
+<ul>
+  <li><strong>Interfaz de usuario</strong>. Las aplicaciones J2ME nos permite 
+    crear una interfaz de usuario flexible. La capa de presentaci&oacute;n esta 
+    implementada totalmente en el cliente, por lo que se podr&aacute; ajustar 
+    mejor a las caracter&iacute;sticas de cada dispositivo. <br>
+  </li>
+  <li><strong>Funcionamiento sin conexi&oacute;n</strong>. La aplicaci&oacute;n 
+    J2ME se ejecuta de forma local en el m&oacute;vil, por lo que podremos trabajar 
+    sin conexi&oacute;n. Podemos utilizar RMS para guardar datos mientras trabajamos 
+    en forma local, y conectar al servidor &uacute;nicamente cuando sea necesario.<br>
+  </li>
+  <li><strong>Conexi&oacute;n HTTP</strong>. Estas aplicaciones se conectan utilizando 
+    el protocolo est&aacute;ndar HTTP. No har&aacute; falta conocer la estructura 
+    de la red m&oacute;vil subyacente. El poder establecer conexiones HTTP a Internet 
+    nos permitir&aacute; enlazar las aplicaciones J2EE y J2ME. </li>
+</ul>
+<p>Normalmente ser&aacute; preferible utilizar HTTP a <em>sockets</em> o datagramas 
+  porque esto nos aportar&aacute; una serie de ventajas. Por un lado, HTTP est&aacute; 
+  soportado por todos los dispositivos MIDP. Al utilizar HTTP tampoco tendremos 
+  problema con <em>firewalls</em> intermedios, cosa que puede ocurrir si conectamos 
+  por <em>sockets</em> mediante un puerto que est&eacute; cerrado. Adem&aacute;s 
+  las APIs de Java incluyen facilidades para trabajar con HTTP, por lo que ser&aacute; 
+  sencillo realizar la comunicaci&oacute;n tanto en el cliente como en el servidor. 
+</p>
+<p>La conexi&oacute;n de red en los m&oacute;viles normalmente tiene una alta 
+  latencia, un reducido ancho de banda y es posible que se produzcan interrupciones 
+  cuando la cobertura es baja. Deberemos tener en cuenta todos estos factores 
+  cuando dise&ntilde;emos nuestra aplicaci&oacute;n. Por esta raz&oacute;n deberemos 
+  minimizar la cantidad de datos que se intercambian a trav&eacute;s de la red, 
+  y permitir que la aplicaci&oacute;n pueda continuar trabajando correctamente 
+  sin conexi&oacute;n.</p>
+<p><strong>Optimizaciones en el cliente</strong></p>
+<p>Para reducir el n&uacute;mero de datos que se env&iacute;an por la red, evitando 
+  que se hagan conexiones innecesarias, es conveniente realizar una validaci&oacute;n 
+  de los datos introducidos por el usuario en el cliente. Normalmente no podremos 
+  validarlos de la misma forma en que se validan en el servidor, ya que por ejemplo 
+  no tenemos acceso a las bases de datos de la aplicaci&oacute;n, por lo que deber&aacute; 
+  volverse a validar por el servidor para realizar la validaci&oacute;n completa. 
+  No obstante, es conveniente realizar esta validaci&oacute;n en el cliente como 
+  una prevalidaci&oacute;n, de forma que detecte siempre que sea posible los datos 
+  err&oacute;neos en el lado del cliente evitando as&iacute; realizar una conexi&oacute;n 
+  innecesaria con el servidor.</p>
+<p>Dado que la red es lenta, las operaciones que necesiten conectarse a la red 
+  ser&aacute;n costosas. Estas operaciones ser&aacute; conveniente que sean ejecutadas 
+  por hilos en segundo plano, y nunca deberemos establecer una conexi&oacute;n 
+  desde un <em>callback</em>. Adem&aacute;s siempre que sea posible deberemos 
+  mostrar una barra de progreso mientras se realiza la operaci&oacute;n, de forma 
+  que el usuario tenga constancia de que se est&aacute; haciendo algo. Tambi&eacute;n 
+  ser&aacute; conveniente permitir al usuario que interrumpa estas largas operaciones, 
+  siempre que la interrupci&oacute;n pueda hacerse y no cause inconsistencias 
+  en los datos.</p>
+<p>Un aspecto interesante en los clientes J2ME es la posibilidad de incorporar 
+  personalizaci&oacute;n. La personalizaci&oacute;n consiste en recordar los datos 
+  y las preferencias del usuario, de forma que la aplicaci&oacute;n se adapte 
+  a estas preferencias y el usuario no tenga que introducir estos datos en cada 
+  sesi&oacute;n. Podremos pedir esta informaci&oacute;n de personalizaci&oacute;n 
+  la primera vez que ejecuta la aplicaci&oacute;n y almacenar esta informaci&oacute;n 
+  utilizando RMS o bien registrarla en el servidor de forma remota. Si tuvi&eacute;semos 
+  esta informaci&oacute;n por duplicado, en local y en remoto, deberemos proporcionar 
+  mecanismos para sincronizar ambos registros.</p>
+<p><strong>Arquitectura MVC</strong></p>
+<p>El patr&oacute;n de dise&ntilde;o MVC (Modelo-Vista-Controlador) suele aplicarse 
+  para dise&ntilde;ar las aplicaciones web J2EE. Podemos aplicar este mismo patr&oacute;n 
+  a las aplicaciones cliente J2ME. En una aplicaci&oacute;n cliente tendremos 
+  los siguientes elementos:</p>
+<ul>
+  <li><strong>Modelo</strong>: Datos de la aplicaci&oacute;n.<br>
+  </li>
+  <li><strong>Vista</strong>: Presentaci&oacute;n de la aplicaci&oacute;n. Ser&aacute;n 
+    las distintas pantallas de nuestro MIDlet. <br>
+  </li>
+  <li><strong>Controlador</strong>: El controlador ser&aacute; quien controle 
+    el flujo de la aplicaci&oacute;n. Nos dir&aacute; qu&eacute; pantalla se debe 
+    mostrar en cada momento, seg&uacute;n las acciones realizadas.</li>
+</ul>
+<p>De esta forma con esta arquitectura estamos aislando datos, presentaci&oacute;n 
+  y flujo de control. Es especialmente interesante el haber aislado los datos 
+  del resto de componentes. De esta forma la capa de datos podr&aacute; decidir 
+  si trabajar con datos de forma local con RMS o de forma remota a trav&eacute;s 
+  de HTTP, sin afectar con ello al resto de la aplicaci&oacute;n. Este dise&ntilde;o 
+  nos facilitar&aacute; cambiar de modo remoto a modo local cuando no queramos 
+  tener que establecer una conexi&oacute;n de red.</p>
+<h3>4.7.4. Integraci&oacute;n con aplicaciones corporativas</h3>
+<p>Vamos a considerar que en el servidor tenemos una aplicaci&oacute;n J2EE. En 
+  este caso accederemos a la aplicaci&oacute;n corporativa a trav&eacute;s de 
+  un <code>Servlet</code>. Los <em>servlets</em> son componentes Java en el servidor 
+  que encapsulan el mecanismo petici&oacute;n/respuesta. Es decir, podemos enviar 
+  una petici&oacute;n HTTP a un <em>servlet</em>, y &eacute;ste la analizar&aacute; 
+  y nos devolver&aacute; una respuesta. </p>
+<div align="center"><img src="imagenes/red/j2ee.gif" width="431" height="155"> 
+</div>
+<p class="caption">Figura 30. Integraci&oacute;n de J2ME y J2EE</p>
+<p>La aplicaci&oacute;n J2ME se comunicar&aacute; con un <em>servlet</em>. Dentro 
+  de la aplicaci&oacute;n J2EE en el servidor este <em>servlet</em> utilizar&aacute; 
+  EJBs para realizar las tareas necesarias. Los EJBs son componentes reutilizables 
+  que implementan la l&oacute;gica de negocio de la aplicaci&oacute;n. Estos EJBs 
+  podr&aacute;n utilizar otras APIs para realizar sus funciones, como por ejemplo 
+  JMS para enviar o recibir mensajes, JDBC para acceder a bases de datos, CORBA 
+  para acceder a objetos distribuidos, o bien acceder a Servicios Web utilizando 
+  las APIs de XML.</p>
+<p>Normalmente tendremos <em>servlets</em> que se encarguen de generar una respuesta 
+  para navegadores web HTML. Para las aplicaciones m&oacute;viles esta respuesta 
+  no es adecuada, por lo que deberemos crear otra versi&oacute;n de estos <em>servlets</em> 
+  que devuelvan una respuesta adaptada a las necesidades de los m&oacute;viles. 
+  La arquitectura de capas de J2EE nos permitir&aacute; crear <em>servlets</em> 
+  para distintos tipos de clientes minimizando la cantidad de c&oacute;digo redundante, 
+  ya que la l&oacute;gica de negocio est&aacute; implementada en los EJBs y estos 
+  componentes pueden ser reutilizados desde los diferentes <em>servlets</em>.</p>
+<p>El proceso de comunicaci&oacute;n entre nuestra aplicaci&oacute;n y un <em>servlet</em> 
+  ser&aacute; el siguiente:</p>
+<ul>
+  <li>La aplicaci&oacute;n J2ME env&iacute;a la petici&oacute;n al <em>servlet</em>. 
+    Para ello establece como URL la direcci&oacute;n en la que est&aacute; mapeado 
+    el <em>servlet</em> y a&ntilde;ade al mensaje el contenido que queramos enviar 
+    en la petici&oacute;n. Si incluimos contenido en un mensaje de tipo POST deberemos 
+    establecer la cabecera <code>Content-Type</code> al tipo correcto de datos 
+    que estemos enviando para que el mensaje sea procesado de forma correcta por 
+    los <em>gateways</em> intermedios por los que pase. Si enviamos el contenido 
+    del mensaje codificado como texto, deberemos establecer este tipo a<code> 
+    text/plain</code>, mientras que si los datos se env&iacute;an en binario deberemos 
+    utilizar como tipo <code>application/octet-stream</code>.<br>
+  </li>
+  <li>El <em>servlet</em> recibe la petici&oacute;n, la descodifica, la analiza 
+    y en caso necesario utiliza los EJBs que sean necesarios para realizar las 
+    acciones oportunas.<br>
+  </li>
+  <li>Una vez se ha procesado la petici&oacute;n el <em>servlet</em> construye 
+    la respuesta con los resultados obtenidos y la codifica. Deberemos establecer 
+    las cabeceras <code>Content-Type </code>y <code>Content-Length</code> para 
+    asegurarnos de que el mensaje sea procesado correctamente por los <em>gateways</em> 
+    intermedios igual que en el caso del env&iacute;o de la petici&oacute;n. En 
+    este caso como tipo podremos utilizar por ejemplo<code> text/plain</code> 
+    para texto <code>image/png</code> para devolver una imagen PNG al cliente, 
+    y <code>application/octet-stream</code> para devolver un mensaje codificado 
+    en binario.<br>
+  </li>
+  <li>Para finalizar, el cliente recibir&aacute; y descodificar&aacute; la respuesta 
+    que le ha enviado el <em>servlet</em>. Una vez descodificada podr&aacute; 
+    mostrarla en pantalla utilizando la API LCDUI.</li>
+</ul>
+<p><strong>Codificaci&oacute;n de los datos</strong></p>
+<p>Hemos visto que la aplicaci&oacute;n J2ME y el <em>servlet</em> de la aplicaci&oacute;n 
+  J2EE intercambian datos con una determinada codificaci&oacute;n. En J2ME no 
+  tenemos disponibles mecanismos de alto nivel para intercambiar informaci&oacute;n 
+  con componentes remotos, como por ejemplo RMI para la invocaci&oacute;n de m&eacute;todos 
+  de objetos Java remotos, o las API de an&aacute;lisis de XML para intercambiar 
+  informaci&oacute;n en este formato. Por lo tanto deberemos codificar la informaci&oacute;n 
+  con formatos propios. Seremos nosotros los que decidamos qu&eacute; formato 
+  y codificaci&oacute;n deben tener estos datos.</p>
+<p>Podemos movernos entre dos extremos: la codificaci&oacute;n de los datos en 
+  binario y la codificaci&oacute;n en XML.</p>
+<p>La codificaci&oacute;n binaria de los datos ser&aacute; eficiente y compacta. 
+  Ser&aacute; sencillo codificar informaci&oacute;n en este formato utilizando 
+  los objetos <code>DataOutputStream</code> y <code>ByteArrayOutputStream</code>. 
+  Tiene el inconveniente de que tanto el cliente como el servidor deber&aacute;n 
+  conocer c&oacute;mo est&aacute; codificada la informaci&oacute;n dentro del 
+  <em>array</em> de <em>bytes</em>, por lo que estos componentes estar&aacute;n 
+  altamente acoplados.</p>
+<p>Si hemos definido una serializaci&oacute;n para los objetos, podemos aprovechar 
+  esta serializaci&oacute;n para enviarlos a trav&eacute;s de la red. En este 
+  caso la serializaci&oacute;n la hemos definido manualmente nosotros en un m&eacute;todo 
+  del objeto, y no se hace autom&aacute;ticamente como en el caso de J2SE, por 
+  lo que deberemos tener cuidado de que en el objeto del cliente y en el del servidor 
+  se serialice y deserialice de la misma forma. Adem&aacute;s, al transferir un 
+  objeto entre J2ME y J2EE deberemos asegurarnos de que este objeto utiliza solamente 
+  la parte com&uacute;n de la API de Java en ambas plataformas.</p>
+<p>En el otro extremo, XML es un lenguaje complejo de analizar y la informaci&oacute;n 
+  ocupa m&aacute;s espacio. Como ventaja tenemos que XML es un lenguaje est&aacute;ndar 
+  y autodescriptivo, por lo que reduciremos el acoplamiento de cliente y servidor. 
+  Aunque en MIDP no se incluyen librer&iacute;as para procesar XML, diversos fabricantes 
+  proporcionan sus propias implementaciones de las librer&iacute;as de XML para 
+  J2ME. Podemos utilizar estas librer&iacute;as para crear y analizar estos documentos 
+  en los clientes m&oacute;viles. </p>
+<p>Podemos encontrar incluso implementaciones de librer&iacute;as de XML orientado 
+  a RPC para invocar Servicios Web SOAP directamente desde el m&oacute;vil. Debemos 
+  tener cuidado al invocar Servicios Web directamente desde los m&oacute;viles, 
+  ya que la construcci&oacute;n y el an&aacute;lisis de los mensajes SOAP es una 
+  tarea demasiado costosa para estos dispositivos. Para optimizar la aplicaci&oacute;n, 
+  en lugar de invocarlos desde el mismo m&oacute;vil, podemos hacer que sea la 
+  aplicaci&oacute;n J2EE la que invoque el servicio, y que el m&oacute;vil se 
+  comunique con esta aplicaci&oacute;n a trav&eacute;s de mensajes sencillos.</p>
+<p><strong>Mantenimiento de sesiones</strong></p>
+<p>El protocolo HTTP sigue un mecanismo de petici&oacute;n/respuesta, no mantiene 
+  informaci&oacute;n de sesi&oacute;n. Es decir, si realizamos varias peticiones 
+  HTTP a un servidor desde nuestro cliente, cada una de estas peticiones ser&aacute; 
+  tratada independientemente por el servidor, sin identificar que se trata de 
+  un mismo usuario. Para implementar sesiones sobre protocolo HTTP tendremos que 
+  recurrir a mecanismos como la reescritura de URLs o las <em>cookies</em>.</p>
+<p>Normalmente cuando accedamos a una aplicaci&oacute;n web necesitaremos mantener 
+  una sesi&oacute;n para que en todas las peticiones que hagamos al servidor, 
+  &eacute;ste nos identifique como un mismo usuario. De esta forma por ejemplo 
+  podremos ir a&ntilde;adiendo con cada petici&oacute;n productos a un carrito 
+  de la compra en el lado del servidor, sin perder la informaci&oacute;n sobre 
+  los productos a&ntilde;adidos de una petici&oacute;n a otra.</p>
+<p>Para mantener las sesiones lo que se har&aacute; es obtener en el cliente un 
+  identificador de la sesi&oacute;n, de forma que en cada petici&oacute;n que 
+  se haga al servidor se env&iacute;e este identificador para que el servidor 
+  sepa a qu&eacute; sesi&oacute;n pertenece dicha petici&oacute;n. Este identificador 
+  puede ser obtenido mediante <em>cookies</em>, o bien incluirlo como parte de 
+  las URLs utilizando la t&eacute;cnica de reescritura de URLs.</p>
+<p>Los navegadores web normalmente implementan las sesiones mediante <em>cookies</em>. 
+  Estas <em>cookies</em> son informaci&oacute;n que el servidor nos env&iacute;a 
+  en la respuesta y que el navegador almacena de forma local en nuestra m&aacute;quina. 
+  En la primera petici&oacute;n el servidor enviar&aacute; una <em>cookie</em> 
+  al cliente con el identificador de la sesi&oacute;n, y el navegador almacenar&aacute; 
+  esta <em>cookie</em> de forma local en el cliente. Cuando se vaya a hacer otra 
+  petici&oacute;n al servidor, el navegador env&iacute;a esta <em>cookie</em> 
+  para identificarnos ante el servidor como el mismo cliente. De esta forma el 
+  servidor podr&aacute; utilizar el valor de la <em>cookie</em> recibida para 
+  determinar la sesi&oacute;n correspondiente a dicho cliente, y de esta forma 
+  poder acceder a los datos que hubiese almacenado en peticiones anteriores dentro 
+  de la misma sesi&oacute;n. </p>
+<p>Sin embargo, cuando conectamos desde un cliente J2ME estamos estableciendo 
+  una conexi&oacute;n con la URL del <em>servlet</em> desde nuestra propia aplicaci&oacute;n, 
+  no desde un navegador que gestione autom&aacute;ticamente estas <em>cookies</em>. 
+  Por lo tanto ser&aacute; tarea nuestra implementar los mecanismos necesarios 
+  para mantener esta sesi&oacute;n desde el cliente.</p>
+<p>Vamos a ver como implementar los mecanismos para mantenimiento de sesiones 
+  en las aplicaciones J2ME. Ser&aacute; m&aacute;s fiable utilizar reescritura 
+  de URLs, ya que algunos <em>gateways</em> podr&iacute;an filtrar las <em>cookies</em> 
+  y por lo tanto este mecanismo fallar&iacute;a. </p>
+<p>Estos mecanismos de <em>cookies</em> y reescritura de URLs se utilizan para 
+  que los navegadores mantengan las sesiones de una forma est&aacute;ndar para 
+  todas las aplicaciones. Pero lo que pretendemos en &uacute;ltima instancia es 
+  tener un identificador de la sesi&oacute;n en el cliente que pueda ser enviado 
+  al servidor en cada petici&oacute;n. Si nos conectamos desde nuestra propia 
+  aplicaci&oacute;n podremos utilizar nuestro propio identificador y enviarlo 
+  al servidor de la forma que queramos (como cabecera, par&aacute;metro, en el 
+  post, etc). Por ejemplo, podr&iacute;amos hacer que en cada petici&oacute;n 
+  que haga nuestra aplicaci&oacute;n J2ME env&iacute;e nuestro <em>login</em> 
+  al servidor, de forma que esta informaci&oacute;n le sirva al servidor para 
+  identificarnos en cada momento.</p>
+<p>Sin embargo, ser&aacute; conveniente que nuestra aplicaci&oacute;n implemente 
+  alguno de los mecanismos est&aacute;ndar para el mantenimiento de sesiones, 
+  ya que as&iacute; podremos aprovechar las facilidades que ofrecen los componentes 
+  del servidor para mantener las sesiones. Ahora veremos como implementar las 
+  t&eacute;cnicas de reescritura de URLs y <em>cookies</em> en nuestras aplicaciones 
+  J2ME.</p>
+<p><strong>Reescritura de URLs</strong></p>
+<p>Algunos navegadores no soportan <em>cookies</em>. Para mantener sesiones en 
+  este caso podemos utilizar la t&eacute;cnica de reescritura de URLs. Esta t&eacute;cnica 
+  consiste en modificar las URLs a las que acceder&aacute; el cliente incluyendo 
+  en ellas el identificador de sesi&oacute;n como par&aacute;metro.</p>
+<p>Para utilizar esta t&eacute;cnica deberemos codificar la URL en el servidor 
+  y devolverla de alguna forma al cliente. Por ejemplo, podemos devolver esta 
+  URL modificada como una cabecera HTTP propia. Supongamos que devolvemos esta 
+  URL reescrita como una cabecera <code>URL-Reescrita</code>. Podremos obtenerla 
+  en la aplicaci&oacute;n cliente de la siguiente forma:</p>
+<pre class="codigo">String url_con_ID = con.getHeaderField(&quot;URL-Reescrita&quot;);</pre>
+<p>En la pr&oacute;xima petici&oacute;n que hagamos al servidor deberemos utilizar 
+  la URL que hemos obtenido, en lugar de la URL b&aacute;sica a la que conectamos 
+  inicialmente:</p>
+<pre class="codigo">HttpConnection con = (HttpConnection)Connector.open(url_con_ID);</pre>
+<p>De esta forma cuando establezcamos esta segunda conexi&oacute;n el <em>servlet</em> 
+  al que conectamos sabr&aacute; que se trata de la misma sesi&oacute;n y podremos 
+  acceder a la informaci&oacute;n de la sesi&oacute;n dentro del servidor.</p>
+<p>En el c&oacute;digo del <em>servlet</em> que atiende nuestra petici&oacute;n 
+  en el servidor deberemos rescribir la URL y devolv&eacute;rsela al cliente como 
+  la cabecera que hemos visto anteriormente. Esto podemos hacerlo de la siguiente 
+  forma:</p>
+<pre class="codigo">String url = request.getRequestURL().toString();<br>String url_con_ID = response.<strong>encodeURL</strong>(url);<br>response.setHeader(&quot;URL-Reescrita&quot;, url_con_ID);</pre>
+<p><strong>Manejo de cookies</strong></p>
+<p>Los <em>servlets</em> utilizan las <em>cookies</em> para mantener la sesi&oacute;n 
+  siempre que detecten que el cliente soporta <em>cookies</em>. Para el caso de 
+  estas aplicaciones J2ME el <em>servlet</em> detectar&aacute; que el cliente 
+  no soporta <em>cookies</em>, por lo que utilizar&aacute; &uacute;nicamente reescritura 
+  de URLs. Sin embargo, si que podremos crear <em>cookies</em> manualmente en 
+  el <em>servlet</em> para permitir mantener la informaci&oacute;n del usuario 
+  en el cliente durante el tiempo que dure la sesi&oacute;n o incluso durante 
+  m&aacute;s tiempo.</p>
+<p>Desde las aplicaciones J2ME podremos implementar las sesiones utilizando <em>cookies</em>. 
+  Adem&aacute;s con las <em>cookies</em> podremos mantener informaci&oacute;n 
+  del usuario de forma persistente, no &uacute;nicamente durante una sola sesi&oacute;n. 
+  Por ejemplo, podemos utilizar RMS para almacenar las <em>cookies</em> con informaci&oacute;n 
+  sobre el usuario, de forma que cuando se vuelve a utilizar la aplicaci&oacute;n 
+  en otro momento sigamos teniendo esta informaci&oacute;n. Con esto podemos por 
+  ejemplo evitar que el usuario tenga que autentificarse cada vez que entra a 
+  la aplicaci&oacute;n. </p>
+<p>Estas <em>cookies</em> consisten en una pareja <em>&lt;nombre, valor&gt;</em> 
+  y una fecha de caducidad. Con esta fecha de caducidad podemos indicar si la 
+  <em>cookie</em> debe mantenerse s&oacute;lo durante la sesi&oacute;n actual, 
+  o por m&aacute;s tiempo. </p>
+<p>Podemos recibir las <em>cookies</em> que nos env&iacute;a el servidor leyendo 
+  la cabecera <code>set-cookie</code> de la respuesta desde nuestra aplicaci&oacute;n 
+  J2ME:</p>
+<pre class="codigo">String cookie = con.<strong>getHeaderField</strong>(&quot;set-cookie&quot;);</pre>
+<p>Una vez tengamos la <em>cookie</em> podemos guard&aacute;rnosla en memoria, 
+  o bien en RMS si queremos almacenar persistentemente esta informaci&oacute;n. 
+  En las siguientes peticiones que hagamos al servidor deberemos enviarle esta 
+  cookie en la cabecera <code>cookie</code>:</p>
+<pre class="codigo">con.<strong>setRequestProperty</strong>(&quot;cookie&quot;, cookie);</pre>
+<p><strong>Seguridad</strong></p>
+<p>Podemos establecer una conexi&oacute;n segura con el servidor mediante SSL 
+  (<em>Secure Sockets Layer</em>) simplemente indicando como protocolo en la URL 
+  de la conexi&oacute;n <code>https</code> en lugar de <code>http</code>. Adem&aacute;s 
+  el servidor deber&aacute; soportar este tipo de conexiones. </p>
+<p>En cuanto a la autentificaci&oacute;n de los usuarios al conectarse a las aplicaciones 
+  corporativas, normalmente utilizaremos seguridad a nivel de la aplicaci&oacute;n. 
+  Es decir, enviaremos nuestro <em>login</em> y <em>password</em> a un <em>servlet</em> 
+  para que los verifique en la base de datos de usuarios que haya en el servidor. 
+  Una vez autentificados, podremos mantener esta informaci&oacute;n de registro 
+  en la sesi&oacute;n del usuario, de forma que en sucesivas peticiones podamos 
+  obtener la informaci&oacute;n sin necesidad de volvernos a autentificar en cada 
+  una de ellas.</p>
+<h3>4.7.5. Env&iacute;o y recepci&oacute;n de mensajes</h3>
+<p>Podemos utilizar la API adicional WMA para enviar o recibir mensajes cortos 
+  (SMS, <em>Short Message Service</em>) a trav&eacute;s del tel&eacute;fono m&oacute;vil. 
+  Esta API extiende GFC, permitiendo establecer conexiones para recibir o enviar 
+  mensajes. Cuando queramos enviar mensajes nos comportaremos como clientes en 
+  la conexi&oacute;n, mientras que para recibirlos actuaremos como servidor. La 
+  URL para establecer una conexi&oacute;n con el sistema de mensajes para ser 
+  enviados o recibidos a trav&eacute;s de una portadora SMS sobre GSM tendr&aacute; 
+  el siguiente formato: </p>
+<p><code>sms://telefono:puerto</code></p>
+<p>Las clases de esta API se encuentran en el paquete <code>javax.wireless.messaging</code>. 
+  Aqu&iacute; se definen una serie de interfaces para trabajar con los mensajes 
+  y con la conexi&oacute;n. </p>
+<p><strong>Envio de mensajes</strong></p>
+<p>Si queremos enviar mensajes, deberemos crear una conexi&oacute;n cliente proporcionando 
+  en la URL el n&uacute;mero del tel&eacute;fono al que vamos a enviar el mensaje 
+  y el puerto al que lo enviaremos de forma opcional:</p>
+<p><code>sms://+34555000000<br>
+  sms://+34555000000:4444</code></p>
+<p>Si no especificamos el puerto se utilizar&aacute; el puerto que se use por 
+  defecto para los mensajes del usuario en el tel&eacute;fono m&oacute;vil. Deberemos 
+  abrir una conexi&oacute;n con una de estas URLs utilizando GFC, con lo que nos 
+  devolver&aacute; una conexi&oacute;n de tipo <code>MessageConnection</code></p>
+<pre class="codigo"><strong>MessageConnection</strong> mc = 
+    (<strong>MessageConnection</strong>)Connector.open(&quot;sms://+34555000000&quot;);</pre>
+<p>Una vez creada la conexi&oacute;n podremos utilizarla para enviar mensajes 
+  cortos. Podremos mandar tanto mensajes de texto como binarios. Estos mensajes 
+  tienen un tama&ntilde;o limitado a un m&aacute;ximo de 140 <em>bytes</em>. Si 
+  el mensaje es de texto el n&uacute;mero de caracteres depender&aacute; de la 
+  codificaci&oacute;n de &eacute;stos. Por ejemplo si los codificamos con 7 bits 
+  tendremos una longitud de 160 caracteres, mientras que con una codificaci&oacute;n 
+  de 8 bits tendremos un juego de caracteres m&aacute;s amplio pero los mensajes 
+  estar&aacute;n limitados a 140 caracteres.</p>
+<p>WMA permite encadenar mensajes, de forma que esta longitud podr&aacute; ser 
+  por lo menos 3 veces mayor. El encadenamiento consiste en que si el mensaje 
+  supera la longitud m&aacute;xima de 140 <em>bytes</em> que puede transportar 
+  SMS, entonces se fracciona en varios fragmentos que ser&aacute;n enviados independientemente 
+  a trav&eacute;s de SMS y ser&aacute;n unidos al llegar a su destino para formar 
+  el mensaje completo. Esto tiene el inconveniente de que realmente por la red 
+  est&aacute;n circulando varios mensajes, por lo que se nos cobrar&aacute; por 
+  el n&uacute;mero de fragmentos que haya enviado. </p>
+<p>Podremos crear el mensaje a enviar a partir de la conexi&oacute;n. Los mensajes 
+  de texto los crearemos de la siguiente forma:</p>
+<pre class="codigo">String texto = &quot;Este es un mensaje corto de texto&quot;;
+TextMessage msg = mc.<strong>newMessage</strong>(mc.TEXT_MESSAGE);
+msg.<strong>setPayloadText</strong>(texto);</pre>
+<p>Para el caso de un mensaje binario, lo crearemos de la siguiente forma:</p>
+<pre class="codigo">byte [] datos = codificarDatos();
+BinaryMessage msg = mc.<strong>newMessage</strong>(mc.BINARY_MESSAGE);
+msg.<strong>setPayloadData</strong>(datos);
+</pre>
+<p>Antes de enviar el mensaje, podemos ver en cu&aacute;ntos fragmentos deber&aacute; 
+  ser dividido para poder ser enviado utilizando la red subyacente con el siguiente 
+  m&eacute;todo:</p>
+<pre class="codigo">int num_segmentos = mc.<strong>numberOfSegments</strong>(msg);</pre>
+<p>Esto nos devolver&aacute; el n&uacute;mero de segmentos en los que se fraccionar&aacute; 
+  el mensaje, &oacute; 0 si el mensaje no puede ser enviado utilizando la red 
+  subyacente. </p>
+<p>Independientemente de si se trata de un mensaje de texto o de un mensaje binario, 
+  podremos enviarlo utilizando el siguiente m&eacute;todo:</p>
+<pre class="codigo">mc.<strong>send</strong>(msg);
+</pre>
+<p><strong>Recepci&oacute;n de mensajes</strong></p>
+<p>Para recibir mensajes deberemos crear una conexi&oacute;n de tipo servidor. 
+  Para ello en la URL s&oacute;lo especificaremos el puerto en el que queremos 
+  recibir los mensajes:</p>
+<p> <code>sms://:4444</code></p>
+<p>Crearemos una conexi&oacute;n utilizando una URL como esta, en la que no se 
+  especifique el n&uacute;mero de tel&eacute;fono destino.</p>
+<pre class="codigo"><strong>MessageConnection</strong> mc = 
+    (<strong>MessageConnection</strong>)Connector.open(&quot;sms://:4444&quot;);</pre>
+<p>Para recibir un mensaje utilizaremos el m&eacute;todo:</p>
+<pre class="codigo">Message msg = mc.<strong>receive</strong>();</pre>
+<p>Si hemos recibido un mensaje que todav&iacute;a no hay sido leido este m&eacute;todo 
+  obtendr&aacute; dicho mensaje. Si todav&iacute;a no se ha recibido ning&uacute;n 
+  mensaje, este m&eacute;todo se quedar&aacute; bloqueado hasta que se reciba 
+  un mensaje, momento en el que lo leer&aacute; y nos lo devolver&aacute;.</p>
+<p>Podemos determinar en tiempo de ejecuci&oacute;n si se trata de un mensaje 
+  de texto o de un mensaje binario. Para ello deberemos comprobar de qu&eacute; 
+  tipo es realmente el objeto devuelto, y seg&uacute;n este tipo leer sus datos 
+  como texto o como <em>array</em> de <em>bytes</em>:</p>
+<pre class="codigo">if(msg instanceof TextMessage) {<br>    String texto = ((TextMessage)msg).<strong>getPayloadText</strong>();<br>    // Procesar texto<br>} else if(msg instanceof TextMessage) {<br>    byte [] datos = ((BinaryMessage)msg).<strong>getPayloadData</strong>();<br>    // Procesar datos<br>}</pre>
+<p>Hemos visto que el m&eacute;todo <code>receive</code> se queda bloqueado hasta 
+  que se reciba un mensaje. No debemos hacer que la aplicaci&oacute;n se quede 
+  bloqueada esperando un mensaje, ya que &eacute;ste puede tardar bastante, o 
+  incluso no llegar nunca. Podemos solucionar este problema realizando la lectura 
+  de los mensajes mediante un hilo en segundo plano. Otra soluci&oacute;n es utilizar 
+  un <em>listener</em>.</p>
+<p><strong>Listener de mensajes</strong></p>
+<p>Estos <em>listeners</em> nos servir&aacute;n para que se nos notifique el momento 
+  en el que se recibe un mensaje corto. De esta forma no tendremos que quedarnos 
+  bloqueados esperando recibir el mensaje, sino que podemos invocar <code>receive</code> 
+  directamente cuando sepamos que se ha recibido el mensaje.</p>
+<p>Para crear un <em>listener</em> de este tipo deberemos crear una clase que 
+  implemente la interfaz <code>MessageListener</code>:</p>
+<pre class="codigo">public MiListener implements <strong>MessageListener</strong> {<br>    public void <strong>notifyIncomingMessage</strong>(MessageConnection mc) {<br>        // Se ha recibido un mensaje a trav&eacute;s de la conexion mc<br>    }<br>}</pre>
+<p>Dentro del m&eacute;todo <code>notifyIncomingMessage</code> deberemos introducir 
+  el c&oacute;digo a ejecutar cuando se reciba un mensaje. No debemos ejecutar 
+  la operaci&oacute;n <code>receive</code> directamente dentro de este m&eacute;todo, 
+  ya que es una operaci&oacute;n costosa que no debe ser ejecutada dentro de los 
+  <em>callbacks</em> que deben devolver el control lo antes posible para no entorpecer 
+  el procesamiento de eventos de la aplicaci&oacute;n. Deberemos hacer que la 
+  recepci&oacute;n del mensaje la realice un hilo independiente. </p>
+<p>Para que la recepci&oacute;n de mensajes le sea notificada a nuestro <em>listener</em> 
+  deberemos registrarlo como <em>listener</em> de la conexi&oacute;n con:</p>
+<pre class="codigo">mc.<strong>setMessageListener</strong>(new MiListener());</pre>
+<p>En WTK 2.0 tenemos disponible una consola WMA con la que podremos simular el 
+  env&iacute;o y la recepci&oacute;n de mensajes cortos que se intercambien entre 
+  los emuladores, de forma que podremos probar estas aplicaciones sin tener que 
+  enviar realmente los mensajes y pagar por ellos.</p>
+<h3>4.7.6. Conexiones push</h3>
+<p>Hasta ahora hemos visto que cuando queremos obtener informaci&oacute;n primero 
+  debemos crear la conexi&oacute;n desde el cliente m&oacute;vil. Para recibir 
+  algo antes tenemos que solicitarlo desde nuestra aplicaci&oacute;n cliente, 
+  esto es lo que se conoce como una conexi&oacute;n <em>pull</em>, en la que el 
+  cliente debe tirar de los datos para obtenerlos.</p>
+<p>Para determinadas aplicaciones puede ser interesante poder recibir datos sin 
+  tener que solicitarlos. Por ejemplo pensemos en una aplicaci&oacute;n de chat, 
+  en la que hay varios clientes conectados a un mismo servidor que env&iacute;an 
+  mensajes al chat. Nosotros querremos visualizar en nuestro cliente la lista 
+  de mensajes publicados en el servidor, pero no sabemos cuando llega un mensaje 
+  al servidor, ya que puede haberlo enviado cualquier otro cliente, s&oacute;lo 
+  el servidor sabe cuando llegan nuevos mensajes.</p>
+<p>Podemos utilizar una t&eacute;cnica conocida como <em>polling</em>, que consiste 
+  en interrogar al servidor cada cierto periodo de tiempo para comprobar si han 
+  llegado mensajes nuevos, y en tal caso recibirlos. Esto nos obligar&aacute; 
+  a estar continuamente realizando peticiones al servidor, aunque no se haya recibido 
+  ning&uacute;n mensaje.</p>
+<p>Con una conexi&oacute;n de tipo <em>push</em> podremos solucionar este problema, 
+  ya que en este caso el servidor podr&aacute; enviarnos informaci&oacute;n sin 
+  tener que pedirla nosotros previamente. De esta forma cuando el servidor haya 
+  recibido nuevos mensajes nos los enviar&aacute; mediante <em>push</em>, sin 
+  tener que estar interrog&aacute;ndolo nosotros continuamente.</p>
+<p>MIDP 2.0 soporta este tipo de conexiones. Debemos especificar en el fichero 
+  JAD de la suite la lista de conexiones <em>push</em> entrantes que aceptar&aacute; 
+  nuestra aplicaci&oacute;n:</p>
+<pre class="codigo">MIDlet-Push-1: sms://:4444, es.ua.j2ee.sms.MIDletRecibir, *</pre>
+<p>Debemos especificar para cada conexi&oacute;n <em>push</em> que queramos permitir 
+  la URL de la conexi&oacute;n entrante y el MIDlet que se ejecutar&aacute; cuando 
+  recibamos datos. Adem&aacute;s como tercer elemento podemos indicar los remitentes 
+  a los que les permitimos enviarnos datos. Con <code>*</code> indicamos que aceptamos 
+  datos de cualquier remitente. </p>
+<p>Podemos utilizar esta conexi&oacute;n <em>push</em> por ejemplo para la recepci&oacute;n 
+  de mensajes cortos. De esta forma no har&aacute; falta que nuestra aplicaci&oacute;n 
+  est&eacute; ejecut&aacute;ndose continuamente para esperar recibir mensajes. 
+  Con <em>push</em> cuando llegue un mensaje al puerto especificado se ejecutar&aacute; 
+  autom&aacute;ticamente nuestra aplicaci&oacute;n para recibirlo.</p>
+</body>
+</html>

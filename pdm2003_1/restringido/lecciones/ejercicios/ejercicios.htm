@@ -1,0 +1,349 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Anexo A: Ejercicios</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1> A. Ejercicios</h1>
+             
+<h2>A.1. Entornos de desarrollo</h2>
+<p><strong>1.1.</strong> Abrir la herramienta <code>ktoolbar</code> de WTK 1.0.4. 
+  Abrir desde ella alguna de las aplicaciones de ejemplo que tenemos disponibles 
+  (<code>UIDemo</code>, <code>demos</code> o <code>games</code>). Probar a compilar 
+  estas aplicaciones y ejecutarlas en distintos emuladores (creando el paquete 
+  en caso necesario). Observar las diferencias que encontramos de unos emuladores 
+  a otros.</p>
+<p><strong>1.2.</strong> Vamos a hacer nuestra primera aplicaci&oacute;n <em>&quot;Hola 
+  mundo&quot;</em> en J2ME. Para ello debemos:</p>
+<p><em>a)</em> Crear un nuevo proyecto con WTK 1.0.4. El proyecto se llamar&aacute; 
+  <code>PruebaAplicacion</code> y el MIDlet principal ser&aacute; <code>es.ua.j2ee.prueba.MIDletPrueba</code>. 
+</p>
+<p><em>b)</em> Una vez creado abriremos el proyecto desde Eclipse, crearemos la 
+  clase del MIDlet principal, e introduciremos en ella el siguiente c&oacute;digo:</p>
+<pre class="codigo">package es.ua.j2ee.prueba;<br><br>import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;<br><br>public class MIDletPrueba extends MIDlet {<br><br>    protected void startApp() throws MIDletStateChangeException {
+        Form f = new Form(&quot;Hola mundo&quot;);
+        Display d = Display.getDisplay(this);
+        d.setCurrent(f);
+    }<br><br>    protected void pauseApp() {
+    }<br><br>    protected void destroyApp(boolean incondicional) <br>        throws MIDletStateChangeException    {
+    }
+}</pre>
+<p><em>c)</em> Guardar el fichero y desde WTK compilar y ejecutar la aplicaci&oacute;n 
+  en emuladores, comprobando que funciona correctamente.</p>
+<p><strong>1.3. </strong>A&ntilde;adir un fichero <code>build.xml</code> al proyecto 
+  en Eclipse para poderlo compilar y ejecutar desde este mismo entorno. Compilar 
+  y ejecutar desde este entorno.</p>
+<p><strong>1.4.</strong> Vamos a a&ntilde;adir recursos a nuestra aplicaci&oacute;n. 
+  Mostraremos una imagen en la pantalla, introduciendo el siguiente c&oacute;digo 
+  en el m&eacute;todo <code>startApp</code> de nuestro MIDlet:</p>
+<pre class="codigo">protected void startApp() throws MIDletStateChangeException {
+    Form f = new Form(&quot;Hola mundo&quot;);
+    try {
+        f.append(Image.createImage(&quot;/logo.png&quot;));
+    } catch(Exception e) {}
+   
+    Display d = Display.getDisplay(this);
+    d.setCurrent(f);
+}</pre>
+<p>Para poder mostrar esta imagen deberemos a&ntilde;adirla como recurso a la 
+  <em>suite</em>. A&ntilde;adir una imagen con nombre <code>logo.png</code> al 
+  directorio de recursos. </p>
+<p>Compilar y ejecutar la aplicaci&oacute;n para comprobar que la imagen se muestra 
+  correctamente. Utilizar para ello tanto <code>ktoolbar</code> como la herramienta 
+  <em>ant</em> desde Eclipse.</p>
+<p><strong>1.5.</strong> Ahora a&ntilde;adiremos sonido a la aplicaci&oacute;n. 
+  Para ello deberemos utilizar la API multimedia que es una API adicional. Deberemos:</p>
+<p><em>a)</em> Incorporar la librer&iacute;a MMAPI a nuestro proyecto en Eclipse. 
+  Podemos localizar esta librer&iacute;a dentro del directorio de los emuladores 
+  que soporten esta API (normalmente en el subdirectorio <code>lib</code>). Podremos 
+  obtenerla por ejemplo de los emuladores de la Serie 60 de Nokia, o del MMEmulator 
+  de Sun. </p>
+<p><em>b)</em> Una vez hecho esto podremos utilizar esta API multimedia en el 
+  editor de Eclipse sin que nos muestre errores en el c&oacute;digo. Modificaremos 
+  el c&oacute;digo del MIDlet de la siguiente forma:</p>
+<pre class="codigo">package es.ua.j2ee.prueba;<br><br>import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+<strong>import javax.microedition.media.*;</strong><br><br>public class MIDletPrueba extends MIDlet {<br><br>    protected void startApp() throws MIDletStateChangeException {
+        Form f = new Form(&quot;Hola mundo&quot;);
+        try {
+            f.append(Image.createImage(&quot;/logo.png&quot;));
+        } catch(Exception e) {}<br><br>        <strong>try {
+            Manager.playTone(80, 1000, 100);
+        } catch(MediaException e) {}</strong>
+   
+        Display d = Display.getDisplay(this);
+        d.setCurrent(f);
+    }<br><br>    protected void pauseApp() {
+    }<br><br>    protected void destroyApp(boolean incondicional)<br>        throws MIDletStateChangeException {
+    }
+}</pre>
+<p><em>c)</em> Guardar y compilar desde WTK. Compilar seleccionando distintos 
+  emuladores distintos. &iquest;Con cu&aacute;les funciona y con cu&aacute;les 
+  obtenemos errores de compilaci&oacute;n? &iquest;Por qu&eacute;?</p>
+<p><em>d)</em> Modificar ahora el fichero <code>build.xml</code> para que compile 
+  utilizando esta API multimedia. Comprobar que compila y ejecuta correctamente 
+  el ejemplo.</p>
+<p> <strong>1.6. </strong>Crear un proyecto con NetBeans. Utilizar la plantilla 
+  <code>HelloMIDlet</code> para crear el MIDlet principal de nuestra <em>suite</em>. 
+  Compilar y ejecutar el proyecto desde este entorno. Depurar la aplicaci&oacute;n 
+  estableciendo un <em>breakpoint</em> al comienzo del m&eacute;todo <code>startApp</code>.</p>
+<h2>A.2. Interfaz gr&aacute;fica de alto nivel</h2>
+<p><strong>2.1.</strong> Modificar el ejemplo <em>&quot;Hola mundo&quot;</em> 
+  de la sesi&oacute;n anterior para hacerlo parametrizable. Ahora en lugar de 
+  mostrar siempre el mensaje <em>&quot;Hola mundo&quot;</em>, tomaremos el mensaje 
+  a mostrar del par&aacute;metro <code>msg.bienvenida</code>. Crear este par&aacute;metro 
+  dentro del fichero JAD, y leerlo dentro del MIDlet para mostrarlo como t&iacute;tulo 
+  del formulario.</p>
+<p><strong>2.2.</strong> Vamos a implementar una alarma utilizando alertas y temporizadores. 
+  En las plantillas de los ejercicios se proporciona una base para realizar esta 
+  aplicaci&oacute;n, contenida en el directorio <code>Alarma</code>. Tenemos un 
+  formulario donde podemos establecer la fecha de la alarma y fijarla o anularla. 
+  Lo que deberemos hacer es:</p>
+<p><em>a)</em> Crear una tarea (<code>TimerTask</code>) que al ser ejecutada muestre 
+  una alerta de tipo alarma y reproduzca un sonido de aviso (utilizando la clase 
+  <code>AlertType</code>). Despu&eacute;s de mostrarse esta alerta deber&aacute; 
+  volver a la pantalla actual.</p>
+<p><em>b)</em> Planificar la ejecuci&oacute;n de esta alarma utilizando un temporizador 
+  (<code>Timer</code>). Esto lo haremos en el m&eacute;todo <code>commandAction</code> 
+  como respuesta al comando de fijar alarma. Tambi&eacute;n deberemos cancelar 
+  el temporizador en caso de que la alarma se anule.</p>
+<p><strong>2.3.</strong> Vamos a crear una pantalla sencilla para nuestra aplicaci&oacute;n. 
+  Haremos el men&uacute; principal de nuestro juego, en el que deberemos tener 
+  las opciones <em>Nuevo juego</em> y <em>Salir</em>. Podemos encontrar la base 
+  de esta aplicaci&oacute;n en el directorio <code>AdivinaNumero</code> de las 
+  plantillas de los ejercicios. Aqu&iacute; tenemos definido el MIDlet principal, 
+  desde el cu&aacute;l deberemos mostrar la pantalla que vamos a implementar.</p>
+<p><em>a)</em> &iquest;Qu&eacute; tipo de <em>displayable</em> utilizaremos para 
+  realizar este men&uacute;?</p>
+<p><em>b)</em> Implementar esta pantalla encapsulando todo su contenido en una 
+  misma clase.</p>
+<p><em>c)</em> A&ntilde;adir un comando que nos permita seleccionar la opci&oacute;n 
+  marcada del men&uacute;. </p>
+<p><em>d)</em> Incorporar un <em>listener</em> de comandos para dar respuesta 
+  a este comando de selecci&oacute;n de opciones. Por ahora lo que haremos ser&aacute; 
+  mostrar una alerta que diga <em>&quot;Opcion no implementada todavia&quot;</em>.</p>
+<p><strong>2.4.</strong> Ahora implementaremos el juego de adivinar un n&uacute;mero 
+  del 1 al 100. Para ello partiremos de la base realizada en el ejercicio anterior. 
+</p>
+<p>La aplicaci&oacute;n pensar&aacute; un n&uacute;mero aleatorio de 1 a 100, 
+  y se mostrar&aacute; al usuario un cuadro de texto donde deber&aacute; introducir 
+  el n&uacute;mero del que piensa que se trata. Una vez introducido, pulsar&aacute; 
+  OK y entonces la aplicaci&oacute;n le dir&aacute; si el n&uacute;mero de demasiado 
+  alto, si es demasiado bajo o si ha acertado. En caso de que el n&uacute;mero 
+  sea muy alto o muy bajo, volveremos al mismo cuadro de texto para volver a probar. 
+  Si ha acertado el juego finalizar&aacute;, mostrando el n&uacute;mero de intentos 
+  que ha necesitado y volviendo al men&uacute; principal.</p>
+<div align="center"><img src="imagenes/ejercicios/adivina.gif" width="365" height="230"> 
+</div>
+<p>Para implementar esta aplicaci&oacute;n crearemos una nueva pantalla encapsulada 
+  en una clase de nombre <code>EntradaTexto</code> que ser&aacute; de tipo <code>TextBox</code>, 
+  donde el usuario introducir&aacute; el n&uacute;mero. Al construir esta pantalla 
+  se deber&aacute; determinar un n&uacute;mero aleatorio de 1 a 100, cosa que 
+  podemos hacer de la siguiente forma:</p>
+<pre class="codigo">Random rand = new Random();
+this.numero = Math.abs(rand.nextInt()) % 100 + 1;</pre>
+<p>Deberemos a&ntilde;adir un comando para que el usuario notifique que ha introducido 
+  el n&uacute;mero. Como respuesta a este comando deberemos obtener el n&uacute;mero 
+  que ha introducido el usuario y compararlo con el n&uacute;mero aleatorio. Seg&uacute;n 
+  si el n&uacute;mero es menor, mayor o igual mostraremos una alerta con el mensaje 
+  correspondiente, y volveremos a la pantalla actual o al men&uacute; principal 
+  seg&uacute;n si el usuario ha fallado o acertado respectivamente.</p>
+<h2>A.3. Interfaz gr&aacute;fica de bajo nivel</h2>
+<p><strong>3.1.</strong> Vamos a implementar una aplicaci&oacute;n similar al 
+  juego que se conoc&iacute;a como <em>&quot;TeleSketch&quot;</em>. Esta aplicaci&oacute;n 
+  nos deber&aacute; permitir dibujar en la pantalla utilizando las teclas de los 
+  cursores.</p>
+<p>La idea es dibujar en <em>offscreen</em> (en una imagen mutable), de forma 
+  que no se pierda el contenido dibujado. En cada momento conoceremos la posici&oacute;n 
+  actual del cursor, donde dibujaremos un punto (puede ser un c&iacute;rculo o 
+  rect&aacute;ngulo de tama&ntilde;o reducido). Al pulsar las teclas de los cursores 
+  del m&oacute;vil moveremos este cursor por la pantalla haciendo que deje rastro, 
+  y de esta manera se ir&aacute; generando el dibujo.</p>
+<p>Tenemos una plantilla en el directorio <code>TeleSketch</code>. Sobre esta 
+  plantilla deberemos realizar lo siguiente:</p>
+<p><em>a)</em> En el constructor de la clase deberemos crear una imagen mutable 
+  donde dibujar, con el tama&ntilde;o del <code>Canvas</code>.</p>
+<p><em>b)</em> En el m&eacute;todo <code>actualiza</code> deberemos dibujar un 
+  punto en la posici&oacute;n actual del cursor y llamar a <code>repaint</code> 
+  para repintar el contenido de la pantalla.</p>
+<p><em>c) </em>En <code>paint</code> deberemos volcar el contenido de la imagen 
+  <em>offscreen</em> a la pantalla.</p>
+<p><em>d)</em> Deberemos definir los eventos <code>keyPressed</code> y <code>keyRepeated</code> 
+  para mover el cursor cada vez que se pulsen las teclas arriba, abajo, izquierda 
+  y derecha. Podemos utilizar las acciones de juegos (game actions) para conocer 
+  cu&aacute;les son estas teclas.</p>
+<p><strong>3.2.</strong> Ampliar la aplicaci&oacute;n anterior permitiendo cambiar 
+  el color y el grosor del l&aacute;piz. Para hacer esto podemos a&ntilde;adir 
+  una serie de comandos con un conjunto de colores y grosores preestablecidos.</p>
+<p><strong>3.3.</strong> Si dibujamos usando los eventos de repetici&oacute;n 
+  el cursor muchas veces se mover&aacute; muy lentamente. En lugar de utilizar 
+  este evento para dibujar podemos crear un hilo que ejecute un bucle infinito. 
+  Dentro de este hilo mientras la tecla siga pulsada se ir&aacute; moviendo el 
+  cursor, de esta manera se actualizar&aacute; con la frecuencia que nosotros 
+  queramos sin tener que esperar al evento de repetici&oacute;n. Sabremos que 
+  una tecla se mantiene pulsada desde que se invoca un evento <code>keyPressed</code> 
+  hasta que se invoca un evento <code>keyReleased</code> para la misma tecla.</p>
+<p><strong>3.4.</strong> Utilizar API de Nokia para dibujar en un <em>canvas</em> 
+  a pantalla completa.</p>
+<h2>A.4. Juegos</h2>
+<p><strong>4.1.</strong> Implementaremos un juego b&aacute;sico con WTK 2.0. El 
+  primer paso que vamos a realizar es mostrar un <em>sprite</em> que se mueva 
+  por la pantalla. Tenemos la imagen <code>coche.png</code>, que utilizaremos 
+  como <em>sprite</em>. Crearemos el ciclo del juego, en el que leeremos la entrada 
+  del usuario, seg&uacute;n &eacute;sta moveremos el <em>sprite</em> por la pantalla 
+  (en las direcciones izquierda, derecha, arriba y abajo), y actualizaremos los 
+  gr&aacute;ficos.</p>
+<p><strong>4.2.</strong> Vamos a a&ntilde;adir un fondo a la escena. En la imagen 
+  <code>fondo.png</code> tenemos una serie de elementos con los que construir 
+  el fondo de la carretera. Podemos utilizar el fichero <code>datos</code> donde 
+  tenemos codificado un posible escenario. De este fichero podremos leer el &iacute;ndice 
+  del elemento que se debe mostrar en cada celda del fondo. Se encuentra codificado 
+  de la siguiente forma:</p>
+<p><code>&lt;ancho:int&gt; &lt;alto:int&gt;<br>
+  &lt;celda_1_1:byte&gt; &lt;celda_1_2:byte&gt; ... &lt;celda_1_ancho&gt;<br>
+  &lt;celda_2_1:byte&gt; &lt;celda_2_2:byte&gt; ... &lt;celda_2_ancho&gt;<br>
+  ...<br>
+  &lt;celda_alto_1:byte&gt; &lt;celda_alto_2:byte&gt; ... &lt;celda_alto_ancho&gt;</code></p>
+<p>Podremos leer estos datos utilizando un <code>DataInputStream</code>, o bien 
+  crear nuestro propio mosaico para el fondo. Dibujaremos este fondo como capa 
+  en la pantalla, y en cada iteraci&oacute;n lo iremos desplazando hacia abajo 
+  para causar el efecto de que el coche avanza por la carretera.</p>
+<p><strong>4.3.</strong> Como tarea avanzada podemos a&ntilde;adir otros coches 
+  a la carretera, y detectar colisiones con nuestro coche y los dem&aacute;s coches, 
+  o con nuestro coche y el fondo. De esta forma podremos chocar con los bordes 
+  de la carretera, teniendo que evitar salirnos de estos m&aacute;rgenes. Para 
+  comenzar, cuando choquemos podemos mostrar simplemente una alerta que nos avise 
+  de que hemos chocado y se vuelva a iniciar el juego.</p>
+<h2>A.5. Multimedia</h2>
+<p><strong>5.1.</strong> Vamos a crear un reproductor de video que reproduzca 
+  un video con formato 3GPP. Lo reproduciremos dentro de un <em>canvas</em>. Para 
+  ello a&ntilde;adiremos un comando <em>Start</em> al <em>canvas</em> que nos 
+  permita comenzar la reproducci&oacute;n del video. </p>
+<p><strong>5.2. </strong>A&ntilde;adir un <em>listener</em> para conocer cuando 
+  comienza a reproducirse y cuando se detiene el video. Este <em>listener</em> 
+  deber&aacute; modificar los comandos disponibles en el <em>canvas</em>. Cuando 
+  comience a reproducirse eliminar&aacute; el comando <em>Start</em> y a&ntilde;adir&aacute; 
+  un comando <em>Stop</em> que nos servir&aacute; para detenerlo. Cuando el video 
+  se detenga, eliminaremos el comando <em>Stop</em> y volveremos a a&ntilde;adir 
+  el comando <em>Start</em>.</p>
+<p><strong>5.3.</strong> Permitir realizar captura de im&aacute;genes (<em>snapshots</em>) 
+  del video. Para ello cuando comience a reproducirse a&ntilde;adiremos un comando 
+  <em>Snap</em> con el que podremos capturar un fotograma del video. Una vez capturado, 
+  detendremos el video y mostraremos la imagen en el <em>canvas</em>.</p>
+<h2>A.6. RMS</h2>
+<p><strong>6.1.</strong> Vamos a implementar un almac&eacute;n de notas. En el 
+  directorio <code>Notas</code> tenemos la base de esta aplicaci&oacute;n. Vamos 
+  a ampliarla haciendo que estas notas se almacenen de forma persistente utilizando 
+  RMS. Para ello deberemos completar el c&oacute;digo de la clase <code>Notas</code> 
+  de la siguiente forma:</p>
+<p><em>a) </em>En el constructor se debe abrir el almac&eacute;n de registros 
+  de nombre <code>RS_NAME</code> (cre&aacute;ndolo si es necesario) y cargando 
+  todas las notas que tenemos almacenadas en &eacute;l. Podemos utilizar la deserializaci&oacute;n 
+  definida en el objeto <code>Nota</code> para leerlos. Conforme leamos las notas 
+  las a&ntilde;adiremos al vector <code>notas</code>. </p>
+<p>El &iacute;ndice de cada registro en el almac&eacute;n nos servir&aacute; para 
+  luego poder modificar o eliminar dicha nota. Por esta raz&oacute;n deberemos 
+  guardarnos este valor en alguna parte. Podemos utilizar para ello el campo <code>id</code> 
+  de cada objeto <code>Nota</code> creado.</p>
+<p><em>b)</em> En <code>eliminaNota</code> deberemos eliminar las notas del almac&eacute;n. 
+  Para ello deberemos obtener el <code>id</code> asociado a la nota y eliminar 
+  dicho registro del almac&eacute;n.</p>
+<p><em>c)</em> En <code>cambiaNota</code> modificaremos una nota del almac&eacute;n 
+  sobrescribi&eacute;ndola con la nueva nota proporcionada. Para ello obtendremos 
+  el <code>id</code> correspondiente a la antigua nota, y en ese registro escribiremos 
+  la nueva nota utilizando la serializaci&oacute;n del objeto <code>Nota</code>.</p>
+<p><em>d)</em> En <code>nuevaNota</code> a&ntilde;adiremos una nueva nota al almac&eacute;n, 
+  utilizando la serializaci&oacute;n del objeto <code>Nota</code>. Nos guardaremos 
+  el <code>id</code> del registro en el que hemos guardado la nota por si necesitamos 
+  modificarlo posteriormente.</p>
+<p><strong>6.2. </strong>Obtener la informaci&oacute;n de la cantidad de memoria 
+  ocupada y disponible a partir del objeto <code>RecordStore</code>. Deberemos 
+  hacer que los m&eacute;todos <code>getMem</code> y <code>getFree</code> de la 
+  clase <code>Notas</code> devuelvan esta informaci&oacute;n.</p>
+<p><strong>6.3.</strong> Utilizar un <em>listener</em> para actualizar la lista 
+  de notas en memoria. A&ntilde;adiendo este <em>listener</em> sobre el almac&eacute;n 
+  de registros ya no necesitaremos modificar el vector de notas en los m&eacute;todos 
+  <code>eliminaNota</code>, <code>cambiaNota</code> y <code>nuevaNota</code>, 
+  podemos usar estos m&eacute;todos s&oacute;lo para modificar el almac&eacute;n, 
+  y actualizar el vector en memoria &uacute;nicamente desde nuestro <em>listener</em>. 
+  De esta forma la lista de notas que se muestra en pantalla se actualizar&aacute; 
+  siempre que se produzca un cambio en el almac&eacute;n, aunque no haya sido 
+  producido por el usuario desde nuestro MIDlet.</p>
+<h2>A.7. Red</h2>
+<p><strong>7.1.</strong> Vamos a acceder desde el m&oacute;vil a nuestra tienda 
+  virtual. Mostraremos en el m&oacute;vil una pantalla en la que aparecer&aacute; 
+  la lista de productos que hay disponibles en nuestra tienda. Al pulsar sobre 
+  cada uno de ellos nos mostrar&aacute; informaci&oacute;n detallada sobre el 
+  producto.</p>
+<p>Tenemos la aplicaci&oacute;n base implementada en el directorio <code>Tienda</code>. 
+  Deberemos a&ntilde;adir en el m&eacute;todo <code>leeProductos</code> de la 
+  clase <code>ListaProductos</code> el c&oacute;digo necesario para leer la lista 
+  de productos de la red.</p>
+<p>Para ello conectaremos a la URL donde tenemos el <em>servlet</em> de nuestra 
+  tienda y leeremos la informaci&oacute;n de los productos que nos env&iacute;a 
+  en la respuesta. La informaci&oacute;n que se env&iacute;a consiste en una serie 
+  de objetos <code>Producto</code> serializados. Para leerlos podremos deserializar 
+  objetos <code>Producto</code> del flujo de entrada hasta que se produzca una 
+  <code>EOFException</code>, indic&aacute;ndonos que se ha llegado al final del 
+  flujo.</p>
+<p><strong>7.2.</strong> En este ejercicio implementaremos una aplicaci&oacute;n 
+  de chat para el m&oacute;vil. Podemos encontrar el c&oacute;digo base de la 
+  aplicaci&oacute;n en el directorio <code>Chat</code>, sobre el que deberemos 
+  hacer lo siguiente:</p>
+<p><em>a)</em> Lo primero que se mostrar&aacute; ser&aacute; una pantalla de <em>login</em>, 
+  donde el usuario deber&aacute; introducir el <em>login</em> con el que participar 
+  en el chat. Deberemos enviar este <em>login</em> al servidor para iniciar la 
+  sesi&oacute;n. Para ello abriremos una conexi&oacute;n con la URL del <em>servlet</em> 
+  proporcionando los siguientes par&aacute;metros:</p>
+<p><code>?accion=login&amp;id=&lt;nick_del_usuario&gt;</code></p>
+<p>Si el <em>login</em> es correcto, el servidor nos devolver&aacute; un c&oacute;digo 
+  de respuesta <code>200 OK</code>. Adem&aacute;s deberemos leer la cabecera <code>URL-Reescrita</code>, 
+  donde nos habr&aacute; enviado la URL rescrita que deberemos utilizar de ahora 
+  en adelante para mantener la sesi&oacute;n.</p>
+<p>Esto deberemos hacerlo en el m&eacute;todo <code>login</code> de la clase <code>PantallaLogin</code>. 
+  Este m&eacute;todo deber&aacute; devolver la URL rescrita. </p>
+<p><em>b)</em> Una vez hemos entrado en el chat, utilizaremos la t&eacute;cnica 
+  de <em>polling</em> para obtener los mensajes escritos en el chat y mostrarlos 
+  en la pantalla. Utilizando la URL rescrita, conectaremos al <em>servlet</em> 
+  del chat proporcionando el siguiente par&aacute;metro:</p>
+<p><code>?accion=lista</code></p>
+<p>Esto nos devolver&aacute; como respuesta una serie de mensajes, codificados 
+  mediante un objeto <code>DataOutputStream</code> de la siguiente forma:</p>
+<p><code>&lt;nick1&gt; &lt;mensaje1&gt;<br>
+  &lt;nick2&gt; &lt;mensaje2&gt;<br>
+  ...<br>
+  &lt;nickN&gt; &lt;mensajeN&gt;</code></p>
+<p>De esta forma podremos utilizar un objeto <code>DataInputStream</code> para 
+  ir leyendo con el m&eacute;todo <code>readUTF</code> las cadenas del <em>nick</em> 
+  y del texto de cada mensaje del chat:</p>
+<pre class="codigo">String nick = dis.readUTF();
+String texto = dis.readUTF();</pre>
+<p>Esto lo haremos dentro del m&eacute;todo <code>actualizaLista</code> de la 
+  clase <code>ListaMensajes</code>. A&ntilde;adiremos cada mensaje le&iacute;do 
+  como un <code>StringItem</code> al formulario:</p>
+<pre class="codigo">this.append(new StringItem(&quot;&lt;&quot; + nick + &quot;&gt;&quot;, texto));	 </pre>
+<p>Esto har&aacute; que el n&uacute;mero de elementos del formulario vaya creciendo 
+  conforme llegan mensajes del chat. Para evitar que llegue a crecer demasiado, 
+  cosa que lo har&iacute;a inc&oacute;modo para la interfaz de los m&oacute;viles, 
+  podemos eliminar los mensajes m&aacute;s antiguos cuando se rebase una cierta 
+  capacidad m&aacute;xima:</p>
+<pre class="codigo">if(this.size() &gt;= CAPACIDAD) {
+    this.delete(0);
+}</pre>
+<p><em>c)</em> Lo &uacute;ltimo que deberemos hacer es permitir enviar mensajes 
+  al chat. Para ello enviaremos los mensajes en el POST, a la URL rescrita proporcionando 
+  el siguiente par&aacute;metro:</p>
+<p><code>?accion=enviar</code></p>
+<p>Esto lo haremos en el m&eacute;todo <code>envia</code> de la clase <code>EnviarMensaje</code>. 
+  El mensaje se deber&aacute; codificar en binario, escribiendo la cadena del 
+  mensaje con el m&eacute;todo <code>writeUTF</code> de un objeto <code>DataOutputStream</code>. 
+  Si obtenemos una respuesta <code>200 OK</code> el mensaje habr&aacute; sido 
+  enviado correctamente.</p>
+</body>
+</html>

@@ -1,0 +1,1127 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Tema 1: Introducci&oacute;n a los dispositivos m&oacute;viles</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1> 1. Introducción a los dispositivos m&oacute;viles</h1>
+             
+<p>Durante los &uacute;ltimos a&ntilde;os hemos visto como han ido evolucionando 
+  los tel&eacute;fonos m&oacute;viles, pasando de ser simplemente tel&eacute;fonos 
+  a ser peque&ntilde;os ordenadores en los que tenemos disponibles una serie de 
+  aplicaciones preinstaladas (mensajer&iacute;a, registro de llamadas, agenda, 
+  calculadora, juegos, etc).</p>
+<p>Un paso importante en esta evoluci&oacute;n ha sido la posibilidad de que estos 
+  dispositivos se conecten a Internet. Esto permitir&aacute; que accedan a informaci&oacute;n 
+  disponible en la red, a aplicaciones corporativas utilizando alg&uacute;n<em> 
+  front-end</em>, o descargar nuevas aplicaciones para nuestro m&oacute;vil. </p>
+<p>De esta forma vemos que se podr&aacute;n incluir nuevas aplicaciones en cada 
+  dispositivo, adecu&aacute;ndose a las necesidades de cada usuario. Estas aplicaciones 
+  podr&aacute;n ser tanto<em> front-ends</em> que nos permitan acceder a aplicaciones 
+  de empresa residentes en alg&uacute;n servidor de Internet, como aplicaciones 
+  locales para utilizar en nuestro m&oacute;vil.</p>
+<p>Nos interesar&aacute; contar con un amplio repertorio de aplicaciones disponibles, 
+  y con la posibilidad de que las empresas puedan desarrollar f&aacute;cilmente 
+  software para los m&oacute;viles que se adapte a sus aplicaciones. Por lo tanto 
+  surge la necesidad de que los desarrolladores puedan realizar estas aplicaciones 
+  de forma r&aacute;pida y con el menor coste posible, sin tener que conocer los 
+  detalles de la especificaci&oacute;n de cada modelo concreto de m&oacute;vil. 
+</p>
+<p>Vamos primero a estudiar las distintas eras en la evoluci&oacute;n de Internet, 
+  seg&uacute;n el tipo de dispositivos que se conectan a esta red, para ver el 
+  momento en el que se introducen este tipo de dispositivos y la problem&aacute;tica 
+  que plantean. A continuaci&oacute;n estudiaremos las caracter&iacute;sticas 
+  de este tipo de dispositivos, y por &uacute;ltimo analizaremos de forma general 
+  las distintas APIs ofrecidas por la plataforma J2ME para la programaci&oacute;n 
+  de dispositivos m&oacute;viles.</p>
+<h2>1.1. Evoluci&oacute;n de Internet</h2>
+             
+<p> Hasta hace poco hemos visto la red Internet como una red en la que se encuentran 
+  conectados ordenadores de todo el mundo. Sin embargo, durante los &uacute;ltimos 
+  a&ntilde;os estamos entrando en una segunda era de Internet, en la que se est&aacute;n 
+  conectando a la red diferentes tipos de dispositivos heterog&eacute;neos como 
+  por ejemplo tel&eacute;fonos m&oacute;viles o PDAs. </p>
+<h3>1.1.1. Primera era: El Internet de los ordenadores</h3>
+<p>En esta primera era tenemos conectados a Internet ordenadores que cuentan con 
+  una interfaz com&uacute;n y una capacidad m&iacute;nima suficiente. La informaci&oacute;n 
+  que obtenemos de la red se obtiene normalmente en forma de p&aacute;ginas web 
+  escritas en HTML, dise&ntilde;adas para mostrarse en dispositivos gr&aacute;ficos 
+  con resoluciones por encima de 640x480 <em>pixels</em> y con monitores de por 
+  lo menos 14&quot;. </p>
+<div align="center"><img src="imagenes/introduccion/inet_maquinas.gif" width="354" height="290"> 
+</div>
+<p class="caption">Figura 1. El Internet de los ordenadores</p>
+<p>Asumiendo que los clientes cuentan con esta configuraci&oacute;n m&iacute;nima, 
+  podemos elaborar p&aacute;ginas que se visualicen correctamente en ellos. Es 
+  decir, parte de la capa de presentaci&oacute;n residir&aacute; en el servidor, 
+  ya que estas p&aacute;ginas HTML definir&aacute;n el formato con el que se mostrar&aacute; 
+  la informaci&oacute;n. Los navegadores en las m&aacute;quinas cliente deber&aacute;n 
+  ser capaces de interpretar el c&oacute;digo HTML y mostrar en pantalla las p&aacute;ginas 
+  web. </p>
+<h3>1.1.2. Segunda era: El Internet de los dispositivos</h3>
+<p>Al incorporarse distintos tipos de dispositivos a Internet, cada uno de ellos 
+  con interfaces y capacidad totalmente distinta, ya no va a ser posible definir 
+  una presentaci&oacute;n &uacute;nica en el lado del servidor, ya que &eacute;sta 
+  no va a poder ser visualizada correctamente por todos los clientes. </p>
+<div align="center"><img src="imagenes/introduccion/inet_disp.gif" width="341" height="304"> 
+</div>
+<p class="caption">Figura 2. El Internet de los dispositivos</p>
+<p>Estos dispositivos llevan ordenadores embebidos, en muchos casos con grandes 
+  limitaciones en su interfaz y baja capacidad, debido a su reducido tama&ntilde;o 
+  o a la escasa necesidad de incorporar un ordenador mayor que encarecer&iacute;a 
+  el producto. Deber&aacute;n conectarse a Internet utilizando estos ordenadores, 
+  por lo que el acceso ser&aacute; distinto dependiendo del dispositivo del que 
+  se trate.</p>
+<p>Una posible soluci&oacute;n es definir un nuevo tipo de documento, adaptado 
+  a la reducida interfaz de estos dispositivos. Este es el caso por ejemplo de 
+  los documentos WML para los tel&eacute;fonos m&oacute;viles WAP. El problema 
+  es que si definimos esta presentaci&oacute;n en el servidor para todos los m&oacute;viles, 
+  tendremos que definirla de forma que sea compatible con todos los modelos existentes 
+  que soporten esta tecnolog&iacute;a. Conforme mejoran los modelos de m&oacute;viles, 
+  podr&iacute;amos visualizar en ellos aplicaciones m&aacute;s ricas, pero el 
+  tener que utilizar un formato compatible para todos los m&oacute;viles nos obligar&aacute; 
+  a definir un documento bastante m&aacute;s pobre que sea soportado por todos 
+  ellos.</p>
+<p>Por ello en esta segunda era surgen nuevos paradigmas para la programaci&oacute;n 
+  web. La informaci&oacute;n se empezar&aacute; a ofrecer en forma de servicios, 
+  en lugar de documentos. Es decir, obtendremos de Internet &uacute;nicamente 
+  la informaci&oacute;n, pero no la presentaci&oacute;n. Por ejemplo, esta informaci&oacute;n 
+  puede estar codificada en lenguaje XML siguiendo un determinado est&aacute;ndar, 
+  de forma que cualquier aplicaci&oacute;n sea capaz de entenderla, o bien utilizar 
+  nuestra propia codificaci&oacute;n. De esta forma, cada cliente (m&oacute;vil) 
+  tendr&aacute; aplicaciones adaptadas a sus caracter&iacute;sticas, que obtendr&aacute;n 
+  de Internet &uacute;nicamente la informaci&oacute;n a la que necesitan acceder.</p>
+<p>Nos vamos a centrar en la programaci&oacute;n de este tipo de aplicaciones 
+  para dispositivos m&oacute;viles. Estas aplicaciones se alojar&aacute;n y se 
+  ejecutar&aacute;n de forma local en el dispositivo. Ser&aacute; deseable que 
+  la API (Interfaz de Programaci&oacute;n de Aplicaciones) que ofrezca cada dispositivo 
+  para programar en &eacute;l nos permita utilizar todas las caracter&iacute;sticas 
+  del mismo, y establecer conexiones de red para obtener la informaci&oacute;n 
+  necesaria de Internet. </p>
+<h3>1.1.3. Tercera era: El Internet de las cosas</h3>
+<p>En una futura era de Internet, podr&aacute; formar parte de Internet cualquier 
+  cosa. Podremos de esta forma tener conectada a la red ropa, productos de alimentaci&oacute;n 
+  o cualquier otra cosa que incorpore un chip capaz de conectarse y ofrecer informaci&oacute;n 
+  sobre el producto. Con esto se disparar&aacute; el n&uacute;mero de elementos 
+  conectados a la red. </p>
+<div align="center"><img src="imagenes/introduccion/inet-cosas.gif" width="347" height="308"> 
+</div>
+<p class="caption">Figura 3. El Internet de las cosas</p>
+<p>Por ejemplo, la tecnolog&iacute;a <em>Auto ID</em> consiste en un peque&ntilde;o 
+  chip transmisor (del tama&ntilde;o de la cabeza de un alfiler) que podr&aacute; 
+  ser incluido en los art&iacute;culos. Este chip vendr&aacute; a sustituir en 
+  el futuro al c&oacute;digo de barras, ya que adem&aacute;s de ofrecernos toda 
+  la informaci&oacute;n sobre el producto, nos permitir&aacute; conocer su localizaci&oacute;n. 
+  Para comunicarse emitir&aacute;n una se&ntilde;al de radio, que ser&aacute; 
+  recibida por un receptor conectado a un ordenador que nos ofrezca la informaci&oacute;n 
+  sobre estas &quot;cosas&quot; conectadas.</p>
+<p> De esta forma podremos saber f&aacute;cilmente si en nuestra tienda tenemos 
+  un determinado tipo de productos, o si se han agotado y tenemos que realizar 
+  un pedido. Tambi&eacute;n podremos saber si alguien se lleva un producto de 
+  nuestra tienda, lo cu&aacute;l ser&aacute; &uacute;til para evitar robos. O 
+  incluso ver si en nuestra tienda tenemos productos que hayan caducado, y descubrir 
+  d&oacute;nde est&aacute;n estos productos para poder retirarlos de la venta.</p>
+<p>Vemos que esta tecnolog&iacute;a tiene multitud de posibles aplicaciones. Como 
+  inconveniente, tenemos la presunta violaci&oacute;n de la intimidad de los consumidores 
+  al poder estos chips ofrecer informaci&oacute;n sobre los art&iacute;culos que 
+  han adquirido.</p>
+<h3>1.1.4. Internet como un conjunto de servicios</h3>
+<p>Hemos visto como en la segunda era de Internet surgen los Servicios Web como 
+  alternativa a los documentos web (como las p&aacute;ginas HTML y WML por ejemplo). 
+  Podemos definir un servicio como la interfaz que nos da acceso a un m&oacute;dulo 
+  de funcionalidad. </p>
+<p>Por ejemplo, podemos tener un servicio que nos permita acceder a informaci&oacute;n 
+  sobre cambio de monedas. Este servicio nos ofrecer&aacute; una operaci&oacute;n 
+  <code>cambioVenta(moneda_origen, moneda_destino)</code> que nos devolver&aacute; 
+  el cambio actual entre dos monedas, para la venta, y otra operaci&oacute;n an&aacute;loga 
+  <code>cambioCompra(moneda_origen, moneda_destino)</code> para obtener esta informaci&oacute;n 
+  en el caso de la compra.</p>
+<p>Un Servicio Web ser&aacute; un servicio al que podamos acceder mediante protocolos 
+  web est&aacute;ndar. Se utilizar&aacute; lenguaje XML para codificar el mensaje 
+  de invocaci&oacute;n de las operaciones del servicio, y la respuesta que nos 
+  haya devuelto la operaci&oacute;n. De esta forma podremos invocar servicios 
+  a trav&eacute;s de Internet.</p>
+<p>Los documentos web mezclan la informaci&oacute;n y la presentaci&oacute;n. 
+  Normalmente la informaci&oacute;n que ofrecen est&aacute; escrita en lenguaje 
+  natural y formateada de forma que los humanos la podamos entender f&aacute;cilmente. 
+  Sin embargo, esto ser&aacute; dif&iacute;cilmente entendible por una aplicaci&oacute;n. 
+  Los Servicios Web nos ofrecen &uacute;nicamente la informaci&oacute;n que nos 
+  ha devuelto la operaci&oacute;n invocada. Por ello podemos ver estos Servicios 
+  Web como la web para aplicaciones, frente a los documentos web que ser&iacute;an 
+  la web para humanos. Ser&aacute;n las aplicaciones instaladas en el cliente, 
+  que invocan los Servicios Web, las encargadas de dar formato y presentar al 
+  usuario la informaci&oacute;n obtenida.</p>
+<p>En la actualidad podemos encontrar algunos Servicios Web ofrecidos por una 
+  serie de proveedores. En el futuro Internet ser&aacute; como un gran Sistema 
+  Operativo distribuido, en el que haya disponibles un gran n&uacute;mero de servicios 
+  que puedan ser utilizados por cualquier m&aacute;quina conectada a la red. De 
+  esta forma las aplicaciones se encontrar&aacute;n distribuidas en Internet, 
+  es decir, estar&aacute;n formadas por m&oacute;dulos que podr&aacute;n residir 
+  en distintos lugares del mundo. La cuesti&oacute;n es qui&eacute;n se har&aacute; 
+  con el control de este gran Sistema Operativo, &iquest;Microsoft con .NET o 
+  Sun con las tecnolog&iacute;as Java?.</p>
+<h2>1.2. Caracter&iacute;sticas de los dispositivos</h2>
+<p>Vamos a ver los distintos tipos de dispositivos con ordenadores embebidos que 
+  podemos encontrar, as&iacute; como sus caracter&iacute;sticas, para luego centrarnos 
+  en los dispositivos m&oacute;viles de informaci&oacute;n (<em>Mobile Information 
+  Devices</em>, MIDs) que son los que trataremos con mayor detalle.</p>
+<h3>1.2.1. Tipos de dispositivos</h3>
+<p>Podemos encontrar distintos dispositivos con ordenadores embebidos que van 
+  introduci&eacute;ndose en nuestros hogares. Por un lado tenemos los tel&eacute;fonos 
+  m&oacute;viles y las agendas electr&oacute;nicas o PDAs. Estos dispositivos 
+  son conocidos como <strong>dispositivos m&oacute;viles de informaci&oacute;n 
+  (MIDs)</strong>. Incorporan un reducido Sistema Operativo y una serie de aplicaciones 
+  que se ejecutan sobre &eacute;l (Agenda, Notas, Mensajes, etc) adaptadas a la 
+  interfaz de estos dispositivos, de forma que se puedan visualizar correctamente 
+  en su peque&ntilde;a pantalla y que se puedan manejar usando el teclado del 
+  tel&eacute;fono o el puntero del PDA por ejemplo.</p>
+<p>A parte de los MIDs encontramos m&aacute;s tipos de dispositivos, cuyo n&uacute;mero 
+  crecer&aacute; conforme pase el tiempo. Tenemos por ejemplo los descodificadores 
+  de televisi&oacute;n digital (<em>set top boxes</em>). Las plataformas de televisi&oacute;n 
+  digital, tanto por sat&eacute;lite, por cable, o terrestre, ofrecen una serie 
+  de servicios accesibles desde estos descodificadores, como por ejemplo servicios 
+  de telegu&iacute;a, juegos, etc. Para ello deberemos tener aplicaciones que 
+  se ejecuten en estos dispositivos.</p>
+<p>Los electrodom&eacute;sticos tambi&eacute;n siguen esta tendencia y ya podemos 
+  encontrar por ejemplo frigor&iacute;ficos o lavadoras con un peque&ntilde;o 
+  computador capaz de conectarse a la red dom&eacute;stica. La idea es integrar 
+  todos estos dispositivos es nuestra red para construir un sistema dom&oacute;tico. 
+  Para ello todos los dispositivos que queramos integrar deber&aacute;n ser capaces 
+  de conectarse a la red.</p>
+<p>Hablamos de <strong>dispositivos conectados</strong> para referirnos a cualquier 
+  dispositivo capaz de conectarse a la red. Podemos tener distintos tipos de dispositivos 
+  conectados, con grandes diferencias de capacidad. Un subgrupo de estos dispositivos 
+  conectados son los MIDs de los que hemos hablado previamente.</p>
+<h3>1.2.2. Dispositivos m&oacute;viles de informaci&oacute;n (MIDs)</h3>
+<p>Vamos a centrarnos en el estudio de los MIDs. Para ello vamos a ver las caracter&iacute;sticas 
+  de una serie de modelos actuales con lo que podremos hacernos una idea del rango 
+  de memoria y los tipos de interfaz con los que vamos a tener que trabajar.</p>
+<table width="95%" border="0" align="center">
+  <tr> 
+    <td width="12%"><font size="2" face="Arial, Helvetica, sans-serif">&nbsp;</font></td>
+    <td width="22%" valign="top"> <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/8310.jpg" width="45" height="100"></font></p>
+      <p><font size="2" face="Arial, Helvetica, sans-serif">Nokia 8310<br>
+        -Serie 20<br>
+        -Similar a 3330<br>
+        -Sin Java</font></p></td>
+    <td width="22%" valign="top"> <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/3410.jpg" width="45" height="100"></font></p>
+      <p><font size="2" face="Arial, Helvetica, sans-serif">Nokia 3410 <br>
+        -Serie 30</font></p></td>
+    <td width="22%" valign="top"> <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/6100.jpg" width="42" height="100"></font></p>
+      <p><font size="2" face="Arial, Helvetica, sans-serif">Nokia 6100 <br>
+        -Serie 40<br>
+        -Similar a 6610, 7210, 7250, 5100, 3300</font></p></td>
+    <td width="22%" valign="top"> <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/3650.jpg" width="45" height="100"></font></p>
+      <p><font size="2" face="Arial, Helvetica, sans-serif">Nokia 3650<br>
+        -Serie 60<br>
+        -Similar a 7650, N-Gage</font></p></td>
+  </tr>
+  <tr> 
+    <td><strong><font size="2" face="Arial, Helvetica, sans-serif">Interfaz</font></strong></td>
+    <td nowrap><font size="2" face="Arial, Helvetica, sans-serif">84x48 <br>
+      Monocromo</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">96x65 <br>
+      Monocromo</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">128x128<br>
+      12bits (4096 colores)</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">176x208<br>
+      12 bits (4096 colores)</font></td>
+  </tr>
+  <tr> 
+    <td><strong><font size="2" face="Arial, Helvetica, sans-serif">Memoria</font></strong></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">&nbsp;-</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">Heap 164 KB<br>
+      Shared 150 KB<br>
+      JAR 50 KB</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">Heap 200 KB<br>
+      Shared 725 KB <br>
+      (625 KB en 6610, 7210) <br>
+      (4,6 MB en 7250)<br>
+      (4,5 MB en 3300)<br>
+      JAR 64 KB</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">Heap 1,4 MB <br>
+      (2,4 MB en N-Gage)<br>
+      Shared 3,4 MB <br>
+      (4 MB en 7650, N-Gage)<br>
+      JAR 4 MB</font></td>
+  </tr>
+  <tr> 
+    <td><strong><font size="2" face="Arial, Helvetica, sans-serif">APIs</font></strong></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">&nbsp;-</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">CLDC 1.0<br>
+      MIDP 1.0<br>
+      WMA<br>
+      Nokia UI<br>
+      Nokia SMS</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">CLDC 1.0<br>
+      MIDP 1.0<br>
+      Nokia UI<br>
+      WMA (3300)</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">CLDC 1.0<br>
+      MIDP 1.0<br>
+      WMA (N-Gage, 3650)<br>
+      MMAPI (N-Gage, 3650)<br>
+      Nokia UI<br>
+      SO Symbian</font></td>
+  </tr>
+  <tr> 
+    <td><strong><font size="2" face="Arial, Helvetica, sans-serif">Otros</font></strong></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">HSCSD<br>
+      GPRS (8310)<br>
+      CSD (3330)<br>
+      WAP 1.2.1 (8310)<br>
+      WAP 1.1 (3330)<br>
+      IrDA (8310)</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">CSD<br>
+      WAP 1.1&nbsp;</font></td>
+    <td><font size="2" face="Arial, Helvetica, sans-serif">HSCSD<br>
+      GPRS<br>
+      WAP 1.2.1<br>
+      USB<br>
+      IrDA<br>
+      C&aacute;mara (7250)</font></td>
+    <td><p><font size="2" face="Arial, Helvetica, sans-serif"> HSCSD<br>
+        GPRS<br>
+        WAP 1.2.1<br>
+        XHTML<br>
+        Camara (3650, 7650)<br>
+        Bluetooth<br>
+        IrDA (3650, 7650)<br>
+        USB (N-Gage)</font><br>
+      </p></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table width="95%" border="0" align="center">
+  <tr valign="top"> 
+    <td width="10%"> 
+      <div align="left"><font size="2" face="Arial, Helvetica, sans-serif"></font></div></td>
+    <td width="30%"> 
+      <div align="left">
+        <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/sl45i.jpg" width="40" height="100"></font></p>
+        <p><font size="2" face="Arial, Helvetica, sans-serif">SL45i</font></p>
+      </div></td>
+    <td width="30%"> 
+      <div align="left">
+        <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/c55.jpg" width="48" height="100"></font></p>
+        <p><font size="2" face="Arial, Helvetica, sans-serif">C55<br>
+          -Similar a M50</font></p>
+      </div></td>
+    <td width="30%" nowrap> 
+      <div align="left">
+        <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/sl55.jpg" width="47" height="100"></font></p>
+        <p><font size="2" face="Arial, Helvetica, sans-serif">SL55<br>
+          -Similar a M55, S55</font></p>
+      </div></td>
+  </tr>
+  <tr> 
+    <td><div align="left"><strong><font size="2" face="Arial, Helvetica, sans-serif">Interfaz</font></strong></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">101x80 
+        <br>
+        Monocromo</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">101x64<br>
+        Monocromo</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">101x80<br>
+        12 bits (4096 colores)<br>
+        (256 colores en S55)</font></div></td>
+  </tr>
+  <tr> 
+    <td><div align="left"><strong><font size="2" face="Arial, Helvetica, sans-serif">Memoria</font></strong></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">Heap 
+        147 KB<br>
+        Flex 0,2 MB<br>
+        JAR 70 KB</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">Heap 
+        150 KB<br>
+        Flex 0,5 MB <br>
+        (0,2 MB en M50)<br>
+        JAR 70 KB</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">Heap 
+        365 KB<br>
+        (560 KB en M55)<br>
+        Flex 1,6 MB <br>
+        (1 MB en S55)<br>
+        JAR 70 KB</font></div></td>
+  </tr>
+  <tr> 
+    <td><div align="left"><strong><font size="2" face="Arial, Helvetica, sans-serif">APIs</font></strong></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">MIDP 
+        1.0 </font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">MIDP 
+        1.0 </font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">MIDP 
+        1.0 </font></div></td>
+  </tr>
+  <tr> 
+    <td><div align="left"><strong><font size="2" face="Arial, Helvetica, sans-serif">Otros</font></strong></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">WAP 
+        1.1<br>
+        IrDA</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">GPRS<br>
+        WAP 1.2.1</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">GPRS<br>
+        WAP 1.2.1<br>
+        IrDA (S55, SL55)<br>
+        Bluetooth (S55)<br>
+        C&aacute;mara (SL55)</font></div></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table width="95%" border="0" align="center">
+  <tr valign="top"> 
+    <td width="12%"> 
+      <div align="left"><font size="2" face="Arial, Helvetica, sans-serif"></font></div></td>
+    <td width="22%"> 
+      <div align="left">
+        <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/9210.jpg" width="71" height="100"></font></p>
+        <p><font size="2" face="Arial, Helvetica, sans-serif">Nokia 9210<br>
+          -Serie 80<br>
+          -Comunicador</font></p>
+      </div></td>
+    <td width="22%"> 
+      <div align="left">
+        <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/sharp.jpg" width="75" height="100"></font></p>
+        <p><font size="2" face="Arial, Helvetica, sans-serif">Sharp Zaurus SL-5500</font></p>
+      </div></td>
+    <td width="22%"> 
+      <div align="left">
+        <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/palm.jpg" width="78" height="100"></font></p>
+        <p><font size="2" face="Arial, Helvetica, sans-serif">Palm Tungsten</font></p>
+      </div></td>
+    <td width="22%"> 
+      <div align="left">
+        <p><font size="2" face="Arial, Helvetica, sans-serif"><img src="imagenes/introduccion/hp.jpg" width="60" height="100"></font></p>
+        <p><font size="2" face="Arial, Helvetica, sans-serif">HP iPAQ Pocket PC 
+          H1930</font></p>
+      </div></td>
+  </tr>
+  <tr> 
+    <td><div align="left"><strong><font size="2" face="Arial, Helvetica, sans-serif">Interfaz</font></strong></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">640x200<br>
+        12 bits (4096 colores)</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">240x320<br>
+        16 bits (65536 colores)</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">240x320 
+        <br>
+        Color</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">240x320 
+        <br>
+        Color</font></div></td>
+  </tr>
+  <tr> 
+    <td><div align="left"><strong><font size="2" face="Arial, Helvetica, sans-serif">Memoria</font></strong></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">8 
+        MB SD-RAM<br>
+        18 MB disponibles<br>
+        14 MB aplicaciones</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">64 
+        MB RAM</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">16 
+        MB RAM</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">64 
+        MB SDRAM</font></div></td>
+  </tr>
+  <tr> 
+    <td><div align="left"><strong><font size="2" face="Arial, Helvetica, sans-serif">APIs</font></strong></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">PersonalJava<br>
+        JavaPhone<br>
+        SO Symbian</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">SO 
+        Linux 2.4</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">SO 
+        Palm</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">SO 
+        Windows Pocket PC 2003 Professional</font></div></td>
+  </tr>
+  <tr> 
+    <td><div align="left"><strong><font size="2" face="Arial, Helvetica, sans-serif">Otros</font></strong></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">HSCSD<br>
+        WAP 1.1<br>
+        HTML 3.2<br>
+        IrDA<br>
+        Cable serie</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">IrDA<br>
+        USB</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">IrDA<br>
+        Bluetooth<br>
+        USB</font></div></td>
+    <td><div align="left"><font size="2" face="Arial, Helvetica, sans-serif">IrDA<br>
+        USB</font></div></td>
+  </tr>
+</table>
+<p>Podemos ver que las caracter&iacute;sticas de los m&oacute;viles var&iacute;an 
+  bastante, tanto a nivel de memoria como de interfaz entre los diferentes modelos 
+  disponibles. Adem&aacute;s, a medida que aparezcan modelos nuevos encontraremos 
+  mayor diferencia entre los modelos antiguos y los m&aacute;s recientes. Es dif&iacute;cil 
+  realizar una aplicaci&oacute;n que se adapte perfectamente al modelo utilizado. 
+  Por eso normalmente lo que se har&aacute; ser&aacute; realizar distintas versiones 
+  de una misma aplicaci&oacute;n para distintos conjuntos de m&oacute;viles con 
+  similares caracter&iacute;sticas. El coste de hacer una aplicaci&oacute;n capaz 
+  de adaptarse ser&iacute;a mayor que el de hacer varias versiones de la aplicaci&oacute;n, 
+  intentando siempre hacerlo de forma que tenga que modificarse la menor cantidad 
+  de c&oacute;digo posible.</p>
+<p>Tenemos adem&aacute;s un problema adicional, y es que cada m&oacute;vil puede 
+  tener su propia API. Distintos modelos de m&oacute;viles, tanto de marcas distintas 
+  como de la misma marca, pueden incluir Sistemas Operativos diferentes y por 
+  lo tanto una interfaz diferente para programar aplicaciones (API). Esto nos 
+  obligar&aacute; a tener que modificar gran parte del c&oacute;digo para portar 
+  nuestras aplicaciones a diferentes modelos de m&oacute;viles. Dado el creciente 
+  n&uacute;mero de dispositivos disponibles esto ser&aacute; un grave problema 
+  ya que ser&aacute; dif&iacute;cil que una aplicaci&oacute;n est&eacute; disponible 
+  para todos los modelos.</p>
+<p>Aqu&iacute; es donde aparece la conveniencia de utilizar tecnolog&iacute;as 
+  Java para programar este tipo de dispositivos tan heterog&eacute;neos. Sun ha 
+  apostado desde hace tiempo por las aplicaciones independientes de la plataforma 
+  con su tecnolog&iacute;a Java. Esta independencia de la plataforma cobra un 
+  gran inter&eacute;s en este caso, en el que tenemos un gran n&uacute;mero de 
+  dispositivos heterog&eacute;neos.</p>
+<p>Con la edici&oacute;n <em>Micro Edition</em> de <em>Java 2</em>, se introduce 
+  esta plataforma en los dispositivos. De esta forma podremos desarrollar aplicaciones 
+  Java que puedan correr en todos los dispositivos que soporten las APIs de J2ME. 
+  Al ser estas APIs un est&aacute;ndar, los programas que escribamos en Java que 
+  las utilicen ser&aacute;n portables a todos estos dispositivos.</p>
+<p>Es m&aacute;s, no ser&aacute; necesario recompilar la aplicaci&oacute;n para 
+  cada tipo de dispositivo. Las aplicaciones Java corren sobre una m&aacute;quina 
+  virtual Java, que deber&aacute; estar instalada en todos los dispositivos que 
+  soporten Java. Las aplicaciones Java se compilan a un tipo de c&oacute;digo 
+  intermedio (conocido como <em>bytecodes</em>) que es capaz de interpretar la 
+  m&aacute;quina virtual. De esta forma, nuestra aplicaci&oacute;n una vez compilada 
+  podr&aacute; ejecutarse en cualquier dispositivo que tenga una m&aacute;quina 
+  virtual Java, ya que esta m&aacute;quina virtual ser&aacute; capaz de interpretar 
+  el c&oacute;digo compilado de la aplicaci&oacute;n sin necesidad de compilarla 
+  otra vez. Incluso si aparece un nuevo modelo de dispositivo con soporte para 
+  Java despu&eacute;s de que nosotros hayamos publicado una aplicaci&oacute;n, 
+  esta aplicaci&oacute;n funcionar&aacute; en este modelo.</p>
+<p>Es por esta raz&oacute;n que las tecnolog&iacute;as Java se han impuesto en 
+  el mercado de programaci&oacute;n de dispositivos m&oacute;viles, teniendo pr&aacute;cticamente 
+  todos los modelos de m&oacute;viles que aparecen en la actualidad soporte para 
+  Java. </p>
+<h3>1.2.3. Redes m&oacute;viles</h3>
+<p>Centr&aacute;ndonos en los tel&eacute;fonos m&oacute;viles celulares, vamos 
+  a ver las distintas generaciones de estos dispositivos seg&uacute;n la red de 
+  comunicaciones utilizada.</p>
+<p>Se denominan celulares porque la zona de cobertura se divide en zonas de menor 
+  tama&ntilde;o llamadas c&eacute;lulas. Cada c&eacute;lula tendr&aacute; un transmisor 
+  que se comunicar&aacute; con los dispositivos dentro del &aacute;rea de dicha 
+  c&eacute;lula mediante se&ntilde;ales de radio, operando en una determinada 
+  banda de frecuencias. Dentro de esta banda de frecuencias, tendremos un determinado 
+  n&uacute;mero de canales a trav&eacute;s de los cuales se podr&aacute;n comunicar 
+  los m&oacute;viles de dicha zona.</p>
+<p>Este n&uacute;mero de canales estar&aacute; limitado por la banda de frecuencias 
+  utilizada, lo que limitar&aacute; el n&uacute;mero de usuarios que puedan estar 
+  conectados simult&aacute;neamente a la red. Al dividir la cobertura en c&eacute;lulas 
+  permitimos que en distintas c&eacute;lulas se reutilicen las mismas frecuencias, 
+  por lo que este n&uacute;mero limitar&aacute; s&oacute;lo los usuarios conectados 
+  dentro de una misma c&eacute;lula, que es un &aacute;rea peque&ntilde;a donde 
+  habr&aacute; menos usuarios, y no de toda la zona global de cobertura.</p>
+<p><strong>Primera generaci&oacute;n (1G): Red anal&oacute;gica</strong></p>
+<p>Los primeros tel&eacute;fonos m&oacute;viles que aparecieron utilizaban una 
+  red anal&oacute;gica para comunicarse. La informaci&oacute;n anal&oacute;gica 
+  se transfiere por ondas de radio sin ninguna codificaci&oacute;n, por frecuencia 
+  modulada (FM). Este tipo de redes permiten &uacute;nicamente comunicaciones 
+  de voz. Un ejemplo de red anal&oacute;gica es la red TACS, que opera en la banda 
+  de frecuencias entorno a los 900MHz. Al ser anal&oacute;gica hace un uso poco 
+  eficiente del espectro, por lo que tendremos menos canales disponibles y por 
+  lo tanto ser&aacute; m&aacute;s f&aacute;cil que la red se sature. </p>
+<p>Esta es la red anal&oacute;gica que se utiliza en Espa&ntilde;a para telefon&iacute;a 
+  m&oacute;vil, basada en la Estadounidense AMPS (<em>Advanced Mobile Phone System</em>). 
+  En EEUU adem&aacute;s de esta podemos encontrar bastantes m&aacute;s tipos de 
+  redes anal&oacute;gicas.</p>
+<p>Un gran inconveniente de estas redes anal&oacute;gicas es que existen numerosos 
+  tipos de redes, y cada pa&iacute;s adopt&oacute; una distinta. Esto dificulta 
+  la itinerancia (o <em>roaming</em>), ya que no posibilita que utilicemos nuestro 
+  dispositivo en otros pa&iacute;ses con redes diferentes.</p>
+<p><strong>Segunda generaci&oacute;n (2G): Red digital</strong></p>
+<p>La segunda generaci&oacute;n de m&oacute;viles consiste en aquellos que utilizan 
+  una red digital para comunicarse. En Europa se adopt&oacute; como est&aacute;ndar 
+  la red GSM (<em>Global System for Mobile communication</em>s). Se trata de una 
+  red inicialmente dise&ntilde;ada para voz, pero que tambi&eacute;n puede transferir 
+  datos, aunque es m&aacute;s apropiada para voz. Digitaliza tanto la voz como 
+  los datos para su transmisi&oacute;n. Esta red es la que ha producido un acercamiento 
+  entre la telefon&iacute;a m&oacute;vil y la inform&aacute;tica.</p>
+<p>Se implanta como est&aacute;ndar en Europa y desplaza r&aacute;pidamente a 
+  los anal&oacute;gicos. En una primera fase opera en los 900MHz. Una vez saturada 
+  la banda de los 900MHz empieza a funcionar en 1800MHz. Los m&oacute;viles capaces 
+  de funcionar en ambas bandas (<em>dualband</em>) tendr&aacute;n una mayor cobertura, 
+  ya que si una banda esta saturada podr&aacute;n utilizar la otra. En EEUU se 
+  utiliza la banda 1900MHz. Hay m&oacute;viles tribanda que nos permitir&aacute;n 
+  conectarnos en cualquiera de estas 3 bandas, por lo que con ellos tendremos 
+  cobertura en EEUU, Europa y Asia.</p>
+<p>Una caracter&iacute;stica de los dispositivos GSM es que los datos relevantes 
+  del usuario se almacenan en una tarjeta de pl&aacute;stico extra&iacute;ble 
+  (SIM, <em>Suscriber Identification Module</em>), lo cual independiza la identificaci&oacute;n 
+  del usuario (n&uacute;mero de tel&eacute;fono y otros datos) del terminal m&oacute;vil, 
+  permitiendo llevar esta tarjeta de un terminal a otro sin tener que cambiar 
+  el n&uacute;mero.</p>
+<p>Opera por conmutaci&oacute;n de circuitos (CSD, <em>Circuit Switched Data</em>), 
+  es decir, se establece un circuito permanente de comunicaci&oacute;n. Con esta 
+  tecnolog&iacute;a se consigue una velocidad de 9,6kbps, siendo el tiempo de 
+  establecimiento de conexi&oacute;n de unos 10 segundos. Los inconvenientes de 
+  esta tecnolog&iacute;a son:</p>
+<ul>
+  <li>Debido a que se establece un circuito de comunicaci&oacute;n de forma permanente, 
+    se tarifica por tiempo, por lo que se cobrar&aacute; al usuario el tiempo 
+    que est&eacute; conectado aunque no est&eacute; descargando nada. <br>
+  </li>
+  <li>Adem&aacute;s, tiene una velocidad de transmisi&oacute;n demasiado lenta, 
+    lo cu&aacute;l es bastante negativo para el usuario sobretodo al tarificarse 
+    por tiempo de conexi&oacute;n. <br>
+  </li>
+  <li>Otro inconveniente es que no se trata de una red IP, por lo que el m&oacute;vil 
+    no podr&aacute; conectarse directamente a Internet. Tendr&aacute; que hacerlo 
+    a trav&eacute;s de alg&uacute;n intermediario (<em>gateway</em>) que traduzca 
+    los protocolos propios de la red m&oacute;vil a los protocolos TCP/IP de Internet.</li>
+</ul>
+<p>M&aacute;s adelante se desarrolla la tecnolog&iacute;a HSCSD (<em>High Speed 
+  Circuit Switched Data</em>), que consigue una velocidad de 56Kbps sobre la misma 
+  red GSM. Para conseguir esta alta velocidad, esta tecnolog&iacute;a utiliza 
+  varios canales de comunicaci&oacute;n simult&aacute;neamente, cada uno de los 
+  cuales funciona a una velocidad de 9'6Kbps f&iacute;sicos de forma similar a 
+  como se hac&iacute;a con CSD (se puede conseguir aumentar a 14'4kbps utilizando 
+  m&eacute;todos de compresi&oacute;n por software). Al transmitir por 4 canales 
+  se consigue esta mayor velocidad, pero tenemos el gran inconveniente de tener 
+  4 circuitos establecidos de forma permanente, por lo que el coste de la conexi&oacute;n 
+  se multiplicar&aacute; por 4, tarific&aacute;ndose por tiempo de conexi&oacute;n 
+  igual que ocurr&iacute;a en el caso anterior. Otro inconveniente es que sigue 
+  sin ser compatible con IP.</p>
+<p><strong>Paso intermedio (2,5G): GPRS</strong></p>
+<p>Hemos visto que con las tecnolog&iacute;as anteriores de portadoras de datos 
+  (CSD y HSCSD) tenemos los problemas de la baja velocidad, tarificaci&oacute;n 
+  por tiempo y el no ser una red IP. Surge aqu&iacute; la necesidad de implantar 
+  un m&eacute;todo de transmisi&oacute;n por paquetes que no requiera ocupar un 
+  canal de forma permanente, sino que env&iacute;e los datos fraccionados en paquetes 
+  IP independientes. De esta forma surge GPRS, que se considera como un paso intermedio 
+  entre la segunda (2G) y tercera (3G) generaci&oacute;n.</p>
+<p>GPRS (<em>General Packet Radio Service</em>) es una evoluci&oacute;n de las 
+  redes GSM y funciona sobre estas mismas redes, por lo que no ser&aacute; necesario 
+  realizar una gran inversi&oacute;n en infraestructuras, simplemente se deber&aacute; 
+  actualizar la red GSM para que soporte la transmisi&oacute;n de paquetes.</p>
+<p>Esta tecnolog&iacute;a realiza una transmisi&oacute;n inal&aacute;mbrica de 
+  datos basada en paquetes. Puede alcanzar una velocidad de hasta 144kbps te&oacute;ricamente, 
+  aunque en la pr&aacute;ctica no suele pasar de los 40Kbps por limitaciones de 
+  los dispositivos. La informaci&oacute;n se fragmenta en paquetes que se env&iacute;an 
+  mediante el protocolo IP por distintos canales de forma independiente y se reconstruye 
+  en destino. Al seguir el protocolo IP, podremos acceder a todos los recursos 
+  de la red Internet.</p>
+<p>Un canal no tendr&aacute; que estar dedicado a la comunicaci&oacute;n exclusivamente 
+  de un punto a otro, es decir, no mantiene una conexi&oacute;n abierta de forma 
+  permanente, conecta solo para transmitir datos (paquetes). Por esta raz&oacute;n 
+  se aprovechar&aacute;n mejor los canales de comunicaci&oacute;n, ya que s&oacute;lo 
+  se ocupan cuando es necesario y se optimiza as&iacute; el uso de la red. El 
+  tiempo de establecimiento de conexi&oacute;n es de aproximadamente 1 segundo. 
+  De esta forma se paga por informaci&oacute;n transmitida, y no por tiempo de 
+  conexi&oacute;n. Esto nos permite que podamos estar siempre conectados a Internet, 
+  ya que mientras no se transfieran paquetes no estaremos ocupando los canales 
+  de comunicaci&oacute;n y por lo tanto no se nos estar&aacute; cobrando.</p>
+<p>Los dispositivos cuentan con varios canales para transmitir (a 10Kbps cada 
+  uno), tanto para enviar como para recibir. Por ejemplo podemos tener dispositivos 
+  (2+1), con 2 canales para recibir y 1 para enviar, por lo que recibir&aacute;n 
+  datos a 20Kbps y enviar&aacute;n a 10Kbps. Se pueden tener hasta un m&aacute;ximo 
+  de 8 canales. Esto nos permite tener simultaneidad de voz y datos.</p>
+<p><strong>Tercera generaci&oacute;n (3G): Banda ancha</strong></p>
+<p>La tercera generaci&oacute;n de telefon&iacute;a m&oacute;vil viene con la 
+  red UMTS (<em>Universal Mobile Telephony System</em>). Con esta nueva tecnolog&iacute;a 
+  de radio se pretende buscar un est&aacute;ndar mundial para las redes de telefon&iacute;a 
+  m&oacute;vil, de forma que podemos movernos a cualquier parte del mundo sin 
+  que nuestro m&oacute;vil deje de funcionar.</p>
+<p>Adem&aacute;s con ella se pretende dar acceso a servicios multimedia, como 
+  videoconferencia, ver la TV a trav&eacute;s del m&oacute;vil, o&iacute;r m&uacute;sica, 
+  etc. Para ello esta red proporciona un ancho de banda mucho mayor que las redes 
+  de segunda generaci&oacute;n, teniendo velocidades de transferencia entre 384kbps 
+  y 2Mbps. Al igual que ocurr&iacute;a con GPRS la informaci&oacute;n se enviar&aacute; 
+  por paquetes, por lo que se cobrar&aacute; por informaci&oacute;n transmitida, 
+  lo que nos permitir&aacute; estar conectados permanentemente. </p>
+<p>Esta red tiene el inconveniente de que para implantarla es necesario realizar 
+  una fuerte inversi&oacute;n en infraestructuras. Es compatible con GSM y funciona 
+  en la frecuencia 2GHz.</p>
+<h3>1.2.4. Portadores</h3>
+<p>En la arquitectura de capas de las redes m&oacute;viles, denominamos capa portadora 
+  (<em>bearer</em>) a aquella que se va a utilizar para transferir los datos a 
+  trav&eacute;s de la red. Distintas tecnolog&iacute;as que podemos utilizar como 
+  portadoras para enviar o recibir datos a trav&eacute;s de la red son:</p>
+<ul>
+  <li><strong>CSD</strong>: Conmutaci&oacute;n de circuitos sobre una red GSM. 
+    <br>
+  </li>
+  <li><strong>HSCSD</strong>: Conmutaci&oacute;n de circuitos de alta velocidad 
+    sobre una red GSM. <br>
+  </li>
+  <li><strong>GPRS</strong>: Env&iacute;o de paquetes a trav&eacute;s de una red 
+    GSM.<br>
+  </li>
+  <li><strong>SMS</strong>: Mensajes de texto cortos. Se env&iacute;an por paquetes, 
+    limitando su contenido a 140 <em>bytes</em>.<br>
+  </li>
+  <li><strong>MMS</strong>: Mensajes multimedia. Permiten incorporar elementos 
+    multimedia (audio, im&aacute;genes, video) al mensaje. </li>
+</ul>
+<p>Debemos distinguir claramente las tecnolog&iacute;as portadoras de las tecnolog&iacute;as 
+  para desarrollar aplicaciones. Podemos desarrollar aplicaciones para dispositivos 
+  m&oacute;viles utilizando diferentes tecnolog&iacute;as, y para acceder a una 
+  aplicaci&oacute;n podremos utilizar diferentes portadores. </p>
+<h3>1.2.5. Aplicaciones para m&oacute;viles</h3>
+<p>Las aplicaciones web normalmente se desarrollan pensando en ser vistas en las 
+  pantallas de nuestro PCs, con una resoluci&oacute;n de unos 800x600 <em>pixels</em> 
+  y navegar en ellas mediante el puntero del rat&oacute;n. Por lo tanto, estas 
+  aplicaciones no se podr&aacute;n mostrar correctamente en las reducidas pantallas 
+  de los dispositivos m&oacute;viles. Adem&aacute;s, en gran parte de los dispositivos 
+  m&oacute;viles (como por ejemplo los tel&eacute;fonos) no tenemos ning&uacute;n 
+  dispositivo de tipo puntero, por lo que deberemos realizar p&aacute;ginas en 
+  las que se pueda navegar f&aacute;cilmente utilizando el reducido teclado de 
+  estos dispositivos.</p>
+<p>Han surgido diferentes tecnolog&iacute;as dise&ntilde;adas para ofrecer contenidos 
+  aptos para este tipo de dispositivos. Entre ellas destacamos las siguientes:</p>
+<ul>
+  <li><strong>WAP</strong> (<em>Wireless Application Protocol</em>): Se compone 
+    de un conjunto de protocolos que se sit&uacute;an por encima de la capa portadora. 
+    Puede funcionar sobre cualquier tecnolog&iacute;a portadora existente (CSD, 
+    HSCSD, GRPS, SMS, UMTS, etc). </li>
+</ul>
+<div align="center"><img src="imagenes/introduccion/arquitectura_wap.gif" width="400" height="237"> 
+</div>
+<p class="caption">Figura 3. Arquitectura WAP</p>
+<blockquote>
+  <p>Debido a que la red m&oacute;vil puede no ser una red IP, se introduce un 
+    elemento intermediario: el <em>gateway</em> WAP. Este <em>gateway</em> traduce 
+    entre el protocolo WSP (perteneciente a WAP) de la red m&oacute;vil y el protocolo 
+    TCP/IP de Internet.</p>
+</blockquote>
+<div align="center"><img src="imagenes/introduccion/gateway_wap.gif" width="500" height="220"> 
+</div>
+<p class="caption">Figura 4. Gateway WAP</p>
+<blockquote>
+  <p> Los documentos web se escriben en lenguaje WML (<em>Wireless Markup Language</em>), 
+    que forma parte del protocolo WAP. Se trata de un lenguaje de marcado para 
+    definir documentos web que puedan ser visualizados en pantallas peque&ntilde;as, 
+    usando navegadores WML. Como inconvenientes de este lenguaje encontramos la 
+    pobreza de los documentos que podemos generar con &eacute;l, ya que para asegurarse 
+    de funcionar en todos los dispositivos debe ser muy restrictivo, y tambi&eacute;n 
+    el ser un lenguaje totalmente distinto a HTML, que obligar&aacute; a los desarrolladores 
+    a tener que aprender otro lenguaje y escribir desde cero una nueva versi&oacute;n 
+    de las aplicaciones.<br>
+  </p>
+</blockquote>
+<ul>
+  <li><strong>iMode</strong>: Esta tecnolog&iacute;a fue lanzada por la empresa 
+    NTT en Jap&oacute;n. Para escribir los documentos se utiliza cHTML, un subconjunto 
+    del HTML (compacto). En Jap&oacute;n esta tecnolog&iacute;a se ofreci&oacute; 
+    desde el principio con una velocidad similar a la de las red GSM, con conexi&oacute;n 
+    permanente y tarificando por informaci&oacute;n transmitida. Se lanz&oacute; 
+    con gran cantidad de servicios, y cuenta con un gran &eacute;xito en Jap&oacute;n. 
+    En Europa tambi&eacute;n se introduce esta tecnolog&iacute;a, en este caso 
+    sobre GPRS. El inconveniente que tiene es que es propietario, mientras que 
+    WAP es abierto.<br>
+  </li>
+  <li><strong>XHTML</strong>: Se trata de una versi&oacute;n reducida de lenguaje 
+    HTML ideado para crear aplicaciones para dispositivos m&oacute;viles con interfaces 
+    reducidas. Es similar a cHTML, pero a diferencia de este &uacute;ltimo, se 
+    ha desarrollado como est&aacute;ndar</li>
+</ul>
+<p>Con estas tecnolog&iacute;as podemos desarrollar aplicaciones web para acceder 
+  desde dispositivos m&oacute;viles. Sin embargo, en este tipo de dispositivos 
+  donde muchas veces la conexi&oacute;n es lenta, cara e inestable es conveniente 
+  poder trabajar con las aplicaciones de forma local. Adem&aacute;s las aplicaciones 
+  que instalemos en el dispositivo podr&aacute;n estar hechas a medida para nuestro 
+  modelo de dispositivo concreto y de esta manera adaptarse mejor a las posibilidades 
+  que ofrece. </p>
+<p>Vamos a ver qu&eacute; tecnolog&iacute;as podemos utilizar para desarrollar 
+  estar aplicaciones. Los dispositivos tendr&aacute;n instalado un sistema operativo. 
+  Existen diferentes sistemas operativos disponibles para este tipo de dispositivos, 
+  entre los que destacamos los siguientes:</p>
+<ul>
+  <li><strong>Windows Pocket PC</strong>: Se trata de una versi&oacute;n del sistema 
+    operativo Windows de Microsoft para PDAs. Es una evoluci&oacute;n de Windows 
+    CE, destinado tambi&eacute;n a este tipo de dispositivos. Windows CE ten&iacute;a 
+    un aspecto similar al Windows 9X, pero no se adaptaba bien a las reducidas 
+    interfaces de estos dispositivos. Pocket PC soluciona este problema y tiene 
+    un aspecto similar a Windows XP. Una ventaja de Pocket PC es que mantiene 
+    la compatibilidad con los sistemas Windows de escritorio, ya que maneja los 
+    mismos formatos de ficheros, por lo tanto podremos transferir f&aacute;cilmente 
+    nuestros datos entre PCs y PDAs.<br>
+  </li>
+  <li><strong>Palm OS</strong>: Sistema operativo para los PDAs Palm. Se adapta 
+    mejor a los dispositivos que Windows CE.<br>
+  </li>
+  <li><strong>Symbian OS</strong>: Se trata de un Sistema Operativo incluido en 
+    distintos modelos de m&oacute;viles, como por ejemplo en la serie 60 de Nokia. 
+  </li>
+</ul>
+<p>Podemos programar aplicaciones utilizando la API de estos SO, pero estas aplicaciones 
+  s&oacute;lo funcionar&aacute;n en dispositivos que cuenten con dicho SO. Si 
+  adem&aacute;s accedemos directamente al hardware del dispositivo en nuestros 
+  programas, entonces s&oacute;lo podemos confiar en que sea compatible con el 
+  modelo concreto para el que lo hayamos desarrollado.</p>
+<p>Debido al gran n&uacute;mero de dispositivos distintos existentes con diferentes 
+  sistemas operativos, programar a bajo nivel (es decir, utilizando directamente 
+  la API del SO) no ser&aacute; conveniente ya que ser&aacute; muy complicado 
+  portar nuestro programas a otros dispositivos distintos. Por ello adquiere especial 
+  inter&eacute;s en el campo de la programaci&oacute;n de dispositivos m&oacute;viles 
+  el tener aplicaciones independientes de la plataforma. </p>
+<p>Para tener esta independencia de la plataforma deberemos tener instalado en 
+  los dispositivos un entorno de ejecuci&oacute;n que sea capaz de interpretar 
+  estas aplicaciones multiplataforma. Existen diferentes tecnolog&iacute;as que 
+  nos permitir&aacute;n crear este tipo de aplicaciones, como son las siguientes: 
+</p>
+<ul>
+  <li><strong>BREW</strong> (<em>Binary Runtime Environment for Wireless</em>): 
+    El lenguaje de programaci&oacute;n nativo es C/C++. Tambi&eacute;n puede usarse 
+    Java y otros lenguajes. El inconveniente de esta tecnolog&iacute;a es que 
+    es desconocida por los desarrolladores, y que est&aacute; soportada por un 
+    n&uacute;mero reducido de dispositivos.</li>
+</ul>
+<ul>
+  <li><strong>J2ME </strong>(<em>Java 2 Micro Edition</em>): Edici&oacute;n de 
+    la plataforma Java para dispositivos m&oacute;viles. Se trata de una versi&oacute;n 
+    reducida de Java que nos permitir&aacute; ejecutar aplicaciones escritas en 
+    este lenguaje en estos dispositivos. Con Java desde el principio se apost&oacute; 
+    por la multiplataforma, por lo que la filosof&iacute;a seguida con esta tecnolog&iacute;a 
+    es muy adecuada a este tipo de dispositivos.<br>
+    <br>
+    Tiene la ventaja de que existe una gran comunidad de desarrolladores Java, 
+    a los que no les costar&aacute; aprender a programar para estos dispositivos, 
+    ya que se usa pr&aacute;cticamente la misma API, y adem&aacute;s la mayor&iacute;a 
+    de modelos de m&oacute;viles que aparecen en el mercado soportan esta tecnolog&iacute;a. 
+    Podemos encontrar gran n&uacute;mero de p&aacute;ginas que nos ofrecen aplicaciones 
+    y juegos Java para descargar en nuestros m&oacute;viles.</li>
+</ul>
+<h3>1.2.6. Conectividad de los MIDs</h3>
+<p>Hemos hablado de que estos dispositivos son capaces de conectarse. Vamos a 
+  ver las posibles formas de conectar estos dispositivos m&oacute;viles para obtener 
+  datos, aplicaciones o intercambiar cualquier otra informaci&oacute;n. Una primera 
+  forma de conectarlos consiste en establecer una conexi&oacute;n a Internet desde 
+  el m&oacute;vil a trav&eacute;s de la red GSM. Sin embargo, esta conexi&oacute;n 
+  cuesta dinero, por lo que ser&aacute; interesante tener otros mecanismos de 
+  conexi&oacute;n directa de nuestro m&oacute;vil para poder copiar en &eacute;l 
+  las aplicaciones que estemos desarrollando para hacer pruebas, gestionar nuestros 
+  datos, o intercambiar informaci&oacute;n con otros usuarios.</p>
+<ul>
+  <li><strong>OTA (Over The Air)</strong>: Se conecta directamente a Internet 
+    de forma inal&aacute;mbrica utilizando la red m&oacute;vil (GSM o en el futuro 
+    UMTS). Esto nos permitir&aacute; acceder a los recursos que haya en Internet. 
+    Por ejemplo, podemos publicar nuestras aplicaciones en una p&aacute;gina WML 
+    y descargarlas desde ah&iacute; para instalarlas en el m&oacute;vil. El inconveniente 
+    de este m&eacute;todo es que el tiempo de conexi&oacute;n tiene un coste elevado.<br>
+  </li>
+  <li><strong>Cable serie/USB</strong>: Algunos dispositivos permiten ser conectados 
+    a un PC mediante cable serie o USB. Con ello podremos copiar los datos del 
+    m&oacute;vil al PC, o al rev&eacute;s. De este forma podremos subir nuestras 
+    aplicaciones al m&oacute;vil para probarlas. El problema es que tendremos 
+    que conectar el m&oacute;vil f&iacute;sicamente mediante un cable.<br>
+  </li>
+  <li><strong>Infrarrojos (IrDA)</strong>: Un gran n&uacute;mero de modelos nos 
+    permiten establecer conexiones v&iacute;a infrarrojos. Podemos de esta manera 
+    conectar varios dispositivos entre si, o bien conectarlos con un PC. Para 
+    ello el PC deber&aacute; contar con puerto de infrarrojos. Muchos port&aacute;tiles 
+    incorporan este puerto, o tambi&eacute;n podemos a&ntilde;adir este puerto 
+    a cualquier otro ordenador por ejemplo a trav&eacute;s de interfaz USB. Tenemos 
+    la ventaja de que podemos conectar todo tipo de dispositivos que cuenten con 
+    este puerto, y adem&aacute;s no es necesario contar con un cable f&iacute;sico. 
+    El inconveniente es que los dispositivos deber&aacute;n verse entre si para 
+    poder comunicarse por infrarrojos.<br>
+  </li>
+  <li><strong>Bluetooth</strong>: <em>Bluetooth</em> es una tecnolog&iacute;a 
+    que nos permite conectar distintos tipos de dispositivos utilizando ondas 
+    de radio para comunicarse. Podremos de esta forma conectar distintos dispositivos 
+    <em>bluetooth</em> entre ellos. Podemos incorporar un adaptador <em>bluetooth</em> 
+    a nuestro PC (a trav&eacute;s de USB por ejemplo) de forma que nuestro ordenador 
+    se comporte como un dispositivo <em>bluetooth</em> m&aacute;s y de esta forma 
+    podamos conectarlo a nuestro m&oacute;vil. Al comunicarse por ondas de radio 
+    no har&aacute; falta que los dispositivos est&eacute;n visibles entre si, 
+    teniendo estas ondas un alcance de unos 10 metros. Es el sustituto de alta 
+    velocidad de los infrarrojos, pudiendo alcanzar velocidades de 723Kbit/s.</li>
+</ul>
+<h2>1.3 Aplicaciones J2ME</h2>
+<p>La plataforma J2ME nos ofrece una serie de APIs con las que desarrollar las 
+  aplicaciones en lenguaje Java. Una vez tengamos la aplicaci&oacute;n podremos 
+  descargarla en cualquier dispositivo con soporte para J2ME y ejecutarla en &eacute;l. 
+</p>
+<p>J2ME soporta una gran variedad de dispositivos, no &uacute;nicamente MIDs. 
+  Actualmente define APIs para dar soporte a los dispositivos conectados en general, 
+  tanto aquellos con una gran capacidad como a tipos m&aacute;s limitados de estos 
+  dispositivos. </p>
+<h3>1.3.1. Arquitectura de J2ME</h3>
+<p>Hemos visto que existen dispositivos de tipos muy distintos, cada uno de ellos 
+  con sus propias necesidades, y muchos con grandes limitaciones de capacidad. 
+  Si obtenemos el m&iacute;nimo com&uacute;n denominador de todos ellos nos quedamos 
+  pr&aacute;cticamente con nada, por lo que es imposible definir una &uacute;nica 
+  API en J2ME que nos sirva para todos. </p>
+<p>Por ello en J2ME existir&aacute;n diferentes APIs cada una de ellas dise&ntilde;ada 
+  para una familia de dispositivos distinta. Estas APIs se encuentras arquitecturadas 
+  en dos capas: configuraciones y perfiles.</p>
+<p align="center"><center>
+    <img src="imagenes/introduccion/arquitectura.gif" width="284" height="402"> 
+  </center></p>
+<p class="caption">Figura 5. Arquitectura de J2ME</p>
+<p><strong>Configuraciones</strong></p>
+<p>Las configuraciones son las capas de la API de bajo nivel, que residen sobre 
+  la m&aacute;quina virtual y que est&aacute;n altamente vinculadas con ella, 
+  ofrecen las caracter&iacute;sticas b&aacute;sicas de todo un gran conjunto de 
+  dispositivos. En esta API ofrecen lo que ser&iacute;a el m&iacute;nimo denominador 
+  com&uacute;n de todos ellos, la API de programaci&oacute;n b&aacute;sica en 
+  lenguaje Java.</p>
+<p>Encontramos distintas configuraciones para adaptarse a la capacidad de los 
+  dispositivos. La configuraci&oacute;n CDC (<em>Connected Devices Configuration</em>) 
+  contiene la API com&uacute;n para todos los dispositivos conectados, soportada 
+  por la m&aacute;quina virtual Java.</p>
+<p>Sin embargo, para algunos dispositivos con grandes limitaciones de capacidad 
+  esta m&aacute;quina virtual Java puede resultar demasiado compleja. Hemos de 
+  pensar en dispositivos que pueden tener 128 KB de memoria. Es evidente que la 
+  m&aacute;quina virtual de Java (JVM) pensada para ordenadores con varias megas 
+  de RAM instaladas no podr&aacute; funcionar en estos dispositivos.</p>
+<p>Por lo tanto aparece una segunda configuraci&oacute;n llamada CLDL (<em>Connected 
+  Limited Devices Configuration</em>) pensada para estos dispositivos con grandes 
+  limitaciones. En ella se ofrece una API muy reducida, en la que tenemos un menor 
+  n&uacute;mero de funcionalidades, adapt&aacute;ndose a las posibilidades de 
+  estos dispositivos. Esta configuraci&oacute;n est&aacute; soportada por una 
+  m&aacute;quina virtual mucho m&aacute;s reducida, la KVM (<em>Kilobyte Virtual 
+  Machine</em>), que necesitar&aacute; muchos menos recursos por lo que podr&aacute; 
+  instalarse en dispositivos muy limitados.</p>
+<p>Vemos que tenemos distintas configuraciones para adaptarnos dispositivos con 
+  distinta capacidad. La configuraci&oacute;n CDC soportada por la JVM (<em>Java 
+  Virtual Machine</em>) funcionar&aacute; s&oacute;lo con dispositivos con memoria 
+  superior a 1 MB, mientras que para los dispositivos con memoria del orden de 
+  los KB tenemos la configuraci&oacute;n CLDC soportada por la KVM, de ah&iacute; 
+  viene el nombre de <em>Kilobyte Virtual Machine</em>.</p>
+<p><strong>Perfiles</strong></p>
+<p>Como ya hemos dicho, las configuraciones nos ofrecen s&oacute;lo la parte b&aacute;sica 
+  de la API para programar en los dispositivos, aquella parte que ser&aacute; 
+  com&uacute;n para todos ellos. El problema es que esta parte com&uacute;n ser&aacute; 
+  muy reducida, y no nos permitir&aacute; acceder a todas las caracter&iacute;sticas 
+  de cada tipo de dispositivo espec&iacute;fico. Por lo tanto, deberemos extender 
+  la API de programaci&oacute;n para cada familia concreta de dispositivos, de 
+  forma que podamos acceder a las caracter&iacute;sticas propias de cada familia.</p>
+<p>Esta extensi&oacute;n de las configuraciones es lo que se denomina perfiles. 
+  Los perfiles son una capa por encima de las configuraciones que extienden la 
+  API definida en la configuraci&oacute;n subyacente a&ntilde;adiendo las operaciones 
+  adecuadas para programar para una determinada familia de dispositivos.</p>
+<p>Por ejemplo, tenemos un perfil MIDP (<em>Mobile Information Devices Profile</em>) 
+  para programar los dispositivos m&oacute;viles de informaci&oacute;n. Este perfil 
+  MIDP reside sobre CLDC, ya que estos son dispositivos bastante limitados a la 
+  mayor&iacute;a de las ocasiones.</p>
+<p><strong>Paquetes opcionales</strong></p>
+<p>Adem&aacute;s podemos incluir paquetes adicionales, como una tercera capa por 
+  encima de las anteriores, para dar soporte a funciones concretas de determinados 
+  modelos de dispositivos. Por ejemplo, los m&oacute;viles que incorporen c&aacute;mara 
+  podr&aacute;n utilizar una API multimedia para acceder a ella.</p>
+<h3>1.3.2. Configuraci&oacute;n CDC</h3>
+<p>La configuraci&oacute;n CDC se utilizar&aacute; para dispositivos conectados 
+  con una memoria de por lo menos 1 MB (se recomiendan al menos 2 MB para un funcionamiento 
+  correcto). Se utilizar&aacute; en dispositivos como PDAs de gama alta, comunicadores, 
+  descodificadores de televisi&oacute;n, impresoras de red, <em>routers</em>, 
+  etc. </p>
+<p>CDC se ha dise&ntilde;ado de forma que se mantenga la m&aacute;xima compatibilidad 
+  posible con J2SE, permitiendo de este modo portar f&aacute;cilmente las aplicaciones 
+  con las que ya contamos en nuestros ordenadores a CDC. </p>
+<p>La m&aacute;quina virtual utilizada, la CVM, cumple con la misma especificaci&oacute;n 
+  que la JVM, por lo que podremos programar las aplicaciones de la misma forma 
+  que lo hac&iacute;amos en J2SE. Existe una nueva m&aacute;quina virtual para 
+  soportar CDC, llamada CDC <em>Hotspot</em>, que incluye diversas optimizaciones 
+  utilizando la tecnolog&iacute;a <em>Hotspot</em>.</p>
+<p>La API que ofrece CDC es un subconjunto de la API que ofrec&iacute;a J2SE, 
+  optimizada para este tipo de dispositivos que tienen menos recursos que los 
+  PCs en los que utilizamos J2SE. Se mantienen las clases principales de la API, 
+  que ofrecer&aacute;n la misma interfaz que en su versi&oacute;n de J2SE.</p>
+<p>CDC viene a sustituir a la antigua API <em>PersonalJava</em>, que se aplicaba 
+  al mismo tipo de dispositivos. La API CDC, a diferencia de <em>PersonalJava</em>, 
+  est&aacute; integrada dentro de la arquitectura de J2ME. </p>
+<p>Tenemos diferentes perfiles disponibles seg&uacute;n el tipo de dispositivo 
+  que estemos programando: <em>Foundation Profile</em> (FP), <em>Personal Basis 
+  Profile</em> (PBP) y <em>Personal Profile</em> (PP).</p>
+<p><strong>Foundation Profile</strong></p>
+<p>Este es el perfil b&aacute;sico para la programaci&oacute;n con CDC. No incluye 
+  ninguna API para la creaci&oacute;n de una interfaz gr&aacute;fica de usuario, 
+  por lo que se utilizar&aacute; para dispositivos sin interfaz, como por ejemplo 
+  impresoras de red o <em>routers</em>.</p>
+<p>Los paquetes que se incluyen en este perfil son:</p>
+<pre>   java.io
+   java.lang
+   java.lang.ref
+   java.lang.reflect
+   java.net
+   java.security
+   java.security.acl
+   java.security.cert
+   java.security.interfaces
+   java.security.spec
+   java.text
+   java.util
+   java.util.jar
+   java.util.zip
+</pre>
+<p>Vemos que incluye todos los paquetes del n&uacute;cleo de Java, para la programaci&oacute;n 
+  b&aacute;sica en el lenguaje (<code>java.lang</code>), para manejar la entrada/salida 
+  (<code>java.io</code>), para establecer conexiones de red (<code>java.net</code>), 
+  para seguridad (<code>java.security</code>), manejo de texto (<code>java.text</code>) 
+  y clases &uacute;tiles (<code>java.util</code>). Estos paquetes se incluyen 
+  en su versi&oacute;n integra, igual que en J2SE. Adem&aacute;s incluye un paquete 
+  adicional que no pertenece a J2SE:</p>
+<pre>   javax.microedition.io</pre>
+<p>Este paquete pertenece est&aacute; presente para mantener la compatibilidad 
+  con CLDC, ya que pertenece a esta configuraci&oacute;n, como veremos m&aacute;s 
+  adelante.</p>
+<p><strong>Personal Basis Profile</strong></p>
+<p>Este perfil incluye una API para la programaci&oacute;n de la interfaz gr&aacute;fica 
+  de las aplicaciones. Lo utilizaremos para dispositivos en los que necesitemos 
+  aplicaciones con interfaz gr&aacute;fica. Este es el caso de los descodificadores 
+  de televisi&oacute;n por ejemplo.</p>
+<p>Adem&aacute;s de los paquetes incluidos en FP, a&ntilde;ade los siguientes:</p>
+<pre>   java.awt
+   java.awt.color
+   java.awt.event
+   java.awt.image
+   java.beans
+   java.rmi
+   java.rmi.registry</pre>
+<p>Estos paquetes incluyen un subconjunto de las clases que conten&iacute;an en 
+  J2SE. Tenemos el paquete AWT (<code>java.awt</code>) para la creaci&oacute;n 
+  de la interfaz gr&aacute;fica de las aplicaciones. Este paquete s&oacute;lo 
+  incluye soporte para componentes ligeros (aquellos que definen mediante c&oacute;digo 
+  Java la forma de dibujarse), y no incluye ning&uacute;n componente de alto nivel 
+  (como botones, campos de texto, etc). Tendremos que crear nosotros nuestros 
+  propios componentes, definiendo la forma en la que se dibujar&aacute; cada uno. 
+</p>
+<p>Tambi&eacute;n incluye un soporte limitado para <em>beans</em> (<code>java.beans</code>) 
+  y objetos distribuidos RMI (<code>java.rmi</code>).</p>
+<p>Adem&aacute;s podemos encontrar un nuevo tipo de componente no existente en 
+  J2SE, que son los <strong>Xlets</strong>.</p>
+<pre>   javax.microedition.xlet
+   javax.microedition.xlet.ixc</pre>
+<p>Estos <em>xlets</em> son similares a los <em>applets</em>, son componentes 
+  que se ejecutan dentro de un contenedor que controla su ciclo de vida. En el 
+  caso de los <em>applets</em> este contenedor era normalmente el navegador donde 
+  se cargaba el <em>applet</em>. Los <em>xlets</em> se ejecutan dentro del <em>xlet 
+  manager</em>. Los <em>xlets</em> pueden comunicarse entre ellos mediante RMI. 
+  De hecho, la parte de RMI incluida en PBP es &uacute;nicamente la dedicada a 
+  la comunicaci&oacute;n entre <em>xlets</em>. </p>
+<p>Los <em>xlets</em> se diferencian tambi&eacute;n de los <em>applets</em> en 
+  que tienen un ciclo de vida definido m&aacute;s claramente, y que no est&aacute;n 
+  tan vinculados a la interfaz (AWT) como los <em>applets</em>. Por lo tanto podremos 
+  utilizar tanto <em>xlets</em> con interfaz gr&aacute;fica, como sin ella. </p>
+<p>Estos <em>xlets</em> se suelen utilizar en aplicaciones de televisi&oacute;n 
+  interactiva, instaladas en los descodificadores (<em>set top boxes</em>).</p>
+<p><strong>Personal Profile</strong></p>
+<p>Este perfil incluye soporte para <em>applets</em> e incluye la API de AWT &iacute;ntegra. 
+  De esta forma podremos utilizar los componentes pesados de alto nivel definidos 
+  en AWT (botones, men&uacute;s, campos de texto, etc). Estos componentes pesado 
+  utilizan la interfaz gr&aacute;fica nativa del dispositivo donde se ejecutan. 
+  De esta forma, utilizaremos este perfil cuando trabajemos con dispositivos que 
+  disponen de su propia interfaz gr&aacute;fica de usuario (GUI) nativa.</p>
+<p>Incluye los siguientes paquetes:</p>
+<pre>   java.applet
+   java.awt
+   java.awt.datatransfer</pre>
+<p>En este caso ya se incluye &iacute;ntegra la API de AWT (<code>java.awt</code>) 
+  y el soporte para applets (<code>java.applet</code>). Este paquete es el m&aacute;s 
+  parecido al desaparecido <em>PersonalJava</em>, por lo que ser&aacute; el m&aacute;s 
+  adecuado para migrar las aplicaciones <em>PersonalJava</em> a J2ME.</p>
+<p><strong>Paquetes opcionales</strong></p>
+<p>En CDC se incluyen como paquetes opcionales subconjuntos de otras APIs presentes 
+  en J2SE: la API <strong>JDBC</strong> para conexi&oacute;n a bases de datos, 
+  y la API de <strong>RMI</strong> para utilizar esta tecnolog&iacute;a de objetos 
+  distribuidos. </p>
+<p>Adem&aacute;s tambi&eacute;n podremos utilizar como paquete opcional la API 
+  <strong>Java TV</strong>, adecuada para aplicaciones de televisi&oacute;n interactiva 
+  (iTV), que pueden ser instaladas en descodificadores de televisi&oacute;n digital. 
+  Incluye la extensi&oacute;n JMF (<em>Java Media Framework</em>) para controlar 
+  los flujos de video.</p>
+<p>Podremos utilizar estas APIs para programar todos aquellos dispositivos que 
+  las soporten.</p>
+<h3> 1.3.3. Configuraci&oacute;n CLDC</h3>
+<p>La configuraci&oacute;n CLDC se utilizar&aacute; para dispositivos conectados 
+  con poca memoria, pudiendo funcionar correctamente con s&oacute;lo 128 KB de 
+  memoria. Normalmente la utilizaremos para los dispositivos con menos de 1 &oacute; 
+  2 MB de memoria, en los que CDC no funcionar&aacute; correctamente. Esta configuraci&oacute;n 
+  se utilizar&aacute; para tel&eacute;fonos m&oacute;viles (celulares) y PDAs 
+  de gama baja.</p>
+<p>Esta configuraci&oacute;n se ejecutar&aacute; sobre la KVM, una m&aacute;quina 
+  virtual con una serie de limitaciones para ser capaz de funcionar en estas configuraciones 
+  de baja memoria. Por ejemplo, no tiene soporte para tipos de datos <code>float</code> 
+  y <code>double</code>, ya que estos dispositivos normalmente no tienen unidad 
+  de punto flotante.</p>
+<p>La API que ofrece esta configuraci&oacute;n consiste en un subconjunto de los 
+  paquetes principales del n&uacute;cleo de Java, adaptados para funcionar en 
+  este tipo de dispositivos. Los paquetes que ofrece son los siguientes:</p>
+<pre>   java.lang
+   java.io
+   java.util</pre>
+<p>Tenemos las clases b&aacute;sicas del lenguaje (<code>java.lang</code>), algunas 
+  clases &uacute;tiles (<code>java.util</code>), y soporte para flujos de entrada/salida 
+  (<code>java.io</code>). Sin embargo vemos que no se ha incluido la API de red 
+  (<code>java.net</code>). Esto es debido a que esta API es demasiado compleja 
+  para estos dispositivos, por lo que se sustituir&aacute; por una API de red 
+  propia m&aacute;s reducida, adaptada a sus necesidades de conectividad:</p>
+<pre>    javax.microedition.io</pre>
+<p>En la actualidad encontramos &uacute;nicamente un perfil que se ejecuta sobre 
+  CLDC. Este perfil es MIDP (<em>Mobile Information Devices Profile</em>), y corresponde 
+  a la familia de dispositivos m&oacute;viles de informaci&oacute;n (tel&eacute;fonos 
+  m&oacute;viles y PDAs)</p>
+<p><strong>Mobile Information Devices Profile</strong></p>
+<p>Utilizaremos este perfil para programar aplicaciones para MIDs. En los siguientes 
+  cap&iacute;tulos nos centraremos en la programaci&oacute;n de aplicaciones para 
+  m&oacute;viles utilizando este perfil, que es el que m&aacute;s protagonismo 
+  ha cobrado tras la aparici&oacute;n de los &uacute;ltimos modelos de m&oacute;viles 
+  que incluyen soporte para esta API.</p>
+<p>La API que nos ofrece MIDP consiste, adem&aacute;s de los paquetes ofrecidos 
+  en CLDL, en los siguientes paquetes:</p>
+<pre>   javax.microedition.lcdui 
+   javax.microedition.lcdui.game 
+   javax.microedition.media 
+   javax.microedition.media.control 
+   javax.microedition.midlet 
+   javax.microedition.pki 
+   javax.microedition.rms 
+</pre>
+<p>Las aplicaciones que desarrollaremos para estos dispositivos se llaman <strong>MIDlets</strong>. 
+  El m&oacute;vil actuar&aacute; como contenedor de este tipo de aplicaciones, 
+  controlando su ciclo de vida. Tenemos un paquete con las clases correspondientes 
+  a este tipo de componentes (<code>javax.microedition.midlet</code>). Adem&aacute;s 
+  tendremos otro paquete con los elementos necesarios para crear la interfaz gr&aacute;fica 
+  en la pantalla de los m&oacute;viles (<code>javax.microedition.lcdui</code>), 
+  que adem&aacute;s nos ofrece facilidades para la programaci&oacute;n de juegos. 
+  Tenemos tambi&eacute;n un paquete con clases para reproducci&oacute;n de m&uacute;sicas 
+  y tonos (<code>javax.microedition.media</code>), para creaci&oacute;n de certificados 
+  por clave p&uacute;blica para controlar la seguridad de las aplicaciones (<code>javax.microedition.pki</code>), 
+  y para almacenamiento persistente de informaci&oacute;n (<code>javax.microedition.rms</code>).</p>
+<p><strong>Paquetes opcionales</strong></p>
+<p>Como paquetes opcionales tenemos dos paquetes principales:</p>
+<ul>
+  <li><strong>Wireless Messaging API </strong>(WMA): Nos permitir&aacute; trabajar 
+    con mensajes en el m&oacute;vil. De esta forma podremos por ejemplo enviar 
+    o recibir mensajes de texto SMS.<br>
+  </li>
+  <li><strong>Mobile Media API (MMAPI)</strong>: Proporciona controles para la 
+    reproducci&oacute;n y captura de audio y video. Permite reproducir ficheros 
+    de audio y video, generar y secuenciar tonos, trabajar con <em>streams</em> 
+    de estos medios, e incluso capturar audio y video si nuestro m&oacute;vil 
+    est&aacute; equipado con una c&aacute;mara.</li>
+</ul>
+<h3>1.3.4. Otras APIs</h3>
+<p>Adem&aacute;s de los paquetes opcionales que hemos visto podemos encontrar 
+  otros disponibles tanto para CDC como para CLDC, como son los siguientes:</p>
+<ul>
+  <li><strong>Wireless Messaging API</strong>: Aunque es m&aacute;s com&uacute;n 
+    encontrarlo relacionado con CLDC, tambi&eacute;n podemos utilizarlo como paquete 
+    opcional de CDC.<br>
+  </li>
+  <li><strong>J2ME Web Services</strong>: Nos permitir&aacute; invocar Servicios 
+    Web desde nuestro cliente m&oacute;vil. Muchos fabricantes de servidores de 
+    aplicaciones J2EE, con soporte para desplegar Servicios Web, nos ofrecen sus 
+    propias APIs para invocar estos servicios desde los m&oacute;viles J2ME, como 
+    es el caso de Weblogic por ejemplo.<br>
+  </li>
+  <li><strong>Bluetooth API</strong>: Con esta API podremos establecer comunicaciones 
+    con otros dispositivos de forma inal&aacute;mbrica y local v&iacute;a <em>bluetooth</em>.<br>
+  </li>
+  <li><strong>Security and Trust Services API for J2ME</strong>: Ofrece servicios 
+    de seguridad para proteger los datos privados que tenga almacenados el usuario, 
+    encriptar la informaci&oacute;n que circula por la red, y otros servicios 
+    como identificaci&oacute;n y autentificaci&oacute;n.</li>
+</ul>
+<h2>&nbsp;</h2>
+</body>
+</html>

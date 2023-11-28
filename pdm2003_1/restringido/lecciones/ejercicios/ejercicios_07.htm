@@ -1,0 +1,84 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Anexo A: Ejercicios</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2> A.7. Red</h2>
+             
+<p><strong>7.1.</strong> Vamos a acceder desde el m&oacute;vil a nuestra tienda 
+  virtual. Mostraremos en el m&oacute;vil una pantalla en la que aparecer&aacute; 
+  la lista de productos que hay disponibles en nuestra tienda. Al pulsar sobre 
+  cada uno de ellos nos mostrar&aacute; informaci&oacute;n detallada sobre el 
+  producto.</p>
+<p>Tenemos la aplicaci&oacute;n base implementada en el directorio <code>Tienda</code>. 
+  Deberemos a&ntilde;adir en el m&eacute;todo <code>leeProductos</code> de la 
+  clase <code>ListaProductos</code> el c&oacute;digo necesario para leer la lista 
+  de productos de la red.</p>
+<p>Para ello conectaremos a la URL donde tenemos el <em>servlet</em> de nuestra 
+  tienda y leeremos la informaci&oacute;n de los productos que nos env&iacute;a 
+  en la respuesta. La informaci&oacute;n que se env&iacute;a consiste en una serie 
+  de objetos <code>Producto</code> serializados. Para leerlos podremos deserializar 
+  objetos <code>Producto</code> del flujo de entrada hasta que se produzca una 
+  <code>EOFException</code>, indic&aacute;ndonos que se ha llegado al final del 
+  flujo.</p>
+<p><strong>7.2.</strong> En este ejercicio implementaremos una aplicaci&oacute;n 
+  de chat para el m&oacute;vil. Podemos encontrar el c&oacute;digo base de la 
+  aplicaci&oacute;n en el directorio <code>Chat</code>, sobre el que deberemos 
+  hacer lo siguiente:</p>
+<p><em>a)</em> Lo primero que se mostrar&aacute; ser&aacute; una pantalla de <em>login</em>, 
+  donde el usuario deber&aacute; introducir el <em>login</em> con el que participar 
+  en el chat. Deberemos enviar este <em>login</em> al servidor para iniciar la 
+  sesi&oacute;n. Para ello abriremos una conexi&oacute;n con la URL del <em>servlet</em> 
+  proporcionando los siguientes par&aacute;metros:</p>
+<p><code>?accion=login&amp;id=&lt;nick_del_usuario&gt;</code></p>
+<p>Si el <em>login</em> es correcto, el servidor nos devolver&aacute; un c&oacute;digo 
+  de respuesta <code>200 OK</code>. Adem&aacute;s deberemos leer la cabecera <code>URL-Reescrita</code>, 
+  donde nos habr&aacute; enviado la URL rescrita que deberemos utilizar de ahora 
+  en adelante para mantener la sesi&oacute;n.</p>
+<p>Esto deberemos hacerlo en el m&eacute;todo <code>login</code> de la clase <code>PantallaLogin</code>. 
+  Este m&eacute;todo deber&aacute; devolver la URL rescrita. </p>
+<p><em>b)</em> Una vez hemos entrado en el chat, utilizaremos la t&eacute;cnica 
+  de <em>polling</em> para obtener los mensajes escritos en el chat y mostrarlos 
+  en la pantalla. Utilizando la URL rescrita, conectaremos al <em>servlet</em> 
+  del chat proporcionando el siguiente par&aacute;metro:</p>
+<p><code>?accion=lista</code></p>
+<p>Esto nos devolver&aacute; como respuesta una serie de mensajes, codificados 
+  mediante un objeto <code>DataOutputStream</code> de la siguiente forma:</p>
+<p><code>&lt;nick1&gt; &lt;mensaje1&gt;<br>
+  &lt;nick2&gt; &lt;mensaje2&gt;<br>
+  ...<br>
+  &lt;nickN&gt; &lt;mensajeN&gt;</code></p>
+<p>De esta forma podremos utilizar un objeto <code>DataInputStream</code> para 
+  ir leyendo con el m&eacute;todo <code>readUTF</code> las cadenas del <em>nick</em> 
+  y del texto de cada mensaje del chat:</p>
+<pre class="codigo">String nick = dis.readUTF();
+String texto = dis.readUTF();</pre>
+<p>Esto lo haremos dentro del m&eacute;todo <code>actualizaLista</code> de la 
+  clase <code>ListaMensajes</code>. A&ntilde;adiremos cada mensaje le&iacute;do 
+  como un <code>StringItem</code> al formulario:</p>
+<pre class="codigo">this.append(new StringItem(&quot;&lt;&quot; + nick + &quot;&gt;&quot;, texto));	 </pre>
+<p>Esto har&aacute; que el n&uacute;mero de elementos del formulario vaya creciendo 
+  conforme llegan mensajes del chat. Para evitar que llegue a crecer demasiado, 
+  cosa que lo har&iacute;a inc&oacute;modo para la interfaz de los m&oacute;viles, 
+  podemos eliminar los mensajes m&aacute;s antiguos cuando se rebase una cierta 
+  capacidad m&aacute;xima:</p>
+<pre class="codigo">if(this.size() &gt;= CAPACIDAD) {
+    this.delete(0);
+}</pre>
+<p><em>c)</em> Lo &uacute;ltimo que deberemos hacer es permitir enviar mensajes 
+  al chat. Para ello enviaremos los mensajes en el POST, a la URL rescrita proporcionando 
+  el siguiente par&aacute;metro:</p>
+<p><code>?accion=enviar</code></p>
+<p>Esto lo haremos en el m&eacute;todo <code>envia</code> de la clase <code>EnviarMensaje</code>. 
+  El mensaje se deber&aacute; codificar en binario, escribiendo la cadena del 
+  mensaje con el m&eacute;todo <code>writeUTF</code> de un objeto <code>DataOutputStream</code>. 
+  Si obtenemos una respuesta <code>200 OK</code> el mensaje habr&aacute; sido 
+  enviado correctamente.</p>
+</body>
+</html>

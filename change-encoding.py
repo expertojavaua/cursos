@@ -13,5 +13,6 @@ def change_encoding(root_dir, original_encoding='iso-8859-1', new_encoding='utf-
                     f.write(content)
                 print(f"Converted {filepath} to {new_encoding}")
 
-# Call the function with the path of the root directory
-change_encoding('.')
+# Input for the main directory
+main_directory = input("Enter the main directory to start conversion: ")
+change_encoding(main_directory)

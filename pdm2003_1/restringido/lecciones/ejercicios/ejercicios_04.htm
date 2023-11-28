@@ -1,0 +1,43 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Anexo A: Ejercicios</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2> A.4. Juegos</h2>
+             
+<p><strong>4.1.</strong> Implementaremos un juego b&aacute;sico con WTK 2.0. El 
+  primer paso que vamos a realizar es mostrar un <em>sprite</em> que se mueva 
+  por la pantalla. Tenemos la imagen <code>coche.png</code>, que utilizaremos 
+  como <em>sprite</em>. Crearemos el ciclo del juego, en el que leeremos la entrada 
+  del usuario, seg&uacute;n &eacute;sta moveremos el <em>sprite</em> por la pantalla 
+  (en las direcciones izquierda, derecha, arriba y abajo), y actualizaremos los 
+  gr&aacute;ficos.</p>
+<p><strong>4.2.</strong> Vamos a a&ntilde;adir un fondo a la escena. En la imagen 
+  <code>fondo.png</code> tenemos una serie de elementos con los que construir 
+  el fondo de la carretera. Podemos utilizar el fichero <code>datos</code> donde 
+  tenemos codificado un posible escenario. De este fichero podremos leer el &iacute;ndice 
+  del elemento que se debe mostrar en cada celda del fondo. Se encuentra codificado 
+  de la siguiente forma:</p>
+<p><code>&lt;ancho:int&gt; &lt;alto:int&gt;<br>
+  &lt;celda_1_1:byte&gt; &lt;celda_1_2:byte&gt; ... &lt;celda_1_ancho&gt;<br>
+  &lt;celda_2_1:byte&gt; &lt;celda_2_2:byte&gt; ... &lt;celda_2_ancho&gt;<br>
+  ...<br>
+  &lt;celda_alto_1:byte&gt; &lt;celda_alto_2:byte&gt; ... &lt;celda_alto_ancho&gt;</code></p>
+<p>Podremos leer estos datos utilizando un <code>DataInputStream</code>, o bien 
+  crear nuestro propio mosaico para el fondo. Dibujaremos este fondo como capa 
+  en la pantalla, y en cada iteraci&oacute;n lo iremos desplazando hacia abajo 
+  para causar el efecto de que el coche avanza por la carretera.</p>
+<p><strong>4.3.</strong> Como tarea avanzada podemos a&ntilde;adir otros coches 
+  a la carretera, y detectar colisiones con nuestro coche y los dem&aacute;s coches, 
+  o con nuestro coche y el fondo. De esta forma podremos chocar con los bordes 
+  de la carretera, teniendo que evitar salirnos de estos m&aacute;rgenes. Para 
+  comenzar, cuando choquemos podemos mostrar simplemente una alerta que nos avise 
+  de que hemos chocado y se vuelva a iniciar el juego.</p>
+</body>
+</html>

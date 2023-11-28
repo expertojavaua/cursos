@@ -1,0 +1,319 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Tema 4: Desarrollo de aplicaciones con J2ME</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+<h2> 4.6. Almacenamiento persistente</h2>
+<p>Muchas veces las aplicaciones necesitan almacenar datos de forma persistente. 
+  Cuando realizamos aplicaciones para PCs de sobremesa o servidores podemos almacenar 
+  esta informaci&oacute;n en alg&uacute;n fichero en el disco o bien en una base 
+  de datos. Lo m&aacute;s sencillo ser&aacute; almacenarla en ficheros, pero en 
+  los dispositivos m&oacute;viles no podemos contar ni tan solo con esta caracter&iacute;stica. 
+  Aunque los m&oacute;viles normalmente tienen su propio sistema de ficheros, 
+  por cuestiones de seguridad MIDP no nos dejar&aacute; acceder directamente a 
+  &eacute;l. Es posible que en alguna implementaci&oacute;n podamos acceder a 
+  ficheros en el dispositivo, pero esto no es requerido por la especificaci&oacute;n, 
+  por lo que si queremos que nuestra aplicaci&oacute;n sea portable no deberemos 
+  confiar en esta caracter&iacute;stica.</p>
+<p>Para almacenar datos de forma persistente en el m&oacute;vil utilizaremos RMS 
+  (<em>Record Management System</em>). Se trata de un sistema de almacenamiento 
+  que nos permitir&aacute; almacenar registros con informaci&oacute;n de forma 
+  persistente en los dispositivos m&oacute;viles. No se especifica ninguna forma 
+  determinada en la que se deba almacenar esta informaci&oacute;n, cada implementaci&oacute;n 
+  deber&aacute; guardar estos datos de la mejor forma posible para cada dispositivo 
+  concreto, utilizando memoria no vol&aacute;til, de forma que no se pierda la 
+  informaci&oacute;n aunque reiniciemos el dispositivo o cambiemos las bater&iacute;as. 
+  Por ejemplo, algunas implementaciones podr&aacute;n utilizar el sistema de ficheros 
+  del dispositivo para almacenar la informaci&oacute;n de RMS, o bien cualquier 
+  otro dispositivo de memoria no vol&aacute;til que contenga el m&oacute;vil. 
+  La forma de almacenamiento real de la informaci&oacute;n en el dispositivo ser&aacute; 
+  transparente para los MIDlets, &eacute;stos s&oacute;lo podr&aacute;n acceder 
+  a la informaci&oacute;n utilizando la API de RMS. Esta API se encuentra en el 
+  paquete <code>javax.microedition.rms</code>.</p>
+<h3>4.6.1. Almacenes de registros</h3>
+<p>La informaci&oacute;n se almacena en almacenes de registros (<em>Record Stores</em>), 
+  que ser&aacute;n identificados con un nombre que deberemos asignar nosotros. 
+  Cada aplicaci&oacute;n podr&aacute; crear y utilizar tantos almacenes de registros 
+  como quiera. Cada almac&eacute;n de registros contendr&aacute; una serie de 
+  registros con la informaci&oacute;n que queramos almacenar en ellos.</p>
+<p>Los almacenes de registros son propios de la suite. Es decir, los almacenes 
+  de registro creados por un MIDlet dentro de una suite, ser&aacute;n compartidos 
+  por todos los MIDlets de esa suite, pero no podr&aacute;n acceder a ellos los 
+  MIDlets de suites distintas. Por seguridad, no se permite acceder a recursos 
+  ni a almacenes de registros de suites distintas a la nuestra.</p>
+<div align="center"><img src="imagenes/rms/rms.gif" width="350" height="528"> 
+</div>
+<p class="caption">Figura 27. Acceso a los almacenes de registros</p>
+<p>Cada <em>suite</em> define su propio espacio de nombres. Es decir, los nombres 
+  de los almacenes de registros deben ser &uacute;nicos para cada <em>suite</em>, 
+  pero pueden estar repetidos en diferentes <em>suites</em>. Como hemos dicho 
+  antes, nunca podremos acceder a un almac&eacute;n de registros perteneciente 
+  a otra <em>suite</em>.</p>
+<p><strong>Abrir el almac&eacute;n de registros</strong></p>
+<p>Lo primero que deberemos hacer es abrir o crear el almac&eacute;n de registros. 
+  Para ello utilizaremos el siguiente m&eacute;todo:</p>
+<pre class="codigo">RecordStore rs = RecordStore.<strong>open</strong>(nombre, true);</pre>
+<p>Con el segundo par&aacute;metro a <code>true</code> estamos diciendo que si 
+  el almac&eacute;n de registros con nombre <code>nombre</code> no existiese en 
+  nuestra <em>suite</em> lo crear&iacute;a. Si por el contrario estuviese a <code>false</code>, 
+  s&oacute;lo intentar&iacute;a abrir un almac&eacute;n de registros existente, 
+  y si &eacute;ste no existe se producir&aacute; una excepci&oacute;n <code>RecordStoreNotFoundException</code>.</p>
+<p>El nombre que especificamos para el almac&eacute;n de registros deber&aacute; 
+  se un nombre de como mucho 32 caracteres codificado en Unicode.</p>
+<p>Una vez hayamos terminado de trabajar con el almac&eacute;n de registros, podremos 
+  cerrarlo con:</p>
+<pre class="codigo">rs.<strong>close</strong>();</pre>
+<p><strong>Listar los almacenes de registros</strong></p>
+<p>Si queremos ver la lista completa de almacenes de registros creados dentro 
+  de nuestra suite, podemos utilizar el siguiente m&eacute;todo:</p>
+<pre class="codigo">String [] nombres = RecordStore.<strong>listRecordStores</strong>();</pre>
+<p>Esto nos devolver&aacute; una lista con los nombres de los almacenes de registros 
+  que hayan sido creados. Teniendo estos nombres podremos abrirlos como hemos 
+  visto anteriormente para consultarlos, o bien eliminarlos.</p>
+<p><strong>Eliminar un almac&eacute;n de registros</strong></p>
+<p>Podemos eliminar un almac&eacute;n de registros existente proporcionando su 
+  nombre, con:</p>
+<pre class="codigo">RecordStore.<strong>deleteRecordStore</strong>(nombre); </pre>
+<p><strong>Propiedades de los almacenes de registros</strong></p>
+<p>Los almacenes de registros tienen una serie de propiedades que podemos obtener 
+  con informaci&oacute;n sobre ellos. Una vez hayamos abierto el almac&eacute;n 
+  de registros para trabajar con &eacute;l, podremos obtener los valores de las 
+  siguientes propiedades: </p>
+<ul>
+  <li><strong>Nombre</strong>: El nombre con el que hemos identificado el almac&eacute;n 
+    de registros.</li>
+</ul>
+<pre class="codigo">String nombre = rs.<strong>getName</strong>();</pre>
+<ul>
+  <li><strong>Estampa de tiempo</strong>: El almac&eacute;n de registros contiene 
+    una estampa de tiempo, que nos indicar&aacute; el momento de la &uacute;ltima 
+    modificaci&oacute;n que se ha realizado en los datos que almacena. Este instante 
+    de tiempo se mide en milisegundos desde el 1 de enero de 1970 a las 0:00, 
+    y podemos obtenerlo con:</li>
+</ul>
+<pre class="codigo">long timestamp = rs.<strong>getLastModified</strong>();</pre>
+<ul>
+  <li><strong>Versi&oacute;n</strong>: Tambi&eacute;n tenemos una versi&oacute;n 
+    del almac&eacute;n de registros. La versi&oacute;n ser&aacute; un n&uacute;mero 
+    que se incrementar&aacute; cuando se produzca cualquier modificaci&oacute;n 
+    en el almac&eacute;n de registros. Esta propiedad, junto a la anterior, nos 
+    ser&aacute; &uacute;til para tareas de sincronizaci&oacute;n de datos.</li>
+</ul>
+<pre class="codigo">int version = rs.<strong>getVersion</strong>();</pre>
+<ul>
+  <li><strong>Tama&ntilde;o</strong>: Nos dice el espacio en <em>bytes</em> que 
+    ocupa el almac&eacute;n de registros actualmente.</li>
+</ul>
+<pre class="codigo">int tam = rs.<strong>getSize</strong>();</pre>
+<ul>
+  <li><strong>Tama&ntilde;o disponible</strong>: Nos dice el espacio m&aacute;ximo 
+    que podr&aacute; crecer este almac&eacute;n de registros. El dispositivo limitar&aacute; 
+    el espacio asignado a cada almac&eacute;n de registros, y con este m&eacute;todo 
+    podremos saber el espacio restante que nos queda.</li>
+</ul>
+<pre class="codigo">int libre = rs.<strong>getSizeAvailable</strong>();</pre>
+<h3>4.6.2. Registros</h3>
+<p>El almac&eacute;n de registros contendr&aacute; una serie de registros donde 
+  podemos almacenar la informaci&oacute;n. Podemos ver el almac&eacute;n de registros 
+  como una tabla en la que cada fila corresponde a un registro. Los registros 
+  tienen un identificador y un <em>array</em> de datos.</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="25%"><strong>Identificador</strong></td>
+    <td width="75%"><strong>Datos</strong></td>
+  </tr>
+  <tr> 
+    <td><code>1</code></td>
+    <td><code>array de datos ...</code></td>
+  </tr>
+  <tr> 
+    <td><code>2</code></td>
+    <td><code>array de datos ...</code></td>
+  </tr>
+  <tr> 
+    <td><code>3</code></td>
+    <td><code>array de datos ...</code></td>
+  </tr>
+  <tr> 
+    <td><code>...</code></td>
+    <td><code>...</code></td>
+  </tr>
+</table>
+<p>Estos datos de cada registro se almacenan como un <em>array</em> de <em>bytes</em>. 
+  Podremos acceder a estos registros mediante su identificador o bien recorriendo 
+  todos los registros de la tabla.</p>
+<p>Cuando a&ntilde;adamos un nuevo registro al almac&eacute;n se le asignar&aacute; 
+  un identificador una unidad superior al identificador del &uacute;ltimo registro 
+  que tengamos. Es decir, si a&ntilde;adimos dos registros y al primero se le 
+  asigna un identificador <code>n</code>, el segundo tendr&aacute; un identificador 
+  <code>n+1</code>.</p>
+<p>Las operaciones para acceder a los datos de los registros son at&oacute;micas, 
+  por lo que no tendremos problemas cuando se acceda concurrentemente al almac&eacute;n 
+  de registros.</p>
+<p><strong>Almacenar informaci&oacute;n</strong></p>
+<p>Tenemos dos formas de almacenar informaci&oacute;n en el almac&eacute;n de 
+  registros. Lo primero que deberemos hacer en ambos casos es construir un <em>array</em> 
+  de <em>bytes</em> con la informaci&oacute;n que queramos a&ntilde;adir. Para 
+  hacer esto podemos utilizar un flujo <code>DataOutputStream</code>, como se 
+  muestra en el siguiente ejemplo:</p>
+<pre class="codigo">ByteArrayOutputStream baos = new ByteArrayOutputStream();<br>DataOutputStream dos = new DataOutputStream(baos);<br><br>dos.<strong>writeUTF</strong>(nombre);<br>dos.<strong>writeInt</strong>(edad);<br><br>byte [] datos = baos.<strong>toByteArray</strong>();</pre>
+<p>Una vez tenemos el <em>array</em> de datos que queremos almacenar, podremos 
+  utilizar uno de los siguientes m&eacute;todos del objeto almac&eacute;n de datos:</p>
+<pre class="codigo">int id = rs.<strong>addRecord</strong>(datos, 0, datos.length);<br>rs.<strong>setRecord</strong>(id, datos, 0, datos.length);</pre>
+<p>En el caso de <code>addRecord</code>, lo que se hace es a&ntilde;adir un nuevo 
+  registro al almac&eacute;n con la informaci&oacute;n que hemos proporcionado, 
+  devolvi&eacute;ndonos el identificador <code>id</code> asignado al registro 
+  que acabamos de a&ntilde;adir. </p>
+<p>Con <code>setRecord</code> lo que se hace es sobrescribir el registro correspondiente 
+  al identificador <code>id</code> indicado con los datos proporcionados. En este 
+  caso no se a&ntilde;ade ning&uacute;n registro nuevo, s&oacute;lo se almacenan 
+  los datos en un registro ya existente.</p>
+<p><strong>Leer informaci&oacute;n</strong></p>
+<p>Si tenemos el identificador del registro que queremos leer, podemos obtener 
+  su contenido como <em>array</em> de <em>bytes</em> directamente utilizando el 
+  m&eacute;todo:</p>
+<pre class="codigo">byte [] datos = rs.<strong>getRecord</strong>(id);</pre>
+<p>Si hemos codificado la informaci&oacute;n dentro de este registro utilizando 
+  un flujo <code>DataOutputStream</code>, podemos descodificarlo realizando el 
+  proceso inverso con un flujo <code>DataInputStream</code>:</p>
+<pre class="codigo">ByteArrayInputStream bais = new ByteArrayInputStream(datos);<br>DataInputStream dis = DataInputStream(bais);<br><br>String nombre = dis.<strong>readUTF</strong>();<br>String edad = dis.<strong>readInt</strong>();<br><br>dis.close();</pre>
+<p><strong>Borrar registros</strong></p>
+<p>Podremos borrar un registro del almac&eacute;n a partir de su identificador 
+  con el siguiente m&eacute;todo:</p>
+<pre class="codigo">rs.<strong>deleteRecord</strong>(id);</pre>
+<p><strong>Almacenar y recuperar objetos</strong></p>
+<p>Si hemos definido una forma de serializar los objetos, podemos aprovechar esta 
+  serializaci&oacute;n para almacenar los objetos de forma persistente en RMS 
+  y posteriormente poder recuperarlos. </p>
+<p>Imaginemos que en nuestra clase <code>MisDatos</code> hemos definido los siguientes 
+  m&eacute;todos para serializar y deserializar tal como vimos en el apartado 
+  de entrada/salida:</p>
+<pre class="codigo">public void <strong>serialize</strong>(OutputStream out)<br>public static MisDatos <strong>deserialize</strong>(InputStream in)</pre>
+<p>Podemos serializar el objeto en un <em>array</em> de <em>bytes</em> utilizando 
+  estos m&eacute;todos para almacenarlo en RMS de la siguiente forma:</p>
+<pre class="codigo">MisDatos md = new MisDatos();<br>...<br>ByteArrayOutputStream baos = new ByteArrayOutputStream();<br>md.<strong>serialize</strong>(baos);<br><br>byte [] datos = baos.toByteArray();</pre>
+<p>Una vez tenemos este <em>array</em> de <em>bytes</em> podremos almacenarlo 
+  en RMS. Cuando queramos recuperar el objeto original, leeremos el <em>array</em> 
+  de <em>bytes</em> de RMS y deserializaremos el objeto de la siguiente forma:</p>
+<pre class="codigo">ByteArrayInputStream bais = new ByteArrayInputStream(datos);<br>MisDatos md = MisDatos.<strong>deserialize</strong>(bais);</pre>
+<h3>4.6.3. Navegar en el almac&eacute;n de registros</h3>
+<p>Si no conocemos el identificador del registro al que queremos acceder, podremos 
+  recorrer todos los registros del almac&eacute;n utilizando un objeto <code>RecordEnumeration</code>. 
+  Para obtener la enumeraci&oacute;n de registros del almac&eacute;n podemos utilizar 
+  el siguiente m&eacute;todo:</p>
+<pre class="codigo">RecordEnumeration re = rs.<strong>enumerateRecords</strong>(null, null, false);</pre>
+<p>Con los dos primeros par&aacute;metros podremos establecer la ordenaci&oacute;n 
+  y el filtrado de los registros que se enumeren como veremos m&aacute;s adelante. 
+  Por ahora vamos a dejarlo a <code>null</code> para obtener la enumeraci&oacute;n 
+  con todos los registros y en un orden arbitrario. Esta es la forma m&aacute;s 
+  eficiente de acceder a los registros. </p>
+<p>El tercer par&aacute;metro nos dice si la enumeraci&oacute;n debe mantenerse 
+  actualizada con los registros que hay realmente almacenados, o si por el contrario 
+  los cambios que se realicen en el almac&eacute;n despu&eacute;s de haber obtenido 
+  la enumeraci&oacute;n no afectar&aacute;n a dicha enumeraci&oacute;n. Ser&aacute; 
+  m&aacute;s eficiente establecer el valor a <code>false</code> para evitar que 
+  se tenga que mantener actualizado, pero esto tendr&aacute; el inconveniente 
+  de que puede que alguno de los registros de la enumeraci&oacute;n se haya borrado 
+  o que se hayan a&ntilde;adido nuevos registros que no constan en la enumeraci&oacute;n. 
+  En al caso de que especifiquemos <code>false</code> para que no actualice autom&aacute;ticamente 
+  la enumeraci&oacute;n, podremos forzar manualmente a que se actualice invocando 
+  el m&eacute;todo <code>rebuild</code> de la misma, que la reconstruir&aacute; 
+  utilizando los nuevos datos.</p>
+<p>Recorreremos la enumeraci&oacute;n de registros de forma similar a como recorremos 
+  los objetos <code>Enumeration</code>. Tendremos un cursor que en cada momento 
+  estar&aacute; en uno de los elementos de la enumeraci&oacute;n. En este caso 
+  podremos recorrer la enumeraci&oacute;n de forma bidireccional.</p>
+<p>Para pasar al siguiente registro de la enumeraci&oacute;n y obtener sus datos 
+  utilizaremos el m&eacute;todo <code>nextRecord</code>. Podremos saber si existe 
+  un siguiente registro llamando a <code>hasNextElement</code>. Nada m&aacute;s 
+  crear la enumeraci&oacute;n el cursor no se encontrar&aacute; en ninguno de 
+  los registros. Cuando llamemos a <code>nextRecord</code> por primera vez se 
+  situar&aacute; en el primer registro y nos devolver&aacute; su <em>array</em> 
+  de datos. De esta forma podremos seguir recorriendo la enumeraci&oacute;n mientras 
+  haya m&aacute;s registros. Un bucle t&iacute;pico para hacer este recorrido 
+  es el siguiente:</p>
+<pre class="codigo">while(re.<strong>hasNextElement</strong>()) {<br>    byte [] datos = re.<strong>nextRecord</strong>();<br>    // Procesar datos obtenidos<br>    ...<br>}</pre>
+<p>Hemos dicho que el recorrido puede ser bidireccional. Por lo tanto, tenemos 
+  un m&eacute;todo <code>previousRecord</code> que mover&aacute; el cursor al 
+  registro anterior devolvi&eacute;ndonos su contenido. De la misma forma, tenemos 
+  un m&eacute;todo <code>hasPreviousElement</code> que nos dir&aacute; si existe 
+  un registro anterior. Si invocamos <code>previousRecord</code> nada m&aacute;s 
+  crear la enumeraci&oacute;n, cuando el cursor todav&iacute;a no se ha posicionado 
+  en ning&uacute;n registro, mover&aacute; el cursor al &uacute;ltimo registro 
+  de la enumeraci&oacute;n devolvi&eacute;ndonos su resultado. Podemos tambi&eacute;n 
+  volver al estado inicial de la enumeraci&oacute;n en el que el cursor no apunta 
+  a ning&uacute;n registro llamando a su m&eacute;todo <code>reset</code>.</p>
+<p>En lugar de obtener el contenido de los registros puede que nos interese obtener 
+  su identificador, de forma que podamos eliminarlos o hacer otras operaciones 
+  con ellos. Para ello tenemos los m&eacute;todos <code>nextRecordId</code> y 
+  <code>previousRecordId</code>, que tendr&aacute;n el mismo comportamiento que 
+  <code>nextRecord</code> y <code>previousRecord</code> respectivamente, salvo 
+  porque devuelven el identificador de los registros recorridos, y no su contenido. 
+</p>
+<p><strong>Ordenaci&oacute;n de registros</strong></p>
+<p>Puede que nos interese que la enumeraci&oacute;n nos ofrezca los registros 
+  en un orden determinado. Podemos hacer que se ordenen proporcionando nosotros 
+  el criterio de ordenaci&oacute;n. Para ello deberemos crear un comparador de 
+  registros que nos diga cuando un registros es mayor, menor o igual que otro 
+  registro. Para crear este comparador deberemos crear una clase que implemente 
+  la interfaz <code>RecordComparator</code>:</p>
+<pre class="codigo">public class MiComparador implements <strong>RecordComparator</strong> {<br> <br>   public int <strong>compare</strong>(byte [] reg1, byte [] reg2) {<br> <br>       if( /* reg1 es anterior a reg2 */ ) {<br>            return <strong>RecordComparator.PRECEDES</strong>;<br>        } else if( /* reg1 es posterior a reg2 */ ) {<br>            return <strong>RecordComparator.FOLLOWS</strong>;<br>        } else if( /* reg1 es igual a reg2 */ ) {<br>            return <strong>RecordComparator.EQUIVALENT</strong>;<br>        }<br>    }<br>}</pre>
+<p>De esta manera, dentro del c&oacute;digo de esta clase deberemos decir cuando 
+  un registro va antes, despu&eacute;s o es equivalente a otro registro, para 
+  que el enumerador sepa c&oacute;mo ordenarlos. Ahora, cuando creemos el enumerador 
+  deberemos proporcionarle un objeto de la clase que hemos creado para que realice 
+  la ordenaci&oacute;n tal como lo hayamos especificado en el m&eacute;todo <code>compare</code>:</p>
+<pre class="codigo">RecordEnumeration re = <br>    rs.<strong>enumerateRecords</strong>(new MiComparador(), null, false);</pre>
+<p>Una vez hecho esto, podremos recorrer los registros del enumerador como hemos 
+  visto anteriormente, con la diferencia de que ahora obtendremos los registros 
+  en el orden indicado.</p>
+<p><strong>Filtrado de registros</strong></p>
+<p>Es posible que no queramos que el enumerador nos devuelva todos los registros, 
+  sino s&oacute;lo los que cumplan unas determinadas caracter&iacute;sticas. Es 
+  posible realizar un filtrado para que el enumerador s&oacute;lo nos devuelva 
+  los registros que nos interesan. Para que esto sea posible deberemos definir 
+  qu&eacute; caracter&iacute;sticas cumplen los registros que nos interesan. Esto 
+  lo haremos creando una clase que implemente la interfaz <code>RecordFilter</code>:</p>
+<pre class="codigo">public class MiFiltro implements <strong>RecordFilter</strong> {<br> <br>   public boolean <strong>matches</strong>(byte [] reg) {<br> <br>       if( /* reg nos interesa */ ) {<br>            return <strong>true</strong>;<br>        } else {<br>            return <strong>false</strong>;<br>        }<br>    }<br>}</pre>
+<p>De esta forma dentro del m&eacute;todo <code>matches</code> diremos si un determinado 
+  registro nos interesa, o si por lo contrario debe ser filtrado para que no aparezca 
+  en la enumeraci&oacute;n. Ahora podremos proporcionar este filtro al crear la 
+  enumeraci&oacute;n para que filtre los registros seg&uacute;n el criterio que 
+  hayamos especificado en el m&eacute;todo <code>matches</code>:</p>
+<pre class="codigo">RecordEnumeration re = <br>    rs.<strong>enumerateRecords</strong>(null, new MiFiltro(), false);</pre>
+<p>Ahora cuando recorramos la enumeraci&oacute;n, s&oacute;lo veremos los registros 
+  que cumplan los criterios impuestos en el filtro.</p>
+<h3>4.6.4. Notificaci&oacute;n de cambios</h3>
+<p>Es posible que queramos que en cuanto haya un cambio en el almac&eacute;n de 
+  registros se nos notifique. Esto ocurrir&aacute; por ejemplo cuando estemos 
+  trabajando con la copia de los valores de un conjunto de registros en memoria, 
+  y queramos que esta informaci&oacute;n se mantenga actualizada con los &uacute;ltimos 
+  cambios que se hayan producido en el almac&eacute;n.</p>
+<p>Para estar al tanto de estos cambios deberemos utilizar un <em>listener</em>, 
+  que escuche los cambios en el almac&eacute;n de registros. Este <em>listener</em> 
+  lo crearemos implementando la interfaz <code>RecordListener</code>, como se 
+  muestra a continuaci&oacute;n:</p>
+<pre class="codigo">public class MiListener implements <strong>RecordListener</strong> {<br><br>    public void <strong>recordAdded</strong>(RecordStore rs, int id) {<br>        // Se ha a&ntilde;adido un registro con identificador id a rs<br>    }<br><br>    public void <strong>recordChanged</strong>(RecordStore rs, int id) {<br>        // Se ha modificador el registro con identificador id en rs<br>    }<br><br>    public void <strong>recordDeleted</strong>(RecordStore rs, int id) {<br>        // Se ha eliminado el registro con identificador id de rs<br>    }<br></pre>
+<p>De esta forma dentro de estos m&eacute;todos podremos indicar qu&eacute; hacer 
+  cuando se produzca uno de estos cambios en el almac&eacute;n de registros. Para 
+  que cuando se produzca un cambio en el almac&eacute;n de registros se le notifique 
+  a este <em>listener</em>, deberemos a&ntilde;adir el <em>listener</em> en el 
+  correspondiente almac&eacute;n de registros de la siguiente forma:</p>
+<pre class="codigo">rs.<strong>addRecordListener</strong>(new MiListener());</pre>
+<p>De esta forma cada vez que se realice alguna operaci&oacute;n en la que se 
+  a&ntilde;adan, eliminen o modifiquen registros del almac&eacute;n se le notificar&aacute; 
+  a nuestro <em>listener</em> para que &eacute;ste pueda realizar la operaci&oacute;n 
+  que sea necesaria.</p>
+<p>Por ejemplo, cuando creamos una enumeraci&oacute;n con registros poniendo a 
+  <code>true</code> el par&aacute;metro para que mantenga en todo momento actualizados 
+  los datos de la enumeraci&oacute;n, lo que har&aacute; ser&aacute; utilizar 
+  un <em>listener</em> para ser notificada de los cambios que se produzcan en 
+  el almac&eacute;n. Cada vez que se produzca un cambio, el <em>listener</em> 
+  har&aacute; que los datos de la enumeraci&oacute;n se actualicen.</p>
+</body>
+</html>

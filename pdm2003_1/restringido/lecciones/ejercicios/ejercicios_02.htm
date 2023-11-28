@@ -1,0 +1,75 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Anexo A: Ejercicios</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2> A.2. Interfaz gr&aacute;fica de alto nivel</h2>
+             
+<p><strong>2.1.</strong> Modificar el ejemplo <em>&quot;Hola mundo&quot;</em> 
+  de la sesi&oacute;n anterior para hacerlo parametrizable. Ahora en lugar de 
+  mostrar siempre el mensaje <em>&quot;Hola mundo&quot;</em>, tomaremos el mensaje 
+  a mostrar del par&aacute;metro <code>msg.bienvenida</code>. Crear este par&aacute;metro 
+  dentro del fichero JAD, y leerlo dentro del MIDlet para mostrarlo como t&iacute;tulo 
+  del formulario.</p>
+<p><strong>2.2.</strong> Vamos a implementar una alarma utilizando alertas y temporizadores. 
+  En las plantillas de los ejercicios se proporciona una base para realizar esta 
+  aplicaci&oacute;n, contenida en el directorio <code>Alarma</code>. Tenemos un 
+  formulario donde podemos establecer la fecha de la alarma y fijarla o anularla. 
+  Lo que deberemos hacer es:</p>
+<p><em>a)</em> Crear una tarea (<code>TimerTask</code>) que al ser ejecutada muestre 
+  una alerta de tipo alarma y reproduzca un sonido de aviso (utilizando la clase 
+  <code>AlertType</code>). Despu&eacute;s de mostrarse esta alerta deber&aacute; 
+  volver a la pantalla actual.</p>
+<p><em>b)</em> Planificar la ejecuci&oacute;n de esta alarma utilizando un temporizador 
+  (<code>Timer</code>). Esto lo haremos en el m&eacute;todo <code>commandAction</code> 
+  como respuesta al comando de fijar alarma. Tambi&eacute;n deberemos cancelar 
+  el temporizador en caso de que la alarma se anule.</p>
+<p><strong>2.3.</strong> Vamos a crear una pantalla sencilla para nuestra aplicaci&oacute;n. 
+  Haremos el men&uacute; principal de nuestro juego, en el que deberemos tener 
+  las opciones <em>Nuevo juego</em> y <em>Salir</em>. Podemos encontrar la base 
+  de esta aplicaci&oacute;n en el directorio <code>AdivinaNumero</code> de las 
+  plantillas de los ejercicios. Aqu&iacute; tenemos definido el MIDlet principal, 
+  desde el cu&aacute;l deberemos mostrar la pantalla que vamos a implementar.</p>
+<p><em>a)</em> &iquest;Qu&eacute; tipo de <em>displayable</em> utilizaremos para 
+  realizar este men&uacute;?</p>
+<p><em>b)</em> Implementar esta pantalla encapsulando todo su contenido en una 
+  misma clase.</p>
+<p><em>c)</em> A&ntilde;adir un comando que nos permita seleccionar la opci&oacute;n 
+  marcada del men&uacute;. </p>
+<p><em>d)</em> Incorporar un <em>listener</em> de comandos para dar respuesta 
+  a este comando de selecci&oacute;n de opciones. Por ahora lo que haremos ser&aacute; 
+  mostrar una alerta que diga <em>&quot;Opcion no implementada todavia&quot;</em>.</p>
+<p><strong>2.4.</strong> Ahora implementaremos el juego de adivinar un n&uacute;mero 
+  del 1 al 100. Para ello partiremos de la base realizada en el ejercicio anterior. 
+</p>
+<p>La aplicaci&oacute;n pensar&aacute; un n&uacute;mero aleatorio de 1 a 100, 
+  y se mostrar&aacute; al usuario un cuadro de texto donde deber&aacute; introducir 
+  el n&uacute;mero del que piensa que se trata. Una vez introducido, pulsar&aacute; 
+  OK y entonces la aplicaci&oacute;n le dir&aacute; si el n&uacute;mero de demasiado 
+  alto, si es demasiado bajo o si ha acertado. En caso de que el n&uacute;mero 
+  sea muy alto o muy bajo, volveremos al mismo cuadro de texto para volver a probar. 
+  Si ha acertado el juego finalizar&aacute;, mostrando el n&uacute;mero de intentos 
+  que ha necesitado y volviendo al men&uacute; principal.</p>
+<div align="center"><img src="imagenes/ejercicios/adivina.gif" width="365" height="230"> 
+</div>
+<p>Para implementar esta aplicaci&oacute;n crearemos una nueva pantalla encapsulada 
+  en una clase de nombre <code>EntradaTexto</code> que ser&aacute; de tipo <code>TextBox</code>, 
+  donde el usuario introducir&aacute; el n&uacute;mero. Al construir esta pantalla 
+  se deber&aacute; determinar un n&uacute;mero aleatorio de 1 a 100, cosa que 
+  podemos hacer de la siguiente forma:</p>
+<pre class="codigo">Random rand = new Random();
+this.numero = Math.abs(rand.nextInt()) % 100 + 1;</pre>
+<p>Deberemos a&ntilde;adir un comando para que el usuario notifique que ha introducido 
+  el n&uacute;mero. Como respuesta a este comando deberemos obtener el n&uacute;mero 
+  que ha introducido el usuario y compararlo con el n&uacute;mero aleatorio. Seg&uacute;n 
+  si el n&uacute;mero es menor, mayor o igual mostraremos una alerta con el mensaje 
+  correspondiente, y volveremos a la pantalla actual o al men&uacute; principal 
+  seg&uacute;n si el usuario ha fallado o acertado respectivamente.</p>
+</body>
+</html>

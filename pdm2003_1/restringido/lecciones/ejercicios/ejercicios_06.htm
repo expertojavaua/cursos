@@ -1,0 +1,53 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Anexo A: Ejercicios</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2> A.6. RMS</h2>
+             
+<p><strong>6.1.</strong> Vamos a implementar un almac&eacute;n de notas. En el 
+  directorio <code>Notas</code> tenemos la base de esta aplicaci&oacute;n. Vamos 
+  a ampliarla haciendo que estas notas se almacenen de forma persistente utilizando 
+  RMS. Para ello deberemos completar el c&oacute;digo de la clase <code>Notas</code> 
+  de la siguiente forma:</p>
+<p><em>a) </em>En el constructor se debe abrir el almac&eacute;n de registros 
+  de nombre <code>RS_NAME</code> (cre&aacute;ndolo si es necesario) y cargando 
+  todas las notas que tenemos almacenadas en &eacute;l. Podemos utilizar la deserializaci&oacute;n 
+  definida en el objeto <code>Nota</code> para leerlos. Conforme leamos las notas 
+  las a&ntilde;adiremos al vector <code>notas</code>. </p>
+<p>El &iacute;ndice de cada registro en el almac&eacute;n nos servir&aacute; para 
+  luego poder modificar o eliminar dicha nota. Por esta raz&oacute;n deberemos 
+  guardarnos este valor en alguna parte. Podemos utilizar para ello el campo <code>id</code> 
+  de cada objeto <code>Nota</code> creado.</p>
+<p><em>b)</em> En <code>eliminaNota</code> deberemos eliminar las notas del almac&eacute;n. 
+  Para ello deberemos obtener el <code>id</code> asociado a la nota y eliminar 
+  dicho registro del almac&eacute;n.</p>
+<p><em>c)</em> En <code>cambiaNota</code> modificaremos una nota del almac&eacute;n 
+  sobrescribi&eacute;ndola con la nueva nota proporcionada. Para ello obtendremos 
+  el <code>id</code> correspondiente a la antigua nota, y en ese registro escribiremos 
+  la nueva nota utilizando la serializaci&oacute;n del objeto <code>Nota</code>.</p>
+<p><em>d)</em> En <code>nuevaNota</code> a&ntilde;adiremos una nueva nota al almac&eacute;n, 
+  utilizando la serializaci&oacute;n del objeto <code>Nota</code>. Nos guardaremos 
+  el <code>id</code> del registro en el que hemos guardado la nota por si necesitamos 
+  modificarlo posteriormente.</p>
+<p><strong>6.2. </strong>Obtener la informaci&oacute;n de la cantidad de memoria 
+  ocupada y disponible a partir del objeto <code>RecordStore</code>. Deberemos 
+  hacer que los m&eacute;todos <code>getMem</code> y <code>getFree</code> de la 
+  clase <code>Notas</code> devuelvan esta informaci&oacute;n.</p>
+<p><strong>6.3.</strong> Utilizar un <em>listener</em> para actualizar la lista 
+  de notas en memoria. A&ntilde;adiendo este <em>listener</em> sobre el almac&eacute;n 
+  de registros ya no necesitaremos modificar el vector de notas en los m&eacute;todos 
+  <code>eliminaNota</code>, <code>cambiaNota</code> y <code>nuevaNota</code>, 
+  podemos usar estos m&eacute;todos s&oacute;lo para modificar el almac&eacute;n, 
+  y actualizar el vector en memoria &uacute;nicamente desde nuestro <em>listener</em>. 
+  De esta forma la lista de notas que se muestra en pantalla se actualizar&aacute; 
+  siempre que se produzca un cambio en el almac&eacute;n, aunque no haya sido 
+  producido por el usuario desde nuestro MIDlet.</p>
+</body>
+</html>

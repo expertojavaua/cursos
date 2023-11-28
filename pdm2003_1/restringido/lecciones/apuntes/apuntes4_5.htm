@@ -1,0 +1,390 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Tema 4: Desarrollo de aplicaciones con J2ME</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+<h2> 4.5. Sonido y multimedia</h2>
+<p>Hemos visto que MIDP 1.0 carece de soporte para la reproducci&oacute;n de sonido. 
+  Esta carencia se soluciona en MIDP 2.0 que proporciona soporte para la reproducci&oacute;n 
+  de distintos tipos de sonidos y m&uacute;sicas. Esta API que incorpora MIDP 
+  2.0 es un subconjunto de la API multimedia MMAPI, que se ofrece como API opcional 
+  para los dispositivos MIDP. Esta API multimedia, a parte de sonido, nos permite 
+  reproducir video, y adem&aacute;s con ella podremos capturar sonido, im&aacute;genes 
+  o video utilizando el micr&oacute;fono y la c&aacute;mara del m&oacute;vil. 
+</p>
+<p>Vamos a comenzar viendo c&oacute;mo reproducir sonido, cosa que podremos hacer 
+  tanto en los dispositivos MIDP 2.0 como en los dispositivos MIDP 1.0 que incorporen 
+  la API opcional MMAPI. Despu&eacute;s de esto veremos como reproducir y capturar 
+  otros medios utilizando las caracter&iacute;sticas que s&oacute;lo est&aacute;n 
+  disponibles en MMAPI, y que podr&aacute;n implementar los modelos de tel&eacute;fonos 
+  m&oacute;viles multimedia.</p>
+<p>Esta API multimedia se encuentra en el paquete<code> javax.microedition.media 
+  </code>y subpaquetes. En MIDP 2.0 tendremos s&oacute;lo el subconjunto de clases 
+  de la API MMAPI necesarias para la reproducci&oacute;n de sonido.</p>
+<h3>4.5.1. Reproductor de medios</h3>
+<p>Para poder reproducir los distintos tipos de medios (sonidos, m&uacute;sicas, 
+  videos) deberemos utilizar un objeto reproductor de medios, al que referenciaremos 
+  mediante la interfaz <code>Player</code>. Para obtener el reproductor adecuado 
+  para un determinado medio utilizaremos la clase <code>Manager</code>. Esta clase 
+  ofrece una serie de m&eacute;todos est&aacute;ticos que nos permiten crear objetos 
+  reproductores para los medios que queramos reproducir.</p>
+<p>Para crear un reproductor utilizaremos el m&eacute;todo est&aacute;tico <code>createPlayer</code> 
+  de la clase <code>Manager</code>. Podemos crear el reproductor a partir de un 
+  flujo de datos abierto de donde leer el medio, o a partir de una URL que nos 
+  sirva para localizar este medio:</p>
+<pre class="codigo">// A partir de un flujo de datos y un tipo<br>InputStream in = abrirFlujo();<br>Player player = Manager.<strong>createPlayer</strong>(in, tipo);
+<br>// A partir de una URL<br>Player player = Manager.<strong>createPlayer</strong>(url);</pre>
+<p>Cuando creamos el reproductor a partir del flujo de datos deberemos indicar 
+  expl&iacute;citamente el tipo de medio del que se trata, ya que del flujo podr&aacute; 
+  leer el contenido pero no conocer&aacute; qu&eacute; tipo de medio est&aacute; 
+  leyendo. En el caso de la URL no ser&aacute; necesario, ya que podr&aacute; 
+  obtener informaci&oacute;n sobre el tipo de contenido conectando a dicha URL.</p>
+<p>Si queremos abrir un medio almacenado en un fichero dentro del JAR de la aplicaci&oacute;n 
+  podremos obtener un flujo para leer de dicho recurso con <code>getResourceAsStream</code>, 
+  y crear un reproductor para reproducir el contenido le&iacute;do a trav&eacute;s 
+  de este flujo. En este caso deberemos especificar el tipo MIME del medio que 
+  estamos abriendo. Cada implementaci&oacute;n de MMAPI puede soportar tipos de 
+  datos distintos. Por ejemplo, posibles tipos que podemos encontrar son:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="31%"><code>audio/x-wav</code></td>
+    <td width="69%">Ficheros WAV</td>
+  </tr>
+  <tr> 
+    <td><code>audio/basic </code></td>
+    <td>Ficheros AU</td>
+  </tr>
+  <tr> 
+    <td><code>audio/mpeg </code></td>
+    <td>Ficheros MP3</td>
+  </tr>
+  <tr> 
+    <td><code>audio/midi </code></td>
+    <td>Ficheros MIDI</td>
+  </tr>
+  <tr> 
+    <td><code>audio/x-tone-seq </code></td>
+    <td>Secuencias de tonos</td>
+  </tr>
+  <tr> 
+    <td><code>video/mpeg </code></td>
+    <td>Videos MPEG</td>
+  </tr>
+  <tr> 
+    <td><code>video/3gpp</code></td>
+    <td>Videos 3GPP</td>
+  </tr>
+</table>
+<p>Utilizando URLs podremos, adem&aacute;s de abrir estos tipos de ficheros de 
+  medios proporcionando la URL donde se localizan, acceder a dispositivos de captura 
+  y reproducir <em>streams</em> de audio y video en tiempo real. Estas URLs tendr&aacute;n 
+  la siguiente forma:</p>
+<p><code>protocolo:direcci&oacute;n</code></p>
+<p>Por ejemplo, podemos reproducir un sonido que haya disponible en Internet proporcionando 
+  su URL:</p>
+<pre class="codigo">Player player = <br>    Manager.<strong>createPlayer</strong>(&quot;http://j2ee.ua.es/pdm/sonido.wav&quot;);</pre>
+<p>Normalmente en este caso descargar&aacute; el medio desde Internet y lo almacenar&aacute; 
+  en un buffer temporal para reproducirlo. Podemos utilizar otras URLs, como por 
+  ejemplo <code>capture://dispositivo</code> para acceder a un dispositivo de 
+  captura (micr&oacute;fono o c&aacute;mara), o <code>rtp://direccion</code> para 
+  conectarnos a un servidor de <em>streaming</em> de audio o video. El soporte 
+  para la captura, <em>streaming</em>, o diferentes tipos de medios depender&aacute; 
+  de cada modelo concreto de m&oacute;vil.</p>
+<p><strong>Estados</strong></p>
+<p>La reproducci&oacute;n de muchos de estos tipos de medios consume gran cantidad 
+  de recursos. Deberemos almacenar el medio a reproducir en memoria, y cuando 
+  vayamos a reproducirlo necesitamos reservar una serie de recursos de forma exclusiva, 
+  como puede ser por ejemplo el altavoz del dispositivo. Dado que estos recursos 
+  son escasos, los reproductores nos permitir&aacute;n decidir cuando los reservamos 
+  y cuando los liberamos.</p>
+<p>Para controlar esta asignaci&oacute;n de recursos, los reproductores pasar&aacute;n 
+  por una serie de estados. En cada uno de ellos se habr&aacute;n reservado una 
+  serie de recursos. Cambiando el estado actual podremos controlar este proceso 
+  de reserva de recursos por parte del reproductor. Hemos de tener en cuenta que 
+  si hemos reservado todos los recursos necesarios podremos empezar a reproducir 
+  el medio de forma casi inmediata, mientras que si todav&iacute;a no se han reservado 
+  y queremos reproducir el sonido, el comienzo de la reproducci&oacute;n puede 
+  tener un cierto retardo debido a que previamente deber&aacute; adquirir los 
+  recursos necesarios, lo cu&aacute;l llevar&aacute; un tiempo.</p>
+<p>Los estados por los que pasar&aacute; el reproductor son los siguientes:</p>
+<ul>
+  <li><strong>Unrealized</strong>: Nada m&aacute;s crear el reproductor se encontrar&aacute; 
+    en este estado. En este estado todav&iacute;a no se ha reservado ning&uacute;n 
+    recurso. En este estado no podremos obtener ninguna informaci&oacute;n sobre 
+    los medios a reproducir. Podremos pasar al siguiente estado invocando el m&eacute;todo 
+    <code>realize</code>. <br>
+  </li>
+  <li><strong>Realized</strong>: Normalmente en este estado el reproductor habr&aacute; 
+    adquirido todos los recursos que necesita para la reproducci&oacute;n del 
+    medio excepto aquellos que sean de acceso exclusivo, como puede ser el altavoz 
+    del m&oacute;vil. Se habr&aacute; le&iacute;do ya el medio a reproducir, por 
+    lo que a partir de este momento podremos obtener informaci&oacute;n sobre 
+    &eacute;l. Para pasar el siguiente estado invocaremos el m&eacute;todo <code>prefetch</code>.<br>
+  </li>
+  <li><strong>Prefetched</strong>: En el estado <em>realized</em> todav&iacute;a 
+    no tenemos todos los recursos necesarios para empezar a reproducir el medio. 
+    Ser&aacute; al pasar a estado <em>prefetched</em> cuando obtengamos estos 
+    recursos. Esto implica por ejemplo reservar los recursos de uso exclusivo 
+    necesario, crear los <em>bufferes</em> de datos necesarios, etc. Cuando estemos 
+    en estado <em>prefetched</em> podremos empezar a reproducir el medio en cualquier 
+    momento, ya que tenemos todos los recursos necesarios. Si queremos empezar 
+    a reproducir el medio utilizaremos el m&eacute;todo <code>start</code>. Si 
+    por el contrario, queremos liberar los recursos de uso exclusivo y volver 
+    a estado <em>realized</em>, utilizaremos <code>deallocate</code>. <br>
+  </li>
+  <li><strong>Reproduciendo</strong>: Nos encontraremos en este estado mientras 
+    se est&eacute; reproduciendo el medio. Cuando termine la reproducci&oacute;n 
+    se volver&aacute; autom&aacute;ticamente al estado <em>prefetched</em>. Tambi&eacute;n 
+    podemos detener manualmente la reproducci&oacute;n invocando el m&eacute;todo 
+    <code>stop</code>.<br>
+  </li>
+  <li><strong>Cerrado</strong>: Desde cualquiera de los estados anteriores podemos 
+    cerrar el reproductor invocando el m&eacute;todo <code>close</code>. Con esto 
+    liberaremos todos los recursos y ya no podremos utilizar m&aacute;s el reproductor.</li>
+</ul>
+<div align="center"><img src="imagenes/multimedia/estados.gif" width="400" height="338"> 
+</div>
+<p class="caption">Figura 25. Diagrama de estados del reproductor</p>
+<p>No tendremos que pasar por todos estos estados manualmente. Podremos llamar 
+  a <code>start</code> sin haber llamado antes a <code>realize</code> y <code>prefetch</code>. 
+  De esta forma en la misma llamada a <code>start</code> se pasar&aacute; impl&iacute;citamente 
+  por los estados <em>realized</em> y <em>prefetched</em>.</p>
+<p>Podremos obtener el estado en el que se encuentra el reproductor en cada momento 
+  con el m&eacute;todo:</p>
+<pre class="codigo">int estado = player.<strong>getState</strong>();</pre>
+<p><strong>Informaci&oacute;n y control del medio</strong></p>
+<p>Una vez en estado <em>realized</em>, podremos obtener informaci&oacute;n sobre 
+  el medio y controlar la forma en la que se va a reproducir. El objeto <code>Player</code> 
+  nos ofrecer&aacute; una serie de m&eacute;todos con los que podremos acceder 
+  a esta informaci&oacute;n. Podemos obtener el tipo MIME del contenido del medio 
+  con:</p>
+<pre class="codigo">String tipo = player.<strong>getContentType</strong>();</pre>
+<p>Podemos obtener la duraci&oacute;n del medio en milisegundos cuando se reproduce 
+  a velocidad normal con:</p>
+<pre class="codigo">long tiempo = player.<strong>getDuration</strong>();</pre>
+<p>Si no es posible obtener el tiempo del medio nos devolver&aacute; <code>Player.TIME_UNKNOWN</code>. 
+  Podemos modificar el tiempo de reproducci&oacute;n, de forma que el medio se 
+  reproduzca m&aacute;s lentamente o m&aacute;s r&aacute;pidamente para ajustarse 
+  al nuevo tiempo. Podemos establecer u obtener este tiempo de reproducci&oacute;n 
+  con:</p>
+<pre class="codigo">long tiempo = player.<strong>getMediaTime</strong>();
+player.<strong>setMediaTime</strong>(tiempo);</pre>
+<p>Podemos tambi&eacute;n hacer que el medio se reproduzca de forma c&iacute;clica. 
+  Para ello deberemos indicar el n&uacute;mero de ciclos que queremos que se reproduzca 
+  con:</p>
+<pre class="codigo">player.<strong>setLoopCount</strong>(int numero);</pre>
+<p> Por defecto los medios se reproducir&aacute;n una sola vez. Si queremos que 
+  se reproduzca en un ciclo infinito como n&uacute;mero debemos especificar <code>-1</code>. 
+  Este m&eacute;todo lo deberemos ejecutar siempre antes de que el medio haya 
+  empezado a reproducirse, nunca deberemos ejecutarlo en estado de reproducci&oacute;n 
+  ya que esto producir&aacute; una excepci&oacute;n. </p>
+<p>Todas estas caracter&iacute;sticas son gen&eacute;ricas para todos los medios 
+  y por lo tanto podemos acceder a ellas a trav&eacute;s del objeto <code>Player</code>. 
+  Si queremos acceder a otras caracter&iacute;sticas propias s&oacute;lo de un 
+  determinado tipo de medios deberemos utilizar controles.</p>
+<p><strong>Controles de medios</strong></p>
+<p>Podemos encontrar controles para controlar determinadas caracter&iacute;sticas 
+  de los medios. Seg&uacute;n el tipo de medio del que se trate tendremos disponibles 
+  unos controles u otros. Por ejemplo, para los clips de audio tendremos disponibles 
+  controles para cambiar el volumen o los tonos reproducidos, mientras que para 
+  secuencias de video tendremos controles que nos permitan mostrar el video en 
+  la pantalla.</p>
+<p>Podremos obtener estos controles a trav&eacute;s del reproductor proporcionando 
+  el nombre del control al que queremos acceder, o bien obtener la lista completa 
+  de controles disponibles:</p>
+<pre class="codigo">Control [] controles = player.<strong>getControls</strong>();
+Control control = player.<strong>getControl</strong>(nombre);</pre>
+<p>Para obtener estos controles deberemos estar por lo menos en estado <em>realized</em>. 
+  Deberemos hacer una conversi&oacute;n <em>cast</em> al tipo de control concreto 
+  que estemos obteniendo en cada momento, como puede ser <code>VolumeControl</code>, 
+  <code>ToneControl</code> o <code>VideoControl</code>, para poder acceder a las 
+  caracter&iacute;sticas que controla cada uno.</p>
+<p><strong>Listener de medios</strong></p>
+<p>Podemos utilizar un <em>listener</em> sobre el reproductor de medios para conocer 
+  cu&aacute;ndo suceden determinados eventos, como por ejemplo cu&aacute;ndo terminan 
+  de reproducirse los medios. Este <em>listener</em> lo crearemos en una clase 
+  que herede de <code>PlayerListener</code>:</p>
+<pre class="codigo">public class MiListener implements <strong>PlayerListener</strong> {<br>    public void <strong>playerUpdate</strong>(Player player, <br>                             String evento, Object datos) {<br><br>        if(evento == <strong>PlayerListener.STARTED</strong>) {<br>            // Ha comenzado la reproduccion<br>        } else if(evento == <strong>PlayerListener.STOPPED</strong>) {<br>            // Se ha detenido la reproduccion<br>        } else <br>            ...<br>    }</pre>
+<p>Cuando suceda un evento en el reproductor, se invocar&aacute; el m&eacute;todo 
+  <code>playerUpdate</code> que hayamos definido proporcion&aacute;ndonos como 
+  par&aacute;metro el reproductor sobre el que se ha producido el evento, el tipo 
+  de evento y una serie de datos que podemos tener asociados al evento. Los tipos 
+  de eventos est&aacute;n definidos como constantes en la clase <code>PlayerListener</code>. 
+  Entre ellos podemos encontrar los siguientes:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="44%"><code>PlayerListener.STARTED</code></td>
+    <td width="56%">Ha comenzado la reproducci&oacute;n</td>
+  </tr>
+  <tr> 
+    <td><code>PlayerListener.STOPPED</code></td>
+    <td>Se ha detenido la reproducci&oacute;n</td>
+  </tr>
+  <tr> 
+    <td><code>PlayerListener.END_OF_MEDIA</code></td>
+    <td>Se ha llegado al final del medio</td>
+  </tr>
+  <tr> 
+    <td><code>PlayerListener.VOLUME_CHANGED</code></td>
+    <td>Se ha cambiado el volumen del dispositivo</td>
+  </tr>
+  <tr> 
+    <td><code>PlayerListener.CLOSED</code></td>
+    <td>Se ha cerrado el reproductor</td>
+  </tr>
+  <tr> 
+    <td><code>PlayerListener.ERROR</code></td>
+    <td>Se ha producido un error en el reproductor</td>
+  </tr>
+</table>
+<p>Una vez creado el <em>listener</em>, para que empiece a funcionar deberemos 
+  registrarlo en el reproductor con:</p>
+<pre class="codigo">player.<strong>addPlayerListener</strong>(new MiListener());</pre>
+<h3>4.5.2. Reproducci&oacute;n de tonos</h3>
+<p>Vamos a comenzar viendo la reproducci&oacute;n b&aacute;sica de tonos en el 
+  altavoz del m&oacute;vil. Una forma sencilla de reproducir un tono individual 
+  es invocando el m&eacute;todo:</p>
+<pre class="codigo">Manager.<strong>playTone</strong>(nota, duracion, volumen);</pre>
+<p>Aqu&iacute; deberemos especificar la nota que queremos tocar, su duraci&oacute;n 
+  en milisegundos y el volumen que ser&aacute; un valor entero de 0 a 100.</p>
+<p>Para reproducir una secuencia de tonos ya deberemos crear un reproductor. Este 
+  reproductor se crear&aacute; con una URL especifica que representa el dispositivo 
+  de reproducci&oacute;n de tonos del m&oacute;vil. Lo haremos de la siguiente 
+  forma:</p>
+<pre class="codigo">Player player = Manager.<strong>createPlayer</strong>(Manager.TONE_DEVICE_LOCATOR);</pre>
+<p>Para poder establecer la secuencia de tonos deberemos crear un control de tonos 
+  asociado al reproductor de la siguiente forma:</p>
+<pre class="codigo">player.<strong>realize</strong>();
+ToneControl tc = (ToneControl)player.<strong>getControl</strong>(&quot;ToneControl&quot;);
+tc.<strong>setSequence</strong>(new byte[] {<br>    ToneControl.VERSION,1,<br>    ToneControl.TEMPO,30,    <br>    ToneControl.C4,16,<br>    ToneControl.C4+2,16,     //D4<br>    ToneControl.C4+4,16,     //E4<br>    ToneControl.C4+5,16,     //F4<br>    ToneControl.C4+7,16,     //G4<br>    ToneControl.C4+9,16,     //A4<br>    ToneControl.C4+11,16,    //B4<br>    ToneControl.C4+9,8,      //A4<br>    ToneControl.C4+7,8,      //G4<br>    ToneControl.C4+5,8,      //F4<br>    ToneControl.C4+4,8,      //E4<br>    ToneControl.C4+2,8,      //D4<br>    ToneControl.C4,8<br>});</pre>
+<p>Como secuencia de tonos debemos crear un <em>array</em> de <em>bytes</em> en 
+  el que indicaremos la secuencia de notas y una serie de par&aacute;metros como 
+  el <em>tempo</em>. En esta secuencia se especifican las notas y su duraci&oacute;n 
+  en posiciones consecutivas.</p>
+<p>Hemos de destacar que es necesario estar en estado <em>realized</em> para poder 
+  obtener los controles asociados al reproductor. Por esta raz&oacute;n hemos 
+  realizado previamente la transici&oacute;n a este estado.</p>
+<p>Una vez establecida esta secuencia podremos reproducirla con:</p>
+<pre class="codigo">player.<strong>start</strong>();</pre>
+<h3>4.5.3. M&uacute;sica y sonidos</h3>
+<p>Vamos a ver ahora c&oacute;mo reproducir m&uacute;sica y efectos de sonido 
+  utilizando el altavoz del m&oacute;vil. Estos medios podemos leerlos por ejemplo 
+  de ficheros WAV o MIDI. Los ficheros MIDI ser&aacute;n adecuados para reproducir 
+  una m&uacute;sica de fondo en nuestras aplicaciones, mientras que los ficheros 
+  WAV son m&aacute;s apropiados para efectos de sonido cortos. </p>
+<p>De esta forma podemos poner m&uacute;sica y efectos de sonido por ejemplo a 
+  los juegos que hagamos. Debemos tener en cuenta que algunos modelos de m&oacute;viles 
+  no permiten realizar mezclado de medios, es decir, no podemos reproducir m&aacute;s 
+  de un medio al mismo tiempo. En este caso no podr&iacute;amos hacer sonar efectos 
+  de sonido mientras o&iacute;mos una m&uacute;sica de fondo.</p>
+<p>Para crear un reproductor para reproducir m&uacute;sica o efectos de sonido 
+  deberemos crearlo a partir de un fichero de este tipo (WAV, AU, MID, MP3, etc). 
+  Podremos especificarlo o bien como una URL o como un flujo de entrada:</p>
+<pre class="codigo">// A partir de una URL (fichero remoto en internet)<br>Player player = <br>    Manager.<strong>createPlayer</strong>(&quot;http://j2ee.ua.es/pdm/musica.mid&quot;);<br>player.<strong>start</strong>();
+
+// A partir de un fichero local<br>InputStream in = getClass().getResourceAsStream(&quot;/musica.mid&quot;);<br>Player player = Manager.<strong>createPlayer</strong>(in, &quot;audio/midi&quot;);<br>player.<strong>start</strong>();</pre>
+<p>Para todos los medios que reproduzcan audio podremos obtener un control de 
+  volumen que nos permitir&aacute; cambiar el volumen del altavoz, o bien silenciarlo 
+  por completo. Para obtener este control haremos lo siguiente:</p>
+<pre class="codigo">VolumeControl vol = (VolumeControl)player.<strong>getControl</strong>(&quot;VolumeControl&quot;);</pre>
+<p>Una vez tengamos este control de volumen podremos cambiar el volumen o silenciarlo 
+  con los siguientes m&eacute;todos:</p>
+<pre class="codigo">vol.<strong>setLevel</strong>(volumen);
+vol.<strong>setMute</strong>(true);</pre>
+<p>El nivel de volumen ser&aacute; un n&uacute;mero entero de 0 a 100. Tendremos 
+  tambi&eacute;n otros dos m&eacute;todos que nos permitir&aacute;n consultar 
+  el nivel del volumen y si est&aacute; silenciado o no.</p>
+<h3>4.5.4. Reproducci&oacute;n de video</h3>
+<p>La API multimedia incorporada en MIDP 2.0 s&oacute;lo soporta audio, como hemos 
+  visto anteriormente. Sin embargo los tel&eacute;fonos que incorporen la API 
+  completa MMAPI podr&aacute;n reproducir tambi&eacute;n video. Podremos crear 
+  un reproductor de video de la misma forma que los de audio, utilizando en este 
+  caso un fichero de video (como por ejemplo MPEG, o 3GPP). Podremos crearlo de 
+  la siguiente forma:</p>
+<pre class="codigo">InputStream in = getClass().getResourceAsStream(&quot;/video.3gp&quot;);<br>Player player = Manager.<strong>createPlayer</strong>(in, &quot;video/3gpp&quot;);</pre>
+<p>Sin embargo, con esto todav&iacute;a no podremos mostrar el video en pantalla. 
+  Para poder hacer esto necesitaremos obtener un control de video que nos permita 
+  mostrar el video en alg&uacute;n &aacute;rea de la pantalla del m&oacute;vil. 
+  Para ello pasaremos a estado <em>realized</em> y obtendremos en control necesario:</p>
+<pre class="codigo">player.<strong>realize</strong>();<br>VideoControl vc = (VideoControl)player.<strong>getControl</strong>(&quot;VideoControl&quot;);</pre>
+<p>Ahora podremos a&ntilde;adir este video de distintas formas. Podemos o bien 
+  a&ntilde;adirlo a un <em>canvas</em>, o bien como elemento de un formulario. 
+  La primera forma nos permitir&aacute; tener un mayor control a bajo nivel sobre 
+  c&oacute;mo se muestra el video en la pantalla. </p>
+<p>Para a&ntilde;adirlo como primitiva de alto nivel a un formulario haremos lo 
+  siguiente: </p>
+<pre class="codigo">Item item = <br>    (Item)vc.<strong>initDisplayMode</strong>(VideoControl.USE_GUI_PRIMITIVE, null);<br>formulario.append(item);<br>player.<strong>start</strong>();</pre>
+<p>Mientras que para visualizarlo en un <em>canvas</em> lo haremos de la siguiente 
+  forma:</p>
+<pre class="codigo">vc.<strong>initDisplayMode</strong>(VideoControl.USE_DIRECT_VIDEO, canvas);<br>vc.<strong>setVisible</strong>(true);<br>player.<strong>start</strong>();</pre>
+<div align="center"><img src="imagenes/multimedia/video.gif" width="176" height="208"> 
+</div>
+<p class="caption">Figura 26. Reproductor de video</p>
+<h3>4.5.5. Captura</h3>
+<p>La API multimedia tambi&eacute;n nos permitir&aacute; capturar audio o video 
+  a trav&eacute;s del micr&oacute;fono o de la c&aacute;mara que incorpore el 
+  tel&eacute;fono m&oacute;vil. Para acceder a estos dispositivos de captura utilizaremos 
+  una URL como la siguiente:</p>
+<pre class="codigo">capture://dispositivo</pre>
+<p>Por ejemplo, con las siguientes URLs:</p>
+<pre class="codigo">capture://audio
+capture://video
+capture://audio_video</pre>
+<p>Crearemos un reproductor para capturar audio, video o audio y video respectivamente. 
+  Con estas URLs se capturar&aacute; con el formato que tengan estos medios por 
+  defecto. Adem&aacute;s, en esta URL podremos a&ntilde;adir par&aacute;metros 
+  para establecer el formato y codificaci&oacute;n de la captura. Por ejemplo, 
+  las siguientes URLs: </p>
+<pre class="codigo">capture://audio?encoding=pcm
+capture://video?width=160&amp;height=120</pre>
+<p>Nos servir&aacute;n para capturar audio con formato PCM y video con resoluci&oacute;n 
+  de 160x120 <em>pixels</em> respectivamente. </p>
+<p>Podremos crear un reproductor utilizando estas URLs igual que para los anteriores 
+  tipos de medios:</p>
+<pre class="codigo">Player player = Manager.<strong>createPlayer</strong>(&quot;capture://video&quot;);</pre>
+<p>Ahora podremos mostrar el video capturado en pantalla igual que hemos visto 
+  anteriormente para la reproducci&oacute;n de ficheros de video:</p>
+<pre class="codigo">player.<strong>realize</strong>();<br>VideoControl vc = (VideoControl)player.<strong>getControl</strong>(&quot;VideoControl&quot;);
+vc.<strong>initDisplayMode</strong>(VideoControl.USE_DIRECT_VIDEO, canvas);<br>vc.<strong>setVisible</strong>(true);<br>player.<strong>start</strong>();</pre>
+<p><strong>Grabaci&oacute;n de medios</strong></p>
+<p>Normalmente nos interesar&aacute; poder grabar el medio que estemos capturando. 
+  Para grabar un medio deberemos obtener un control de grabaci&oacute;n <code>RecordControl</code>:</p>
+<pre class="codigo">RecordControl rc = (RecordControl)player.getControl(&quot;RecordControl&quot;);
+</pre>
+<p>Ahora deberemos decidir donde grabar el medio. Deberemos proporcionar un flujo 
+  de salida para que almacene el video a trav&eacute;s de &eacute;l. Por ejemplo, 
+  podemos hacer que lo almacene en memoria asignando el siguiente flujo de salida:</p>
+<pre class="codigo">ByteArrayOutputStream out = new ByteArrayOutputStream();
+rc.<strong>setRecordStream</strong>(out);
+</pre>
+<p>Suponiendo que el medio ya se est&aacute; reproduciendo, podemos comenzar a 
+  grabarlo en el flujo proporcionado con:</p>
+<pre class="codigo">rc.<strong>startRecord</strong>();</pre>
+<p>Podemos detener la grabaci&oacute;n con:</p>
+<pre class="codigo">rc.<strong>stopRecord</strong>();</pre>
+<p>Despu&eacute;s de detenerse puede reanudarse volviendo a llamar a <code>startRecord</code>. 
+  Si queremos finalizar la grabaci&oacute;n, deberemos ejecutar:</p>
+<pre class="codigo">rc.<strong>commit</strong>();
+</pre>
+<p>De esta forma se finalizar&aacute; la escritura del video y en este caso ya 
+  no podremos reanudarlo.</p>
+<p><strong>Captura de im&aacute;genes</strong></p>
+<p>Mientras se reproduce el video capturado por la c&aacute;mara o cualquier otro 
+  video podemos tambi&eacute;n capturar im&aacute;genes, de forma que se comporte 
+  como una c&aacute;mara de fotos. Para capturar fotograf&iacute;as con la c&aacute;mara 
+  utilizaremos el siguiente m&eacute;todo del control de video: </p>
+<pre class="codigo">byte [] img_png = vc.<strong>getSnapshot</strong>(null);</pre>
+<p>Con esto obtendremos la imagen en el formato por defecto, que es el formato 
+  PNG que soportan todos los m&oacute;viles. Si queremos podemos especificar como 
+  par&aacute;metro de este m&eacute;todo el formato en el que queremos que se 
+  capture la imagen. </p>
+<p>Una vez tenemos los <em>bytes</em> de la imagen PNG, podremos crear un objeto 
+  <code>Image</code> a partir de ellos con:</p>
+<pre class="codigo">Image img = Image.<strong>createImage</strong>(img_png, 0, img_png.length);</pre>
+</body>
+</html>
