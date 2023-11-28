@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios Sesion 11</title>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ 
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+ <body bgcolor="#ffffff" text="#000000">
+<h1><span class="section">Sesión 11</span> </h1>
+<p>&nbsp;</p>
+ 
+<p><b>1.</b>   En esta sesión vamos a realizar dos ejemplos con AWT. El primero
+de ellos va a simular una
+calculadora sencilla, con este aspecto:</p>
+ 
+<p><div align="center"><img border="0" src="imagenes/modulo2/calculadora.gif" width="296" height="146"></div>
+<p class="caption">Figura 1. Apariencia de la calculadora</p>
+<p>En el primer cuadro de texto ponemos el primer operando, luego elegimos la
+operación a realizar (suma '+', resta '-', o multiplicación '*'), y en el
+segundo cuadro de texto ponemos el segundo operando. Pulsando en <i>Calcular</i>
+mostraremos el resultado en el tercer cuadro de texto.</p>
+ 
+<ol>
+  <li>Antes de comenzar, lee los apartados <b>3.1.1</b> (<i>Introducción a </i><i>AWT</i>)
+    y <b>3.1.2 </b>(<i>Gestores de disposición</i>) del tema 3 de teoría.<br>
+  </li>
+  <li>Echa un vistazo a la clase <i>Calculadora.java</i> que se proporciona en la
+    plantilla de la sesión. Verás que es un subtipo de <i>Frame</i>, y tiene un constructor vacío, y un método <i>main</i>
+    que crea un objeto de ese tipo y lo muestra (método <i>show</i>). Nos falta
+    completar el constructor para definir la ventana que se mostrará.<br>
+  </li>
+  <li>Lo primero de todo es definir la ventana sobre la que van a ir los
+    controles: crearemos una ventana de 300 de ancho por 150 de alto, con un
+    gestor de tipo <i>GridLayout</i>, con 4 filas y 2 columnas (como se ve en la
+    figura superior):<pre class="codigo">public Calculadora()
+{
+<b>	setSize(300, 150);
+	setLayout(new GridLayout(4, 2));</b></pre>
+  </li>
+  <li>Después colocamos los componentes, por orden, en la rejilla: primero la
+    etiqueta y el cuadro de texto del primer operando, después la etiqueta y el
+    desplegable... etc:<pre class="codigo">public Calculadora()
+{
+	...
+<b>
+	// Primer operando
+</b>	Label lblOp1 = new Label(&quot;Primer operando:&quot;);
+	TextField txtOp1 = new TextField();
+	add(lblOp1);
+	add(txtOp1);
+<b>		
+	// Operador
+</b>	Label lblOper = new Label (&quot;Operador:&quot;);
+	Choice operadores = new Choice();
+	operadores.addItem(&quot;+&quot;);
+	operadores.addItem(&quot;-&quot;);
+	operadores.addItem(&quot;*&quot;);
+	add(lblOper);
+	add(operadores);
+<b>		
+	// Segundo operando
+</b>	Label lblOp2 = new Label(&quot;Segundo operando:&quot;);
+	TextField txtOp2 = new TextField();
+	add(lblOp2);
+	add(txtOp2);
+<b>		
+	// Boton de calcular y cuadro de resultado
+</b>	Button btnRes = new Button (&quot;Calcular&quot;);
+	TextField txtRes = new TextField();
+	add(btnRes);
+	add(txtRes);<b>
+</b>}</pre>
+  </li>
+  <li>Llegados a este punto, compila y ejecuta el programa, para comprobar que
+    no hay errores en el código, y para asegurarte de que el programa va a
+    tener la misma apariencia que el de la figura 1 (lógicamente el programa
+    aún no hará nada, sólo verás la ventana).<br>
+  </li>
+  <li>Lo que nos queda es &quot;hacer que el programa haga algo&quot;. Para ello
+    vamos a definir los eventos. Antes de seguir, lee el apartado <b>3.1.3 </b>(<i>Modelo
+    de eventos en Java</i>) del tema 3 de teoría.<br>
+    <ol type="a">
+      <li>Definimos un evento sobre el botón, para que, al pulsarlo, tome los
+        dos operandos y el operador seleccionado, y muestre el resultado en el
+        cuadro correspondiente:</li>
+    </ol>
+    <pre class="codigo">public Calculadora()
+{
+    ...
+<b>    // Evento sobre el botón
+</b>    btnRes.addActionListener(new ActionListener()
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            int op1, op2;
+            try
+            {
+		<b>// Tomar los dos operandos</b>
+                op1 = Integer.parseInt(txtOp1.getText());
+                op2 = Integer.parseInt(txtOp2.getText());	
+					
+		<strong>/</strong><b>/ Hacer la operacion segun el operador seleccionado</b>
+                if (((String)(operadores.getSelectedItem())).equals(&quot;+&quot;))
+                    txtRes.setText(&quot;&quot; + (op1 + op2));
+                   else if (((String)(operadores.getSelectedItem())).equals(&quot;-&quot;))
+                    txtRes.setText(&quot;&quot; + (op1 - op2));
+                   else if (((String)(operadores.getSelectedItem())).equals(&quot;*&quot;))
+                       txtRes.setText(&quot;&quot; + (op1 * op2));
+            } catch (Exception ex) {
+                txtRes.setText(&quot;ERROR EN LOS OPERANDOS&quot;);
+            }
+        }
+    });	
+}</pre>
+    <ol type="a" start="2">
+      <li>El otro evento lo definimos sobre la ventana (el <i>Frame</i>) para
+        hacer que se cierre y termine el programa cuando pulsemos el botón de
+        cerrar:
+      </li>
+    </ol>
+    <pre class="codigo">public Calculadora()
+{
+	...
+<b>	this.addWindowListener(new WindowAdapter()
+	{
+		public void windowClosing(WindowEvent e)
+		{
+			System.exit(0);
+		}
+	});			
+</b>}</pre>
+    <ol type="a" start="2">
+      <li>Compila el programa... te dará errores de compilación.</li>
+      <li>Los errores del paso anterior se deben a que, si accedemos a un
+        control desde dentro de un evento (como por ejemplo a los controles <i>txtOp1,
+        txtOp2</i>, <i>txtRes&nbsp; </i>o la lista <i>operadores</i>, en el
+        evento del botón), dichos controles no pueden ser variables locales
+        normales. El error de compilación dice que deben declararse variables
+        finales, u otra posibilidad es ponerlas como variables globales de la
+        clase. Es decir, podemos hacer lo siguiente:<br>
+        <br>
+        Sustituir estas líneas:<pre class="codigo">public Calculadora()
+{
+	...
+	TextField txtOp1 = new TextField();
+	...
+	Choice operadores = new Choice();
+	...
+	TextField txtOp2 = new TextField();
+	...
+	TextField txtRes = new TextField();
+	...
+}</pre>
+        <p>Por estas:</p>
+        <pre class="codigo">public Calculadora()
+{
+	...
+	<b>final </b>TextField txtOp1 = new TextField();
+	...
+	<b>final </b>Choice operadores = new Choice();
+	...
+	<b>final </b>TextField txtOp2 = new TextField();
+	...
+	<b>final </b>TextField txtRes = new TextField();
+	...
+}</pre>
+        <p>O bien colocarlas fuera del constructor, como variables globales:</p>
+        <pre class="codigo">public class Calculadora ...
+{
+	TextField txtOp1 = new TextField();
+	Choice operadores = new Choice();
+	TextField txtOp2 = new TextField();
+	TextField txtRes = new TextField();
+
+	public Calculadora()
+	{
+		...
+	}
+	...
+}</pre>
+      </li>
+    </ol>
+  </li>
+  <li>Compila y ejecuta el programa. Prueba su funcionamiento con algunos
+    ejemplos que se te ocurran. Observa también los ficheros <i>.class</i> que
+    se generan: además del principal (<i>Calculadora.class</i>), aparecen dos
+    más (<i>Calculadora$1.class</i> y <i>Calculadora$2.class</i>). ¿Sabrías
+    decir qué son? (AYUDA: observa que aparecen tantos ficheros adicionales
+    como eventos has definido en la aplicación...)</li>
+  <li><strong>(OPTATIVO)</strong> Implementa otra clase <em>CalculadoraProfesional</em>, que tenga la apariencia de la calculadora de Windows, pero en versi&oacute;n reducida: en ella tendremos los n&uacute;meros en diferentes botones, operaciones para sumar, restar, multiplicar y dividir, cada una en un bot&oacute;n, un bot&oacute;n &quot;=&quot; para calcular el resultado, y un cuadro de texto que simule la pantalla de la calculadora. El funcionamiento es el convencional: pulsando los botones, se actualizar&aacute; el cuadro de texto, con los n&uacute;meros introducidos, y realizando las operaciones indicadas. </li>
+</ol>
+<p><b>2.</b>   Ahora vamos a construir otra aplicación desde cero. Para resumir
+los pasos que hemos dado en el ejercicio anterior, lee el apartado <b>3.1.4 </b>(<i>Pasos
+generales para construir una aplicación gráfica con AWT</i>) del tema 3 de
+teoría.
+ </p>
+        
+<p>La aplicación que vamos&nbsp; a construir ahora no es más que un bloc de
+notas &quot;reducido&quot;, donde podremos cambiar algunas características de
+la fuente con que escribimos. La ventana tendrá una apariencia como la
+siguiente:</p>
+ 
+<p><div align="center"><img border="0" src="imagenes/modulo2/formatos.gif" width="196" height="195"></div>
+<p class="caption">Figura 2. Apariencia de nuestro &quot;bloc de notas&quot;</p>
+<p>Vemos que sólo hay un cuadro de texto grande donde escribir, y un menú
+llamado <i>Formato </i>donde irán todas las opciones para cambiar el formato de
+la fuente. Dichas opciones serán cambiar el color entre rojo y negro, y cambiar
+el estilo entre normal, cursiva y/o negrita.</p>
+ 
+<ol>
+  <li>Echa un vistazo a la clase <i>Formatos.java</i> que se proporciona en la
+    plantilla de la sesión. Verás que es un subtipo de <i>Frame</i>, y tiene un constructor vacío, y un método <i>main</i>
+    que crea un objeto de ese tipo y lo muestra (método <i>show</i>). Nos falta
+    completar el constructor para definir la ventana que se mostrará.<br>
+  </li>
+  <li>Lo primero de todo es importar los paquetes necesarios: el de AWT y el de
+    eventos:<pre class="codigo"><b>import java.awt.*;
+import java.awt.event.*;
+</b>
+public class Formatos extends Frame
+{
+	...</pre>
+  </li>
+  <li>Después establecemos el tamaño de la ventana y colocamos los
+    componentes: el menú <i>Formato</i> con sus opciones, y el cuadro de texto:<pre class="codigo">public class Formatos extends Frame
+{
+<b>	TextArea txt;
+	boolean negrita = false;
+	boolean cursiva = false;
+</b>
+	public Formatos()
+	{
+<b>		setSize(200, 200);
+</b>	
+	<b>	// Menú
+	</b>		
+		MenuBar mb = new MenuBar();
+	
+		Menu m = new Menu(&quot;Formato&quot;);
+	
+		MenuItem mi = new MenuItem(&quot;Color Negro&quot;);
+		mi.addActionListener(this);
+		m.add(mi);
+		mi = new MenuItem(&quot;Color Rojo&quot;);
+		mi.addActionListener(this);
+		m.add(mi);
+	
+		CheckboxMenuItem cmi = new CheckboxMenuItem(&quot;Negrita&quot;);
+		cmi.addItemListener(this);
+		m.add(cmi);
+		cmi = new CheckboxMenuItem(&quot;Cursiva&quot;);
+		cmi.addItemListener(this);
+		m.add(cmi);
+	
+		mb.add(m);
+	
+		setMenuBar(mb);
+			
+	<b>	// Area de texto
+	</b>		
+		txt = new TextArea();
+		txt.setFont(new Font(&quot;Arial&quot;, Font.PLAIN, 16));
+		add(txt, BorderLayout.CENTER);
+	}<b>
+</b>}</pre>
+    Las variables globales <i>negrita</i> y <i>cursiva</i> de momento no las
+    utilizamos, pero más adelante las emplearemos para guardar en todo momento
+    si están marcadas las opciones de letra negrita o cursiva, respectivamente.
+    En el cuadro de texto establecemos una fuente Arial de 16 puntos, y sin
+    estilo (sin negrita ni cursiva, indicado en la constante <i>Font.PLAIN</i>).<br>
+  </li>
+  <li>Observa que hay dos tipos de <i>menu items</i>: unos de tipo <i>MenuItem </i>para
+    cambiar el color entre rojo y negro, y otros de tipo <i>CheckboxMenuItem</i>
+    para establecer o no la cursiva y la negrita. Este tipo de items son de los
+    que se marcan y se desmarcan cada vez que se pulsan.<br>
+    <br>
+    Observa también que definimos dos tipos de eventos sobre estos items de
+    menú: un evento de tipo <i>ActionListener</i> sobre los <i>MenuItem</i>, y
+    uno de tipo <i>ItemListener</i> para los <i>CheckboxMenuItem</i>. Esto se
+    debe a que, al ser tipos diferentes de items, en AWT responden a dos tipos
+    diferentes de eventos: los primeros son eventos de acción (al pulsar sobre
+    el menú, es como si pulsáramos un botón), y los segundos son de cambio de
+    estado (al pulsar sobre el item, es como si lo marcáramos o desmarcáramos
+    cada vez).<br>
+    <br>
+    Por último, observa que los <i>ActionListener</i> e <i>ItemListener</i> que
+    añadimos tienen como parámetro <i>this</i>, es decir, <b>la propia clase</b>
+    debe implementar las interfaces <i>ActionListener</i> e <i>ItemListener</i>:<pre class="codigo">public class Formatos extends Frame <b>implements ActionListener, ItemListener</b>
+{
+	...</pre>
+    <ol type="a">
+      <li>Para la interfaz <i>ActionListener</i>, debemos definir un método <i>actionPerformed</i>,
+        que será el que se ejecute cuando pulsemos sobre la opción <i>Color
+        Rojo</i> o <i>Color Negro</i> del menú:<pre class="codigo">public class Formatos extends Frame implements ActionListener, ItemListener
+{
+	...
+	public Formatos()
+	{
+		...
+	}
+
+<b>	public void actionPerformed(ActionEvent e)
+	{
+		if (e.getActionCommand().equals(&quot;Color Negro&quot;))
+		{
+			txt.setForeground(Color.black);
+		} else if (e.getActionCommand().equals(&quot;Color Rojo&quot;)) {
+			txt.setForeground(Color.red);
+		}
+	}</b></pre>
+        <p>¿Cómo hacemos para distinguir qué opción del menú se ha pulsado
+        en el <i>actionPerformed</i>? ¿Qué método se utiliza para cambiar el
+        color de la fuente de un cuadro de texto? ¿Qué error daría si no
+        hubiésemos puesto la variable <i>txt</i> del área de texto como
+        global?<br>
+      </li>
+      <li>Para la interfaz <i>ItemListener</i> debemos definir un método <i>itemStateChanged</i>,
+        que será el que se ejecute cuando pulsemos sobre <i>Negrita </i>o <i>Cursiva
+        </i>en el menú:<pre class="codigo">public class Formatos extends Frame implements ActionListener, ItemListener
+{
+	...
+	public Formatos()
+	{
+		...
+	}	
+	...
+<b>	public void itemStateChanged(ItemEvent e)
+	{
+		String item = (String)(e.getItem());
+		if (item.equals(&quot;Negrita&quot;))
+			negrita = !negrita;
+		else if (item.equals(&quot;Cursiva&quot;))
+			cursiva = !cursiva;
+
+		txt.setFont(new Font(&quot;Arial&quot;, (negrita?Font.BOLD:0) | 
+                                              (cursiva?Font.ITALIC:0), 16));
+	}</b></pre>
+        <p>Observa que seguimos manteniendo, como en el constructor, una fuente
+        Arial de 16 puntos. También observa que utilizamos las variables
+        globales <i>negrita </i>y <i>cursiva</i> definidos al principio de la
+        clase. Según si estos flags son verdaderos o falsos, establecemos una
+        combinación de los mismos (con <i>Font.BOLD</i> y <i>Font.ITALIC</i>).<br>
+        <br>
+        ¿Cómo hacemos aquí para distinguir qué opción del menú se ha
+        pulsado? ¿Qué método se utiliza para cambiar la fuente de un cuadro
+        de texto? ¿Qué significa el segundo parámetro de dicho método?<br>
+      </li>
+    </ol>
+  </li>
+  <li>Lo último que nos queda por hacer es definir, en el constructor, el
+    evento sobre la ventana (el <i>Frame</i>) para
+        hacer que se cierre y termine el programa cuando pulsemos el botón de
+        cerrar:
+    <pre class="codigo">public Formatos()
+{
+	...
+<b>	this.addWindowListener(new WindowAdapter()
+	{
+		public void windowClosing(WindowEvent e)
+		{
+			System.exit(0);
+		}
+	});			
+</b>}</pre>
+  </li>
+  <li>Compila el programa para corregir posibles erratas, y ejecútalo para
+    comprobar que funciona correctamente. Observa que, al cambiar el formato del
+    texto, se cambia para TODO el texto del cuadro, no sólo para lo que vayamos
+    a escribir a continuación.</li>
+</ol>
+        
+<p>&nbsp;
+ </p>
+        
+<p><b>PARA ENTREGAR</b></p>
+<ul>
+  <li>Fichero<b>     Calculadora.java</b>  y <b>Formatos.java </b>con todas las modificaciones indicadas.</li>
+  <li>Fichero de texto <b>respuestas.txt</b> contestando a todas las preguntas
+    formuladas.</li>
+  <li>Contenidos optativos que hayas podido realizar (opcional) </li>
+</ul>
+ 
+</body>
+    </html>

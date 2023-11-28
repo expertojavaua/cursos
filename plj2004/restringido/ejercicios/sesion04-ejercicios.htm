@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  <meta name="Author" content="Nacho">
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+  <title>Sesion 4</title>
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+<h1>Sesi&oacute;n 4</h1>
+<p>Interfaces. Arrays. Colecciones.</p>
+<h2>1. El API de Java (cont.)</h2>
+<p>Vamos a comenzar de nuevo con un ejercicio sobre el API de Java.</p>
+<ol>
+  <li>Busca en el API de Java el paquete <code>java.util</code>. Consultando las 
+    p&aacute;ginas HTML que describen el paquete, contesta en el fichero <strong>respuestas.txt</strong> 
+    las siguientes preguntas: 
+    <ul>
+      <li> &iquest;Qu&eacute; interfaces se declaran en el paquete?</li>
+      <li>&iquest;Qu&eacute; excepciones<code></code>?</li>
+    </ul>
+  <li>Busca en el paquete la interfaz <code>Iterator</code>. </li>
+  <ul>
+    <li>&iquest;Qu&eacute; m&eacute;todos se declaran en la interfaz <code>Iterator</code>?</li>
+    <li>&iquest;Qu&eacute; m&eacute;todos de las clases de <code>java.util</code> 
+      devuelven un <code>Iterator</code>? (&iexcl;No se te ocurra buscarlos uno 
+      a uno!, hay una forma mucho m&aacute;s f&aacute;cil).</li>
+  </ul>
+</ol>
+<h2>2. Un ejemplo de interfaces</h2>
+<ol>
+  <li>Descomprime el fichero de plantillas del ejercicio. Encontrar&aacute;s las 
+    clases <code>Watcher</code>, <code>Sensor</code>, <code>Sonar</code> y <code>Bumper</code>. 
+    La clase <code>Sensor</code> es una clase abstracta de la que heredan <code>Sonar</code> 
+    y <code>Bumper</code>. La clase <code>Sensor</code> implementa la interfaz 
+    <code>Watcher</code>. Suponemos que todas estas clases se est&aacute;n definiendo 
+    para implementar un programa Java que simula el movimiento de un robot m&oacute;vil 
+    en un mapa predefinido. El robot tendr&aacute; objetos de tipo <code>Sonar</code> 
+    y <code>Bumper</code> (y otros) que se usar&aacute;n para tomar lecturas del 
+    entorno simulado en el que se mueve.<br>
+    <pre class="codigo">package modulo1.sesion4;
+
+import plj.geom.*;
+
+/**
+ * La interfaz Watcher especifica una posición y una
+ * dirección en la que se mira. Ambos datos están referidos
+ * a un sistema de referencia (mapa) global. 
+ */
+public <strong>interface Watcher</strong> {
+    public Position getPos();
+    public double angle();
+}</pre>
+    <pre class="codigo">package modulo1.sesion4;
+
+public <strong>abstract class Sensor implements Watcher </strong>{
+    int state;
+    private long time;
+
+    public abstract void doReadings();
+
+    public int getState() {
+        return state;
+    }
+
+    public void fire() {
+        time = System.currentTimeMillis();
+        doReadings();
+    }
+
+    public long lastTimeFired() {
+        return time;
+    }
+}</pre>
+    <pre class="codigo">package modulo1.sesion4;
+
+import plj.geom.Position;
+
+public <strong>class Sonar extends Sensor </strong>{
+    double[] readings;
+    int resolution;    // numero de lecturas
+    int rangeMax;      // maximo alcance
+    double angleMax;   // arco del sonar
+    
+    public Sonar(int resolution, int rangeMax, double angleMax){
+        this.resolution = resolution;
+        this.rangeMax = rangeMax;
+        this.angleMax = angleMax;
+    }
+
+    public double[] getReadings() {
+        return readings;
+    }
+
+    /**
+     * doReadings() actualiza el array readings
+     * con todas las lecturas de distancias 
+     * de objetos frente al sonar en la direccion
+     * angle() y en un arco y una resolucion definida por 
+     * el tipo de sonar
+     */
+    public void doReadings() {
+    }
+
+    public Position getPos() {
+        return null;
+    }
+
+    public double angle() {
+        return 0;
+    }
+}</pre>
+    <pre class="codigo">package modulo1.sesion4;
+
+import plj.geom.Position;
+
+public <strong>class Bumper extends Sensor </strong>{
+    boolean bumped;
+
+    /**
+     * doReadings() actualiza bumped. 
+     * true -> si ha habido un contacto 
+     * false -> si el sensor no ha chocado con nada
+     */
+    public void doReadings() {
+    }
+
+    public boolean bumped() {
+        return bumped;
+    }
+
+    public Position getPos() {
+        return null;
+    }
+
+    public double angle() {
+        return 0;
+    }
+}</pre>
+  </li>
+  <li>Comp&iacute;la las clases. Contesta a las siguientes preguntas en el fichero 
+    <strong>respuestas.txt</strong>: 
+    <ul>
+      <li>&iquest;Se pueden crear objetos de tipo <code>Sensor</code>?</li>
+      <li>&iquest;Qu&eacute; sucede si no definimos el m&eacute;todo <code>angle()</code> 
+        en la clase <code>Bumper</code>?&iquest;Por qu&eacute;?</li>
+      <li>&iquest;C&oacute;mo habr&iacute;a que modificar las clases si a&ntilde;adimos 
+        el m&eacute;todo <code>move()</code> en la interfaz <code>Watcher</code>?</li>
+      <li>&iquest;Podr&iacute;amos definir la clase <code>Sensor</code> como concreta 
+        (no abstracta)? &iquest;Habr&iacute;a que a&ntilde;adirle alg&uacute;n 
+        m&eacute;todo? &iquest;Habr&iacute;a que quitarle alg&uacute;n m&eacute;todo? 
+        &iquest;Podr&iacute;a <code>doReadings()</code> seguir siendo un m&eacute;todo 
+        abstracto?</li>
+    </ul>
+  </li>
+  <li>Escribe un programa de ejemplo que use esas clases.</li>
+</ol>
+<h2>2. Implementando interfaces</h2>
+<ol>
+  <li>Define e implementa un ejemplo de interfaz y de clase o clases que lo implementen. 
+    Recuerda algunas reglas b&aacute;sicas sobre clases e interfaces:<br>
+    <ul>
+      <li>Una subclase A hereda de una superclase B si pasa el <strong>test ES-UN</strong>. 
+        Este test consiste, sencillamente, en comprobar que A <strong>ES-UN</strong> 
+        B. Por ejemplo, un Sonar <strong>ES-UN</strong> Sensor. O tambi&eacute;n, 
+        un Perro <strong>ES-UN</strong> Animal. O tambi&eacute;n, un Empleado 
+        <strong>ES-UNA</strong> Persona. Pero un Animal no <strong>ES-UN</strong> 
+        Naturaleza (por lo que Animal no puede ser subclase de Naturaleza).</li>
+      <li>Construye una subclase s&oacute;lo cuando necesites hacer una versi&oacute;n 
+        <strong>m&aacute;s espec&iacute;fica</strong> de una clase y necesites 
+        sobrecargar o a&ntilde;adir nuevas conductas.</li>
+      <li>Usa una clase abstracta cuando quieras definir una <strong>plantilla</strong> 
+        para para un grupo de subclases, y tengas alg&uacute;n c&oacute;digo de 
+        implementaci&oacute;n que todas las clases puedan usar. Haz la clase abstracta 
+        cuando quieras garantizar que nadie va a hacer objetos de esa clase.</li>
+      <li>Usa un interface cuando quieras definir un <strong>papel</strong> que 
+        puedan jugar otras clases, independientemente de d&oacute;nde se encuentran 
+        esas clases en el &aacute;rbol de herencia. Recuerda que la definici&oacute;n 
+        de interfaces es la forma en la que Java resuelve la imposibilidad de 
+        usar herencia m&uacute;ltiple. <strong>Una subclase no puede tener m&aacute;s 
+        de una superclase, sin embargo s&iacute; que puede implementar m&aacute;s 
+        de una interface.</strong></li>
+    </ul>
+  </li>
+</ol>
+<h2>3. Arrays</h2>
+<p>Vamos a hacer un peque&ntilde;o ejemplo en el que manejemos arrays. Tambi&eacute;n 
+  vamos a usar la entrada est&aacute;ndar para introducir valores a un programa 
+  Java. </p>
+<ol>
+  <li>Prueba el siguiente programa. Es un programa que define un array est&aacute;tico 
+    y despu&eacute;s lo ordena. Usa el m&eacute;todo <code>sort</code> para ordenar 
+    arrays est&aacute;ticos que se define en la clase <code>java.util.Arrays</code>.<br>
+    <pre class="codigo">package modulo1.sesion4;
+
+import java.util.Arrays;
+
+public class ArrayDemo1 {
+    public static void main(String args[]) {
+        int vec[] = { 37, 47, 23, -5, 19, 56 };
+        Arrays.sort(vec);
+        for (int i = 0; i < vec.length; i++) {
+            System.out.println(vec[i]);
+        }
+    }
+}</pre>
+    Cambia el tipo de array a un array de <code>Strings</code>, inicializa el 
+    array con valores de cadenas arbitrarias y prueba si funciona el programa. 
+    &iquest;C&oacute;mo piensas que puede funcionar correctamente, sin a&ntilde;adir 
+    ning&uacute;n par&aacute;metro al m&eacute;todo <code>sort()</code> que le 
+    diga el tipo de elementos que hay en el array? (Contesta en el fichero <strong>respuestas.txt</strong>).</li>
+  <li>Prueba el siguiente programa, que realiza una b&uacute;squeda binaria en 
+    un array<br>
+    <pre class="codigo">package modulo1.sesion4;
+import java.util.Arrays;
+
+public class ArrayDemo2 {
+    public static void main(String args[]) {
+        int vec[] = {-5, 19, 23, 37, 47, 56};
+        int slot = Arrays.binarySearch(vec, 35);
+        slot = -(slot + 1);
+        System.out.println("Punto de inserion = " + slot);
+    }
+}</pre>
+    El programa busca en el array el n&uacute;mero 35 y no lo encuentra. Por eso 
+    el m&eacute;todo <code>binarySearch</code> devuelve un n&uacute;mero negativo. 
+    El n&uacute;mero -(<code>slot</code> + 1) es el lugar donde se encontrar&iacute;a 
+    el n&uacute;mero en el caso de estar en el array. </li>
+  <li>Prueba el siguiente programa, que muestra c&oacute;mo pedir datos al usuario 
+    usando la entrada est&aacute;ndar. El programa espera n&uacute;meros doubles 
+    y usa el m&eacute;todo est&aacute;tico <code>parseDouble()</code> de la clase 
+    <code>Double</code> para convertir la cadena que escribe el usuario en un 
+    <code>double</code>.</li>
+  <pre class="codigo">package modulo1.sesion4;
+
+import java.io.*;
+
+public class StandardInput {
+    public static void main(String[] args) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
+        for (;;) {
+            System.out.print("StandardInput> ");
+            String line = in.readLine();
+            // El programa termina cuando llegamos al fin del
+            // fichero o el usuario introduce quit
+            if ((line == null) || line.equals("quit"))
+                break;
+            // Parsea la linea y calcula la raiz cuadrada
+            try {
+                double x = Double.parseDouble(line);
+                System.out.println("raiz cuadrada de " + x + " = "
+                        + Math.sqrt(x));
+            }
+            // Si algo falla muestra un mensaje de error
+            catch (Exception e) {
+                System.out.println("Entrada erronea");
+            }
+        }
+    }
+}</pre>
+  <li>Termina juntando todos los programas de este punto: escribe un programa 
+    <code>ArrayDemo3.java</code> que pida al usuario n&uacute;meros enteros hasta 
+    que escriba la cadena &quot;fin&quot;, introduzca los n&uacute;meros en un 
+    array y despu&eacute;s pida al usuario un n&uacute;mero a buscar en el array. 
+    El programa debe terminar dando un mensaje que diga en qu&eacute; posici&oacute;n 
+    se encuentra el n&uacute;mero o el mensaje &quot;n&uacute;mero no encontrado&quot; 
+    si el n&uacute;mero no est&aacute; en el array.</li>
+</ol>
+<h2>4. ArrayLists</h2>
+<p>Vamos a ver un peque&ntilde;o ejemplo que use el framework Collections. En 
+  el apartado 1.7 de los apuntes hay una explicaci&oacute;n detallada de las clases 
+  e interfaces de este framework. El uso de interfaces es muy importante en las 
+  colecciones. </p>
+<ol>
+  <li>Compila y prueba el siguiente programa: 
+    <pre class="codigo">package modulo1.sesion4;
+
+import java.util.*;
+
+public class CollectionDemo1 {
+
+    public static void main(String args[]) {
+        // Creo una coleccion de objetos
+        List list = new ArrayList();
+
+        // Anyado elementos a la colección
+        list.add("This is a String");
+        list.add(new Short((short) 12));
+        list.add(new Integer(35));
+
+        // Obtengo un iterador de la lista y lo recorro
+        for (Iterator i = list.iterator(); i.hasNext();) {
+            System.out.print(i.next());
+        }
+    }
+}</pre>
+    Contesta las siguientes preguntas en el fichero <strong>respuestas.txt</strong>. 
+    <ul>
+      <li>&iquest;Qu&eacute; es <code>List</code>, una clase abstracta o un interfaz? 
+        &iquest;Ser&iacute;a correcto hacer la siguiente llamada? 
+        <pre class="codigo">List miLista = new List();</pre>
+      </li>
+      <li>&iquest;Funcionar&iacute;a bien el programa si se sustituye new <code>ArrayList()</code> 
+        por new <code>LinkedList()</code> ?&iquest;Qu&eacute; cambiar&iacute;a?</li>
+      <li>&iquest;Qu&eacute; clases concretas pueden tener los objetos que se 
+        pasen c&oacute;mo par&aacute;metro a un m&eacute;todo definido de la siguiente 
+        forma? 
+        <pre>public void metodoQueUsaList(List unaLista)</pre>
+      </li>
+    </ul>
+  <li>Si necesitas que la colecci&oacute;n de elementos est&eacute; ordenada, 
+    debes usar la clase <code>TreeSet</code>, que implementa la interfaz <code>SortedSet</code>. 
+    Prueba el siguiente ejemplo: 
+    <pre class="codigo">package modulo1.sesion4;
+
+import java.util.*;
+
+public class CollectionDemo2 {
+
+    public static void main(String args[]) {
+        // Creo una coleccion de objetos
+        List list = new ArrayList();
+
+        // Anyado elementos a la colección
+        list.add(new Integer(50));
+        list.add(new Integer(-1));
+        list.add(new Integer(35));
+
+        // Creo un TreeSet a partir de la lista
+        
+        TreeSet set = new TreeSet(list);
+        
+        // Anyado otros elementos al conjunto
+        
+        set.add(new Integer(99));
+        set.add(new Integer(-5));
+        
+        // Obtengo un iterador del conjunto y lo recorro
+        for (Iterator i = set.iterator(); i.hasNext();) {
+            System.out.print(i.next()+" ");
+        }
+    }
+}</pre>
+  </li>
+  <li>Por &uacute;ltimo, de forma similar al ejercicio anterior, escribe un programa 
+    <code>CollectionDemo3</code> que pida al usuario n&uacute;meros enteros hasta 
+    que escriba la cadena &quot;fin&quot;, introduzca los n&uacute;meros en un 
+    conjunto y despu&eacute;s pida al usuario un n&uacute;mero a buscar en el 
+    conjunto. El programa debe terminar dando un mensaje que diga si el n&uacute;mero 
+    introducido est&aacute; en el conjunto o no. <br>
+    <em>Nota 1: usa el API de la interfaz SortedSet para encontrar los m&eacute;todos 
+    con los que comprobar si el n&uacute;mero est&aacute; en el conjunto.</em><br>
+    <em>Nota 2: nota que en las colecciones deben introducirse objetos y no datos 
+    primitivos. Lee el apartado 1.7.3 de los apuntes si quieres m&aacute;s informaci&oacute;n 
+    sobre los wrappers de los tipos b&aacute;sicos.</em></li>
+</ol>
+<p> <b>PARA ENTREGAR</b></p>
+<p>Debes crear un ZIP llamado <strong>sesion4.zip</strong> con: </p>
+<ul>
+  <li>El fichero de texto <strong>respuestas.txt</strong> con las cuestiones contestadas</li>
+  <li>Los ficheros con las clases que has implementado y modificado.</li>
+</ul>
+<p>&nbsp;</p>
+</body>
+</html>

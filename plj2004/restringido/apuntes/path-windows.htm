@@ -1,0 +1,90 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+                                                            
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+                                                            
+  <meta name="Author" content="Nacho">
+                                                            
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+                                                        
+  <link rel="stylesheet" href="../apuntes.css" type="text/css">
+  <title>Anexo B: Actualizacion del PATH</title>
+</head>
+  <body>
+      <b>      
+<h1>Anexo B. C&oacute;mo actualizar la variable del entorno PATH en Windows</h1>
+</b>
+<p align="center">Este documento es una adaptaci&oacute;n del documento de Sun 
+</p>
+<p align="center"><a href="http://java.sun.com/j2se/1.4.2/install-windows.html">http://java.sun.com/j2se/1.4.2/install-windows.html</a><b> 
+  </b><b></b></p>
+<h2>C&oacute;mo actualizo el PATH permanentemente?</h2>
+<p>Puedes ejecutar el SDK (Software Developer Kit) Java 2 sin actualizar la variable 
+  PATH, o puedes actualizar a tu conveniencia. Actualiza la variable PATH si deseas 
+  ejectuar los programas del SDK Java 2 (javac.exe, java.exe, javadoc.exe, etc.) 
+  desde cualquier directorio sin tener que escribir el path completo del comando. 
+  Si no actualizas las variable PATH, tendr&aacute;s que especifcar el path completo 
+  del ejecutable cada vez que lo lances, como:</p>
+<pre class="codigo"> C:&gt; \j2sdk1.4.2_&lt;version&gt;\bin\javac MyClass.java</pre>
+<p>Es &uacute;til actualizar el PATH permanentemente, de forma que persista despu&eacute;s 
+  de reiniciar el ordenador.</p>
+<p>Para establecer el PATH permenantemente, a&ntilde;ade el path completo del 
+  directorio j2sdk1.4.2_&lt;version&gt;\bin a la variable PATH. Es t&iacute;pico 
+  que este path completo sea algo como C:\j2sdk1.4.2_&lt;version&gt;\bin. Actualiza 
+  el PATH como sigue, dependiendo de si tu sistema operativo es Microsoft Windows 
+  NT o 98/2000/ME.</p>
+<h3>Microsoft Windows NT, 2000, and XP</h3>
+<p>Para actualizar el PATH permanentemente:</p>
+<p> 1. Escoge Inicio, Panel de control y haz un doble click en Sistema. En Microsoft 
+  Windows NT, selecciona la pesta&ntilde;a Entorno; en Microsoft Windows 2000 
+  y XP selecciona la pesta&ntilde;a &quot;Opciones avanzadas&quot; y despu&eacute;s 
+  &quot;Variables de entorno&quot;. Busca &quot;Path&quot; en las variables de 
+  usuario y en las variables del sistema. A&ntilde;ade el camino completo de del 
+  directorio j2sdk1.4.2_&lt;version&gt;\bin a la derecha de la variable &quot;Path&quot;, 
+  despu&eacute;s de un punto y coma (;).</p>
+<pre class="codigo"> &lt;otras entradas del path&gt;;c:\j2sdk1.4.2_02\bin</pre>
+<p> No importa las may&uacute;sculas o min&uacute;sculas. Microsoft Windows no 
+  es sensible a ellas. Pulsa &quot;Aceptar&quot;. El PATH puede ser una serie 
+  de directorios separados por puntos y coma. Microsoft Windows busca los programas 
+  en los directorios que hay en el PATH, de izquierda a derecha. Deber&iacute;as 
+  tener en el PATH un &uacute;nico directorio bin para un SDK Java (los siguientes 
+  de la lista se ignorar&iacute;an), por lo que si ya hay alguno presente, deber&iacute;as 
+  actualizarlo a j2sdk.1.4.2_&lt;version&gt;\bin.</p>
+<p>2. El nuevo path toma efecto en cada ventana de comandos que abras despu&eacute;s 
+  de actualizar la variable PATH.</p>
+<h3>Microsoft Windows 98</h3>
+<p>Para actualizar el PATH permanentemente, abre el fichero AUTOEXEC.BAT y a&ntilde;ade 
+  o cambia la sentencia PATH como sigue:</p>
+<p> 1. Arranca el editor del sistema. Escoge &quot;Inicio&quot;, &quot;Ejecutar&quot; 
+  e introduce sysedit y pulsa Aceptar. Aparece el editor del sistema y muestra 
+  varias ventanas. Ve a la ventana que muestra AUTOEXEC.BAT.</p>
+<p>2. Busca la sentencia PATH (si no tienes una, a&ntilde;&aacute;dela). A&ntilde;ade 
+  el path al SDK a la derecha de la sentencia, separ&aacute;ndolo por un punto 
+  y coma. Por ejemplo: </p>
+<pre class="codigo">PATH C:\WINDOWS;C:\WINDOWS\COMMAND;C:\J2SDK1.4.2_&lt;version&gt;\BIN </pre>
+<p> No importa las may&uacute;sculas o min&uacute;sculas. Microsoft Windows no 
+  es sensible a ellas. El PATH puede ser una serie de directorios separados por 
+  puntos y coma. Microsoft Windows busca los programas en los directorios que 
+  hay en el PATH, de izquierda a derecha. Deber&iacute;as tener en el PATH un 
+  &uacute;nico directorio bin para un SDK Java (los siguientes de la lista se 
+  ignorar&iacute;an), por lo que si ya hay alguno presente, deber&iacute;as actualizarlo 
+  a j2sdk.1.4.2_&lt;version&gt;\bin.</p>
+<p> 3. Para hacer que el path tome efecto en la ventana de comando actual, ejecuta 
+  lo siguiente:</p>
+<pre class="codigo"> C:&gt; c:\autoexec.bat</pre>
+<p> Para comprobar el valor actual del PATH, escribe en el prompt de comandos:</p>
+<pre class="codigo"> C:&gt; path</pre>
+<h3>Microsoft Windows ME</h3>
+<p>Para actualizar el PATH permanentemente:</p>
+<p> Desde el men&uacute; de inicio, escoge programas, accesorios, herramientas 
+  del sistema e informaci&oacute;n del sistema. Esto abre una ventana llamada 
+  &quot;Microsoft Ayuda y Soporte&quot;. Desde aqu&iacute;, escoge el men&uacute; 
+  de herramientas y luego selecciona la utilidad de configuraci&oacute;n del sistema. 
+  Haz click en la pesta&ntilde;a entorno, selecciona PATH y pulsa el bot&oacute;n 
+  editar. Ahora a&ntilde;ade el SDK al path como se ha descrito en los casos anteriores. 
+  Despu&eacute;s de que has a&ntilde;adido la localizaci&oacute;n del SDK en el 
+  PATH, graba los cambios y reinicia la m&aacute;quina cuando lo solicite el sistema.</p>
+</body>
+        </html>

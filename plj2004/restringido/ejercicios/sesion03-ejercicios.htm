@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  <meta name="Author" content="Nacho">
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+  <title>Sesion 3</title>
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+<h1>Sesi&oacute;n 3</h1>
+<p>API de Java. M&eacute;todos y objetos. Modificador static. Herencia. </p>
+<h2>1. El API de Java</h2>
+<p>Vamos a comenzar con un ejercicio para aprender a consultar el API de Java 
+  (y algunas cosas m&aacute;s).</p>
+<ol>
+  <li>Repasa la secci&oacute;n<em> API de Java</em> del apartado 1.1.1 de los 
+    apuntes.</li>
+  <li>Busca en el API de Java el paquete <code>java.util.zip</code>. Consultando 
+    la p&aacute;gina HTML que describe el paquete, contesta en el fichero <strong>respuestas.txt</strong> 
+    las siguientes preguntas: 
+    <ul>
+      <li> &iquest;Para qu&eacute; es el paquete?</li>
+      <li>&iquest;Qu&eacute; interfaces, clases y excepciones se declaran en el 
+        paquete?</li>
+    </ul>
+  </li>
+  <li>Busca en el API la clase <code>Stack</code>. Contesta en el fichero <strong>respuestas.txt</strong> 
+    las siguientes preguntas:</li>
+  <ul>
+    <li>&iquest;En qu&eacute; paquete se encuentra la clase <code>Stack</code>? 
+      &iquest;Qu&eacute; instrucci&oacute;n <code>import</code> tendr&iacute;as 
+      que definir para usar la clase <code>Stack</code>?</li>
+    <li>&iquest;Qu&eacute; constructores tiene la clase?</li>
+    <li>&iquest;Qu&eacute; m&eacute;todos modifican el estado de un objeto <code>Stack</code>?</li>
+    <li>&iquest;De qu&eacute; clase son los objetos que puedes a&ntilde;adir y 
+      obtener de un stack?</li>
+    <li>El siguiente c&oacute;digo no es correcto, &iquest;por qu&eacute;? (consulta 
+      el apartado 1.7.3 de los apuntes) &iquest;Cu&aacute;l ser&iacute;a el c&oacute;digo 
+      correcto?<br>
+      <pre class="codigo">int i = 10;
+Stack pila = new Stack();
+pila.add(i);</pre>
+      <em><strong>Nota: en la versi&oacute;n 1.5 de Java y en BeanShell el c&oacute;digo 
+      de arriba es correcto ya que usan una t&eacute;cnica denominada autoboxing.<br>
+      </strong></em></li>
+  </ul>
+  <li>Ejecuta en BeanShell un conjunto instrucciones que trabajen con un<code> 
+    Stack</code>. Recuerda que para visualizar el valor de un objeto <code>o</code> 
+    en BeanShell debes usar el comando <code>print(o)</code>. Copia la sesi&oacute;n 
+    de interacci&oacute;n con BeanShell en el fichero <strong>respuestas.txt</strong>.</li>
+</ol>
+<h2>2. M&eacute;todos y objetos</h2>
+<p>Vamos a hacer un ejercicio m&aacute;s elaborado en el que se definan clases 
+  y objetos. Puedes usar el entorno de desarrollo que desees. Si tu ordenador 
+  no tiene la potencia (memoria sobre todo) suficiente para que Eclipse funcione 
+  con fluidez usa alg&uacute;n editor de texto para editar las clases. </p>
+<p>Todas las clases las vamos a definir en el paquete <code>modulo1.sesion3</code>. 
+  Se encuentran en la plantilla de ejercicios de la sesi&oacute;n 3.</p>
+<ol>
+  <li>Supongamos las siguientes clases <code>Contador</code> y <code>ContadorTest</code><br>
+    <pre class="codigo">package modulo1.sesion3;
+public class Contador {
+    static int acumulador = 0;
+    int valor;
+    
+    static public int acumulador() {
+        return acumulador;
+    }
+
+    public Contador(int valor) {
+        this.valor = valor;
+        acumulador += valor;
+        // no es valido this.acumulador
+        // es valido Contador.acumulador
+    }    
+    
+    public void inc() {
+       valor++;
+       acumulador++;
+    }
+    
+    public int getValor(){
+        return valor;
+    }
+}</pre>
+    <pre class="codigo">package modulo1.sesion3;
+
+public class ContadorTest {
+
+    public static void main(String[] args) {
+        Contador c1, c2;
+        
+        System.out.println(Contador.acumulador());     
+        c1 = new Contador(3);
+        c2 = new Contador(10);
+        c1.inc();
+        c1.inc();
+        c2.inc();
+        System.out.println(c1.getValor());
+        System.out.println(c2.getValor());
+        System.out.println(Contador.acumulador);        
+    }
+}
+</pre>
+    Compila las clases y pru&eacute;balas. Responde a las siguientes preguntas 
+    en el fichero <strong>respuestas.txt</strong>: 
+    <ul>
+      <li> &iquest;Se pueden realizar las siguientes modificaciones en el c&oacute;digo 
+        de la clase <code>Contador</code>? &iquest;Por qu&eacute;? <br>
+        <ol>
+          <li>Cambiar &quot;acumulador += valor&quot; en el constructor Contador 
+            por &quot;this.acumulador += valor&quot;.</li>
+          <li>Cambiar &quot;acumulador += valor&quot; en el constructor Contador 
+            por &quot;Contador.acumulador += valor&quot;.</li>
+          <li>Cambiar &quot;valor++&quot; por &quot;this.valor++&quot; en el m&eacute;todo 
+            inc().<br>
+          </li>
+        </ol>
+      </li>
+      <li>&iquest;Qu&eacute; valores imprime el programa ContadorTest?</li>
+      <li>Si cambiamos en la clase Contador la l&iacute;nea &quot;static int acumulador 
+        = 0&quot; por &quot;private static int acumulador = 0&quot;, &iquest;aparece 
+        alg&uacute;n error? &iquest;por qu&eacute;?</li>
+      <li>&iquest;Qu&eacute; sucede si no inicializamos el valor del campo acumulador?<br>
+      </li>
+    </ul>
+  </li>
+  <li> Vamos a complicar un poco m&aacute;s el c&oacute;digo de Contador, a&ntilde;adiendo 
+    una constante (<code>VALOR_INICIAL</code>) a la clase y otro nuevo constructor. 
+    El c&oacute;digo es el que sigue (en negrita lo que se ha a&ntilde;adido). 
+    El modificador final indica que el valor asignado a <code>VALOR_INICIAL</code> 
+    no puede modificarse.<br>
+    <pre class="codigo">package modulo1.sesion3;
+
+public class Contador {
+    static int acumulador;
+<strong>    final static int VALOR_INICIAL=10;</strong>
+    int valor;
+    
+    static public int acumulador() {
+        return acumulador;
+    }
+
+    public Contador(int valor) {
+        this.valor = valor;
+        acumulador += valor;
+    }    
+    
+<strong>    public Contador(){
+        this(Contador.VALOR_INICIAL);
+    }
+</strong>
+    public void inc() {
+       this.valor++;
+       acumulador++;
+    }
+    
+    public int getValor(){
+        return this.valor;
+    }
+}
+</pre>
+    F&iacute;jate en la llamada &quot;<code>this(Contador.VALOR_INICIAL)</code>&quot;. 
+    &iquest;Qu&eacute; hace? Escribe un programa ejemplo <code>ContadorTest2</code> 
+    que compruebe el funcionamiento de la clase modificada. Por &uacute;ltimo, 
+    una pregunta algo complicada: &iquest;Qu&eacute; sucede si cambiamos la l&iacute;nea 
+    &quot;<code>this(Contador.VALOR_INICIAL)</code>&quot; por &quot;<code>new 
+    Contador(Contador.VALOR_INICIAL)</code>&quot;?</li>
+  <li>Por &uacute;ltimo, realiza las siguientes modificaciones en la clase <code>Contador</code>: 
+    <ul>
+      <li>A&ntilde;ade una variable de clase <code>nContadores</code> que contenga 
+        el n&uacute;mero de contadores creados</li>
+      <li>A&ntilde;ade una variable de clase <code>valores</code> que contenga 
+        un array con los valores de los contadores creados.</li>
+      <li>A&ntilde;ade un metodo <code>getValores</code> que devuelva un array 
+        con los valores de los contadores creados.</li>
+    </ul>
+</ol>
+<h2>3. Un ejemplo de herencia</h2>
+<ol>
+  <li>En el fichero de plantillas de esta sesi&oacute;n encontrar&aacute;s los 
+    ficheros <code>Figura.java</code>, <code>Circulo.java</code>, <code>Rectangulo.java</code> 
+    y <code>FiguraTest.java</code>, que contienen el siguiente c&oacute;digo:<br>
+    <pre class="codigo">package modulo1.sesion3;
+
+public abstract class Figura {
+    double area;
+
+    public abstract double getArea();
+}
+</pre>
+    <pre class="codigo">
+package modulo1.sesion3;
+
+class Circulo extends Figura {
+    double radio;
+
+    public Circulo(double radio) {
+        this.radio = radio;
+    }
+
+    public double getArea() {
+        area = 3.14 * (radio * radio);
+        return (area);
+    };
+}
+</pre>
+    <pre class="codigo">
+package modulo1.sesion3;
+
+class Rectangulo extends Figura {
+    double lado;
+    double altura;
+
+    public Rectangulo(double lado, double altura) {
+        this.lado = lado;
+        this.altura = altura;
+    }
+
+    public double getArea() {
+        area = lado * altura;
+        return (area);
+    };
+
+}</pre>
+    <pre class="codigo">package modulo1.sesion3;
+
+import java.util.Stack;
+
+public class FiguraTest {
+    public static void main(String args[]) {
+        Figura f;
+
+        Rectangulo rect = new Rectangulo(10, 15);
+        System.out.println("El area del rectangulo es: " + rect.getArea());
+
+        Circulo circ = new Circulo(3);
+        System.out.println("El area del circulo es: " + circ.getArea());
+
+        Stack pila = new Stack();
+        pila.push(rect);
+        pila.push(circ);
+
+        while (!pila.isEmpty()) {
+            f = (Figura) pila.pop();
+            System.out.println("El area de la figura es: " + f.getArea());
+        }
+    }
+}</pre>
+  </li>
+  <li>Compila las clases y ejecuta el ejemplo. Contesta las siguientes preguntas 
+    en el fichero <strong>respuestas.txt</strong>: <br>
+    <ul>
+      <li>&iquest;Podr&iacute;a crear un objeto de tipo <code>Figura</code>? &iquest;Por 
+        qu&eacute;?</li>
+      <li>&iquest;Por qu&eacute; puedo a&ntilde;adir a la pila objetos de tipo 
+        <code>Rectangulo</code> y <code>Circulo</code>, siendo tipos diferentes?</li>
+      <li>Supongamos un m&eacute;todo como el siguiente 
+        <pre class="codigo">public void draw(Figura fig);</pre>
+        ¿Podr&iacute;a pasar un objeto de la clase <code>Circulo</code> como par&aacute;metro 
+        del m&eacute;todo? &iquest;Y un objeto de la clase <code>Rectangulo</code>? 
+        &iquest;Y un objeto de la clase <code>plj.geom.Rect</code>?</li>
+      <li>&iquest;C&oacute;mo se deber&iacute;an modificar las clases para que 
+        el m&eacute;todo <code>getArea()</code> no fuera abstracto, sino que tuviera 
+        la implementaci&oacute;n definida en la clase <code>Figura</code> (y funcione 
+        correctamente, claro).</li>
+    </ul>
+  </li>
+</ol>
+<h2>4. Crea una jerarqu&iacute;a de clases</h2>
+<p>Define e implementa un ejemplo de jerarqu&iacute;a de clases. Recuerda algunas 
+  reglas b&aacute;sicas sobre herencia de clases:</p>
+<ul>
+  <li>Una subclase A hereda de una superclase B si pasa el <strong>test ES-UN</strong>. 
+    Este test consiste, sencillamente, en comprobar que A <strong>ES-UN</strong> 
+    B. Por ejemplo, un Sonar <strong>ES-UN</strong> Sensor. O tambi&eacute;n, 
+    un Perro <strong>ES-UN</strong> Animal. O tambi&eacute;n, un Empleado <strong>ES-UNA</strong> 
+    Persona. Pero un Animal no <strong>ES-UN</strong> Naturaleza (por lo que Animal 
+    no puede ser subclase de Naturaleza).</li>
+  <li>Construye una subclase s&oacute;lo cuando necesites hacer una versi&oacute;n 
+    <strong>m&aacute;s espec&iacute;fica</strong> de una clase y necesites sobrecargar 
+    o a&ntilde;adir nuevas conductas.</li>
+  <li>Usa una clase abstracta cuando quieras definir una <strong>plantilla</strong> 
+    para para un grupo de subclases, y tengas alg&uacute;n c&oacute;digo de implementaci&oacute;n 
+    que todas las clases puedan usar. Haz la clase abstracta cuando quieras garantizar 
+    que nadie va a hacer objetos de esa clase.</li>
+</ul>
+  <p> <b>PARA ENTREGAR</b></p>
+<p>Debes crear un ZIP llamado <strong>sesion3.zip</strong> con: </p>
+<ul>
+  <li>El fichero de texto <strong>respuestas.txt</strong> con las cuestiones contestadas.</li>
+  <li>Los ficheros con las clases que has implementado y modificado.</li>
+</ul>
+<p>&nbsp;</p>
+</body>
+</html>

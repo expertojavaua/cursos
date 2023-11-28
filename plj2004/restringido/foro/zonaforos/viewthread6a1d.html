@@ -1,0 +1,731 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+
+
+
+
+
+
+
+
+<html >
+
+<!-- Mirrored from www.j2ee.ua.es/zonaforos/viewthread?thread=84 by HTTrack Website Copier/3.x [XR&CO'2003], Fri, 30 Jul 2004 10:56:15 GMT -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<head>
+  <title>mvnForum - Ver Tema - Excepciones. Acerca de throw.</title>
+
+<meta name="copyright" content="This software is copyrighted by MyVietnam.net and released under the terms of the GNU General Public License GPL license. All rights reserved.">
+<meta name="Keywords" content="mvnForum, server side java, online meetings, collaboration, bulletin board, board, forum, discussion board, jsp, servlet, java, j2se, j2ee, database, jdbc, connection pool, mysql, MyVietnam, mvnForum, framework, web app, web application, servlet container, tomcat, jboss, weblogic, websphere">
+<meta name="Description" content="mvnForum is a powerful Jsp/Servlet forum (discussion board) - based on Java technology.">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+
+
+</head>
+<link href="../mvnplugin/mvnforum/css/style.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="http://www.j2ee.ua.es/mvnplugin/mvnforum/js/mvnnav.js"></script>
+<body leftmargin="0" topmargin="0">
+ï»¿
+
+
+
+<table width="95%" border="0" cellspacing="1" cellpadding="0" align="center">
+  <tr>
+    <td height="60">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td rowspan="2">
+            <a href="http://www.j2ee.ua.es/"><img src="../mvnplugin/mvnforum/images/logo.gif" height="50" border="0" alt="mvnForum Homepage"></a>
+          </td>
+          <td width="100%" height="25" align="right" valign="top" nowrap class="welcomeHeader">
+            
+              Bienvenido <font color="#FF0000">domingo</font>&nbsp;&nbsp;|&nbsp;
+              <a href="http://www.j2ee.ua.es/controlador/pubCerrarSesion" class="welcomeHeader">Terminar sesiÃ³n</a>
+            
+            &nbsp;&nbsp;
+          </td>
+        </tr>
+        <tr>
+          <td height="35" valign="top">
+          <form action="http://www.j2ee.ua.es/zonaforos/searchprocess">
+            <table class="tborder" cellspacing="1" cellpadding="2" align="right">
+              <tr class="topmenu">
+                <td align="left" valign="top" nowrap>&nbsp;
+                  <img src="../mvnplugin/mvnforum/images/icon/search.gif" alt="BÃºsqueda" hspace="0" vspace="0" border="0" align="bottom">
+                  <input type="text" size="10" name="key">
+                  <input type="button" value="BÃºsqueda" onclick="disabled=true; submit();" class="mainoption">&nbsp;
+                </td>
+              </tr>
+            </table>
+          </form>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<table class="tborder" width="95%" cellspacing="1" cellpadding="2" align="center">
+  <tr class="topmenu">
+    <td align="left" nowrap>&nbsp;
+      <a href="http://www.j2ee.ua.es/zonaforos/index" class="topmenu">Indice</a>&nbsp;|&nbsp;
+      
+      <a href="http://www.j2ee.ua.es/zonaforos/listrecentthreads" class="topmenu">Temas Recientes</a>&nbsp;|&nbsp;
+      <a href="http://www.j2ee.ua.es/zonaforos/listonlineusers" class="topmenu">QuiÃ©n EstÃ¡ en LÃ­nea</a>&nbsp;|&nbsp;
+      <a href="http://www.j2ee.ua.es/zonaforos/listmembers" class="topmenu">Lista de Usuarios</a>&nbsp;|&nbsp;
+      <a href="http://www.j2ee.ua.es/zonaforos/myprofile" class="topmenu">Mi Perfil</a>&nbsp;|&nbsp;
+      <a href="http://www.j2ee.ua.es/zonaforos/search" class="topmenu">BÃºsqueda</a>&nbsp;|&nbsp;
+      <a href="http://www.j2ee.ua.es/zonaforos/help" class="topmenu">Ayuda</a>
+    </td>
+  </tr>
+</table>
+
+<br/>
+
+
+
+<table width="95%" align="center">
+  <tr class="nav">
+    <td><img src="../mvnplugin/mvnforum/images/nav.gif"></td>
+    <td width="100%" nowrap>
+    <a class="nav" href="http://www.j2ee.ua.es/zonaforos/index">mvnForum</a>&nbsp;&raquo;&nbsp;
+    <a class="nav" href="http://www.j2ee.ua.es/zonaforos/listforums">Listar todos los foros</a>&nbsp;&raquo;&nbsp;
+    Foro: <a class="nav" href="listthreads6125.html?forum=10">Curso PLJ</a>&nbsp;&raquo;&nbsp;
+    Tema: Excepciones. Acerca de throw.
+    </td>
+  </tr>
+</table>
+<br/>
+
+<table width="95%" align="center">
+  <tr class="messageText"><td>
+  <form>
+  Ir a &raquo; <select name="FastGoForum" onChange="gotoPage(this.options[this.selectedIndex].value)">
+  
+    <option value=""></option>
+    <option value="listforums">Foros generales</option>
+    <option value="">---------------------------------</option>
+  
+    <option value="listthreads?forum=1" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TecnologÃ­as Java</option>
+  
+    <option value="listthreads?forum=3" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dudas sobre los cursos</option>
+  
+    <option value="listthreads?forum=9" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Incidencias en la web</option>
+  
+    <option value=""></option>
+    <option value="listforums">Foros de cursos CECLEC</option>
+    <option value="">---------------------------------</option>
+  
+    <option value="listthreads?forum=4" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Curso IAS</option>
+  
+    <option value="listthreads?forum=5" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Curso PAJ</option>
+  
+    <option value="listthreads?forum=6" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Curso PDM</option>
+  
+    <option value=""></option>
+    <option value="listforums">Foros del curso de especialista en J2EE</option>
+    <option value="">---------------------------------</option>
+  
+    <option value="listthreads?forum=7" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Curso actual</option>
+  
+    <option value="listthreads?forum=8" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TecnologÃ­as J2EE</option>
+  
+    <option value=""></option>
+    <option value="listforums">Foros de cursos no presenciales</option>
+    <option value="">---------------------------------</option>
+  
+    <option value="listthreads?forum=10" selected>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Curso PLJ</option>
+  
+  </select>
+  </form>
+  </td></tr>
+</table>
+
+
+
+
+
+<table width="95%" align="center">
+  <tr>
+    <td valign="bottom" class="hightlight">Total de mensajes en este tema: 5
+      
+
+
+
+    </td>
+    <td valign="bottom" align="right">
+
+
+    <a class="command" href="http://www.j2ee.ua.es/zonaforos/deletethread?thread=84">&#91;Eliminar este Tema]</a>
+    <a class="command" href="http://www.j2ee.ua.es/zonaforos/movethread?thread=84">&#91;Mover este Tema]</a><br/>
+
+    <a class="command" href="http://www.j2ee.ua.es/zonaforos/addfavoritethreadprocess?thread=84">&#91;AÅadir a Mis Favoritos]</a>
+    <a class="command" href="http://www.j2ee.ua.es/zonaforos/addwatchprocess?thread=84&WatchSelector=3">&#91;AÅadir un aviso a este tema]</a>
+    <a class="command" href="http://www.j2ee.ua.es/zonaforos/addpost?forum=10">&#91;Publicar nuevo tema]</a>
+    </td>
+  </tr>
+</table>
+
+<table class="tborder" width="95%" cellspacing="1" cellpadding="5" align="center">
+  <tr class="theader">
+    <td width="155" align="center" nowrap>Autor</td>
+    <td align="center">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td nowrap>
+            
+            <a href="viewthreada745.html?thread=83"><img src="../mvnplugin/mvnforum/images/icon/left.gif" border="0" alt="Tema Anterior"></a>
+            
+          </td>
+          <td class="theader" width="100%" align="center">
+            Este tema ha sido visto <font color="Aqua">80</font> veces y tiene <font color="Yellow">4</font>
+            respuestas
+          </td>
+          <td nowrap>
+            
+            <a href="viewthreadc243.html?thread=85"><img src="../mvnplugin/mvnforum/images/icon/right.gif" border="0" alt="Tema Siguiente"></a>
+            
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+
+
+
+
+<a name="204"></a>
+<table class="tborder" width="95%" cellspacing="1" cellpadding="5" align="center">
+  <tr class="trow0">
+    <td width="155" rowspan="2" valign="top" nowrap>
+      
+        
+        <img src="../mvnplugin/mvnforum/images/icon/male.gif" border="0" alt="Masculino">
+        
+        <a href="http://www.j2ee.ua.es/zonaforos/viewmember?memberid=2358" class="memberName">rsm</a>
+        <br/>
+        Extranjero
+        <br/>
+        
+        <p>
+        
+        <br/>
+        <br/>
+        IngresÃ³: <b>Jul 1, 2004</b><br/>
+        Mensajes: <b>11</b><br/>
+        Estado: Desconectados
+      
+    </td>
+    <td valign="top">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="100%" rowspan="2" valign="top" class="messageTextBold">
+            
+              
+              <a href="http://www.j2ee.ua.es/zonaforos/addattachment?post=204&offset=0"><img src="../mvnplugin/mvnforum/images/icon/attach.gif" border="0" alt="Adjuntar archivo"></a>&nbsp;&nbsp;
+              
+              <a href="http://www.j2ee.ua.es/zonaforos/editpost?post=204&offset=0"><img src="../mvnplugin/mvnforum/images/icon/edit.gif" border="0" alt="Editar este mensaje"></a>&nbsp;&nbsp;
+              
+              
+            
+            
+            Excepciones. Acerca de throw.
+          </td>
+          <td align="right" valign="top" nowrap>
+          <a class="command" href="http://www.j2ee.ua.es/zonaforos/addpost?parent=204">Responder a este mensaje</a><br/>
+          <a class="command" href="http://www.j2ee.ua.es/zonaforos/addpost?parent=204&quote=yes">Responder citando</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="right" valign="top" nowrap>
+          
+            <a class="command" href="http://www.j2ee.ua.es/zonaforos/deletethread?thread=84">&#91;Eliminar este Tema]</a>
+          
+          </td>
+        </tr>
+
+      </table>
+      <hr size="1" noshade>
+      Hola.<br><br>He estado leyendo la teorÃ­a de excepciones del mÃ³dulo 2 y no me ha quedado claro el punto 2.1.3. Lanzamiento de excepciones. Entiendo que con el bloque catch se capturan las excepciones que se producen. Â¿Pero que hace throw? Â¿Lanza la excepciÃ³n manualmente en lugar de lanzarse automÃ¡ticamente? Â¿Si es asÃ­ la excepciÃ³n busca un bloque manejador en el bloque en el que se encuentra? Â¿Si el bloque que la maneja no existe en esa funciÃ³n busca en la de nivel superior? Â¿Tiene que tener la funciÃ³n superior alguna declaraciÃ³n para capturar la excepcion? Â¿Y si la excepciÃ³n no se ha lanzado con throw sino automÃ¡ticamente puede pasar al nivel superior?<br><br>AgradecerÃ­a que alguien me ayudara a entender esto y si es posible que adjunte algÃºn ejemplo donde se vea claro. Un saludo.<br>
+      
+      
+
+      
+    </td>
+  </tr>
+  <tr class="trow0">
+    <td>
+      <table class="trow0" width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td nowrap>
+          &#91;Jul 12, 2004 5:00:00 PM]
+          
+            <a href="http://www.j2ee.ua.es/zonaforos/printpost?post=204&thread=84"><img src="../mvnplugin/mvnforum/images/icon/printer.gif" border="0" alt="Print Post"></a>
+          </td>
+          <td width="100%">
+              
+                  
+                  
+                  
+                  
+                  
+                        &nbsp;&nbsp;&nbsp;<a href="mailto:rjsm1@alu.ua.es"><img src="../mvnplugin/mvnforum/images/icon/email.gif" border="0" alt="rjsm1@alu.ua.es"></a>
+                  
+          </td>
+          <td nowrap>
+            
+              <a href="mailto:malozano@dccia.ua.es?subject=Report threaten message (id = 204)"><img src="../mvnplugin/mvnforum/images/icon/threat.gif" border="0" alt="Reportar mensaje ofensivo"></a>
+            
+            &nbsp;<a href="#"><img src="../mvnplugin/mvnforum/images/icon/up.gif" border="0" alt="Ir al inicio"></a>&nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+
+
+
+<a name="205"></a>
+<table class="tborder" width="95%" cellspacing="1" cellpadding="5" align="center">
+  <tr class="trow2">
+    <td width="155" rowspan="2" valign="top" nowrap>
+      
+        
+        <img src="../mvnplugin/mvnforum/images/icon/male.gif" border="0" alt="Masculino">
+        
+        <a href="http://www.j2ee.ua.es/zonaforos/viewmember?memberid=14" class="memberName">nacho</a>
+        <br/>
+        Miembro
+        <br/>
+        
+        <p>
+        
+        <br/>
+        <br/>
+        IngresÃ³: <b>Feb 1, 2004</b><br/>
+        Mensajes: <b>63</b><br/>
+        Estado: Desconectados
+      
+    </td>
+    <td valign="top">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="100%" rowspan="2" valign="top" class="messageTextBold">
+            
+              
+              <a href="http://www.j2ee.ua.es/zonaforos/addattachment?post=205&offset=0"><img src="../mvnplugin/mvnforum/images/icon/attach.gif" border="0" alt="Adjuntar archivo"></a>&nbsp;&nbsp;
+              
+              <a href="http://www.j2ee.ua.es/zonaforos/editpost?post=205&offset=0"><img src="../mvnplugin/mvnforum/images/icon/edit.gif" border="0" alt="Editar este mensaje"></a>&nbsp;&nbsp;
+              
+              
+            
+            
+            Re: Excepciones. Acerca de throw.
+          </td>
+          <td align="right" valign="top" nowrap>
+          <a class="command" href="http://www.j2ee.ua.es/zonaforos/addpost?parent=205">Responder a este mensaje</a><br/>
+          <a class="command" href="http://www.j2ee.ua.es/zonaforos/addpost?parent=205&quote=yes">Responder citando</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="right" valign="top" nowrap>
+          
+            <a class="command" href="http://www.j2ee.ua.es/zonaforos/deletepost?post=205">&#91;Eliminar este mensaje]</a>
+          
+          </td>
+        </tr>
+
+      </table>
+      <hr size="1" noshade>
+      Hola.<br><br>Vamos a ver, intentarÃ© resumirlo todo lo que pueda <img src='../mvnplugin/mvnforum/images/emotion/smile.gif' border='0' alt='smile'> <br><br>Cuando en un mÃ©todo de una clase Java puede producirse un error, y ese error es de lo que en los apuntes llama &quot;tipo checked&quot; (es decir, algo asÃ­ como &quot;predecible&quot;), se debe o bien capturar, o bien lanzar la excepciÃ³n correspondiente, para que quien llame a ese mÃ©todo tenga en cuenta que se puede producir ese error.<br><br>Si aplicamos esto a los sucesivos niveles de llamadas, resulta que un throw que se produce en un mÃ©todo, puede volverse a producir en el que le llama, y en el que llama a este segundo... y asÃ­ sucesivamente.<br><br>El tema estÃ¡ entonces en ver hasta dÃ³nde queremos que llegue el error. Si en uno de esos mÃ©todos intermedios hacemos un &quot;catch&quot; de la excepciÃ³n, capturamos el error, y sacamos el mensaje correspondiente o hacemos lo que toque. En ese momento la propagaciÃ³n del error termina.<br><br>Si en ningÃºn mÃ©todo capturamos el error, el &quot;main&quot; que hayamos ejecutado serÃ¡ su Ãºltima parada, antes de salir por el monitor.<br><br>Un mÃ©todo Ãºtil para seguir todo esto es &quot;printStackTrace&quot; de la clase &quot;Exception&quot; (y por ende, de todas sus subclases). Con este mÃ©todo puedes ver una traza de por dÃ³nde ha ido propagÃ¡ndose una determinada excepciÃ³n.<br><br>Como pone en los apuntes, hay dos tipos de excepciones bÃ¡sicamente: las checked y las no checked. Las primeras, cuando llamamos al mÃ©todo que las produce, tenemos OBLIGACION de capturarlas, o bien de pasarlas con otro &quot;throw&quot; al siguiente mÃ©todo en el Ã¡rbol de llamadas. Eso durarÃ¡ como mucho hasta llegar al &quot;main&quot; que ejecutemos, donde obligatoriamente tendremos que capturarla para que el programa compile.<br><br>Las no checked no hace falta capturarlas, porque en teorÃ­a no se sabe cuÃ¡ndo pueden producirse. Estas no dan errores de compilaciÃ³n si no las capturamos ni las lanzamos, y si no tenemos cuidado pueden provocar excepciones en la ejecuciÃ³n principal.<br><br>Veamos un ejemplo de tratamiento de excepciones con checked y no checked.<br><br>----------------------------------------------------------<br>EJEMPLO con tipo checked:<br><br>Supongamos que tenemos un mÃ©todo que puede lanzar una excepcion de tipo MiExcepcion (que es de tipo checked):<br><br>public void metodo() throws MiExcepcion<br>{<br>   if (... condicion ...)<br>      throw new MiExcepcion (&quot;Error en el metodo...&quot;);<br><br>  ... resto del codigo del mÃ©todo<br>}<br><br>Al ser de tipo checked, si queremos lanzarla en un mÃ©todo tenemos que poner la clÃ¡usula &quot;throws&quot; en su cabecera, y luego lanzarla con un throw dentro.<br><br>Supongamos que luego tenemos otro mÃ©todo &quot;m2&quot; que llama a este. El compilador nos darÃ¡ ERROR si no capturamos la excepciÃ³n:<br><br>public void m2()<br>{<br>   try<br>   {<br>      metodo();   // Esta lÃ­nea sin el try darÃ­a ERROR<br>   } catch (MiExcepcion e) {<br>      e.printStackTrace();<br>   }<br>}<br><br>o bien declaramos que puede lanzarse a otro nivel:<br><br>public void m2() throws MiExcepcion<br>{<br>   if (... condicion...)<br>      throw new MiExcepcion (&quot;Propagando el error...&quot;);<br>   ...<br>   // Aqui no hace falta try<br>   //porque declaras que puede lanzarse      <br>   metodo();   <br>   ...<br>}<br><br>Si optamos por lo primero, ahÃ­ se acaba el error. Si elegimos lo segundo, la cadena continuarÃ¡ hasta que la capturemos en otro mÃ©todo despuÃ©s. Como muy tarde, deberemos capturarla en el mÃ©todo &quot;main&quot; que ejecutemos, que serÃ¡ el Ãºltimo mÃ©todo de todos. AhÃ­ ya no podemos hacer mÃ¡s &quot;throw&quot;.<br><br>En resumen, siempre que estemos tratando una excepciÃ³n de tipo checked tenemos OBLIGACION de capturarla, o de declarar que se puede lanzar. Si no no podremos compilar el programa.<br><br>----------------------------------------------------------<br><br>EJEMPLO con tipo no checked:<br><br>Supongamos por otra parte que tenemos un mÃ©todo que recorre un array. Si no tenemos cuidado, puede ser que nos salgamos de los lÃ­mites del array, y salte una excepciÃ³n de tipo ArrayIndexOutOfBoundsException. Sin embargo, esta excepciÃ³n no es checked, asÃ­ que no tenemos obligaciÃ³n de capturarla.<br><br>Es decir, si el mÃ©todo lo dejamos asÃ­:<br><br>public void m3()<br>{<br>   int[] elementos = new int[4];<br>   for (int i = 0; i &lt; 10; i++)<br>   {<br>      System.out.println(&quot;Elemento: &quot; + elementos<i>);<br>   }<br>}<br><br>Como tenemos un array de 4 elementos, en cuanto el bucle pase de la 4Âª posicion lanzarÃ¡ una excepciÃ³n de tipo ArrayIndexOutOfBounds. No nos va a dar error de compilaciÃ³n como en las checked. AsÃ­ que este tipo de excepciones es voluntario capturarlas. PodrÃ­amos dejar el mÃ©todo bien hecho con algo como:<br><br>public void m3()<br>{<br>   int[] elementos = new int[4];<br>   for (int i = 0; i &lt; 10; i++)<br>   {<br>      try<br>      {<br>         System.out.println(&quot;Elemento: &quot; + elementos<i>);<br>      } catch (ArrayIndexOutOfBoundsException e) {}<br>   }<br>}<br><br>Pero como digo, no es necesario<br>----------------------------------------------------------<br><br>Bueno, despuÃ©s de todo este &quot;rollazo&quot;, espero haber sido de ayuda. Si no, dÃ­melo e intentarÃ© explicÃ¡rtelo de otra forma, pero no te quedes con la duda porque las excepciones son bÃ¡sicas para todo lo que va a venir despuÃ©s.<br><br>Un saludo!<br><br>Nacho.<br>
+      
+      
+
+      
+    </td>
+  </tr>
+  <tr class="trow2">
+    <td>
+      <table class="trow2" width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td nowrap>
+          &#91;Jul 12, 2004 5:57:14 PM]
+          
+            <a href="http://www.j2ee.ua.es/zonaforos/printpost?post=205&thread=84"><img src="../mvnplugin/mvnforum/images/icon/printer.gif" border="0" alt="Print Post"></a>
+          </td>
+          <td width="100%">
+              
+                  
+                  
+                  
+                  
+                  
+                        &nbsp;&nbsp;&nbsp;<a href="mailto:iiborra@dccia.ua.es"><img src="../mvnplugin/mvnforum/images/icon/email.gif" border="0" alt="iiborra@dccia.ua.es"></a>
+                  
+          </td>
+          <td nowrap>
+            
+              <a href="mailto:malozano@dccia.ua.es?subject=Report threaten message (id = 205)"><img src="../mvnplugin/mvnforum/images/icon/threat.gif" border="0" alt="Reportar mensaje ofensivo"></a>
+            
+            &nbsp;<a href="#"><img src="../mvnplugin/mvnforum/images/icon/up.gif" border="0" alt="Ir al inicio"></a>&nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+
+
+
+<a name="221"></a>
+<table class="tborder" width="95%" cellspacing="1" cellpadding="5" align="center">
+  <tr class="trow1">
+    <td width="155" rowspan="2" valign="top" nowrap>
+      
+        
+        <img src="../mvnplugin/mvnforum/images/icon/male.gif" border="0" alt="Masculino">
+        
+        <a href="http://www.j2ee.ua.es/zonaforos/viewmember?memberid=2358" class="memberName">rsm</a>
+        <br/>
+        Extranjero
+        <br/>
+        
+        <p>
+        
+        <br/>
+        <br/>
+        IngresÃ³: <b>Jul 1, 2004</b><br/>
+        Mensajes: <b>11</b><br/>
+        Estado: Desconectados
+      
+    </td>
+    <td valign="top">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="100%" rowspan="2" valign="top" class="messageTextBold">
+            
+              
+              <a href="http://www.j2ee.ua.es/zonaforos/addattachment?post=221&offset=0"><img src="../mvnplugin/mvnforum/images/icon/attach.gif" border="0" alt="Adjuntar archivo"></a>&nbsp;&nbsp;
+              
+              <a href="http://www.j2ee.ua.es/zonaforos/editpost?post=221&offset=0"><img src="../mvnplugin/mvnforum/images/icon/edit.gif" border="0" alt="Editar este mensaje"></a>&nbsp;&nbsp;
+              
+              
+            
+            
+            Re: Excepciones. Acerca de throw.
+          </td>
+          <td align="right" valign="top" nowrap>
+          <a class="command" href="http://www.j2ee.ua.es/zonaforos/addpost?parent=221">Responder a este mensaje</a><br/>
+          <a class="command" href="http://www.j2ee.ua.es/zonaforos/addpost?parent=221&quote=yes">Responder citando</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="right" valign="top" nowrap>
+          
+            <a class="command" href="http://www.j2ee.ua.es/zonaforos/deletepost?post=221">&#91;Eliminar este mensaje]</a>
+          
+          </td>
+        </tr>
+
+      </table>
+      <hr size="1" noshade>
+      Hola de nuevo. <br><br>Gracias por la explicaciÃ³n. Entonces, si no lo he entendido mal, lo que hace throw es pasar la excepciÃ³n al mÃ©tdo superior. Â¿Me equivoco?<br><br>Pero aÃºn no me he enterado bien y me quedan algunas dudas acerca de cÃ³mo debemos usar el throw cuando queremos que una excepciÃ³n se propague. En el caso de try-catch, se especifica un bloque donde &quot;permanecer alerta&quot; y, si se produce una excepciÃ³n pasar el control al bloque catch. En estos casos la excepciÃ³n salta automÃ¡ticamente cuando se viola una determinada condiciÃ³n. Â¿Pero quÃ© pasa con throw? Â¿Tenemos que chequear nosotros si se cumple una condiciÃ³n y entonces lanzar la excepciÃ³n? CreÃ­a que la excepciÃ³n ArrayIndexOutOfBoundsException, por ejemplo, se producÃ­a automÃ¡ticamente al acceder fuera de los lÃ­mites de un array... Â¿QuÃ© hace el programa cuando llega a un throw? Â¿Se detiene y pasa al nivel superior en busca de un catch? Â¿CÃ³mo se volverÃ­a a lanzar la excepciÃ³n hacia el siguiente nivel desde allÃ­? Â¿...?<br><br>Por Ãºltimo, en el mÃ©todo divide del ejercicio 7 de la sesiÃ³n 6, Â¿por quÃ© no se pone divide(int dividendo, int divisor) throws IllegalArgumentException?<br><br>Saludos.<br>
+      
+      
+
+      
+    </td>
+  </tr>
+  <tr class="trow1">
+    <td>
+      <table class="trow1" width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td nowrap>
+          &#91;Jul 14, 2004 12:34:18 AM]
+          
+            <a href="http://www.j2ee.ua.es/zonaforos/printpost?post=221&thread=84"><img src="../mvnplugin/mvnforum/images/icon/printer.gif" border="0" alt="Print Post"></a>
+          </td>
+          <td width="100%">
+              
+                  
+                  
+                  
+                  
+                  
+                        &nbsp;&nbsp;&nbsp;<a href="mailto:rjsm1@alu.ua.es"><img src="../mvnplugin/mvnforum/images/icon/email.gif" border="0" alt="rjsm1@alu.ua.es"></a>
+                  
+          </td>
+          <td nowrap>
+            
+              <a href="mailto:malozano@dccia.ua.es?subject=Report threaten message (id = 221)"><img src="../mvnplugin/mvnforum/images/icon/threat.gif" border="0" alt="Reportar mensaje ofensivo"></a>
+            
+            &nbsp;<a href="#"><img src="../mvnplugin/mvnforum/images/icon/up.gif" border="0" alt="Ir al inicio"></a>&nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+
+
+
+<a name="222"></a>
+<table class="tborder" width="95%" cellspacing="1" cellpadding="5" align="center">
+  <tr class="trow2">
+    <td width="155" rowspan="2" valign="top" nowrap>
+      
+        
+        <img src="../mvnplugin/mvnforum/images/icon/male.gif" border="0" alt="Masculino">
+        
+        <a href="http://www.j2ee.ua.es/zonaforos/viewmember?memberid=2358" class="memberName">rsm</a>
+        <br/>
+        Extranjero
+        <br/>
+        
+        <p>
+        
+        <br/>
+        <br/>
+        IngresÃ³: <b>Jul 1, 2004</b><br/>
+        Mensajes: <b>11</b><br/>
+        Estado: Desconectados
+      
+    </td>
+    <td valign="top">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="100%" rowspan="2" valign="top" class="messageTextBold">
+            
+              
+              <a href="http://www.j2ee.ua.es/zonaforos/addattachment?post=222&offset=0"><img src="../mvnplugin/mvnforum/images/icon/attach.gif" border="0" alt="Adjuntar archivo"></a>&nbsp;&nbsp;
+              
+              <a href="http://www.j2ee.ua.es/zonaforos/editpost?post=222&offset=0"><img src="../mvnplugin/mvnforum/images/icon/edit.gif" border="0" alt="Editar este mensaje"></a>&nbsp;&nbsp;
+              
+              
+            
+            
+            Re: Excepciones. Acerca de throw.
+          </td>
+          <td align="right" valign="top" nowrap>
+          <a class="command" href="http://www.j2ee.ua.es/zonaforos/addpost?parent=222">Responder a este mensaje</a><br/>
+          <a class="command" href="http://www.j2ee.ua.es/zonaforos/addpost?parent=222&quote=yes">Responder citando</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="right" valign="top" nowrap>
+          
+            <a class="command" href="http://www.j2ee.ua.es/zonaforos/deletepost?post=222">&#91;Eliminar este mensaje]</a>
+          
+          </td>
+        </tr>
+
+      </table>
+      <hr size="1" noshade>
+      NOTA: A la Ãºltima pregunta ya he encontrado la soluciÃ³n en los ejercicios.<br>
+      
+      
+
+      
+    </td>
+  </tr>
+  <tr class="trow2">
+    <td>
+      <table class="trow2" width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td nowrap>
+          &#91;Jul 14, 2004 12:48:57 AM]
+          
+            <a href="http://www.j2ee.ua.es/zonaforos/printpost?post=222&thread=84"><img src="../mvnplugin/mvnforum/images/icon/printer.gif" border="0" alt="Print Post"></a>
+          </td>
+          <td width="100%">
+              
+                  
+                  
+                  
+                  
+                  
+                        &nbsp;&nbsp;&nbsp;<a href="mailto:rjsm1@alu.ua.es"><img src="../mvnplugin/mvnforum/images/icon/email.gif" border="0" alt="rjsm1@alu.ua.es"></a>
+                  
+          </td>
+          <td nowrap>
+            
+              <a href="mailto:malozano@dccia.ua.es?subject=Report threaten message (id = 222)"><img src="../mvnplugin/mvnforum/images/icon/threat.gif" border="0" alt="Reportar mensaje ofensivo"></a>
+            
+            &nbsp;<a href="#"><img src="../mvnplugin/mvnforum/images/icon/up.gif" border="0" alt="Ir al inicio"></a>&nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+
+
+
+<a name="223"></a>
+<table class="tborder" width="95%" cellspacing="1" cellpadding="5" align="center">
+  <tr class="trow1">
+    <td width="155" rowspan="2" valign="top" nowrap>
+      
+        
+        <img src="../mvnplugin/mvnforum/images/icon/male.gif" border="0" alt="Masculino">
+        
+        <a href="http://www.j2ee.ua.es/zonaforos/viewmember?memberid=14" class="memberName">nacho</a>
+        <br/>
+        Miembro
+        <br/>
+        
+        <p>
+        
+        <br/>
+        <br/>
+        IngresÃ³: <b>Feb 1, 2004</b><br/>
+        Mensajes: <b>63</b><br/>
+        Estado: Desconectados
+      
+    </td>
+    <td valign="top">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="100%" rowspan="2" valign="top" class="messageTextBold">
+            
+              
+              <a href="http://www.j2ee.ua.es/zonaforos/addattachment?post=223&offset=0"><img src="../mvnplugin/mvnforum/images/icon/attach.gif" border="0" alt="Adjuntar archivo"></a>&nbsp;&nbsp;
+              
+              <a href="http://www.j2ee.ua.es/zonaforos/editpost?post=223&offset=0"><img src="../mvnplugin/mvnforum/images/icon/edit.gif" border="0" alt="Editar este mensaje"></a>&nbsp;&nbsp;
+              
+              
+            
+            
+            Re: Excepciones. Acerca de throw.
+          </td>
+          <td align="right" valign="top" nowrap>
+          <a class="command" href="http://www.j2ee.ua.es/zonaforos/addpost?parent=223">Responder a este mensaje</a><br/>
+          <a class="command" href="http://www.j2ee.ua.es/zonaforos/addpost?parent=223&quote=yes">Responder citando</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="right" valign="top" nowrap>
+          
+            <a class="command" href="http://www.j2ee.ua.es/zonaforos/deletepost?post=223">&#91;Eliminar este mensaje]</a>
+          
+          </td>
+        </tr>
+
+      </table>
+      <hr size="1" noshade>
+      Hola otra vez <img src='../mvnplugin/mvnforum/images/emotion/smile.gif' border='0' alt='smile'> <br><br>El &quot;throw&quot; se puede usar con cualquier excepciÃ³n (es decir, puedes lanzar cualquier excepciÃ³n), la diferencia estÃ¡ en que las que no son tipo checked (como ArrayIndexOutOfBounds, o IllegalArgument) no lo necesitan para lanzarse, como tampoco necesitan el &quot;throws&quot;. Simplemente cuando suceda un error del tipo de la excepciÃ³n se lanzarÃ¡ la misma.<br><br>Eso sÃ­, cuando uses &quot;throw&quot; tienes que comprobar tÃº a mano que se estÃ¡ produciendo un error. Es decir, si quieres lanzar un IllegalArgumentException tÃº, y no dejar que lo haga el programa, tienes que comprobar tÃº a mano que el argumento no es vÃ¡lido. De la misma forma, si quieres indicar que se estÃ¡ saliendo de los lÃ­mites de un array, debes comprobar tÃº esos lÃ­mites y lanzar el ArrayIndexOutOfBounds. Si no lo haces tÃº, lo harÃ¡ el programa. La diferencia estÃ¡ en que si lo haces tÃº controlas un poco mÃ¡s cuÃ¡ndo y dÃ³nde se produce ese error.<br><br>Sobre lo de cÃ³mo propagar el throw de un nivel al siguiente, es sencillo. Si por ejemplo todo empieza aquÃ­:<br><br>public void m1() throws UnaExcepcion<br>{<br>   if (...condicion...)<br>      throw new UnaExcepcion(...);<br>}<br><br>Y luego este mÃ©todo llama al anterior:<br><br>public void m2()<br>{<br>   m1();<br>}<br><br>Tenemos dos opciones:<br><br>- Capturar la excepcion y acabar con la propagaciÃ³n del error. Para eso ponemos un bloque try...catch y listo:<br><br>public void m2()<br>{<br>   try<br>   {<br>      m1();<br>   } catch (UnaExcepcion e) {<br>      ...<br>   }<br>}<br><br>- Propagar la excepciÃ³n. Basta con definir en la cabecera del mÃ©todo, con un &quot;throws&quot;, que este mÃ©todo puede lanzar excepciones de ese tipo. No hace falta que hagamos un &quot;throw&quot; dentro, porque eso ya lo hace el mÃ©todo que la lanzÃ³ originalmente:<br><br>public void m2() throws UnaExcepcion<br>{<br>   m1();<br>}<br><br>De esta otra forma, un mÃ©todo m3 que llame al anterior podrÃ­a optar por lo mismo:<br><br>public void m3()<br>{<br>   try {<br>      m2();<br>   } catch (UnaExcepcion e) {}<br>}<br><br>o bien<br><br>public void m3() throws UnaExcepcion<br>{<br>   m2();<br>}<br><br>... y asÃ­ sucesivamente.<br><br><br>De todas formas, es IMPORTANTE que tengas en cuenta que todo esto se aplica OBLIGATORIAMENTE para excepciones de tipo checked (es decir, las que no sean subtipos de RuntimeException). Para las otras, es voluntario tratar todo esto, puesto que serÃ¡n excepciones que se considera que no se pueden predecir.<br>
+      
+      
+
+      
+    </td>
+  </tr>
+  <tr class="trow1">
+    <td>
+      <table class="trow1" width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td nowrap>
+          &#91;Jul 14, 2004 9:20:08 AM]
+          
+            <a href="http://www.j2ee.ua.es/zonaforos/printpost?post=223&thread=84"><img src="../mvnplugin/mvnforum/images/icon/printer.gif" border="0" alt="Print Post"></a>
+          </td>
+          <td width="100%">
+              
+                  
+                  
+                  
+                  
+                  
+                        &nbsp;&nbsp;&nbsp;<a href="mailto:iiborra@dccia.ua.es"><img src="../mvnplugin/mvnforum/images/icon/email.gif" border="0" alt="iiborra@dccia.ua.es"></a>
+                  
+          </td>
+          <td nowrap>
+            
+              <a href="mailto:malozano@dccia.ua.es?subject=Report threaten message (id = 223)"><img src="../mvnplugin/mvnforum/images/icon/threat.gif" border="0" alt="Reportar mensaje ofensivo"></a>
+            
+            &nbsp;<a href="#"><img src="../mvnplugin/mvnforum/images/icon/up.gif" border="0" alt="Ir al inicio"></a>&nbsp;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+
+
+<table width="95%" align="center">
+  <tr>
+    <td>
+      
+
+
+
+    </td>
+    <td align="right">
+      <a class="command" href="http://www.j2ee.ua.es/zonaforos/printthread?thread=84">&#91;VersiÃ³n imprimible]</a> 
+      <a class="command" href="http://www.j2ee.ua.es/zonaforos/addpost?forum=10">&#91;Publicar nuevo tema]</a>
+    </td>
+  </tr>
+</table>
+
+
+<br/>
+
+
+
+<table class="tfooter" width="500" cellspacing="0" cellpadding="0" align="center">
+  <tr><td width="100%" height="1"></td></tr>
+</table>
+<div align="center" class="pageFooter">
+  <!--
+  We request you retain the full copyright notice below including the link to www.mvnForum.com.
+  This not only gives respect to the large amount of time given freely by the developers
+  but also helps build interest, traffic and use of mvnForum. If you cannot (for good
+  reason) retain the full copyright we request you at least leave in place the
+  "Powered by mvnForum" line, with mvnForum linked to http://www.mvnForum.com.
+  These conditions are part of the licence this software is released under.
+  For detailed information about mvnForum License Agreement, look at the License Notice at
+  the top of all jsp, java files and the GNU General Public License.
+  
+  MyVietnam.net Group
+  -->
+  Powered by <a href="http://www.mvnforum.com/" target="_blank">mvnForum 1.0.0 RC2</a> (Build: 1 November 2003)<br>
+  Copyright &copy; 2002, 2003 by <a href="http://www.myvietnam.net/" target="_blank">MyVietnam.net</a>
+  <p>&nbsp;
+</div>
+
+</body>
+
+<!-- Mirrored from www.j2ee.ua.es/zonaforos/viewthread?thread=84 by HTTrack Website Copier/3.x [XR&CO'2003], Fri, 30 Jul 2004 10:56:15 GMT -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+</html>

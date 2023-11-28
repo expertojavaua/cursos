@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios Sesion 6</title>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ 
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+ <body bgcolor="#ffffff" text="#000000">
+<h1><span class="section">Sesión 6</span> </h1>
+<p><b>1.</b>  Vamos a construir un ejercicio completo de uso de excepciones.
+Para ello seguiremos los pasos que se indican a continuación:</p>
+ 
+<ol>
+  <li>Antes de comenzar, lee la introducción del punto <b>2.1</b> (<i>Excepciones</i>),
+    y los apartados <b>2.1.1</b> (<i>Tipos de excepciones</i>) y <b>2.1.2</b> (<i>Captura
+    de excepciones</i>) del tema 2 de teoría.</li>
+  <li>Echa un vistazo a la clase <i>Ej1.java</i> que se proporciona en la
+    plantilla. Verás que calcula la división de dos números (en el método <i>divide</i>),
+    y se ejecuta dicha división en el método <i>main</i>, pasándole los dos
+    números como argumentos en el parámetro <i>args</i> de dicho método.</li>
+  <li>Compila y prueba el funcionamiento de la clase, ejecutando una división
+    sencilla, como por ejemplo 20 / 4, de la siguiente forma:</li>
+</ol>
+<blockquote>
+  <pre class="codigo">javac Ej1.java
+java Ej1 20 4</pre>
+</blockquote>
+<ol start="4">
+  <li>Observa que la clase no realiza ciertos controles: no se comprueba si se
+    le han pasado parámetros al <i>main</i> al ejecutar, ni si dichos
+    parámetros son números correctos, ni si se puede realizar la división (no
+    se podría dividir por un número que fuese cero, por ejemplo). Vamos a ir
+    controlando dichos errores mediante lanzamiento y captura de excepciones, en
+    los siguientes pasos.</li>
+  <li>Dentro del método <i>main</i> vamos a comprobar que se hayan pasado 2
+    parámetros al programa, y que dichos dos parámetros sean dos números. 
+    <ol type="a">
+      <li>Para lo primero (comprobar que se han pasado 2 parámetros), capturaremos una excepción de tipo <b>ArrayIndexOutOfBoundsException</b>,
+        al acceder al parámetro <i>args</i>:<pre class="codigo">public static void main(String[] args)
+{
+	String param1=null, param2=null;
+	int dividendo=0, divisor=0;
+
+	<b>try
+	{</b>
+		param1 = args[0];
+		param2 = args[1];
+	<b>} catch (ArrayIndexOutOfBoundsException e) {
+		System.out.println (&quot;Faltan parametros&quot;);
+		System.exit(-1);
+	}
+
+	...</b>
+
+	System.out.println (&quot;Resultado: &quot; + divide(dividendo, divisor));
+}</pre>
+        <p>Prueba después la excepción capturada, ejecutando el programa con
+        algo como:</p>
+  <pre class="codigo">java Ej1 20 </pre>
+        <p>Debería capturar la excepción y mostrar por pantalla el mensaje
+        &quot;<i>Faltan parametros</i>&quot;.<br>
+      </li>
+      <li>Para lo segundo (comprobar que los dos parámetros son números), capturaremos una excepción de tipo <b>NumberFormatException</b>
+        si falla el método de conversión a entero de los parámetros de tipo <i>String</i>
+        (es decir, capturaremos la excepción al llamar a <i>Integer.parseInt(...)</i>):<pre class="codigo">public static void main(String[] args)
+{
+	String param1=null, param2=null;
+	int dividendo=0, divisor=0;
+
+	...
+
+	<b>try
+	{
+	</b>	dividendo = Integer.parseInt(param1);
+		divisor = Integer.parseInt(param2);
+	<b>} catch (NumberFormatException e2) {
+		System.out.println (&quot;Formato incorrecto del parametro&quot;);
+		System.exit(-1);
+	}</b>
+
+	System.out.println (&quot;Resultado: &quot; + divide(dividendo, divisor));
+}</pre>
+        <p>Prueba después la excepción capturada, ejecutando el programa con
+        algo como:</p>
+  <pre class="codigo">java Ej1 20 hola</pre>
+        <p>Debería capturar la excepción y mostrar por pantalla el mensaje
+        &quot;<i>Formato incorrecto del parametro</i>&quot;.<br>
+      </li>
+      <li>Observa que se puede poner todo junto, ahorrándonos las variables <i>param1</i>
+        y <i>param2</i>, y capturando las dos excepciones en un solo bloque:<pre class="codigo">public static void main(String[] args)
+{
+	int dividendo=0, divisor=0;
+
+	<b>try
+	{
+	</b>	dividendo = Integer.parseInt(args[0]);
+		divisor = Integer.parseInt(args[1]);
+<b>	} catch (ArrayIndexOutOfBoundsException e) {
+		...
+</b>	<b>} catch (NumberFormatException e2) {
+		...
+	}</b>
+
+	System.out.println (&quot;Resultado: &quot; + divide(dividendo, divisor));
+}</pre>
+        <p>Modifica el método <i>main</i> para dejarlo todo en un solo bloque <i>try</i>,
+        y vuelve a probar los distintos casos de fallo indicados antes, para ver
+        que el programa sigue comportándose igual.<br>
+      </li>
+    </ol>
+  </li>
+  <li>Lee ahora el punto <b>2.1.3</b> (<i>Lanzamiento de excepciones</i>) del
+    tema 2 de teoría.</li>
+  <li>Una vez tenemos comprobado que se pasan 2 parámetros, y que éstos son
+    numéricos, sólo nos falta comprobar que se puede realizar una división
+    correcta, es decir, que no se va a dividir por cero. Eso lo vamos a
+    comprobar dentro del método <i>divide.<br>
+    </i>
+    <ol type="a">
+      <li>Al principio del método, comprobamos si el segundo parámetro del
+        mismo (el divisor) es cero, si lo es, lanzaremos una excepción
+        indicando que el parámetro no es correcto. Dentro de los subtipos de
+        excepciones de <b>RuntimeException</b>, tenemos una llamada <b>IllegalArgumentException</b>
+        que nos puede ayudar. Probamos a poner estas líneas al principio del
+        método <i>divide</i>:<pre class="codigo">public static int divide(int dividendo, int divisor)
+{
+	<b>if (divisor == 0)
+		throw new IllegalArgumentException (&quot;Divisor incorrecto&quot;);
+
+	...</b>
+}</pre>
+      </li>
+      <li>Compila y ejecuta la clase. Prueba con algo como:
+  <pre class="codigo">java Ej1 20 0</pre>
+        <p>¿Qué mensaje aparece? ¿Qué significa?<br>
+      </li>
+      <li>Notar que lanzamos la excepción en el método <i>divide</i> pero no
+        la capturamos en <i>main</i>. Por eso nos muestra un mensaje de error
+        más largo, con la traza de la excepción. Si quisiéramos controlar
+        qué saca el error, deberíamos capturar la excepción en el <i>main</i>
+        y mostrar el texto que quisiéramos.<br>
+        <br>
+        Capturemos la excepción en el <i>main</i> y mostremos la traza del
+        error:<pre class="codigo">public static void main(String[] args)
+{
+	...
+
+	<b>try
+	{
+ </b>	    System.out.println (&quot;Resultado: &quot; + divide(dividendo, divisor));
+	<b>} catch (IllegalArgumentException e3) {
+		e3.printStackTrace()
+	}</b>
+}</pre>
+        <p>¿Qué mensaje aparece? ¿Qué significa?<br>
+      </li>
+    </ol>
+  </li>
+  <li>Lee ahora el punto <b>2.1.4</b> (<i>Creación de nuevas excepciones</i>)
+    del tema 2 de teoría.</li>
+  <li>Vamos a añadir una última excepción al método <i>divide</i> para
+    comprobar que se realiza una división de números naturales (es decir,
+    enteros mayores que 0). Para ello vamos a crear una excepción propia,
+    llamada <b>NumeroNaturalException</b>, como la siguiente:</li>
+</ol>
+<blockquote>
+  <pre class="codigo">public class NumeroNaturalException extends Exception
+{
+	public NumeroNaturalException(String mensaje)
+	{
+		super(mensaje);
+	}
+}</pre>
+</blockquote>
+<ol start="10">
+  <li>¿Para qué sirve la llamada a <i>super</i> en el constructor en este
+    caso?</li>
+  <li>Ahora añadiremos el lanzamiento de esta excepción en el método <i>divide</i>,
+    comprobando, tras ver si el divisor es cero, que tanto dividendo como
+    divisor son positivos:</li>
+</ol>
+<blockquote>
+  <pre class="codigo">public static int divide(int dividendo, int divisor) <b>
+</b>{
+	if (divisor == 0)
+		throw new IllegalArgumentException (&quot;Divisor incorrecto&quot;);
+	<b>if (dividendo &lt; 0 || divisor &lt; 0)
+		throw new NumeroNaturalException(&quot;La division no es natural&quot;);</b>
+<b>
+	...</b>
+}</pre>
+    <ol type="a">
+      <li>Prueba a compilar la clase. ¿Qué error te da? ¿A qué puede
+        deberse?</li>
+      <li>Para subsanarlo, hay que indicar en el método <i>divide</i>  que
+        dicho método puede lanzar excepciones de tipo <b>NumeroNaturalException</b>.
+        Eso se hace mediante una cláusula <i>throws</i>  en la declaración del
+        método:<pre class="codigo">public static nt divide(int dividendo, int divisor) <b>
+throws NumeroNaturalException</b>
+{
+    if(divisor == 0)
+	throw new IllegalArgumentException (&quot;Divisor incorrecto&quot;);
+    if (dividendo &lt; 0 || divisor &lt; 0)
+	throw new NumeroNaturalException(&quot;La division no es natural&quot;);
+<b>
+	...</b>
+}</pre>
+        <p>NOTA: esta cláusula sólo hay que introducirla para excepciones que
+        sean de tipo <i>checked</i>, es decir, que se pueda predecir que pueden
+        pasar al ejecutar un programa.&nbsp; Dichas excepciones son los subtipos
+        fuera de <b>RuntimeException</b>, y cualquier excepción que podamos
+        crear nosotros.&nbsp;</li>
+      <li>Prueba a compilar la clase. ¿Qué error te da ahora? ¿Por qué?</li>
+      <li>Lo que nos queda por hacer para terminar de corregir la clase es
+        capturar la excepción que se lanza en el método <i>divide, </i>cuando
+        utilizamos dicho método en el <i>main</i>:<pre class="codigo">public static void main(String[] args)
+{
+<b>   ...
+</b>
+   <b>try
+   {</b>
+	System.out.println (&quot;Resultado: &quot; + divide(dividendo, divisor));
+   <b>} catch (IllegalArgumentException e3) {
+	e3.printStackTrace()
+</b>   <b>} catch (NumeroNaturalException e4) {
+	System.out.println (&quot;Error: &quot; + e4.getMessage());
+	System.exit(-1);
+   }</b>
+}</pre>
+      </li>
+    </ol>
+<blockquote>
+  <p>¿Para qué sirve la llamada a &quot;getMessage()&quot; (qué texto
+  obtenemos con esa llamada)?<br>
+  Nota que cuando hemos añadido antes la excepción <b>IllegalArgumentException
+  </b>no ha habido que poner una cláusula &quot;throws&quot; en la declaración
+  de &quot;divide&quot;, ni capturar la excepción en el <i>main</i> para poder
+  compilar, y sin embargo sí lo hemos hecho ahora para la <b>NumeroNaturalException</b>.
+  ¿A qué se debe esta diferencia?</p>
+</blockquote>
+</blockquote>
+<ol start="12">
+  <li>Finalmente, compila y ejecuta el programa de las siguientes formas,
+    observando que da la salida adecuada:<br>
+    <br>
+    <pre class="codigo">java Ej1 20 4				<b>// 5
+</b>java Ej1 20 				<b>// &quot;Faltan parametros&quot;
+</b>java Ej1 20 hola			<b>// &quot;Formato incorrecto del parametro&quot;
+</b>java Ej1 20 0				<b>// Excepci&oacute;n de tipo IllegalArgument
+</b>java Ej1 20 -1				<b>// &quot;Error: La division no es natural&quot;</b></pre>
+  </li>
+  <li><strong>(OPTATIVO)</strong> Crea una nueva excepci&oacute;n <strong>DivideParException</strong>, que controle si se va a dividir un n&uacute;mero impar entre 2. En ese caso, deber&aacute; lanzar una excepci&oacute;n indicando que la divisi&oacute;n no es exacta. A&ntilde;ade el c&oacute;digo necesario al programa principal para controlar esta excepci&oacute;n nueva. </li>
+</ol>
+<p><b>PARA ENTREGAR</b></p>
+<ul>
+  <li>Fichero<b> Ej1.java</b> con todas las modificaciones indicadas, de forma
+    que las pruebas realizadas en el paso 13 den los resultados correctos.</li>
+  <li>Fichero <b>NumeroNaturalException.java</b> con la nueva excepción creada.</li>
+  <li>Fichero de texto <b>respuestas.txt</b> contestando a todas las preguntas
+    formuladas.</li>
+  <li>Contenidos optativos que hayas podido realizar (opcional) </li>
+</ul>
+ 
+</body>
+    </html>

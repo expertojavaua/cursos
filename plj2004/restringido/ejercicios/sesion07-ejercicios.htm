@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios Sesion 7</title>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ 
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+ <body bgcolor="#ffffff" text="#000000">
+<h1><span class="section">Sesión 7</span> </h1>
+<p><b>1.</b> Implementaremos ahora un ejercicio para practicar
+diferentes aspectos sobre hilos y multiprogramación:</p>
+ 
+<ol>
+  <li>Antes de comenzar, lee la introducción del punto <b>2.2</b> (<i>Hilos</i>),
+    y los apartados <b>2.2.1</b> (<i>Creación de hilos</i>) y <b>2.2.2 </b>(<i>Estado
+    y propiedades de los hilos</i>) del tema 2 de
+    teoría.<br>
+  </li>
+  <li>Echa un vistazo a la clase <i>Ej2.java</i> que se proporciona en la
+    plantilla de la sesión. Verás que tiene una subclase llamada <i>MiHilo </i>que
+    es un hilo. Tiene un campo <i>nombre </i>que sirve para dar nombre al hilo,
+    y un campo <i>contador</i>. También hay un método <i>run</i> que itera el
+    contador del 1 al 1000; en cada iteración hace un <i>System.gc()</i>, es
+    decir, llama al recolector de basura de Java. Lo hacemos para consumir algo
+    de tiempo en cada iteración.<br>
+    <br>
+    Desde la clase principal (<i>Ej2</i>), se crea un hilo de este tipo, y se
+    ejecuta (en el constructor). También en el constructor hacemos un bucle <b>do...while</b>,
+    donde el programa principal va examinando qué valor tiene el contador del
+    hilo en cada momento, y luego duerme un tiempo hasta la próxima
+    comprobación, mientras el hilo siga vivo.<br>
+  </li>
+  <li>Compila y prueba el funcionamiento de la clase de la siguiente forma,
+    comprobando que el hilo se lanza y ejecuta sus 1000 iteraciones.
+  <pre class="codigo">javac Ej2.java
+java Ej2</pre>
+    <p>¿Cuántos hilos o flujos de ejecución hay en total? ¿Qué hace cada
+    uno? (AYUDA: en todo programa al menos hay UN flujo de ejecución, que no es
+    otro que el programa principal. Aparte, podemos tener los flujos secundarios
+    (hilos) que queramos).</li>
+</ol>
+<ol start="4">
+  <li>Vamos a añadir y lanzar dos hilos más de tipo <i>MiHilo </i>en la clase <i>Ej2.
+    </i>Para ello podemos copiar y pegar el código que crea y lanza el primer
+    hilo, para hacer otros dos nuevos:<pre class="codigo">public Ej2()
+{
+	MiHilo t = new MiHilo(&quot;Hilo 1&quot;);
+<b>	MiHilo t2 = new MiHilo(&quot;Hilo 2&quot;);
+</b><b>	MiHilo t3 = new MiHilo(&quot;Hilo 3&quot;);
+</b>
+	t.start();
+<b>	t2.start();
+	t3.start();
+
+</b>	<b>do
+	{
+		System.out.print(&quot;Hilo 1 = &quot; + t.contador + 
+		                 &quot;, Hilo 2 = &quot; + t2.contador + 
+		                 &quot;, Hilo 3 = &quot; + t3.contador + &quot;\r&quot;);
+		try {
+			Thread.currentThread().sleep(100);
+		} catch(InterruptedException e) { }
+
+	} while (t.isAlive() || t2.isAlive() || t3.isAlive());
+</b>}</pre>
+    <p>El bucle <b>do...while</b>  lo modificamos también, y ahora nos muestra cuánto
+    vale el contador de cada hilo cada vez. Dentro del bucle, hacemos que el
+    hilo actual (es decir, el programa principal), se duerma cada 100 ms, para
+    dejar sitio a los hilos en el procesador.</p>
+    <p>Ejecuta después el programa varias veces (3 o 4), y comprueba el orden
+    en el que terminan los hilos. ¿Existe mucha diferencia de tiempo entre la
+    finalización de éstos? ¿Por qué?</p>
+  </li>
+  <li>Vamos a modificar la prioridad de los hilos, para hacer que terminen en
+    orden inverso al que se lanzan. Para ello daremos al hilo 3 la máxima
+    prioridad, al hilo 2 una prioridad normal, y al hilo 1 una prioridad
+    mínima:<pre class="codigo">public Ej2()
+{
+	MiHilo t = new MiHilo(&quot;Hilo 1&quot;);
+	MiHilo t2 = new MiHilo(&quot;Hilo 2&quot;);
+	MiHilo t3 = new MiHilo(&quot;Hilo 3&quot;);
+
+<b>	t.setPriority(Thread.MIN_PRIORITY);
+	t2.setPriority(Thread.NORM_PRIORITY);
+	t3.setPriority(Thread.MAX_PRIORITY);
+
+</b>	t.start();
+	t2.start();
+	t3.start();
+
+	...
+}</pre>
+    <p>
+    Observa si los hilos terminan en el orden establecido. ¿Existe esta vez
+    más diferencia de tiempos en el orden de finalización?<br>
+  </li>
+  <li><p>Observa los campos locales de la clase <i>MiHilo</i>: la variable <i>contador</i>
+    y el campo <i>nombre</i>. A juzgar por lo que has visto en la ejecución de
+    los hilos: ¿Podría modificar el hilo t2 el valor de estos campos para el
+    hilo t3, es decir, comparten los diferentes hilos estos campos, o cada uno
+    tiene los suyos propios? ¿Qué pasaría si los tres hilos intentasen
+    modificar el campo <i>valor</i> de la clase principal <i>Ej2</i>, también
+    tendrían una copia cada uno o accederían los tres a la misma variable?</li>
+</ol>
+        
+<p><b>2.</b> En este ejercicio vamos a practicar con la sincronización entre
+múltiples hilos, resolviendo el problema de los productores 
+  y los consumidores. Vamos a definir 3 clases: el hilo <b> Productor</b>, el 
+  hilo <b>Consumidor</b>, y el objeto <b>Recipiente </b>donde el productor deposita 
+  el valor producido, y de donde el consumidor extrae los datos.
+        </p>
+        
+<ol>
+  <li>Antes de comenzar, lee el apartado <b>2.2.3</b> (<i>Sincronización de
+    hilos</i>) del tema 2 de
+    teoría.<br>
+  </li>
+  <li>Echa un vistazo a la clase <i>Ej3.java</i> que se proporciona en la
+    plantilla de la sesión. Verás que tiene 3 subclases: una llamada <i>Productor</i>,
+    que serán los hilos que se encarguen de producir valores, otra llamada <i>Consumidor</i>,
+    que serán los hilos que se encargarán de consumir los valores producidos
+    por los primeros, y una tercera llamada <i>Recipiente</i>, donde los <i>Productores</i>
+    depositarán los valores producidos, y los <i>Consumidores</i> retirarán
+    dichos valores.<br>
+    <br>
+    Los valores producidos no son más que números enteros, que los productores
+    generarán y los consumidores leerán.&nbsp;<br>
+    <br>
+    Si miramos el código de los hilos <i>Productores</i>, vemos (método <i>run</i>)
+    que los valores que producen van de 0 a 9, y entre cada producción duermen
+    una cantidad aleatoria, entre 1 y 2 segundos.<br>
+    <br>
+    En cuanto a los <i>Consumidores</i>, vemos que entre cada consumición
+    también duermen una cantidad aleatoria entre 1 y 2 segundos, y luego
+    consumen el valor.<br>
+    <br>
+    Para producir y para consumir se utilizan los métodos <i>produce</i>
+    y <i>consume</i>, respectivamente, de la clase <i>Recipiente</i>.<br>
+  </li>
+  <li>Compila y prueba varias veces (3 o 4) el funcionamiento de la clase.<pre class="codigo">javac Ej3.java
+java Ej3</pre>
+    <p>¿Funciona bien el programa? ¿Qué anomalía(s) detectas?<br>
+  </li>
+  <li>Como habrás podido comprobar, el programa no funciona correctamente: hay
+    iteraciones en las que el hilo <i>Consumidor</i> consume ANTES de
+    que el <i>Productor</i> produzca el nuevo valor, o el <i>Productor</i>
+    produce dos valores seguidos sin que el <i>Consumidor</i> los consuma.&nbsp;<br>
+    <br>
+ Es necesario sincronizarlos de forma que el <i>Consumidor
+    </i>se espere a que el <i>Productor</i> produzca, y luego el <i>Productor</i>
+    espere a que el <i>Consumidor</i> consuma, antes de generar otro nuevo
+    valor. Es decir, el funcionamiento correcto debería ser que el
+ consumidor consuma exactamente los mismos valores que el productor ha
+ producido, sin saltarse ninguno ni repetirlos.<br>
+  </li>
+  <li><p>   Vamos a añadir el código necesario en los métodos <i>produce
+  </i>y <i>consume</i> para sincronizar el acceso a ellos. El comportamiento
+  debería ser el siguiente:</p>
+    <ol type="a">
+    <li>Si queremos producir y todavía hay datos disponibles en el recipiente,
+      esperaremos hasta que se saquen, si no produciremos y avisamos a posibles
+      consumidores que estén a la espera.<pre class="codigo">public void produce(int valor) 
+{
+<b>	/* Si hay datos disponibles esperar a que se consuman */
+</b>
+	if(disponible) {
+		try {
+<b>			wait();
+</b>		} catch(InterruptedException e) { }
+	}
+
+	this.valor = valor;
+
+<b>	/* Ya hay datos disponibles */
+</b>
+	disponible = true;
+
+<b> 	/* Notificar de la llegada de datos a consumidores a la espera */
+</b>
+<b>	notifyAll();
+</b>
+}</pre>
+      ¿Qué hace el método <i>wait</i> en este código?<br>
+      ¿Para qué se utiliza el flag <i>disponible</i>?<br>
+      ¿Qué efecto tiene la llamada a <i>notifyAll</i>?¿Qué pasaría si no
+      estuviese?<br>
+      </li>
+    <li>Si queremos consumir y no hay datos disponibles en el recipiente,
+      esperaremos hasta que se produzcan, si no consumimos el valor disponible y
+      avisamos a posibles productores que estén a la espera.<pre class="codigo">public int consume()
+{
+<b>	/* Si no hay datos disponibles esperar a que se produzcan */
+</b>
+	if(!disponible) {
+		try {
+			wait();
+		} catch(InterruptedException e) { }
+	}
+
+<b>	/* Ya no hay datos disponibles */
+</b>
+	disponible = false;
+
+<b>	/* Notificar de que el recipiente esta libre a productores en espera */
+</b>	notifyAll();
+
+	return valor;
+}</pre>
+      </li>
+    </ol>
+  </li>
+  <li><p>Compilad y ejecutad el programa. ¿Qué excepción o error da? ¿A qué
+    puede deberse?</p>
+  </li>
+  <li><p>El error del paso anterior lo da porque no podemos llamar a los
+    métodos <i>wait</i> o <i>notify/notifyAll</i> si no tenemos la variable
+    cerrojo. Dicha variable se consigue dentro de bloques de código <i>synchronized</i>,
+    de forma que el primer hilo que entra es quien tiene el cerrojo, y hasta que
+    no salga o se ponga a esperar, no lo liberará.&nbsp;<br>
+    <br>
+    Para corregir el error, debemos hacer que tanto <i>produce</i> como <i>consume</i>
+    sean dos métodos <i>synchronized</i>, de forma que nos aseguremos que sólo
+    un hilo a la vez entrará, y podrá ejecutar dichos métodos.</p>
+    <pre class="codigo">public <b>synchronized</b> int consume() 
+{
+	...
+}
+
+public <b>synchronized</b> void produce (int valor)
+{
+	...
+}</pre>
+  </li>
+  <li><p>Compilar y comprobar que el programa funciona correctamente. Si lo
+    ejecutáis varias veces, podría darse el caso de que aún salgan mensajes
+    de consumición ANTES de que se muestren los de producción respectivos, por
+    ejemplo:
+  </p>
+    <pre class="codigo">Produce 0
+Consume 0
+<b>Consume 1
+Produce 1
+</b>Produce 2
+Consume 2
+...</pre>
+    <p>... pero aún así el programa es correcto. ¿A qué se debe entonces que
+    puedan salir los mensajes en orden inverso? (AYUDA: observad el método <i>System.out.println(...)</i>
+    que hay al final de los métodos <i>run</i> de <i>Productor</i> y <i>Consumidor</i>,
+    que es el que muestra estos mensajes... ¿hay algo que garantice que se
+    ejecute este método en orden?)
+  </p>
+  </li>
+</ol>
+ 
+<p><b>PARA ENTREGAR</b></p>
+<ul>
+  <li>Fichero<b>  Ej2.java</b> con todas las modificaciones indicadas.</li>
+  <li>Fichero<b> Ej3.java</b> con el problema de los productores y los
+    consumidores resuelto</li>
+  <li>Fichero de texto <b>respuestas.txt</b> contestando a todas las preguntas
+    formuladas.</li>
+</ul>
+ 
+    </body>
+    </html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios Sesion 13</title>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ 
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+ <body bgcolor="#ffffff" text="#000000">
+<h1><span class="section">Sesión 13</span> </h1>
+<p>&nbsp;</p>
+ 
+<p><b>1.</b>    Vamos a realizar un ejercicio que nos permita practicar cómo
+dibujar en Java, y posteriormente realizar animaciones con esos dibujos.</p>
+ 
+<ol>
+  <li>Antes de comenzar, lee la introducción al apartado <b>3.4</b>
+    (<i>Gráficos y animación</i>), y los subapartados <b>3.4.1 </b>(<i>Gráficos
+    en AWT</i>), y <b>3.4.2 </b>(<i>Contexto gráfico: Graphics</i>) entero,
+    incluyendo sus subapartados, del tema 3 de teoría.<br>
+  </li>
+  <li>Echa un vistazo a la clase <i>Ej1.java</i> que se proporciona en la
+    plantilla de la sesión. Verás que es un subtipo de <i>JFrame</i>, de 300
+    de ancho por 300 de alto, y que tiene un <i>GridLayout</i> de 2 filas y 1
+    columna.<br>
+    <br>
+    Verás también que dentro de ese <i>GridLayout</i> coloca dos componentes.
+    Uno de tipo <i>MiPanel</i> (una clase interna definida dentro de <i>Ej1</i>),
+    y otro de tipo <i>MiCanvas </i>(también otra clase interna de <i>Ej1</i>).
+    Observa que el primero es un subtipo de <i>JPanel</i>, y el segundo un
+    subtipo de <i>Canvas</i>.<br>
+  </li>
+  <li>Compila y ejecuta la clase para comprobar que, de momento, no hay errores.
+    Aparecerá una ventana de 300 x 300 donde no se ve nada (están añadidos el
+    canvas y el panel, pero al estar vacíos no se ve nada).<br>
+  </li>
+  <li>Vamos a hacer que tanto en <i>MiCanvas</i> como en <i>MiPanel</i> se
+    dibujen un rectángulo azul y un círculo verde. Para ello, vamos a cada
+    clase y definimos dentro un método <i>paint</i> propio, que será el
+    encargado de dibujar estos elementos:<pre class="codigo">...
+class MiPanel extends JPanel
+{
+	...
+	
+<b>	public void paint(Graphics g)
+	{
+		g.setColor(Color.blue);
+		g.fillRect(5, 0, 100, 25);
+		g.setColor(Color.green);
+		g.fillOval(125, 0, 100, 50);
+	}
+</b>}
+
+class MiCanvas extends Canvas
+{
+	...
+<b>	public void paint(Graphics g)
+	{
+		g.setColor(Color.blue);
+		g.fillRect(5, 0, 100, 25);
+		g.setColor(Color.green);
+		g.fillOval(125, 0, 100, 50);
+	}</b>
+}</pre>
+    Observa que los dos (panel y canvas) dibujan las figuras en sus mismas
+    coordenadas (relativas a cada uno), de forma que la apariencia en los dos es
+    la misma.<br>
+  </li>
+  <li>Compila y ejecuta ahora la aplicación. Quedaría algo como esto:<br>
+    <br>
+        <div align="center"><img border="0" src="imagenes/modulo2/dibujos.gif" width="295" height="295"></div>
+    <p class="caption">Figura 1. Apariencia de la aplicación de dibujar. El
+    panel superior es MiPanel, y el inferior es MiCanvas</p>
+  </li>
+  <li>Vamos a introducir ahora algunas animaciones sobre estas figuras. Antes de
+    seguir, lee entero el apartado <b>3.4 </b>(<i>Animaciones</i>) del tema 3 de
+    teoría.<br>
+  </li>
+  <li>Vamos a mover todas las figuras desde una coordenada y = 0 hasta otra y =
+    100.<br>
+    <ol type="a">
+      <li>Lo primero, definimos una variable global en la clase <i>Ej1</i>, que
+        guarde dicha coordenada y:
+    <pre class="codigo">public class Ej1 extends JFrame
+{
+	MiPanel mp = new MiPanel();
+	MiCanvas mc = new MiCanvas();
+<b>	int yObj = 0;
+	...</b></pre>
+      </li>
+      <li>Para hacer las animaciones, como se explica en el apartado de teoría,
+        es importante hacerlas desde un hilo aparte, para no bloquear el
+        programa principal. Así que definimos un hilo en nuestra clase
+        principal, y hacemos que ésta implemente la interfaz <i>Runnable</i>:
+    <pre class="codigo">public class Ej1 extends JFrame <b>implements Runnable</b>
+{
+	MiPanel mp = new MiPanel();
+	MiCanvas mc = new MiCanvas();
+	int yObj = 0;
+	<b>Thread t = new Thread(this);</b>
+<b>	...</b></pre>
+        <p>Al final del constructor, iniciamos el hilo:</p>
+    <pre class="codigo">public Ej1()
+{
+<b>	...
+	t.start();
+</b>}</pre>
+        <p>Finalmente, definimos un método <i>run</i> en la clase <i>Ej1</i>,
+        que haga las animaciones. Lo que va a hacer es incrementar la <i>yObj</i>
+        de uno en uno, hasta 100, y repintar el panel y el canvas en cada
+        iteración. Dormirá 100 ms entre cada iteración para permitir que el
+        proceso principal (la ventana) siga su curso.</p>
+    <pre class="codigo">public void run()
+{	
+	while (yObj &lt; 100)
+	{
+		yObj++;
+		mp.repaint();
+		mc.repaint();
+		try
+		{
+			Thread.currentThread().sleep(100);
+		} catch (Exception ex) {}
+	}
+}</pre>
+        <p>Finalmente, nos queda modificar un poco los métodos <i>paint</i> de <i>MiCanvas</i>
+        y <i>MiPanel</i>, para hacer que la coordenada Y donde se dibujan las
+        figuras no sea fija, sino que sea la variable <i>yObj</i>:</p>
+        <pre class="codigo">...
+class MiPanel extends JPanel
+{
+	...
+	
+	public void paint(Graphics g)
+	{
+		g.setColor(Color.blue);
+		g.fillRect(5, <b>yObj</b>, 100, 25);
+		g.setColor(Color.green);
+		g.fillOval(125, <b>yObj</b>, 100, 50);
+	}
+}
+
+class MiCanvas extends Canvas
+{
+	...
+	public void paint(Graphics g)
+	{
+		g.setColor(Color.blue);
+		g.fillRect(5, <b>yObj</b>, 100, 25);
+		g.setColor(Color.green);
+		g.fillOval(125, <b>yObj</b>, 100, 50);
+	}
+}</pre>
+      </li>
+      <li>Prueba a compilar y ejecutar la clase... ¿Qué efecto no deseable
+        observas en el panel superior (<i>MiPanel</i>)? ¿Y en el inferior (<i>MiCanvas</i>)?<br>
+      </li>
+    </ol>
+  </li>
+  <li>Vamos a corregir los dos efectos no deseables que ocurrían en el paso
+    anterior.<br>
+    <ul>
+      <li>En el caso de <i>MiPanel</i>, el efecto de rastro se subsana
+        definiendo un método <i>update</i> que llame a <i>paint</i>, y haciendo
+        que en el método <i>paint</i> se limpie el área de dibujo antes de
+        volver a dibujar (con un <i>clearRect</i>:<pre class="codigo">class MiPanel extends JPanel
+{
+	...
+		
+<b>	public void update(Graphics g)
+	{
+		paint(g);
+	}
+</b>		
+	public void paint(Graphics g)
+	{
+<b>		g.clearRect(0, 0, getWidth(), getHeight());
+</b>		g.setColor(Color.blue);
+		g.fillRect(5, yObj, 100, 25);
+		g.setColor(Color.green);
+		g.fillOval(125, yObj, 100, 50);
+	}
+}</pre>
+      </li>
+      <li>En el caso de <i>MiCanvas</i> el parpadeo (<i>flicker</i>) se corrige
+        empleando la técnica del doble buffer. Definimos un campo de tipo <i>Image
+        </i>en la clase <i>MiCanvas</i>, que utilizaremos como <i>backbuffer</i>.
+        Haremos un método <i>update</i> que llame a <i>paint</i>, como antes, y
+        luego en el paint dibujaremos sobre este <i>backbuffer</i>, y volcaremos
+        el resultado entero en pantalla:<pre class="codigo">class MiCanvas extends Canvas
+{
+<b>	Image backbuffer = null;			
+</b>		
+	public MiCanvas()
+	{
+	}
+
+<b>	public void update(Graphics g)
+	{
+		paint(g);
+	}
+</b>		
+	public void paint(Graphics g)
+	{
+<b>		if(backbuffer == null)
+			backbuffer = createImage(getWidth(), getHeight());
+</b>	
+		// Dibujamos los gráficos en el backbuffer
+	
+<b>		Graphics off_g = backbuffer.getGraphics();
+		off_g.clearRect(0, 0, getWidth(), getHeight());
+</b>		off_g.setColor(Color.blue);
+		off_g.fillRect(5, yObj, 100, 25);
+		off_g.setColor(Color.green);
+		off_g.fillOval(125, yObj, 100, 50);
+	
+		// Volcamos el backbuffer a pantalla
+	
+<b>		g.drawImage(backbuffer, 0, 0, getWidth(), getHeight(), this);
+		g.dispose();</b>
+	}
+}</pre>
+        <p>Observa como hacemos el mismo dibujo, pero sobre los gráficos del <i>backbuffer
+        (off_g)</i>, no sobre los del canvas (<i>g</i>). Después volcamos la
+        imagen entera. Observa también que es necesario limpiar el <i>backbuffer</i>
+        (con un <i>clearRect</i>) antes de dibujar, puesto que de lo contrario
+        dejaríamos el rastro visto en <i>MiPanel</i>.<br>
+      </li>
+    </ul>
+  </li>
+  <li>Compila y ejecuta la aplicación, para ver que funciona ya correctamente.
+    ¿Por qué en el caso de <i>MiPanel</i> no ha sido necesario hacer el doble
+    buffer, y sí lo hemos tenido que hacer en <i>MiCanvas</i>?<br>
+  </li>
+</ol>
+ 
+<p><b>PARA ENTREGAR</b></p>
+<ul>
+  <li>Fichero<b>      Ej1.java</b>  &nbsp;con todos los cambios propuestos</li>
+  <li>Fichero de texto <b>respuestas.txt</b> contestando a todas las preguntas
+    formuladas.</li>
+</ul>
+ 
+    </body>
+    </html>

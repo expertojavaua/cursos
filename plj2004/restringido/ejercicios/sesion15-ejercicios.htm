@@ -1,0 +1,914 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios Sesion 15</title>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ 
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+ <body bgcolor="#ffffff" text="#000000">
+<h1><span class="section">Sesión 15</span> </h1>
+<p>En esta última sesión vamos a hacer una aplicación que reúna varios de
+los conceptos importantes vistos hasta ahora. Debéis elegir <b>una </b>de las
+dos propuestas siguientes:</p>
+ 
+<ul>
+  <li>Realizar una aplicación Swing que simule un <b>Paint simplificado</b>,
+    donde sólo se podrán dibujar círculos, rectángulos y líneas, y se
+    podrán guardar los datos en archivos, y recuperarlos. Si elegís esta
+    opción, deberéis hacer el <b><a href="#ej1">Ejercicio 1</a></b></li>
+</ul>
+<ul>
+  <li>Realizar un <b>juego Java</b> a pantalla completa. Si elegís esta otra
+    opción, deberéis hacer el <b><a href="#ej2">Ejercicio 2</a></b>.</li>
+</ul>
+<hr>
+<p><b><a name="ej1"></a>Ejercicio 1.</b>   Vamos a construir un <b>Paint</b> en
+versión simplificada. En dicho <i>Paint</i> deberemos poder dibujar tres tipos
+de figuras: círculos, rectángulos y líneas rectas. También deberemos poder
+guardar figuras en ficheros, y recuperarlas después desde la aplicación.&nbsp;</p>
+ 
+<p>Una apariencia general de la aplicación podría ser esta:</p>
+ 
+<div align="center">
+  <img border="0" src="imagenes/modulo3/paint.gif" width="398" height="295">
+</div>
+<p class="caption">Figura 1. Apariencia de la aplicación Paint</p>
+<p>Para hacer este ejercicio deberéis tomar el ejercicio que hicisteis en la <b>sesión
+10</b>, donde se os pedía que, en modo texto, indicarais qué figuras
+geométricas añadir o quitar de una lista.</p>
+ 
+<p>La estructura de clases y paquetes que vamos a necesitar es la misma que la
+de aquella sesión:</p>
+ 
+<ul>
+  <li><b>paquete geom</b>: con las figuras geométricas: contendrá la clase padre abstracta <i>Figura</i>,
+    y las subclases <i>Circulo.java</i>, <i>Rectangulo.java</i> y <i>Linea.java</i>
+    .</li>
+  <li><b>paquete io</b>: aquí tendremos la clase <i>EntradaTeclado</i>  (que no
+    utilizaremos en esta ocasión) y la
+    clase <i>IOFiguras</i> para guardar y recuperar un conjunto de figuras en un fichero.
+    Esta otra clase sí nos será útil.</li>
+</ul>
+<p>La clase principal de aquella aplicación (la de la sesión 10) era <i>AplicGeom.
+</i>La borraremos, y sustituiremos por la versión en modo gráfico, la clase <i>JAplicGeom</i>
+que se os da en la plantilla, para que la completéis.</p>
+<p><b>PREPARATIVOS PREVIOS</b></p>
+<p>Antes de empezar, debéis realizar un cambio en la clase <b>geom.Figura</b>,
+y es añadirle un método abstracto más, llamado <i>dibuja</i>:</p>
+<pre class="codigo">package geom;
+
+<b>import java.awt.Graphics;
+</b>
+public abstract class Figura implements java.io.Serializable
+{
+	public abstract String imprime();
+<b>	public abstract void dibuja(Graphics g);
+</b>}</pre>
+<p>Este método indicará cómo se debe dibujar cada subtipo de figura. Por
+tanto, deberéis añadir este método también en las tres subclases (<b>Circulo,
+Rectangulo</b> y <b>Linea</b>), indicando cómo se dibujaría cada una:</p>
+<ul>
+  <li>En el caso del <b>Circulo</b>, habría que usar el método <b>drawOval</b>
+    del parámetro <i>Graphics</i>, para indicarle que dibuje una elipse, que en
+    realidad será un círculo centrado en (<i>x, y</i>), y con radio <i>radio</i>,
+    es decir, una elipse que empiece en (<i>x - x/2, y - y/2</i>), y que tenga
+    anchura = <i>radio</i>, altura = <i>radio</i>:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">package geom;
+
+<b>import java.awt.Graphics;
+</b>
+public class Circulo extends Figura implements java.io.Serializable
+{
+	...
+<b>	public void dibuja(Graphics g)
+	{
+		g.drawOval(x - x/2, y - y/2, radio, radio);
+	}
+</b>}</pre>
+</blockquote>
+<ul>
+  <li>En el caso del <b>Rectángulo</b>, indicamos con <b>drawRect</b> que
+    dibuje un rectángulo con inicio en (<i>x1, y1</i>), y con anchura <i>x2 -
+    x1 </i>y altura<i> y2 - y1</i>. (NOTA: se asume que x2 &gt; x1, e y2 &gt;
+    y1):</li>
+</ul>
+<blockquote>
+  <pre class="codigo">package geom;
+
+<b>import java.awt.Graphics;
+</b>
+public class Rectangulo extends Figura implements java.io.Serializable
+{
+	...
+<b>	public void dibuja(Graphics g)
+	{
+		g.drawRect(x1, y1, x2 - x1, y2 - y1);
+	}
+</b>}</pre>
+</blockquote>
+<ul>
+  <li>En el caso de la <b>Linea</b>, indicamos con <b>drawLine</b> que dibuje
+    una línea con inicio en (<i>x1, y1</i>) y fin en (<i>x2, y2</i>):</li>
+</ul>
+<blockquote>
+  <pre class="codigo">package geom;
+
+<b>import java.awt.Graphics;
+</b>
+public class Rectangulo extends Figura implements java.io.Serializable
+{
+	...
+<b>	public void dibuja(Graphics g)
+	{
+		g.drawLine(x1, y1, x2, y2);
+	}
+</b>}</pre>
+</blockquote>
+<p>Con esto ya tenemos preparadas nuestras figuras para dibujarse. Nos faltará
+únicamente completar el programa principal (<i>JAplicGeom</i>) para indicar
+cómo dibujarlas, guardarlas y recuperarlas.</p>
+<p><b>OBJETIVOS QUE DEBE CUMPLIR EL PROGRAMA</b></p>
+<p>Se os da libertad para que cada uno implemente el programa como quiera,
+siempre que se cumplan los siguientes <b>requisitos</b>:</p>
+<ul>
+  <li>Se deben poder dibujar los tres tipos de figuras: círculos, rectángulos
+    y líneas</li>
+  <li>Se deben poder guardar las figuras en un fichero, y recuperarlas después
+    si se quiere.</li>
+</ul>
+<p><b>NOTAS ACERCA DE LA IMPLEMENTACIÓN</b></p>
+<p>Vamos a ver ahora cómo hacer los apartados que más os puedan costar.</p>
+<p><a name="1indice" href="#1a">Cómo construir la ventana</a><br>
+<a href="#1b">Cómo gestionar las figuras</a><br>
+<a href="#1c">Cómo abrir y guardar archivos de figuras</a><br>
+<a href="#1d">Cómo responder a peticiones sobre menús y botones</a><br>
+<a href="#1e">Cómo responder a eventos sobre el área de dibujo</a><br>
+<a href="#1f">Cómo dibujar las figuras</a><br>
+</p>
+<p><b><a name="1a"></a>a) Cómo construir la ventana</b></p>
+<p>Como veis en la figura 1, la ventana de la aplicación tiene un área de
+dibujo en la parte superior, y tres botones de radio en la inferior, que indican
+qué figura dibujar, además de los menús.</p>
+<p>Para la parte superior, podemos crearnos una clase interna <i>MiAreaDibujo</i>,
+que sea un subtipo de <i>JPanel</i>, y que podamos colocar en la parte superior
+para dibujar. Dicha clase tendrá un método <i>update</i> y otro <i>paint</i>,
+donde pondremos el código necesario para dibujar las figuras:</p>
+<pre class="codigo">import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class JAplicGeom extends JFrame
+{
+<b>	class MiAreaDibujo extends JPanel
+	{
+		public MiAreaDibujo()
+		{
+		}
+	
+		public void update(Graphics g)
+		{
+			paint(g);
+		}
+	
+		public void paint(Graphics g)
+		{
+			// Borrar el área de dibujo
+			g.clearRect(0, 0, getWidth(), getHeight());
+	
+			// Dibujar las figuras (más adelante)...
+		}
+	}
+</b>}</pre>
+<p>Luego añadiríamos un objeto de este tipo en la clase principal:</p>
+<pre class="codigo">...
+public class JAplicGeom extends JFrame
+{
+	<b>MiAreaDibujo mad;
+</b>
+<b>	public JAplicGeom()
+	{
+		...
+		mad = new MiAreaDibujo();
+	}
+</b>	...
+}</pre>
+<p>Para la parte inferior, podemos crear tres <i>JRadioButtons</i>, y añadirlos
+a un <i>JPanel</i>.</p>
+<pre class="codigo">...
+public class JAplicGeom extends JFrame
+{
+	MiAreaDibujo mad;
+<b>	JRadioButton btnCirculo;
+	JRadioButton btnRectangulo;
+	JRadioButton btnLinea;	
+</b>
+	public JAplicGeom()
+	{
+		...
+		mad = new MiAreaDibujo();
+
+<b>		btnCirculo = new JRadioButton(&quot;Circulo&quot;, true);
+		btnRectangulo = new JRadioButton(&quot;Rectangulo&quot;);
+		btnLinea = new JRadioButton(&quot;Linea&quot;);
+
+		JPanel panelBotones = new JPanel();
+		panelBotones.add(btnCirculo);
+		panelBotones.add(btnRectangulo);
+		panelBotones.add(btnLinea);
+</b>	}
+	...
+}</pre>
+<p>Finalmente, basta con colocar el área de dibujo arriba, y el panel de
+botones abajo:</p>
+<pre class="codigo">...
+public class JAplicGeom extends JFrame
+{
+	MiAreaDibujo mad;
+	JRadioButton btnCirculo;
+	JRadioButton btnRectangulo;
+	JRadioButton btnLinea;	
+
+	public JAplicGeom()
+	{
+		...
+		mad = new MiAreaDibujo();
+
+		btnCirculo = new JRadioButton(&quot;Circulo&quot;, true);
+		btnRectangulo = new JRadioButton(&quot;Rectangulo&quot;);
+		btnLinea = new JRadioButton(&quot;Linea&quot;);
+
+		JPanel panelBotones = new JPanel();
+		panelBotones.add(btnCirculo);
+		panelBotones.add(btnRectangulo);
+		panelBotones.add(btnLinea);
+
+<b>		getContentPane().add(mad, BorderLayout.CENTER);
+		getContentPane().add(panelBotones, BorderLayout.SOUTH);</b>
+	}
+	...
+}</pre>
+<p>Para los menús, definimos un <i>JMenuBar</i>, un <i>JMenu</i> llamado
+&quot;Archivo&quot;, y dentro tres items: &quot;Abrir&quot; (para abrir un
+fichero de figuras), &quot;Guardar&quot; (para guardar las figuras actuales en
+fichero) y &quot;Salir&quot; (para cerrar la aplicación):</p>
+<pre class="codigo">...
+public class JAplicGeom extends JFrame
+{
+	...
+	public JAplicGeom()
+	{
+		...
+<b>		JMenuBar mb = new JMenuBar();
+		JMenu m = new JMenu(&quot;Archivo&quot;);
+</b>		
+<b>		JMenuItem mAbrir = new JMenuItem(&quot;Abrir&quot;);
+		m.add(mAbrir);</b>		
+<b>		JMenuItem mGuardar = new JMenuItem(&quot;Guardar&quot;);
+		m.add(mGuardar);
+		JMenuItem mSalir = new JMenuItem(&quot;Salir&quot;);
+		m.add(mSalir);
+</b>		
+<b>		mb.add(m);
+
+		this.setJMenuBar(mb);		
+</b>	}
+	...
+}</pre>
+<p>Definimos un &quot;main&quot; donde creamos la ventana, le damos tamaño, le
+ponemos el evento de cerrarse, y la mostramos:</p>
+<pre class="codigo">...
+public class JAplicGeom extends JFrame
+{
+	...
+	<b>public static void main(String[] args)
+	{
+		JAplicGeom jag = new JAplicGeom();
+
+		jag.setSize(400, 300);
+
+		jag.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+
+		jag.show();		
+	}</b>
+}</pre>
+<p>Probad a compilar y ejecutar el programa ahora, para depurar erratas y ver
+que se os muestra la ventana como la de la figura 1 (deberéis importar los
+paquetes necesarios en el fichero <i>JAplicGeom</i>).</p>
+<p><a href="#1indice">Volver</a></p>
+<p><b><a name="1b"></a>b)</b>  <b>Cómo gestionar las </b><b> figuras</b></p>
+<p>Para llevar un seguimiento de la lista de figuras, podemos definir una
+variable global que sea un <b>ArrayList</b>, donde almacenemos las figuras que
+vamos dibujando. Sería buena idea también definir una variable <b>Figura</b>
+que almacene la figura que se está dibujando actualmente (antes de añadirla a
+la lista):</p>
+<pre class="codigo">...
+public class JAplicGeom extends JFrame
+{
+	<b>ArrayList figuras = new ArrayList();
+	Figura figActual = null;
+	...</b>
+}</pre>
+<p>Cuando empecemos a dibujar una figura, ésta se almacenará temporalmente en <i>figActual</i>,
+y cuando terminemos de dibujarla, la añadiremos a la lista <i>figuras</i>, y
+volveremos a dejar vacía <i>figActual</i>. En otros apartados se explica <a href="#1cargar">cómo
+cargar una lista de fichero</a>, o <a href="#1actualizar">cómo ir actualizando
+la lista con nuevas figuras</a> dibujadas.</p>
+<p><a href="#1indice">Volver</a></p>
+<p><b><a name="1c"></a>c) Cómo abrir y guardar archivos de figuras</b></p>
+<p>En primer lugar vamos a ver qué hacer cuando elijamos <i>Archivo - Abrir</i>
+o <i>Archivo - Guardar</i>. Para leer o guardar una lista de figuras, tenemos
+los métodos <i>leeFiguras</i> y <i>guardaFiguras</i>, que implementamos en la
+clase <i>io.IOFiguras</i>, en la sesión 10.</p>
+<p>Para <b>elegir el fichero del que leer</b>, o donde guardar, utilizaremos la
+clase <b>JFileChooser<i> </i></b>de Swing.&nbsp;</p>
+<p>De esta forma, si quiero <b>leer figuras de un fichero</b>, y guardarlas en
+el campo <i>figuras</i> definido antes, haré algo como:</p>
+<pre class="codigo"><a name="1cargar"></a>JFileChooser jfc = new JFileChooser(&quot;.&quot;);
+int result = jfc.showOpenDialog(this);
+if (result == JFileChooser.APPROVE_OPTION)
+{
+	String fichero = jfc.getSelectedFile().getAbsolutePath();
+	Figura[] figs = IOFiguras.leeFiguras(fichero);
+	figuras = new ArrayList();
+	if (figs != null)
+		for (int i = 0; i &lt; figs.length; i++)
+			figuras.add(figs[i]);
+	repaint();
+}</pre>
+<p>donde primero muestro el diálogo con <i>showOpenDialog</i> (<i>this</i>
+sería la ventana actual, que actúa como ventana padre del diálogo), recojo la
+respuesta, y si es APPROVE_OPTION quiere decir que he elegido un fichero. En ese
+caso cojo la ruta y el nombre del fichero (<i>getAbsolutePath</i>), y llamo a <i>IOFiguras.leeFiguras</i>
+para obtener las figuras. Luego las cargo en el campo <i>figuras</i>, y redibujo
+la ventana.</p>
+<p>Por otro lado, si quiero <b>guardar las figuras en un fichero</b>, haré algo
+como:</p>
+<pre class="codigo">JFileChooser jfc = new JFileChooser(&quot;.&quot;);
+int result = jfc.showSaveDialog(this);
+if (result == JFileChooser.APPROVE_OPTION)
+{
+	String fichero = jfc.getSelectedFile().getAbsolutePath();
+	Figura[] figs = (Figura[])(figuras.toArray(new Figura[0]));
+	IOFiguras.guardaFiguras(figs, fichero);
+}</pre>
+<p>Es muy parecido a lo anterior: muestro el diálogo (ahora con <i>showSaveDialog</i>),
+recojo el fichero elegido, y llamo a <i>IOFiguras.guardaFiguras</i> para guardar
+la lista de figuras en el fichero.</p>
+<p><b>NOTA</b>: estos dos bloques tendréis que colocarlos donde toque, es
+decir, el primero lo pondréis donde se dé la orden de <a href="#1abrir">abrir
+un fichero</a>, y el segundo donde se dé la orden de <a href="#1guardar">guardar</a>.</p>
+<p><a href="#1indice">Volver</a></p>
+<p><b><a name="1d"></a>d) Cómo responder a peticiones sobre menús y botones</b></p>
+<p>Distinguimos dos tipos de eventos en el programa: los que se producen al
+elegir opciones de menú, o pulsar botones de radio, y los que se producirán
+cuando dibujemos figuras en el área de dibujo. Aquí trataremos los primeros.</p>
+<p>Notemos que necesitamos distinguir 6 tipos de opciones diferentes, entre
+menús y botones de radio:</p>
+<ul>
+  <li>Pulsar <b>Archivo - Abrir</b></li>
+  <li>Pulsar <b>Archivo - Guardar</b></li>
+  <li>Pulsar <b>Archivo - Salir</b></li>
+  <li>Pulsar botón de <b>Circulo</b></li>
+  <li>Pulsar botón de <b>Rectangulo</b></li>
+  <li>Pulsar botón de <b>Linea</b></li>
+</ul>
+<p>Podríamos definir un <i>ActionListener</i> para cada uno de estos elementos.
+Sin embargo, nos es más fácil hacer que la clase principal implemente <i>ActionListener</i>,
+y juntar todos los eventos en un solo método:</p>
+<pre class="codigo">...
+public class JAplicGeom extends JFrame <b>implements ActionListener</b>
+{
+	...
+	public JAplicGeom()
+	{
+		...
+		<b>btnCirculo.addActionListener(this);
+		btnRectangulo.addActionListener(this);
+		btnLinea.addActionListener(this);
+		mAbrir.addActionListener(this);
+		mGuardar.addActionListener(this);
+		mSalir.addActionListener(this);</b>
+	}
+	
+	<b>public void actionPerformed(ActionEvent e)
+	{
+	}</b>
+}</pre>
+<p>En el <i>actionPerformed</i> que hemos añadido, pondremos el código que
+controle TODAS esas acciones. Para distinguir qué acción se ha pedido, el
+parámetro <i>ActionEvent</i> tiene un método <i>getActionCommand</i>, que
+permite comparar y ver de qué opción se trata:</p>
+<pre class="codigo">	...
+	public void actionPerformed(ActionEvent e)
+	{
+		if (e.getActionCommand().equals(&quot;Abrir&quot;))
+		{
+			<b><a name="1abrir"></a>//... Qué hacer al elegir &quot;Archivo - Abrir&quot;</b>
+		} else if (e.getActionCommand().equals(&quot;Guardar&quot;)) {
+			<b><a name="1guardar"></a>//... Qué hacer al elegir &quot;Archivo - Guardar&quot;</b>
+		} else if (e.getActionCommand().equals(&quot;Salir&quot;)) {
+			<b>//... Qué hacer al elegir &quot;Archivo - Salir&quot;</b>
+		} else if (e.getActionCommand().equals(&quot;Circulo&quot;)) {
+			<b>// Marcar como seleccionado el Círculo, y quitar los otros</b>
+<b>			btnCirculo.setSelected(true);
+			btnRectangulo.setSelected(false);
+			btnLinea.setSelected(false);
+</b>		} else if (e.getActionCommand().equals(&quot;Rectangulo&quot;)) {
+			<b>// Marcar como seleccionado el Rectangulo, y quitar los otros</b>
+		} else if (e.getActionCommand().equals(&quot;Linea&quot;)) {
+			<b>// Marcar como seleccionada la Linea, y quitar los otros</b>
+		}
+	}
+<b>	...</b></pre>
+<p>El contenido de cada &quot;if&quot; o &quot;else&quot; deberéis rellenarlo
+vosotros.</p>
+<p><a href="#1indice">Volver</a></p>
+<p><b><a name="1e"></a>e) Cómo responder a eventos sobre el área de dibujo</b></p>
+<p><a name="1actualizar"></a>Cuando pinchemos con el ratón sobre el área de dibujo, empezará a
+dibujarse la figura que tengamos seleccionada de las tres de abajo. Cuando
+arrastremos el ratón con el botón pulsado, se redibujará la figura, con las
+nuevas dimensiones que le estemos dando. Finalmente, cuando soltemos el botón
+del ratón, se terminará de dibujar la figura.</p>
+<p>Para controlar todo esto, debemos definir dos tipos de eventos de ratón
+sobre la clase <i>MiAreaDibujo</i>: uno de tipo <i>MouseListener</i> (para
+cuando pulsemos el botón y lo soltemos), y otro de tipo <i>MouseMotionListener</i>
+(para cuando arrastremos el ratón). También sería interesante definir 4
+campos, <i>xIni, yIni, xFin, yFin</i> que marcarán los límites superior
+izquierdo e inferior derecho de la figura que dibujamos:</p>
+<pre class="codigo">...
+public class JAplicGeom extends JFrame <b>implements ActionListener</b>
+{
+	...
+	class MiAreaDibujo extends JPanel
+	{
+		<b>int xIni, yIni, xFin, yFin;
+</b>
+		public MiAreaDibujo()
+		{
+<b>			this.addMouseListener(new MouseAdapter()
+			{
+				public void mousePressed(MouseEvent e)
+				{
+					// Qué hacer al pulsar el boton
+				}
+				
+				public void mouseReleased(MouseEvent e)
+				{
+					// Qué hacer al soltar el boton
+				}
+			});
+			
+			this.addMouseMotionListener(new MouseMotionAdapter()
+			{
+				public void mouseDragged(MouseEvent e)
+				{
+					// Qué hacer al arrastrar el ratón
+				}
+			});
+</b>		}	
+	}
+}</pre>
+<p>Al <b>pulsar el botón del ratón</b>, crearemos una figura del tipo que
+tengamos seleccionado:</p>
+<pre class="codigo">public void mousePressed(MouseEvent e)
+{
+	xIni = xFin = e.getX();
+	yIni = yFin = e.getY();
+					
+	if (btnCirculo.isSelected())
+	{
+		figActual = new Circulo(xIni, yIni, 0);
+	} else if (btnRectangulo.isSelected()) {
+		figActual = new Rectangulo(xIni, yIni, xFin, yFin);
+	} else if (btnLinea.isSelected()) {
+		figActual = new Linea(xIni, yIni, xFin, yFin);
+	}
+}</pre>
+<p>Observa que el parámetro <i>MouseEvent</i> tiene métodos <i>getX()</i> y <i>getY()</i>
+que indican qué coordenadas estamos pinchando.</p>
+<p>Al <b>arrastrar el ratón</b>, iremos modificando los parámetros de la
+figura que habíamos creado, modificando sus coordenadas, anchura, o lo que
+toque:</p>
+<pre class="codigo">public void mouseDragged(MouseEvent e)
+{
+	xFin = e.getX();
+	yFin = e.getY();
+
+	if (btnCirculo.isSelected())
+	{
+		((Circulo)figActual).setX((xIni + xFin) / 2);
+		((Circulo)figActual).setY((yIni + yFin) / 2);
+		((Circulo)figActual).setRadio(Math.min(Math.abs(xIni - xFin), 
+                                                       Math.abs(yIni - yFin)));
+	} else if (btnRectangulo.isSelected()) {
+		((Rectangulo)figActual).setX1(Math.min(xIni, xFin));
+		((Rectangulo)figActual).setY1(Math.min(yIni, yFin));
+		((Rectangulo)figActual).setX2(Math.max(xIni, xFin));
+		((Rectangulo)figActual).setY2(Math.max(yIni, yFin));
+	} else if (btnLinea.isSelected()) {
+		((Linea)figActual).setX2(xFin);
+		((Linea)figActual).setY2(yFin);
+	}
+	repaint();
+}</pre>
+<p>Observad que para el círculo reajustamos el centro en la mitad de los
+límites de la figura, y ponemos como radio el valor mínimo entre la anchura y
+la altura. En el rectángulo ponemos como x1 e y1 los valores menores de
+coordenadas, y como x2 e y2 los mayores. Al terminar hacemos un repaint para que
+actualice el dibujo en pantalla.</p>
+<p>Al <b>soltar el botón del ratón</b>, añadimos la figura a la lista, y
+ponemos a <i>null</i> la figura actual:</p>
+<pre class="codigo">public void mouseReleased(MouseEvent e)
+{
+	xFin = e.getX();
+	yFin = e.getY();
+	figuras.add(figActual);
+	figActual = null;
+	repaint();
+}</pre>
+<p><a href="#1indice">Volver</a></p>
+<p><b><a name="1f"></a>f) Cómo dibujar las figuras</b></p>
+<p>Ya hemos visto cómo se va actualizando la lista de figuras a medida que
+vamos poniendo nuevas con el ratón. Ahora falta en el método <i>paint</i>
+decir cómo se dibujan. Basta con recorrer la lista de figuras, y llamar al
+método <i>dibuja</i> de cada una, pasándole los gráficos del panel.
+Finalmente, dibujamos la figura actual (<i>figActual</i>), si no es <i>null</i>,
+puesto que será la figura que estamos modificando actualmente:</p>
+<pre class="codigo">public void paint(Graphics g)
+{
+	g.clearRect(0, 0, getWidth(), getHeight());
+
+<b>	for (int i = 0; i &lt; figuras.size(); i++)
+	{
+		Figura f = (Figura)(figuras.get(i));
+		f.dibuja(g);
+	}
+
+	if (figActual != null)
+		figActual.dibuja(g);</b>
+}</pre>
+<p><a href="#1indice">Volver</a></p>
+<p><b>ELEMENTOS OPTATIVOS</b></p>
+<p>Podéis añadir (si queréis) los elementos optativos que queráis. Aquí os
+proponemos algunos:</p>
+<ul>
+  <li>
+    <p align="left">Como CURIOSIDAD, comprobad qué le pasa al menú si la clase
+    <i>MiAreaDibujo </i>hereda de <i>Canvas</i> en lugar de <i>JPanel</i>.</li>
+  <li>Permitir borrar figuras del panel</li>
+  <li>Permitir elegir el color con que dibujar cada figura.</li>
+  <li>Permitir dibujar un color de fondo para círculos y rectángulos, distinto
+    al del contorno</li>
+</ul>
+<hr>
+<p><b><a name="ej2"></a>Ejercicio 2. </b>En este ejercicio vamos a hacer un <b>juego
+Java</b> que consistirá en lo siguiente: tendremos un bosque de fondo, y en la
+parte inferior de la pantalla, al oso Yogi, que se podrá mover de izquierda a
+derecha de la pantalla. El juego consistirá en que, desde arriba caerán una
+serie de alimentos, que Yogi deberá coger. Por cada alimento que coja antes de
+que llegue al suelo, sumará un punto, y por cada uno que no pueda recoger,
+perderá una vida.</p>
+<p>La apariencia general del juego sería parecida a la siguiente:</p>
+<div align="center">
+  <img border="0" src="imagenes/modulo3/juegoYogi.gif" width="512" height="384">
+</div>
+<p class="caption">Figura 2. Apariencia del juego Java</p>
+<p>En la plantilla, en la carpeta <i>Yogi </i>tenéis una parte del juego hecha,
+para seguir desde ahí. Veréis una clase principal <b>Yogi.java</b>, que
+tendrá la parte importante del juego. Si la compiláis y ejecutáis (deberéis
+elegir el modo gráfico), veréis que simplemente aparece Yogi, y lo podréis
+mover de izquierda a derecha. Explicaremos a continuación cómo está hecho
+todo eso.</p>
+<p>Deberéis completar el juego para que:</p>
+<ul>
+  <li>Aparezca el bosque de fondo (imagen <i>bosque.jpg</i> de la plantilla)</li>
+  <li>Caiga comida desde arriba (imagen <i>food.png</i> de la plantilla)</li>
+  <li>Se actualicen los puntos y las vidas (imagen <i>vida.png</i> de la
+    plantilla) según corresponda, cuando vayan
+    cayendo los alimentos</li>
+</ul>
+<p><b>CONSIDERACIONES SOBRE LA IMPLEMENTACION</b></p>
+<p>Tenéis libertad para hacer el juego como queráis, siempre que se cumplan
+los puntos anteriores. Aquí vamos a contaros cómo está hecha la parte que se
+os da, y cómo poder hacer lo que queda.</p>
+<p>Conviene que leáis el primer apartado de los siguientes antes que nada, y
+entendáis con él el código que se os da en la plantilla, para poderlo
+modificar.</p>
+<p><a name="2indice" href="#2a">Clases hechas en la plantilla</a>&nbsp;<br>
+<a href="#2b">Cómo cargar el fondo</a><br>
+<a href="#2c">Cómo dibujar los alimentos</a><br>
+<a href="#2d">Cómo dibujar las vidas</a><br>
+<a href="#2e">Cómo dibujar los puntos</a></p>
+<p><b><a name="2a"></a>a) Clases hechas en la plantilla</b></p>
+<p>En la plantilla se os dan 3 clases:</p>
+<ul>
+  <li>La clase <b>DlgModos</b> es igual que la vista en la sesión 14, y es un
+    diálogo que nos permite elegir el modo gráfico para poner el juego a
+    pantalla completa.</li>
+  <li>La clase <b>SpriteYogi</b> controla el dibujo de la figura de Yogi.&nbsp;
+    <ul>
+      <li>Veréis en la plantilla un fichero llamado <i><b>yogi.png</b></i> que
+        contiene animaciones de Yogi moviéndose a izquierda y derecha:<br>
+<div align="center">
+  <img border="0" src="imagenes/modulo3/yogi.png" width="210" height="64">
+</div>
+        <p class="caption">Figura 3. Animaciones de Yogi</p>
+      </li>
+      <li>La clase tiene dos constantes <b>ALTO</b> y <b>ANCHO</b>, que indican
+        la altura altura y anchura de cada uno de los &quot;sprites&quot; de
+        animación que hay en esta imagen (cada figura de Yogi mide ANCHO x
+        ALTO)</li>
+      <li>Tenemos además los siguientes campos:
+        <ul>
+          <li><b>sprites</b>: es un objeto de tipo <i>Image</i> que contiene la
+            imagen <i>yogi.png </i>entera</li>
+          <li><b>x</b>: es un campo que indica la coordenada x en la imagen de
+            la figura que se va a mostrar</li>
+          <li><b>width </b>y <b>height</b> guardan la anchura y altura total de
+            la imagen (con todos los sprites juntos)</li>
+        </ul>
+      </li>
+      <li>En el <b>constructor</b> se carga la imagen en <i>sprites</i>, y se
+        asignan la anchura y altura de la misma (que se conocen con algún
+        programa de tratamiento de imágenes, o también se pueden sacar desde
+        Java). Inicialmente el campo <i>x</i> vale 0, lo que indica que apunta a
+        la primera figura (la de más a la izquierda).</li>
+      <li>El método <b>setFrame</b> nos permite cambiar de una figura de Yogi a
+        otra. Simplemente modifica el campo <i>x</i>, haciendo que se mueva de
+        ANCHO en ANCHO píxeles, para pasar de una figura a otra:<br>
+<div align="center">
+  <img border="0" src="imagenes/modulo3/sprites_yogi.gif" width="226" height="105">
+</div>
+        <p class="caption">Figura 4. Moverse por los sprites de Yogi</p>
+        <p>Así podremos elegir en cada paso de animación qué figura dibujar.<br>
+      </li>
+    </ul>
+  </li>
+  <li>Finalmente, la clase <b>Yogi</b> es la ventana principal.
+    <p>CONSTANTES Y CAMPOS:<br>
+    <ul>
+      <li>Tiene las constantes <b>ANCHO</b> y <b>ALTO</b> que definen la anchura
+        y altura de la ventana de dibujo (luego se redimensionará para ocupar
+        toda la ventana), y además la constante <b>INC_MOV_YOGI</b> que indica
+        cuántos píxeles se mueve Yogi a izquierda o derecha en cada pulsación
+        de flecha.</li>
+      <li>Tiene los campos <b>ancho</b> y <b>alto </b>que guardarán la
+        resolución real que elijamos de pantalla, a fin de escalar luego el
+        dibujo de ANCHO x ALTO a la pantalla completa de <i>ancho x alto</i>.</li>
+      <li>El campo <b>backbuffer</b> se utiliza para dibujar la pantalla en
+        doble buffer, y luego volcar el resultado</li>
+      <li>El campo <i>sprn</i> será el dibujo de Yogi en pantalla. Es un objeto
+        de tipo <i>SpriteYogi</i>, donde cada vez iremos eligiendo qué sprite o
+        frame dibujar de Yogi.</li>
+      <li>Los campos <b>secuenciaDer</b> y <b>secuenciaIzq</b> indican las
+        secuencias de animación de Yogi a derecha e izquierda, respectivamente.
+        Veréis que hay varios números repetidos consecutivamente. La idea es
+        la siguiente: cuando pulsemos la flecha derecha la primera vez, el
+        sprite a cargar de los de la figura 4 es el <i>secuenciaDer[0]</i>, es
+        decir, el 0. La siguiente vez que pulsemos la flecha será <i>secuenciaDer[1]</i>
+        (vuelve a ser el 0)... y a medida que vayamos pulsando la tecla derecha
+        irá pasando al siguiente número de frame.<br>
+        <br>
+        La <b>pregunta</b> es... ¿por qué no se ha puesto {0, 1, 2}
+        directamente, para pasar de un frame a otro? La respuesta es sencilla:
+        si pasamos de un frame a otro tan instantáneamente, la animación
+        resulta demasiado rápida, y no da la impresión de que Yogi camine,
+        sino más bien parece que tenga epilepsia :-). Por eso se repiten frames
+        durante un tiempo, para hacer la animación más lenta.<br>
+        <br>
+        La misma filosofía se aplica para animar a Yogi hacia la izquierda, con
+        el array <i>secuenciaIzq</i>.<br>
+      </li>
+      <li>El campo <b>numFrame</b> apuntará a la posición del array de
+        movimientos (izquierdo o derecho) que se mostrará en cada paso de
+        animación.</li>
+      <li>El campo <b>xIni</b> indica la posición X actual de Yogi. Se irá
+        actualizando cada vez que lo movamos.</li>
+      <li>Por último, tenemos un hilo <b>t</b> que será el encargado de hacer
+        las animaciones.</li>
+    </ul>
+    <p>MÉTODOS:<br>
+    <ul>
+      <li>En el <b>constructor</b> hacemos algo parecido a lo de la sesión 14:
+        obtenemos el dispositivo gráfico (<b>GraphicsDevice</b>) y el modo de
+        pantalla seleccionado a través de la clase <b>DlgModos</b>. Por último
+        ponemos el modo a <b>pantalla completa </b>seleccionado. Enmedio de todo
+        eso, inicializamos el <b>sprite de Yogi </b>(campo <i>sprn</i>) y
+        definimos los <b>eventos de teclado </b>(<i>KeyListener</i>) para que:
+        <ul>
+          <li>Al pulsar la <b>flecha IZQUIERDA</b> se actualice la xIni, se coja
+            el frame correspondiente del array <i>secuenciaIzq</i>, y se pase a
+            apuntar al frame siguiente, para la siguiente animación.</li>
+          <li>Al pulsar la <b>flecha DERECHA</b> se actualice la xIni, se coja
+            el frame correspondiente del array <i>secuenciaDer</i>, y se pase a
+            apuntar al frame siguiente, para la siguiente animación.</li>
+          <li>Al pulsar <b>ESCAPE</b> se salga del juego.</li>
+        </ul>
+      </li>
+      <li>Tenemos un método <b>update</b> que directamente llama al <b>paint</b>
+        de la ventana. Dicho <i>paint</i> hace el doble buffer, y utiliza un
+        método auxiliar llamado <b>dibuja </b>para dibujar en dicho doble
+        buffer. Finalmente vuelca dicho buffer a la pantalla.</li>
+      <li>El método<i> </i><b>dibuja </b>será el que utilicemos para dibujar
+        todos los componentes del juego. Ahora lo que hace es <b>limpiar el
+        área</b> de dibujo (de ANCHO x ALTO) y <b>dibujar la imagen de Yogi </b>que
+        toque. Pero <b>¿cómo se dibuja sólo la figura que nos interese de
+        toda la tira?</b>. Lo que hacemos es definir un área de recorte (<i>setClip</i>)
+        y poner la imagen sobre la pantalla de forma que en dicha área
+        &quot;caiga&quot; la parte de la tira que nos interese:<br>
+        <br>
+<div align="center">
+  <img border="0" src="imagenes/modulo3/anim_yogi.gif" width="262" height="503">
+</div>
+        <p class="caption">Figura 5.Cómo animar a Yogi</p>
+        <p>En el código (método <i>dibuja</i>), esto queda reflejado como:</p>
+        <pre class="codigo">// Dibujar a Yogi
+Shape clip = g.getClip();
+<b>g.setClip(xIni, ALTO - SpriteYogi.ALTO, SpriteYogi.ANCHO, SpriteYogi.ALTO);
+g.drawImage(sprn.sprites, xIni - sprn.x, ALTO - SpriteYogi.ALTO, 
+            sprn.width, sprn.height, this);
+</b>g.setClip(clip);</pre>
+        <p>El área de recorte la definimos en el <i>xIni</i> que marca la
+        posición X actual de Yogi. Marcamos un recorte de lo que mida cada
+        sprite de animación (<i>SpriteYogi.ANCHO x SpriteYogi.ALTO</i>), y
+        dibujamos la imagen de sprites entera, pero desplazada para que el
+        sprite que toque &quot;caiga&quot; dentro del área de recorte. Antes de recortar, nos guardamos el area de recorte previa (para no
+        machacarla), con un <i>getClip</i>, y después de dibujar en el área de
+        recorte la volvemos a establecer con un <i>setClip</i>, para poder
+        seguir dibujando en toda la ventana (si no lo restablecemos, cualquier
+        cosa que dibujemos fuera del área de recorte no se verá).<br>
+        &nbsp;</li>
+      <li>El método <b>run </b>lo ejecuta el hilo. Lo que hace es
+        constantemente llamar a repaint() (que llamará a <i>update</i>, éste a
+        <i>paint</i>, y éste a <i>dibuja</i>) para forzar un nuevo paso de
+        animación, y actualizar la posición de los elementos en pantalla.</li>
+    </ul>
+  </li>
+</ul>
+<p><a href="#2indice">Volver</a></p>
+<p><b><a name="2b"></a>b) Cómo cargar el fondo</b></p>
+<p>Cargar el fondo del juego (imagen <i>bosque.jpg</i> de la plantilla) es muy
+sencillo. Podéis definir un campo global de tipo <i>Image</i> para guardar la
+imagen:</p>
+        <pre class="codigo">...
+public class Yogi extends JFrame implements Runnable
+{
+<b>	Image fondo = null;
+</b>	...	</pre>
+<p>Luego en el constructor, ayudándonos de la clase <i>Toolkit</i> le cargamos
+la imagen JPG:</p>
+        <pre class="codigo">...
+public Yogi()
+{
+	...
+	<b>Toolkit tk = Toolkit.getDefaultToolkit();
+	fondo = tk.createImage(&quot;bosque.jpg&quot;);
+</b>}</pre>
+<p>Tenéis que tener en cuenta que, si la imagen es muy grande (ocupa muchos KB),
+puede que tarde en cargarla, y puede que se cargue la ventana sin tener la
+imagen ya cargada. Para asegurarnos de que no va a abrir la ventana hasta
+tenerla cargada, podemos utilizar la clase <b>MediaTracker</b>, y le pasamos la
+imagen, para que no siga hasta tenerla cargada:
+        <pre class="codigo">...
+public Yogi()
+{
+	...
+	Toolkit tk = Toolkit.getDefaultToolkit();
+	fondo = tk.createImage(&quot;bosque.jpg&quot;);
+
+<b>	MediaTracker mt = new MediaTracker(this);
+	mt.addImage(fondo, 1);
+	try {
+		mt.waitForAll();
+	} catch (Exception e) { e.printStackTrace(); }
+</b>}</pre>
+<p>lo que hacemos es añadirle la imagen al <i>MediaTracker</i>, y luego hacer
+que espere hasta que todas las imágenes que tenga añadidas (en este caso, el
+fondo) estén listas.<p>Finalmente, en el método <i>dibuja</i> dibujamos la
+imagen ANTES de dibujar cualquier otra cosa (para dejarla detrás de todo).
+Podemos dibujarla justo después de limpiar el área de dibujo:
+        <pre class="codigo">public void dibuja(Graphics g)
+{		
+	// Limpiar area
+	g.clearRect(0, 0, ANCHO, ALTO);
+		
+<b>	// Dibujar fondo
+	g.drawImage(fondo, 0, 0, ANCHO, ALTO, this);
+</b>
+	...</pre>
+<p><a href="#2indice">Volver</a></p>
+<p><b><a name="2c"></a>c) Cómo dibujar los alimentos</b></p>
+<p>Tenéis una imagen llamada <i>food.png</i> en la plantilla, con tres tipos
+diferentes de alimentos. Cada uno de ellos tiene un ancho y un alto de 20
+píxeles.&nbsp;</p>
+<div align="center">
+  <img border="0" src="imagenes/modulo3/food.png" width="60" height="19">
+</div>
+        <p class="caption">Figura 6. Tipos de alimentos disponibles</p>
+<p>De lo que se trata es de que construyáis una clase <i>SpriteComida</i>,
+similar a <i>SpriteYogi</i>, donde defináis los tamaños de cada alimento, y de
+la imagen entera, y podáis elegir con un <i>setFrame</i> qué comida mostrar.
+De hecho, el código será muy parecido a <i>SpriteYogi</i>, pero cambiando los
+tamaños de cada sprite y de la imagen.</p>
+<p>Luego, en la clase principal, creáis un objeto de este tipo, y le ponéis la
+comida que queráis de la imagen (podéis generar qué sprite poner
+aleatoriamente, por ejemplo). De forma que dicho sprite se vaya moviendo en cada
+iteración hacia abajo, hasta llegar al suelo. En ese momento se creará otro
+sprite diferente y se repetirá el proceso.</p>
+<p>Para mover la comida, conviene que actualicéis la posición Y del sprite
+dentro del método <i>run</i>, y luego en <i>dibuja</i> sólo tengáis que ver
+qué Y tiene, y dibujarlo como se hace con el sprite de Yogi. Notad que en este
+caso no hay que cambiar de frame en cada paso de animación: se mantiene siempre
+la misma comida hasta que termina de caer, y luego se crea otro sprite, con la
+misma comida u otra diferente. Así el <i>setFrame</i> para la comida sólo se
+ejecutaría al crearla, y no se variaría durante su caída.</p>
+<p><a href="#2indice">Volver</a></p>
+<p><b><a name="2d"></a>d) Cómo dibujar las vidas</b></p>
+<p>Para las vidas tenéis una imagen que se llama <i>vida.png</i> en la
+plantilla. Basta con que la asignéis a un campo <i>Image</i> en la clase
+principal, y lo dibujéis en la parte superior derecha, tantas veces como vidas
+se tengan.</p>
+<div align="center">
+  <img border="0" src="imagenes/modulo3/vida.png" width="25" height="25">
+</div>
+        <p class="caption">Figura 7.Imagen para las vidas</p>
+<p><a href="#2indice">Volver</a></p>
+<p><b><a name="2e"></a>e) Cómo dibujar los puntos</b></p>
+<p>Como véis en la figura 2, los puntos son una cadena de texto en la parte
+superior izquierda. Para dibujar texto en un objeto <i>Graphics</i> tenéis el
+método <i>drawString</i>. Simplemente hay que pasarle la cadena a dibujar, y
+las coordenadas (X,Y) inferiores izquierdas.</p>
+<p>Para aseguraros de que todo el texto os va a caer dentro de la pantalla, y no
+se os va a cortar nada por arriba, conviene que hagáis uso de la clase <b>FontMetrics</b>,
+que toma las medidas de la fuente establecida, y permite ver qué altura va a
+tener el texto.</p>
+        <pre class="codigo">public void dibuja(Graphics g)
+{
+	...
+	Font fuentePuntos = new Font(&quot;Arial&quot;, Font.BOLD | Font.ITALIC, 15);
+	FontMetrics fmPuntos = g.getFontMetrics(fuentePuntos);
+	g.drawString(&quot;Puntos: ...los que sean... &quot;, x, y);
+}</pre>
+<p>Tomamos en este caso una fuente Arial de 15 puntos, negrita y cursiva. Luego
+obtenemos su <i>FontMetrics</i>, y dibujamos la cadena, donde <i>x</i> e <i>y</i>
+se deben sustituir por la coordenada inferior izquierda desde donde dibujar la
+cadena. La <i>x</i> en nuestro caso sería 0 (dibujamos desde el borde
+izquierdo), y la <i>y</i> dependerá de la altura que vaya a tener el texto
+dibujado. Para obtener eso, el objeto <i>FontMetrics</i> tiene un método
+llamado <i>getAscent() </i>que nos indica qué altura va a tener el texto. Basta
+con dibujarlo con la Y en ese valor, para que al subir como mucho llegue a <i>y
+= 0</i>, y no se pase por arriba:</p>
+<pre class="codigo">g.drawString(&quot;Puntos: ...los que sean... &quot;, 0, fmPuntos.getAscent());</pre>
+<p><a href="#2indice">Volver</a></p>
+<p><b>ALGUNAS CUESTIONES OPTATIVAS</b></p>
+<p>Si tenéis tiempo (y ganas), podéis añadirle, de forma opcional, cualquier
+cosa que consideréis al juego. <b>Aunque no las vayáis a hacer, os
+recomendamos que las leáis</b>, para tener claro algunas mejoras que podrían
+ser importantes en cualquier juego.&nbsp;</p>
+<p>Por ejemplo, os sugerimos las siguientes:</p>
+<ul>
+  <li>Tratad de hacer un juego basado en estados o etapas: inicialmente el juego
+    estará en un estado INICIAL, donde se le pedirá al usuario que pulse una
+    tecla para empezar las animaciones. Después se pasará al estado JUGANDO,
+    donde se desarrollará el juego normal, y cuando se acaben las vidas se
+    pasará al estado FINALIZADO, donde no se seguirá animando más, y se
+    pedirá al usuario que salga del juego. El paso de un estado a otro vendrá
+    dado por pulsaciones de teclas, o porque se acaben las vidas. La animación
+    del <i>run</i> se hará siempre y cuando el estado sea JUGANDO.</li>
+  <li>En la plantilla tenéis también una imagen llamada <i>yogi_1.png</i>, que
+    contiene un montón de sprites de Yogi. Podéis por ejemplo coger los que
+    necesitéis para hacer que Yogi pueda <b>saltar</b>, y añadirlos al juego.</li>
+  <li>También tenéis otra imagen llamada <i>food_1.png</i> con muchas más
+    comidas que poder utilizar, si queréis.</li>
+  <li>Aumentad la complejidad del juego haciendo que la comida caiga cada vez
+    más deprisa, o de lugares más lejanos o aleatorios.</li>
+  <li>Podéis aumentar también la complejidad haciendo que caigan varias
+    comidas a la vez, o que caiga una comida sin esperar a que la anterior haya
+    terminado.</li>
+</ul>
+<hr>
+ 
+<p><b>PARA ENTREGAR</b></p>
+<ul>
+  <li>Todos los ficheros que compongan la aplicación que hayáis elegido
+    implementar&nbsp;(incluídos los que se os den en la plantilla)</li>
+</ul>
+ 
+<p><b>ENTREGA FINAL DEL BLOQUE 3</b></p>
+<ul>
+  <li>Como entrega <b>única</b> de TODOS los ejercicios del bloque 3, deberéis
+    hacer un fichero ZIP (<i><b>bloque3.zip</b></i>), con una carpeta para cada
+    sesión (<i>sesion11, sesion12, sesion13, sesion14 </i>y <i>sesion15</i>), y
+    dentro de cada carpeta copiar los ficheros que se os pidan en cada sesión.</li>
+</ul>
+ 
+    </body>
+    </html>

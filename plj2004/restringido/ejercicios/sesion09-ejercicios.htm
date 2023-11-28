@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios Sesion 9</title>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ 
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+ <body bgcolor="#ffffff" text="#000000">
+<h1><span class="section">Sesión 9</span> </h1>
+<p>En esta sesión practicaremos conceptos algo más avanzados de Entrada/Salida,
+como la lectura de tokens desde ficheros, y la lectura de objetos complejos.</p>
+ 
+<p><b>1.</b>  En este primer ejercicio practicaremos la lectura de tokens de un
+fichero, y su almacenamiento para realizar alguna operación.</p>
+ 
+<ol>
+  <li>Antes de comenzar, lee el apartado <b>2.3.4</b> (<i>Lectura de tokens</i>)
+    del tema 2 de teoría.<br>
+  </li>
+  <li>Echa un vistazo a la clase <i>Ej6.java</i> que se proporciona en la
+    plantilla de la sesión. Verás que hay un constructor vacío, y un método <i>main</i>
+    que le llama. Rellenaremos el constructor como se indica en los siguientes
+    pasos.<br>
+  </li>
+  <li>Lo que vamos a hacer es que el constructor acceda a un fichero (fichero <i>matriz.txt</i>)
+    que tiene una matriz <i>m x n</i>. Dicho fichero tiene la siguiente
+    estructura:<pre class="codigo">; Comentario de cabecera
+m n
+A11 A12 A13...
+A21 A22 A23...
+...
+</pre>
+    <p>donde <i>m</i> son las filas, <i>n </i>las columnas, y después aparece
+    la matriz puesta por filas, con un espacio en blanco entre cada elemento.<br>
+    <br>
+    El ejercicio leerá la matriz (utilizando un <i>StreamTokenizer</i> sobre el
+    fichero), construirá una matriz (array) con los datos leídos, después
+    elevará al cuadrado cada componente, y volcará el resultado en un fichero
+    de salida.<br>
+    <ol type="a">
+      <li>Primero obtendremos el flujo de entrada para leer del fichero, y el <i>StreamTokenizer</i>:<pre class="codigo">public Ej6()
+{
+<b>	StreamTokenizer st = 
+	   new StreamTokenizer(new FileReader(&quot;matriz.txt&quot;));
+</b>}</pre>
+      </li>
+      <li>Después establecemos qué caracteres van a identificar las líneas de
+        comentarios. En este caso, los comentarios se identifican por punto y
+        coma:&nbsp;
+  <pre class="codigo">public Ej6()
+{
+	StreamTokenizer st = 
+	   new StreamTokenizer(new FileReader(&quot;matriz.txt&quot;));
+
+	<b>st.commentChar(';');</b>
+}</pre>
+      </li>
+      <li>Después del comentario irán el número de filas y de columnas.
+        Utilizamos el método <i>nextToken</i> del <i>tokenizer</i> para
+        leerlos, y luego accedemos al campo <i>nval</i> para obtener qué valor
+        numérico se ha leído en cada caso:<pre class="codigo">public Ej6()
+{
+	StreamTokenizer st = 
+	   new StreamTokenizer(new FileReader(&quot;matriz.txt&quot;));
+
+	st.commentChar(';');
+
+	<b>int filas, columnas;
+	
+	st.nextToken();
+	filas = (int)(st.nval);				// Filas
+
+	st.nextToken();
+	columnas = (int)(st.nval);			// Columnas</b>
+}</pre>
+        <p>NOTA: asumimos que el fichero va a tener un formato correcto, y no
+        tenemos que controlar que haya elementos no deseados por enmedio.<br>
+        <br>
+        ¿Qué se habría leído en primer lugar si no hubiésemos identificado
+        la primera línea como comentario? ¿Dónde podríamos haber consultado
+        ese valor leído?<br>
+      </li>
+      <li>Lo siguiente es ir leyendo los elementos de la matriz. Construimos un
+        array de enteros de <i>filas </i>x <i>columnas</i>, y luego lo vamos
+        rellenando con los valores que nos dé el <i>StreamTokenizer</i>:<pre class="codigo">public Ej6()
+{
+	...
+<b>	int[][] matriz = new int[filas][columnas];
+	int t;
+</b>			
+<b>	for (int i = 0; i &lt; filas; i++)
+		for (int j = 0; j &lt; columnas; j++)
+		{
+			t = st.nextToken();
+			if (t != StreamTokenizer.TT_EOF)
+			{
+				matriz[i][j] = (int)(st.nval);
+			}
+		}				
+</b>}</pre>
+      </li>
+      <li>Por último, calculamos el cuadrado de cada elemento de la matriz
+        (utilizamos el método <i>pow</i> de la clase <i>Math</i>), y guardamos
+        la matriz resultado en otro fichero de salida (<i>matrizSal.txt</i>),
+        con el mismo formato que el de entrada:<pre class="codigo">public Ej6()
+{
+	...
+			
+<b>	for (int i = 0; i &lt; filas; i++)
+		for (int j = 0; j &lt; columnas; j++)
+		{
+			matriz[i][j] = (int)(Math.pow(matriz[i][j], 2));
+		}				
+
+	// Volcamos la salida a fichero
+			
+	PrintWriter pw = new PrintWriter (new FileWriter(&quot;matrizSal.txt&quot;));
+	pw.println (&quot;; Matriz resultado&quot;);
+	pw.println (&quot;&quot; + filas + &quot; &quot; + columnas);
+	for (int i = 0; i &lt; filas; i++)
+	{
+		for (int j = 0; j &lt; columnas; j++)
+		{
+			pw.print(&quot;&quot; + matriz[i][j] + &quot; &quot;);
+		}				
+		pw.println();
+	}
+	pw.close();
+</b>}</pre>
+      </li>
+      <li>Compila y ejecuta el programa (captura las excepciones adecuadas para
+        que te compile bien). Comprueba que el fichero de salida genera el
+        resultado adecuado:&nbsp;
+  <pre class="codigo">; Matriz resultado
+3 3
+1 4 9 
+16 25 36 
+49 64 81 </pre>
+        <p>Prueba también a pasarle este mismo fichero como entrada al
+        programa, y que genere otro fichero de salida diferente.<br>
+      </li>
+    </ol>
+  </li>
+</ol>
+<p><b>2.</b>  En este segundo ejercicio practicaremos cómo utilizar los
+ficheros para almacenar y leer objetos complejos. Hasta ahora sólo hemos
+trabajado con enteros o cadenas, y para leerlos basta con leer un stream de
+bytes, o utilizar un <i>tokenizer</i> y procesar el fichero de la forma que nos
+convenga.<br>
+<br>
+Imaginemos que trabajamos con un objeto complejo que encapsula diferentes tipos
+de datos (enteros, cadenas, vectores, etc). A la hora de guardar este elemento
+en fichero, se nos plantea el problema de cómo representar su información para
+volcarla. De la misma forma, a la hora de leerlo, también debemos saber cómo
+extraer y recomponer la información del objeto. Veremos que hay clases Java que
+hacen todo este trabajo mucho más sencillo.
+        </p>
+        
+<ol>
+  <li>Antes de comenzar, lee los apartados <b>2.3.5</b> (<i>Acceso a ficheros o
+    recursos dentro de un JAR</i>), <b>2.3.6</b> (<i>Codificación de datos</i>)
+    y <b>2.3.7 </b>(<i>Serialización de objetos</i>) del tema 2 de teoría.<br>
+  </li>
+  <li>Echa un vistazo al fichero <i>Ej7.java</i> que se proporciona en la
+    plantilla de la sesión. Tiene una clase principal (<i>Ej7</i>), con un
+    constructor vacío y un método <i>main</i> que le llama.&nbsp;<br>
+    <br>
+    También tiene una clase interna llamada <i>ObjetoFichero</i>. Observa que
+    dicha clase interna tiene diferentes tipos de campos: una cadena, un entero,
+    un double y un Vector.&nbsp; Tiene un constructor que asigna valores a los
+    campos, y luego dos métodos: uno <i>addCadena</i> que añade cadenas al
+    Vector, y otro <i>imprimeObj </i>que devuelve una cadena que representa los
+    valores de los campos del objeto. Es <b>importante</b> también resaltar que
+    esta clase es <b>Serializable</b>, es decir, implementa la interfaz <i>Serializable</i>,
+    lo que permitirá que se pueda guardar y leer de flujos o ficheros como un
+    objeto complejo en bloque.
+    <br>
+  </li>
+  <li>Lo que vamos a hacer en el constructor de <i>Ej7</i> es crear varios
+    objetos de tipo <i>ObjetoFichero</i>, y luego guardarlos en un fichero de
+    salida (<i>ficheroObj.dat</i>). Finalmente, leeremos los objetos de ese
+    fichero de salida y mostraremos por pantalla los valores de sus campos, para
+    comprobar que se han guardado y leído de forma correcta.<br>
+    <ol type="a">
+    <li>Lo primero es crear varios objetos (por ejemplo, dos) de tipo <i>ObjetoFichero</i>,
+      cada uno con valores diferentes:<pre class="codigo">public Ej7()
+{
+	<b>ObjetoFichero of = new ObjetoFichero (&quot;cad1&quot;, 1, 1.5);
+	of.addCadena(&quot;cad2&quot;);
+	of.addCadena(&quot;cad3&quot;);
+
+	ObjetoFichero of2 = new ObjetoFichero (&quot;cad1b&quot;, 2, 2.5);
+	of2.addCadena(&quot;cad2b&quot;);
+	of2.addCadena(&quot;cad3b&quot;);
+</b><b>
+</b>}</pre>
+      El vector de elementos de cada objeto tiene 3 cadenas de texto, más
+      aparte los valores que le hemos dado a los otros campos de la clase.<br>
+      </li>
+    <li>Ahora guardaremos en el fichero de salida (<i>ficheroObj.dat</i>) estos
+      dos objetos creados. Vamos a utilizar la clase <i>ObjectOutputStream</i>
+      que permite abrir un flujo de salida y meter en él objetos complejos,
+      siempre que sean <i>Serializables</i>, como el nuestro. Simplemente basta
+      con utilizar su método <i>writeObject</i>, y pasarle el objeto que
+      queremos guardar:<pre class="codigo">public Ej7()
+{
+	...
+
+	<b>ObjectOutputStream oos = 
+	   new ObjectOutputStream(new FileOutputStream(&quot;ficheroObj.dat&quot;));
+	oos.writeObject(of);
+	oos.writeObject(of2);
+	oos.close();</b>
+}</pre>
+      <p>Observa lo sencillo que resulta guardar objetos complejos de esta
+      forma. La única condición que deben cumplir es que deben ser <i>Serializables</i>.</p>
+      </li>
+    <li>
+      <p>Finalmente, leeremos los objetos guardados del fichero que hemos
+      generado, y sacaremos por pantalla los valores de sus campos. Para leer
+      los ficheros utilizaremos el análogo a la clase anterior, es decir, un
+      objeto de tipo <i>ObjectInputStream</i>, que permite leer objetos
+      complejos enteros (siempre que sean serializables), desde flujos de
+      entrada. Sólo hay que utilizar su método <i>readObject</i>, que
+      extraerá cada objeto de ese tipo que tengamos en el flujo.</p>
+      <pre class="codigo">public Ej7()
+{
+	...
+
+<b>	ObjectInputStream ois = 
+	   new ObjectInputStream(new FileInputStream(&quot;ficheroObj.dat&quot;));
+	ObjetoFichero ofLeido1 = (ObjetoFichero)(ois.readObject());
+	ObjetoFichero ofLeido2 = (ObjetoFichero)(ois.readObject());
+</b>
+}</pre>
+      <p>Es importante hacer notar que el método <i>readObject </i>devuelve un
+      objeto de tipo <i>Object</i>, que luego nosotros debemos convertir (con un
+      <i>cast</i>) al tipo de datos que necesitemos.<br>
+      <br>
+      Para sacar el valor de los campos por pantalla, recordemos que cada objeto
+      de tipo <i>ObjetoFichero</i> tiene un método llamado <i>imprimeObj</i>
+      que devuelve una cadena que representa su contenido. Así que basta con
+      imprimir esa cadena:</p>
+      <pre class="codigo">public Ej7()
+{
+	...
+<b>	System.out.println(ofLeido1.imprimeObj());
+	System.out.println(ofLeido2.imprimeObj());</b>
+}</pre>
+    </li>
+    <li>
+      <p align="left">Compilad y ejecutad el programa (capturad las excepciones
+      necesarias para que compile), y observad si se muestran por pantalla los
+      valores correctos. Eso será prueba de que los objetos se han guardado y
+      leído bien.<br>
+      <br>
+      ¿Qué pasaría si <i>ObjetoFichero</i> no implementase la interfaz <i>Serializable</i>?
+      ¿Qué excepción saltaría al ejecutar?</p>
+    </li>
+    </ol>
+  </li>
+</ol>
+ 
+<p><b>PARA ENTREGAR</b></p>
+<ul>
+  <li>Fichero<b>    Ej6.java</b>  y <b>Ej7.java </b>con todas las modificaciones indicadas.</li>
+  <li>Fichero de texto <b>respuestas.txt</b> contestando a todas las preguntas
+    formuladas.</li>
+</ul>
+ 
+    </body>
+    </html>

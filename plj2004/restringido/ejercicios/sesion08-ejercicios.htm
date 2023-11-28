@@ -1,0 +1,369 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios Sesion 8</title>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ 
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+ <body bgcolor="#ffffff" text="#000000">
+<h1><span class="section">Sesión 8</span> </h1>
+<p>En esta sesión practicaremos algunos conceptos básicos de Entrada/Salida,
+como la lectura y escritura básica con ficheros, y el uso de ficheros de
+propiedades, y entrada/salida estándar. Antes de comenzar, lee la introducción del punto
+<b>2.3</b> (<i>Entrada/Salida</i>),
+    y los apartados <b>2.3.1</b> (<i>Flujos de Entrada/Salida</i>), <b>2.3.2 </b>(<i>Entrada,
+salida y salida de error estándar</i>) y <b>2.3.3</b> (<i>Acceso a ficheros</i>) del tema 2 de
+    teoría.</p>
+ 
+<p><b>1.</b>  En este primer ejercicio practicaremos la lectura y escritura
+básica con ficheros, utilizando las dos posibles alternativas: <i>Streams</i> y
+<i>Readers/Writers</i>:</p>
+ 
+<ol>
+  <li>Echa un vistazo a la clase <i>Ej4.java</i> que se proporciona en la
+    plantilla de la sesión. Verás que hay un constructor vacío, y un campo
+    llamado <i>cabecera</i>, que contiene una cadena de texto. También hay dos
+    métodos vacíos, <i>leeEscribeStream</i> y <i>leeEscribeWriter</i>, y un
+    método <i>main</i> que crea un objeto de tipo <i>Ej4</i> y llama a estos
+    dos métodos. Lo que vamos a hacer es rellenar esos dos métodos de la forma
+    que se nos indica a continuación.<br>
+  </li>
+  <li>El primero de los métodos <i>leeEscribeStream</i> va a leer un fichero de
+    entrada (el fichero <i>entrada.dat</i> que se os proporciona en la
+    plantilla), y lo va a volcar a un fichero de salida (fichero <i>salidaStream.dat</i>),
+    pero añadiéndole la cadena <i>cabecera</i> como encabezado del fichero.
+    Para hacer todo eso empleará flujos de tipo <i>stream</i> (<i>InputStream</i>
+    para leer, <i>OutputStream</i> para escribir, o cualquier subclase derivada
+    de éstas).<br>
+    <ol type="a">
+      <li>Primero obtendremos el flujo de entrada para leer del fichero.
+        Utilizaremos un objeto de tipo <i>FileInputStream</i>, que es el stream
+        preparado para leer de ficheros:
+  <pre class="codigo">public void leeEscribeStream()
+{
+<b>	FileInputStream in = new FileInputStream(&quot;entrada.dat&quot;);
+</b>}</pre>
+      </li>
+      <li>Después obtendremos el flujo de salida, para escribir en el fichero
+        destino. Emplearemos un objeto de tipo <i>FileOutputStream</i>, que es
+        el stream preparado para volcar datos a ficheros:
+  <pre class="codigo">public void leeEscribeStream()
+{
+	FileInputStream in = new FileInputStream(&quot;entrada.dat&quot;);
+<b>	FileOutputStream out = new FileOutputStream(&quot;salidaStream.dat&quot;);
+</b>}</pre>
+      </li>
+      <li>El siguiente paso es leer el contenido de la entrada, e irlo volcando
+        en la salida. Para leer datos de la entrada emplearemos el método <i>read()</i>
+        de <i>FileInputStream</i>, que irá leyendo caracteres (transformados en
+        enteros). Para escribir, utilizaremos el método <i>write()</i> de <i>FileOutputStream</i>,
+        que vuelca esos mismos enteros que leemos:
+  <pre class="codigo">public void leeEscribeStream()
+{
+	FileInputStream in = new FileInputStream(&quot;entrada.dat&quot;);
+	FileOutputStream out = new FileOutputStream(&quot;salidaStream.dat&quot;);
+	<b>int c</b>;
+
+<b>	while ((c = in.read()) != -1)
+	{
+		out.write(c);
+	}
+</b>}</pre>
+        <p>Echa un vistazo a la documentación sobre el método <i>read. </i>¿Por
+        qué se compara el dato que se lee con -1?<br>
+      </li>
+      <li>Finalmente, lo que nos queda es cerrar tanto el flujo de entrada como
+        el de salida:
+  <pre class="codigo">public void leeEscribeStream()
+{
+	...
+<b>	in.close();
+	out.close();
+</b>}</pre>
+      </li>
+      <li>Compila el programa. Te dará errores porque se deben capturar ciertas
+        excepciones cuando se trabaja con métodos de entrada salida en fichero
+        (<i>FileNotFoundException</i> e <i>IOException</i>,
+        concretamente).&nbsp;
+  <pre class="codigo">public void leeEscribeStream()
+{
+<b>	try
+	{
+</b>		...
+<b>	} catch (FileNotFoundException e) {
+		Sytem.err.println (&quot;Fichero no encontrado&quot;);
+	} catch (IOException e2) {
+		System.err.println (&quot;Error al acceder a los ficheros&quot;);
+	}
+</b>}</pre>
+        <p>Captúralas y prueba el resultado.<br>
+      </li>
+      <li>Al ejercicio le falta algo, porque si recuerdas, aparte de leer y
+        volcar el contenido del fichero, debemos añadir a la salida como
+        cabecera el contenido del campo <i>cabecera</i>.<br>
+        <br>
+        Observa en la API que la clase <i>FileOutputStream</i> no tiene métodos
+        para escribir directamente una cadena a fichero. Lo que vamos a hacer es
+        convertir la cadena a un array de <i>bytes</i>, y luego utilizar el
+        método <i>write(byte[ ] b)</i> para volcarla. Todo esto lo haremos
+        justo antes de empezar a leer el fichero de entrada, y volcar su
+        contenido:
+  <pre class="codigo">public void leeEscribeStream()
+{
+	try
+	{
+		FileInputStream in = 
+			new FileInputStream(&quot;entrada.dat&quot;);
+		FileOutputStream out = 
+			new FileOutputStream(&quot;salidaStream.dat&quot;);
+
+<b>		byte[] b = cabecera.getBytes();
+		out.write(b);
+</b>
+		int c;
+		while ((c = in.read()) != -1)
+		
+		...
+}</pre>
+        <p>Prueba el método ya completo, y comprueba que el fichero de salida (<i>salidaStream.dat</i>)
+        deja algo como:</p>
+  <pre class="codigo"># Esto es la cabecera del fichero que hay que introducir
+Hola, este es el texto
+del fichero de entrada
+que debería copiarse en el fichero de salida</pre>
+      </li>
+    </ol>
+  </li>
+  <li>El segundo método, <i>leeEscribeWriter</i>, leerá el mismo fichero de
+    entrada (<i>entrada.dat</i>), y lo volcará a otro fichero de salida
+    diferente (<i>salidaWriter.dat</i>), empleando flujos de tipo <i>Reader</i>
+    y <i>Writer</i> (como <i>FileReader</i> o <i>FileWriter</i>, o cualquier
+    otro subtipo).<br>
+    <ol type="a">
+      <li>Igual que en el método anterior, primero obtendremos las variables
+        para leer de la entrada y escribir en la salida. Para leer podríamos
+        utilizar la clase <i>FileReader</i>, pero en su lugar vamos a utilizar
+        la clase <i>BufferedReader</i> que nos va a permitir leer líneas
+        enteras del fichero, en lugar de leer carácter a carácter. Para
+        escribir, vamos a utilizar la clase <i>PrintWriter</i>, que también nos
+        permitirá escribir líneas enteras en la salida.
+  <pre class="codigo">public void leeEscribeWriter()
+{
+	<b>BufferedReader br = 
+		new BufferedReader(new FileReader(&quot;entrada.dat&quot;));
+	PrintWriter pw = 
+		new PrintWriter(new FileWriter(&quot;salidaWriter.dat&quot;));
+</b><b>
+</b>}</pre>
+        <p>Observad que para construir tanto el <i>BufferedReader</i> como el <i>PritWriter</i>
+        nos valemos de un objeto <i>FileReader</i> o <i>FileWriter</i>,
+        respectivamente. Lo que hacemos es simplemente crear un buffer de
+        entrada (<i>BufferedReader</i>) o de salida <i>(PrintWriter</i>) sobre
+        el <i>FileReader</i> o el <i>FileWriter </i>para poder acumular cadenas
+        de texto enteras antes de leerlas o escribirlas.<br>
+      </li>
+      <li>El siguiente paso es leer el contenido de la entrada, e irlo volcando
+        en la salida. Para leer datos de la entrada emplearemos el método <i>readLine()</i>
+        de <i>BufferedReader</i>, que irá leyendo líneas enteras del fichero.
+        Para escribir, utilizaremos el método <i>println()</i> de <i>PrintWriter</i>,
+        que vuelca esas mismas líneas que leemos:
+  <pre class="codigo">public void leeEscribeWriter()
+{
+	BufferedReader br = new ...;
+	PrintWriter pw = new ...;
+
+<b>	String linea = &quot;&quot;;
+	while ((linea = br.readLine()) != null)
+	{
+		pw.println(linea);
+	}
+</b><b>
+</b>}</pre>
+        <p>El uso de <i>PrintWriter</i> permite formatear la salida de la misma
+        forma que si la estuviésemos sacando por pantalla, puesto que tiene los
+        mismos métodos que el campo <i>System.out</i> (métodos <i>println,
+        print</i>, etc).<br>
+        <br>
+        Echa un vistazo a la documentación sobre el método <i>readLinea. </i>¿Por
+        qué se compara el dato que se lee con <i>null</i>?<br>
+      </li>
+      <li>Finalmente, lo que nos queda es cerrar tanto el flujo de entrada como
+        el de salida:
+  <pre class="codigo">public void leeEscribeWriter()
+{
+	...
+<b>	br.close();
+	pw.close();
+</b>}</pre>
+      </li>
+      <li>Compila el programa. Te dará errores porque se deben capturar las
+        mismas excepciones que antes (<i>FileNotFoundException</i> e <i>IOException</i>).&nbsp;
+  <pre class="codigo">public void leeEscribeWriter()
+{
+<b>	try
+	{
+</b>		...
+<b>	} catch (FileNotFoundException e) {
+		Sytem.err.println (&quot;Fichero no encontrado&quot;);
+	} catch (IOException e2) {
+		System.err.println (&quot;Error al acceder a los ficheros&quot;);
+	}
+</b>}</pre>
+        <p>Captúralas y prueba el resultado.<br>
+      </li>
+      <li>Para completar el ejercicio, nos falta añadir la cabecera antes de
+        volcar el fichero. Observa que con <i>PrintWriter</i> no hace falta que
+        convirtamos la cadena a <i>bytes</i> y luego la escribamos, podemos
+        escribir directamente la cadena, antes de empezar a leer el fichero:
+  <pre class="codigo">public void leeEscribeWriter()
+{
+	try
+	{
+		BufferedReader br = ...;
+		PrintWriter pw = ...;
+<b>		pw.print(cabecera);
+
+</b>		String linea = &quot;&quot;;
+		while ((linea = br.readLine()) != null)
+
+		...
+}</pre>
+        <p>Prueba el método ya completo, y comprueba que el fichero de salida (<i>salidaWriter.dat</i>)
+        deja el mismo resultado que con el método anterior.<br>
+      </li>
+      <li>NOTA: observa la API de la clase <i>PrintWriter</i>, y verás que
+        tiene constructores que permiten crear este tipo de objetos a partir de <i>Writers</i>
+        (como hemos hecho aquí) como a partir de <i>OuputStreams</i> (como
+        habríamos hecho en el paso 2), con lo que podemos utilizar esta clase
+        para dar formato a la salida de un fichero en cualquiera de los casos.</li>
+    </ol>
+  </li>
+</ol>
+<p><b>2.</b>  En este segundo ejercicio practicaremos el uso de ficheros de
+propiedades, y el uso de la entrada y salida estándares.
+        </p>
+        
+<ol>
+  <li>Echa un vistazo a la clase <i>Ej5.java</i> que se proporciona en la
+    plantilla de la sesión. Sólo tiene un constructor vacío, y un método <i>main</i>
+    que le llama. Vamos a completar el constructor de la forma que veremos a
+    continuación.
+    <br>
+  </li>
+  <li>Lo que vamos a hacer en el constructor es leer un fichero de propiedades
+    (el fichero <i>prop.txt</i> que se proporciona en la plantilla), y luego
+    pedirle al usuario que, por teclado, indique qué valores quiere que tengan
+    las propiedades. Una vez establecidos los valores, volveremos a guardar el
+    fichero de propiedades.<br>
+    <ol type="a">
+    <li>Lo primero que vamos a hacer es leer el fichero de propiedades. Para
+      ello utilizaremos un objeto <i>java.util.Properties</i>, lo crearemos y
+      llamaremos a su método <i>load()</i> para cargar las propiedades del
+      fichero <i>prop.txt</i>:<pre class="codigo">public Ej5()
+{
+<b>	Properties p = new Properties();
+	p.load(new FileInputStream(&quot;prop.txt&quot;));
+</b>}</pre>
+      Observa que para cargar las propiedades, al método <i>load</i> le debemos
+      pasar un <i>InputStream</i> desde el que leerlas. En este caso le pasamos
+      un <i>FileInputStream</i> con el fichero <i>prop.txt</i>.<br>
+      </li>
+    <li>Ahora ya tenemos en el objeto <i>p</i> todas las propiedades del
+      fichero. Vamos a irlas recorriendo una a una, e indicando al usuario que
+      teclee su valor. Para recorrer las propiedades obtendremos un <i>Enumeration</i>
+      con sus nombres, y luego lo iremos recorriendo, y sacándolo por pantalla:<pre class="codigo">public Ej5()
+{
+	Properties p = new Properties();
+	p.load(new FileInputStream(&quot;prop.txt&quot;));
+
+<b>	Enumeration en = p.propertyNames();
+	while (en.hasMoreElements())
+	{
+		String prop = (String)(en.nextElement());
+		System.out.println(&quot;Introduzca valor para propiedad &quot; + prop);
+	}</b>	
+}</pre>
+      <p>Observa el orden en que van mostrándose las propiedades. ¿Es el mismo
+      que el que hay en el fichero? ¿A qué crees que puede deberse? (AYUDA:
+      cuando nosotros <i>enumeramos</i> una serie de características, no
+      tenemos que seguir un orden necesariamente. Del mismo modo, cuando
+      introducimos valores en una tabla hash, el orden en que se guardan no es
+      el mismo que el orden en que los introducimos).</p>
+      </li>
+    <li>
+      <p>Lo que hacemos con este bucle es sólo recorrer los nombres de las
+      propiedades y sacarlos por pantalla. Nos falta hacer que el usuario teclee
+      los valores correspondientes. Para ello utilizaremos un objeto de tipo <i>BufferedReader</i>,
+      que en este caso leerá líneas de texto que el usuario entre desde
+      teclado:</p>
+      <pre class="codigo">public Ej5()
+{
+	Properties p = new Properties();
+	p.load(new FileInputStream(&quot;prop.txt&quot;));
+
+	Enumeration en = p.propertyNames();
+	<b>BufferedReader in = 
+	  new BufferedReader(new InputStreamReader(System.in));		
+</b>	
+	while (en.hasMoreElements())
+	{
+		...
+	}	
+}</pre>
+      <p>observad que construimos el <i>BufferedReader</i> para leer de un <i>InputStream</i>
+      (no de un <i>Reader</i>). Esto lo podemos hacer si nos ayudamos de la
+      &quot;clase puente&quot; <i>InputStreamReader</i>, que transforma un tipo
+      de lector en otro.<br>
+      <br>
+      Lo que nos queda por hacer es pedirle al usuario que, para cada nombre de
+      propiedad, introduzca su valor, y luego asignarlo a la propiedad
+      correspondiente:</p>
+      <pre class="codigo">public Ej5()
+{
+	...<b>
+</b>	
+	while (en.hasMoreElements())
+	{
+		String prop = (String)(en.nextElement());
+		System.out.println(&quot;Introduzca valor para propiedad &quot; + prop);
+<b>		String valor = in.readLine();
+		p.setProperty(prop, valor);</b>
+	}	
+}</pre>
+    </li>
+    <li>
+      <p>Finalmente, cerramos el buffer de entrada, y guardamos las propiedades
+      en el fichero.</p>
+      <pre class="codigo">public Ej5()
+{
+	...<b>
+</b><b>	in.close();
+	p.store(new FileOutputStream(&quot;prop.txt&quot;), &quot;Cabecera del fichero&quot;);</b>
+}</pre>
+    </li>
+    <li>
+      <p>Compilad y ejecutad el programa. Para que os compile deberéis capturar
+      las excepciones que se os indique en los errores de compilación:</p>
+      <pre class="codigo">public Ej5()
+{
+<b>	try
+	{
+		...
+	} catch(...) {}
+</b>}</pre>
+    </li>
+    </ol>
+  </li>
+</ol>
+ 
+<p><b>PARA ENTREGAR</b></p>
+<ul>
+  <li>Fichero<b>   Ej4.java</b>  y <b>Ej5.java </b>con todas las modificaciones indicadas.</li>
+  <li>Fichero de texto <b>respuestas.txt</b> contestando a todas las preguntas
+    formuladas.</li>
+</ul>
+ 
+    </body>
+    </html>

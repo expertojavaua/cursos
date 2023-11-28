@@ -1,0 +1,1553 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Tema 3: Interfaz Gr&aacute;fica</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1>3. Interfaz Gráfica</h1>
+<h2>3.1. AWT</h2>
+
+<h3>3.1.1. Introducción a AWT</h3>
+
+<p><b>AWT</b> (<i>Abstract Windows Toolkit</i>) es la parte de Java
+que se emplea para construir <b>interfaces gr&aacute;ficas</b> de usuario.
+Este paquete ha estado presente desde la primera versi&oacute;n (la 1.0),
+aunque con la 1.1 sufri&oacute; un cambio notable. En la versi&oacute;n
+1.2 se incorpor&oacute; tambi&eacute;n a Java una librer&iacute;a adicional,
+<b>Swing</b>,
+que enriquece a AWT en la construcci&oacute;n de aplicaciones gr&aacute;ficas.
+<br>&nbsp;
+<p><b>Controles de AWT</b>
+<p>
+Java proporciona una serie de <b>controles</b> que podremos colocar en
+las aplicaciones visuales que implementemos. Dichos controles son subclases
+de la clase <b>Component</b>, y forman parte del paquete
+<b>java.awt</b>. Las m&aacute;s comunes son:
+
+</p><center>
+<img SRC="imagenes/awtswing/AWTcontroles.jpg" ALT="" NOSAVE></center>
+
+
+<p class="caption">Figura 1. Estructura de clases de AWT
+<p>Los controles s&oacute;lo se ver&aacute;n si los a&ntilde;adimos sobre
+un contenedor (un elemento de tipo <i>Container</i>, o cualquiera de sus
+subtipos). Para ello
+utilizamos el m&eacute;todo <b>add(...)</b> del contenedor para a&ntilde;adir
+el control. Por ejemplo, si queremos a&ntilde;adir un bot&oacute;n a un
+<i>Panel</i>:
+<pre class="codigo">Button boton = new Button(&quot;Pulsame&quot;);
+Panel panel = new Panel();
+...
+panel.add(boton);</pre>
+
+<center><table BORDER="1" WIDTH="548" >
+<caption>
+&nbsp;
+</caption><center>
+<tbody>
+</tbody></center>
+
+<tr>
+<td ALIGN=CENTER><b>Component</b></td>
+
+<td>La clase padre <i>Component</i> no se puede utilizar directamente.
+Es una clase abstracta, que proporciona algunos m&eacute;todos &uacute;tiles
+para sus subclases.&nbsp;</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER><b>Botones</b>
+<br><img SRC="imagenes/awtswing/AWTbutton.jpg" ALT="" NOSAVE ></td>
+
+<td>Para emplear la clase <b>Button</b>, en el constructor simplemente
+indicamos el texto que queremos que tenga :&nbsp;
+<pre class="codigo">Button boton = new Button(&quot;Pulsame&quot;);</pre>
+</td>
+</tr>
+
+</center>
+
+
+<tr>
+<td ALIGN=CENTER><b>Etiquetas</b>
+<br><img SRC="imagenes/awtswing/AWTlabel.jpg" ALT="" NOSAVE></td>
+
+<center>
+
+<td>Para utilizar <b>Label</b>, el uso es muy similar al bot&oacute;n:
+se crea el objeto con el texto que queremos darle:&nbsp;
+<pre class="codigo">Label etiq = new Label(&quot;Etiqueta&quot;);</pre>
+</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER><b>Areas de dibujo</b></td>
+
+<td>La clase <b>Canvas</b> se emplea para heredar de ella y crear componentes
+personalizados.&nbsp;
+<br>Accediendo al objeto <i>Graphics</i> de los elementos podremos darle
+la apariencia que queramos: dibujar l&iacute;neas, pegar im&aacute;genes,
+etc:
+<pre class="codigo">Panel p = new Panel();
+p.getGraphics().drawLine(0, 0, 100, 100);
+p.getGraphics().drawImage(...);</pre>
+</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER><b>Casillas de verificaci&oacute;n</b>
+<br><img SRC="imagenes/awtswing/AWTcheckbox.jpg" ALT="" NOSAVE></td>
+
+<td><b>Checkbox</b> se emplea para marcar o desmarcar opciones. Podremos
+tener controles aislados, o grupos de <i>Checkboxes </i>en un objeto <b>CheckboxGroup</b>, de forma que s&oacute;lo una de las casillas del grupo pueda&nbsp; marcarse
+cada vez.&nbsp;
+<pre class="codigo">Checkbox cb = new Checkbox
+              (&quot;Mostrar subdirectorios&quot;, 
+              false);
+System.out.println (&quot;Esta marcada: &quot; + 
+                    cb.getState());</pre>
+</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER><b>Listas</b>
+<br><img SRC="imagenes/awtswing/AWTchoice.jpg" ALT="" NOSAVE>
+<br><img SRC="imagenes/awtswing/AWTlist.jpg" ALT="" NOSAVE></td>
+
+<td>Para utilizar una <b>lista desplegable</b> (objeto <b>Choice</b> ),
+se crea el objeto y se a&ntilde;aden, con el m&eacute;todo <b>addItem(...)</b>
+, los elementos que queramos a la lista:&nbsp;
+<pre class="codigo">Choice ch = new Choice();
+ch.addItem(&quot;Opcion 1&quot;);
+ch.addItem(&quot;Opcion 2&quot;);
+...
+int i = ch.getSelectedIndex();</pre>
+Para utilizar <b>listas fijas</b> (objeto <b>List</b>), en el constructor
+indicamos cu&aacute;ntos elementos son visibles. Tambi&eacute;n podemos
+indicar si se permite seleccionar varios elementos a la vez. Dispone de
+muchos de los m&eacute;todos que tiene <i>Choice</i> para a&ntilde;adir
+y consultar elementos.&nbsp;
+<pre class="codigo">List lst = new List(3, true);
+lst.addItem(&quot;Opcion 1&quot;);
+lst.addItem(&quot;Opcion 2&quot;);</pre>
+</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER><b>Cuadros de texto</b>
+<br><img SRC="imagenes/awtswing/AWTtextfield.jpg" ALT="" NOSAVE>
+<img SRC="imagenes/awtswing/AWTtextarea.jpg" ALT="" NOSAVE></td>
+
+<td>Al trabajar con <b>TextField</b> o <b>TextArea</b>, se indica opcionalmente
+en el constructor el n&uacute;mero de columnas (y filas en el caso de <i>TextArea</i>)
+que se quieren en el cuadro de texto.&nbsp;
+<pre class="codigo">TextField tf = new TextField(30);
+TextArea ta = new TextArea(5, 40);
+...
+tf.setText(&quot;Hola&quot;);
+ta.appendText(&quot;Texto 2&quot;);
+String texto = ta.getText();</pre>
+</td>
+</tr>
+
+<tr>
+<td ALIGN=CENTER><b>Men&uacute;s</b>
+<br><img SRC="imagenes/awtswing/AWTmenu.jpg" ALT="" NOSAVE></td>
+
+<td>Para utilizar men&uacute;s, se emplea la clase <b>MenuBar</b> (para
+definir la barra de men&uacute;), <b>Menu</b> (para definir cada men&uacute;),
+y <b>MenuItem</b> (para cada opci&oacute;n en un men&uacute;). Un men&uacute;
+podr&aacute; contener a su vez submen&uacute;s (objetos de tipo <i>Menu</i>
+). Tambi&eacute;n est&aacute; la clase <b>CheckboxMenuItem</b> para definir
+opciones de men&uacute; que son casillas que se marcan o desmarcan.&nbsp;
+<pre class="codigo">MenuBar mb = new MenuBar();
+Menu m1 = new Menu &quot;Menu 1&quot;);
+Menu m11 = new Menu (&quot;Menu 1.1&quot;);
+Menu m2 = new Menu (&quot;Menu 2&quot;);
+MenuItem mi1 = new MenuItem (&quot;Item 1.1&quot;);
+MenuItem mi11=new MenuItem (&quot;Item 1.1.1&quot;);
+CheckboxMenuItem mi2 = 
+   new CheckboxMenuItem(&quot;Item 2.1&quot;);
+mb.add(m1);
+mb.add(m2);
+m1.add(mi1);
+m1.add(m11);
+m11.add(mi11);
+m2.add(mi2);</pre>
+Mediante el m&eacute;todo <i>setMenuBar(...)</i> de Frame podremos a&ntilde;adir
+un men&uacute; a una ventana:
+<pre class="codigo">Frame f = new Frame();
+f.setMenuBar(mb);</pre>
+</td>
+</tr>
+</table>
+
+  <h2 align="left">&nbsp; </h2>
+  <h3 align="left"> <a NAME="disposicion"></a>3.1.2. Gestores de disposición</h3>
+  <p align="left"> Para colocar los controles Java en los contenedores se hace 
+    uso de un determinado <b>gestor de disposici&oacute;n</b>. Dicho gestor indica 
+    c&oacute;mo se colocar&aacute;n los controles en el contenedor, siguiendo 
+    una determinada distribuci&oacute;n. Para establecer qu&eacute; gestor queremos, 
+    se emplea el m&eacute;todo <i> setLayout(...)</i> del contenedor. Por ejemplo:</p>
+  <div align="left" style="width: 553; height: 823">
+    <pre class="codigo">Panel panel = new Panel();
+panel.setLayout(new BorderLayout());</pre>
+    Veremos ahora los gestores m&aacute;s importantes: 
+    <table BORDER="1" WIDTH="552" >
+      <caption></caption>
+      <tbody> </tbody> 
+      <tr> 
+        <td ALIGN=CENTER><b>BorderLayout</b> <br>
+          <img SRC="imagenes/awtswing/AWTborderlayout.jpg" ALT="" NOSAVE> 
+          <br>
+          (gestor por defecto para contenedores tipo <i>Window</i>)</td>
+        <td>Divide el &aacute;rea del contenedor en 5 zonas: Norte (<i> NORTH</i> 
+          ), Sur (<i>SOUTH</i>), Este (<i>EAST</i>), Oeste (<i>WEST</i>) y Centro 
+          (<i>CENTER</i>), de forma que al colocar los componentes deberemos indicar 
+          en el m&eacute;todo <i>add(...)</i> en qu&eacute; zona colocarlo:&nbsp;
+          <pre class="codigo">panel.setLayout(new BorderLayout());
+Button btn = new Button(&quot;Pulsame&quot;);
+panel.add(btn, BorderLayout.SOUTH);</pre>
+          Al colocar un componente en una zona, se colocar&aacute; sobre el que 
+          existiera anteriormente en dicha zona (lo tapa).&nbsp;</td>
+      </tr>
+      <tr> 
+        <td ALIGN=CENTER><b>FlowLayout</b> <br>
+          <img SRC="imagenes/awtswing/AWTflowlayout.jpg" ALT="" NOSAVE> 
+          <br>
+          (gestor por defecto para contenedores de tipo <i>Panel</i>)</td>
+        <td>Con este gestor, se colocan los componentes en fila, uno detr&aacute;s 
+          de otro, con el tama&ntilde;o preferido (<i>preferredSize</i> ) que 
+          se les haya dado. Si no caben en una fila, se utilizan varias.&nbsp; 
+          <pre class="codigo">panel.setLayout(new FlowLayout());
+panel.add(new Button(&quot;Pulsame&quot;));</pre>
+        </td>
+      </tr>
+      <tr> 
+        <td ALIGN=CENTER><b>GridLayout</b> <br>
+          <img SRC="imagenes/awtswing/AWTgridlayout.jpg" ALT="" NOSAVE></td>
+        <td>Este gestor sit&uacute;a los componentes en forma de tabla, dividiendo 
+          el espacio del contenedor en celdas del mismo tama&ntilde;o, de forma 
+          que el componente ocupa todo el tama&ntilde;o de la celda.&nbsp; <br>
+          Se indica en el constructor el n&uacute;mero de filas y de columnas. 
+          Luego, al colocarlo, va por orden (rellenando filas de izquierda a derecha).&nbsp; 
+          <pre class="codigo">panel.setLayout(new GridLayout(2,2));
+panel.add(new Button(&quot;Pulsame&quot;));
+panel.add(new Label(&quot;Etiqueta&quot;));</pre>
+        </td>
+      </tr>
+      <tr> 
+        <td ALIGN=CENTER><b>Sin gestor</b></td>
+        <td>Si especificamos un gestor <b><i>null</i></b>, podremos colocar a 
+          mano los componentes en el contenedor, con m&eacute;todos como <b>setBounds(...)</b> 
+          , o <b>setLocation(...)</b>:&nbsp; 
+          <pre class="codigo">panel.setLayout(null);
+Button btn = new Button (&quot;Pulsame&quot;);
+btn.setBounds(0, 0, 100, 30);
+panel.add(btn);</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <p align="left"><b>Ejemplo</b>: Vemos el aspecto de algunos componentes de AWT, 
+    y el uso de gestores de disposici&oacute;n en este ejemplo: 
+  <div align="center"><img SRC="imagenes/awtswing/AWTejemplo.jpg" NOSAVE height=317 width=399> </div>
+  <div align="center"><a href="ejemplos/awt/EjemploAWT.java">C&oacute;digo</a></div>
+  <div align="left">&nbsp;</div>
+  <div align="left">El código nos muestra cómo se crea una clase que es una
+    ventana principal (hereda de <i>Frame</i>), y define un gestor que es un <i>GridLayout</i>,
+    con 4 filas y 2 columnas. En ellas vamos colocando etiquetas (<i>Label</i>),
+    botones (<i>Button</i>), casillas de verificación (<i>Checkbox</i>), listas
+    desplegables (<i>Choice</i>) y cuadros de texto (<i>TextField</i>). Además,
+    se crea un menú con diferentes opciones.</div>
+  <h3 align="left"> <a NAME="eventos"></a>3.1.3. Modelo de Eventos en Java</h3>
+<p align="left">Hasta ahora hemos visto qué tipos de elementos podemos colocar
+en una aplicación visual con AWT, y cómo colocarlos sobre los distintos
+contenedores que nos ofrece la librería. Pero sólo con esto nuestra
+aplicación no hace nada: no sabemos cómo emitir una determinada respuesta al
+pulsar un botón, o realizar una acción al seleccionar una opción del menú.
+Para definir todo esto se utilizan los llamados <b>eventos</b>.</p>
+  <p align="left"> Entendemos por <b>evento</b> una acci&oacute;n o cambio en 
+    una aplicaci&oacute;n que permite que dicha aplicaci&oacute;n produzca una 
+    respuesta.&nbsp; El <b>modelo de eventos</b> de AWT se descompone en dos grupos 
+    de elementos: las fuentes y los oyentes de eventos. Las <b>fuentes</b> son 
+    los elementos que generan los eventos (un bot&oacute;n, un cuadro de texto, 
+    etc), mientras que los <b>oyentes</b> son elementos que est&aacute;n a la 
+    espera de que se produzca(n) determinado(s) tipo(s) de evento(s) para emitir 
+    determinada(s) respuesta(s).</p>
+  <p align="left">Para poder gestionar eventos, necesitamos definir el <b>manejador 
+    de eventos</b> correspondiente, un elemento que act&uacute;e de oyente sobre 
+    las fuentes de eventos que necesitemos considerar. Cada tipo de evento tiene 
+    asignada una <b>interfaz</b>, de modo que para poder gestionar dicho evento, 
+    el manejador deber&aacute; implementar la interfaz asociada. Los oyentes m&aacute;s 
+    comunes son: 
+  <div align="left">
+    <table BORDER="1" WIDTH="83%" >
+      <caption></caption>
+      <tbody> </tbody> 
+      <tr> 
+        <td WIDTH="19%"> 
+          <center>
+            <b>ActionListener</b>
+          </center>
+        </td>
+        <td WIDTH="81%">Para eventos de acci&oacute;n (pulsar un <i>Button</i> 
+          , por ejemplo)</td>
+      </tr>
+      <tr> 
+        <td WIDTH="19%"> 
+          <center>
+            <b>ItemListener</b>
+          </center>
+        </td>
+        <td WIDTH="81%">Cuando un elemento (<i>Checkbox</i>, <i>Choice</i> , etc), 
+          cambia su estado</td>
+      </tr>
+      <tr> 
+        <td WIDTH="19%"> 
+          <center>
+            <b>KeyListener</b>
+          </center>
+        </td>
+        <td WIDTH="81%">Indican una acci&oacute;n sobre el teclado: pulsar una 
+          tecla, soltarla, etc.</td>
+      </tr>
+      <tr> 
+        <td WIDTH="19%"> 
+          <center>
+            <b>MouseListener</b>
+          </center>
+        </td>
+        <td WIDTH="81%">Indican una acci&oacute;n con el rat&oacute;n que no implique 
+          movimiento del mismo: hacer click, presionar un bot&oacute;n, soltarlo, 
+          entrar / salir...</td>
+      </tr>
+      <tr> 
+        <td WIDTH="19%"> 
+          <center>
+            <b>MouseMotionListener</b>
+          </center>
+        </td>
+        <td WIDTH="81%">Indican una acci&oacute;n con el rat&oacute;n relacionada 
+          con su movimiento: moverlo por una zona determinada, o arrastrar el 
+          rat&oacute;n.</td>
+      </tr>
+      <tr> 
+        <td WIDTH="19%"> 
+          <center>
+            <b>WindowListener</b>
+          </center>
+        </td>
+        <td WIDTH="81%">Indican el estado de una ventana</td>
+      </tr>
+    </table>
+  </div>
+<p align="left">Cada uno de estos tipos de evento puede ser producido por diferentes 
+    fuentes.&nbsp;Por ejemplo, los <i>ActionListeners</i> pueden producirse al
+pulsar un botón, elegir una opción de un menú, o pulsar Intro. Los <i>MouseListener</i>
+se producen al pulsar botones del ratón, etc.<p align="left">Toda la gestión
+de eventos se lleva a cabo desde el paquete <b>java.awt.event</b>. 
+  <p align="left">&nbsp; 
+  <p align="left"><b>Modos de definir un oyente</b></p>
+<p align="left">Supongamos que queremos realizar una acci&oacute;n determinada 
+    al pulsar un bot&oacute;n. En este caso, tenemos que asociar un <i>ActionListener</i> 
+    a un objeto <i>Button</i>, e indicar dentro de dicho <i>ActionListener</i>
+qué queremos hacer al pulsar el botón. Veremos que hay varias formas de hacerlo:</p>
+  <p align="left"><b>1. Que la propia clase que usa el control implemente el oyente</b> 
+  <div align="left">
+    <pre class="codigo">class MiClase implements ActionListener
+{
+&nbsp;&nbsp;&nbsp; public MiClase()
+&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Button btn = new Button(&quot;Boton&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btn.addActionListener(this);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; public void actionPerformed(ActionEvent e)
+&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Aqui va el codigo de la accion
+&nbsp;&nbsp;&nbsp; }
+}</pre>
+    <b>2. Definir otra clase aparte que implemente el oyente</b> 
+    <pre class="codigo">class MiClase
+{
+&nbsp;&nbsp;&nbsp;&nbsp; public MiClase()
+&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Button btn = new Button(&quot;Boton&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btn.addActionListener(new MiOyente());
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp; }
+}
+
+class MiOyente implements ActionListener
+{
+&nbsp;&nbsp;&nbsp;&nbsp; public void actionPerformed(ActionEvent e)
+&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Aqui va el codigo de la accion
+&nbsp;&nbsp;&nbsp;&nbsp; }
+}</pre>
+    <b>3. Definir una instancia interna del oyente</b> 
+    <pre class="codigo">class MiClase
+{
+&nbsp;&nbsp;&nbsp;&nbsp; public MiClase()
+&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Button btn = new Button(&quot;Boton&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; btn.addActionListener(new ActionListener()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void actionPerformed(ActionEvent e)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Aqui va el codigo de la accion
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp; }
+}</pre>
+    &nbsp; </div>
+  <p align="left"><b>Uso de los &quot;adapters&quot;</b></p>
+<p align="left"> Algunos de los oyentes disponibles (como por ejemplo <i>MouseListener,
+</i>consultad su API) tienen varios m&eacute;todos que hay que implementar si queremos definir 
+    el oyente. Este trabajo puede ser bastante pesado e innecesario si sólo queremos 
+    usar algunos métodos. Por ejemplo, si sólo queremos hacer algo al hacer
+click con el ratón, deberemos redefinir el método <i>mouseClicked</i>, pero
+deberíamos escribir también los métodos <i>mousePressed, mouseReleased</i>,
+etc, y dejarlos vacíos.</p>
+  <p align="left">Una soluci&oacute;n a esto es el uso de los <i>adapters</i>. 
+    Asociado a cada oyente con m&aacute;s de un m&eacute;todo hay una clase ...<i>Adapter</i> 
+    (para <i>MouseListener</i> est&aacute; <i>MouseAdapter</i> , para <i>WindowListener</i> 
+    est&aacute; <i>WindowAdapter</i>, etc). Estas clases implementan las interfaces 
+    con las que se asocian, de forma que se tienen los m&eacute;todos implementados 
+    por defecto, y s&oacute;lo tendremos que sobreescribir los que queramos modificar. 
+  <p align="left">Veamos la diferencia con el caso de <i>MouseListener</i>, suponiendo 
+    que queremos asociar un evento de rat&oacute;n a un <i>Panel</i> para que 
+    haga algo al hacer click sobre &eacute;l. 
+  <p align="left"><b>1. Mediante Listener:</b> 
+  <div align="left">
+    <pre class="codigo">class MiClase&nbsp;
+{
+&nbsp;&nbsp;&nbsp;&nbsp; public MiClase()
+&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Panel panel = new Panel();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; panel.addMouseListener(new MouseListener()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void mouseClicked(MouseEvent e)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Aqui va el codigo de la accion
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void mouseEntered(MouseEvent e)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // ... No se necesita
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void mouseExited(MouseEvent e)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // ... No se necesita
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void mousePressed(MouseEvent e)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // ... No se necesita
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void mouseReleased(MouseEvent e)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // ... No se necesita
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp; }
+}</pre>
+    Vemos que hay que definir todos los m&eacute;todos, aunque muchos queden vac&iacute;os 
+    porque no se necesitan. </div>
+  <p align="left"><b>2. Mediante Adapter:</b> 
+  <div align="left">
+    <pre class="codigo">class MiClase&nbsp;
+{
+&nbsp;&nbsp;&nbsp;&nbsp; public MiClase()
+&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Panel panel = new Panel();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; panel.addMouseListener(new MouseAdapter()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void mouseClicked(MouseEvent e)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Aqui va el codigo de la accion
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp; }
+}</pre>
+    Vemos que aqu&iacute; s&oacute;lo se a&ntilde;aden los m&eacute;todos necesarios, 
+    el resto ya est&aacute;n implementados en <i> MouseAdapter</i> (o en el <i>adapter</i> 
+    que corresponda), y no hace falta ponerlos. </div>
+  <p align="left"><b>Ejemplo</b>: Vemos el uso de oyentes en este ejemplo:&nbsp;<a href="ejemplos/awt/EjemploAWT2.java">C&oacute;digo</a> 
+</center>
+
+
+  <div align="left">&nbsp;</div>
+  <div align="left">La aplicación muestra distintos tipos de eventos que
+    podemos definir sobre una aplicación:&nbsp;</div>
+  <div align="left">
+    <ul>
+      <li>Tenemos una etiqueta llamada <i>lblCont</i>. Tiene definido un evento
+        de tipo <i>MouseListener</i> para que, cuando el ratón esté dentro de
+        la etiqueta, muestre un texto, cuando esté fuera, muestre otro.</li>
+      <li>Por otra parte, tenemos un botón (variable <i>btn</i>) con un evento
+        de tipo <i>ActionListener</i> para que, al pulsar sobre él, se
+        incremente en 1 un contador que hay en un cuadro de texto.</li>
+      <li>También tenemos una lista desplegable (variable <i>ch</i>) que tiene
+        un evento de tipo <i>ItemListener</i> para que, al cambiar el elemento
+        seleccionado, se actualiza el valor del contador del cuadro de texto a
+        dicho elemento seleccionado.</li>
+      <li>Finalmente, la ventana principal tiene un evento de tipo <i>WindowListener</i>
+        para que, al pulsar el botón de cerrar la ventana, se finalice la
+        aplicación (son las últimas líneas de código del constructor).</li>
+    </ul>
+</div>
+
+<h3>3.1.4. Pasos generales para construir una aplicación gráfica con AWT</h3>
+
+<p>Con todo lo visto hasta ahora, ya deberíamos ser capaces de construir
+aplicaciones más o menos completas con AWT. Para ello, los pasos a seguir son:<p><b>1.
+Definir la clase principal, que será la ventana principal de la aplicación</b><p>Cualquier
+aplicación AWT debe tener una ventana principal que sea de tipo <b>Frame</b>.
+Así pues lo primero que debemos hacer es definir qué clase hará de <i>Frame</i>:<pre class="codigo">import java.awt.*;
+import java.awt.event.*;
+
+public class MiAplicacion extends Frame
+{
+&nbsp;&nbsp;&nbsp;&nbsp; public MiAplicacion()
+&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setSize(500, 400);
+         setLayout(new GridLayout(1, 1));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp; }
+}</pre>
+<p>podemos definir un constructor, y dentro hacer algunas inicializaciones como
+el tamaño de la ventana, el gestor de disposición, etc.<p><b>2. Colocar los
+controles en la ventana</b><p>Una vez definida la clase, e inicializada la
+ventana, podemos colocar los componentes en ella:<pre class="codigo">import java.awt.*;
+import java.awt.event.*;
+
+public class MiAplicacion extends Frame
+{
+&nbsp;&nbsp;&nbsp;&nbsp; public MiAplicacion()
+&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setSize(500, 400);
+         setLayout(new GridLayout(1, 1));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+         <b>Button btn = new Button(&quot;Hola&quot;);
+         this.add(btn);
+
+         JPanel p = new JPanel();
+         JLabel l = new JLabel(&quot;Etiqueta&quot;);
+         JLabel l2 = new JLabel (&quot;Otra etiqueta&quot;);
+         p.add(l);
+         p.add(l2);
+         this.add(p);</b>
+&nbsp;&nbsp;&nbsp;&nbsp; }
+}</pre>
+<p>En nuestro caso añadimos un botón, y un panel con 2 etiquetas.<p><b>3.
+Definir los eventos que sean necesarios</b><p>Escribimos el código de los
+eventos para los controles sobre los que vayamos a actuar:<pre class="codigo">import java.awt.*;
+import java.awt.event.*;
+
+public class MiAplicacion extends Frame
+{
+&nbsp;&nbsp;&nbsp;&nbsp; public MiAplicacion()
+&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setSize(500, 400);
+         setLayout(new GridLayout(1, 1));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+         Button btn = new Button(&quot;Hola&quot;);
+         this.add(btn);
+
+         JPanel p = new JPanel();
+         JLabel l = new JLabel(&quot;Etiqueta&quot;);
+         JLabel l2 = new JLabel (&quot;Otra etiqueta&quot;);
+         p.add(l);
+         p.add(l2);
+         this.add(p);
+
+         <b>btn.addActionListener(new ActionListener()
+         {
+             public void actionPerformed(ActionEvent e)
+             {
+                 System.out.println (&quot;Boton pulsado&quot;);
+             }
+         });
+
+         addWindowListener(new WindowAdapter()
+         {
+             public void windowClosing (WindowEvent e)
+             {
+                 System.exit(0);
+             }
+         });</b>
+&nbsp;&nbsp;&nbsp;&nbsp; }
+}</pre>
+<p>
+<br><b>4. Mostrar la ventana</b><p>Desde el método <i>main</i> de nuestra clase
+principal podemos hacer que se muestre la ventana:<pre class="codigo">import java.awt.*;
+import java.awt.event.*;
+
+public class MiAplicacion extends Frame
+{
+&nbsp;&nbsp;&nbsp;&nbsp; public MiAplicacion()
+&nbsp;&nbsp;&nbsp;&nbsp; {
+         ...
+&nbsp;&nbsp;&nbsp;&nbsp; }
+
+<b>     public static void main(String[] args)
+     {
+         MiAplicacion ma = new MiAplicacion();
+         ma.show();
+     }
+</b>}</pre>
+<p><b>5</b><b>. Definir otras subventanas o diálogos</b><p>Aparte de la clase
+principal, podemos definir otros <i>Frames</i> en otras clases, e
+interrelacionarlos. También podemos definir diálogos (<i>Dialogs</i>) que
+dependan de una ventana principal (<i>Frame</i>) y que se muestren en un momento
+dado.
+
+
+<h2>&nbsp;</h2>
+
+
+<h2>3.2. Swing</h2>
+<h3> 3.2.1. Introducción a Swing</h3>
+<p> Anteriormente se ha visto una descripci&oacute;n de los controles <i>AWT</i> 
+  para construir aplicaciones visuales. En cuanto a estructura, no hay mucha diferencia 
+  entre los controles proporcionados por <i>AWT</i> y los proporcionados por <i>Swing</i>: 
+  &eacute;stos se llaman, en general, igual que aqu&eacute;llos, salvo que tienen 
+  una "J" delante; as&iacute;, por ejemplo, la clase <i>Button</i> de <i>AWT</i> 
+  pasa a llamarse <i>JButton</i> en <i>Swing</i> , y en general la estructura 
+  del paquete de Swing (<b>javax.swing</b>) es la misma que la que tiene <i>java.awt</i>.</p>
+<p>Pero yendo m&aacute;s all&aacute; de la estructura, existen importantes diferencias 
+  entre los componentes <i>Swing</i> y los componentes <i>AWT</i>: 
+<ul>
+  <li> Los componentes <i>Swing</i> est&aacute;n escritos sin emplear c&oacute;digo 
+    nativo, con lo que ofrecen m&aacute;s versatilidad multiplataforma (podemos 
+    dar a nuestra aplicaci&oacute;n un aspecto que no dependa de la plataforma 
+    en que la estemos ejecutando).</li>
+</ul>
+<ul>
+  <li> Los componentes <i>Swing</i> ofrecen m&aacute;s capacidades que los correspondientes 
+    <i>AWT</i>: los botones pueden mostrar im&aacute;genes, hay m&aacute;s facilidades 
+    para modificar la apariencia de los componentes, etc.</li>
+</ul>
+<ul>
+  <li> Al mezclar componentes <i>Swing</i> y componentes <i>AWT</i> en una aplicaci&oacute;n, 
+    se debe tener cuidado de emplear contenedores <i>AWT</i> con elementos <i>Swing</i>, 
+    puesto que los contenedores pueden solapar a los elementos (se colocan
+    encima y no dejan ver el componente).</li>
+</ul>
+<h3>3.2.2. Características específicas de Swing</h3>
+<b>Resumen de controles</b> 
+<p> Los controles en Swing tienen en general el mismo nombre que los de AWT, con 
+  una "J" delante. As&iacute;, el bot&oacute;n en Swing es <i>JButton</i> , la 
+  etiqueta es <i>JLabel</i> , etc. Hay algunas diferencias, como por ejemplo <i>JComboBox</i> 
+  (el equivalente a <i>Choice</i> de AWT), y controles nuevos. Vemos aqu&iacute; 
+  un listado de algunos controles:</p>
+<table BORDER="1" WIDTH="562" >
+  <tr> 
+    <td ALIGN=CENTER WIDTH="164"><b>JComponent</b></td>
+    <td width="382">La clase padre para los componentes Swing es <i>JComponent</i> 
+      , paralela al <i>Component</i> de AWT.&nbsp;</td>
+  </tr>
+  <tr> 
+    <td ALIGN=CENTER width="164"><b>Botones</b> <br>
+      <img SRC="imagenes/awtswing/SWbuttons.gif" ALT="" NOSAVE height=113 width=131></td>
+    <td width="382">Se tienen botones normales (<b>JButton</b>), de verificaci&oacute;n 
+      (<b>JCheckBox</b>), de radio (<b>JRadioButton</b>), etc, similares a los 
+      <i>Button</i>, <i>Checkbox</i> de AWT, pero con m&aacute;s posibilidades 
+      (se pueden a&ntilde;adir im&aacute;genes, etc).&nbsp;</td>
+  </tr>
+  <tr> 
+    <td ALIGN=CENTER width="164"><b>Etiquetas</b> <br>
+      <img SRC="imagenes/awtswing/SWlabel.gif" ALT="" NOSAVE height=91 width=139></td>
+    <td width="382">Las etiquetas son <b>JLabel</b>, paralelas a las <i>Label</i> 
+      de AWT pero con m&aacute;s caracter&iacute;sticas propias (iconos, etc).&nbsp;</td>
+  </tr>
+  <tr> 
+    <td ALIGN=CENTER width="164"><b>Cuadros de texto</b> <br>
+      <img SRC="imagenes/awtswing/SWtextfield.gif" ALT="" NOSAVE height=100 width=124></td>
+    <td width="382">Las clases <b>JTextField </b>y <b>JTextArea</b> representan 
+      los cuadros de texto en Swing, de forma parecida a los <i>TextField</i> 
+      y <i>TextArea</i> de AWT.</td>
+  </tr>
+  <tr> 
+    <td ALIGN=CENTER width="164"><b>Listas</b> <br>
+      <img SRC="imagenes/awtswing/SWcombo.gif" ALT="" NOSAVE height=110 width=138> 
+      <br>
+      <img SRC="imagenes/awtswing/SWlist.gif" ALT="" NOSAVE height=79 width=109></td>
+    <td width="382">Las clases <b>JComboBox</b> y <b>JList</b> se emplean para 
+      lo mismo que <i>Choice</i> y <i>List</i> en AWT.&nbsp;</td>
+  </tr>
+  <tr> 
+    <td ALIGN=CENTER width="164"><b>Di&aacute;logos y ventanas</b> <img SRC="imagenes/awtswing/SWdialog.gif" ALT="" NOSAVE height=97 width=137> 
+      <br>
+      <img SRC="imagenes/awtswing/SWframe.gif" NOSAVE height=93 width=160></td>
+    <td width="382">Las clases <b>JDialog</b> (y sus derivadas) y <b>JFrame</b> 
+      se emplean para definir di&aacute;logos y ventanas. Se tienen algunos cuadros 
+      de di&aacute;logo espec&iacute;ficos, para elegir ficheros (<i>JFileChooser</i> 
+      ), para elegir colores (<i>JColorChooser</i>), etc.&nbsp;</td>
+  </tr>
+  <tr> 
+    <td ALIGN=CENTER width="164"><b>Men&uacute;s</b> <br>
+      <img SRC="imagenes/awtswing/SWmenu.gif" ALT="" NOSAVE height=80 width=132></td>
+    <td width="382">Con <b>JMenu</b>, <b>JMenuBar</b>, <b>JMenuItem</b>, se construyen 
+      los men&uacute;s que se construian en AWT con <i>Menu</i>, <i>MenuBar</i> 
+      y <i>MenuItem</i>.</td>
+  </tr>
+</table>
+<h3>&nbsp; </h3>
+<b>Gestores de disposición y modelo de eventos</b> 
+<p> Los gestores de disposici&oacute;n de Swing son <a href="apuntes3_1.htm#disposicion">los 
+  mismos</a> que los vistos en AWT. Sólo debemos tener en cuenta que hay
+ciertos métodos de <b>JFrame</b> a los que no podemos acceder directamente (en <i>Frame
+</i>sí podemos), y se debe acceder a ellos a través de un método llamado <i>getContentPane</i>.
+Ejemplos de estos métodos son <b>add</b> y <b>setLayout</b>, que pasan a usarse
+de la siguiente forma:</p>
+<pre class="codigo">public class MiFrame extends JFrame
+{
+    public MiFrame()
+    {
+        Button b = new Button(&quot;Hola&quot;);
+
+        this.add(b);						// ERROR
+<b>        this.getContentPane().add(b);				// OK
+</b>        this.setLayout(new BorderLayout());			// ERROR
+<b>        this.getContentPane().setLayout(new BorderLayout());	// OK
+</b>    }
+...</pre>
+<p> <br>
+  El modelo de eventos tambi&eacute;n es&nbsp; <a href="apuntes3_1.htm#eventos">el 
+  mismo</a> que el visto en AWT.</p>
+<p> <b>Otras características</b> </p>
+<p> Swing ofrece otras posibilidades, que se comentan brevemente:</p>
+<ul>
+  <li> Uso de <b>acciones</b>, objetos <b>Action</b> que coordinan tareas realizadas 
+    por distintos elementos.</li>
+  <li> Uso de <b>bordes</b>, elementos que bordean los controles y ofrecen un 
+    mejor aspecto visual a la aplicaci&oacute;n.</li>
+  <li> Uso de <b>iconos</b>: algunos componentes permiten que se les indique un 
+    icono a mostrar, mediante la clase <b>ImageIcon</b>.</li>
+  <li> Uso de la <b>apariencia</b> (<i>look and feel</i>): podemos indicar qu&eacute; 
+    aspecto queremos que tenga la aplicaci&oacute;n: espec&iacute;fico de Windows, 
+    de Motif, etc.</li>
+  <li> Uso de <b>hilos</b> para gestionar eventos: algunos eventos pueden bloquear 
+    componentes durante mucho tiempo, y es mejor separar el tratamiento del evento 
+    en un hilo para liberar el componente.</li>
+  <li> Uso de <b>temporizadores</b>: con la clase <b>Timer</b> podemos definir 
+    acciones que queremos ejecutar en un momento determinado o con una periodicidad 
+    determinada.</li>
+</ul>
+<p><br>
+  <b>Ejemplo</b>: Vemos el aspecto de algunos componentes de Swing, paralelo al 
+  visto en el tema de AWT: 
+  <center>
+    <img SRC="imagenes/awtswing/SWejemplo.jpg" NOSAVE height=298 width=398> <br>
+    <a href="ejemplos/swing/EjemploSwing.java">C&oacute;digo</a>
+  </center>
+<p>Observad cómo se pasa una aplicación de AWT a Swing. Hay que cambiar los
+componentes de AWT por los equivalentes de Swing (<i>Frame</i> por <i>JFrame</i>,
+<i>Button</i> por <i>JButton</i>, etc), y luego hay algunos métodos a los que
+no podemos llamar directamente, como son los métodos <b>add</b> y <b>setLayout</b>
+de <i>JFrame</i>, a los que se debe llamar a través del método <b>getContentPane</b>
+(IMPORTANTE: esto se aplica única y exclusivamente a ciertos métodos de <i>JFrame</i>,
+como los indicados).<p><b>Ejemplo</b>: Vemos un ejemplo de uso de iconos y temporizadores (como icono 
+  se emplea <a href="ejemplos/swing/clock.gif">esta imagen</a>): <a href="ejemplos/swing/EjemploSwing2.java">C&oacute;digo</a> 
+<p>Para utilizar los iconos se utiliza un objeto de tipo <b>ImageIcon</b> y se
+dice cuál es el fichero de la imagen. Para el temporizador, se utiliza un
+objeto de tipo <b>Timer</b>. Vemos que se define un <i>ActionListener</i>, que
+se ejecuta cada X milisegundos (1000, en este caso), ejecutando así un trabajo
+periódico (mediante el método <i>setRepeats</i> del <i>Timer</i> indicamos que
+el listener se ejecute periódicamente, o no). 
+<p>&nbsp; 
+<h2 align="left"> 3.3. Applets</h2>
+<p align="left">Los ejemplos vistos hasta ahora son <b>aplicaciones</b>, puesto 
+  que son instancias de la clase <b>Frame </b>o <b>JFrame</b>, y por tanto son 
+  ventanas que pueden ejecutarse independientemente. 
+<p align="left">Un <b>applet </b>es una aplicaci&oacute;n normalmente corta (aunque 
+  no hay l&iacute;mite de tama&ntilde;o), cuya principal funcionalidad es ser 
+  accesible a un servidor Internet (una aplicaci&oacute;n que pueda visualizarse 
+  desde un navegador). 
+<p align="left">La forma de definir un applet es muy similar a la definici&oacute;n 
+  de una aplicaci&oacute;n, salvo por algunas diferencias: 
+<div align="left"> 
+  <ul>
+    <li> No se hereda de <b>Frame</b>, sino de <b>Applet</b> (clase <i>java.applet.Applet</i> 
+      )</li>
+    <li> No hay constructor, en su lugar hay un m&eacute;todo <b>init()</b> que 
+      veremos a continuaci&oacute;n</li>
+    <li> No hay m&eacute;todo <b>main()</b>, puesto que el applet no puede autoejecutarse. 
+      Lo que se ejecuta es la p&aacute;gina HTML para ver el applet en el navegador.</li>
+  </ul>
+  Un ejemplo básico de applet sería:<pre class="codigo">public class MiApplet extends Applet
+{
+&nbsp;&nbsp;&nbsp; public void init()
+    {
+        setLayout(new BorderLayout());
+        Button b = new Button(&quot;Hola&quot;);
+        add(b, BorderLayout.NORTH);
+        ...
+    }
+}</pre>
+  <p>
+  El <b>appletviewer </b>es un navegador m&iacute;nimo distribuido con Java, que 
+  espera como argumento un fichero HTML, que contendr&aacute; una marca indicando 
+  el c&oacute;digo que cargar&aacute; el <i>appletviewer</i>  . Podemos así
+  cargar un applet que esté en una página HTML con:</p>
+  <pre class="codigo">appletviewer &lt;fichero HTML&gt;</pre>
+  En la p&aacute;gina 
+  HTML debemos incluir etiquetas que permitan cargar el applet, como son las
+  etiquetas APPLET u OBJECT: 
+  <pre class="codigo">&lt;HTML&gt;
+&nbsp; &lt;BODY&gt;
+&nbsp; ...
+&nbsp; &lt;APPLET CODE = MiApplet.class WIDTH = 300 HEIGHT = 100&gt;
+&nbsp; &lt;/APPLET&gt;
+&nbsp; ...
+&nbsp; &lt;/BODY&gt;
+&lt;/HTML&gt;</pre>
+  Donde se indican el fichero <i> .class</i> compilado del applet, la anchura 
+  y altura. Este c&oacute;digo se coloca en un fichero HTML y puede verse desde 
+  cualquier navegador que soporte Java, o con el programa <i>appletviewer</i> 
+  . </div>
+<p align="left">La clase <b>Applet</b> tiene unos m&eacute;todos predefinidos 
+  para controlar los applets: 
+<div align="left"> 
+  <ul>
+    <li> <b>init ( )</b>: este m&eacute;todo se llama cada vez que el appletviewer 
+      carga por primera vez la clase. En &eacute;l deben inicializarse las caracter&iacute;sticas 
+      del applet que se quieran (tama&ntilde;o, im&aacute;genes, controles, valores 
+      de variables, etc).</li>
+    <li> <b>start ( )</b>: llamada para arrancar el applet cada vez que es visitado.&nbsp;</li>
+    <li> <b>stop ( )</b>: llamada para detener la ejecuci&oacute;n del applet. 
+      Se llama cuando el applet desaparece de la pantalla.&nbsp;</li>
+    <li> <b>destroy ( )</b>: se llama cuando ya no se va a usar m&aacute;s el
+      applet, y hay que liberar los recursos dispuestos por el mismo.&nbsp;</li>
+  </ul>
+</div>
+<h3>3.3.1. Applets Swing</h3>
+<p> La &uacute;nica diferencia entre los applets construidos en <i>AWT</i> y los 
+  construidos con <i>Swing</i> es que &eacute;stos heredan de la clase <i>JApplet</i> 
+  en lugar de la clase <i>Applet</i>. Pero se tiene el inconveniente de que actualmente 
+  s&oacute;lo la utilidad <i>appletviewer</i> est&aacute; preparada para ejecutar 
+  applets de <i>Swing</i> con Java 1.2 o posteriores. Para el resto de navegadores 
+  deberemos contar con el Java Plug-in 1.1.1, que contiene la versi&oacute;n 1.0.3 
+  de <i>Swing</i> . El resto de la estructura de los applets es la misma que para
+AWT.</p>
+<p align="left"> <b>Ejemplo</b>: Vemos el ejemplo anterior convertido en applet. 
+  Puede verse <a href="ejemplos/swing/EjemploApplet.java">aqu&iacute;</a> el c&oacute;digo 
+  y <a href="ejemplos/swing/EjemploApplet.html">aqu&iacute;</a> la p&aacute;gina 
+  HTML con el applet.
+<p align="left"> &nbsp; 
+<h2><span class="section">3.4. Gr&aacute;ficos y animaci&oacute;n</span> </h2>
+<p>Hasta ahora hemos visto la creaci&oacute;n de aplicaciones con una interfaz 
+  gr&aacute;fica a partir de una serie de componentes definidos en la API de AWT 
+  y de Swing (ventanas, botones, campos de texto, etc).</p>
+<p>En este punto veremos como dibujar nuestros propios gr&aacute;ficos directamente 
+  en pantalla. Para ello Java nos proporciona acceso al contexto gr&aacute;fico 
+  del &aacute;rea donde vayamos a dibujar, permiti&eacute;ndonos a trav&eacute;s 
+  de &eacute;ste modificar los pixels de este &aacute;rea, dibujar una serie de 
+  figuras geom&eacute;tricas, as&iacute; como volcar im&aacute;genes en ella.</p>
+<h3 class="subsection">3.4.1. Gr&aacute;ficos en AWT</h3>
+<p>Para dibujar gr&aacute;ficos en un &aacute;rea de la pantalla, AWT nos ofrece 
+  un objeto con el contexto gr&aacute;fico de dicha &aacute;rea, perteneciente 
+  a la clase <strong>Graphics</strong>. Este objeto nos ofrece una serie de m&eacute;todos 
+  que nos permiten dibujar distintos elementos en pantalla. M&aacute;s adelante 
+  veremos con detalle los m&eacute;todos m&aacute;s importantes.</p>
+<p>Este objeto <strong>Graphics</strong> nos lo deber&aacute; proporcionar AWT 
+  en el momento en que vayamos a dibujar, ya que no podremos obtenerlo por nuestra 
+  cuenta de ninguna otra forma.</p>
+<p>Para dibujar en pantalla cualquier componente AWT, estos componentes proporcionan 
+  dos m&eacute;todos: <strong>paint(Graphics g)</strong> y <strong>update(Graphics 
+  g)</strong>. </p>
+<p>Estos m&eacute;todos ser&aacute;n invocados por AWT cuando necesite dibujar 
+  su contenido en pantalla. Por ejemplo, cuando la ventana se muestre por primera 
+  vez, AWT invocar&aacute; al m&eacute;todo <strong>paint(Graphics g)</strong> 
+  de todos los componentes AWT que contenga la aplicaci&oacute;n, de forma que 
+  estos se dibujen en pantalla. Cuando una aplicaci&oacute;n minimizada se maximice, 
+  o una aplicaci&oacute;n que estaba total o parcialmente tapada por otra pase 
+  a primer plano de nuevo, tambi&eacute;n podr&aacute; ser necesario invocar dicho 
+  m&eacute;todo para volver a dibujar los componentes de la ventana.</p>
+<p>Cada componente AWT definir&aacute; su propio m&eacute;todo <strong>paint(Graphics 
+  g)</strong> para dibujar su contenido. Por ejemplo, un <em>Button</em> dibujar&aacute; 
+  en pantalla la forma del bot&oacute;n y el texto. Si creamos una subclase de 
+  estos componentes y sobrescribimos su m&eacute;todo <strong>paint(Graphics g)</strong> 
+  con un m&eacute;todo propio, dentro de &eacute;l podremos utilizar el objeto 
+  de contexto gr&aacute;fico <strong>Graphics</strong> para dibujar en el &aacute;rea 
+  de dicho componente.</p>
+<p>La mayor&iacute;a de los componentes tienen ya definido su propio comportamiento 
+  y apariencia, por lo que no deberemos sobrescribir este m&eacute;todo ya que 
+  el componente dejar&iacute;a de funcionar correctamente. Sin embargo, hay un 
+  componente dise&ntilde;ado para que el usuario pueda utilizarlo como &aacute;rea 
+  de dibujo, este es el caso del <strong>Canvas</strong>. Este componente simplemente 
+  comprende un &aacute;rea vac&iacute;a de la pantalla, en la que nosotros podremos 
+  dibujar nuestros propios gr&aacute;ficos sobrescribiendo su m&eacute;todo <strong>paint(Graphics 
+  g)</strong>. Sobrescribiremos el m&eacute;todo de la siguiente forma:</p>
+<pre class="codigo">public class MiCanvas <strong>extends Canvas</strong> {
+	public void <strong>paint(Graphics g)</strong> {
+		// Dibujamos en el área del canvas
+		// usando el objeto g proporcionado
+	}
+}</pre>
+<p>Con esto en la clase MiCanvas hemos creado un componente propio en el que nosotros 
+  controlamos lo que se dibuja en pantalla. Podremos a&ntilde;adir este componente 
+  a nuestra aplicaci&oacute;n de la misma forma que a&ntilde;adimos cualquier 
+  otro componente AWT:</p>
+<pre class="codigo">MiCanvas mc = <strong>new MiCanvas()</strong>;
+panel.<strong>add</strong>(mc);</pre>
+<p>Hemos de recordar que no podemos controlar cuando se invoca el m&eacute;todo 
+  <strong>paint(Graphics g)</strong>, est&eacute; m&eacute;todo ser&aacute; invocado 
+  por AWT en el momento en el que el SO necesite que la ventana sea redibujada. 
+  En &eacute;l simplemente definimos como se dibujar&aacute; el contenido de nuestro 
+  componente en pantalla, y AWT ya se encargar&aacute; de invocarlo cuando sea 
+  necesario.&nbsp;</p>
+<h3>3.4.2 Contexto gr&aacute;fico: Graphics</h3>
+<p>El objeto <strong>Graphics</strong> nos permitir&aacute; acceder al contexto 
+  gr&aacute;fico de un determinado componente y a trav&eacute;s de &eacute;l dibujar 
+  en su &aacute;rea en pantalla. Vamos a ver ahora como dibujar utilizando dicho 
+  objeto.</p>
+<h4>3.4.2.1 Atributos</h4>
+<p>El contexto gr&aacute;fico tendr&aacute; asociado el color del l&aacute;piz 
+  que usamos en cada momento para dibujar, as&iacute; como la fuente de texto 
+  que se utilizar&aacute; en el caso de que dibujemos una cadena de texto. Para 
+  consultar o modificar el color o la fuente asociadas al contexto gr&aacute;fico 
+  se proporcionan los siguientes m&eacute;todos:</p>
+<ul>
+  <li><strong>Color getColor() </strong>/<strong> setColor(Color c)</strong>: 
+    Obtiene/Establece el color del l&aacute;piz en el contexto gr&aacute;fico. 
+    Deberemos utilizar un objeto de la clase <strong>Color</strong> para especificar 
+    el color que queremos establecer. Los objetos <strong>Color</strong> pueden 
+    ser construidos a partir de las componentes RGB del color deseado, o bien 
+    utilizar como color alguno de los colores predefinidos como constantes en 
+    la misma clase <strong>Color</strong> (<i>Color.red, Color.black</i>, etc).</li>
+  <li><strong>Font getFont() </strong>/<strong> setFont (Font f)</strong>: Obtiene/Establece la fuente que se utilizar&aacute; para dibujar texto. Utilizaremos 
+    la clase <strong>Font</strong> para especificar la fuente de texto que vamos 
+    a utilizar.</li>
+  <li><strong>setPaintMode()</strong> / <strong>setXORMode(Color c)</strong>: 
+    Establece el modo de dibujo. El modo <strong>Paint</strong> dibuja directamente 
+    en el &aacute;rea con el color actual, sobrescribiendo con este color el valor 
+    anterior de los pixels sobre los que se dibuja. El modo <strong>XOR</strong> 
+    realiza una operaci&oacute;n XOR entre el color del nuevo pixel y el que habia 
+    antes en esa posici&oacute;n, dibujando el resultado de dicha operaci&oacute;n. 
+    M&aacute;s adelante veremos la utilidad de este modo.</li>
+</ul>
+<p>Una vez establecidos estos atributos en el contexto gr&aacute;fico, podremos 
+  dibujar en &eacute;l una serie de elementos utilizando una serie de m&eacute;todos 
+  de <strong>Graphics</strong>. Estos m&eacute;todos comienzan por <strong>drawXXXX</strong> 
+  para dibujar el contorno de una determinada forma, o <strong>fillXXXX</strong> 
+  para dibujar dicha forma con relleno. </p>
+<p>El sistema de coordenadas del &aacute;rea en pantalla tendr&aacute; la coordenada 
+  (0,0) en su esquina superior izquierda, y las coordenadas ser&aacute;n positivas 
+  hacia la derecha (coordenada x) y hacia abajo (coordenada y), tal como se muestra 
+  a continuaci&oacute;n:</p>
+<div align="center"><img src="imagenes/awtswing/scoord.gif" width="215" height="159" align="middle"></div>
+<p align="center" class="caption">Figura 1. Coordenadas del &aacute;rea de dibujo</p>
+<h4><strong>3.4.2.2 Figuras</strong></h4>
+<p>El contexto gr&aacute;fico nos ofrece una serie de m&eacute;todos para dibujar 
+  en &eacute;l las principales primitivas geom&eacute;tricas b&aacute;sicas:</p>
+<ul>
+  <li><strong>draw-</strong> / <strong>fillRect(int x, int y, int width, int height)</strong>: 
+    Dibuja un rect&aacute;ngulo dadas sus coordenadas de inicio y el ancho y el 
+    alto. </li>
+  <li><strong>draw-</strong> / <strong>fillOval(int x, int y, int width, int height)</strong>: 
+    Dibuja una elipse dadas las coordenadas de inicio y el ancho y el alto del 
+    rect&aacute;ngulo que la contiene. </li>
+  <li><strong>drawLine(int x1, int y1, int x2, int y2)</strong>: Dibuja una l&iacute;nea 
+    desde el punto <em>(x1,y1)</em> hasta <em>(x2,y2)</em>. </li>
+  <li><strong>draw-</strong> / <strong>fillPolygon(int [ ] xPoint, int [ ] yPoint, 
+    int nPoint)</strong>: Dibuja un pol&iacute;gono cerrado cuyos <i>nPoint</i> v&eacute;rtices 
+    tienen las coordenadas <em>(x,y)</em> especificadas en las listas <em>xPoint</em> 
+    e <em>yPoint</em> proporcionadas. </li>
+</ul>
+<p>Por ejemplo, el siguiente canvas aparecer&aacute; con un dibujo de un c&iacute;rculo 
+  rojo y un rectángulo (cuadrado) verde:</p>
+<pre class="codigo">public class MiCanvas extends Canvas {
+	public void paint(Graphics g) {
+		g.<strong>setColor</strong>(Color.red);
+		g.<strong>fillOval</strong>(10,10,50,50);
+		g.<strong>setColor</strong>(Color.green);
+		g.<strong>fillRect</strong>(60,60,50,50);
+	}
+}</pre>
+<h4>3.4.2.3 Texto</h4>
+<p>Aparte de dibujar figuras geom&eacute;tricas tambi&eacute;n podremos dibujar 
+  cadenas de texto. Para ello se proporciona el m&eacute;todo <strong>drawString(String 
+  s, int x, int y)</strong> que dibuja la cadena <em>s</em> en las coordenadas 
+  <em>(x,y)</em>. Este punto corresponder&aacute; al inicio de la cadena, en la 
+  l&iacute;nea de base del texto como se muestra a continuaci&oacute;n:</p>
+<div align="center"><img src="imagenes/awtswing/lbase.gif" width="212" height="58"></div>
+<p align="center" class="caption">Figura 2. L&iacute;nea de base del texto</p>
+<p>Con esto dibujaremos un texto en pantalla, pero podemos querer hacer por ejemplo 
+  que el texto sea sensible a pulsaciones del rat&oacute;n sobre &eacute;l. Lo 
+  &uacute;nico que nos proporciona AWT es la posici&oacute;n del rat&oacute;n 
+  dentro del &aacute;rea, por lo que para saber si est&aacute; sobre el texto 
+  tendremos que saber que regi&oacute;n ocupa el texto. Aqu&iacute; es donde encontramos 
+  el problema, seg&uacute;n la fuente, la cadena escrita, y el contexto donde 
+  la escribamos, el texto puede tener distintas dimensiones, y nosotros s&oacute;lo 
+  conocemos las coordenadas de comienzo. La soluci&oacute;n a esto la proporciona 
+  el objeto <strong>FontMetrics</strong>, que podemos obtener llamando al m&eacute;todo<strong> 
+  getFontMetrics(Font f)</strong> del contexto gr&aacute;fico o del componente 
+  AWT (ambos tipos de objetos contienen este m&eacute;todo). Este objeto nos dar&aacute; 
+  informaci&oacute;n sobre las m&eacute;tricas de dicha fuente en este contexto. 
+  De este objeto podemos sacar la siguiente informaci&oacute;n:</p>
+<ul>
+  <li><strong>int stringWidth(String s)</strong>: Nos devuelve el ancho que tendr&aacute; 
+    la cadena<i> s</i> en pixels.</li>
+  <li><strong>int getAscent()</strong> / <strong>int getMaxAscent()</strong>: 
+    Nos devuelve la altura t&iacute;pica o la m&aacute;xima altura respectivamente 
+    que tendr&aacute;n los caracteres (valores positivos).</li>
+  <li><strong>int getDescent()</strong> / <strong>int getMaxDescent()</strong>: 
+    Nos devuelve lo que descienden los car&aacute;cteres desde la l&iacute;nea 
+    de base, tanto el descenso t&iacute;pico como el m&aacute;ximo respectivamente 
+    (valores positivos).</li>
+</ul>
+<p>Con estas medidas podremos conocer exactamente los l&iacute;mites de una cadena 
+  de texto, tal como se muestra a continuaci&oacute;n:</p>
+<div align="center"><img src="imagenes/awtswing/fmetrics.gif" width="272" height="57"></div>
+<p align="center" class="caption">Figura 3. M&eacute;tricas del texto</p>
+<h4>3.4.2.4 Im&aacute;genes</h4>
+<p>Por &uacute;ltimo, un m&eacute;todo importante es el que nos permite volcar 
+  una imagen al &aacute;rea de dibujo. Las im&aacute;genes en Java se encapsulan mediante la clase <strong>Image</strong>. Podemos o bien crearnos una imagen 
+  vacia para dibujar nosotros en ella, o cargar im&aacute;genes desde ficheros. 
+  Para cargar una imagen de un fichero en caso de un <strong>Applet</strong>, 
+  simplemente deberemos llamar al m&eacute;todo <strong>getImage(URL url)</strong> 
+  de la clase <strong>Applet</strong> que nos devolver&aacute; el objeto <strong>Image</strong> 
+  con la imagen cargada, que podr&aacute; estar en formato GIF, JPG o PNG. En 
+  el caso de una aplicaci&oacute;n deberemos seguir los siguientes pasos:</p>
+<p>Obtener la implementaci&oacute;n del toolkit de AWT a partir de cualquier componente 
+  AWT de nuestra aplicaci&oacute;n. Si tenemos una ventana con un canvas, tanto 
+  la ventana como el canvas nos servir&iacute;an dado que ambos son componentes 
+  AWT. Sobre el componente llamaremos al m&eacute;todo <strong>getToolkit()</strong> 
+  para obtener el objeto <strong>Toolkit</strong>:</p>
+<pre class="codigo">Canvas mc = new MiCanvas();
+Toolkit toolkit = mc.<strong>getToolkit()</strong>;</pre>
+<p>Tambi&eacute;n podemos obtener el toolkit por defecto si no podemos acceder 
+  a ning&uacute;n componente AWT:</p>
+<pre class="codigo">Toolkit toolkit = Toolkit.<b>getDefaultToolkit</b>();</pre>
+<p>Utilizar el m&eacute;todo <strong>createImage(String fichero)</strong> del 
+  Toolkit para cargar la imagen del fichero de nombre <em>fichero</em>:</p>
+<pre class="codigo">Image img = toolkit.<strong>createImage</strong>(&quot;foto.jpg&quot;);</pre>
+<p>Una vez obtenida la imagen podremos dibujarla en el contexto gr&aacute;fico 
+  con <strong>drawImage(Image img, int x, int y, ImageObserver obs)</strong>. 
+  Con esto dibujaremos la imagen <em>img</em> en las coordenadas <em>(x,y)</em> 
+  del &aacute;rea. Adem&aacute;s necesitamos proporcionar el objeto <strong>ImageObserver</strong> 
+  que se utilizar&aacute; para avisar a la aplicación cuando la imagen esté cargada 
+  del todo, y por lo tanto puede mostrarla por pantalla. Cualquier componente 
+  AWT capaz de mostrar imagenes implementar&aacute; la interfaz <b>ImageObserver</b>, 
+  por lo que podremos utilizarlo en la llamada a dicho m&eacute;todo. Por ejemplo, 
+  si dibujamos la imagen en un <strong>Canvas</strong>, utilizaremos el mismo 
+  <strong>Canvas</strong> como <strong>ImageObserver</strong> ya que es el componente 
+  en el que vamos a observar la imagen:</p>
+<pre class="codigo">public class MiCanvas extends Canvas {
+	public void paint(Graphics g) {
+		Toolkit toolkit = getToolkit();
+		Image img = toolkit.createImage(&quot;foto.jpg&quot;);
+
+		g.<strong>drawImage(img, 0, 0, this)</strong>;
+	}
+}
+</pre>
+<p>Si no necesitamos utilizar un <b>ImageObserver</b> podemos especificar <i>null 
+  </i>en este par&aacute;metro. Esto ser&aacute; &uacute;til cuando trabajemos 
+  con im&aacute;genes que sabemos que ya est&aacute;n cargadas, y cuando no tengamos 
+  la referencia al componente donde se va a dibujar la imagen.</p>
+<h4>3.4.2.5 Otros m&eacute;todos</h4>
+<p>Otros m&eacute;todos &uacute;tiles del contexto gr&aacute;fico son:</p>
+<ul>
+  <li><strong>clearRect(int x, int y, int width, int height)</strong>: Vacia el 
+    rect&aacute;ngulo especificado del &aacute;rea. El color del rect&aacute;ngulo 
+    ser&aacute; el del color de fondo del componente AWT (el contexto gr&aacute;fico 
+    no define color de fondo, este color es propio del componente AWT en el que 
+    se dibuja).</li>
+  <li><strong>clipRect(int x, int y, int width, int height)</strong>: Define un 
+    rect&aacute;ngulo de recorte. Cuando definimos un &aacute;rea de recorte en 
+    el contexto gr&aacute;fico, s&oacute;lo se dibujar&aacute;n en pantalla los 
+    pixels que caigan dentro de este &aacute;rea. El espacio que ocupa el componente 
+    en el que dibujamos es un &aacute;rea de recorte impuesta por el sistema. 
+    Nunca se dibujar&aacute;n los pixels que escribamos fuera de este espacio. 
+    Este m&eacute;todo establece un recorte en el &aacute;rea de recorte anterior, 
+    si ya existia un rect&aacute;ngulo de recorte, el nuevo rect&aacute;ngulo 
+    de recorte ser&aacute; la intersecci&oacute;n de ambos. Si queremos eliminar 
+    el &aacute;rea de recorte anterior deberemos usar el m&eacute;todo <strong>setClip(null)</strong>.</li>
+  <li><strong>copyArea(int x, int y, int width, int height, int dx, int dy)</strong>: 
+    Copia el &aacute;rea dentro del rect&aacute;ngulo especificado en las coordenadas 
+    de destino<em> (dx, dy)</em>.</li>
+</ul>
+<h3>3.4.3 Animaciones</h3>
+<p>Hasta ahora hemos visto como dibujar gr&aacute;ficos en pantalla, pero lo &uacute;nico 
+  que hacemos es definir un m&eacute;todo que se encargue de dibujar el contenido 
+  del componente, y ese m&eacute;todo ser&aacute; invocado cuando el sistema necesite 
+  dibujar la ventana. </p>
+<p>Sin embargo puede interesarnos cambiar din&aacute;micamente los gr&aacute;ficos 
+  de nuestro componente. Para ello deberemos indicar el momento en el que queremos 
+  que se redibujen los gr&aacute;ficos, ya que el sistema por si solo s&oacute;lo 
+  llamar&aacute; a <strong>paint(Graphics g)</strong> cuando sea necesario volver 
+  a dibujar la ventana porque su contenido se ha perdido, pero no lo llamar&aacute; 
+  cuando hayamos realizado cambios.</p>
+<h4>3.4.3.1 Redibujado del &aacute;rea</h4>
+<p>Para forzar que se redibuje el &aacute;rea del componente, deberemos llamar 
+  al m&eacute;todo <strong>repaint()</strong> del componente (del canvas por ejemplo). 
+  Con eso estamos solicitando al sistema que se repinte el componente, pero no 
+  lo repinta en el mismo momento en el que se llama. El sistema introducir&aacute; 
+  esta solicitud en la cola de ventanas de debe repintar, y cuando tenga tiempo 
+  repintar&aacute; su contenido.</p>
+<pre class="codigo">MiCanvas mc = new MiCanvas();
+...
+mc.<strong>repaint()</strong>;</pre>
+<p>En este caso para repintar el componente no llamar&aacute; a su m&eacute;todo 
+  <strong>paint(Graphics g)</strong>, sino al m&eacute;todo <strong>update(Graphics 
+  g)</strong>. Este es el m&eacute;todo que se encarga de actualizar los gr&aacute;ficos. 
+  Su implementaci&oacute;n por defecto consiste en borrar los gr&aacute;ficos 
+  actuales del &aacute;rea del componente, y llamar a <strong>paint(Graphics g)</strong> 
+  para pintarlo de nuevo.</p>
+<p>Imaginemos que estamos moviendo un rect&aacute;ngulo por pantalla. El rect&aacute;ngulo 
+  ir&aacute; cambiando de posici&oacute;n, y en cada momento lo dibujaremos en 
+  la posici&oacute;n en la que se encuentre. Pero si no borramos el contenido 
+  de la pantalla en el instante anterior, el rect&aacute;ngulo aparecer&aacute; 
+  en todos los lugares donde ha estado en instantes anteriores produciendo este 
+  efecto indeseable de dejar rastro. Por ello el m&eacute;todo <strong>update(Graphics 
+  g)</strong> vac&iacute;a todo el &aacute;rea del componente antes de invocar 
+  a <strong>paint(Graphics g)</strong> para que dibuje los gr&aacute;ficos en 
+  el instante actual.</p>
+<p><a href="ejemplos/graficos/flicker.htm">Ejemplo de efecto flicker</a></p>
+<p>Sin embargo, al estar vaciando y volviendo a dibujar en el componente, veremos 
+  en &eacute;ste un efecto parpadeo (<i>flicker</i>). Por ello, si queremos que 
+  nuestra aplicaci&oacute;n no muestre este aspecto de aplicaci&oacute;n <em>amateur</em>, 
+  deberemos sobrescribir el m&eacute;todo <strong>update(Graphics g)</strong> 
+  para que su &uacute;nica funci&oacute;n sea llamar a <strong>paint(Graphics 
+  g) </strong>sin vaciar previamente el &aacute;rea:</p>
+<pre class="codigo">public class MiCanvas {
+	public void <strong>update(Graphics g)</strong> {
+		paint(g);
+	}
+
+	public void paint(Graphics g) {
+		// Aqui dibujamos el contenido del componente
+	}
+}</pre>
+<p>Pero ahora nos encontramos con otros problemas. Al no borrar la pantalla los 
+  objetos pueden dejar rastro. Adem&aacute;s puede que queramos dibujar varios 
+  componentes en pantalla, y si los dibujamos uno detr&aacute;s de otro puede 
+  producirse el efecto poco deseable de ver como se va construyendo la imagen. 
+  Para evitar que esto ocurra y conseguir unas animaciones limpias, utilizaremos 
+  la t&eacute;cnica del <em>doble buffer</em>.</p>
+<p><a href="ejemplos/graficos/rastro.htm">Ejemplo de efecto rastro</a></p>
+<h4>3.4.3.2 T&eacute;cnica del doble buffer</h4>
+<p>La t&eacute;cnica del <em>doble buffer</em> consiste en dibujar todos los elementos 
+  que queremos mostrar en una imagen en memoria, y una vez se ha dibujado todo, 
+  volcarlo a pantalla como una unidad. De esta forma, mientras se va dibujando 
+  la imagen, como no se hace directamente en pantalla no veremos efectos de parpadeo 
+  al borrar el contenido anterior, ni veremos como se va creando la imagen, en 
+  pantalla se mostrar&aacute; la imagen cuando est&eacute; completa.</p>
+<p><a href="ejemplos/graficos/buffer.htm">Ejemplo de doble buffer</a></p>
+<p>Para utilizar esta t&eacute;cnica lo primero que deberemos hacer es crearnos 
+  el denominado <em>back buffer</em> que ser&aacute; el buffer en memoria donde 
+  dibujamos la imagen. Para implementarlo en Java utilizaremos una imagen (objeto 
+  <strong>Image</strong>) que tendremos en memoria, y sobre la que dibujaremos 
+  el contenido que queramos mostrar. Deberemos crear una imagen del mismo tama&ntilde;o 
+  del componente en el que vamos a dibujar. Para crear una imagen en blanco podemos 
+  usar el m&eacute;todo <strong>createImage(int width, int height) </strong>que 
+  se encuentra en cualquier componente AWT (<strong>Component</strong>), como 
+  por ejemplo nuestro canvas, y crea una imagen vacia con las dimensiones especificadas. 
+  Tendremos que crearla con las dimensiones del componente:</p>
+<pre class="codigo">Image backbuffer = <b>createImage</b>(getWidth(), getHeight());</pre>
+<p>Al igual que cada componente tiene un contexto gr&aacute;fico asociado en el 
+  que podemos dibujar, una imagen en memoria tambi&eacute;n tendr&aacute; su contexto 
+  gr&aacute;fico. Mientras el contexto gr&aacute;fico de los componentes hace 
+  referencia a la pantalla, el de una imagen har&aacute; referencia a un espacio 
+  de memoria en el que se almacena la imagen, pero la forma de dibujar en ambos 
+  se realiza de la misma forma a trav&eacute;s de la misma interfaz (objeto <b>Graphics</b>). 
+  Para obtener el contexto gr&aacute;fico de una imagen utilizaremos el m&eacute;todo 
+  <b>getGraphics()</b> de la misma:</p>
+<pre class="codigo">Graphics offScreen = backbuffer.<strong>getGraphics</strong>();</pre>
+<p>Una vez obtenido este contexto gr&aacute;fico, dibujaremos todo lo que queremos 
+  mostrar en &eacute;l, en lugar de hacerlo en pantalla. Una vez hemos dibujado 
+  todo el contenido en este contexto gr&aacute;fico, deberemos volcar la imagen 
+  a pantalla para que &eacute;sta se haga visible:</p>
+<pre class="codigo">g.<strong>drawImage</strong>(backbuffer, 0, 0, this);</pre>
+<p>La imagen conviene crearla una &uacute;nica vez, ya que la animaci&oacute;n 
+  puede redibujar frecuentemente, y si cada vez que lo hacemos creamos un nuevo 
+  objeto imagen estaremos malgastando memoria inutilmente. Es buena pr&aacute;ctica 
+  de programaci&oacute;n en Java instanciar nuevos objetos las m&iacute;nimas 
+  veces posibles, intentando reutilizar los que ya tenemos. </p>
+<p>Podemos ver como quedar&iacute;a nuestra clase ahora:</p>
+<pre class="codigo">public MiCanvas extends Canvas {
+
+	// Backbuffer
+	Image backbuffer = null;
+
+	// Ancho y alto del backbuffer
+	int width, height;
+
+	// Coordenadas del rectangulo dibujado
+	int x, y;
+
+	public void update(Graphics g) {
+		paint(g);
+	}
+
+	public void paint(Graphics g) {
+		// Solo creamos la imagen la primera vez 
+		// o si el componente ha cambiado de tamaño
+		if( backbuffer == null || 
+			width != getWidth() || 
+			height != getHeight() )
+		{
+			width = getWidth();
+			height = getHeight();
+			backbuffer = <strong>createImage</strong>(width, height);
+		}
+
+		Graphics offScreen = backbuffer.<strong>getGraphics</strong>();
+
+		// Vaciamos el área de dibujo
+
+		offScreen.<strong>clearRect</strong>(0,0,getWidth(), getHeight());
+
+		// Dibujamos el contenido en offScreen
+		offScreen.setColor(Color.red);
+		offScreen.fillRect(x,y,50,50);
+
+		// Volcamos el back buffer a pantalla
+		g.<strong>drawImage</strong>(backbuffer,0,0,this);
+	}
+}</pre>
+<p>En este ejemplo se dibuja un rect&aacute;ngulo rojo en la posici&oacute;n <em>(x,y)</em> 
+  de la pantalla que podr&aacute; ser variable, tal como veremos a continuaci&oacute;n 
+  a&ntilde;adiendo a este ejemplo m&eacute;todos para realizar la animaci&oacute;n.</p>
+<h4>3.4.3.3 C&oacute;digo para la animaci&oacute;n</h4>
+<p>Si queremos hacer una animaci&oacute;n tendremos que ir cambiando ciertas propiedades 
+  de los objetos de la imagen (por ejemplo su posici&oacute;n) y solicitar que 
+  se redibuje tras cada cambio. El bucle para la animaci&oacute;n podr&iacute;a 
+  ser el siguiente:</p>
+<pre class="codigo">public class MiCanvas extends Canvas {
+	...
+	public void anima() {
+		// El rectangulo comienza en (10,10)
+		x = 10;
+		y = 10;
+
+		while(x &lt; 100) {
+			x++;
+			<strong>repaint</strong>();
+
+			try {
+				Thread.currentThread().sleep(100);
+			} catch(InterruptedException e) {}
+		}
+	}
+}</pre>
+<p>Con este c&oacute;digo de ejemplo veremos una animaci&oacute;n en la que el 
+  rect&aacute;ngulo que dibujamos partir&aacute; de la posici&oacute;n (10,10) 
+  y cada 100ms se mover&aacute; un pixel hacia la derecha, hasta llegar a la coordenada 
+  (100,10).</p>
+<p>Para ello s&oacute;lo tendremos que invocar el m&eacute;todo <em>anima()</em> 
+  de nuestro componente. Pero es importante no invocar este m&eacute;todo directamente 
+  desde cualquier respuesta a un evento, como puede ser la pulsaci&oacute;n de 
+  un boton:</p>
+<pre class="codigo">public void actionPerformed(ActionEvent e) {
+	// ¡¡¡ No hay que hacer esto !!!
+	mc.<strong>anima</strong>();
+}</pre>
+<p>&iquest;Por qu&eacute; no debemos hacer esto? Parece dificil ver que esto pueda 
+  causar alg&uacute;n problema, pero debemos pensar que Java tiene un hilo en 
+  el que se tratan los eventos que se van produciendo, y este mismo hilo ser&aacute; 
+  el que se encargue de repintar la pantalla cuando se lo solicitemos. Sin embargo, 
+  si desde este hilo llamamos al m&eacute;todo que realiza la animaci&oacute;n 
+  y &eacute;ste no devuelve el control hasta que la animaci&oacute;n no ha terminado, 
+  al no continuar el hilo no podr&aacute; repintar el contenido de la pantalla, 
+  por mucho que se lo pidamos dentro de nuestra funci&oacute;n de animaci&oacute;n
+(la ventana de la aplicación quedaría como &quot;colgada&quot;). 
+  Esto producir&aacute; el efecto de no ver la animaci&oacute;n mientras se est&aacute; 
+  realizando, s&oacute;lo se actualizar&aacute; la pantalla una vez haya terminado 
+  la animaci&oacute;n, por lo tanto se producir&aacute; un salto desde el estado 
+  inicial hasta el estado final.</p>
+<p>Por lo tanto, si queremos hacer una animaci&oacute;n lo mejor ser&aacute; crear 
+  un hilo independiente que se encargue de realizar dicha animaci&oacute;n, y 
+  de esta manera el hilo de procesamiento de eventos pueda continuar realizando 
+  sus tareas mientras se ejecuta la animaci&oacute;n:</p>
+<pre class="codigo">public class MiCanvas extends Canvas implements <strong>Runnable</strong> {
+	...
+	public void <strong>run</strong>() {
+		anima();
+	}
+}</pre>
+<p>Ahora si que podremos invocar la animaci&oacute;n desde el c&oacute;digo de 
+  los eventos creando un hilo independiente que se encargue de ella:</p>
+<pre class="codigo">public void actionPerformed(ActionEvent e) {
+	// Así si que funciona
+	Thread t = new Thread(mc);
+	t.start();
+}</pre>
+<h4>3.4.3.4 Modo XOR</h4>
+<p>Si no queremos tener que sobrescribir la pantalla entera cada vez que se actualiza, 
+  podemos utilizar otra t&eacute;cnica que se basa en el modo XOR de dibujo para 
+  evitar que los objetos dejen rastro al ser modificados. </p>
+<p>Lo que haremos en este caso es activar el modo XOR mientras estemos modificando 
+  un objeto. Cada vez que realicemos un cambio en el objeto (movimiento, cambio 
+  de tama&ntilde;o o forma), lo que haremos ser&aacute; dibujar de nuevo el objeto 
+  en su posici&oacute;n anterior, de forma que al estar activado el modo XOR se 
+  borrar&aacute; el objeto, y a continuaci&oacute;n lo dibujamos en su nueva posici&oacute;n. 
+  Este modo es muy utilizado en programas de dibujo, mientras estamos dibujando 
+  figuras en pantalla.</p>
+<h3>3.4.4 API de Java 2D</h3>
+<p>Java 2D es una nueva API introducida a partir de JDK 1.2, que extiende AWT 
+  para proporcionar un extenso conjunto de funcionalidades para trabajar con gr&aacute;ficos 
+  2D, texto e im&aacute;genes. Aporta una serie de formas primitivas b&aacute;sicas 
+  con las que podremos trabajar.</p>
+<p>Adem&aacute;s de mostrar gr&aacute;ficos por pantalla, es capaz de sacarlos 
+  a trav&eacute;s de la impresora, utilizando un modelo uniforme de render para 
+  ambos casos.</p>
+<p>El mecanismo de render es el mismo que vimos en AWT para versiones anteriores 
+  de JDK, cuando el sistema necesita redibujar un componente, se invoca a su m&eacute;todo 
+  <strong>paint</strong> o <strong>update</strong>. Sin embargo, lo que se proporciona 
+  es un objeto <strong>Graphics2D</strong>, que extiende a <strong>Graphics</strong> 
+  proporcionando acceso a las nuevas funcionalidades de Java 2D.</p>
+<p>Adem&aacute;s, todos aquellos componentes de Swing derivados de <b>JComponent</b> 
+  implementan internamente el doble buffer, por lo que no tendremos que ocuparnos 
+  de hacerlo nosotros. Simplemente deberemos rellenar el c&oacute;digo del m&eacute;todo 
+  <b>paint</b>, borrando el contenido del contexto gr&aacute;fico que se nos proporciona, 
+  si fuese necesario, y dibujando los gr&aacute;ficos. Es importante hacer notar 
+  que no todos los componentes de Swing derivan de<b> JComponent</b>, como es 
+  el caso de <b>JFrame</b> por ejemplo, por lo que en este caso no implementar&aacute; 
+  internamente el doble buffer. Para saber si un componente deriva de &eacute;ste, 
+  simplemente tendremos que ir a la documentaci&oacute;n de la API de Java y en 
+  la p&aacute;gina de dicho componente veremos toda la jerarqu&iacute;a de sus 
+  ascendientes. </p>
+<p>Lo que deberemos hacer (siempre que trabajemos con la versi&oacute;n 1.2 de 
+  JDK o posteriores) ser&aacute; hacer una conversi&oacute;n cast del objeto <strong>Graphics</strong> 
+  proporcionado a un objeto <strong>Graphics2D</strong>. Esto es as&iacute; porque 
+  a los m&eacute;todos <strong>paint</strong> y <strong>update</strong> se les 
+  estar&aacute; proporcionando en realidad un objeto <strong>Graphics2D</strong>, 
+  aunque la referencia a &eacute;l sea de tipo <strong>Graphics</strong> por cuesti&oacute;n 
+  de mantener la compatibilidad con versiones anteriores. Si queremos utilizar 
+  las funcionalidades mejoradas que ofrece la nueva API de Java 2D, deberemos 
+  obtener el objeto<b> Graphics2D </b>de la siguiente forma:</p>
+<pre class="codigo">public void paint(Graphics g) {
+	<strong>Graphics2D</strong> g2 = <strong>(Graphics2D)</strong>g;
+}</pre>
+<p>Este objeto nos permitir&aacute; realizar un mayor n&uacute;mero de operaciones 
+  en el contexto gr&aacute;fico pudiendo as&iacute; obtener de forma sencilla 
+  unos gr&aacute;ficos mejorados.</p>
+<p>En este nuevo contexto gr&aacute;fico tendremos los siguiente atributos:</p>
+<ul>
+  <li><i>Paint</i>: Relleno de las figuras o texto dibujadas. En este caso el 
+    relleno no tiene por qué ser un color s&oacute;lido. Tambi&eacute;n podr&aacute; 
+    ser un determinado patr&oacute;n o un gradiente. </li>
+  <blockquote> 
+    <div align="center"><img src="imagenes/awtswing/paint.gif" width="516" height="70"></div>
+    <p align="center" class="caption">Figura 4. Relleno de las figuras</p>
+  </blockquote>
+  <li><i>Font</i>: Fuente utilizada para dibujar texto.</li>
+  <li><i>Stroke</i>: Contorno de las figuras o texto dibujadas (l&aacute;piz). 
+    Podremos utilizar para el contorno lineas continuas o discontinuas, y distintos 
+    grosores de l&iacute;nea. </li>
+  <blockquote> 
+    <div align="center"><img src="imagenes/awtswing/stroke.gif" width="410" height="167"></div>
+    <p align="center" class="caption">Figura 5. Tipos de l&aacute;p&igrave;ces</p>
+  </blockquote>
+  <li><i>Transform</i>: Podremos realizar transformaciones con las figuras, texto 
+    o im&aacute;genes que dibujemos. Podremos utilizar aqu&iacute; cualquier transformaci&oacute;n 
+    af&iacute;n, por lo que podremos realizar traslaciones, rotaciones, escalados, 
+    desencajados, en resumen, cualquier transformaci&oacute;n que pueda ser definida 
+    por una matriz de transformaci&oacute;n 3x3.</li>
+  <li><i>Composite</i>: Se refiere a la forma de combinar las distintas figuras 
+    que dibujemos. Podremos hacer que al dibujar una figura sobre otra se produzcan 
+    diferentes efectos, como quedarse encima o debajo, o bien producirse una intersecci&oacute;n, 
+    uni&oacute;n o resta de figuras. </li>
+  <blockquote> 
+    <div align="center"><img src="imagenes/awtswing/composite.gif" width="428" height="198"></div>
+    <p align="center" class="caption">Figura 6. Composici&oacute;n de figuras</p>
+  </blockquote>
+  <li><i>Clip</i>: Realiza un recortado del contenido que dibujemos. Nos permite 
+    definir unos l&iacute;mites del &aacute;rea en la que queremos que se dibuje. 
+    Todo lo que quede fuera de este &aacute;rea no se dibujar&aacute; en pantalla. 
+    El &aacute;rea de recortado no se limita s&oacute;lo a rect&aacute;ngulos 
+    en este caso.</li>
+  <li><i>Calidad del render</i> <i>(RenderingHints)</i>: Aqu&iacute; podremos 
+    cambiar determinadas opciones de render. Por ejemplo, podremos usar antialiasing 
+    para reducir el efecto escalera de los gr&aacute;ficos. </li>
+  <blockquote> 
+    <div align="center"><img src="imagenes/awtswing/aliasing.gif" width="268" height="54"></div>
+    <p align="center" class="caption">Figura 7. Efecto aliasing</p>
+  </blockquote>
+</ul>
+<p>Se proporcionan una ser&iacute;e de m&eacute;todos <b>setXXXX</b> y <b>getXXXX</b> 
+  para obtener y modificar los atributos anteriores. </p>
+<p>Para dibujar figuras podemos utilizar el siguiente m&eacute;todo:</p>
+<pre class="codigo">g2.<b>draw</b>(Shape figura);</pre>
+<p>La informaci&oacute;n de las figuras estar&aacute; encapsulada en clases derivadas 
+  de <b>Shape</b> (podemos encontrar rect&aacute;ngulos, l&iacute;neas, curvas, 
+  etc). Deberemos instanciar la figura adecuada y dibujarla en el contexto gr&aacute;fico 
+  mediante el m&eacute;todo anterior.</p>
+<div align="center"><img src="imagenes/awtswing/figuras.gif" width="451" height="203"></div>
+<p align="center" class="caption">Figura 8. Tipos de figuras</p>
+<h3>3.4.5 Modo a pantalla completa</h3>
+<p>A partir de JDK 1.4.0 podremos utilizar un modo de gr&aacute;ficos a pantalla 
+  completa. Con este modo tendremos acceso exclusivo y directo al dispositivo 
+  de la pantalla.</p>
+<p>En AWT hemos visto anteriormente que era el sistema el que se encargaba de 
+  mandar eventos para repintar el contenido de nuestra ventana. Esto tiene que 
+  hacerse as&iacute; ya que el dispositivo gr&aacute;fico (la pantalla) se comparte 
+  con el sistema operativo y el resto de aplicaciones en ejecuci&oacute;n, por 
+  lo que es el mismo sistema el que nos tiene que indicar cuando podemos redibujar. 
+</p>
+<p>Sin embargo, al tener ahora un acceso exclusivo a la pantalla, podremos dibujar 
+  en ella en cualquier momento. Esto es lo que se conoce como render activo, frente 
+  al render pasivo que hemos visto anteriormente.</p>
+<p>Para utilizar este modo exclusivo a pantalla completa lo primero que deberemos 
+  hacer es obtener el dispositivo gr&aacute;fico (<b>GraphicsDevice</b>) que vamos 
+  a utilizar. Lo obtendremos a partir del entorno gr&aacute;fico (<b>GraphicsEnvironment</b>) 
+  de nuestra m&aacute;quina:</p>
+<pre class="codigo">GraphicsEnvironment ge = 
+	GraphicsEnvironment.<b>getLocalGraphicsEnvironment</b>();
+GraphicsDevice gd = ge.<b>getDefaultScreenDevice</b>();</pre>
+<p>Podemos tener varios dispositivos gr&aacute;ficos en nuestra m&aacute;quina, 
+  que podr&aacute;n ser obtenidos tambi&eacute;n a trav&eacute;s del entorno gr&aacute;fico. 
+  Con el m&eacute;todo visto anteriormente obtendremos el dispositivo primario 
+  que es el que querremos utilizar normalmente, ya que lo normal ser&aacute; disponer 
+  de un solo dispositivo gr&aacute;fico.</p>
+<p>Una vez tenemos el dispositivo gr&aacute;fico podemos comprobar si 
+  soporta el modo a pantalla completa con el siguiente método (dentro de <i>GraphicsDevice</i>):</p>
+<pre class="codigo">boolean b =  gd.<b>isFullScreenSupported</b>()</pre>
+<p>Una vez hemos comprobado que soporta dicho modo podremos pasar a pantalla completa 
+  indicando que la ventana (<b>Window</b>) de nuestra aplicaci&oacute;n vamos a mostrar 
+  en la pantalla. Para ello utilizamos el siguiente método (dentro de <i>GraphicsDevice</i>):</p>
+<pre class="codigo">gd.<b>setFullScreenWindow</b>(Window w)</pre>
+<p>Del objeto de dispositivo gr&aacute;fico podremos obtener la lista de modos 
+  soportados por dicho dispositivo (resoluci&oacute;n y profundidad de color), 
+  y seleccionar cualquiera de estos modos siempre que la operaci&oacute;n est&eacute; 
+  permitida en nuestro sistema. Obtenemos el modo gr&aacute;fico actual con:</p>
+<pre class="codigo">DisplayMode dm = gd.<b>getDisplayMode</b>();</pre>
+<p>Para obtener todos los modos soportados haremos lo siguiente:</p>
+<pre class="codigo">DisplayMode [] dms = gd.<b>getDisplayModes</b>();</pre>
+<p>Los datos sobre los modos gr&aacute;ficos se encapsulan en la clase <b>DisplayMode</b>. 
+  Una vez elegido el modo que queremos utilizar podemos seleccionarlo con:</p>
+<pre class="codigo">gd.<b>setDisplayMode</b>(dm);</pre>
+<p>Antes hemos hablado del concepto de render activo. Para utilizar este tipo 
+  de render tendremos que obtener el objeto de contexto gr&aacute;fico asociado 
+  al componente donde vamos a dibujar (la ventana en este caso):</p>
+<pre class="codigo">Graphics g = getGraphics();</pre>
+<p>Una vez hemos terminado de dibujar en la pantalla, debemos llamar 
+  a <b>dispose</b> para liberar los recursos que estuviese utilizando.</p>
+<pre class="codigo">g.dispose();</pre>
+<p>Podemos usar tanto el modo activo como el modo pasivo cuando trabajemos a imagen 
+  completa. Sin embargo el modo activo nos dar&aacute; un mayor control y podremos 
+  utilizar t&eacute;cnicas avanzada como el intercambio (<i>flipping</i>) de p&aacute;ginas 
+  de memoria de video.</p>
+<p>Antes hemos visto como implementar el doble buffer. Pero ahora que tenemos 
+  acceso directo al dispositivo gr&aacute;fico, podremos usar una t&eacute;cnica 
+  m&aacute;s r&aacute;pida para implementarlo. Existen dos t&eacute;cnicas:</p>
+<p><b>BLT</b>: Leido como <i>blit </i>(<i>blitting</i>), que significa <i>BLock 
+  Transfer</i>. Es una t&eacute;cnica similar a la que hemos descrito anteriormente. 
+  El backbuffer es un &aacute;rea en memoria, y cuando queremos volcar este contenido 
+  a pantalla copiaremos el contenido de dicho &aacute;rea a la memoria del dispositivo 
+  gr&aacute;fico.</p>
+<p><b>FLIP</b>: Se refiere al intercambio (<i>flipping</i>) de p&aacute;ginas 
+  de memoria de video. Normalmente la tarjeta gr&aacute;fica tendr&aacute; varias 
+  p&aacute;ginas de memoria (doble buffer o triple buffer normalmente). En un 
+  momento dado el dispositivo gr&aacute;fico estar&aacute; mostrando el contenido 
+  de una de estas p&aacute;ginas. Lo que haremos ser&aacute; utilizar la p&aacute;gina 
+  que no se est&eacute; mostrando como backbuffer. Una vez hayamos terminado de 
+  dibujar, haremos que esa p&aacute;gina pase a ser el buffer de pantalla mostr&aacute;ndose 
+  as&iacute; su contenido sin tener que hacer ninguna transferencia de datos, 
+  y la otra p&aacute;gina pasar&aacute; a ser el backbuffer donde dibujaremos 
+  a continuaci&oacute;n. Esta t&eacute;cnica, puesto que la p&aacute;gina contiene 
+  todo el contenido de la pantalla, no podremos utilizarla si estamos compartiendo 
+  la pantalla con otras aplicaciones, ya que afectariamos a todas ellas. Es por 
+  esto que esta t&eacute;cnica solo podemos utilizarla al trabajar a pantalla 
+  completa.</p>
+<p>Con el modo a pantalla completa podremos utilizar cualquiera de las dos t&eacute;cnicas 
+  anteriores. Para ello tenemos las clases <b>BufferStrategies</b> y <b>BufferCapabilities</b> 
+  que implementan dichas t&eacute;cnicas.</p>
+<p><b>EJEMPLO</b></p>
+<p>La siguiente <a href="ejemplos/graficos/EjPantallaCompleta.java">clase</a> es
+un ejemplo sencillo de cómo establecer la pantalla completa y dibujar
+animaciones en ella.&nbsp;</p>
+<p>El constructor de la clase principal se encarga de obtener el dispositivo
+gráfico (<i>GraphicsDevice</i>), elegir el modo gráfico (<i>DisplayMode</i>),
+y luego pasar a modo pantalla completa con el modo gráfico seleccionado.
+Después hay un hilo (campo <i>t</i>) que es el que se encarga de hacer las
+animaciones.</p>
+<p>Para las animaciones, definimos un método <i>update</i> que sólo llame a <i>paint</i>,
+y un método <i>paint</i> que vaya dibujando cada frame de la animación, pero
+con un doble buffer. El método <i>dibuja</i> se encarga de dibujar en el <i>backbuffer</i>,
+y luego en <i>paint</i> se vuelca ese contenido directamente en pantalla. La
+animación en sí (método <i>dibuja</i>) consiste en mover un círculo rojo
+desde una X inicial de 10 hasta una final de 200.</p>
+<p>Veréis también una clase interna llamada <i>DlgModos</i> que se encarga de
+elegir el modo gráfico (<i>DisplayMode</i>) de entre una lista de posibles
+modos. Simplemente muestra un cuadro de diálogo para que el usuario elija el
+modo que quiera. Luego, el modo elegido es asignado al dispositivo gráfico (<i>GraphicsDevice</i>).</p>
+<p>Este otro <a href="ejemplos/graficos/panj.zip">ejemplo</a> es un juego
+completo hecho utilizando estas técnicas. Fue desarrollado por Miguel Angel
+Lozano, profesor de este departamento, y es una variante del juego Pang que
+antiguamente se solía ver en las máquinas recreativas. Podéis probarlo
+ejecutando la clase <i>Panj</i>.</p>
+<h3>3.4.6 Sonido y m&uacute;sica. Java Sound</h3>
+<p>Hemos visto como incluir gr&aacute;ficos y animaciones en nuestras aplicaciones 
+  y applets. Con Java adem&aacute;s podremos a&ntilde;adir sonido y m&uacute;sica 
+  de forma sencilla.</p>
+<p>En las primeras versiones de JDK los applets permit&iacute;an cargar clips 
+  de audio, con lo que podiamos reproducir m&uacute;sica y sonido en la web. Los 
+  tipos de ficheros y formatos reconocidos entonces eran bastante limitados (MIDI, 
+  WAV, AU).</p>
+<p>A partir de Java 2, se incorpora la API de Java Sound, que nos permite adem&aacute;s 
+  de tratar con una mayor n&uacute;mero de formatos, incorporar sonido tanto a 
+  applets como aplicaciones y trabajar con la reproducci&oacute;n del sonido a 
+  un nivel m&aacute;s bajo, lo cual nos dar&aacute; mayor flexibilidad para incluir 
+  todo tipo de efectos de sonido en nuestras aplicaciones.</p>
+<p>Nos referiremos a las m&uacute;sicas y a los efectos de sonido como clips de 
+  audio. Estos clips de audio estar&aacute;n encapsulados en la clase <b>AudioClip</b>. 
+  Para cargar un clip de audio, los applets siempre han incorporado el siguiente 
+  m&eacute;todo:</p>
+<pre class="codigo"><b>AudioClip</b> clip = <b>getAudioClip</b>(url);</pre>
+<p>Para ello deberemos estar dentro un applet, ya que dicho m&eacute;todo pertenece 
+  a la clase <b>Applet</b> y para usarlo debe haber un objeto <b>Applet</b> instanciado.</p>
+<p>Si estamos dentro de una aplicaci&oacute;n, no tendremos acceso a este m&eacute;todo. 
+  Por ello, a partir de JDK 1.2 se incorpora a la clase <b>Applet</b> el siguiente 
+  m&eacute;todo est&aacute;tico:</p>
+<pre class="codigo"><b>AudioClip</b> clip = Applet.<b>newAudioClip</b>(url);</pre>
+<p>Al ser est&aacute;tico no har&aacute; falta haber instanciado un applet para 
+  poder usarlo, por lo que lo podremos utilizar desde cualquier aplicaci&oacute;n 
+  Java. El problema que tenemos en este caso es que debemos proporcionar una URL, 
+  cuando lo m&aacute;s seguro es que queramos cargar un fichero del disco local. 
+  Podemos obtener una url para esto de la siguiente forma:</p>
+<pre class="codigo">URL url = new URL(&quot;file:&quot; + System.getProperty(&quot;user.dir&quot;) 
+                          + &quot;/sonido.wav&quot;;</pre>
+<p>Utilizamos la propiedad del sistema <i>user.dir</i> para obtener el directorio 
+  actual, y con &eacute;l podemos construir un URL para el acceso a ficheros locales.</p>
+<p>Una vez obtenido el clip de audio, podremos reproducirlo.</p>
+<pre class="codigo">clip.<b>play</b>();</pre>
+<p>Reproduce el clip una sola vez.</p>
+<pre class="codigo">clip.<b>loop</b>();</pre>
+<p>Reproduce el clip ciclicamente. Util en el caso de que queramos tener una m&uacute;sica 
+  de fondo que no pare de sonar.</p>
+<pre class="codigo">clip.<b>stop</b>();</pre>
+<p>Detiene la reproducci&oacute;n del clip de audio. Sobretodo &uacute;til para 
+  m&uacute;sicas, y cuando hayamos establecido que se reproduzca ciclicamente.</p>
+<p>En la API Java Sound incorporada en las &uacute;ltimas versiones de Java, tenemos 
+  bastante m&aacute;s clases que nos permitir&aacute;n controlar la secuenciaci&oacute;n, 
+  el mezclado, etc. Estas clases se incluyen en el paquete <b>javax.sound</b> 
+  y subpaquetes.</p>
+<p align="left">
+<p>&nbsp;</p>
+
+
+</body>
+</html>

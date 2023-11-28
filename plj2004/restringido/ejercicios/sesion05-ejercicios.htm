@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  <meta name="Author" content="Nacho">
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+  <title>Sesion 5</title>
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+<h1>Sesi&oacute;n 5</h1>
+<p>Modificadores de acceso. Miniproyecto.</p>
+<h2>1. Modificadores de acceso</h2>
+<p>Vamos a comenzar la &uacute;ltima sesi&oacute;n del m&oacute;dulo con un peque&ntilde;o 
+  ejercicio para comprobar los modificadores de acceso de Java. </p>
+<p>Antes de nada, hagamos un peque&ntilde;o resumen. En Java existen cuatro posibles 
+  niveles de acceso: <code>private</code>, por defecto (si no declaramos nada), 
+  <code>protected</code>, <code>public</code>. Estos cuatro niveles tienen la 
+  siguiente pol&iacute;tica de acceso:</p>
+<ul>
+  <li><span style="font-weight: bold;"><code>private</code></span>: no se permite 
+    el acceso al elemento, ni siquiera para los objetos de alguna subclase. <span
+ style="font-weight: bold;">S&oacute;lo se puede acceder al elemento desde la 
+    misma clase</span>. Si, por ejemplo, declaramos un m&eacute;todo A de una 
+    superclase Super como private, ese m&eacute;todo A no es heredado por las 
+    subclases de Super.</li>
+  <li><span style="font-weight: bold;">defecto</span>: es el nivel de
+acceso que tiene un elemento si no declaramos nada. <span
+ style="font-weight: bold;">Se puede acceder al elmento desde cualquier
+clase del mismo paquete</span>. Si, por ejemplo, el campo A de la clase
+Clase1 que est&aacute; en el paquete modulo1.sesion5 no tiene
+modificador de acceso (tiene un acceso por defecto), cualquier clase de
+este paquete va a poder acceder a su valor.</li>
+  <li><strong><code>protected</code></strong>: puede ser que una subclase no est&eacute; 
+    en el mismo paquete que la superclase. Si un elemento tiene el modificador 
+    protected, <strong>se puede acceder a &eacute;l desde el mismo paquete y desde 
+    cualquier subclase, aunque la subclase no est&eacute; en el mismo paquete</strong>.</li>
+  <li><strong><code>public</code></strong>: un elemento public <strong>es accesible 
+    desde cualquier otra clase</strong> sin ninguna restricci&oacute;n.</li>
+</ul>
+<ol>
+  <li> 
+    <p>Vamos a hacer un peque&ntilde;o ejercicio para probar estos niveles de 
+      acceso. Supongamos la siguiente clase en el paquete <code>modulo1.sesion5</code></p>
+    <pre class="codigo">package modulo1.sesion5;
+public class Acceso {
+    public int valorPublico;
+    int valorDefecto;
+    protected int valorProtected;
+    private int valorPrivate;
+}</pre>
+    <p>y ahora supongamos las dos siguientes clases que van a comprobar el acceso 
+      a los campos de Acceso:</p>
+    <pre class="codigo">package modulo1.sesion5;
+public class TestAcceso{
+    public void testeador() {
+        int i;
+        
+        Acceso acceso = new Acceso();
+        i = acceso.valorPrivado;
+        i = acceso.valorDefecto;
+        i = acceso.valorProtected;
+        i = acceso.valorPublico;
+    }
+}</pre>
+    <pre class="codigo">package modulo1.sesion5;
+public class TestAccesoSubclase extends Acceso{
+    public void testeador() {
+        int i;
+       
+        i = this.valorPrivado;
+        i = this.valorDefecto;
+        i = this.valorProtected;
+        i = this.valorPublico;
+    }
+}
+</pre>
+    <p>La primera clase es una clase normal que est&aacute; en el mismo paquete 
+      y la segunda es una subclase de Acceso. Contesta a las siguientes preguntas 
+      en el fichero <strong>respuestas.txt</strong>:</p>
+    <ul>
+      <li>&iquest;En qu&eacute; campos de la clase <code>TestAcceso</code> hay 
+        un error?</li>
+      <li>&iquest;En qu&eacute; campos de la clase <code>TestAccesoSubclase</code> 
+        hay un error?</li>
+    </ul>
+  </li>
+  <li>Copia ahora ambas clases de prueba en el paquete <code>modulo1.sesion4</code>, 
+    modificando la instrucci&oacute;n package y a&ntilde;adiendo el import de 
+    la clase <code>modulo1.sesion5.Acceso</code>: 
+    <pre class="codigo">package modulo1.sesion4;
+import modulo1.sesion5.Acceso;</pre>
+    <p>&iquest;Qu&eacute; ha cambiado ahora? &iquest;Qu&eacute; componentes son 
+      accesibles? </p>
+  </li>
+</ol>
+<h2>2. Miniproyecto</h2>
+<p>En el fichero de plantillas de esta sesi&oacute;n se encuentran la siguientes 
+  clases que implementan un sencillo juego de un laberinto: <code>Posicion</code>, 
+  <code>Laberinto</code> <code>Jugador</code>, <code>EstadoJuego</code>, <code>Vista</code>, 
+  <code>Controlador</code>, <code>JuegoLaberinto</code> y <code>JuegoLauncher</code>. 
+</p>
+<p>Vamos primero a explicar brevemente el funcionamiento del juego y despu&eacute;s 
+  comentaremos el ejercicio a realizar.</p>
+<h3>Funcionamiento del juego</h3>
+<p>El juego define un laberinto (siempre el mismo) en el que se mueve el jugador. 
+  La posici&oacute;n inicial del jugador es aleatoria. El jugador se mueve introduciendo 
+  un comando de texto. El laberinto y el jugador aparecen representado en modo 
+  texto y se muestra por la salida est&aacute;ndar cada vez que el jugador ha 
+  introducido un comando:</p>
+<pre># #############
+#    *  #     #
+# ### # # ### #
+#   # #   ### #
+### ########  #
+#   #   ####  #
+# ### ###### ##
+# #    ##### ##
+#   ##     # ##
+############ ##
+
+INTRODUCE MOVIMIENTO (A,B,D,I,S)></pre>
+<h3>Dise&ntilde;o e Implementaci&oacute;n</h3>
+<p>El juego se ha dise&ntilde;ado siguiendo la estrategia (o el patr&oacute;n, 
+  como se suele decir) Modelo-Vista-Controlador. La idea de esta estrategia es 
+  independizar el funcionamiento del programa de su presentaci&oacute;n al usuario. 
+  De esta forma, es m&aacute;s sencillo modificar la interfaz de usuario (la forma 
+  de obtener los datos del usuario y de presentar los resultados) sin afectar 
+  al funcionamiento del programa.</p>
+<p>En nuestro caso, tenemos la clase Vista que se encarga de mostrar el laberinto 
+  y de obtener la instrucci&oacute;n del usuario. Tenemos tambi&eacute;n la clase 
+  Controlador que se encarga de realizar un paso de ejecuci&oacute;n del juego. 
+  Y, por &uacute;ltimo, tenemos las clases Jugador, Laberinto y EstadoJuego que 
+  mantienen los distintos elementos del juego.</p>
+<p>Si, por ejemplo, quisi&eacute;ramos adaptar el juego a un entorno gr&aacute;fico, 
+  s&oacute;lo tendr&iacute;amos que modificar la clase <code>Vista</code> y esto 
+  no afectar&iacute;a al funcionamiento interno del juego.</p>
+<p>Vamos ya a plantear los ejercicios:</p>
+<ol>
+  <li>Compila todas las clases en el paquete <code>modulo1.sesion5</code> y prueba 
+    que funciona la aplicaci&oacute;n.</li>
+  <li>Modifica la aplicaci&oacute;n para incluir las siguientes caracter&iacute;sticas:</li>
+  <ul>
+    <li>Incorporar un jugador enemigo (lo llamaremos robot) que se mueve aleatoriamente 
+      por el laberinto.</li>
+    <li>Si chocan en la misma celda el robot y el jugador, terminar el juego con 
+      un mensaje de error. Por ejemplo:&quot;Fin de partida. Has chocado&quot;.</li>
+    <li>Si el robot sale del laberinto, terminar el juego con un mensaje. Por 
+      ejemplo: &quot;Fin de partida. Ha ganado el robot&quot;.</li>
+  </ul>
+</ol>
+<p><b>PARA ENTREGAR</b></p>
+<p>Debes crear un ZIP llamado <strong>sesion5.zip</strong> con: </p>
+<ul>
+  <li>El fichero de texto <strong>respuestas.txt</strong> con las
+cuestiones contestadas</li>
+  <li>Los ficheros con las clases que has implementado y modificado.</li>
+</ul>
+<p>&nbsp;</p>
+</body>
+</html>

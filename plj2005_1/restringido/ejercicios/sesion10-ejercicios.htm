@@ -1,0 +1,404 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios Sesion 10</title>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ 
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+ <body bgcolor="#ffffff" text="#000000">
+<h1><span class="section">Sesión 10</span> </h1>
+<p>En esta sesión vamos a hacer un ejercicio práctico que englobe varios de
+los conceptos vistos hasta ahora.</p>
+ 
+<p><b>1.</b>   Vamos a construir una aplicación que permita definir distintos
+tipos de figuras geométricas, y poderlas leer y guardar en ficheros. Antes de
+explicar los pasos a seguir, daremos un rápido vistazo a la estructura de la
+aplicación, para entender qué ficheros y directorios tenéis en la plantilla.</p>
+ 
+<p>En la plantilla tenemos dos paquetes de clases:</p>
+ 
+<ul>
+  <li><b>paquete geom</b>: dedicado a distintos tipos de figuras geométricas.
+    Contiene una clase padre abstracta llamada <i>Figura</i>, con un método
+    abstracto llamado <i>imprime</i>. Esta clase tendrá una serie de subclases,
+    que son los ficheros <i>Circulo.java</i>, <i>Rectangulo.java</i> y <i>Linea.java</i>
+    que deberéis completar. De esta forma lo que tenemos es un conjunto de
+    figuras geométricas de distintos tipos, y todas ellas subtipos de una clase
+    padre genérica <i>Figura</i>.</li>
+  <li><b>paquete io</b>: aquí tendremos clases relacionadas con tareas de
+    entrada/salida: la clase <i>EntradaTeclado</i> deberá contener el código
+    necesario para recoger los datos que el usuario introduce por teclado. La
+    clase <i>IOFiguras</i> tendrá métodos para leer de un fichero un conjunto
+    de figuras geométricas (del paquete <i>geom</i> anterior), y para guardar
+    un conjunto de figuras en un fichero.</li>
+</ul>
+<p>Finalmente, tenemos una clase principal en el directorio raíz, llamada <i>AplicGeom</i>,
+que leerá las figuras que haya en un fichero que se le pase como parámetro, y
+mostrará un menú de opciones para que el usuario pueda:</p>
+<ol>
+  <li>Crear una nueva figura geométrica</li>
+  <li>Borrar una figura geométrica de la lista existente</li>
+  <li>Guardar la lista de figuras actual en el fichero de entrada</li>
+  <li>Salir del programa</li>
+</ol>
+<p>Veremos ahora qué pasos seguir para construir todo esto.</p>
+ 
+<ol>
+  <li>En primer lugar, construiremos el paquete <b>geom</b>. La clase <i>Figura</i>
+    ya está completa, así que rellenaremos las otras:<br>
+    <ol type="a">
+      <li>La clase <b>Circulo</b> deberá tener dos campos enteros <i>x</i>, <i>y</i>,
+        que indiquen la posición de su centro, y luego un campo entero <i>radio</i>,
+        que indique la longitud de su radio. Haremos un constructor que tome
+        estos tres campos y los asigne, y luego métodos <i>getXXX</i> y <i>setXXX</i>
+        para obtener y cambiar el valor de cada campo. Deberemos rellenar
+        también el método <i>imprime</i>, ya que es abstracto en la
+        superclase. Dicho método devolverá una cadena con información de los
+        campos de la figura:<pre class="codigo">package geom;
+
+public class Circulo <b>extends Figura implements java.io.Serializable</b>
+{
+	int x;
+	int y;
+	int radio;
+	
+	public Circulo(int x, int y, int radio)
+	{
+		...
+	}
+	
+	public int getX()
+	{
+		...
+	}
+	
+	public int getY()
+	{
+		...
+	}
+	
+	public int getRadio()
+	{
+		...
+	}
+	
+	public void setX(int x)
+	{
+		...
+	}
+	
+	public void setY(int y)
+	{
+		...
+	}
+	
+	public void setRadio(int radio)
+	{
+		...
+	}
+
+	public String imprime()
+	{
+		return &quot;CIRCULO: (&quot; + x + &quot;, &quot; + y + &quot;), r = &quot; + radio;
+	}
+}</pre>
+      </li>
+      <li>De forma similar construimos las clases <b>Rectangulo </b>y <b>Linea</b>.
+        Estas clases tendrán cada una cuatro campos: <i>x1, y1, x2</i> e <i>y2</i>.
+        En el caso del <i>Rectangulo</i>, (<i>x1, y1</i>) indican la posición
+        del vértice superior izquierdo, y (<i>x2, y2</i>) la del vértice
+        inferior derecho. En el caso de la <i>Linea</i>, (<i>x1, y1</i>) indican
+        un extremo de la línea, y (<i>x2, y2</i>) el otro extremo.&nbsp;<pre class="codigo">...
+public class Rectangulo extends Figura implements java.io.Serializable
+{
+	int x1;
+	int y1;
+	int x2;
+	int y2;
+...</pre>
+        <pre class="codigo">...
+public class Linea extends Figura implements java.io.Serializable
+{
+	int x1;
+	int y1;
+	int x2;
+	int y2;
+...</pre>
+        <p>Recordad definir también el método <i>imprime</i> para que saque
+        una cadena de texto con información relativa a cada figura.<br>
+        <br>
+        En el caso del <i>Rectangulo</i>, sería algo como:</p>
+        <pre class="codigo">&quot;RECTANGULO: (&quot; + x1 + &quot;, &quot; + y1 + &quot;) - (&quot; + x2 + &quot;, &quot; + y2 + &quot;)&quot;</pre>
+        <p>Y para la <i>Linea</i>:</p>
+        <pre class="codigo">&quot;LINEA: (&quot; + x1 + &quot;, &quot; + y1 + &quot;) - (&quot; + x2 + &quot;, &quot; + y2 + &quot;)&quot;</pre>
+        <p>NOTA IMPORTANTE: Observad que tanto la clase padre <i>Figura</i> como
+        todas las subclases definidas son <b>Serializables </b>(implementan la
+        interfaz <i>Serializable</i>). Esto nos permitirá después guardarlas y
+        leerlas de ficheros como objetos completos. Recordad también poner la
+        directiva <i>package</i> al principio del fichero, indicando el paquete
+        al que pertenecen las clases.<br>
+      </li>
+    </ol>
+  </li>
+  <li>Completaremos ahora el paquete <b>io</b>.<br>
+    <ol type="a">
+      <li>Comenzamos por la clase <b>EntradaTeclado</b>. Simplemente debe
+        recoger los datos que el usuario introduzca por teclado, así que
+        declararemos un campo de tipo <i>BufferedReader</i>:<pre class="codigo"><b>package io;</b>
+
+import java.io.*;
+
+public class EntradaTeclado
+{
+	BufferedReader in = null;
+	...</pre>
+        <p>Después, en el constructor hacemos que dicho buffer lea de la
+        entrada estándar (<i>System.in</i>):</p>
+        <pre class="codigo">	...
+	public EntradaTeclado()
+	{
+<b>		in = new BufferedReader(new InputStreamReader(System.in));
+</b>	}</pre>
+        <p>Finalmente, definimos un método <i>leeTeclado</i> que devuelva una
+        cadena con cada línea que el usuario ha escrito hasta pulsar Intro.
+        Esta cadena la utilizaremos después desde el programa principal, para
+        recoger todas las órdenes del usuario (capturamos las excepciones
+        necesarias, y devolvemos <i>null</i> si se produce algún error):</p>
+        <pre class="codigo">	...
+	public String leeTeclado()
+	{
+		try
+		{
+<b>			return in.readLine();
+</b>		} catch (Exception e) {
+			return null;
+		}
+	}
+}</pre>
+      </li>
+      <li>Por otro lado, completamos la clase <b>IOFiguras</b>. Esta clase
+        tendrá dos métodos <b>estáticos</b> (para llamarlos sin tener que
+        crear un objeto de la clase): uno servirá para leer un conjunto de
+        figuras de un fichero, y el otro para guardarlas en fichero.<pre class="codigo"><b>package io;
+</b>
+import geom.*;
+import java.io.*;
+import java.util.*;
+
+public class IOFiguras
+{
+<b>	public static Figura[] leeFiguras(String fichero)
+</b>	{
+		...
+	}
+<b>	public static void guardaFiguras(Figura[] figuras, String fichero)
+</b>	{
+		...
+	}
+}</pre>
+        <ol type="i">
+          <li>Para el método <b>leeFiguras</b>, haremos que abra un <i>ObjectInputStream</i>
+            contra el fichero <i>fichero</i>, y que vaya leyendo objetos de tipo
+            <i>Figura</i> y metiéndolos en una lista (<i>ArrayList</i>), hasta
+            que salte la excepción que indique el fin de fichero. Después,
+            construiremos un array con la lista, y lo devolveremos. En el caso
+            de que no haya elementos en la lista, devolveremos <i>null</i>.<pre class="codigo">public static Figura[] leeFiguras(String fichero)
+{
+	ArrayList alAux = new ArrayList();
+	Figura f;
+
+	<b>try
+	{
+		ObjectInputStream oin = 
+		  new ObjectInputStream (new FileInputStream(fichero));
+</b>
+<b>		... // leer figuras del fichero<br><br></b><b></b><b>		oin.close();
+
+	} catch (Exception e) {
+		// Se pueden producir 2 excepciones:
+		// FileNotFoundException si no encuentra el fichero
+		// IOException cuando llegue a fin de fichero
+		// DA IGUAL QUE SE PRODUZCA UNA U OTRA,
+		// LA CAPTURAMOS Y NO HACEMOS NADA MAS
+	}
+</b>			
+
+	<b>// Si no había fichero, o no tenía figuras, la lista estará 
+	// vacía (se inicializa al principio del método, pero no llega
+	// a entrar en el &quot;while&quot;). Entonces devolvemos null</b>
+	if (alAux.size() == 0)
+		return null;
+
+	<b>// Si había figuras, devolvemos un array con ellas</b><b>
+	return((Figura[])(alAux.toArray(new Figura[0])));
+</b>}</pre>
+            <p align="left">Observa que leemos objetos de tipo <i>Figura</i> (genéricos),
+            sin discriminar si son líneas, círculos o rectángulos. El objeto
+            se recupera tal cual, y del tipo que sea, aunque se trate como una
+            figura genérica. Observa también que no hay forma de detectar el
+            final del fichero. Se lanzará una IOException cuando lleguemos.
+            Así que hay que meter la lectura de objetos en un bucle (infinito),
+            y el bucle en un <i>try</i>, de forma que cuando llegue al final del
+            fichero lanzará la excepción y saldremos del bucle, con todo el
+            fichero ya leído. Por último, observa que <b>no pasa nada si el
+            fichero no existe, o si se lanza cualquier excepción</b>. El
+            método irá a&ntilde;adiendo figuras conforme las vaya leyendo: si no hay
+            fichero, o no hay figuras en él, la lista quedará vacía (nunca
+            entrará en el &quot;while&quot;), y se devolverá <i>null</i>. Si
+            hay figuras, se irán colocando en la lista y se devolverá la lista
+            al final. Después se trata de tomar lo que devuelva la llamada al
+            método y hacer lo que corresponda:<pre class="codigo">Figura[] fig = IOFiguras.leeFiguras(nombre_fichero);
+if (fig != null)
+{
+	// ... Procesar el array de figuras como se necesite
+	// Por ejemplo, para meterlas en una lista:
+	ArrayList figuras = new ArrayList();
+	for (int i = 0; i &lt; fig.length; i++)
+		figuras.add(fig[i]);
+} else {
+	// ... No hay figuras que procesar
+}</pre>
+            <p align="left">
+            Captura las excepciones adecuadas para poderlo compilar. No es
+            necesario que hagas nada en el bloque <i>catch</i> de la captura.<br>
+          </li>
+          <li>Para el método de guardado, <b>guardaFiguras</b>, abrimos un <i>ObjectOutputStream</i>
+            contra el fichero <i>fichero</i>, luego vamos recorriendo el array <i>figuras</i>
+            y metiendo cada una en el fichero, con un <i>writeObject</i>:<pre class="codigo">public static void guardaFiguras(Figura[] figuras, String fichero)
+{
+	try
+	{
+<b>		ObjectOutputStream oout = 
+		   new ObjectOutputStream (new FileOutputStream(fichero));
+</b>
+<strong>		... // guardar figuras </strong>	<br>		
+		oout.close();
+			
+	} catch (Exception e) {}<b>
+</b>}</pre>
+            <p>Captura las excepciones adecuadas, para poderlo compilar. No es
+            necesario que hagas nada en el bloque <i>catch</i> de la captura.<br>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li>Lo que nos queda es completar el programa principal <b>AplicGeom</b>.
+    Veréis que la clase tiene un campo de tipo <i>EntradaTeclado </i>para leer
+    las órdenes del usuario, otro para guardar el nombre del fichero con que
+    trabajar, y otro que es una lista (<i>ArrayList</i>) con las figuras que
+    haya en cada momento.<br>
+    <br>
+    Tenemos también un constructor al que se le pasa el nombre del fichero y lo
+    asigna. Deberemos también inicializar la <i>EntradaTeclado</i> en el
+    constructor, y leer del fichero las figuras (ayudándonos de la clase <i>IOFiguras</i>)
+    y guardarlas en la lista:<pre class="codigo">public AplicGeom(String fichero)
+{
+	this.fichero = fichero;
+<b>	et = new EntradaTeclado();
+	figuras = new ArrayList();
+	Figura[] fig = IOFiguras.leeFiguras(fichero);
+
+	// ... Aquí iría el resto del código: un bucle para 
+	// recorrer las figuras del array &quot;fig&quot; (si no es null)
+	// y meterlas en la lista &quot;figuras&quot;
+</b>}</pre>
+    <p>Después vemos que hay un método <i>main</i> que recoge el nombre del
+    fichero de los parámetros de entrada, y crea un objeto de tipo <i>AplicGeom</i>
+    con él. Finalmente, llama al método <i>iniciar</i> de la clase, que está
+    vacío, pero deberá contener toda la lógica del programa. Deberéis
+    completarlo para que haga una iteración continua en la que:<br>
+    <ul>
+      <li>En cada iteración:
+        <ul>
+          <li>Primero mostrará un listado con las figuras que hay actualmente
+            en la lista <i>figuras</i>. Recorrerá dicho <i>ArrayList</i> y
+            llamará al método <i>imprime</i> de cada figura, sacando la
+          información que devuelva por pantalla</li>
+          <li>A continuación, mostrará un menú con las 4 opciones
+            disponibles:
+            <ul>
+              <li>Crear una nueva figura</li>
+              <li>Borrar una figura existente</li>
+              <li>Guardar datos en fichero</li>
+              <li>Salir</li>
+            </ul>
+          </li>
+          <li>Si el usuario elige <i>Salir</i>, se termina la ejecución (<i>System.exit(0)</i>)</li>
+          <li>Si elige <i>Crear una nueva figura</i>:
+            <ul>
+              <li>Se le pedirá que elija entre las figuras disponibles
+                (Circulo, Rectángulo o Linea)</li>
+          <li>Una vez elegida, se le pedirá que introduzca uno a uno los
+            valores de los campos para dicha figura (estos campos dependerán de
+            la figura elegida).</li>
+              <li>Se recogerán todos ellos. Como se recogen como <i>String</i>,
+                se deberán convertir luego al valor adecuado (es recomendable
+                utilizar el método <i>Integer.parseInt(String valor)</i>  para
+                convertir una cadena a entero). Una vez recogidos, se creará un
+                objeto del tipo elegido (Circulo, Rectangulo o Linea) y se
+                añadirá a la lista <i>figuras</i>
+                que tenemos como campo global</li>
+            </ul>
+          </li>
+          <li>Si elige <i>Borrar una figura existente</i>:
+            <ul>
+              <li>Se mostrará un listado con las figuras que haya actualmente en la
+            lista <i>figuras</i></li>
+              <li>Se pedirá al usuario que elija el número de la figura que quiere
+            borrar</li>
+              <li>Se borrará de la lista la figura de la posición elegida</li>
+            </ul>
+          </li>
+          <li>Si elige <i>Guardar datos</i>:
+            <ul>
+              <li>Se utilizará la clase <i>IOFiguras</i>, y su método <i>guardaFiguras</i>
+            para guardar la lista de figuras (habrá que convertirla a array),
+            en el fichero que indicamos al arrancar el programa.<br>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Compila y ejecuta la aplicación completa, verificando que funciona
+    correctamente.</li>
+  <li>Una vez finalizado el ejercicio, y visto la forma en que está
+    estructurado...
+    <ul>
+      <li>¿Qué ventajas ves en definir una clase padre que englobe a todas las
+        figuras (ventajas en cuanto a tratamiento de las figuras,
+        lectura/escritura, etc)?</li>
+      <li>¿Por qué no ha hecho falta en ningún momento del ejercicio (menos
+        al añadir figuras a la lista) distinguir de qué figura se trata cada
+        vez? Es decir, observa que siempre hemos tratado las figuras como
+        &quot;Figura&quot;, y no como casos particulares &quot;Rectangulo&quot;,
+        &quot;Circulo&quot; o &quot;Linea&quot;. ¿A qué se debe esto? (AYUDA:
+        tiene que ver con el uso de clases abstractas como superclases, y
+        métodos abstractos dentro de ellas).<br>
+      </li>
+    </ul>
+  </li>
+</ol>
+ 
+<p><b>PARA ENTREGAR</b></p>
+<ul>
+  <li>Todos los ficheros<b> .java</b> que se dan en la plantilla, debidamente
+    rellenos y compilados para que la aplicación funcione.&nbsp;</li>
+  <li>Fichero de texto <b>respuestas.txt</b> contestando a todas las preguntas
+    formuladas.</li>
+</ul>
+ 
+<p><b>ENTREGA FINAL DEL BLOQUE 2</b></p>
+<ul>
+  <li>Como entrega <b>única</b> de TODOS los ejercicios del bloque 2, deberéis
+    hacer un fichero ZIP (<i><b>bloque2.zip</b></i>), con una carpeta para cada
+    sesión (<i>sesion6, sesion7, sesion8, sesion9 </i>y <i>sesion10</i>), y
+    dentro de cada carpeta copiar los ficheros que se os pidan en cada sesión.</li>
+</ul>
+ 
+</body>
+</html>

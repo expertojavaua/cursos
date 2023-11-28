@@ -1,0 +1,325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios Sesion 12</title>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ 
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+ <body bgcolor="#ffffff" text="#000000">
+<h1><span class="section">Sesión 12</span> </h1>
+<p>&nbsp;</p>
+ 
+<p><b>1.</b>    Vamos a realizar un par de ejercicios con la librería Swing,
+para ver qué diferencias existen con AWT, y qué posibilidades nuevas ofrece.</p>
+ 
+<ol>
+  <li>Antes de comenzar con estos ejercicios, lee entero el apartado <b>3.2</b>
+    (<i>Swing</i>) del tema 3 de teoría.<br>
+  </li>
+  <li>Echa un vistazo a la clase <i>JCalculadora.java</i> que se proporciona en la
+    plantilla de la sesión. Verás que es una versión &quot;resuelta&quot; del
+    ejercicio de la <i>Calculadora</i> propuesto en la sesión de AWT anterior.
+    Lo que vamos a hacer ahora es transformar este ejemplo en un programa Swing,
+    para ver qué diferencias hay.<br>
+  </li>
+  <li>Lo primero que hay que hacer es importar el paquete adecuado (además de
+    los de AWT, que NO hay que quitar, porque el modelo de eventos y los
+    gestores de disposición son los mismos).<pre class="codigo">import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+<b>import javax.swing.*;
+</b>
+public class JCalculadora ...</pre>
+  </li>
+  <li>Después vamos cambiando los componentes de AWT por los correspondientes
+    de Swing.<br>
+    <ol type="a">
+      <li>En primer lugar, la clase ya no heredará de <i>Frame</i>, sino de su
+        homólogo <i>JFrame</i></li>
+    </ol>
+    <pre class="codigo">public class JCalculadora <b>extends JFrame</b>
+{
+	...</pre>
+    <ol type="a" start="2">
+      <li>Después sustituimos cada control de AWT por el correspondiente de
+        Swing, es decir, las líneas:<pre class="codigo">TextField txtOp1 = new TextField();
+...
+Choice operadores = new Choice();
+...
+TextField txtOp2 = new TextField();
+...
+TextField txtRes = new TextField();
+...
+Label lblOp1 = new Label(&quot;Primer operando:&quot;);
+...
+Label lblOp2 = new Label(&quot;Segundo operando:&quot;);
+...
+Label lblOper = new Label(&quot;Operador:&quot;);
+...
+Button btnRes = new Button(&quot;Primer operando:&quot;);
+...</pre>
+        <p>Por las correspondientes clases Swing:</p>
+        <pre class="codigo"><b>JTextField</b> txtOp1 = new <b>JTextField</b>();
+...
+<b>JComboBox</b> operadores = new <b>JComboBox</b>();
+...
+<b>JTextField</b> txtOp2 = new <b>JTextField</b>();
+...
+<b>JTextField</b> txtRes = new <b>JTextField</b>();
+...
+<b>JLabel</b> lblOp1 = new <b>JLabel</b>(&quot;Primer operando:&quot;);
+...
+<b>JLabel</b> lblOp2 = new <b>JLabel</b>(&quot;Segundo operando:&quot;);
+...
+<b>JLabel</b> lblOper = new <b>JLabel</b>(&quot;Operador:&quot;);
+...
+<b>JButton</b> btnRes = new <b>JButton</b>(&quot;Primer operando:&quot;);
+...</pre>
+      </li>
+      <li>Prueba a compilar y ejecutar la clase... dará error. ¿A qué se debe
+        el error?</li>
+      <li>Como se explica en la parte de teoría, en Swing algunos métodos de <i>JFrame</i>
+        no pueden ser accedidos directamente, como ocurría con <i>Frame</i> en
+        AWT. Estos métodos son, entre otros, <i>setLayout</i> y <i>add</i>.
+        Así, para solucionar el error anterior, deberás anteponer el método <i>getContentPane()</i>
+        antes de cada método <i>setLayout</i> o <i>add</i> del <i>JFrame</i>:<pre class="codigo"><b>getContentPane()</b>.setLayout(new GridLayout(4, 2));
+...
+<b>getContentPane()</b>.add(lblOp1);
+<b>getContentPane()</b>.add(txtOp1);
+...
+<b>getContentPane()</b>.add(lblOper);
+<b>getContentPane()</b>.add(operadores);
+...
+<b>getContentPane()</b>.add(lblOp2);
+<b>getContentPane()</b>.add(txtOp2);
+...
+<b>getContentPane()</b>.add(btnRes);
+<b>getContentPane()</b>.add(txtRes);
+...</pre>
+      </li>
+      <li>Compila y comprueba que el funcionamiento del programa es el mismo,
+        aunque su apariencia sea distinta:<br>
+        <div align="center"><img border="0" src="imagenes/modulo2/jcalculadora.gif" width="291" height="115"></div>
+        <p class="caption">Figura 1. Apariencia de la calculadora en Swing</p>
+      </li>
+    </ol>
+  </li>
+</ol>
+<p><b>2.</b>    En este segundo ejercicio probaremos algunas cosas nuevas que
+ofrece Swing, partiendo de una aplicación ya hecha.
+        </p>
+        
+<ol>
+  <li>Echa un vistazo a la clase <i>JFormatos.java</i> que se proporciona en la
+    plantilla de la sesión. Verás que es una versión en Swing del ejercicio
+    de <i>Formatos</i> que se pedía en la sesión de AWT anterior.&nbsp;<br>
+  </li>
+  <li>Compílala y ejecútala para comprobar que funciona correctamente.<br>
+  </li>
+  <li>Antes de seguir, vamos a echar un vistazo a las cosas que cambian entre la
+    aplicación en AWT y esta versión de Swing:<br>
+    <ul>
+      <li>Observa, como en el ejercicio anterior, que cada clase AWT deja paso a
+        su correspondiente de Swing:<pre class="codigo">Frame -&gt; <b>JFrame
+</b>TextArea -&gt; <b>JTextArea
+</b>MenuBar -&gt; <b>JMenuBar
+</b>Menu -&gt; <b>JMenu
+</b>MenuItem -&gt; <b>JMenuItem
+</b>CheckboxMenuItem -&gt; <b>JCheckBoxMenuItem</b></pre>
+      </li>
+      <li>Un cambio importante lo tenemos en los controles de tipo <i>JCheckBoxMenuItem</i>.
+        Observa que ahora ya no lanzan <i>ItemListeners</i>, sino <i>ActionListeners</i>,
+        como los menús normales (<i>MenuItems</i>). Ello se debe a que la clase
+        <i>JCheckBoxMenuItem</i> ya tiene disponible el método <i>addActionListener</i>,
+        que no tenía su predecesora en AWT. Esto nos permite juntar todo el
+        código de los menús en un sólo evento <i>actionPerformed</i>, y no
+        tenerlo separado en dos (<i>actionPerformed</i> e <i>itemStateChanged</i>,
+        como ocurría en AWT).<br>
+      </li>
+    </ul>
+  </li>
+  <li>Sobre esta aplicación vamos a añadir dos cambios:&nbsp;<br>
+    <ul>
+      <li>Un temporizador que cada 10 segundos guarde el texto que haya escrito
+        en un fichero determinado (indicado por una variable)&nbsp;</li>
+      <li>Un botón con un icono de guardar (imagen <i>save.jpg</i> de la
+        plantilla), que al pulsarlo nos abra un diálogo
+        para que elijamos en qué fichero guardar el texto.<br>
+      </li>
+    </ul>
+    <ol type="a">
+      <li>Para el temporizador, primero importamos el paquete de entrada salida,
+        para poder utilizar clases de acceso a ficheros:<pre class="codigo">import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+<b>import java.io.*;</b></pre>
+        <p>También añadimos una variable global llamada <i>fichero</i> que
+        tenga el nombre del fichero donde guardar el contenido del cuadro de
+        texto:</p>
+        <pre class="codigo">public class JFormatos extends JFrame implements ActionListener
+{
+	JTextArea txt;
+	boolean negrita = false, cursiva = false;
+<b>	String fichero = &quot;guardar.txt&quot;;
+	...</b></pre>
+        <p>Después, en el constructor, añadimos al final el temporizador, que
+        utilizará un <i>PrintWriter</i> para volcar al fichero <i>fichero</i>
+        el contenido del cuadro de texto:</p>
+        <pre class="codigo">public JFormatos()
+{
+	...
+	// Timer
+
+<b>	</b>Timer tim = new Timer (10000, new ActionListener() 
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			try
+			{
+				PrintWriter pw = 
+				   new PrintWriter(new FileWriter(fichero));
+				pw.println(txt.getText());
+				pw.close();
+			} catch (Exception ex) {}
+		}
+	});
+	tim.setRepeats(true);
+	tim.start();
+}</pre>
+        <p>¿Qué ocurriría si no pusiéramos el método <i>setRepeats(true)</i>?<br>
+      </li>
+      <li>Para el botón de guardar, primero declaramos una variable global que
+        haga referencia al <i>JFrame</i> actual (luego veremos para qué sirve):<pre class="codigo">public class JFormatos extends JFrame implements ActionListener
+{
+	JTextArea txt;
+	boolean negrita = false, cursiva = false;
+	String fichero = &quot;guardar.txt&quot;;
+	<b>JFrame frame = this;</b>
+<b>	...</b></pre>
+        <p>Después añadimos el botón al final del constructor, con el icono <i>save.jpg</i>
+        que se tiene en la plantilla, y su evento correspondiente:</p>
+        <pre class="codigo">public JFormatos()
+{
+	...
+	// Icono
+		
+	JButton btnSave = new JButton(&quot;Guardar&quot;, new ImageIcon(&quot;save.jpg&quot;));
+	btnSave.addActionListener(new ActionListener()
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			JFileChooser jfc = new JFileChooser(&quot;.&quot;);
+			int res = jfc.showSaveDialog(<b>frame</b>);
+			if (res == JFileChooser.APPROVE_OPTION)
+			   fichero = jfc.getSelectedFile().getAbsolutePath();
+		}
+	});
+	getContentPane().add(btnSave, BorderLayout.SOUTH);
+
+}</pre>
+        <p>Observa que para añadir el icono al botón, utilizamos un
+        constructor de <i>JButton</i> con los parametros <i>JButton(String
+        nombre, Icon icono</i>), y creamos el icono con la clase <i>ImageIcon</i>
+        de Swing.<br>
+        <br>
+        En cuanto al evento del botón, creamos un diálogo de tipo <i>JFileChooser</i>,
+        que se abrirá en el directorio actual (indicado por &quot;.&quot;).
+        Observa que al llamar a <i>showSaveDialog</i> se abre un diálogo como
+        los de <i>Guardar como...</i> de Windows, y este diálogo devuelve un
+        entero, que es el resultado tras cerrarlo. Si dicho resultado es igual a
+        la constante <i>JFileChooser.APPROVE_OPTION</i> indica que el usuario ha
+        elegido un fichero, con lo que sólo nos queda tomar el fichero
+        seleccionado (<i>getSelectedFile</i>) y su ruta absoluta (<i>getAbsolutePath</i>).
+        A partir de entonces, el fichero donde guarde el temporizador será el
+        nuevo que hemos asignado.<br>
+        <br>
+        Observa también que la variable <i>frame</i> que hemos creado antes, la
+        utilizamos para crear el diálogo, indicando de qué ventana principal
+        depende. En realidad, podríamos haber utilizado cualquier componente de
+        nuestra ventana principal.<br>
+        <br>
+        Si hubiésemos querido abrir un fichero para leerlo, en lugar de para
+        guardarlo... ¿qué método de <i>JFileChooser</i> habría sido más
+        adecuado, en lugar de <i>showSaveDialog</i>? (consulta la API de esta
+        clase para averiguarlo).</li>
+    </ol>
+  </li>
+</ol>
+<p>&nbsp;
+        </p>
+        
+<p><b>3.</b>    Para terminar esta sesión, vamos a dar un rápido vistazo a los
+Applets. Lee primero el apartado <b>3.3 </b>(<i>Applets</i>) del tema 3 de
+teoría.
+        </p>
+        
+<ol>
+  <li>Echa un vistazo a la clase <i>CalcApplet.java</i> que se proporciona en la
+    plantilla de la sesión. Verás que es otra copia del ejercicio de la <i>Calculadora</i>
+    en AWT. Ahora vamos a convertirla en Applet.<br>
+  </li>
+  <li>Lo primero que haremos será importar el paquete para trabajar con applets,
+    manteniendo los que ya hay de AWT, que los necesitaremos para los eventos,
+    controles, y demás:<pre class="codigo">import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+<b>import java.applet.*;
+</b>
+public class CalcApplet ...</pre>
+  </li>
+  <li>Después hacemos que la clase herede de <i>Applet</i>, no de <i>Frame</i>:<pre class="codigo">public class CalcApplet <b>extends Applet</b>
+{
+	...</pre>
+  </li>
+</ol>
+<ol start="4">
+  <li>A continuación, sustituimos el constructor por el método <i>init</i>,
+    simplemente cambiando el nombre:<pre class="codigo">public CalcApplet()
+{
+	...</pre>
+    <p>por:</p>
+    <pre class="codigo"><b>public void init()
+</b>{
+	...</pre>
+  </li>
+</ol>
+<ol start="5">
+  <li>Por último, eliminamos el método <i>main</i> entero (al ser un applet,
+    no lo necesita), y compilamos el programa para depurar posibles erratas.<br>
+  </li>
+  <li>Lo que nos queda por hacer es una página HTML desde donde cargar el
+    applet. En la plantilla se proporciona la página <i>CalcApplet.html</i>,
+    con un <i>body</i> vacío, sólo hace falta añadirle una etiqueta APPLET
+    con el applet que queramos ejecutar:<pre class="codigo">&lt;html&gt;
+&lt;body&gt;
+
+<b>&lt;APPLET CODE=CalcApplet.class WIDTH=400 HEIGHT=200&gt;
+&lt;/APPLET&gt;
+</b>
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+  </li>
+  <li>Abre la página desde cualquier navegador, y comprueba que el applet
+    funciona correctamente. También puedes abrirla desde la herramienta <i>appletviewer</i>
+    que viene con JDK, pasándole la página a abrir, desde la ventana de
+    MS-DOS:
+    <pre class="codigo">appletviewer CalcApplet.html</pre>
+  </li>
+</ol>
+ 
+<p><b>PARA ENTREGAR</b></p>
+<ul>
+  <li>Fichero<b>     Calculadora.java</b>  &nbsp;</li>
+  <li>Ficheros <b>JFormatos.java</b> y <b>save.jpg</b>, con la aplicación de <i>JFormatos</i>
+    modificada: deberá tener el timer, el botón con el icono, y el evento para
+    abrir el diálogo para elegir fichero.</li>
+  <li>Fichero <b>CalcApplet.java</b> con la calculadora transformada en applet,
+    y la página <b>CalcApplet.html</b> para poder cargar el applet.</li>
+  <li>Fichero de texto <b>respuestas.txt</b> contestando a todas las preguntas
+    formuladas.</li>
+</ul>
+ 
+    </body>
+    </html>

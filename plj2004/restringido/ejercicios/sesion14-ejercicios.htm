@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Ejercicios Sesion 14</title>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ 
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+ <body bgcolor="#ffffff" text="#000000">
+<h1><span class="section">Sesión 14</span> </h1>
+<p>&nbsp;</p>
+ 
+<p><b>1.</b>     En este ejercicio vamos a practicar con el modo a pantalla
+completa de Java, para ver que no resulta tan complicado como pueda parecer el
+trabajar con él.</p>
+ 
+<ol>
+  <li>Antes de comenzar, lee los subapartados <b>3.4.4 </b>(<i>API de Java 2D</i>), y
+    <b>3.4.5 </b>(<i>Modo a pantalla completa</i>) del tema 3 de teoría.<br>
+  </li>
+  <li>Echa un vistazo a la clase <i>Ej2.java</i> que se proporciona en la
+    plantilla de la sesión. Verás que es una versión reducida del ejemplo de
+    animación hecho en la sesión anterior, donde sólo se muestra el Canvas, y
+    dentro el rectángulo y círculo moviéndose.&nbsp;<br>
+  </li>
+  <li>Lo primero que vamos a hacer es pasar este <i>JFrame</i> a pantalla
+    completa. Para ello es imprescindible elegir el modo gráfico que queremos
+    (el <i>DisplayMode</i>). En la plantilla se os proporciona también un
+    fichero llamado <i>DlgModos.java</i>. Echadle un vistazo, y veréis que es
+    un tipo de cuadro de diálogo (<i>JDialog</i>). En él se obtienen los modos
+    de pantalla compatibles con vuestro monitor, y se muestran en una <i>JList</i>,
+    para que elijamos uno. Una vez elegido, pulsando el botón de <i>Aceptar</i>
+    se cierra el cuadro de diálogo, quedándose el modo seleccionado en el
+    campo <i>modoSeleccionado</i>.<br>
+    <br>
+    Vamos a incorporar este cuadro de diálogo a nuestro <i>JFrame</i>, para que
+    se muestre antes de mostrar la ventana principal, y así elegir el modo
+    gráfico que queramos. Añadimos al final del constructor lo siguiente:
+    <pre class="codigo">public Ej2()
+{
+<b>	...
+	// Tomamos el dispositivo grafico
+</b>	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	GraphicsDevice gd = ge.getDefaultScreenDevice();
+<b>		
+	// Mostramos dialogo para elegir un modo grafico
+</b>	DlgModos dlg = new DlgModos(gd, this);
+	dlg.show();
+
+	<b>// Activamos el modo a pantalla completa, con el modo grafico seleccionado</b>
+	gd.setFullScreenWindow(this);
+	gd.setDisplayMode(dlg.modoSeleccionado);
+}</pre>
+    <p>Compilad y ejecutad el programa. Es <b>IMPORTANTE </b>elegir un modo
+    gráfico compatible con nuestra pantalla, pues realmente todos los que
+    muestra no lo son. Para evitar pantallazos y cambios de configuración,
+    podéis elegir el mismo modo que tenéis activo para Windows (normalmente,
+    unos 1024 x 768 con 16 o 32 bits de profundidad de color). Si os fuese
+    demasiado lento, podéis elegir uno de menor resolución (320 x 240, por
+    ejemplo), aunque procurad mantener la misma profundidad de color que
+    tengáis. En general, es cuestión de ir probando hasta que alguno se vea.<br>
+    <br>
+    Veréis que el frame pasa a pantalla completa (aunque todavía se verá la
+    barra superior de la ventana, eso lo solucionaremos luego).
+    <br>
+  </li>
+  <li>Observad que, si elegís una resolución mayor que 320 x 240, el gráfico
+    no ocupa toda la pantalla, sino la parte proporcional a esas dimensiones.
+    Ello se debe a que estamos dibujando una imagen de 320 x 240 dentro de una
+    ventana de resolución mayor. Lo que tenemos que hacer es escalar esa imagen
+    a dibujar, para que ocupe toda la extensión del modo gráfico seleccionado.
+    <ol type="a">
+      <li>Primero declaramos dos variables globales que indicarán el ancho y
+        alto del modo gráfico seleccionado:
+    <pre class="codigo">public class Ej2 extends JFrame implements Runnable
+{
+	public static final int ANCHO = 320;
+	public static final int ALTO = 240;
+	MiCanvas mc = new MiCanvas();
+	Thread t = new Thread(this);
+	int yObj = 0;
+<b>	int anchoPantalla;
+	int altoPantalla;
+</b></pre>
+      </li>
+      <li>Después, una vez elegido el modo de pantalla, asignamos la anchura y
+        altura elegidas a dichas variables. Para ello, cuando se cierre el
+        diálogo del modo gráfico, ponemos:
+    <pre class="codigo">public Ej2()
+{
+<b>	...
+</b>	DlgModos dlg = new DlgModos(gd, this);
+	dlg.show();
+	<b>anchoPantalla = dlg.modoSeleccionado.getWidth();
+	altoPantalla = dlg.modoSeleccionado.getHeight();
+
+	...
+</b>}</pre>
+      </li>
+      <li>Finalmente, en el método <i>paint</i> de <i>MiCanvas</i>, hacemos que
+        el backbuffer se dibuje escalado a las dimensiones de la pantalla, y no
+        a ANCHO x ALTO como estaba antes:
+    <pre class="codigo">public void paint(Graphics g)
+{
+	if(backbuffer == null)
+		backbuffer = createImage(ANCHO, ALTO);
+	
+	// Dibujamos los gráficos en el backbuffer
+	
+	Graphics off_g = backbuffer.getGraphics();
+	off_g.clearRect(0, 0, ANCHO, ALTO);
+	...
+
+	// Volcamos el backbuffer a pantalla, segun el tamaño de la misma
+
+	g.drawImage(backbuffer, 0, 0, <b>anchoPantalla, altoPantalla</b>, this);
+	g.dispose();
+
+}</pre>
+        <p>Observad cómo la imagen del backbuffer siempre será de 320 x 240,
+        tal y como la definimos en <i>createImage. </i>Esto nos permite dibujar
+        independientemente de la resolución final, y luego nosotros escalaremos
+        el resultado según la resolución que tengamos elegida.<br>
+      </li>
+    </ol>
+  </li>
+  <li>La barra superior no la hemos quitado aún porque si no no habría forma
+    de cerrar la ventana. Ahora lo que vamos a hacer es quitarla, y sustituir la
+    animación automática por eventos de teclado, de forma que podamos nosotros
+    mover las figuras (arriba y abajo, por ejemplo), desde las flechas del
+    teclado<br>
+    <br>
+    Para quitar la barra, colocamos en el constructor (al principio, por
+    ejemplo), el siguiente método:
+    <pre class="codigo">public Ej2()
+{
+	<b>this.setUndecorated(true);</b>
+<b>	...
+</b>}</pre>
+    <p>que hace que la ventana no tenga decoración, y con eso se quita la
+    barra.<br>
+    <br>
+    Después, añadimos en ese mismo constructor un evento de teclado (<i>KeyListener</i>)
+    que recogerá las siguientes pulsaciones de teclas:
+    <ul>
+      <li>Si pulsamos la FLECHA HACIA ARRIBA del teclado, moverá las figuras
+        hacia arriba (disminuirá su coordenada Y), hasta llegar al tope (Y = 0)</li>
+      <li>Si pulsamos la FLECHA HACIA ABAJO del teclado, moverá las figuras
+        hacia abajo (aumentará su coordenada Y), hasta llegar al tope (Y =
+        altura del área de dibujo)</li>
+      <li>Si pulsamos ESCAPE cerrará la aplicación.</li>
+    </ul>
+    <p>Añadimos un evento con todo lo anterior:</p>
+    <pre class="codigo">public Ej2()
+{
+<b>	...
+	addKeyListener(new KeyAdapter()
+	{
+		public void keyPressed(KeyEvent e)
+		{
+			if (e.getKeyCode()==KeyEvent.VK_ESCAPE)
+			{
+				System.exit(0);
+			} else if (e.getKeyCode()==KeyEvent.VK_UP) {
+				if (yObj &gt; 0)
+					yObj--;
+			} else if (e.getKeyCode()==KeyEvent.VK_DOWN) {
+				if (yObj &lt; ALTO)
+					yObj++;
+			}
+		}
+	});	
+</b>}</pre>
+    <p>¿Qué método utilizamos en el código para saber qué tecla se ha
+    pulsado? ¿Con qué lo comparamos en cada caso para saber si se ha pulsado
+    la tecla indicada?<br>
+    <br>
+    Como ahora las figuras las movemos por teclado, quitamos la línea que
+    aumenta la coordenada Y automáticamente en el método run, y hacemos que el
+    bucle sea infinito:</p>
+    <pre class="codigo">public void run()
+{	
+	while (<b>true</b>)
+	{
+		<b>// Quitamos esta linea: </b><b>yObj++;
+</b>		mc.repaint();
+		try
+		{
+			Thread.currentThread().sleep(100);
+		} catch (Exception ex) {}
+	}
+}</pre>
+  </li>
+  <li>Compilad y ejecutad la aplicación, para comprobar que funciona
+    correctamente. Probad los eventos del teclado para mover las figuras.
+  </li>
+  <li>Por último, vamos a quitar las figuras que dibujábamos, y en su lugar
+    vamos a colocar una imagen ya predefinida, que podamos mover con teclado.
+    Tenéis una llamada <i>figura.png</i> en la plantilla.
+    <ol type="a">
+      <li>En primer lugar, definimos una variable global que guardará la
+        imagen:<pre class="codigo">public class Ej2 extends JFrame implements Runnable
+{
+	public static final int ANCHO = 320;
+	public static final int ALTO = 240;
+	MiCanvas mc = new MiCanvas();
+	Thread t = new Thread(this);
+	int yObj = 0;
+	int anchoPantalla;
+	int altoPantalla;
+<b>	Image figura;</b></pre>
+      </li>
+      <li>Después, en el constructor, obtenemos la imagen, utilizando la clase <i>Toolkit</i>
+        y luego su método <i>createImage</i>:
+    <pre class="codigo">public Ej2()
+{
+	...
+<b>	Toolkit tk = Toolkit.getDefaultToolkit();
+	figura = tk.createImage(&quot;figura.png&quot;);
+</b><b>	...
+</b>}</pre>
+      </li>
+      <li>Finalmente, en el método <i>paint</i> de <i>MiCanvas</i>, quitamos
+        los dibujos de las figuras, y simplemente dibujamos esta imagen:
+    <pre class="codigo">public void paint(Graphics g)
+{
+	if(backbuffer == null)
+		backbuffer = createImage(ANCHO, ALTO);
+	
+	// Dibujamos los gráficos en el backbuffer
+	
+	Graphics off_g = backbuffer.getGraphics();
+	off_g.clearRect(0, 0, ANCHO, ALTO);
+<b>	off_g.drawImage(figura, 0, yObj, 
+                        figura.getWidth(this), figura.getHeight(this), this);
+
+	// Quitamos estas lineas, ya no las necesitamos:
+	// off_g.setColor(Color.blue);
+	// off_g.fillRect(5, yObj, 100, 25);
+	// off_g.setColor(Color.green);
+	// off_g.fillOval(125, yObj, 100, 50);
+</b>
+	// Volcamos el backbuffer a pantalla, segun el tamaño de la misma
+
+	g.drawImage(backbuffer, 0, 0, <b>anchoPantalla, altoPantalla</b>, this);
+	g.dispose();
+
+}</pre>
+        <p>Vemos que dibujamos la figura en la coordenada X = 0, y variaremos su
+        Y desde las flechas del teclado, como antes.<br>
+      </li>
+    </ol>
+  </li>
+  <li>Compila y ejecuta ahora la aplicación. Comprueba que la figura se carga
+    bien, y la puedes mover desde el teclado.<br>
+  </li>
+  <li><b>(OPTATIVO)</b> Esta parte hazla únicamente si tienes tiempo y quieres,
+    no es necesario entregarla:
+    <ul>
+      <li>El último apartado de teoría del tema 3 (apartado <b>3.4.6</b> (<i>Sonido
+        y música. Java Sound</i>)), no lo hemos visto. Si te interesa, échale
+        un vistazo.</li>
+      <li>En la plantilla se tiene también una imagen llamada <i>yogi.png</i>.
+        Verás que tiene sprites (figuras) del oso Yogi, moviéndose a izquierda
+        y derecha. Intenta sustituir el ejercicio que hemos hecho por otro donde
+        la figura se mueva de izquierda a derecha (en lugar de arriba y abajo),
+        y trata de animar un poco el movimiento cambiando la imagen a mostrar
+        tras cada paso que se dé (eligiendo de entre las que aparecen en <i>yogi.png</i>).<br>
+        AYUDA: en la siguiente sesión veremos un ejemplo de cómo hacer esto,
+        explicando la técnica a seguir en estos casos.<br>
+      </li>
+    </ul>
+  </li>
+</ol>
+ 
+<p><b>PARA ENTREGAR</b></p>
+<ul>
+  <li>Fichero<b>       Ej2.java</b>  &nbsp;con todos los cambios propuestos
+    (salvo los del punto 9, que son optativos), incluyendo también el fichero <b>DlgModos.java</b>.</li>
+  <li>Fichero de texto <b>respuestas.txt</b> contestando a todas las preguntas
+    formuladas.</li>
+</ul>
+ 
+    </body>
+    </html>

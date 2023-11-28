@@ -1,0 +1,67 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Tema 1: Introducci&oacute;n a Java</title>
+<link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+<h1>C&oacute;mo actualizar la web del curso PLJ</h1>
+<h2>1. Resumen</h2>
+<p>La web se mantiene en un repositorio CVS situado en el servidor web (www.j2ee.ua.es). 
+  Para modificar la web (ver punto 2) tienes que hacer un checkout de la web en 
+  tu ordenador, modificar los ficheros que desees y hacer un commit. Muy importante: 
+  el commit modifica el repositorio CVS, pero no el sitio web. Para actualizar 
+  el sitio web (ver punto 3) hay que hacer ssh al servidor y hacer un checkout 
+  del repositorio en el directorio donde se encuentra la web.</p>
+<p>Necesario:</p>
+<ul>
+  <li>Eclipse (las pantallas est&aacute;n cogidas de la versi&oacute;n 3.0, milestone 
+    9, pero supongo que tambi&eacute;n funciona igual en la versi&oacute;n 2.1).</li>
+  <li>Editor sitios web (por ejemplo, Dreamweaver Mx)</li>
+  <li>El repositorio con el sitio web debe estar creado</li>
+</ul>
+<h2>2. Modificaci&oacute;n de la web</h2>
+<p>1. Lanza eclipse y crea un nuevo proyecto con el asistente de CVS.</p>
+<p><img src="imagenes/pantalla1.png" width="894" height="756"></p>
+             
+<p>2. Proporciona a Eclipse los datos del servidor CVS</p>
+<p><img src="imagenes/pantalla2.png" width="499" height="514"></p>
+<p>3. Escoge el m&oacute;dulo CVS que vas a modificar (el sitio web plj)</p>
+<p><img src="imagenes/pantalla3.png" width="485" height="469"></p>
+<p>4. Selecciona el directorio local donde vas a trabajar</p>
+<p><img src="imagenes/pantalla4.png" width="488" height="388"></p>
+<p>&nbsp;</p>
+<p><img src="imagenes/pantalla5.png" width="463" height="348"></p>
+<p>5. Una vez creado el proyecto Eclipse, aparece la siguiente persepectiva:</p>
+<p><img src="imagenes/pantalla6.png" width="748" height="749"></p>
+<p>6. Este es el directorio local con toda la web</p>
+<p><img src="imagenes/pantalla7.png" width="796" height="572"></p>
+<p>7. Cambia las preferencias de Eclipse para indicar que los ficheros *.htm y 
+  *.html los debe gestionar el Dreamweaver:</p>
+<p><img src="imagenes/pantalla8.png" width="637" height="588"></p>
+<p>8. Ahora ya puedes modificar cualquier fichero, a&ntilde;adir ficheros, directorios, 
+  etc. Una vez que hayas terminado de modificar la web (comprueba antes en local 
+  que todo est&aacute; correcto!) ya puedes hacer el commit. <strong>Primero refresca 
+  el proyecto en Eclipse</strong>. Aparecer&aacute;n precedidos con '&gt;' los 
+  ficheros que se hayan modificado. </p>
+<p><img src="imagenes/pantalla10.png" width="712" height="753"></p>
+<p>9. Cambia a la perspectiva de Team Synchronizing y ejecuta commit:</p>
+<p><img src="imagenes/pantalla11.png" width="708" height="712"></p>
+<p>10. A&ntilde;ade una l&iacute;nea con la descripci&oacute;n del cambio:</p>
+<p><img src="imagenes/pantalla12.png" width="722" height="758"></p>
+<h2>3. Actualizaci&oacute;n del sitio web</h2>
+<p>Para actualizar el sitio web debes conectarte con ssh a www.j2ee.ua.es y entrar 
+  con usuario web (contrase&ntilde;a j2eej2ee). Una vez en tu directorio home, 
+  ver&aacute;s un enlace simb&oacute;lico al sitio web plj. Debes ejecutar:</p>
+<p><code>% cd plj<br>
+  % cvs checkout -d . web/plj</code></p>
+<p>Para hacerlo m&aacute;s f&aacute;cil, he creado un script en el directorio 
+  home que ahorra teclear esto. Hay que llamarlo de la siguiente forma (estando 
+  en el directorio home de web):</p>
+<p><code>% ./checkout plj</code></p>
+<p>&nbsp;</p>
+</body>
+</html>

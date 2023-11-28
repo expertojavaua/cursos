@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  <meta name="Author" content="Nacho">
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+  <title>Sesion 2</title>
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+<h1>Sesi&oacute;n 2</h1>
+<p>Eclipse. Paquetes. Bean Shell. </p>
+<h2>1. Instalaci&oacute;n de Eclipse</h2>
+<p>En este primer ejercicio vamos a instalar el entorno de desarrollo <strong>Eclipse
+3.0 </strong></p>
+<ol>
+  <li>Descomprime el fichero Eclipse (ver la p&aacute;gina de <a
+ href="../../recursos.htm">recursos</a>) correspondiente a tu sistema
+operativo en alg&uacute;n directorio del sistema. El fichero es un
+archivo ZIP que contiene todos sus ficheros bajo el directorio <code>./eclipse</code>.
+Por ejemplo, en Windows descompr&iacute;melo en <code>C:\</code> y en
+Linux lo puedes descomprimir en <code>/usr/local/</code> (si tienes
+permiso de super usuario; si no, lo puedes descomprimir en <code>/home/&lt;user&gt;/</code>).
+En Mac OS X debes descomprimir el fichero y arrastrar la
+aplicaci&oacute;n Eclipse a la carpeta de aplicaciones.</li>
+  <li>Arranca Eclipse haciendo doble click sobre la aplicaci&oacute;n.
+Es un programa escrito en Java y debes tener instalado el JDK o el JRE
+(ya lo has hecho en la sesi&oacute;n 1) para que funcione. Cuando
+Eclipse arranca por primera vez pide el directorio de trabajo. Puedes
+aceptar el que te sugiere (<code>C:\eclipse\workspace</code>), o
+indicarle alguno propio.</li>
+  <li>Cuando aceptes el directorio de trabajo, aparecer&aacute; la
+siguiente ventana de presentaci&oacute;n.<br>
+    <br>
+    <br>
+    <center> <img src="imagenes/modulo1/eclipse1.png" height="368"
+ width="510"> <br>
+    </center>
+Desde esta ventana de presentaci&oacute;n puedes ver tutoriales,
+ejemplos o entrar directactemente en la zona de trabajo (esquina
+superior derecha). Haz esto &uacute;ltimo para comenzar a trabajar en
+Eclipse. Podr&aacute;s volver a la ventana de presentaci&oacute;n en
+cualquier momento con la opci&oacute;n <em>Help -&gt; Welcome</em>).
+Qu&eacute;date por ahora en la zona de trabajo:<br>
+    <br>
+    <center> <img src="imagenes/modulo1/eclipse2.png" height="387"
+ width="510"> </center>
+    <br>
+  </li>
+  <li>Lee el apartado 1.4 de los apuntes (<em>Eclipse: un entorno
+gr&aacute;fico para desarrollo Java</em>), en especial los apartados
+1.4.2 (<em>Configuraci&oacute;n visual: perspectivas, vistas y editores</em>)
+y 1.4.5 (<em>Proyectos Java</em>). Las pantallas de ese apartado
+est&aacute;n tomadas de una versi&oacute;n anterior de Eclipse y son
+algo diferentes al aspecto de la versi&oacute;n 3.0. Puede ser que en
+esta primera lectura haya cosas que no entiendas; no te preocupe
+demasiado, se refieren a aspectos avanzados que podr&aacute;s usar
+m&aacute;s adelante.</li>
+</ol>
+<h2>2. Las primeras clases Java en Eclipse</h2>
+<p>Vamos a crear un proyecto en Eclipse en el que programaremos todas
+las clases de la sesi&oacute;n de ayer, para que compruebes la
+diferencia entre usar este entorno y programar con un editor
+b&aacute;sico y la l&iacute;nea de comando.</p>
+<ol>
+  <li>Crea un proyecto Java nuevo con la opci&oacute;n <em>File -&gt;
+New -&gt; Project</em>. Ll&aacute;malo <code>plj</code> y acepta todas
+las opciones por defecto. Ver&aacute;s que Eclipse te pide pasar a la
+perspectiva Java. Acepta. El proyecto se corresponde con un directorio
+que se ha creado con el mismo nombre en el directorio de trabajo de
+Eclipse. <strong>Puedes usar este proyecto durante todo el curso</strong>.
+    <br>
+En el proyecto pueden residir todo un conjunto de clases y paquetes;
+esto es, en un proyecto puede haber m&aacute;s de un programa
+ejecutable (recuerda que los programas Java son clases que tienen el
+m&eacute;todo <code>main</code>).</li>
+  <li>Vamos a crear la clase <code>Ejemplo1</code> con el <em>"Hola
+mundo"</em>. <br>
+Selecciona el proyecto y, con el bot&oacute;n derecho, escoge la
+opci&oacute;n <em>New -&gt; Class</em>. Dale el nombre <code>Ejemplo1</code>
+y activa la opci&oacute;n para que cree un esqueleto del m&eacute;todo "<code>public
+static void main (String[] args)</code>". Pulsa en <em>Finish</em> y
+aparecer&aacute; el editor de Eclipse con el fichero de clase. Al crear
+la clase, Eclipse introduce comentarios con tareas por hacer que puedes
+ver en la vista <em>Tasks</em>. Puedes borrar estos comentarios y se
+borran autom&aacute;ticamente las tareas. Escribe en este fichero el
+programa Ejemplo1 de la sesi&oacute;n de ayer. Durante la escritura
+podr&aacute;s comprobar que el editor chequea la sintaxis cuando grabas
+el fichero, indic&aacute;ndote si hay un error, qu&eacute; tipo de
+error es, e incluso sugiri&eacute;ndote la posible soluci&oacute;n:<br>
+    <br>
+    <img src="imagenes/modulo1/eclipse3.png" height="505" width="700"><br>
+    <br>
+Cuando salves el programa correctamente escrito ver&aacute;s que
+desaparecen todas las marcas de errores. <br>
+    <br>
+Si examinas en el sistema operativo el directorio <code>plj</code>
+creado en el espacio de trabajo de Eclipse, ver&aacute;s que se
+encuentra el fichero <code>Ejemplo1.java</code> y el fichero compilado
+    <code>Ejemplo1.class</code>. Eclipse s&oacute;lo ha a&ntilde;adido
+los ficheros <code>.project</code> y <code>.classpath</code> que
+definen algunas constantes del proyecto. Esta es una de las muchas
+ventajas de Eclipse frente a otros entornos: su limpieza. Lo que hay en
+la ventana de proyecto es lo que hay en el directorio del sistema
+operativo. Puedes examinar los ficheros del sistema operativo cambiando
+a la perspectiva <em>Resource</em>.<br>
+  </li>
+  <li>Vamos a ejecutar la clase <code>Ejemplo1</code>. Selecciona la
+clase y, con el bot&oacute;n derecho, escoge la opci&oacute;n <em>Run
+-&gt; Java Application</em> (tambi&eacute;n puedes seleccionar en el
+men&uacute; la opci&oacute;n<em> Run -&gt; Run As -&gt; Java Application</em>).
+Aparecer&aacute; la vista <em>Console</em> con la salida de la
+ejecuci&oacute;n del programa.<br>
+  </li>
+  <li>Escribe el resto de clases de la sesi&oacute;n 1, excepto la que
+est&aacute; en el package <code>misclases.utils</code>. Para ello
+puedes importar las clases en el paquete desde el sistema de ficheros.
+Escoge la opci&oacute;n <em>File -&gt; Import -&gt; File system</em>,
+selecciona el directorio <code>C:\java</code> y marca todas las clases
+que quieres importar (todas en este caso):<br>
+    <br>
+    <center> <img src="imagenes/modulo1/eclipse4.png" height="533"
+ width="500"> </center>
+    <br>
+    <br>
+Todas las clases se copiar&aacute;n al proyecto actual y se
+compilar&aacute;n autom&aacute;ticamente.</li>
+  <li>&iquest;C&oacute;mo lanzar un programa con argumentos en la
+l&iacute;nea de comandos? Para esto es necesario crear una <strong>configuraci&oacute;n
+de ejecuci&oacute;n</strong>, un elemento muy &uacute;til de Eclipse.
+Selecciona en el men&uacute; la opci&oacute;n <em>Run -&gt; Run ...</em>
+. Aparecer&aacute; la ventana de gesti&oacute;n de configuraciones de
+ejecuci&oacute;n, en la que podr&aacute;s crear y guardar con un nombre
+una configuraci&oacute;n de ejecuci&oacute;n. Dale a esta
+configuraci&oacute;n el nombre <code>conf1, </code>selecciona como <em>Main
+class</em> la clase <code>Reverse2</code> y dale los valores que
+quieras a los argumentos del programa. Puedes guardar la
+configuraci&oacute;n con la opci&oacute;n <em>Apply</em> y ejecutarla
+con <em>Run</em>. La configuraci&oacute;n queda guardada y puedes
+lanzarla cuando quieras, por ejemplo despu&eacute;s de realizar
+modificaciones en el programa principal. </li>
+</ol>
+<h2>3. La clase plj.geom.Rect</h2>
+En este ejercicio vamos a compilar en Eclipse la clase <code>Rect</code>, que 
+define un rect&aacute;ngulo, dentro del <span
+ style="font-style: italic;">package</span> <code>plj.geom</code>. 
+<ol>
+  <li>Comenzamos creando el <span style="font-style: italic;">package</span> <code>plj.geom</code>. 
+    Para ello, escogemos la opci&oacute;n del men&uacute; <span style="font-style: italic;">File-&gt; 
+    New-&gt; Package</span>. Y creamos el paquete con el nombre <code>plj.geom</code>. 
+    Inmediatamente aparecer&aacute; en la vista <span
+ style="font-style: italic;">Package Explorer</span>. Eclipse tambi&eacute;n habr&aacute; 
+    creado en el sistema de ficheros los directorios <code>plj/geom</code> dentro 
+    del directorio de proyecto <code>plj</code>.</li>
+  <li>Desempaqueta el fichero de plantillas de esta sesi&oacute;n de ejercicios 
+    e importa en el package reci&eacute;n creado las clases <code>Rect.java</code> 
+    y <code>Position.java</code>. Vamos a centrarnos en la clase <code>Rect</code>, 
+    la clase <code>Position</code> la usuaremos en otra sesi&oacute;n. Se trata 
+    de una clase con la que se definen objetos de tipo rect&aacute;ngulo. Mira 
+    el c&oacute;digo fuente de la clase. Ver&aacute;s que, por estar definida 
+    en el package <code>plj.geom</code>, se declara la l&iacute;nea 
+    <pre class="codigo"> package plj.geom;</pre>
+    al comienzo del fichero. En Eclipse tendremos una configuraci&oacute;n similar 
+    a esta:<br>
+    <br>
+    <br>
+    <img src="imagenes/modulo1/eclipse5.png" height="445" width="600"><br>
+    <br>
+  </li>
+  <li>Escribe una clase de prueba que use la clase <code>Rect</code> y que se 
+    llame <code style="font-weight: bold;">PruebaRect.java</code>, en el que se 
+    realicen varias operaciones con dos rect&aacute;ngulos reci&eacute;n creados 
+    y se compruebe la clase <code>Rect</code>. Escr&iacute;bela fuera del package 
+    <code>plj.geom</code>. Debe tener el siguiente esqueleto:<br>
+    <pre class="codigo">import plj.geom.Rect;<br><br>public class PruebaRect {<br><br>	public static void main(String[] args) {<br>		Rect r1, r2, r3;<br>       // operaciones con los rect&aacute;ngulos<br>	}<br>} </pre>
+	
+    
+  </li>
+  <li>Por &uacute;ltimo, crea el paquete <code><strong>modulo1.sesion2</strong></code> 
+    y mueve todas las clases a ese nuevo paquete. Lo puedes hacer arrastrando 
+    las clases al nuevo paquete y Eclipse se encarga de declarar el paquete en 
+    el c&oacute;digo fuente de las clases. Prueba alguna clase para comprobar 
+    que no ha habido ning&uacute;n error. </li>
+</ol>
+<h2>4. El int&eacute;rprete BeanShell</h2>
+<p>Vamos a terminar probando una herramiente muy &uacute;til: un int&eacute;rprete 
+  interactivo de Java. El int&eacute;rprete se llama BeanShell y puede ejecutar 
+  c&oacute;digo Java de forma interactiva.</p>
+<ol>
+  <li> 
+    <p>Descomprime BeanShell en cualquier directorio del sistema de ficheros. 
+      Se trata de un programa Java que necesita que tengas JDK o JRE instalado 
+      para que funcione. L&aacute;nzalo haciendo un doble click sobre el fichero<code> 
+      bsh-2.0b1.jar</code>. Aparecer&aacute; un entorno como el que se muestra 
+      en la siguiente figura. El Workspace es un int&eacute;rprete interactivo 
+      en el que puedes ejecutar instrucciones Java. Vamos a probar en ese int&eacute;rprete 
+      la clase <code>Rect</code>.<br>
+      <br>
+      <br>
+      <img src="imagenes/modulo1/beanshell1.png" height="450" width="600"><br>
+    </p>
+  </li>
+  <li> 
+    <p> Para a&ntilde;adir al CLASSPATH de BeanShell el directorio donde se encuentra 
+      el paquete <code>plj</code> se usa la instrucci&oacute;n <code>addClassPath(&quot;C:/eclipse/workspace/plj&quot;)</code>. 
+      Para imprimir un valor a hay que usar la instrucci&oacute;n <code>print 
+      (a)</code>. Un ejemplo de ejecuci&oacute;n es el siguiente:</p>
+    <pre class="codigo">bsh % addClassPath(&quot;G:/eclipse/workspace/plj&quot;);<br>bsh % import plj.geom.Rect;<br>bsh % Rect r = new Rect(0,0,10,10);<br>bsh % print (r.toString());<br><strong>[0.0,0.0; 10.0,10.0]<br></strong>bsh % r.move(2.0,4.0);<br>bsh % print (r);   // llama impl&iacute;citamente a r.toString()<br><strong>[2.0,4.0; 12.0,14.0]</strong><br>bsh % </pre>
+    Ejecuta en el int&eacute;rprete las mismas instrucciones que escribiste en 
+    el programa <code>PruebaRect.java</code>. Copia todas las instrucciones y 
+    las respuestas de BeanShell en el fichero <strong>respuestas.txt</strong>.<br>
+    <br>
+    El int&eacute;rprete BeanShell es muy completo y tiene funcionalidades que 
+    escapan totalmente de este curso. Puedes consultar su funcionamiento en la 
+    documentaci&oacute;n que se entrega en los recursos. Una instrucci&oacute;n 
+    muy &uacute;til es <br>
+    <pre class="codigo">
+    bsh % reloadClasses();</pre>
+    que permite volver a cargar las clases que est&aacute;n en el classpath de 
+    BeanShell. Esta instrucci&oacute;n es &uacute;til cuando hemos modificado 
+    una clase y queremos comprobar el funcionamiento en BeanShell. Notar que las 
+    variables usadas previamente no pueden ser usadas con la nueva clase.</li>
+</ol>
+<p> <b>PARA ENTREGAR</b></p>
+<p>Exporta todo el proyecto con Eclipse a un fichero ZIP llamado <strong>eclipse.zip</strong> 
+  usando la opci&oacute;n del men&uacute; <em>File -&gt; Export -&gt; ZIP File</em>. 
+</p>
+<p>Escribe en el fichero <strong>respuestas.txt</strong> qu&eacute; impresi&oacute;n 
+  te han causado Eclipse y BeanShell. Crea, por &uacute;ltimo, un fichero ZIP 
+  llamado <strong>sesion2.zip</strong> con el ficheros <strong> respuestas.txt</strong> 
+  y el fichero <strong>eclipse.zip</strong>.</p>
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  <meta name="Author" content="Nacho">
+  <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+  <title>Ejercicios de Conceptos B&aacute;sicos</title>
+  <link rel="stylesheet" href="../../apuntes.css" type="text/css">
+</head>
+<body>
+<h1>Sesi&oacute;n 1</h1>
+<p>Compilaci&oacute;n. Paquetes. Hola Mundo.</p>
+<h2>1. Instalaci&oacute;n del JDK 1.4</h2>
+<p>En este primer ejercicio vamos a realizar la instalaci&oacute;n del JDK, necesario 
+  para compilar y ejecutar programas Java.</p>
+<ol>
+  <li>Instala el SDK (Software Developer Kit) Java 1.4.2 (se encuentra en la p&aacute;gina 
+    de <a href="../../recursos.htm">recursos</a>). Es el conjunto de herramientas 
+    que Sun proporciona para desarrollar en Java.</li>
+  <li>Comprueba que la instalaci&oacute;n ha funcionado correctamente, ejecutando 
+    el compilador de Java:</li>
+  <pre class="codigo">&gt; C:\j2sdk1.4.2_02\bin\javac</pre>
+  <li>Actualiza la variable de entorno <code>PATH</code>, a&ntilde;adiendo el 
+    directorio <code>C:\j2sdk1.2.4_02\bin</code> para que no tengas que teclear 
+    todo el camino cada vez que quieras ejecutar alg&uacute;n programa de Java. 
+    Para obtener informaci&oacute;n m&aacute;s detallada sobre c&oacute;mo actualizar 
+    la variable de entorno PATH, puedes consultar el ap&eacute;ndice B de los 
+    apuntes del curso.</li>
+  <li>Comprueba que todo funciona bien, cambi&aacute;ndote a cualquier directorio 
+    (por ejemplo <code>C:\<span
+ style="font-family: arial,helvetica,sans-serif;">tmp</span></code> y escribiendo:</li>
+  <pre class="codigo">C:\tmp&gt; javac</pre>
+</ol>
+<h2>2. Mis primeros programas Java</h2>
+<p>En este ejercicio vamos a realizar, compilar y ejecutar dos programas Java. 
+  En uno de ellos habr&aacute; alg&uacute;n error y deber&aacute;s corregirlo.</p>
+<ol>
+  <li>Antes de empezar a programar, lee el apartado <strong>1.1</strong> (<em>Compilaci&oacute;n 
+    y ejecuci&oacute;n de programas Java</em>) de los apuntes.<br>
+  </li>
+  <li>Crea el directorio <code>C:\java</code>, este va a ser el directorio de 
+    trabajo donde vas a guardar los programas ejemplo de esta primera sesi&oacute;n. 
+    Escribe el siguiente programa Java en un fichero de texto con un editor de 
+    texto cualquiera, como el <em>Notepad</em>. Graba el programa con el nombre 
+    <code>Ejemplo1.java</code> (es importante la "E" may&uacute;scula).<br>
+    <pre class="codigo">public class Ejemplo1 {<br>	public static void main(String[] args) {<br>		System.out.println("Hola mundo");<br>	}<br>}</pre>
+Compila la clase y ver&aacute;s como se genera el fichero <code>.class</code>
+que contiene los bytecodes. Este fichero es el que despu&eacute;s debe
+ejecutar la
+m&aacute;quina virtual java (JVM):<br>
+    <pre>C:\java&gt; javac Ejemplo1.java<br>C:\java&gt; dir <br><br>. &lt;DIR&gt; 16/06/04 1:59a .<br>.. &lt;DIR&gt; 16/06/04 1:59a ..<br>EJEMPL~1 CLA 433 16/06/04 2:07a Ejemplo1.class<br>EJEMPL~1 JAV 130 16/06/04 1:59a Ejemplo1.java </pre>
+Ejecuta el programa con la JVM:<br>
+    <pre>C:\java&gt;java Ejemplo1<br>Hola mundo</pre>
+    <p>Para ejecutar un programa Java, debes invocar con la JVM una clase que 
+      contenga un m&eacute;todo est&aacute;tico llamado main; este es el m&eacute;todo 
+      que se ejecutar&aacute;.</p>
+  </li>
+  <li>Escribe ahora el siguiente programa, y s&aacute;lvalo con el nombre de <code>Ejemplo2.java</code>.<br>
+    <pre class="codigo">import java.awt.*;<br>import java.awt.event.ActionEvent;<br>import javax.swing.*;<br><br>public class MiPrimerGUI {<br>    public static void main(String[] args) {<br>    	// Defino la accion a ejecutar<br>    	Action action = new AbstractAction("Hola mundo") {<br>            public void actionPerformed(ActionEvent evt) {<br>               System.out.println("Hola mundo");<br>            }<br>        };<br><br>        JButton button = new JButton(action);<br>        JFrame frame = new JFrame();<br><br>        // A&ntilde;ado el boton al marco<br>        frame.getContentPane().add(button, BorderLayout.CENTER);<br><br>        // Dimensiones del marco<br>        int frameWidth = 100;<br>        int frameHeight = 100;<br>        frame.setSize(frameWidth, frameHeight);<br><br>        // Muestro el marco<br>        frame.setVisible(true);<br><br>        // Le digo al frame que salga de la aplicacion<br>        // cuando se cierre<br>        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);<br>    }<br>}</pre>
+    Compila el programa y dar&aacute; un mensaje de error. &iquest;Cu&aacute;l 
+    es el error? &iquest;C&oacute;mo corregirlo? (contestalo en el fichero<strong> 
+    respuestas.txt</strong>). Corrige el error y ejecuta la clase. Deber&aacute; 
+    aparecer la siguiente ventana, y cada vez que pinches en el bot&oacute;n deber&iacute;a 
+    aparecer "Hola mundo" en la salida est&aacute;ndar.<br>
+    <p><img src="imagenes/modulo1/boton.png" height="100" width="144"> </p>
+No intentes entender el c&oacute;digo. Esto es s&oacute;lo un aperitivo
+de lo que vendr&aacute; en el &uacute;ltimo m&oacute;dulo del curso.</li>
+</ol>
+<h2>3. Trabajando con paquetes</h2>
+<p>Vamos ahora a realizar unos cortos ejemplos para introducir el uso de paquetes 
+  en las clases Java.</p>
+<ol>
+  <li> 
+    <p>Vamos ahora a actualizar la variable CLASSPATH. Seguimos en el directorio 
+      <code>C:\java</code>, en el que se encuentra la clase compilada <code>Ejemplo1.class</code>. 
+      Si actualizamos el CLASSPATH (recuerda que es la variable del entorno que 
+      le indica al compilador y al int&eacute;rprete Java d&oacute;nde buscar 
+      las clases) de la siguiente forma<br>
+    </p>
+    <pre class="codigo">set CLASSPATH=C:\</pre>
+    <p> y vuelves a probar a ejecutar el programa ejemplo </p>
+    <pre class="codigo">C:\java&gt; java Ejemplo1<br>&lt;MENSAJE DE ERROR&gt; </pre>
+    <p> veras que aparece un mensaje de error. Para que funcione correctamente 
+      debes volver a actualizar el CLASSPATH&nbsp; </p>
+    <pre class="codigo">C:\java&gt; set CLASSPATH=.<br>C:\java&gt; java Ejemplo1<br>Hola mundo<br></pre>
+  </li>
+  <p>&iquest;Qu&eacute; ha causado el error? &iquest;Por qu&eacute; se ha arreglado? 
+    &iquest;Qu&eacute; pasar&aacute; si actualizas el CLASSPATH de la siguiente 
+    forma:&nbsp; "<code>set CLASSPATH = .;C:\java</code>" ? (contesta en el fichero 
+    <strong>respuestas.txt</strong>).</p>
+  <li> 
+    <p>Vamos a declarar que la clase <code>Ejemplo1</code> se defina en el paquete 
+      <code>modulo1.sesion1</code>. Para eso debemos cambiar el c&oacute;digo 
+      fuente de la siguiente forma.</p>
+    <pre class="codigo">package modulo1.sesion1; <br><br>public class Ejemplo1 {<br>	public static void main(String[] args) {<br>		System.out.println("Hola mundo");<br>	}<br>}</pre>
+    <p>Compila el programa, crea la estructura de directorios <code>modulo1\sesion1</code> 
+      y coloca all&iacute; la nueva clase compilada. Puedes hacerlo con: </p>
+    <pre class="codigo">
+C:\java&gt; javac Ejemplo1.java<br>C:\java&gt; mkdir modulo1<br>C:\java&gt; cd modulo1<br>C:\java\modulo1&gt; mkdir sesion1<br>C:\java\modulo1&gt; cd .. <br>C:\java&gt; copy Ejemplo1.class modulo1\sesion1<br>C:\java&gt; del Ejemplo1.class</pre>
+    <p>Una forma m&aacute;s directa de hacer lo mismo es usando la directiva <code>-d 
+      </code>del compilador de Java. Esta directiva permite indicarle al compilador 
+      un directorio en el que vamos a dejar los ficheros <code>.class</code> generados. 
+      Si los ficheros <code>.class</code> est&aacute;n en un package, el compilador 
+      se encargar&aacute; de crear los directorios necesarios:</p>
+    <pre class="codigo">C:\java&gt; javac Ejemplo1.java -d .</pre>
+    <p>Por &uacute;ltimo, para ejecutar el programa reci&eacute;n compilado hay 
+      que llamar a la clase indicando todo su camino (<code>modulo1.sesion1.Ejemplo1</code>). 
+      La variable CLASSPATH debe contener el directorio padre y podemos llamar 
+      al programa desde cualquier directorio.<br>
+    </p>
+    <pre class="codigo">C:\java&gt;set CLASSPATH=.;C:\java<br>C:\java&gt;cd ..<br>C:\&gt; java modulo1.sesion1.Ejemplo1<br>Hola mundo</pre>
+  </li>
+  <li> Por &uacute;ltimo, vamos a crear un fichero JAR en el que se incluya la 
+    clase <code>Ejemplo1</code> y el paquete en el que reside: 
+    <pre class="codigo">C:\java&gt; jar cvf ejemplo.jar modulo1 <br>manifest agregado<br>agregando: modulo1/(entrada = 0) (salida= 0)(almacenado 0%)<br>agregando: modulo1/sesion1/(entrada = 0) (salida= 0)(almacenado 0%)<br>agregando: modulo1/sesion1/Ejemplo1.class(entrada = 442) (salida= 305)(desinflado 30%)<br></pre>
+    <p> Actualizamos el CLASSPATH con el camino del fichero JAR y ya podemos llamar 
+      al int&eacute;rprete</p>
+    <pre class="codigo">C:\java&gt; set CLASSPATH=C:\java\ejemplo.jar<br>C:\java&gt; java modulo1.sesion1.Ejemplo1<br>Hola mundo<br></pre>
+  </li>
+  <li> &iquest;Qu&eacute; valor deber&iacute;as poner en el CLASSPATH para poder 
+    usar la clase <code>misclases.utils.Robot</code> que tiene siguiente PATH 
+    en el sistema operativo: <code>C:\java\lib\misclases\utils\Robot.class</code>? 
+    &iquest;Y si la clase se encuentra en el mismo paquete dentro del fichero 
+    JAR <code>misclases.jar</code>, que tiene el PATH: <code>C:\java\lib\misclases.jar</code>? 
+    (contesta en el fichero <strong>respuestas.txt</strong>)</li>
+</ol>
+<h2>4. El juego de los n&uacute;meros</h2>
+<p>Vamos ahora a un ejercicio en el que compilar&aacute;s un programa algo m&aacute;s 
+  completo. </p>
+<ol>
+  <li>Vamos a ver un ejemplo algo m&aacute;s completo, en el que se utilizan objetos 
+    y clases definidas por el usuario. Escribe y compila la siguiente clase, es 
+    una clase con un &uacute;nico m&eacute;todo (<code>startGame</code>). Lo siguiente 
+    es una imagen, por lo que tendr&aacute;s que teclearlo todo. Corrige los errores 
+    (seguro que tendr&aacute;s m&aacute;s de uno al copiar!) hasta que los &uacute;nicos 
+    errores pendientes sean los derivados de que la clase <code>Player</code> 
+    no est&aacute; definida (6 errores).<br>
+    <br>
+    <center>
+      <img src="imagenes/modulo1/guessgame.png" height="1000" width="680"> 
+    </center>
+  </li>
+  <li>Escribe y compila la clase <code>Player</code> (en el directorio actual) 
+    para que el programa funcione correctamente. <br>
+    <br>
+    Como ver&aacute;s, ninguna clase tiene el m&eacute;todo <code>main</code>, 
+    por lo que no se puede lanzar el programa; escribe la clase <code>GameLauncher</code>, 
+    con el m&eacute;todo main que lance el programa. El resultado debe ser algo 
+    como:<br>
+    <pre>    C:\plj\modulo1&gt;java GameLauncher<br>    Estoy pensando un numero entre 0 y 9 ...<br>    El numero a adivinar es: 2<br>    Yo digo: 0<br>    Yo digo: 6<br>    Yo digo: 2<br>    El jugador 1 dice: 0<br>    El jugador 2 dice: 6<br>    El jugador 3 dice: 2<br>    Tenemos un ganador!<br>    El jugador 1 ha hacertado?: false<br>    El jugador 2 ha hacertado?: false<br>    El jugador 3 ha hacertado?: true</pre>
+  </li>
+</ol>
+<h2>5. Un &uacute;ltimo programa</h2>
+<p>Por &uacute;ltimo, vas a escribir un programa completo a partir de un ejemplo.</p>
+<ol>
+  <li> 
+    <p>Veamos un &uacute;ltimo programa, que escribe en la salida est&aacute;ndar 
+      los argumentos que se le pasan, separados por dos puntos &quot;:&quot;.</p>
+    <pre class="codigo">public class Echo {<br>    public static void main(String[] args) {<br>        int i=0;<br>        while (i &lt; args.length){<br>            System.out.print(args[i]);<br>            System.out.print(&quot;:&quot;);<br>            i++;<br>        }<br>        System.out.println();<br>    }<br>}</pre>
+  </li>
+  <li> Escribe un programa <code>Reverse</code> que escriba en la salida est&aacute;ndar 
+    los argumentos que se le pasa al int&eacute;rprete Java, pero invertidos y 
+    separados por dos puntos &quot;:&quot;. <br>
+    <pre class="codigo">C:\java&gt;java Reverse Hola que tal<br>tal:que:Hola</pre>
+  </li>
+  <li>Escribe un &uacute;ltimo programa <code>Reverse2</code> que invierta tambi&eacute;n 
+    los caracteres de cadaa palabra. Para ello, puedes acceder al car&aacute;cter 
+    i-&eacute;simo de una palabra usando el m&eacute;todo <code>charAt</code> 
+    de la clase <code>String</code>. Por ejemplo <code>str.charAt(0) </code>devuelve 
+    el car&aacute;cter 0 (el primero) del objeto <code>String</code> que est&aacute; 
+    en la variable <code>str</code>. Tambi&eacute;n necesitas saber la longitud 
+    de una palabra. Puedes obtener la longitud de un <code>String str</code>, 
+    llamando al m&eacute;todo <code>length</code> as&iacute;: <code>str.length()</code>. 
+    <pre class="codigo">C:\java&gt;java Reverse2 Hola que tal<br>lat:euq:aloH:</pre>
+  </li>
+</ol>
+<p> <b>PARA ENTREGAR</b></p>
+<p>Debes crear un ZIP llamado <strong>sesion1.zip</strong> con: </p>
+<ul>
+  <li>El fichero de texto <strong>respuestas.txt</strong> con las cuestiones contestadas</li>
+  <li>Los ficheros <strong>Ejemplo1.java</strong>, <strong>Ejemplo2.java</strong>, 
+    <strong>GuessGame.java</strong>, <strong>Player.java</strong>, <strong>GameLauncher.java, 
+    Reverse.java</strong> y <strong>Reverse2.java</strong>.</li>
+</ul>
+<p><strong>&iexcl;No lo entregues todav&iacute;a! </strong>Debes entregar todas 
+  las sesiones del primer m&oacute;dulo juntas.</p>
+<p>&nbsp;</p>
+</body>
+</html>
