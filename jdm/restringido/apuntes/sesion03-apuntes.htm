@@ -1,0 +1,218 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 3: Excepciones e hilos</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1> 3. Excepciones e hilos </h1>
+             
+<p>&nbsp; </p>
+<h2>3.1. Excepciones </h2>
+<p>Las excepciones son eventos que ocurren durante la ejecuci&oacute;n de un programa   		y hacen que &eacute;ste salga de su flujo normal de instrucciones. Este mecanismo   		permite tratar los errores de una forma elegante, ya que separa el c&oacute;digo   		para el tratamiento de errores del c&oacute;digo normal del programa. Se   		dice que una excepci&oacute;n es <em>lanzada</em> cuando se produce un error,   		y esta excepci&oacute;n puede ser <em>capturada</em> para tratar dicho error.</p>
+<h3>3.1.1. Tipos de excepciones</h3>
+<p>Tenemos diferentes tipos de excepciones dependiendo del tipo de error que representen.   		Todas ellas descienden de la clase Throwable, la cual tiene dos   		descendientes directos:</p>
+<ul>
+  <li> <strong>Error</strong>: Se refiere a errores graves en la m&aacute;quina   			virtual de Java, como por ejemplo fallos al enlazar con alguna librer&iacute;a.   			Normalmente en los programas Java no se tratar&aacute;n este tipo de errores.</li>
+  <li> <strong>Exception</strong>: Representa errores que no son cr&iacute;ticos y   			por lo tanto pueden ser tratados y continuar la ejecuci&oacute;n de la aplicaci&oacute;n.   			La mayor&iacute;a de los programas Java utilizan estas excepciones para el   			tratamiento de los errores que puedan ocurrir durante la ejecuci&oacute;n   			del c&oacute;digo.</li>
+</ul>
+<p>Dentro de Exception, cabe destacar una subclase especial de excepciones   		denominada RuntimeException, de la cual derivar&aacute;n todas   		aquellas excepciones referidas a los errores que com&uacute;nmente se pueden   		producir dentro de cualquier fragmento de c&oacute;digo, como por ejemplo hacer   		una referencia a un puntero null, o acceder fuera de los l&iacute;mites   		de un <em>array</em>. </p>
+<p>Estas RuntimeException se diferencian del resto de excepciones   		en que no son de tipo <em>checked</em>. Una excepci&oacute;n de tipo <em>checked</em> debe ser capturada o bien especificar que puede ser lanzada de forma obligatoria,   		y si no lo hacemos obtendremos un error de compilaci&oacute;n. Dado que las   		RuntimeException pueden producirse en cualquier fragmento de c&oacute;digo,   		ser&iacute;a impensable tener que a&ntilde;adir manejadores de excepciones y   		declarar que &eacute;stas pueden ser lanzadas en todo nuestro c&oacute;digo.   		Deberemos:</p>
+<ul>
+  <li>Utilizar excepciones <em> no-checked </em> (no predecibles) para indicar errores   			graves en la l&oacute;gica del programa, que normalmente no deber&iacute;an ocurrir.</li>
+  <li>Utilizar excepciones <em> checked</em> para mostrar errores que pueden ocurrir   			durante la ejecuci&oacute;n de la aplicaci&oacute;n, normalmente debidos a   			factores externos como por ejemplo la lectura de un fichero con formato incorrecto   			o un fallo en la conexi&oacute;n.</li>
+</ul>
+<p><img src="imagenes/java/excepcion.png" width="491" height="254"></p>
+<p>Dentro de estos grupos principales de excepciones podremos encontrar tipos   			concretos de excepciones o bien otros grupos que a su vez pueden contener m&aacute;s   			subgrupos de excepciones, hasta llegar a tipos concretos de ellas. Cada tipo   			de excepci&oacute;n guardar&aacute; informaci&oacute;n relativa al tipo de error   			al que se refiera, adem&aacute;s de la informaci&oacute;n com&uacute;n a todas   			las excepciones. Por ejemplo, una ParseException se suele utilizar   			al procesar un fichero. Adem&aacute;s de almacenar un mensaje de error, guardar&aacute;   			la l&iacute;nea en la que el <em>parser</em> encontr&oacute; el error.</p>
+<h3>3.1.2. Captura de excepciones</h3>
+<p>Cuando un fragmento de c&oacute;digo sea susceptible de lanzar una excepci&oacute;n   			y queramos tratar el error producido o bien por ser una excepci&oacute;n de   			tipo <em>checked</em> debamos capturarla, podremos hacerlo mediante la estructura   			try-catch-finally, que consta de tres bloques de c&oacute;digo:</p>
+<ul>
+  <li> Bloque <strong>try</strong>: Contiene el c&oacute;digo regular de nuestro programa   				que puede producir una excepci&oacute;n en caso de error.</li>
+  <li>Bloque <strong>catch</strong>: Contiene el c&oacute;digo con el que trataremos   				el error en caso de producirse.</li>
+  <li>Bloque <strong>finally</strong>: Este bloque contiene el c&oacute;digo que se   				ejecutar&aacute; al final tanto si se ha producido una excepci&oacute;n como   				si no lo ha hecho. Este bloque se utiliza para, por ejemplo, cerrar alg&uacute;n   				fichero que haya podido ser abierto dentro del c&oacute;digo regular del programa,   				de manera que nos aseguremos que tanto si se ha producido un error como si   				no este fichero se cierre. El bloque finally no es obligatorio   				ponerlo.</li>
+</ul>
+<p>Para el bloque catch adem&aacute;s deberemos especificar el tipo   			o grupo de excepciones que tratamos en dicho bloque, pudiendo incluir varios   			bloques catch, cada uno de ellos para un tipo/grupo de excepciones   			distinto. La forma de hacer esto ser&aacute; la siguiente:</p>
+<pre class="codigo"><strong>try</strong> 
+{  	
+	// C&oacute;digo regular del programa  	
+	// Puede producir excepciones  
+} <strong>catch(TipoDeExcepcion1 e1)</strong> {  	
+	// C&oacute;digo que trata las excepciones de tipo   	
+	// TipoDeExcepcion1 o subclases de ella.  	
+	// Los datos sobre la excepci&oacute;n los encontraremos   	
+	// en el objeto e1.  
+} <strong>catch(TipoDeExcepcion2 e2)</strong> {	  	
+	// C&oacute;digo que trata las excepciones de tipo   	
+	// TipoDeExcepcion2 o subclases de ella.  	
+	// Los datos sobre la excepci&oacute;n los encontraremos   	
+	// en el objeto e2.  ...  
+} <strong>catch(TipoDeExcepcionN eN)</strong> {  	
+	// C&oacute;digo que trata las excepciones de tipo   	
+	// TipoDeExcepcionN o subclases de ella.  	
+	// Los datos sobre la excepci&oacute;n los encontraremos   	
+	// en el objeto eN.  
+} <strong>finally</strong> {  	
+	// C&oacute;digo de finalizaci&oacute;n (opcional)  
+}</pre>
+<p> Si como tipo de excepci&oacute;n especificamos un grupo de excepciones este   			bloque se encargar&aacute; de la captura de todos los subtipos de excepciones   			de este grupo. Por lo tanto, si especificamos Exception capturaremos   			cualquier excepci&oacute;n, ya que &eacute;sta es la superclase com&uacute;n   			de todas las excepciones. </p>
+<p> En el bloque catch pueden ser &uacute;tiles algunos m&eacute;todos de la excepci&oacute;n   			(que podemos ver en la API de la clase padre Exception): </p>
+<pre class="codigo">String getMessage()
+void printStackTrace()</pre>
+<p>con <strong>getMessage</strong> obtenemos una cadena descriptiva del error (si   			la hay). Con <strong>printStackTrace</strong> se muestra por la salida est&aacute;ndar   			la traza de errores que se han producido (en ocasiones la traza es muy larga   			y no puede seguirse toda en pantalla con algunos sistemas operativos). </p>
+<p>Un ejemplo de uso: </p>
+<pre class="codigo">try 
+{  	
+	... // Aqui va el codigo que puede lanzar una excepcion  
+} catch (Exception e) {  	
+	System.out.println ("El error es: " + e.getMessage());  	
+	e.printStackTrace();  
+}</pre>
+<p>Nunca deberemos dejar vac&iacute;o el cuerpo del catch, porque si se   			produce el error, nadie se va a dar cuenta de que se ha producido. En especial,   			cuando estemos con excepciones <em>no-checked</em>.</p>
+<h3>3.1.3. Lanzamiento de excepciones</h3>
+<p>Hemos visto c&oacute;mo capturar excepciones que se produzcan en el c&oacute;digo,   			pero en lugar de capturarlas tambi&eacute;n podemos hacer que se propaguen al   			m&eacute;todo de nivel superior (desde el cual se ha llamado al m&eacute;todo actual). Para esto,  			en el m&eacute;todo donde se vaya a lanzar la excepci&oacute;n, se siguen 2 pasos:</p>
+<ul>
+  <li>Indicar en el m&eacute;todo que determinados tipos   				de excepciones o grupos de ellas pueden ser lanzados, cosa que haremos de la siguiente  				forma, por ejemplo:</li>
+</ul>
+<blockquote>
+<pre class="codigo">public void lee_fichero() <strong>throws </strong>IOException, FileNotFoundException  
+{
+	// Cuerpo de la funci&oacute;n  
+}</pre>
+  <p>Podremos indicar tantos tipos de excepciones como queramos en la cla&uacute;sula   				throws. Si alguna de estas clases de excepciones tiene subclases,   				tambi&eacute;n se considerar&aacute; que puede lanzar todas estas subclases.</p>
+</blockquote>
+<ul>
+  <li> Para lanzar la excepci&oacute;n utilizamos la instrucci&oacute;n throw,   				proporcion&aacute;ndole un objeto correspondiente al tipo de excepci&oacute;n   				que deseamos lanzar. Por ejemplo:</li>
+</ul>
+<blockquote>
+  <pre class="codigo"><strong>throw</strong> new IOException(mensaje_error);</pre>
+</blockquote>
+<ul>
+  <li>Juntando estos dos pasos:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">public void lee_fichero() <strong>throws </strong>IOException, FileNotFoundException  
+{
+	...  	
+	throw new IOException(mensaje_error);  	
+	...  
+}</pre>
+</blockquote>
+<p>Podremos lanzar as&iacute; excepciones en nuestras funciones para indicar que algo   			no es como debiera ser a las funciones llamadoras. Por ejemplo, si estamos procesando   			un fichero que debe tener un determinado formato, ser&iacute;a buena idea lanzar   			excepciones de tipo <em>ParseException</em> en caso de que la sintaxis del   			fichero de entrada no sea correcta.&nbsp;</p>
+<p>NOTA: para las excepciones que no son de tipo <em> checked</em> no har&aacute; falta  			la cl&aacute;usula <em>throws</em> en la declaraci&oacute;n del m&eacute;todo, pero seguir&aacute;n el mismo comportamiento que el resto, si   			no son capturadas pasar&aacute;n al m&eacute;todo de nivel superior, y seguir&aacute;n   			as&iacute; hasta llegar a la funci&oacute;n principal, momento en el que si   			no se captura provocar&aacute; la salida de nuestro programa mostrando el error   			correspondiente.</p>
+<h3>3.1.4. Creaci&oacute;n de nuevas excepciones</h3>
+<p>Adem&aacute;s de utilizar los tipos de excepciones contenidos en la distribuci&oacute;n   			de Java, podremos crear nuevos tipos que se adapten a nuestros problemas.</p>
+<p>Para crear un nuevo tipo de excepciones simplemente deberemos crear una clase   			que herede de Exception o cualquier otro subgrupo de excepciones   			existente. En esta clase podremos a&ntilde;adir m&eacute;todos y propiedades   			para almacenar informaci&oacute;n relativa a nuestro tipo de error. Por ejemplo:</p>
+<pre class="codigo">public class MiExcepcion extends Exception  
+{  	
+	public MiExcepcion (String mensaje)  	
+	{  		
+		super(mensaje);  	
+	}  
+}</pre>
+<p>Adem&aacute;s podremos crear subclases de nuestro nuevo tipo de excepci&oacute;n,   			creando de esta forma grupos de excepciones. Para utilizar estas excepciones   			(capturarlas y/o lanzarlas) hacemos lo mismo que lo explicado antes para las   			excepciones que se tienen definidas en Java.</p>
+<h2>3.2. Hilos</h2>
+<div align="justify">Un hilo es un flujo de control dentro de un programa. Creando varios hilos   			podremos realizar varias tareas simult&aacute;neamente. Cada hilo tendr&aacute;   			s&oacute;lo un contexto de ejecuci&oacute;n (contador de programa, pila de ejecuci&oacute;n).   			Es decir, a diferencia de los procesos UNIX, no tienen su propio espacio de   			memoria sino que acceden todos al mismo espacio de memoria com&uacute;n, por   			lo que ser&aacute; importante su sincronizaci&oacute;n cuando tengamos varios   			hilos accediendo a los mismos objetos. </div>
+<h3>3.2.1. Creaci&oacute;n de hilos</h3>
+<p>En Java los hilos est&aacute;n encapsulados en la clase <strong>Thread</strong>. Para     crear un hilo tenemos dos posibilidades:</p>
+<ul>
+  <li>Heredar de <strong> Thread</strong> redefiniendo el m&eacute;todo <em>run()</em>.</li>
+  <li>Crear una clase que implemente la interfaz <strong> Runnable</strong> que nos obliga       a definir el m&eacute;todo <em>run()</em>.</li>
+</ul>
+<p>En ambos casos debemos definir un m&eacute;todo <em> run()</em> que ser&aacute;     el que contenga el c&oacute;digo del hilo. Desde dentro de este m&eacute;todo     podremos llamar a cualquier otro m&eacute;todo de cualquier objeto, pero este     m&eacute;todo <em> run()</em> ser&aacute; el m&eacute;todo que se invoque cuando     iniciemos la ejecuci&oacute;n de un hilo. El hilo terminar&aacute; su ejecuci&oacute;n     cuando termine de ejecutarse este m&eacute;todo <em>run()</em>.</p>
+<p>Para crear nuestro hilo mediante herencia haremos lo siguiente:</p>
+<pre class="codigo">public class EjemploHilo extends <strong>Thread</strong>  
+{      
+	public void <strong>run</strong>() 
+	{
+		// C&oacute;digo del hilo      
+	}  
+}</pre>
+<p>Una vez definida la clase de nuestro hilo deberemos instanciarlo y ejecutarlo     de la siguiente forma:</p>
+<pre class="codigo"><strong>Thread</strong> t = new EjemploHilo();  
+t.<strong>start</strong>();</pre>
+<p>Al llamar al m&eacute;todo <em>start </em>del hilo, comenzar&aacute; ejecutarse su m&eacute;todo <em>run</em>.  Crear un hilo heredando de <strong> Thread</strong> tiene el problema de que al no haber     herencia m&uacute;ltiple en Java, si heredamos de <strong> Thread</strong> no podremos     heredar de ninguna otra clase, y por lo tanto un hilo no podr&iacute;a heredar     de ninguna otra clase.</p>
+<p>Este problema desaparece si utilizamos la interfaz <strong> Runnable</strong> para crear     el hilo, ya que una clase puede implementar varios interfaces. Definiremos la     clase que contenga el hilo como se muestra a continuaci&oacute;n:</p>
+<pre class="codigo">public class EjemploHilo implements <strong>Runnable</strong>  
+{
+	public void <strong>run</strong>() 
+	{          
+		// C&oacute;digo del hilo      
+	}  
+}</pre>
+<p>Para instanciar y ejecutar un hilo de este tipo deberemos hacer lo siguiente:</p>
+<pre class="codigo"><strong>Thread</strong> t = new <strong>Thread</strong>(new EjemploHilo());  
+t.<strong>start</strong>();</pre>
+<p>Esto es as&iacute; debido a que en este caso <strong> EjemploHilo</strong> no deriva     de una clase <strong>Thread</strong>, por lo que no se puede considerar un hilo, lo &uacute;nico     que estamos haciendo implementando la interfaz es asegurar que vamos a tener     definido el m&eacute;todo <em>run()</em>. Con esto lo que haremos ser&aacute;     proporcionar esta clase al constructor de la clase <strong>Thread</strong>, para que el     objeto <strong> Thread</strong> que creemos llame al m&eacute;todo <em>run()</em> de la     clase que hemos definido al iniciarse la ejecuci&oacute;n del hilo, ya que implementando     la interfaz le aseguramos que esta funci&oacute;n existe.</p>
+<h3>3.2.2. Estado y propiedades de los hilos</h3>
+<p>Un hilo pasar&aacute; por varios estados durante su ciclo de vida. </p>
+<pre class="codigo"><strong>Thread</strong> t = new Thread(this);</pre>
+<p>Una vez se ha instanciado el objeto del hilo, diremos que est&aacute; en estado     de <em> Nuevo hilo</em>.</p>
+<pre class="codigo">t.<strong>start</strong>();</pre>
+<p>Cuando invoquemos su m&eacute;todo <em>start()</em> el hilo pasar&aacute; a ser     un hilo <em>vivo</em>, comenz&aacute;ndose a ejecutar su m&eacute;todo <em>run()</em>.     Una vez haya salido de este m&eacute;todo pasar&aacute; a ser un hilo <em>muerto</em>.</p>
+<p>La &uacute;nica forma de parar un hilo es hacer que salga del m&eacute;todo <em>run()</em> de forma natural. Podremos conseguir esto haciendo que se cumpla  una condici&oacute;n de salida de <em>run() </em>(l&oacute;gicamente, la condici&oacute;n que  se nos ocurra depender&aacute; del tipo de programa que estemos haciendo).     Las funciones para parar, pausar y reanudar hilos est&aacute;n desaprobadas     en las versiones actuales de Java.</p>
+<p>Mientras el hilo est&eacute; <em>vivo</em>, podr&aacute; encontrarse en dos estados: <em> Ejecutable</em> y <em> No ejecutable</em>. El hilo pasar&aacute; de <em> Ejecutable</em> a <em> No ejecutable</em> en los siguientes casos:</p>
+<ul>
+  <li>Cuando se encuentre dormido por haberse llamado al m&eacute;todo <em>sleep()</em>,       permanecer&aacute; <em> No ejecutable</em> hasta haber transcurrido el n&uacute;mero       de milisegundos especificados.</li>
+  <li>Cuando se encuentre bloqueado en una llamada al m&eacute;todo <em>wait()</em> esperando que otro hilo lo desbloquee llamando a <em>notify()</em> o <em>notifyAll()</em>.      Veremos c&oacute;mo utilizar estos m&eacute;todos m&aacute;s adelante.</li>
+  <li>Cuando se encuentre bloqueado en una petici&oacute;n de E/S, hasta que se       complete la operaci&oacute;n de E/S.</li>
+</ul>
+<p><img src="imagenes/java/3-2.gif" width="405" height="154"></p>
+<p>Lo &uacute;nico que podremos saber es si un hilo se encuentra vivo o no, llamando     a su m&eacute;todo <em>isAlive()</em>.</p>
+<p><strong>Prioridades de los hilos</strong></p>
+<p>Adem&aacute;s, una propiedad importante de los hilos ser&aacute; su prioridad.     Mientras el hilo se encuentre vivo, el <em> scheduler</em> de la m&aacute;quina     virtual Java le asignar&aacute; o lo sacar&aacute; de la CPU, coordinando as&iacute;     el uso de la CPU por parte de todos los hilos activos bas&aacute;ndose en su     prioridad. Se puede forzar la salida de un hilo de la CPU llamando a su m&eacute;todo <em>yield()</em>. Tambi&eacute;n se sacar&aacute; un hilo de la CPU cuando un     hilo de mayor prioridad se haga <em>Ejecutable</em>, o cuando el tiempo que se     le haya asignado expire.</p>
+<p>Para cambiar la prioridad de un hilo se utiliza el m&eacute;todo <em>setPriority()</em>,     al que deberemos proporcionar un valor de prioridad entre <em> MIN_PRIORITY</em> y <em>MAX_PRIORITY</em> (ten&eacute;is constantes de prioridad disponibles dentro de  la clase <em>Thread</em>, consultad el API de Java para ver qu&eacute; valores de  constantes hay).</p>
+<p><strong>Hilo actual</strong></p>
+<p>En cualquier parte de nuestro c&oacute;digo Java podemos llamar al m&eacute;todo <em>currentThread</em> de la clase <em>Thread</em>, que nos devuelve un objeto hilo con el hilo que se  encuentra actualmente ejecutando el c&oacute;digo donde est&aacute; introducido ese m&eacute;todo.  Por ejemplo, si tenemos un c&oacute;digo como:</p>
+<pre class="codigo">public class EjemploHilo implements Runnable  
+{      
+	public EjemploHilo()      
+	{          
+		...          
+		int i = 0;          
+		Thread t = Thread.currentThread();  		
+		t.sleep(1000);      
+	}  
+}</pre>
+<p>La llamada a <em>currentThread</em> dentro del constructor de la clase nos  devolver&aacute; el hilo que corresponde con el programa principal (puesto que no  hemos creado ning&uacute;n otro hilo, y si lo cre&aacute;ramos, no ejecutar&iacute;a nada que no  estuviese dentro de un m&eacute;todo <em>run.</em></p>
+<p>Sin embargo, en este otro caso:</p>
+<pre class="codigo">public class EjemploHilo implements Runnable  
+{      
+	public EjemploHilo()      
+	{          
+		Thread t1 = new Thread(this);          
+		Thread t2 = new Thread(this);          
+		t1.start();          
+		t2.start();      
+	}        
+	
+	public void run()      
+	{          
+		int i = 0;          
+		Thread t = Thread.currentThread();  		
+		t.sleep(1000);      
+	}  
+}</pre>
+<p>Lo que hacemos es crear dos hilos auxiliares, y la llamada a <em>currentThread</em> se produce dentro del <em>run</em>, con lo que se aplica a los hilos auxiliares,  que son los que ejecutan el <em>run: </em>primero devolver&aacute; un hilo auxiliar (el  que primero entre, t1 o t2), y luego el otro (t2 o t1).</p>
+<p><strong>Dormir hilos</strong></p>
+<p>Como hemos visto en los ejemplos anteriores, una vez obtenemos el hilo que  queremos, el m&eacute;todo <em>sleep</em> nos sirve para dormirlo, durante los  milisegundos que le pasemos como par&aacute;metro (en los casos anteriores, dorm&iacute;an  durante 1 segundo). El tiempo que duerme el hilo, deja libre el procesador para  que lo ocupen otros hilos. Es una forma de no sobrecargar mucho de trabajo a la  CPU con muchos hilos intentando entrar sin descanso.</p>
+<h3>3.2.3. Sincronizaci&oacute;n de hilos</h3>
+<p>Muchas veces los hilos deber&aacute;n trabajar de forma coordinada, por lo     que es necesario un mecanismo de sincronizaci&oacute;n entre ellos.</p>
+<p>Un primer mecanismo de comunicaci&oacute;n es la variable cerrojo incluida     en todo objeto <strong>Object</strong>, que permitir&aacute; evitar que m&aacute;s de     un hilo entre en la secci&oacute;n cr&iacute;tica para un objeto determinado. Los m&eacute;todos declarados     como <em> synchronized</em> utilizan el cerrojo del objeto al que pertenecen     evitando que m&aacute;s de un hilo entre en ellos al mismo tiempo.</p>
+<pre class="codigo">public <strong>synchronized</strong> void seccion_critica()  
+{ // C&oacute;digo secci&oacute;n cr&iacute;tica }</pre>
+<p>Todos los m&eacute;todos <em>synchronized</em> de un mismo objeto (no clase, sino  objeto de esa clase), comparten el mismo cerrojo, y es distinto al cerrojo de  otros objetos (de la misma clase, o de otras).</p>
+<p>Tambi&eacute;n podemos utilizar cualquier otro objeto para la sincronizaci&oacute;n     dentro de nuestro m&eacute;todo de la siguiente forma:</p>
+<pre class="codigo"><strong>synchronized</strong> (objeto_con_cerrojo) 
+{ // C&oacute;digo secci&oacute;n cr&iacute;tica }</pre>
+<p>de esta forma sincronizar&iacute;amos el c&oacute;digo que escribi&eacute;semos dentro, con el  c&oacute;digo <em>synchronized</em> del objeto <em>objeto_con_cerrojo</em>. </p>
+<p>Adem&aacute;s podemos hacer que un hilo quede bloqueado a la espera de que     otro hilo lo desbloquee cuando suceda un determinado evento. Para bloquear un     hilo usaremos la funci&oacute;n <em>wait()</em>, para lo cual el hilo que llama     a esta funci&oacute;n debe estar en posesi&oacute;n del monitor, cosa que ocurre     dentro de un m&eacute;todo <em>synchronized</em>, por lo que s&oacute;lo podremos     bloquear a un proceso dentro de estos m&eacute;todos. </p>
+<p>Para desbloquear a los hilos que haya bloqueados se utilizar&aacute; <em>notifyAll()</em>,     o bien <em>notify()</em> para desbloquear s&oacute;lo uno de ellos aleatoriamente.     Para invocar estos m&eacute;todos ocurrir&aacute; lo mismo, el hilo deber&aacute;     estar en posesi&oacute;n del monitor.</p>
+<p>Cuando un hilo queda bloqueado liberar&aacute; el cerrojo para que otro hilo     pueda entrar en la secci&oacute;n cr&iacute;tica del objeto y desbloquearlo.</p>
+<p>Por &uacute;ltimo, puede ser necesario esperar a que un determinado hilo haya     finalizado su tarea para continuar. Esto lo podremos hacer llamando al m&eacute;todo <em>join()</em> de dicho hilo, que nos bloquear&aacute; hasta que el hilo haya     finalizado.</p>
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<title>Ejercicios sesi&oacute;n 7: Servlets</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2>Ejercicios de Servlets </h2>
+<p><strong>7.1. </strong>Servlet que muestra la fecha y hora actuales </p>
+  <p>Completar el servlet <strong>ejercicios.FechaServlet</strong> de la aplicaci&oacute;n <strong>servjsp</strong> para que, tanto por GET como por POST, muestre una p&aacute;gina HTML con la  fecha y hora actuales en una cabecera &lt;H3&gt;, y en el &lt;TITLE&gt;  de la p&aacute;gina. Para ello pod&eacute;is utilizar la clase <em>java.util.Date</em>, y sacar por la salida del servlet la hora en formato cadena: </p>
+<pre class="codigo">public void doGet(...) throws ...  
+{  	
+	String fecha = "" + new java.util.Date();  	
+	response.setContentType(...);  	
+	out = response.getWriter();  	
+	... // sacar la fecha tanto en el TITLE como en una cabecera H3  
+}</pre>
+  <p>Una vez hecho, configurad el descriptor de la aplicaci&oacute;n para que, adem&aacute;s de poder llamar al servlet con su nombre por el alias servlet, lo podamos llamar con la URL:</p>
+  <pre class="codigo">http://localhost:8080/servjsp/fechaHora</pre>
+
+<p>&nbsp;</p>
+<p><strong>7.2. </strong>Recogida de datos de un alumno: </p>
+<p>En la carpeta <em>WebContent</em> hay un formulario en la p&aacute;gina <strong>form_alumno.html</strong> que recoge los datos de un alumno (expediente, nombre y sexo). Dicho formulario llama a un servlet <strong>ejercicios.ServletAlumno </strong>que est&aacute; mapeado en el fichero <em>web.xml</em> con la URL <em>servAlumno</em>. Se pide:</p>
+<ul>
+  <li>Completar este servlet para que recoja los 3 par&aacute;metros que le env&iacute;a el formulario y los saque en una p&aacute;gina HTML.</li>
+  <li>En el caso de que falte alguno de los tres (que sea <em>null</em> o que sea vac&iacute;o &quot;&quot;), el servlet debe redirigir a una p&aacute;gina de error (<strong>error.html</strong>), que deber&eacute;is rellenar vosotros, indicando que faltan par&aacute;metros (sin especificar cu&aacute;les). </li>
+</ul>
+<p><strong>7.3. </strong>Servlets y bases de datos : </p>
+<p>Tenemos el servlet<strong> ServletAlumnoBD</strong> en el paquete <strong>es.ua.jtech.sesion7</strong>. Dicho servlet deber&aacute; utilizar la clase <strong>es.ua.jtech.sesion6.AplicAlumnos</strong> de la sesi&oacute;n anterior (copia y pega el paquete entero en la carpeta <em>src</em> de esta sesi&oacute;n). Tambi&eacute;n necesitaremos tener operativa la base de datos de alumnos de aquella sesi&oacute;n. </p>
+<p>Lo que har&aacute; este servlet ser&aacute; recibir un par&aacute;metro llamado<em> accion</em>, que podr&aacute; valer:</p>
+<ul>
+  <li><em>listar</em>: en este caso, el servlet llamar&aacute; al m&eacute;todo<em> listaAlumnos</em> de la clase <em>AplicAlumnos</em>, y recorrer&aacute; el <em>ResultSet</em> obtenido, mostrando un listado de los alumnos en una p&aacute;gina generada por &eacute;l mismo.</li>
+  <li><em>insertar</em>: en este caso, el servlet recibir&aacute;, adem&aacute;s, otros 3 par&aacute;metros llamados <em>exp</em>, <em>nombre</em> y <em>sexo</em>, y llamar&aacute; al m&eacute;todo <em>insertaAlumno</em> de <em>AplicAlumnos</em> con los datos necesarios para insertar al nuevo alumno (NOTA: deber&aacute;s convertir el par&aacute;metro <em>exp</em>, que ser&aacute; <em>String</em>, a un <em>int</em>, para poderlo utilizar en el m&eacute;todo <em>insertaAlumno</em>).</li>
+  <li><em>borrar</em>: en este caso, el servlet recibir&aacute; otro par&aacute;metro llamado <em>exp</em> con el expediente del alumno, y llamar&aacute; al m&eacute;todo <em>borraAlumno</em> de <em>AplicAlumno</em> para borrar al alumno indicado (NOTA: igual que antes, deber&aacute;s convertir el expediente a entero para poder usar el m&eacute;todo).</li>
+</ul>
+<p>Prepara el m&eacute;todo <em>doGet</em> del servlet para que est&eacute; preparado para resolver estas tres situaciones. Despu&eacute;s, mapea el servlet en el fichero <em>web.xml</em> para que se le pueda llamar por la URL:</p>
+<pre class="codigo">http://localhost:8080/servjsp/alumnoBD</pre>
+<p>Y prueba cada una de las 3 operaciones que has implementado con:</p>
+<pre class="codigo">http://localhost:8080/servjsp/alumnoBD?accion=insertar&amp;exp=20&amp;nombre=Prueba&amp;sexo=M</pre>
+<p>Esto crear&aacute; un alumno nuevo llamado Prueba, de sexo M y expediente 20 en la BD. Despu&eacute;s:   </p>
+<pre class="codigo">http://localhost:8080/servjsp/alumnoBD?accion=listar</pre>
+<p>Mostrar&aacute; un listado para verificar que se ha insertado el nuevo alumno. Finalmente:</p>
+<pre class="codigo">http://localhost:8080/servjsp/alumnoBD?accion=borrar&amp;exp=20</pre>
+<p>Borrar&aacute; al alumno de la BD (puedes llamar luego al servlet con <em>accion=listar</em> para comprobar que ya no est&aacute;).</p>
+<p>Para mayor comodidad, haz que, tras cada operacion de <em>insertar</em> y <em>borrar</em>, se redirija al mismo servlet con <em>accion=listar</em> para comprobar que la operaci&oacute;n que acabas de hacer se ha realizado:</p>
+<pre class="codigo">response.sendRedirect(&quot;alumnoBD?accion=listar&quot;);</pre>
+<p>&nbsp; </p>
+<p><strong>7.4. </strong>Perfeccionando la aplicaci&oacute;n web  : </p>
+<p>Vamos a definir una serie de p&aacute;ginas y enlaces para que la aplicaci&oacute;n web de alumnos que estamos haciendo quede m&aacute;s manejable. </p>
+<ul>
+  <li>En primer lugar, define una p&aacute;gina<strong> index.html</strong> en la carpeta <em>WebContent</em> que simplemente muestre 2 enlaces:
+    <br>
+    <br>
+    <a href="http://localhost:8080/servjsp/form_alumno.html">Insertar nuevo alumno</a><br>
+    <a href="http://localhost:8080/servjsp/alumnoBD?accion=listar">Listar alumnos</a><br>
+    <br>
+    <ul>
+      <li>El primero llevar&aacute;  al formulario <strong>form_alumno.html </strong>visto antes, desde el que enviaremos los datos del alumno al servlet <strong>ServletAlumnoBD </strong>para que los inserte.
+        <br>
+        <br>
+        <pre class="codigo">&lt;a href=&quot;form_alumno.html&quot;&gt;Insertar nuevo alumno&lt;/a&gt;</pre>
+        <br>
+        <ul>
+          <li>Modifica el <em>action</em> del formulario de <em>form_alumno.html</em> para que, en lugar de llamar al servlet <em>ServletAlumno</em>, llame a <em>ServletAlumnoBD</em> (utilizando su URL alternativa): <br />
+		  <pre class="codigo">&lt;form action="<strong>alumnoBD</strong>"&gt;
+		  <strong>&lt;input type="hidden" name="accion" value="insertar" />
+</strong>		  ...</pre></li>
+        </ul>
+      </li>
+      <li>El segundo llamar&aacute;  al servlet<em> ServletAlumnoBD </em>(usando su URL alternativa) para que liste a todos los alumnos:<br>
+        <br>
+        <pre class="codigo">&lt;a href=&quot;alumnoBD?accion=listar&quot;&gt;Listar alumnos&lt;/a&gt;</pre>
+      </li>
+    </ul>
+  </li>
+  <li>A la hora de listar alumnos, el servlet que genera el listado, junto a los datos de cada alumno, pondr&aacute; un enlace que llame al mismo servlet con la <em>accion=borrar</em> y el expediente del alumno a borrar, para borrarlo del listado.<br>
+    <br>
+    <pre class="codigo">public void doGet(...)...<br>{<br>
+		...
+		out.println(exp + nombre + sexo +
+		"&lt;a href=\"alumnoBD?accion=borrar&amp;exp=\"+exp&gt;Borrar&lt;/a&gt;")
+	<br>}</pre>
+  </li>
+  <li>Ahora ya podr&aacute;s probar la aplicaci&oacute;n c&oacute;modamente desde:</li>
+</ul>
+<pre class="codigo">http://localhost:8080/servjsp</pre>
+<p>&nbsp; </p>
+<p> </p>
+<p>&nbsp;</p>
+</body>
+</html>

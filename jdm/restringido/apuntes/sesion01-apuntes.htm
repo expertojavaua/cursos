@@ -1,0 +1,572 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 1: Introducci&oacute;n y entorno de desarrollo</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1> 1. Introducción a Java </h1>
+             
+<p>&nbsp; </p>
+<h2>1.1. Conceptos b&aacute;sicos de Java </h2>
+<p><strong>Java</strong> es un lenguaje de programaci&oacute;n creado por <em>Sun Microsystems</em> para poder funcionar en distintos tipos de procesadores. Su sintaxis es muy parecida a la de C o C++, e  	 incorpora como propias algunas  caracter&iacute;sticas que en otros lenguajes son extensiones: gesti&oacute;n de hilos, ejecuci&oacute;n       remota, etc. </p>
+<p>El c&oacute;digo Java, una   vez compilado, puede    llevarse sin modificaci&oacute;n alguna sobre   cualquier m&aacute;quina,    y ejecutarlo. Esto se debe a que el c&oacute;digo se ejecuta sobre una m&aacute;quina    hipot&eacute;tica o virtual, la <strong>Java   Virtual Machine</strong>, que se encarga    de interpretar el c&oacute;digo (ficheros compilados .class) y convertirlo   a c&oacute;digo particular    de la CPU que se est&eacute; utilizando (siempre que se soporte dicha m&aacute;quina  virtual). </p>
+<p>Cuando se programa con Java, se dispone de antemano de un conjunto de clases     ya implementadas. Estas clases (aparte de las que pueda hacer el usuario) forman     parte del propio lenguaje (lo que se conoce como <strong>API</strong> (<em>Application     Programming Interface</em>) de Java). </p>
+<h3>1.1.1. Variables de entorno</h3>
+<p>Para su correcto funcionamiento, Java necesita tener establecidas algunas variables     de entorno: las variables PATH y CLASSPATH. </p>
+<p>La variable de entorno del sistema PATH deber&aacute; contener la ruta     donde se encuentren los programas para compilar y ejecutar (comandos javac     y java de la distribuci&oacute;n JDK de Sun, respectivamente). Por ejemplo: </p>
+<pre class="codigo">set PATH=%PATH%;C:\jdk1.4\bin</pre>
+<p>Con la variable CLASSPATH indicamos d&oacute;nde est&aacute;n las clases externas     a las de la API que necesitemos para compilar o ejecutar nuestro programa. Cualquier     clase necesaria que no pertenezca a la API debe estar inclu&iacute;da en el CLASSPATH     para poder compilar o ejecutar (aunque se encuentre en el mismo directorio que     la que compilamos). </p>
+<p>Podemos incluir todas las clases que hay en un directorio (sin contar los subdirectorios)     poniendo la ruta (absoluta o relativa al directorio actual) del directorio.     Por ejemplo, si est&aacute;n en \misclases :&nbsp; </p>
+<pre class="codigo">set CLASSPATH=%CLASSPATH%;C:\misclases</pre>
+<p>Si las clases pertenecen a un paquete concreto, se debe apuntar al directorio     a partir del cual comienzan los directorios del paquete. Por ejemplo, si la     clase MiClase est&aacute; en el paquete unpaquete, dentro de \misclases     (\misclases\unpaquete\MiClase.java):</p>
+<pre class="codigo">set CLASSPATH=%CLASSPATH%;C:\misclases</pre>
+<p>Si las clases est&aacute;n empaquetadas en un fichero&nbsp;<em>JAR</em> (veremos     a continuaci&oacute;n qu&eacute; es un fichero JAR), se tendr&aacute; que hacer referencia     a dicho fichero. Por ejemplo: </p>
+<pre class="codigo">set CLASSPATH=%CLASSPATH%;C:\misclases\misclases.jar</pre>
+<p>Tambi&eacute;n podemos incluir en el CLASSPATH el directorio actual:</p>
+<pre class="codigo">set CLASSPATH=%CLASSPATH%;.</pre>
+<p>La forma de establecer las variables cambia en funci&oacute;n de la versi&oacute;n del sistema     operativo. Tambi&eacute;n podremos hacer estas variables permanentes modificando los     ficheros de configuraci&oacute;n oportunos (autoexec.bat, .profile, etc), o     mediante el panel de control en algunas versiones de Windows.</p>
+<h3>1.1.2. Compilar y ejecutar clases </h3>
+<p> Si queremos compilar una clase, se compila con el comando javac (deberemos     asegurarnos de que dicho comando est&aacute; accesible en el PATH), seguido del nombre     de fichero a compilar:</p>
+<pre class="codigo">javac NombreFichero.java</pre>
+<p>Tras haber compilado el ejemplo se tendr&aacute; un fichero NombreFichero.class,     y se habr&aacute;n compilado y actualizado (si no lo estaban ya) todas las clases que     necesitara la clase compilada.&nbsp; </p>
+<p>Una vez compilada la clase, para ejecutarla utilizamos el comando java     seguido del nombre de la clase (sin extensi&oacute;n): </p>
+<pre class="codigo">java NombreClase</pre>
+<p>Si se quisieran pasar par&aacute;metros al programa, se pasan despu&eacute;s de   	la clase:</p>
+<pre class="codigo">java NombreClase 20 56 Hola</pre>
+<p>Tambi&eacute;n podemos ejecutar un fichero JAR, si contiene una clase principal. Para     ello pondremos:</p>
+<pre class="codigo">java -jar Fichero.jar</pre>
+<p>A la hora de compilar y ejecutar, es importante respetar las may&uacute;sculas y min&uacute;sculas     de los nombres de ficheros y clases, y asegurarnos antes de compilar o ejecutar     que el CLASSPATH est&aacute; correctamente establecido para encontrar todas las clases     necesarias.</p>
+<h3>1.1.3. Ficheros JAR </h3>
+<p>Java dispone de una utilidad que permite empaquetar varias clases en un solo     fichero comprimido, de forma que hacemos al conjunto m&aacute;s portable, y se puede     acceder a las clases de la misma forma que si estuvieran sueltas en el disco.     Estos ficheros comprimidos tienen una extensi&oacute;n .jar, y su comportamiento     es similar al de un fichero ZIP o un fichero TAR. </p>
+<p>Los ficheros JAR tienen varias ventajas: </p>
+<ul>
+  <li> <strong>Seguridad</strong>: Los ficheros JAR pueden estar <em>firmados</em> digitalmente,       de forma que cuando el usuario conf&iacute;e en la firma podr&aacute; otorgar permisos       a la aplicaci&oacute;n.</li>
+  <li> <strong>Descarga</strong>: Al estar contenidas todas las clases en un &uacute;nico       fichero el tiempo de descarga disminuye, ya que no necesita establecer una       conexi&oacute;n por cada fichero por separado. Adem&aacute;s es posible <strong> comprimir</strong> el contenido del fichero JAR siendo esto totalmente transparente       a la hora de usar las clases contenidas en &eacute;l.</li>
+  <li> <strong>Versiones</strong>: Los ficheros JAR permiten incluir informaci&oacute;n       sobre la versi&oacute;n. Adem&aacute;s podemos <strong>sellar</strong> los paquetes       contenidos en el fichero JAR, de forma que todo el contenido del paquete deber&aacute;       estar dentro del fichero JAR, asegurando as&iacute; la consistencia en las       versiones.</li>
+  <li> <strong>Portabilidad</strong>: Al ser el mecanismo de los ficheros JAR un est&aacute;ndar       de la plataforma Java estos ficheros ser&aacute;n portables a cualquier sistema       que cuente con Java. </li>
+</ul>
+<p>Los ficheros JAR utilizan el formato ZIP, por lo que podremos abrirlos con     cualquier aplicaci&oacute;n que trabaje con ficheros ZIP. De todas formas Java     incorpora una herramienta para trabajar con estos ficheros JAR, llamada jar.     Con ella podremos empaquetar o extraer el contenido de un fichero JAR, y realizar     otras operaciones propias de este formato. Su uso y sintaxis es similar al comando TAR de Linux. Algunos ejemplos:</p>
+<pre class="codigo">jar cvf miFichero.jar aaa/*.class  <br>--&gt; Empaqueta en miFichero.jar todos los .class de la carpeta aaa y subcarpetas<br><br>jar tf miFichero.jar<br>--&gt; Muestra el contenido de miFichero.jar (qu&eacute; archivo(s) contiene)<br><br>jar xvf miFichero.jar<br>--&gt; Extrae los ficheros de miFichero.jar, respetando directorios y subdirectorios</pre>
+<h3>1.1.4. Extensiones de Java </h3>
+<p>A partir de JDK 1.2 se incorpora un mecanismo de extensiones que permite a&ntilde;adir     nuevas funcionalidades al n&uacute;cleo de la plataforma Java. Existen extensiones     desarrolladas por Sun, como Java 3D y Javamail, pero adem&aacute;s cualquier     usuario puede desarrollar sus propias extensiones. </p>
+<p>El mecanismo de extensiones proporciona escalabilidad a Java, permitiendo hacer     que nuestra propia API est&eacute; disponible para cualquier aplicaci&oacute;n. </p>
+<h3>1.1.5. B&uacute;squeda de clases en Java </h3>
+<p>Con lo visto hasta ahora, cuando intentemos compilar o ejecutar un programa,     Java buscar&aacute; las clases necesarias en el siguiente orden: </p>
+<ol>
+  <li> Clases principales de Java (que pertenezcan a la API, y que se encuentran       en los ficheros rt.jar, i18n.jar).</li>
+  <li> Extensiones instaladas</li>
+  <li> Classpath</li>
+</ol>
+<p>&nbsp;</p>
+<h2>1.2. El entorno de desarrollo Eclipse </h2>
+<p>Eclipse es una herramienta que permite integrar diferentes tipos de <strong>aplicaciones</strong>.     La aplicaci&oacute;n principal es el JDT (<em>Java Development Tooling</em>), un IDE     para crear programas en Java. Otras aplicaciones, que no vienen con la distribuci&oacute;n     est&aacute;ndar de Eclipse, se a&ntilde;aden al mismo en forma de <strong><em>plugins</em></strong>, y     son reconocidos autom&aacute;ticamente por la plataforma.</p>
+<p>Adem&aacute;s, Eclipse tiene su propio mecanismo de gesti&oacute;n de <strong>recursos</strong>. Los     recursos son ficheros en el disco duro, que se encuentran alojados en un espacio     de trabajo (<em>workspace</em>), un directorio especial en el sistema. As&iacute;, si     una aplicaci&oacute;n de Eclipse modifica un recurso, dicho cambio es notificado al     resto de aplicaciones de Eclipse, para que lo tengan en cuenta.</p>
+<h3>1.2.1. Instalaci&oacute;n y ejecuci&oacute;n </h3>
+<p>Para instalar Eclipse se <strong>requiere</strong>:</p>
+<ul>
+  <li>Sistema operativo Windows, Linux, Solaris, QNX o Mac OS/X, con 256 MB de       RAM preferiblemente.</li>
+  <li>JDK o JRE versi&oacute;n 1.3 o posterior. Se recomienda al menos la versi&oacute;n 1.4.1.</li>
+  <li>Los archivos de eclipse para instalar (en un archivo ZIP, o como vengan       distribuidos)</li>
+</ul>
+<p>Para la <strong>instalaci&oacute;n</strong>, se siguen los pasos:</p>
+<ul>
+  <li>Instalar JRE o JDK</li>
+  <li>Descomprimir los archivos de Eclipse al lugar deseado del disco duro (p.       ej, a C:\eclipse). El directorio en que se instale lo identificaremos       de ahora en adelante como ECLIPSE_HOME. En Windows Eclipse detecta       autom&aacute;ticamente un JRE o JDK instalado, aunque tambi&eacute;n se lo podemos proporcionar       copiando el directorio jre en ECLIPSE_HOME. Otra opci&oacute;n es proporcionar,       al ejecutar Eclipse, la ruta hacia JRE o JDK, mediante una opci&oacute;n -vm:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">eclipse -vm ruta_jdk_jre</pre>
+</blockquote>
+<p>Para arrancar Eclipse se tiene el ejecutable <em>eclipse.exe</em>. La pantalla inicial de Eclipse aparecer&aacute; tras unos segundos:</p>
+<p align="center"><img src="imagenes/java/eclipse_inicio.gif" width="400" height="300"></p>
+<p>Veremos las opciones principales con detalle m&aacute;s adelante. De los men&uacute;s, entre     otros, pueden resultar interesantes:</p>
+<ul>
+  <li> <strong>File</strong>:
+    <ul>
+        <li> <strong>New</strong>: para crear nuevos proyectos, paquetes, clases Java, etc.</li>
+      <li> <strong>Import / Export</strong>: para importar o exportar recursos con un determinado           formato (por ejemplo, exportar un proyecto como un fichero JAR).</li>
+    </ul>
+  </li>
+  <li> <strong>Project</strong>:
+    <ul>
+        <li> <strong>Open / Close Project</strong>: para abrir o cerrar el proyecto actual</li>
+      <li> <strong>Rebuild Project</strong>: recompila el proyecto actual</li>
+      <li> <strong>Rebuild All</strong>: recompila todos los proyectos</li>
+      <li> <strong>Generate Javadoc</strong>: genera el <em>javadoc</em> para las clases del           proyecto</li>
+    </ul>
+  </li>
+  <li> <strong>Run</strong>:&nbsp;
+      <ul>
+        <li> <strong>Run As</strong>: permite indicar c&oacute;mo queremos ejecutar un proyecto (por           ejemplo, como una aplicaci&oacute;n Java normal, como un applet, como un test           de JUnit, etc).</li>
+        <li> <strong>Run</strong>: ejecuta el proyecto de la forma que hayamos indicado en <em>Run As</em>. Permite seleccionar la clase principal a ejecutar, los           par&aacute;metros del main(...), etc</li>
+      </ul>
+  </li>
+  <li> <strong>Window</strong>:
+    <ul>
+        <li> <strong>Open Perspective</strong>: para abrir una determinada perspectiva (por           ejemplo, la perspectiva <em>Java</em>, que ser&aacute; la que nos interese normalmente).</li>
+      <li> <strong>Show View</strong>: permite a&ntilde;adir/quitar vistas a la perspectiva actual.           Lo veremos tambi&eacute;n m&aacute;s adelante.</li>
+      <li> <strong>Preferences</strong>: opciones de configuraci&oacute;n general. Algunas de ellas           se explicar&aacute;n con detalle m&aacute;s adelante.</li>
+    </ul>
+  </li>
+</ul>
+<h3>1.2.2. Configuraci&oacute;n visual: perspectivas, vistas y editores </h3>
+<p>El usuario trabaja con Eclipse mediante el entorno gr&aacute;fico que se le presenta.     Seg&uacute;n la perspectiva que elija, se establecer&aacute; la apariencia de dicho entorno.     Entendemos por <strong><em>perspectiva</em></strong> una colecci&oacute;n de <strong><em>vistas</em></strong> y <strong><em>editores</em></strong>, con sus correspondientes acciones especiales en men&uacute;s     y barras de herramientas. Algunas vistas muestran informaci&oacute;n especial sobre     los recursos, y dependiendo de las mismas, en ocasiones s&oacute;lo se mostrar&aacute;n algunas     partes o relaciones internas de dichos recursos. Un editor trabaja directamente     sobre un recurso, y s&oacute;lo cuando grabe los cambios sobre el recurso se notificar&aacute;     al resto de aplicaciones de Eclipse sobre estos cambios. Las vistas especiales     se pueden conectar a editores (no a recursos), por ejemplo, la vista de estructura     (<em>outline view</em>) se puede conectar al editor Java. De este modo, una de     las caracter&iacute;sticas importantes de Eclipse es la flexibilidad para combinar     vistas y editores.</p>
+<p>Si queremos <strong>abrir una determinada perspectiva</strong>, vamos a <em>Window -&gt;     Open Perspective</em>. Eligiendo luego <em>Other</em> podemos elegir entre todas     las perspectivas disponibles:</p>
+<p><img src="imagenes/java/eclipse_perspective.gif" width="200" height="220"></p>
+<p>Para <strong>a&ntilde;adir vistas a una perspectiva</strong>, primero abrimos la perspectiva,     y luego vamos a <em>Window -&gt; Show View </em>y elegimos la que queramos cargar:</p>
+<p><img src="imagenes/java/eclipse_view.gif" width="300" height="229"></p>
+<p>Arrastrando la barra de t&iacute;tulo de una vista o editor, podemos moverlo a otro     lugar de la ventana (lo podremos colocar en las zonas donde el cursor del rat&oacute;n     cambie a una flecha negra), o tabularlo con otras vistas o editores (arrastrando     hasta el t&iacute;tulo de dicha vista o editor, el cursor cambia de aspecto, y se ve     como una lista de carpetas, soltando ah&iacute; la vista o editor que arrastramos,     se tabula con la(s) que hay donde hemos soltado).</p>
+<h3>1.2.3. Configuraci&oacute;n general </h3>
+<p>Desde el men&uacute; <strong>Window - Preferences </strong>podemos establecer opciones de configuraci&oacute;n     de los distintos aspectos de Eclipse:</p>
+<p> <strong><img src="imagenes/java/eclipse_pref_1.gif" width="400" height="342"></strong></p>
+<p><strong>Establecer directorios para ficheros fuente o ficheros objeto</strong> </p>
+<p>Podemos elegir entre tener nuestro c&oacute;digo fuente en el mismo lugar que nuestras     clases objeto compiladas, o bien elegir directorios diferentes para fuentes     y objetos. Para ello tenemos, dentro del men&uacute; de configuraci&oacute;n anterior, la     opci&oacute;n <em>Java - New Project</em>. En el cuadro <em>Source and output folder</em> podremos indicar si queremos colocarlo todo junto (marcando <em>Project</em>)     o indicar un directorio para cada cosa (marcando <em>Folders</em>, y eligiendo     el subdirectorio adecuado para cada uno):</p>
+<p><img src="imagenes/java/eclipse_pref_2.gif" width="400" height="250"> </p>
+<p><strong>Establecer la versi&oacute;n de JDK o JRE</strong> </p>
+<p>Para cambiar el compilador a una versi&oacute;n concreta de Java, elegimos la opci&oacute;n     de <em>Java</em> y luego <em>Compiler</em>. Pulsamos en la pesta&ntilde;a <em>Compliance     and Classfiles</em> y elegimos la opci&oacute;n <em>1.4</em> (o la que sea) de la lista <em>Compiler compliance level</em>:</p>
+<p><img src="imagenes/java/eclipse_pref_3.gif" width="400" height="309"></p>
+<p>Tambi&eacute;n podemos utilizar JDK en lugar de JRE para ejecutar los programas. Para     ello vamos a <em>Java - Installed JREs</em>, elegimos la l&iacute;nea <em>Standard VM</em> y pulsamos en <em>Edit </em>o en <em>Add</em>, seg&uacute;n si queremos modificar el que     haya establecido, o a&ntilde;adir nuevas opciones.</p>
+<p><img src="imagenes/java/eclipse_pref_4.gif" width="400" height="255"></p>
+<p>Se nos abre un cuadro de di&aacute;logo para editar valores. Pulsando en <em>Browse</em> elegimos el directorio de JDK (por ejemplo, C:\j2sdk1.4.0).</p>
+<p><img src="imagenes/java/eclipse_pref_5.gif" width="400" height="353"> </p>
+<p><strong>Especificar variables de entorno (CLASSPATH)</strong> </p>
+<p>Podemos a&ntilde;adir variables de entorno en Eclipse, cada una conteniendo un directorio,     fichero JAR o fichero ZIP. Para a&ntilde;adir variables vamos a la opci&oacute;n&nbsp; <em>Java</em> - <em>Classpath Variables</em>.</p>
+<p><img src="imagenes/java/eclipse_pref_6.gif" alt="" width="400" height="250"></p>
+<p>Pulsamos el bot&oacute;n de <em>New</em> para a&ntilde;adir una nueva, y le damos un nombre,     y elegimos el fichero JAR o ZIP (pulsando en <em>File</em>) o el directorio (pulsando     en <em>Folder</em>).</p>
+<p><img src="imagenes/java/eclipse_pref_7.gif" width="300" height="148"></p>
+<h3>1.2.4. Primeros pasos con Eclipse </h3>
+<p> <strong>Espacio de trabajo</strong> </p>
+<p>Por defecto el espacio de trabajo (<em>workspace</em>) para Eclipse es el directorio     ECLIPSE_HOME/workspace. Podemos elegir un directorio arbitrario lanzando     eclipse con una opci&oacute;n -data que indique cu&aacute;l es ese directorio, por     ejemplo:</p>
+<pre class="codigo">eclipse -data C:\misTrabajos</pre>
+<p>Si no indicamos el espacio de trabajo mediante esta opci&oacute;n, Eclipse     nos preguntar&aacute; qu&eacute; espacio de trabajo queremos utilizar en la     siguiente ventana:</p>
+<p><img src="imagenes/java/eclipse_workspace.gif" width="300" height="172"></p>
+<p>Tambi&eacute;n podemos crear nuestros proyectos y trabajos fuera del <em>workspace</em> si queremos, podemos tomarlo simplemente como un directorio opcional donde organizar     nuestros proyectos.</p>
+<p> <strong>Nuevo proyecto</strong> </p>
+<p>Lo primero que debemos hacer para empezar a desarrollar una nueva aplicaci&oacute;n     es crear un proyecto Java en Eclipse. Para ello seleccionamos la opci&oacute;n     del men&uacute; <em>File &gt; New &gt; Project ...</em> Dentro de la ventana de nuevo proyecto, seleccionamos <em>Java Project </em>y     pulsamos <em>Next</em>.</p>
+<p align="center"><img src="imagenes/java/eclipse_proy_2.jpg" width="250" height="250"></p>
+<p>En la siguiente pantalla deberemos dar un nombre al proyecto para identificarlo     dentro de Eclipse. Por defecto crear&aacute; el directorio para este proyecto     dentro del espacio de trabajo de Eclipse. Si queremos crearlo en otro directorio     desmarcaremos la casilla <em>Use default</em>. </p>
+<p>Cuando hayamos introducido esta informaci&oacute;n pulsamos sobre <em>Next</em>.</p>
+<p><img src="imagenes/java/eclipse_proy_3.jpg" width="250" height="253"></p>
+<p>En la siguiente pantalla, podremos configurar varias cosas:</p>
+<p><img src="imagenes/java/eclipse_proy_12.jpg" width="250" height="253"> </p>
+<ul>
+  <li>En la pesta&ntilde;a <strong>Source</strong> podremos indicar la carpeta donde colocar los ficheros fuente, y la carpeta donde volcar los ficheros <em>.class</em> compilados</li>
+  <li>En la pesta&ntilde;a <strong>Projects</strong> podremos relacionar nuestro proyecto con otros ya creados, de forma que incorporemos sus clases y librer&iacute;as al classpath de nuestro proyecto, para poderlas referenciar desde &eacute;l.</li>
+  <li>En la pesta&ntilde;a <strong>Libraries</strong> podremos a&ntilde;adir librer&iacute;as externas al classpath del proyecto, para poder compilar las clases que utilicen dichas librer&iacute;a.</li>
+</ul>
+<p>Cuando terminemos con los cambios, pulsamos en <em>Finish</em> para terminar de crear el proyecto.</p>
+<p> <strong>Crear directorios y ficheros</strong> </p>
+<p>Una vez creado el proyecto, podremos crear directorios y ficheros dentro de     nuestro directorio de desarrollo. Por ejemplo, si queremos crear una web para     nuestro proyecto, podremos crear un directorio web donde guardaremos     los documentos HTML.</p>
+<p>Pulsando con el bot&oacute;n derecho sobre nuestro proyecto en el explorador     de paquetes se abrir&aacute; un men&uacute; contextual con el que podremos crear     un nuevo directorio. Para ello pulsaremos sobre la opci&oacute;n <em>New </em>y veremos todos los elementos que podremos crear desde el lugar donde pinchamos (carpetas, ficheros, clases Java, paquetes, etc) .</p>
+<p><img src="imagenes/java/eclipse_dir_1.jpg" width="400" height="300"></p>
+<h3>1.2.5. Plugins de Eclipse </h3>
+<p>Para <strong>instalar nuevos plugins</strong> que aporten nuevas funcionalidades a Eclipse (por ejemplo, dise&ntilde;o de diagramas UML, resalte de sintaxis en ficheros HTML o JSP, plugins de desarrollo J2EE, etc)  simplemente hay que, una vez obtenidos, copiarlos (descomprimirlos, si es el caso) en el directorio     ECLIPSE_HOME/plugins. Despu&eacute;s habr&aacute; que reiniciar Eclipse para que pueda     tomar los nuevos plugins instalados.</p>
+<p>&nbsp;</p>
+<h2>1.3. Componentes de un programa Java </h2>
+<p> En un programa Java  podemos distinguir varios elementos:</p>
+<h3>1.3.1. Clases </h3>
+<p>Para definir una clase se utiliza la palabra reservada class,    seguida del nombre de la clase:</p>
+<pre class="codigo">class MiClase  
+{
+	...
+}</pre>
+<h3>1.3.2. Campos y variables</h3>
+<p>Dentro de una clase, o de un m&eacute;todo, podemos definir campos o variables,    respectivamente, que pueden ser de tipos simples, o clases complejas, bien de    la API de Java, bien que hayamos definido nosotros mismos, o bien que hayamos    copiado de otro lugar.&nbsp;</p>
+<pre class="codigo">
+int a;				// Tipo simple entero
+Vector v;			// Clase compleja propia de Java
+MiOtraClase mc;		// Clase compleja nuestra</pre>
+<h3>1.3.3. M&eacute;todos</h3>
+<p>Los m&eacute;todos o funciones se definen de forma similar a como se hacen en C:    indicando el tipo de datos que devuelven, el nombre del m&eacute;todo, y luego los    argumentos entre par&eacute;ntesis:</p>
+<pre class="codigo">void imprimir(String mensaje)
+{
+	... // C&oacute;digo del m&eacute;todo
+}
+
+Vector insertarVector(Object elemento, int posicion) 
+{
+	... // C&oacute;digo del m&eacute;todo
+}</pre>
+<h3>1.3.4. Constructores</h3>
+<p>Podemos interpretar los constructores como m&eacute;todos que se llaman igual que    la clase, y que se ejecutan con el operador new para reservar memoria    para los objetos que se creen de dicha clase:</p>
+<pre class="codigo">MiClase()
+{
+	... // C&oacute;digo del constructor
+}
+
+MiClase(int valorA, Vector valorV)
+{
+	... // C&oacute;digo de otro constructor
+}</pre>
+<p> No tenemos que preocuparnos de liberar la memoria  del objeto al dejar de utilizarlo. Esto lo hace autom&aacute;ticamente  el <strong>garbage collector</strong>. A&uacute;n as&iacute;, podemos usar el m&eacute;todo  finalize() para liberar manualmente.</p>
+<h3>1.3.5. Paquetes</h3>
+<p>Las clases en Java se organizan (o pueden organizarse) en <strong>paquetes</strong>, de    forma que cada paquete contenga un conjunto de clases. Tambi&eacute;n puede haber    subpaquetes especializados dentro de un paquete o subpaquete, formando as&iacute;    una jerarqu&iacute;a de paquetes, que despu&eacute;s se plasma en el disco duro en una    estructura de directorios y subdirectorios igual a la de paquetes y    subpaquetes (cada clase ir&aacute; en el directorio/subdirectorio correspondiente a    su paquete/subpaquete).</p>
+<p>Cuando queremos indicar que una clase pertenece a un determinado paquete o    subpaquete, se coloca al principio del fichero la palabra reservada <em>package</em>    seguida por los paquetes/subpaquetes, separados por '.' :</p>
+<pre class="codigo"><strong>package </strong>paq1.subpaq1;
+...
+class MiClase
+{
+	...</pre>
+<p>Si queremos desde otra clase utilizar una clase de un paquete o subpaquete    determinado (diferente al de la clase en la que estamos), incluimos una    sentencia <em>import</em> antes de la clase (y despu&eacute;s de la l&iacute;nea package    que pueda tener la clase, si la tiene), indicando qu&eacute; paquete o subpaquete    queremos importar:</p>
+<pre class="codigo"><strong>import</strong> paq1.subpaq1.*;<br><strong>import</strong> paq1.subpaq1.MiClase;</pre>
+<p>La primera opci&oacute;n (*) se utiliza para importar todas las clases del    paquete (se utiliza cuando queremos utilizar muchas clases del paquete, para    no ir importando una a una). La segunda opci&oacute;n se utiliza para importar una    clase en concreto.</p>
+<p>Al importar, ya podemos utilizar el nombre de la clase importada    directamente en la clase que estamos construyendo. Si no coloc&aacute;semos el import    podr&iacute;amos utilizar la clase igual, pero al referenciar su nombre tendr&iacute;amos    que ponerlo completo, con paquetes y subpaquetes:</p>
+<pre class="codigo">
+// Si hemos hecho el 'import' antes
+MiClase mc;					
+
+// Si NO hemos hecho el 'import' antes
+paq1.subpaq1.MiClase mc;</pre>
+<p>Existe un paquete en la API de Java, llamado <strong><em>java.lang</em></strong>, que no es    necesario importar. Todas las clases que contiene dicho paquete son    directamente utilizables. Para el resto de paquetes (bien sean de la API o    nuestros propios), ser&aacute; necesario importarlos cuando los necesitemos desde una    clase fuera de dichos paquetes.</p>
+<p>Aunque para una clase simple o un programa  de uso interno sencillo no es necesario agrupar las clases en paquetes, s&iacute; es  recomendable asignar un nombre de paquete a cada clase de una aplicaci&oacute;n, para  evitar que luego Java no pueda encontrarlas, debido a que no tienen paquete  asignado.</p>
+<h3>1.3.6. Modificadores de acceso</h3>
+<p>Tanto las clases como los campos y m&eacute;todos admiten modificadores de    acceso, para indicar si dichos elementos tienen &aacute;mbito <em>p&uacute;blico, protegido </em>o <em>privado</em>. Dichos modificadores se marcan con las palabras    reservadas <em>public</em>, <em>protected</em> y <em>private</em>, respectivamente, y se    colocan al principio de la declaraci&oacute;n:</p>
+<pre class="codigo"><strong>public</strong> class MiClase
+{
+	...
+	<strong>protected</strong> int b;
+	...
+	<strong>private</strong> int miMetodo(int b)
+	{
+		...</pre>
+<p>El modificador <strong>protected</strong> implica que los elementos que lo llevan son     visibles desde la clase, sus subclases, y las dem&aacute;s clases del mismo paquete     que la clase. </p>
+<p>Si no se especifica ning&uacute;n modificador, el elemento ser&aacute; considerado     de tipo <em>paquete</em>. Este tipo de elementos podr&aacute;n ser visibles     desde la clase o desde clases del mismo paquete.</p>
+<p>Cada fichero Java que creemos debe tener una y s&oacute;lo una <strong>clase p&uacute;blica</strong> (que ser&aacute; la clase principal del fichero). Dicha clase debe llamarse igual    que el fichero. Aparte, el fichero podr&aacute; tener otras clases internas, pero ya    no podr&aacute;n ser p&uacute;blicas.</p>
+<p>Por ejemplo, si tenemos un fichero MiClase.java,    podr&iacute;a tener esta apariencia:</p>
+<pre class="codigo">public class MiClase
+{
+	...
+}
+
+class OtraClase
+{
+	...
+}
+
+class UnaClaseMas
+{
+	...
+}</pre>
+<h3>1.3.7. Otros modificadores</h3>
+<p>Adem&aacute;s de los modificadores de acceso vistos antes, en clases, m&eacute;todos    y/o campos se pueden utilizar tambi&eacute;n estos modificadores:</p>
+<ul>
+  <li> <strong>abstract</strong>: elemento base para la herencia (los objetos  subtipo deber&aacute;n definir este elemento). Se utiliza para definir clases  abstractas, y m&eacute;todos abstractos dentro de dichas clases, para que los  implementen las subclases que hereden de ella.</li>
+  <li> <strong>static</strong>: elemento compartido por todos los objetos  de la misma clase. Con este modificador, no se crea una copia del elemento en  cada objeto que se cree de la clase, sino que todos comparten una sola copia en  memoria del elemento, que se crea sin necesidad de crear un objeto de la clase  que lo contiene.</li>
+  <li> <strong>final</strong>: objeto final, no modificable ni heredable (se utiliza para definir  constantes)</li>
+  <li> <strong>synchronized</strong>: para elementos a los que no se puede acceder al mismo tiempo  desde distintos hilos de ejecuci&oacute;n.</li>
+</ul>
+<p>Estos modificadores se colocan tras los modificadores de acceso:</p>
+<pre class="codigo">
+public <strong>abstract</strong> class Ejemplo		// Clase abstracta para heredar de ella
+{
+	public <strong>static final</strong> TAM = 10;	// Constante est&aacute;tica de valor 10
+	public <strong>abstract</strong> void metodo();	// M&eacute;todo abstracto a implementar
+	public <strong>synchronized</strong> void otroMetodo()
+	{
+		... // Aqu&iacute; dentro s&oacute;lo puede haber un hilo a la vez
+	}
+}</pre>
+<p>NOTA IMPORTANTE: si tenemos un m&eacute;todo est&aacute;tico (static), dentro de    &eacute;l s&oacute;lo podremos utilizar elementos est&aacute;ticos (campos o m&eacute;todos    est&aacute;ticos), o bien campos y m&eacute;todos de objetos que hayamos creado dentro del    m&eacute;todo. Por ejemplo, si tenemos:</p>
+<pre class="codigo">public class UnaClase 
+{
+	public int a;
+	public static int metodo()
+	{
+		return a + 1;
+	}
+}</pre>
+<p>dar&aacute; error, porque el campo a no es est&aacute;tico, y lo estamos    utilizando dentro del m&eacute;todo est&aacute;tico. Para solucionarlo tenemos dos    posibilidades: definir a como est&aacute;tico (si el dise&ntilde;o del programa lo    permite), o bien crear un objeto de tipo UnaClase en el m&eacute;todo, y    utilizar su campo a (que ya no har&aacute; falta que sea est&aacute;tico, porque    hemos creado un objeto y ya podemos acceder a su campo a):</p>
+<pre class="codigo">public class UnaClase 
+{
+	public int a;
+	public static int metodo()
+	{
+		UnaClase uc = new UnaClase();
+		// ... Aqu&iacute; har&iacute;amos que uc.a tuviese el valor adecuado 
+		return uc.a + 1; 
+	}
+}</pre>
+<h3>1.3.8. Ejecuci&oacute;n de clases: m&eacute;todo main</h3>
+<p>En las clases principales de una aplicaci&oacute;n (las clases que queramos    ejecutar) debe haber un m&eacute;todo main con la siguiente estructura:</p>
+<pre class="codigo">public static void main(String[] args)  
+{
+	... // C&oacute;digo del m&eacute;todo  
+}</pre>
+<p>Dentro pondremos el c&oacute;digo que queramos ejecutar desde esa clase. Hay que    tener en cuenta que main es est&aacute;tico, con lo que dentro s&oacute;lo podremos    utilizar campos y m&eacute;todos est&aacute;ticos, o bien campos y m&eacute;todos de objetos que    creemos dentro del main.</p>
+<h3>1.3.9. Ejemplo completo</h3>
+<p>Con todo lo anterior, podr&iacute;amos tener una clase como:</p>
+<pre class="codigo">
+package paquete1.subpaquete1;
+import otropaquete.MiOtraClase;  
+import java.util.Vector;    
+
+public class MiClase   
+{
+	public int a;
+	public Vector v;
+	private MiOtraClase mc;
+	
+	public MiClase()
+	{
+		... // C&oacute;digo del constructor  	
+	}
+	
+	public MiClase(int valorA, Vector valorV)  	
+	{  		
+		... // C&oacute;digo de otro constructor  	
+	}
+	
+	void imprimir(String mensaje)  	
+	{
+		... // C&oacute;digo del m&eacute;todo  	
+	}
+	
+	public Vector insertarVector(Object elemento, int posicion)  	
+	{
+		... // C&oacute;digo del m&eacute;todo  
+	}
+}</pre>
+<p>Y podr&iacute;amos definir una <strong>instancia</strong> de esa clase, y utilizar sus    campos y m&eacute;todos. Para ello utilizamos el operador new:</p>
+<pre class="codigo">import paquete1.subpaquete1.*;  
+import java.util.*;    
+public class OtraClase  
+{  	
+	public void metodo()  	
+	{
+		MiClase mc;
+		mc = new MiClase (1, new Vector());
+		mc.a++;
+		mc.insertarVector("hola", 0); 
+	}
+}</pre>
+<h3>1.3.10. Herencia</h3>
+<p>Cuando queremos que una clase herede de otra, se utiliza al declararla la palabra <strong>extends</strong>     tras el nombre de la clase, para decir de qu&eacute;       clase se hereda. Para hacer que Pato herede de Animal:</p>
+<pre class="codigo">class Pato <strong>extends</strong> Animal</pre>
+<p>Con esto autom&aacute;ticamente Pato tomar&iacute;a todo lo que tuviese Animal  (aparte, Pato puede a&ntilde;adir sus caracter&iacute;sticas propias). Si Animal fuese una clase abstracta,  Pato deber&iacute;a implementar los m&eacute;todos  abstractos que tuviese.</p>
+<h3>1.3.11. Punteros this y super</h3>
+<p><em>this</em> se usa para hacer referencia a los miembros de  la propia clase. Se utiliza cuando hay otros elementos con el mismo nombre, para   distinguir :</p>
+<pre class="codigo">public class MiClase
+{
+	int i;
+	public MiClase (int i)
+	{
+		<strong>this.i = i;		// i de la clase = parametro i</strong>
+	}
+}</pre>
+<p> <em>super</em> se usa para llamar al mismo elemento en la clase padre. Si la clase  MiClase tiene un m&eacute;todo Suma_a_i(...), lo llamar&iacute;amos desde esta  otra clase con:</p>
+<pre class="codigo">public class MiNuevaClase extends MiClase   
+{
+	public void Suma_a_i (int j) 
+	{
+		i = i + (j / 2);
+		<strong>super.Suma_a_i (j);</strong>
+	}
+}</pre>
+<h3>1.3.12. Interfaces</h3>
+<p>Ya hemos visto c&oacute;mo definir clases normales, y clases abstractas. Si queremos definir  un interfaz, se utiliza la palabra reservada <strong>interface</strong>, en lugar de class,  y dentro declaramos (no implementamos), los m&eacute;todos que queremos que tenga la  interfaz:</p>
+<pre class="codigo">public <strong>interface</strong> MiInterfaz   
+{
+	public void metodoInterfaz();
+	public float otroMetodoInterfaz();
+}</pre>
+<p>Despu&eacute;s, para que una clase implemente los m&eacute;todos de esta interfaz, se  utiliza la palabra reservada <strong>implements</strong> tras el nombre de la clase:</p>
+<pre class="codigo">public class UnaClase <strong>implements</strong> MiInterfaz   
+{
+	public void metodoInterfaz()
+	{
+		... // C&oacute;digo del m&eacute;todo
+	}
+	
+	public float otroMetodoInterfaz()
+	{
+		... // C&oacute;digo del m&eacute;todo  	
+	}
+}</pre>
+<p>Notar que si en lugar de poner <em>implements</em> ponemos <em>extends</em>, en  ese caso UnaClase deber&iacute;a ser un interfaz, que heredar&iacute;a del  interfaz <em>MiInterfaz</em> para definir m&aacute;s m&eacute;todos, pero no para implementar  los que tiene la interfaz. Esto se utilizar&iacute;a para definir interfaces partiendo  de un interfaz base, para a&ntilde;adir m&aacute;s m&eacute;todos a implementar.</p>
+<p>Una clase puede heredar s&oacute;lo de otra &uacute;nica clase, pero puede implementar  cuantos interfaces necesite:</p>
+<pre class="codigo">public class UnaClase 
+<strong>extends</strong> MiClase 
+<strong>implements</strong> MiInterfaz, MiInterfaz2, MiInterfaz3  
+{  	...  }</pre>
+<h3>1.3.13. Programas B&aacute;sicos en Java</h3>
+<p>Veamos ahora algunos ejemplos de programas en Java.</p>
+<ul>
+  <li> <strong>Ejemplo</strong>: El siguiente ejemplo muestra un texto por pantalla (muestra  "Mi programa Java"):
+<pre class="codigo">public class Ejemplo1  
+{
+	public static void main(String[] args)
+	{
+		System.out.println ("Mi programa Java");     
+	}  
+}</pre>
+  </li>
+  <li> <strong>Ejemplo</strong>: El siguiente ejemplo toma dos n&uacute;meros (un entero  y un real) y devuelve su suma:
+<pre class="codigo">public class Ejemplo2  
+{
+	int n1;		// Primer numero (el entero)  	
+	float n2;	// Segundo numero (el real)  	  	
+
+	/* Constructor */  	
+	public Ejemplo2(int n1, float n2)  	
+	{  		
+		this.n1 = n1;  		
+		this.n2 = n2;  	
+	}  	  	
+	
+	/* Suma dos numeros y devuelve el resultado (real) */  	
+	public float suma()  	
+	{  		
+		return (n1 + n2);  	
+	}
+	
+	/* Main */  	
+	public static void main(String[] args)  	
+	{
+		if (args.length &lt; 2)
+		{ 
+			System.out.println ("Uso: java Ejemplo2 &lt;n1&gt; &lt;n2&gt;"); 
+			System.exit(-1);
+		}
+		
+		// Tomamos los dos parametros  		
+		int n1 = Integer.parseInt(args[0]);  		
+		float n2 = Float.parseFloat(args[1]);    		
+		
+		// Creamos un objeto Ejemplo2 y le pedimos la suma de los valores  		
+		Ejemplo2 e = new Ejemplo2(n1, n2);  		
+		System.out.println ("Resultado: " + e.suma());  	
+	}  
+}</pre>
+  </li>
+  <li> <strong>Ejemplo</strong>: El siguiente ejemplo resuelve el  teorema de pit&aacute;goras (obtiene una hipotenusa a partir de dos catetos):
+<pre class="codigo">/* Este ejemplo resuelve el teorema de Pit&aacute;goras:    
+hipotenusa = raiz (cateto1 * cateto1 + cateto2 * cateto2) */  
+public class Ejemplo3   
+{  	
+	// Primer Cateto  	
+	public static final int CATETO1 = 20;    	
+	// Segundo Cateto  	
+	public static final int CATETO2 = 50;  	    	
+	
+	/* Obtiene la hipotenusa de dos catetos que se pasan como parametro */
+	public static double hipotenusa(int cateto1, int cateto2)   	
+	{   		
+		return Math.sqrt(Math.pow(cateto1, 2) + Math.pow(cateto2, 2));   	
+	}     	
+	
+	/* Main */  	
+	public static void main(String[] args)   	
+	{   		
+		System.out.println ("La hipotenusa de los catetos indicados es:");   		
+		double h = hipotenusa(CATETO1, CATETO2);  		
+		System.out.println ("h = " + h);  	
+	}   
+}</pre>
+  </li>
+  <li> <strong>Ejemplo</strong>: El siguiente ejemplo devuelve todos los n&uacute;meros  primos que encuentra hasta un n&uacute;mero determinado:
+<pre class="codigo">/* Este ejemplo devuelve los numeros primos encontrados hasta un cierto valor */  
+public class Ejemplo4  
+{
+	/* Obtiene si un n&uacute;mero es primo o no */  	
+	public static boolean esPrimo (int valor) 
+	{
+		int i = 2;
+		while (i &lt; valor)
+		{
+			if (valor % i == 0)
+				return false;
+			i++;
+		}
+		return true;
+	}     	
+	/* Main */  	
+	public static void main(String[] args)   	
+	{   		
+		System.out.println ("Numeros primos hasta el " + args[0] + ":");   		
+		for (int i = 1; i &lt; Integer.parseInt(args[0]); i++)  			
+			if (esPrimo(i))  				
+				System.out.print (" " + i);  		
+		System.out.println ("\nFinalizado");  	
+	}   
+}</pre>
+  </li>
+  <li> <strong>Ejemplo</strong>: El siguiente ejemplo muestra c&oacute;mo utilizar herencia  y clases abstractas. Define una clase abstracta Persona, de la que hereda  la clase Hombre. La clase Anciano a su vez hereda de la clase Hombre. En  la clase Ejemplo5 se tiene el m&eacute;todo main(), que muestra resultados  de llamadas a todas las clases. Compilando esta clase se compila todo el  ejemplo:
+<pre class="codigo">
+/**    
+  * Ejemplo de herencias y clases abstractas    
+  */  
+public class Ejemplo5  
+{	   	
+	/* Main */  	
+	public static void main(String[] args)  	
+	{  		
+		Hombre h = new Hombre();  		
+		Anciano a = new Anciano();  		
+		Persona p = (Persona)a;  		  		
+		System.out.println ("Edad del hombre: " + h.edad());		  		
+		System.out.println ("Genero del anciano: " + a.genero());  		
+		System.out.println ("Clase de la persona: " + p.clase());  	
+	}  
+}</pre>
+<pre class="codigo">/**    
+  * Ejemplo de herencias y clases abstractas    
+  */  
+public abstract class Persona  
+{	    	
+	/* Devuelve la clase a la que pertenecen las personas */  	
+	public String clase()   	
+	{   		
+		return "mamiferos";   	
+	}     	
+	
+	/* Devuelve el genero de la persona */  	
+	public abstract String genero();    	
+	
+	/* Devuelve la edad de la persona */  	
+	public abstract String edad();  
+}</pre>
+<pre class="codigo">/**    
+  * Ejemplo de herencias y clases abstractas    
+*/  
+public class Hombre extends Persona  
+{	   	
+	/* No hace falta definir el metodo clase(), porque ya esta definido en la clase padre. 
+	   Lo tendr&iacute;amos que definir si queremos devolver algo distinto a lo que devuelve all&iacute;  */  	  	
+
+	/* Devuelve el genero de la persona (este metodo si hay que definirlo porque es abstracto 
+	   en la clase padre) */  	
+	public String genero()  	
+	{  		
+		return "masculino";  	
+	}    	
+	
+	/* Devuelve la edad de la persona (este metodo si hay que definirlo 
+	   porque es abstracto en la clase padre) */  	
+	public String edad()  	
+	{  		
+		return "40";  	
+	}  
+}</pre>
+<pre class="codigo">/**    
+  * Ejemplo de herencias y clases abstractas    
+  */  
+public class Anciano extends Hombre  
+{	   	
+	/* No hace falta definir ningun metodo, s&oacute;lo aquellos en los que queramos devolver 
+	   cosas distintas. En este caso, la edad */ 
+	
+	/* Devuelve la edad de la persona */  	
+	public String edad()  	
+	{  		
+		return "75";  	
+	}  
+}</pre>
+  </li>
+</ul>
+<p>&nbsp;</p>
+</body>
+</html>

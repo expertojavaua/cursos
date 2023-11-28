@@ -1,0 +1,573 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 17: Conexiones de red</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+<h1> 17. Conexiones de red </h1>
+<p>En J2SE tenemos una gran cantidad de clases en el paquete<code> java.net </code>para 
+  permitir establecer distintos tipos de conexiones en red. Sin embargo, el soportar 
+  esta gran API no es viable en la configuraci&oacute;n CLDC dedicada a dispositivos 
+  muy limitados. Por lo tanto en CLDC se sustituye esta API por el marco de conexiones 
+  gen&eacute;ricas (GCF, <em>Generic Connection Framework</em>), con el que se 
+  pretenden cubrir todas las necesidades de conectividad de estos dispositivos 
+  a trav&eacute;s de una API sencilla.</p>
+<h2>17.1. Marco de conexiones gen&eacute;ricas</h2>
+<p>Los distintos dispositivos m&oacute;viles pueden utilizar distintos tipos de 
+  redes para conectarse. Algunos utilizan redes de conmutaci&oacute;n de circuitos, 
+  orientadas a conexi&oacute;n, que necesitar&aacute;n protocolos como TCP. Otros 
+  utilizan redes de transmisi&oacute;n de paquetes en las que no se establece 
+  una conexi&oacute;n permanente, y con las que deberemos trabajar con protocolos 
+  como por ejemplo UDP. Incluso otros dispositivos podr&iacute;an utilizar otras 
+  redes distintas en las que debamos utilizar otro tipo de protocolos. </p>
+<p>El marco de conexiones gen&eacute;ricas (GFC) har&aacute; que esta red m&oacute;vil 
+  subyacente sea transparente para el usuario, proporcionando a &eacute;ste protocolos 
+  est&aacute;ndar de comunicaciones. La API de GFC se encuentra en el paquete 
+  <code>javax.microedition.io</code>. Esta API utilizar&aacute; un &uacute;nico 
+  m&eacute;todo que nos servir&aacute; para establecer cualquier tipo de conexi&oacute;n 
+  que queramos, por esta raz&oacute;n recibe el nombre de marco de conexiones 
+  gen&eacute;ricas, lo cu&aacute;l adem&aacute;s lo hace extensible para incorporar 
+  nuevos tipos de conexiones. Para crear la conexi&oacute;n utilizaremos el siguiente 
+  m&eacute;todo:</p>
+<pre class="codigo">Connection con = Connector.<strong>open</strong>(url);</pre>
+<p> En el que deberemos especificar una URL como par&aacute;metro con el siguiente 
+  formato:</p>
+<p><code>protocolo:direccion;par&aacute;metros</code></p>
+<p>Cambiando el protocolo podremos especificar distintos tipos de conexiones. 
+  Por ejemplo, podr&iacute;amos utilizar las siguientes URLs:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="43%" valign="top"><code>&quot;http://jtech.ua.es/pdm&quot;</code></td>
+    <td width="57%">Abre una conexi&oacute;n HTTP.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>&quot;datagram://192.168.0.4:6666&quot;</code></td>
+    <td>Abre una conexi&oacute;n por datagramas.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>&quot;socket://192.168.0.4:4444&quot;</code></td>
+    <td>Abre una conexi&oacute;n por <em>sockets</em>.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>&quot;comm:0;baudrate=9600&quot;</code></td>
+    <td>Abre una conexi&oacute;n a trav&eacute;s de un puerto de comunicaciones.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>&quot;file:/fichero.txt&quot;</code></td>
+    <td>Abre un fichero.</td>
+  </tr>
+</table>
+<p>Cuando especifiquemos uno de estos protocolos, la clase <code>Connector</code> 
+  buscar&aacute; en tiempo de ejecuci&oacute;n la clase que implemente dicho tipo 
+  de conexi&oacute;n, y si la encuentra nos devolver&aacute; un objeto que implemente 
+  la interfaz <code>Connection</code> que nos permitir&aacute; comunicarnos a 
+  trav&eacute;s de dicha conexi&oacute;n.</p>
+<p>CLDC nos proporciona interfaces para cada tipo gen&eacute;rico de conexi&oacute;n, 
+  pero las implementaciones reales de los protocolos pertenecen a los perfiles.</p>
+<div align="center"><img src="imagenes/red/jerarquia.gif" width="497" height="312"> 
+</div>
+<p class="caption">Figura 1. Componentes de GCF</p>
+<p>El &uacute;nico protocolo que la especificaci&oacute;n de MIDP exige que se 
+  implemente es el protocolo HTTP. Este protocolo pertenece a MIDP, y no a CLDC 
+  como era el caso de las clases gen&eacute;ricas anteriores. Distintos modelos 
+  de dispositivos pueden soportar otro tipo de conexiones, pero si queremos hacer 
+  aplicaciones portables deberemos utilizar HTTP.</p>
+<h2>17.2. Conexi&oacute;n HTTP</h2>
+<p>La conexi&oacute;n mediante el protocolo HTTP es el &uacute;nico tipo de conexi&oacute;n 
+  que sabemos que va a estar soportado por todos los dispositivos MIDP. Este protocolo 
+  podr&aacute; ser implementado en cada modelo de m&oacute;vil bien utilizando 
+  protocolos IP como TCP/IP o bien protocolos no IP como WAP o i-Mode. </p>
+<div align="center"><img src="imagenes/red/gateway.gif" width="352" height="188"> 
+</div>
+<p class="caption">Figura 2. Gateway para protocolos no IP</p>
+<p>De esta forma nosotros podremos utilizar directamente HTTP de una forma est&aacute;ndar 
+  sin importarnos el tipo de red que el m&oacute;vil tenga por debajo.</p>
+<p>Cuando establezcamos una conexi&oacute;n mediante protocolo HTTP, podemos hacer 
+  una conversi&oacute;n <em>cast</em> del objeto <code>Connection</code> devuelto 
+  a un subtipo <code>HttpConnection</code> especializado en conexiones HTTP:</p>
+<pre class="codigo">HttpConnection con = 
+    (HttpConnection)Connector.<strong>open</strong>(&quot;http://jtech.ua.es/datos.txt&quot;);</pre>
+<p>Este objeto <code>HttpConnection</code> contiene gran cantidad de m&eacute;todos 
+  dedicados a trabajar con el protocolo HTTP, lo cu&aacute;l facilitar&aacute; 
+  en gran medida el trabajo de los desarrolladores.</p>
+<p>HTTP es un protocolo de petici&oacute;n/respuesta. El cliente crea un mensaje 
+  de petici&oacute;n y lo env&iacute;a a una determinada URL. El servidor analizar&aacute; 
+  esta petici&oacute;n y le devolver&aacute; una respuesta al cliente. Estos mensajes 
+  de petici&oacute;n y respuesta se compondr&aacute;n de una serie de cabeceras 
+  y del bloque de contenido. Cada cabecera tendr&aacute; un nombre y un valor. 
+  El contenido podr&aacute; contener cualquier tipo de informaci&oacute;n (texto, 
+  HTML, im&aacute;genes, mensajes codificados en binario, etc). Tendremos una 
+  serie de cabeceras est&aacute;ndar con las que podremos intercambiar datos sobre 
+  el cliente o el servidor, o bien sobre la informaci&oacute;n que estamos transmitiendo. 
+  Tambi&eacute;n podremos a&ntilde;adir nuestras propias cabeceras para intercambiar 
+  datos propios.</p>
+<p>Una vez creada la conexi&oacute;n, &eacute;sta pasar&aacute; por tres estados:</p>
+<ul>
+  <li><strong>Configuraci&oacute;n</strong>: No se ha establecido la conexi&oacute;n, 
+    todav&iacute;a no se ha enviado el mensaje de petici&oacute;n. Este ser&aacute; 
+    el momento en el que deberemos a&ntilde;adir la informaci&oacute;n necesaria 
+    a las cabeceras del mensaje de petici&oacute;n.<br>
+  </li>
+  <li><strong>Conectada</strong>: El mensaje de petici&oacute;n ya se ha enviado, 
+    y se espera recibir una respuesta. En este momento podremos leer las cabeceras 
+    o el contenido de la respuesta.<br>
+  </li>
+  <li><strong>Cerrada</strong>: La conexi&oacute;n se ha cerrado y ya no podemos 
+    hacer nada con ella.</li>
+</ul>
+<p>La conexi&oacute;n nada m&aacute;s crearse se encuentra en estado de configuraci&oacute;n. 
+  Pasar&aacute; autom&aacute;ticamente a estado conectada cuando solicitemos cualquier 
+  informaci&oacute;n sobre la respuesta.</p>
+<h3><strong>17.2.1. Lectura de la respuesta</strong></h3>
+<p>Vamos a comenzar viendo c&oacute;mo leer el contenido de una URL. En este caso 
+  no vamos a a&ntilde;adir ninguna informaci&oacute;n al mensaje de petici&oacute;n, 
+  ya que no es necesario. S&oacute;lo queremos obtener el contenido del recurso 
+  solicitado en la URL. </p>
+<p>Imaginemos que queremos leer el fichero en la URL <code>http://jtech.ua.es/datos.txt</code>. 
+  Como primer paso deberemos crear una conexi&oacute;n con dicha URL como hemos 
+  visto anteriormente. Una vez tengamos este objeto <code>HttpConnection</code> 
+  abriremos un flujo de entrada para leer su contenido de la siguiente forma:</p>
+<pre class="codigo">InputStream in = con.<strong>openInputStream</strong>();</pre>
+<p>Una vez hecho esto, la conexi&oacute;n pasar&aacute; a estado conectada, ya 
+  que estamos solicitando leer su contenido. Por lo tanto en este momento ser&aacute; 
+  cuando env&iacute;e el mensaje de petici&oacute;n al servidor, y se quede esperando 
+  a recibir la respuesta. Con el flujo de datos obtenido podremos leer el contenido 
+  de la misma, al igual que leemos cualquier otro flujo de datos en Java.</p>
+<p>Dado que en este momento ya se ha enviado el mensaje de petici&oacute;n, ya 
+  no tendr&aacute; sentido realizar modificaciones en la petici&oacute;n. Es por 
+  esta raz&oacute;n por lo que la creaci&oacute;n del mensaje de petici&oacute;n 
+  debe hacerse en el estado de configuraci&oacute;n.</p>
+<p>Una vez hayamos terminado de leer la respuesta, deberemos cerrar el flujo y 
+  la conexi&oacute;n:</p>
+<pre class="codigo">in.close();<br>con.<strong>close</strong>();</pre>
+<p>Con esto la conexi&oacute;n pasar&aacute; a estado cerrada, liberando todos 
+  los recursos.</p>
+<h3><strong>17.2.2. Mensaje de petici&oacute;n</strong></h3>
+<p>En muchos casos podemos necesitar enviar informaci&oacute;n al servidor, como 
+  por ejemplo el <em>login</em> y el <em>password</em> del usuario para autentificarse 
+  en la aplicaci&oacute;n web. Esta informaci&oacute;n deberemos incluirla en 
+  el mensaje de petici&oacute;n. Existen distintas formas de enviar informaci&oacute;n 
+  en la petici&oacute;n.</p>
+<p>Encontramos los diferentes tipos de mensajes de petici&oacute;n soportados 
+  por MIDP:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="30%" valign="top"><code>HttpConnection.GET</code></td>
+    <td width="70%"><p>Los par&aacute;metros que se env&iacute;an al servidor 
+        se incluyen en la misma URL. Por ejemplo, podemos mandar un par&aacute;metro 
+        <code>login</code> en la petici&oacute;n de la siguiente forma: <code><br>
+        </code><code>http://jtech.ua.es/pdm?login=miguel</code></p>
+    </td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>HttpConnection.POST</code></td>
+    <td>Los par&aacute;metros que se env&iacute;an al servidor se incluyen como 
+      contenido del mensaje. Tiene la ventaja de que se puede enviar la cantidad 
+      de datos que queramos, a diferencia del m&eacute;todo GET en el que esta 
+      cantidad puede estar limitada. Adem&aacute;s los datos no ser&aacute;n visibles 
+      en la misma URL, ya que se incluyen como contenido del mensaje.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>HttpConnection.HEAD</code></td>
+    <td>No se solicita el contenido del recurso al servidor, s&oacute;lo informaci&oacute;n 
+      sobre &eacute;ste, es decir, las cabeceras HTTP.</td>
+  </tr>
+</table>
+<p>Podemos establecer uno de estos tipos utilizando el m&eacute;todo <code>setRequestMethod</code>, 
+  por ejemplo para utilizar una petici&oacute;n POST haremos lo siguiente:</p>
+<pre class="codigo">con.<strong>setRequestMethod</strong>(HttpConnection.POST);</pre>
+<p>Adem&aacute;s podremos a&ntilde;adir cabeceras a la petici&oacute;n con el 
+  siguiente m&eacute;todo:</p>
+<pre class="codigo">con.<strong>setRequestProperty</strong>(nombre, valor);</pre>
+<p>Por ejemplo, podemos mandar las siguiente cabeceras:</p>
+<pre class="codigo">c.setRequestProperty(&quot;IF-Modified-Since&quot;, 
+    &quot;22 Sep 2002 08:00:00 GMT&quot;);
+c.setRequestProperty(&quot;User-Agent&quot;,
+    &quot;Profile/MIDP-1.0 Configuration/CLDC-1.0&quot;);
+c.setRequestProperty(&quot;Content-Language&quot;, &quot;es-ES&quot;);
+</pre>
+<p>Con esto estaremos diciendo al servidor que queremos que nos devuelva una respuesta 
+  s&oacute;lo si ha sido modificada desde la fecha indicada, y adem&aacute;s le 
+  estamos comunicando datos sobre el cliente. Indicamos mediante estas cabeceras 
+  est&aacute;ndar que el cliente es una aplicaci&oacute;n MIDP, y que el lenguaje 
+  es espa&ntilde;ol de Espa&ntilde;a. </p>
+<h3><strong>17.2.3. Env&iacute;o de datos en la petici&oacute;n</strong></h3>
+<p>Cuando necesitemos enviar datos al servidor mediante HTTP mediante nuestra 
+  aplicaci&oacute;n Java, podemos simular el env&iacute;o de datos que realiza 
+  un formulario HTML. Podremos simular tanto el comportamiento de un formulario 
+  que utilice m&eacute;todo GET como uno que utilice m&eacute;todo POST. </p>
+<p>En el caso del m&eacute;todo GET, simplemente utilizaremos una petici&oacute;n 
+  de tipo <code>HttpConnection.GET</code> e incluiremos estos datos codificados 
+  en la URL. Por ejemplo, si estamos registrando los datos de un usuario (nombre, 
+  apellidos y edad) podemos incluir estos par&aacute;metros en la URL de la siguiente 
+  forma:</p>
+<pre class="codigo">HttpConnection con = 
+    (HttpConnection)Connector.<strong>open</strong>(&quot;http://www.jtech.ua.es/aplic&quot; +
+      &quot;/registraUsuario?nombre=Pedro&amp;apellidos=Lopez+Garcia&amp;edad=25&quot;);</pre>
+<p>Cada par&aacute;metro tiene la forma <code>nombre=valor</code>, pudiendo incluir 
+  varios par&aacute;metros separados por el car&aacute;cter <code>'&amp;'</code>. 
+  Como en la URL no puede haber espacios, estos caracteres se sustituyen por el 
+  car&aacute;cter <code>'+'</code> como podemos ver en el ejemplo. </p>
+<p>En el caso de que queramos simular un formulario con m&eacute;todo POST, utilizamos 
+  una petici&oacute;n de tipo <code>HttpConnection.POST</code> y deberemos incluir 
+  los par&aacute;metros que enviemos al servidor como contenido del mensaje. Para 
+  ello deberemos indicar que el tipo de contenido de la petici&oacute;n es <code>application/x-www-form-urlencoded</code>, 
+  y como contenido codificaremos los par&aacute;metros de la misma forma que se 
+  utiliza para codificarlos en la URL cuando se hace una petici&oacute;n GET:</p>
+<pre class="codigo">nombre=Pedro&amp;apellidos=Lopez+Garcia&amp;edad=25</pre>
+<p>De esta forma podemos enviar al servidor datos en forma de una serie de par&aacute;metros 
+  que toman como valor cadenas de texto. Sin embargo, puede que necesitemos intercambiar 
+  datos m&aacute;s complejos con el servidor. Por ejemplo, podemos querer serializar 
+  objetos Java y enviarlos al servidor, o enviar documentos XML. </p>
+<p>Para enviar estos tipos de informaci&oacute;n podemos utilizar tambi&eacute;n 
+  el bloque de contenido, debiendo especificar en cada caso el tipo MIME del contenido 
+  que vamos a a&ntilde;adir. Ejemplos de tipos MIME que podemos utilizar para 
+  el bloque de contenido son:</p>
+<table width="90%" border="0">
+  <tr> 
+    <td width="48%" valign="top"><code>application/x-www-form-urlencoded</code></td>
+    <td width="52%">Se env&iacute;an los datos codificados de la misma forma en 
+      la que son codificados por un formulario HTML con m&eacute;todo POST.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>text/plain</code></td>
+    <td>Se env&iacute;a como contenido texto ASCII.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>application/octet-stream</code></td>
+    <td>Se env&iacute;a como contenido datos binarios. Dentro de la secuencia 
+      de bytes podremos codificar la informaci&oacute;n como queramos. Por ejemplo, 
+      podemos codificar de forma binaria un objeto serializado, utilizando un 
+      <code>DataOutputStream</code>. </td>
+  </tr>
+</table>
+<p>Para establecer el tipo de contenido la cabecera est&aacute;ndar de HTTP <code>Content-Type</code>. 
+  Por ejemplo, si a&ntilde;adimos texto ASCII, podemos establecer esta cabecera 
+  de la siguiente forma:</p>
+<pre class="codigo">con.<strong>setRequestProperty</strong>(&quot;Content-Type&quot;, &quot;text/plain&quot;);</pre>
+<p>Para escribir en el contenido del mensaje de petici&oacute;n deberemos abrir 
+  un flujo de salida como se muestra a continuaci&oacute;n:</p>
+<pre class="codigo">OutputStream out = con.<strong>openOutputStream</strong>();</pre>
+<p>Podremos escribir en este flujo de salida igual que lo hacemos en cualquier 
+  otro flujo de salida, con lo que de esta forma podremos escribir cualquier contenido 
+  en el mensaje de petici&oacute;n.</p>
+<p>Al abrir el flujo para escribir en la petici&oacute;n provocaremos que se pase 
+  a estado conectado. Por lo tanto deberemos haber establecido el tipo de petici&oacute;n 
+  y todas las cabeceras previamente a la apertura de este flujo, cuando todav&iacute;a 
+  est&aacute;bamos en estado de configuraci&oacute;n.</p>
+<h3><strong>17.2.4. Tipo y cabeceras de la respuesta</strong></h3>
+<p>En estado conectado, adem&aacute;s del contenido del mensaje de la respuesta, 
+  podemos obtener el estado de la respuesta y sus cabeceras. Los estados de respuesta 
+  se componen de un c&oacute;digo y un mensaje y nos permitir&aacute;n saber si 
+  la petici&oacute;n ha podido atenderse correctamente o si por el contrario ha 
+  habido alg&uacute;n tipo de error. Por ejemplo, posibles estados son:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="51%"><code>HttpConnection.HTTP_OK</code></td>
+    <td width="7%">200 </td>
+    <td width="42%">OK</td>
+  </tr>
+  <tr> 
+    <td><code>HttpConnection.HTTP_BAD_REQUEST</code></td>
+    <td>400 </td>
+    <td>Bad Request</td>
+  </tr>
+  <tr> 
+    <td><code>HttpConnection.HTTP_INTERNAL_ERROR</code></td>
+    <td>500</td>
+    <td>Internal Server Error</td>
+  </tr>
+</table>
+<p>Este mensaje de estado encabeza el mensaje de respuesta. Si el servidor nos 
+  devuelve un mensaje con c&oacute;digo 200 como el siguiente:</p>
+<pre>HTTP/1.1 200 OK</pre>
+<p>Es que se ha procesado correctamente la petici&oacute;n y nos devuelve su respuesta. 
+  Si ha ocurrido un error, nos mandar&aacute; el c&oacute;digo y mensaje de error 
+  correspondiente. Por ejemplo, el error 400 indica que el servidor no ha entendido 
+  la petici&oacute;n que hemos hecho, posiblemente porque la hemos escrito incorrectamente. 
+  El error 500 nos dice que se trata de un error interno del servidor, no de la 
+  petici&oacute;n realizada.</p>
+<p>Podemos obtener tanto el c&oacute;digo como el mensaje de estado con los siguientes 
+  m&eacute;todos:</p>
+<pre class="codigo">int cod = con.<strong>getResponseCode</strong>(); <br>String msg = con.<strong>getResponseMessage</strong>();</pre>
+<p>Los c&oacute;digos de estado podemos encontrarlos como constantes de la clase 
+  <code>HttpConnection</code> como hemos visto para los tres c&oacute;digos anteriores.</p>
+<p>Tambi&eacute;n podemos utilizar este objeto para leer las cabeceras que nos 
+  ha devuelto la respuesta. Nos ofrece m&eacute;todos para leer una serie de cabeceras 
+  est&aacute;ndar de HTTP como los siguientes:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="22%" valign="top"><code>getLength</code></td>
+    <td width="24%" valign="top"><code>content-length</code></td>
+    <td width="54%">Longitud del contenido, o <code>-1</code> si la longitud es 
+      desconocida</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>getType</code></td>
+    <td valign="top"><code>content-type</code></td>
+    <td>Tipo MIME del contenido devuelto</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>getEncoding</code></td>
+    <td valign="top"><code>content-encoding</code></td>
+    <td>Codificaci&oacute;n del contenido</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>getExpiration</code></td>
+    <td valign="top"><code>expires</code></td>
+    <td>Fecha de expiraci&oacute;n del recurso</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>getDate</code></td>
+    <td valign="top"><code>date</code></td>
+    <td>Fecha de env&iacute;o del recurso</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>getLastModified</code></td>
+    <td valign="top"><code>last-modified</code></td>
+    <td>Fecha de &uacute;ltima modificaci&oacute;n del recurso</td>
+  </tr>
+</table>
+<p>Puede ser que queramos obtener otras cabeceras, como por ejemplo cabeceras 
+  propias no est&aacute;ndar. Para ello tendremos una serie de m&eacute;todos 
+  que obtendr&aacute;n las cabeceras directamente por su nombre:</p>
+<pre class="codigo">String valor = con.<strong>getHeaderField</strong>(nombre);
+int valor = con.<strong>getHeaderFieldInt</strong>(nombre);
+long valor = con.<strong>getHeaderFieldDate</strong>(nombre);</pre>
+<p>De esta forma podemos obtener el valor de la cabecera o bien como una cadena, 
+  o en los datos que sean de tipo fecha (valor <code>long</code>) o enteros tambi&eacute;n 
+  podremos obtener su valor directamente en estos tipos de datos.<br>
+  <br>
+  Podremos acceder a las cabeceras tambi&eacute;n a partir de su &iacute;ndice:</p>
+<pre class="codigo">String valor = con.<strong>getHeaderField</strong>(int indice);
+String nombre = con.<strong>getHeaderFieldKey</strong>(int indice);</pre>
+<p>Podemos obtener de esta forma tanto el nombre como el valor de la cabecera 
+  que ocupa un determinado &iacute;ndice.</p>
+<p>Esta respuesta HTTP, adem&aacute;s de un estado y una serie de cabeceras, tendr&aacute; 
+  un bloque que contenido que podremos leer abriendo un flujo de entrada en la 
+  conexi&oacute;n como hemos visto anteriormente. Normalmente cuando hacemos una 
+  petici&oacute;n a una URL de una aplicaci&oacute;n web nos devuelve como contenido 
+  un documento HTML. Sin embargo, en el caso de nuestra aplicaci&oacute;n MIDP 
+  este tipo de contenido no es apropiado. En su lugar podremos utilizar como contenido 
+  de la respuesta cualquier otro tipo MIME, que vendr&aacute; indicado en la cabecera 
+  <code>content-type</code> de la respuesta. Por ejemplo, podremos devolver una 
+  respuesta codificada de forma binaria que sea le&iacute;da y descodificada por 
+  nuestra aplicaci&oacute;n MIDP.</p>
+<p>Tanto los m&eacute;todos que obtienen un flujo para leer o escribir en la conexi&oacute;n, 
+  como estos m&eacute;todos que acabamos de ver para obtener informaci&oacute;n 
+  sobre la respuesta producir&aacute;n una transici&oacute;n al estado conectado.</p>
+<h2>17.3. Acceso a la red a bajo nivel</h2>
+<p>Como hemos comentado, el &uacute;nico tipo de conexi&oacute;n especificada 
+  en MIDP 1.0 es HTTP, la cual es suficiente y adecuada para acceder a aplicaciones 
+  corporativas. Sin embargo, con las redes 2.5G y 3G tendremos una mayor capacidad 
+  en las conexiones, nos permitir&aacute;n realizar cualquier tipo de conexi&oacute;n 
+  TCP y UDP (no s&oacute;lo HTTP) y adem&aacute;s la comunicaci&oacute;n podr&aacute; 
+  ser m&aacute;s fluida. </p>
+<p>Para poder acceder a estas mejoras desde nuestra aplicaci&oacute;n Java, surge 
+  la necesidad de que en MIDP 2.0 se incorpore soporte para tipos de conexiones 
+  a bajo nivel: sockets (TCP) y datagramas (UDP). Estos tipos de conexiones de 
+  MIDP 2.0 son optativos, de forma que aunque se encuentran definidos en la especificaci&oacute;n 
+  de MIDP 2.0, no se obliga a que los fabricantes ni los operadores de telefon&iacute;a 
+  lo soporten. Es decir, que la posibilidad de utilizar estas conexiones depender&aacute; 
+  de que la red de telefon&iacute;a de nuestro operador y el modelo de nuestro 
+  m&oacute;vil las soporte.</p>
+<p>Si intentamos utilizar un tipo de conexi&oacute;n no soportada por nuestro 
+  sistema, se producir&aacute; una excepci&oacute;n de tipo <code>ConnectionNotFoundException</code>.</p>
+<h3><strong>17.3.1. Sockets</strong></h3>
+<p>Los sockets nos permiten crear conexiones TCP. En este tipo de conexiones se 
+  establece un circuito virtual de forma permanente entre los dispositivos que 
+  se comunican. Se nos asegura que los datos enviados han llegado al servidor 
+  y que han llegado en el mismo orden en el que los enviamos. El inconveniente 
+  que tienen es que el tener un canal de comunicaci&oacute;n abierto permanentemente 
+  consume una mayor cantidad de recursos.</p>
+<p>Para abrir una conexi&oacute;n mediante sockets utilizaremos una URL como la 
+  siguiente:</p>
+<pre class="codigo"><strong>SocketConnection</strong> sc = 
+    (<strong>SocketConnection</strong>) Connector.open(&quot;<strong>socket://host:puerto</strong>&quot;);</pre>
+<p>Una vez abierta la conexi&oacute;n, podremos abrir sus correspondientes flujos 
+  de entrada y salida para enviar y recibir datos a trav&eacute;s de ella:</p>
+<pre class="codigo">InputStream in = sc.<strong>openInputStream</strong>();
+OutputStream out = sc.<strong>openOutputStream</strong>();</pre>
+<p>Es posible tambi&eacute;n hacer que nuestro dispositivos act&uacute;e como 
+  servidor. En este caso utilizaremos una URL como las siguientes para crear el 
+  socket servidor:</p>
+<pre class="codigo"><strong>ServerSocketConnection</strong> ssc = 
+  (<strong>ServerSocketConnection</strong>) Connector.open(&quot;<strong>socket://:puerto</strong>&quot;);
+<strong>ServerSocketConnection</strong> ssc = 
+  (<strong>ServerSocketConnection</strong>) Connector.open(&quot;<strong>socket://</strong>&quot;);</pre>
+<p>En el primer caso indicamos el puerto en el que queremos que escuche nuestro 
+  servidor. En el segundo caso este puerto ser&aacute; asignado autom&aacute;ticamente 
+  por el sistema. Para conocer la direcci&oacute;n y el puerto donde escucha nuestro 
+  servidor podremos utilizar los siguientes m&eacute;todos:</p>
+<pre class="codigo">int puerto = ssc.<strong>getLocalPort</strong>();
+String host = ssc.<strong>getLocalAddress</strong>();</pre>
+<p>Para hacer que el servidor comience a escuchar y aceptar conexiones utilizaremos 
+  el siguiente m&eacute;todo:</p>
+<pre class="codigo"><strong>SocketConnection</strong> sc = (<strong>SocketConnection</strong>) ssc.<strong>acceptAndOpen</strong>();</pre>
+<p>Obtendremos un objeto <code>SocketConnection</code> con el que podremos comunicarnos 
+  con el cliente que acaba de conectarse a nuestro servidor. </p>
+<p>Debemos tener en cuenta que normalmente los m&oacute;viles realizan conexiones 
+  puntuales cuando necesitan acceder a la red, y cada vez que se conecta se le 
+  asigna una nueva IP de forma din&aacute;mica. Esto hace dif&iacute;cil que un 
+  m&oacute;vil pueda comportarse como servidor, ya que no podremos conocer <em>a 
+  priori</em> la direcci&oacute;n en la que est&aacute; atendiendo para poder 
+  conectarnos a ella desde un cliente.</p>
+<h3><strong>17.3.2. Datagramas</strong></h3>
+<p>Cuando trabajemos con datagramas estaremos utilizando una conexi&oacute;n UDP. 
+  En ella no se establece un circuito virtual permanente, sino que cada paquete 
+  (datagrama) es enrutado de forma independiente. Esto produce que los paquetes 
+  puedan perderse o llegar desordenados al destino. Cuando la p&eacute;rdida de 
+  paquetes o su ordenaci&oacute;n no sea cr&iacute;ticos, convendr&aacute; utilizar 
+  este tipo de conexiones, ya que consume menos recursos que los circuitos virtuales.</p>
+<p>Para trabajar con datagramas utilizaremos una URL como la siguiente:</p>
+<pre class="codigo"><strong>DatagramConnection</strong> dc = 
+   (<strong>DatagramConnection</strong>) Connector.open(&quot;<strong>datagram://host:puerto</strong>&quot;);</pre>
+<p>En este caso no hemos abierto una conexi&oacute;n, ya que s&oacute;lo se establecer&aacute; 
+  una conexi&oacute;n cuando se env&iacute;e un datagrama, simplemente hemos creado 
+  el objeto que nos permitir&aacute; intercambiar estos paquetes. Podemos crear 
+  un datagrama que contenga datos codificados en binario de la siguiente forma:</p>
+<pre class="codigo">byte[] datos = obtenerDatos();
+<strong>Datagram</strong> dg = dc.<strong>newDatagram</strong>(datos, datos.length);</pre>
+<p>Una vez hemos creado el datagrama, podemos enviarlo al destinatario utilizando 
+  la conexi&oacute;n:</p>
+<pre class="codigo">dc.<strong>send</strong>(dg);</pre>
+<p>En el caso del servidor, crearemos la conexi&oacute;n de datagramas de forma 
+  similar, pero sin especificar la direcci&oacute;n a la que conectar, ya que 
+  dependiendo del cliente deberemos enviar los datagramas a diferentes direcciones.</p>
+<pre class="codigo"><strong>DatagramConnection</strong> dc = 
+   (<strong>DatagramConnection</strong>) Connector.open(&quot;<strong>datagram://:puerto</strong>&quot;);</pre>
+<p>El servidor no conocer&aacute; las direcciones de sus clientes hasta que haya 
+  recibido alg&uacute;n datagrama de ellos. Para recibir un datagrama crearemos 
+  un datagrama vac&iacute;o indicando su capacidad (en <em>bytes</em>) y lo utilizaremos 
+  para recibir en &eacute;l la informaci&oacute;n que se nos env&iacute;a desde 
+  el cliente de la siguiente forma:</p>
+<pre class="codigo"><strong>Datagram</strong> dg = dc.<strong>newDatagram</strong>(longitud);
+dc.<strong>receive</strong>(dg);</pre>
+<p>Una vez obtenido el datagrama, podremos obtener la direcci&oacute;n desde la 
+  cual se nos env&iacute;a:</p>
+<pre class="codigo"> String direccion = dg.<strong>getAddress</strong>();</pre>
+<p>Ahora podremos crear un nuevo datagrama con la respuesta indicando la direcci&oacute;n 
+  a la que vamos a enviarlo. En este caso en cada datagrama se deber&aacute; especificar 
+  la direcci&oacute;n a la que se env&iacute;a:</p>
+<pre class="codigo"><strong>Datagram</strong> dg = dc.<strong>newDatagram</strong>(datos, datos.length, direccion);</pre>
+<p>El datagrama ser&aacute; enviado de la misma forma en la que se hac&iacute;a 
+  en el cliente. Posteriormente el cliente podr&aacute; recibir este datagrama 
+  de la misma forma en que hemos visto que el servidor recib&iacute;a su primer 
+  datagrama. De esta forma podremos establecer una conversaci&oacute;n entre cliente 
+  y servidor, intercambiando estos datagramas.</p>
+<h2>17.4. Env&iacute;o y recepci&oacute;n de mensajes</h2>
+<p>Podemos utilizar la API adicional WMA para enviar o recibir mensajes cortos 
+  (SMS, <em>Short Message Service</em>) a trav&eacute;s del tel&eacute;fono m&oacute;vil. 
+  Esta API extiende GFC, permitiendo establecer conexiones para recibir o enviar 
+  mensajes. Cuando queramos enviar mensajes nos comportaremos como clientes en 
+  la conexi&oacute;n, mientras que para recibirlos actuaremos como servidor. La 
+  URL para establecer una conexi&oacute;n con el sistema de mensajes para ser 
+  enviados o recibidos a trav&eacute;s de una portadora SMS sobre GSM tendr&aacute; 
+  el siguiente formato: </p>
+<p><code>sms://telefono:puerto</code></p>
+<p>Las clases de esta API se encuentran en el paquete <code>javax.wireless.messaging</code>. 
+  Aqu&iacute; se definen una serie de interfaces para trabajar con los mensajes 
+  y con la conexi&oacute;n. </p>
+<h3><strong>17.4.1. Envio de mensajes</strong></h3>
+<p>Si queremos enviar mensajes, deberemos crear una conexi&oacute;n cliente proporcionando 
+  en la URL el n&uacute;mero del tel&eacute;fono al que vamos a enviar el mensaje 
+  y el puerto al que lo enviaremos de forma opcional:</p>
+<p><code>sms://+34555000000<br>
+  sms://+34555000000:4444</code></p>
+<p>Si no especificamos el puerto se utilizar&aacute; el puerto que se use por 
+  defecto para los mensajes del usuario en el tel&eacute;fono m&oacute;vil. Deberemos 
+  abrir una conexi&oacute;n con una de estas URLs utilizando GFC, con lo que nos 
+  devolver&aacute; una conexi&oacute;n de tipo <code>MessageConnection</code></p>
+<pre class="codigo"><strong>MessageConnection</strong> mc = 
+    (<strong>MessageConnection</strong>)Connector.open(&quot;sms://+34555000000&quot;);</pre>
+<p>Una vez creada la conexi&oacute;n podremos utilizarla para enviar mensajes 
+  cortos. Podremos mandar tanto mensajes de texto como binarios. Estos mensajes 
+  tienen un tama&ntilde;o limitado a un m&aacute;ximo de 140 <em>bytes</em>. Si 
+  el mensaje es de texto el n&uacute;mero de caracteres depender&aacute; de la 
+  codificaci&oacute;n de &eacute;stos. Por ejemplo si los codificamos con 7 bits 
+  tendremos una longitud de 160 caracteres, mientras que con una codificaci&oacute;n 
+  de 8 bits tendremos un juego de caracteres m&aacute;s amplio pero los mensajes 
+  estar&aacute;n limitados a 140 caracteres.</p>
+<p>WMA permite encadenar mensajes, de forma que esta longitud podr&aacute; ser 
+  por lo menos 3 veces mayor. El encadenamiento consiste en que si el mensaje 
+  supera la longitud m&aacute;xima de 140 <em>bytes</em> que puede transportar 
+  SMS, entonces se fracciona en varios fragmentos que ser&aacute;n enviados independientemente 
+  a trav&eacute;s de SMS y ser&aacute;n unidos al llegar a su destino para formar 
+  el mensaje completo. Esto tiene el inconveniente de que realmente por la red 
+  est&aacute;n circulando varios mensajes, por lo que se nos cobrar&aacute; por 
+  el n&uacute;mero de fragmentos que haya enviado. </p>
+<p>Podremos crear el mensaje a enviar a partir de la conexi&oacute;n. Los mensajes 
+  de texto los crearemos de la siguiente forma:</p>
+<pre class="codigo">String texto = &quot;Este es un mensaje corto de texto&quot;;
+TextMessage msg = mc.<strong>newMessage</strong>(mc.TEXT_MESSAGE);
+msg.<strong>setPayloadText</strong>(texto);</pre>
+<p>Para el caso de un mensaje binario, lo crearemos de la siguiente forma:</p>
+<pre class="codigo">byte [] datos = codificarDatos();
+BinaryMessage msg = mc.<strong>newMessage</strong>(mc.BINARY_MESSAGE);
+msg.<strong>setPayloadData</strong>(datos);
+</pre>
+<p>Antes de enviar el mensaje, podemos ver en cu&aacute;ntos fragmentos deber&aacute; 
+  ser dividido para poder ser enviado utilizando la red subyacente con el siguiente 
+  m&eacute;todo:</p>
+<pre class="codigo">int num_segmentos = mc.<strong>numberOfSegments</strong>(msg);</pre>
+<p>Esto nos devolver&aacute; el n&uacute;mero de segmentos en los que se fraccionar&aacute; 
+  el mensaje, &oacute; 0 si el mensaje no puede ser enviado utilizando la red 
+  subyacente. </p>
+<p>Independientemente de si se trata de un mensaje de texto o de un mensaje binario, 
+  podremos enviarlo utilizando el siguiente m&eacute;todo:</p>
+<pre class="codigo">mc.<strong>send</strong>(msg);
+</pre>
+<h3><strong>17.4.2. Recepci&oacute;n de mensajes</strong></h3>
+<p>Para recibir mensajes deberemos crear una conexi&oacute;n de tipo servidor. 
+  Para ello en la URL s&oacute;lo especificaremos el puerto en el que queremos 
+  recibir los mensajes:</p>
+<p> <code>sms://:4444</code></p>
+<p>Crearemos una conexi&oacute;n utilizando una URL como esta, en la que no se 
+  especifique el n&uacute;mero de tel&eacute;fono destino.</p>
+<pre class="codigo"><strong>MessageConnection</strong> mc = 
+    (<strong>MessageConnection</strong>)Connector.open(&quot;sms://:4444&quot;);</pre>
+<p>Para recibir un mensaje utilizaremos el m&eacute;todo:</p>
+<pre class="codigo">Message msg = mc.<strong>receive</strong>();</pre>
+<p>Si hemos recibido un mensaje que todav&iacute;a no hay sido leido este m&eacute;todo 
+  obtendr&aacute; dicho mensaje. Si todav&iacute;a no se ha recibido ning&uacute;n 
+  mensaje, este m&eacute;todo se quedar&aacute; bloqueado hasta que se reciba 
+  un mensaje, momento en el que lo leer&aacute; y nos lo devolver&aacute;.</p>
+<p>Podemos determinar en tiempo de ejecuci&oacute;n si se trata de un mensaje 
+  de texto o de un mensaje binario. Para ello deberemos comprobar de qu&eacute; 
+  tipo es realmente el objeto devuelto, y seg&uacute;n este tipo leer sus datos 
+  como texto o como <em>array</em> de <em>bytes</em>:</p>
+<pre class="codigo">if(msg instanceof TextMessage) {<br>    String texto = ((TextMessage)msg).<strong>getPayloadText</strong>();<br>    // Procesar texto<br>} else if(msg instanceof TextMessage) {<br>    byte [] datos = ((BinaryMessage)msg).<strong>getPayloadData</strong>();<br>    // Procesar datos<br>}</pre>
+<p>Hemos visto que el m&eacute;todo <code>receive</code> se queda bloqueado hasta 
+  que se reciba un mensaje. No debemos hacer que la aplicaci&oacute;n se quede 
+  bloqueada esperando un mensaje, ya que &eacute;ste puede tardar bastante, o 
+  incluso no llegar nunca. Podemos solucionar este problema realizando la lectura 
+  de los mensajes mediante un hilo en segundo plano. Otra soluci&oacute;n es utilizar 
+  un <em>listener</em>.</p>
+<h3><strong>17.4.3. Listener de mensajes</strong></h3>
+<p>Estos <em>listeners</em> nos servir&aacute;n para que se nos notifique el momento 
+  en el que se recibe un mensaje corto. De esta forma no tendremos que quedarnos 
+  bloqueados esperando recibir el mensaje, sino que podemos invocar <code>receive</code> 
+  directamente cuando sepamos que se ha recibido el mensaje.</p>
+<p>Para crear un <em>listener</em> de este tipo deberemos crear una clase que 
+  implemente la interfaz <code>MessageListener</code>:</p>
+<pre class="codigo">public MiListener implements <strong>MessageListener</strong> {<br>    public void <strong>notifyIncomingMessage</strong>(MessageConnection mc) {<br>        // Se ha recibido un mensaje a trav&eacute;s de la conexion mc<br>    }<br>}</pre>
+<p>Dentro del m&eacute;todo <code>notifyIncomingMessage</code> deberemos introducir 
+  el c&oacute;digo a ejecutar cuando se reciba un mensaje. No debemos ejecutar 
+  la operaci&oacute;n <code>receive</code> directamente dentro de este m&eacute;todo, 
+  ya que es una operaci&oacute;n costosa que no debe ser ejecutada dentro de los 
+  <em>callbacks</em> que deben devolver el control lo antes posible para no entorpecer 
+  el procesamiento de eventos de la aplicaci&oacute;n. Deberemos hacer que la 
+  recepci&oacute;n del mensaje la realice un hilo independiente. </p>
+<p>Para que la recepci&oacute;n de mensajes le sea notificada a nuestro <em>listener</em> 
+  deberemos registrarlo como <em>listener</em> de la conexi&oacute;n con:</p>
+<pre class="codigo">mc.<strong>setMessageListener</strong>(new MiListener());</pre>
+<p>En WTK 2.0 tenemos disponible una consola WMA con la que podremos simular el 
+  env&iacute;o y la recepci&oacute;n de mensajes cortos que se intercambien entre 
+  los emuladores, de forma que podremos probar estas aplicaciones sin tener que 
+  enviar realmente los mensajes y pagar por ellos.</p>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 5: Introducci&oacute;n a Java EE</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css"></head>
+<body>
+
+<h1> 5. Introducción a Java EE </h1>
+             
+<p>&nbsp; </p>
+<p>Según la definición de Sun, Java Enterprise Edition (Java EE) es el estándar
+de la industria para desarrollar applicaciones Java portables, rebustas,
+escalables y seguras en el lado del servidor (server-side). Basado en Java SE,
+proporciona APIs para servicios web, modelo de componetes, gestión y comunicación. </p>
+<p>Veremos en esta sesión una introducción al concepto de aplicaciones web y
+su estructura. Después veremos una introducción al manejo de servidores web
+(viendo como ejemplo el servidor web Tomcat), y pasaremos dar algunos detalles
+introductorios sobre algunas de las herramientas principales para el desarrollo
+de aplicaciones Java EE, como son los servlets y las páginas JSP, viendo cómo
+se integra todo en algunos ejemplos sencillos de aplicación que podremos
+probar. </p>
+
+<h2>5.1. Cliente-servidor y protocolo HTTP</h2>
+<p>Toda aplicación web (sea o no Java EE) se basa para su funcionamiento en un
+protocolo <b>cliente-servidor</b>: por un lado, el usuario abre un navegador
+(cliente), que le mostrará una serie de interfaces para la aplicación web a
+probar (formularios, enlaces, etc). Interactuando con estos formularios enviará
+una serie de órdenes a un servidor remoto, que las ejecutará, y mostrará al
+usuario las páginas con los resultados obtenidos (resultados de una búsqueda,
+alta en un sistema de registro, etc).</p>
+<p>En todo este proceso intervienen varios factores: el cliente envía una serie
+de <b>peticiones</b> al servidor, y éste le emite, para cada una su
+correspondiente <b>respuesta</b>. En la petición del cliente puede haber una
+serie de <b>cabeceras de petición</b>, incluidas por el propio navegador, con
+información sobre la petición (tipo de navegador, idiomas aceptados, etc). Por
+otro lado, en la respuesta del servidor también pueden incluirse <b>cabeceras
+de respuesta</b>, con información sobre el contenido que se envía al navegador
+(tamaño del contenido, idioma, fecha de la última modificación, etc).
+Además, el servidor envía un <b>código de estado</b>, indicando si la
+petición previa del cliente se ha podido responder bien o ha habido errores
+(por ejemplo, un código 404 indicará que el servidor no ha podido encontrar la
+página solicitada por el cliente).</p>
+<p>Todos estos elementos (cabeceras de petición, cuerpo de la petición,
+código de estado de la respuesta, cabeceras de respuesta y texto de la
+respuesta) se envían entre cliente y servidor utilizando el <b>protocolo HTTP</b>,
+que establece la forma en la que deben separarse estos elementos para enviarse,
+y la estructura que debe tener cada bloque.</p>
+<h3>5.1.1. La petici&oacute;n HTTP </h3>
+<p>La petici&oacute;n que realiza un cliente HTTP (por ejemplo, un navegador web) tiene la siguiente estructura:</p>
+<PRE class="codigo">Comando    URI    Protocolo
+Cabeceras de petición
+
+Datos adicionales</PRE>
+<p>donde el <em>Comando</em> podr&aacute; ser cualquiera de los comandos soportados por el protocolo HTTP:</p>
+<UL>
+  <LI>GET: para solicitar un documento al servidor (es el m&aacute;s com&uacute;n). Los par&aacute;metros para el documento se env&iacute;an en la propia URI, en la primera l&iacute;nea de la petici&oacute;n.
+  <LI>POST: se emplea para enviar al servidor un   bloque de datos en el cuerpo de la petici&oacute;n. Es similar a GET, pero los par&aacute;metros para el documento se env&iacute;an como <em>Datos adicionales</em>. 
+  <LI>OPTIONS: para consultar al servidor acerca de   las funcionalidades que proporciona   
+  <LI>HEAD: el servidor responde de forma id&eacute;ntica a   un comando GET, pero no devuelve el cuerpo del   documento respuesta, s&oacute;lo las cabeceras. Suele emplearse para comprobar   caracter&iacute;sticas del documento.    
+  <LI>PUT: solicita que el cuerpo de la petici&oacute;n que   env&iacute;a se almacene en el espacio de direcciones del servidor, con el   identificador URI solicitado (guarda un documento en el servidor)   
+  <LI>DELETE: solicita borrar un documento espec&iacute;fico   del servidor   
+  <LI>TRACE: se utiliza para seguir el camino de la   petici&oacute;n por m&uacute;ltiples servidores y proxies (&uacute;til para depurar problemas de   red). </LI>
+</UL>
+<p>La <em>URI</em> ser&aacute; la URL del documento solicitado, y el protocolo indica la versi&oacute;n de HTTP que se va a emplear en la comunicaci&oacute;n.</p>
+<p>Las <em>cabeceras</em> dan informaci&oacute;n al servidor sobre el cliente (por ejemplo, tipo de navegador, tipo de datos que acepta: zips, htmls, xmls, etc).</p>
+<p>Finalmente, los <em>datos adicionales</em> se utilizan por ciertos m&eacute;todos (como POST) para enviar par&aacute;metros adicionales de la petici&oacute;n.</p>
+<p>Un ejemplo completo de petici&oacute;n GET ser&iacute;a:</p>
+<PRE class="codigo">GET  /dir/cargaPagina.php?id=21&amp;nombre=Pepe  HTTP/1.1  
+Accept-Encoding: gzip, deflate  
+User-Agent: Mozilla/4.0 (compatible;MSIE5.0;Windows 98)
+</PRE>
+<p>Esta misma petici&oacute;n, con un comando POST ser&iacute;a:     </p>
+<PRE class="codigo">POST  /dir/cargaPagina.php  HTTP/1.1  
+Accept-Encoding: gzip, deflate  
+User-Agent: Mozilla/4.0 (compatible;MSIE5.0;Windows 98)
+
+id=21&amp;nombre=Pepe</PRE>
+<h3>5.1.2. La respuesta HTTP </h3>
+<p>La respuesta que env&iacute;a el servidor al cliente, tras su petici&oacute;n, tiene una estructura como: </p>
+<PRE class="codigo">Protocolo  Codigo  Mensaje
+Cabeceras de respuesta
+
+
+Datos</PRE>
+<p>Donde <em>protocolo </em> es el protocolo empleado por el servidor (normalmente el mismo indicado por el cliente). </p>
+<p>El <em>c&oacute;digo</em> es un c&oacute;digo de respuesta, que indica si se ha podido servir bien el documento o ha habido errores. Por ejemplo, un c&oacute;digo 200 indica que se ha servido bien. Un c&oacute;digo 404 (muy com&uacute;n al navegar por internet) indica que no se ha encontrado el documento. Un c&oacute;digo 500 indica un error en el servidor.</p>
+<p>El <em>mensaje</em> va asociado al c&oacute;digo, y explica brevemente el significado del mismo.</p>
+<p>Las <em>cabeceras de respuesta</em> son similares a las de petici&oacute;n, pero dan en este caso al cliente (el navegador) informaci&oacute;n sobre la petici&oacute;n realizada y la respuesta servida (tama&ntilde;o de la respuesta, idioma, etc).  </p>
+<h2>5.2. El servidor web Tomcat</h2>
+<p>En el caso de aplicaciones Java EE, en el lado del servidor, necesitamos uno
+que dé soporte a la arquitectura Java EE. Típicamente los <b>servidores de
+aplicaciones</b> Java EE son servidores potentes, que abarcan todo el potencial
+de funcionalidades que ofrece la plataforma Java EE. Sin embargo estos
+servidores son pesados (ocupan mucho espacio en disco y memoria), y requieren de
+máquinas relativamente potentes y dedicadas para su correcto funcionamiento.</p>
+<p>En el caso de no necesitar toda la plataforma, sino su núcleo básico (esto
+es, manejo de servlets, páginas JSP, struts, JSF y alguna que otra
+característica), podemos &quot;conformarnos&quot; con un <b>servidor web</b>
+con soporte para Java EE. Estos servidores lógicamente no disponen de todas las
+funcionalidades de un gran servidor de aplicaciones, pero nos permiten cargar
+aplicaciones web más ligeras, consumiendo menos recursos y siendo más
+fácilmente mantenibles.</p>
+<p>El servidor web estándar que se suele emplear para estos primeros pasos, o
+estas aplicaciones ligeras con Java EE es Tomcat. Es un servidor Java EE
+desarrollado por el proyecto Jakarta (los mismos desarrolladores que el servidor
+Apache), y proporciona diferentes funcionalidades para desarrollar aplicaciones
+Java EE basadas en servlets, páginas JSP, struts, y otras librerías que son un
+estándar en el desarrollo de aplicaciones Java EE.</p>
+<p>La página donde encontrar las últimas versiones y documentación sobre su
+funcionamiento y configuración es:</p>
+<p><a href="http://tomcat.apache.org/">http://tomcat.apache.org/</a> </p>
+<h3>5.2.1. Instalación de Tomcat</h3>
+<p>Para poder instalar Tomcat (versión 5.5.x) tenemos que tener instalada
+previamente la versión 1.5.x de JDK. Una vez hecho esto, deberemos tener una
+variable de entorno <span class="codefrag">JAVA_HOME</span> que apunte al
+directorio donde se ha instalado JDK (algunas versiones de Tomcat ya la
+establecen automáticamente).</p>
+<p>Una vez tengamos JDK instalado, ya podemos instalar Tomcat:</p>
+<ul>
+  <li>Para <strong>Windows</strong>, se tiene un programa autoinstalable, que al
+    ejecutarlo pide dónde queremos instalar Tomcat.</li>
+  <li>Para <strong>Unix</strong> (y también como versión ZIP para Windows) si
+    se dispone de una distribución binaria, se debe descomprimir en el
+    directorio donde queramos que esté Tomcat.</li>
+</ul>
+<p>Tomcat necesita además otra variable de entorno, llamada <span class="codefrag">CATALINA_HOME</span>,
+que apunte al directorio donde está instalado Tomcat. Si no se autoestablece
+deberemos asignarla nosotros.</p>
+<h3>5.2.2. Ejecución de Tomcat</h3>
+<p>Una vez tenemos instalado Tomcat, la ejecución del mismo difiere según la
+distribución que nos hayamos descargado.</p>
+<p>Para la versión <b>ejecutable</b> <strong>Windows</strong>, en el botón de <em>Inicio</em>,
+en <em>Programas</em>, tendremos creada una carpeta <em>Apache Tomcat 5.5</em>,
+y dentro de ella una opción <em>Monitor Tomcat</em>. Al ejecutarla, nos
+aparecerá un icono en la barra inferior, junto al reloj, mediante el que
+podremos parar y arrancar el servidor, con el botón derecho. También tenemos
+una opción en ese menú que es <em>Configure Tomcat</em>, que nos servirá para
+configurar alguna de las opciones de Tomcat que veremos más adelante.</p>
+<p>Para <strong>la versión ZIP</strong> (Linux o Windows) dentro del
+subdirectorio <span class="codefrag">bin</span> donde hayamos instalado Tomcat
+tenemos, entre otros, dos ejecutables (ficheros <span class="codefrag">.sh </span>):</p>
+<ul>
+  <li><strong><span class="codefrag">startup</span></strong>: al ejecutar este
+    comando se <strong>arranca el servidor</strong>.</li>
+  <li><strong><span class="codefrag">shutdown</span></strong>: al ejecutar este
+    comando se <strong>detiene el servidor</strong>.</li>
+</ul>
+<p>Una vez tengamos el servidor arrancado podemos probarlo con la dirección raíz:</p>
+<pre class="code">http://localhost:8080/</pre>
+<p>Que debería mostrar una página como:</p>
+<img src="imagenes/j2ee/tomcatini.jpg" width="598" height="410" />
+<h3>5.2.3. Estructura de Tomcat</h3>
+<p>La distribución de Tomcat está dividida en los siguientes directorios:</p>
+<ul>
+  <li><span class="codefrag"><b>bin</b></span>: ejecutables y scripts para arrancar y
+    parar Tomcat.</li>
+  <li><span class="codefrag"><b>common</b></span>: clases y librerías compartidas
+    entre Tomcat y las aplicaciones web. Las clases se deben colocar en <span class="codefrag"><i>common/classes</i></span>,
+    mientras que las librerías en formato JAR se deben poner en <span class="codefrag"><i>common/lib</i></span>.</li>
+  <li><span class="codefrag"><b>conf</b></span>: ficheros de configuración.</li>
+  <li><span class="codefrag"><b>logs</b></span>: directorio donde se guardan por
+    defecto los logs.</li>
+  <li><span class="codefrag"><b>server</b></span>: las clases que componen Tomcat.</li>
+  <li><span class="codefrag"><b>shared</b></span>: clases compartidas por todas las
+    aplicaciones web.</li>
+  <li><span class="codefrag"><b>webapps</b></span>: directorio usado por defecto como
+    raíz donde se colocan todas las aplicaciones web.</li>
+  <li><span class="codefrag"><b>work</b></span> y <span class="codefrag"><b>temp</b></span>:
+    directorios para almacenar información temporal</li>
+</ul>
+<p>La configuración de Tomcat está almacenada en cuatro ficheros que se
+encuentran en el directorio <strong><span class="codefrag">conf</span></strong>.
+Tres de ellos están en formato XML y el cuarto es un fichero de políticas de
+seguridad en el formato estándar de Java:</p>
+<ul>
+  <li><span class="codefrag"><b>server.xml</b></span>: el fichero principal de
+    configuración.</li>
+  <li><b><span class="codefrag">web.xml</span></b>: es un fichero en el formato estándar
+    para aplicaciones web con servlets, que contiene la configuración global a
+    todas las aplicaciones.</li>
+  <li><span class="codefrag"><b>tomcat-users.xml</b></span>: lista de usuarios y
+    contraseñas para autentificación.</li>
+  <li><span class="codefrag"><b>catalina.policy</b></span>: políticas de seguridad
+    para la ejecución del servidor.</li>
+</ul>
+<h2>5.3. Introducción a las aplicaciones web Java EE</h2>
+<h3>5.3.1. Elementos a considerar en las aplicaciones web</h3>
+<p>Hemos visto que una aplicación web es una aplicación a la que accedemos
+mediante protocolo HTTP utilizando un navegador web.</p>
+<p><strong>Aplicaciones en el lado del servidor</strong></p>
+<p>En el lado del servidor, tenemos que conseguir que nuestro servidor HTTP sea
+capaz de ejecutar programas de aplicación que recojan los parámetros de
+peticiones del cliente, los procesen y devuelvan al servidor un documento que éste
+pasará a su vez al cliente.</p>
+<p>Así, para el cliente el servidor no habrá hecho nada distinto a lo
+estipulado en el protocolo HTTP, pero el servidor podrá valerse de herramientas
+externas para procesar y servir la petición solicitada, pudiendo así no
+limitarse a servir páginas estáticas, sino utilizar otras aplicaciones (servlets,
+JSP, PHP, etc) para servir documentos con contenido dinámico.</p>
+<p>Los programas de aplicación son típicamente programas que realizan
+consultas a bases de datos, procesan la información resultante y devuelven la
+salida al servidor, entre otras tareas.</p>
+<p>Vamos a centrarnos en las aplicaciones web J2EE, en las que los componentes
+dinámicos que recibirán las peticiones HTTP en el servidor serán los servlets
+y JSPs. Estos componentes podrán analizar esta petición y utilizar otros
+componentes Java para realizar las acciones necesarias (beans, EJBs, etc).</p>
+<p><strong>Aplicaciones en el lado del cliente</strong></p>
+<p>Se tienen muchas tecnologías relacionadas con extensiones del lado del
+cliente (entendiendo cliente como un navegador que interpreta código HTML). El
+código HTML es un código estático que sólo permite formatear la apariencia
+de una página y definir enlaces a otras páginas o URLs. Esto no es suficiente
+si queremos que el navegador realice funciones más complicadas: validar
+entradas de formularios, mostrar la evolución del precio de unas acciones, etc.</p>
+<p>Para ampliar las funcionalidades del navegador (respetando el protocolo
+HTTP), se utilizan tecnologías como JavaScript, Applets, Flash, etc. Estas se
+basan en hacer que el navegador ejecute código que le pasa el servidor, bien
+embebido en documentos HTML (como es el caso de JavaScript), o bien mediante
+ficheros compilados multiplataforma (como es el caso de los Applets Java o los
+ficheros Flash).</p>
+<h3>5.3.2. Estructura de una aplicación web Java EE</h3>
+<p>Una aplicación web J2EE que utilice servlets o páginas JSP debe tener una
+estructura de ficheros y directorios determinada:</p>
+<ul>
+  <li>En el <b>directorio raíz</b> de la aplicación se colocan las <b>páginas</b>
+    HTML o JSP (podemos dividirlas también en directorios si queremos)</li>
+  <li>
+    <p>Colgando del directorio inicial de la aplicación, se tiene un directorio
+    <strong><span class="codefrag">WEB-INF</span></strong>, que contiene la
+    información Web relevante para la aplicación. Esta información se divide
+    en:</p>
+    <ul>
+      <li>Fichero <strong>descriptor de despliegue</strong> de la aplicación:
+        es el fichero descriptor de la aplicación web. Es un fichero XML
+        (llamado <span class="codefrag"><b>web.xml</b></span>) que contiene
+        información genérica sobre la aplicación. Lo veremos con más detalle
+        más adelante</li>
+      <li>Subdirectorio <strong><span class="codefrag">classes</span></strong>:
+        en él irán todas las clases Java utilizadas en la aplicación
+        (ficheros <span class="codefrag">.class</span>), es decir, clases
+        externas a la API de Java que se utilicen en las páginas JSP, servlets,
+        etc. Las clases deberán mantener la estructura de paquetes, es decir,
+        si queremos colocar la clase <span class="codefrag">paquete1.subpaquete1.MiClase</span>
+        dentro de <span class="codefrag">classes</span>, se quedará almacenada
+        en el directorio <span class="codefrag">classes/paquete1/subpaquete1/MiClase</span>.</li>
+      <li>Subdirectorio <strong><span class="codefrag">lib</span></strong>: aquí
+        colocaremos las clases Java que estén empaquetadas en ficheros JAR (es
+        decir, colocaremos los ficheros JAR de nuestra aplicación Web, y las
+        librerías ajenas a la API de JDK o de servlets y JSP que se necesiten)</li>
+    </ul>
+  </li>
+  <li>El resto de elementos de la aplicación (imágenes, etc), podemos
+    estructurarlos como nos convenga.</li>
+</ul>
+<p>Notar que se separan los ficheros <span class="codefrag">.class</span> de los
+ficheros JAR, colocando los primeros en el directorio <span class="codefrag">classes</span>
+y los segundos en <span class="codefrag">lib</span>.</p>
+<p>Esta estructura estará contenida dentro de algún directorio, que será el
+directorio correspondiente a la aplicación Web, y que podremos, si lo hacemos
+convenientemente, copiar en el servidor que nos convenga. Es decir, <b>cualquier
+servidor Web J2EE soporta esta estructura</b> en una aplicación Web, sólo
+tendremos que copiarla en el directorio adecuado de cada servidor.</p>
+<p>Cada aplicación web J2EE es un contexto, una unidad que comprende un
+conjunto de recursos, clases Java y su configuración. Cuando hablemos de
+contexto, nos estaremos refiriendo a la aplicación web en conjunto. Por ello
+utilizaremos indistintamente los términos aplicación web y contexto.</p>
+<p><strong>Rutas relativas al contexto</strong></p>
+<p>Cada contexto (aplicación web) instalado en el servidor tendrá asociado una
+ruta para acceder a él desde la web. Por ejemplo, podemos asociar nuestro
+contexto la ruta <span class="codefrag">/aplic</span>, de forma que accediendo a
+la siguiente URL:</p>
+<pre class="codigo">http://localhost:8080/aplic/index.htm</pre>
+<p>Estaremos leyendo el recurso <span class="codefrag">/index.htm</span> de
+nuestro contexto.</p>
+<p><strong>Ficheros WAR</strong></p>
+<p>Una forma de distribuir aplicaciones Web es empaquetar toda la aplicación (a
+partir de su directorio inicial) dentro de un fichero WAR (de forma parecida a
+como se hace con un TAR o un JAR), y distribuir dicho fichero. Podemos crear un
+fichero WAR de la misma forma que creamos un JAR, utilizando la herramienta JAR.</p>
+<p>Estos ficheros WAR son un estándar de J2EE, por lo que podremos utilizarlos
+en los diferentes servidores de aplicaciones J2EE existentes.</p>
+</body>
+</html>

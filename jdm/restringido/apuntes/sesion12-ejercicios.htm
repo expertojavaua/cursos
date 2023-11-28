@@ -1,0 +1,65 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Ejercicios sesi&oacute;n 12: Gr&aacute;ficos avanzados</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2>Ejercicios de gr&aacute;ficos avanzados</h2>
+             
+<p><strong>12.1.</strong> Vamos a probar una aplicaci&oacute;n b&aacute;sica que 
+  dibuje contenido en la pantalla utilizando la API de bajo nivel. En el directorio 
+  <code>DibujoBasico</code> de las plantillas de la sesi&oacute;n tenemos implementada 
+  esta aplicaci&oacute;n.</p>
+<p><em>a)</em> Consultar el c&oacute;digo y posteriormente compilar y probar la 
+  aplicaci&oacute;n.</p>
+<p><em>b)</em> Modificar el anchor de posicionamiento del texto para probar los 
+  distintos alineamientos existentes.</p>
+<p><em>c)</em> Probar a cambiar las propiedades de los objetos dibujados (fuente, 
+  color, etc).</p>
+<p><em>d)</em> A&ntilde;adir animaci&oacute;n. Para ello crearemos un hilo que 
+  modifique las variables <code>x</code> e <code>y</code> a lo largo del tiempo 
+  y llame a <code>repaint</code> para dibujar en la nueva posici&oacute;n. Utilizar 
+  el evento <code>showNotify</code> para poner en marcha este hilo.</p>
+<p><strong>12.2.</strong> Vamos a implementar una aplicaci&oacute;n similar al 
+  juego que se conoc&iacute;a como <em>&quot;TeleSketch&quot;</em>. Esta aplicaci&oacute;n 
+  nos deber&aacute; permitir dibujar en la pantalla utilizando las teclas de los 
+  cursores.</p>
+<p>La idea es dibujar en <em>offscreen</em> (en una imagen mutable), de forma 
+  que no se pierda el contenido dibujado. En cada momento conoceremos la posici&oacute;n 
+  actual del cursor, donde dibujaremos un punto (puede ser un c&iacute;rculo o 
+  rect&aacute;ngulo de tama&ntilde;o reducido). Al pulsar las teclas de los cursores 
+  del m&oacute;vil moveremos este cursor por la pantalla haciendo que deje rastro, 
+  y de esta manera se ir&aacute; generando el dibujo.</p>
+<p>Tenemos una plantilla en el directorio <code>TeleSketch</code>. Sobre esta 
+  plantilla deberemos realizar lo siguiente:</p>
+<p><em>a)</em> En el constructor de la clase deberemos crear una imagen mutable 
+  donde dibujar, con el tama&ntilde;o del <code>Canvas</code>.</p>
+<p><em>b)</em> En el m&eacute;todo <code>actualiza</code> deberemos dibujar un 
+  punto en la posici&oacute;n actual del cursor y llamar a <code>repaint</code> 
+  para repintar el contenido de la pantalla.</p>
+<p><em>c) </em>En <code>paint</code> deberemos volcar el contenido de la imagen 
+  <em>offscreen</em> a la pantalla.</p>
+<p><em>d)</em> Deberemos definir los eventos <code>keyPressed</code> y <code>keyRepeated</code> 
+  para mover el cursor cada vez que se pulsen las teclas arriba, abajo, izquierda 
+  y derecha. Podemos utilizar las acciones de juegos (game actions) para conocer 
+  cu&aacute;les son estas teclas.</p>
+<p><strong>12.3.</strong> Ampliar la aplicaci&oacute;n anterior permitiendo cambiar 
+  el color y el grosor del l&aacute;piz. Para hacer esto podemos a&ntilde;adir 
+  una serie de comandos con un conjunto de colores y grosores preestablecidos.</p>
+<p><strong>12.4.</strong> Si dibujamos usando los eventos de repetici&oacute;n 
+  el cursor muchas veces se mover&aacute; muy lentamente. En lugar de utilizar 
+  este evento para dibujar podemos crear un hilo que ejecute un bucle infinito. 
+  Dentro de este hilo mientras la tecla siga pulsada se ir&aacute; moviendo el 
+  cursor, de esta manera se actualizar&aacute; con la frecuencia que nosotros 
+  queramos sin tener que esperar al evento de repetici&oacute;n. Sabremos que 
+  una tecla se mantiene pulsada desde que se invoca un evento <code>keyPressed</code> 
+  hasta que se invoca un evento <code>keyReleased</code> para la misma tecla.</p>
+<p><strong>12.5.</strong> Utilizar la API de Nokia para dibujar en un <em>canvas</em> 
+  a pantalla completa.</p>
+</body>
+</html>

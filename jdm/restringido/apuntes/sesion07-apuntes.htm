@@ -1,0 +1,259 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 7: Servlets</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1> 7. Servlets </h1>
+             
+<h2>7.1. Concepto de servlet </h2>
+<p>Un <strong>servlet</strong> es un programa Java que se ejecuta en un servidor
+Web y construye o sirve páginas web. De esta forma se pueden construir páginas
+dinámicas, basadas en diferentes fuentes variables: datos proporcionados por el
+usuario, fuentes de información variable (páginas de noticias, por ejemplo), o
+programas que extraigan información de bases de datos.</p>
+<p>Comparado con un CGI, un servlet es más sencillo de utilizar, más eficiente
+(se arranca un hilo por cada petición y no un proceso entero), más potente y
+portable. Con los servlets podremos, entre otras cosas, procesar, sincronizar y
+coordinar múltiples peticiones de clientes, reenviar peticiones a otros
+servlets o a otros servidores, etc.</p>
+<p><b>Arquitectura de servlets</b></p>
+<p>Normalmente al hablar de servlets se habla de JSP y viceversa, puesto que
+ambos conceptos están muy interrelacionados. Para trabajar con ellos se
+necesitan tener presentes algunos recursos:</p>
+<ul>
+  <li>Un <strong>servidor web</strong> que dé soporte a servlets / JSP
+    (contenedor de servlets y páginas JSP). Ejemplos de estos servidores son
+    Apache Tomcat, Resin, JRun, Java Web Server, BEA WebLogic, etc.</li>
+  <li>Las <strong>librerías</strong> (clases) necesarias para trabajar con
+    servlets / JSP. Normalmente vienen en ficheros JAR en un directorio <span class="codefrag">lib</span>
+    del servidor (<span class="codefrag">common/lib</span> en Tomcat): <span class="codefrag"><b>servlet-api.jar</b></span>
+    (con la API de servlets), y <span class="codefrag"><b>jsp-api.jar</b></span>,
+    para JSP. Al desarrollar nuestra aplicación, deberemos incluir las librerías
+    necesarias en el classpath para que compilen los ficheros (sólo
+    necesitaremos compilar los servlets, no los JSP). También se puede utilizar
+    el fichero JAR <span class="codefrag">j2ee.jar</span> que viene con Java
+    Enterprise Edition, pero no es recomendable si se puede disponer de las
+    librerías específicas del servidor.</li>
+  <li>La <strong>documentación</strong> sobre la API de servlets / JSP (no
+    necesaria, pero sí recomendable)</li>
+</ul>
+<p>Dentro del paquete <strong><span class="codefrag">javax.servlet</span></strong>
+tenemos toda la infraestructura para poder trabajar con servlets. El elemento
+central es la interfaz <strong><span class="codefrag">Servlet</span></strong>,
+que define los métodos para cualquier servlet. La clase <strong><span class="codefrag">GenericServlet</span></strong>
+es una clase abstracta que implementa dicha interfaz para un servlet genérico,
+independiente del protocolo. Para definir un servlet que se utilice vía web, se
+tiene la clase <strong><span class="codefrag">HttpServlet</span></strong> dentro
+del subpaquete <strong><span class="codefrag">javax.servlet.http</span></strong>.
+Esta clase hereda de <span class="codefrag">GenericServlet</span>, y también es
+una clase abstracta, de la que heredaremos para construir los servlets para
+nuestras aplicaciones web.</p>
+<p>Cuando un servlet acepta una petición de un cliente, se reciben dos objetos:</p>
+<ul>
+  <li>Un objeto de tipo <strong><span class="codefrag">ServletRequest</span></strong>
+    que contiene los datos de la petición del usuario (toda la información
+    entrante). Con esto se accede a los parámetros pasados por el cliente, el
+    protocolo empleado, etc. Se puede obtener también un objeto <strong><span class="codefrag">ServletInputStream</span></strong>
+    para obtener datos del cliente que realiza la petición. La subclase <strong><span class="codefrag">HttpServletRequest</span></strong>
+    procesa peticiones de tipo HTTP.</li>
+  <li>Un objeto de tipo <strong><span class="codefrag">ServletResponse</span></strong>
+    que contiene (o contendrá) la respuesta del servlet ante la petición (toda
+    la información saliente). Se puede obtener un objeto <strong><span class="codefrag">ServletOutputStream</span></strong>,
+    y un <span class="codefrag">Writer</span>, para poder escribir la respuesta.
+    La clase <strong>HttpServletResponse</strong> se emplea para respuestas a
+    peticiones HTTP.</li>
+</ul>
+<h2>7.2. Ciclo de vida de un servlet</h2>
+<p>Todos los servlets tienen el mismo ciclo de vida: </p>
+<UL>
+  <LI>Un servidor carga e inicializa el servlet   
+  <LI>El servlet procesa cero o m&aacute;s peticiones de clientes (por cada petici&oacute;n se   lanza un hilo)   
+  <LI>El servidor destruye el servlet (en un momento dado o cuando se apaga) </LI>
+</UL>
+<p><STRONG>1. Inicializaci&oacute;n</STRONG> </p>
+<p>En cuanto a la inicializaci&oacute;n de un servlet, se tiene una por defecto en el   m&eacute;todo <STRONG>init()</STRONG>. </p>
+<PRE class="codigo">public void init() throws ServletException  {
+	...  
+}
+<br>public void init(ServletConfig conf) throws ServletException  {  	
+	super.init(conf);  	
+	...  
+}</PRE>
+<p>El primer m&eacute;todo se utiliza si el servlet no necesita par&aacute;metros de   configuraci&oacute;n externos. El segundo se emplea para tomar dichos par&aacute;metros del   objeto ServletConfig que se le pasa. La llamada a   <em>super.init(...)</em> al principio del m&eacute;todo es MUY   importante, porque el servlet utiliza esta configuraci&oacute;n en otras zonas.</p>
+<p>Si queremos definir nuestra propia inicializaci&oacute;n, deberemos sobreescribir   alguno de estos m&eacute;todos. Si ocurre alg&uacute;n error al inicializar y el servlet no es   capaz de atender peticiones, debemos lanzar una excepci&oacute;n de tipo UnavailableException.</p>
+<p>Podemos utilizar la inicializaci&oacute;n para establecer una conexi&oacute;n con una base   de datos (si trabajamos con base de datos), abrir ficheros, o cualquier tarea   que se necesite hacer una sola vez antes de que el servlet comience a funcionar. </p>
+<p><STRONG>2. Procesamiento de peticiones</STRONG> </p>
+<p>Una vez inicializado, cada petici&oacute;n de usuario lanza un hilo que llama al   m&eacute;todo <STRONG>service()</STRONG> del servlet. </p>
+<PRE class="codigo">public void service(HttpServletRequest request, HttpServletResponse response)
+throws ServletException, IOException</PRE>
+<p>Este m&eacute;todo obtiene el tipo de petici&oacute;n que se ha realizado (GET, POST, PUT,   DELETE). Dependiendo del tipo de petici&oacute;n que se tenga, se llama luego a uno de   los m&eacute;todos: </p>
+<UL>
+  <LI>
+    <p><STRONG>doGet()</STRONG>:</p>
+    <PRE class="codigo">public void doGet(HttpServletRequest request, HttpServletResponse response)
+	throws ServletException, IOException</PRE>
+    <p>Para peticiones de tipo GET (aquellas realizadas al escribir una direcci&oacute;n en   un navegador, pinchar un enlace o rellenar un formulario que no tenga   METHOD=POST)</p>
+  <LI>
+    <p><STRONG>doPost()</STRONG>:</p>
+    <PRE class="codigo">public void doPost(HttpServletRequest request, HttpServletResponse response)
+	throws ServletException, IOException</PRE>
+    <p>Para peticiones POST (aquellas realizadas al rellenar un formulario que tenga   METHOD=POST)</p>
+  <LI><STRONG>doXXX()</STRONG>: normalmente s&oacute;lo se emplean los dos m&eacute;todos   anteriores, pero se tienen otros m&eacute;todos para peticiones de tipo DELETE   (<STRONG>doDelete()</STRONG>), PUT (<STRONG>doPut()</STRONG>), OPTIONS   (<STRONG>doOptions()</STRONG>) y TRACE (<STRONG>doTrace()</STRONG>). </LI>
+</UL>
+<p><STRONG>3. Destrucci&oacute;n</STRONG> </p>
+<p>El m&eacute;todo <STRONG>destroy()</STRONG> de los   servlets se emplea para eliminar un servlet y sus recursos asociados.</p>
+<PRE class="codigo">public void destroy() throws ServletException</PRE>
+<p>Aqu&iacute; debe deshacerse cualquier elemento que se construy&oacute; en la inicializaci&oacute;n   (cerrar conexiones con bases de datos, cerrar ficheros, etc). </p>
+<p>El servidor llama a <em>destroy()</em> cuando todas las   llamadas de servicios del servlet han concluido, o cuando haya pasado un   determinado n&uacute;mero de segundos (lo que ocurra primero). Si esperamos que el   servlet haga tareas que requieran mucho tiempo, tenemos que asegurarnos de que   dichas tareas se completar&aacute;n. Podemos hacer lo siguiente: </p>
+<UL>
+  <LI>Definir un contador de tareas activas, que se incremente cada vez que una   tarea comienza (entendemos por <EM>tarea</EM> cada petici&oacute;n que se realice al   servlet), y se decremente cada vez que una termina. Podemos utilizar bloques de   c&oacute;digo synchronized para evitar problemas de   concurrencia.   
+  <LI>Hacer que el m&eacute;todo destroy() no termine hasta   que lo hagan todas las tareas pendientes (comprobando el contador de tareas   pendientes)   
+  <LI>Hacer que las tareas pendientes terminen su trabajo si se quiere cerrar el   servlet (comprobando alg&uacute;n flag que indique si el servlet se va a cerrar o no). </LI>
+</UL>
+<h2>7.3. Estructura b&aacute;sica de un servlet </h2>
+<p>La plantilla común para implementar un servlet es:</p>
+<pre class="codigo">import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ClaseServlet extends HttpServlet
+{
+	public void doGet(HttpServletRequest request, 
+	                  HttpServletResponse response) 
+	throws ServletException, IOException
+	{
+	<strong>	// ... codigo para una peticion GET
+</strong>	}
+
+	public void doPost(HttpServletRequest request, 
+	                   HttpServletResponse response) 
+	throws ServletException, IOException
+
+	{
+	<strong>	// ... codigo para una peticion POST
+</strong>	}
+}</pre>
+<p>El servlet hereda de la clase <span class="codefrag">HttpServlet</span>.
+Normalmente se deben sobreescribir los métodos <span class="codefrag">doGet()</span>,
+<span class="codefrag">doPost()</span> o ambos, colocando el código que
+queremos que se ejecute cuando se reciba una petición GET o POST,
+respectivamente. Conviene definir los dos para distinguir ambas peticiones. En
+caso de que queramos hacer lo mismo para GET o POST, definimos el código en uno
+de ellos, y hacemos que el otro lo llame.</p>
+<h2>7.4. Llamar a un servlet </h2>
+<p>La forma &quot;plana&quot; de llamar a un servlet es acceder a una carpeta
+&quot;virtual&quot; llamada <i>servlet</i> dentro de nuestra aplicación web.
+Esta carpeta no existe, y es interpretada automáticamente por el servidor web
+correspondiente como que tiene que cargar un servlet, cuya clase (incluyendo
+paquetes y subpaquetes) proporcionamos tras esta carpeta. Por ejemplo:</p>
+<pre class="codigo">http://localhost:8080/miapp/servlet/paquete1.subpaquete1.MiServlet</pre>
+<p>Otra opción es añadir unas líneas de configuración en el fichero
+descriptor <b>WEB-INF/web.xml</b>, para indicar que al servlet, en lugar de
+llamarlo a través del alias <i>servlet</i>, le vamos a llamar con otra URL
+alternativa (virtual). Por ejemplo, si añadimos estas líneas para el servlet
+anterior:</p>
+<pre class="codigo">&lt;servlet&gt;
+	&lt;servlet-name&gt;nombre&lt;/servlet-name&gt;
+	&lt;servlet-class&gt;paquete1.subpaquete1.MiServlet&lt;/servlet-class&gt;
+&lt;/servlet&gt;</pre>
+<p>Lo que hacemos es asignar al servlet un nombre (en este caso <i>nombre</i>). De esta forma podremos llamar al servlet, adem&aacute;s de con la URL anterior, con esta otra: </p>
+<pre class="codigo">http://localhost:8080/miapp/setvlet/nombre</pre>
+<p>evitando as&iacute; tener que recordar el nombre de la clase y los paquetes. </p>
+<p>Una tercera alternativa es a&ntilde;adir otro bloque m&aacute;s en <strong>WEB-INF/web.xml</strong> para indicar que al servlet (al que previamente le deberemos haber dado un nombre con una etiqueta <em>servlet-name</em>), lo queremos llamar con una URL alternativa: </p>
+<pre class="codigo">&lt;servlet-mapping&gt;
+	&lt;servlet-name&gt;nombre&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;/ejemploservlet&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;</pre>
+<p>Lo que hacemos es mapear el nombre del servlet con una URL (en este caso <i>/ejemploservlet</i>). Así,
+podemos llamar al servlet, además de con las URL anteriores, con:</p>
+<pre class="codigo">http://localhost:8080/miapp/ejemploservlet</pre>
+<p>evitando as&iacute; acceder al alias <em>servlet</em>, que muchos servidores dejan deshabilitado por cuestiones de seguridad.</p>
+<h2>7.5. Ejemplos b&aacute;sicos </h2>
+<p><b>a) </b>Servlet que genera texto plano</p>
+<p>El siguiente ejemplo de servlet muestra una página con un mensaje de saludo:
+&quot;Este es un servlet de prueba&quot;. Lo cargamos mediante petición GET.</p>
+<pre class="codigo">package ejemplos;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ClaseServlet extends HttpServlet
+{
+	public void doGet(HttpServletRequest request, 
+	                  HttpServletResponse response) 
+	throws ServletException, IOException
+	{
+<strong>		</strong>PrintWriter out = response.getWriter();<strong>
+		</strong>out.println (&quot;Este es un servlet de prueba&quot;);<strong>
+</strong>	}
+}</pre>
+<p>Se obtiene un <span class="codefrag">Writer</span> para poder enviar datos al
+usuario. Simplemente se le envía la cadena que se mostrará en la página
+generada.</p>
+<p><b>b) </b>Servlet que genera contenido HTML</p>
+<p>Este otro ejemplo escribe código HTML para mostrar una página web.</p>
+<pre class="codigo">package ejemplos;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ClaseServletHTML extends HttpServlet
+{
+	public void doGet(HttpServletRequest request, 
+	                  HttpServletResponse response) 
+	throws ServletException, IOException
+	{
+		response.setContentType(&quot;text/html&quot;);
+		PrintWriter out = response.getWriter();
+		out.println (&quot;&lt;!DOCTYPE HTML PUBLIC \&quot;&quot;+
+		             &quot;-//W3C//DTD HTML 4.0 &quot; + 
+		             &quot;Transitional//EN\&quot;&gt;&quot;);
+		out.println (&quot;&lt;HTML&gt;&quot;);
+		out.println (&quot;&lt;BODY&gt;&quot;);
+		out.println (&quot;&lt;h1&gt;Titulo&lt;/h1&gt;&quot;);
+		out.println (&quot;&lt;br&gt;Servlet que genera HTML&quot;);
+		out.println (&quot;&lt;/BODY&gt;&quot;);
+		out.println (&quot;&lt;/HTML&gt;&quot;);
+<strong>	</strong>}
+}</pre>
+<p>Para generar una página HTML con un servlet debemos seguir dos pasos:</p>
+<ul>
+  <li>
+    <p>Indicar que el contenido que se va a enviar es HTML (mediante el método <span class="codefrag">setContentType()
+    </span>de <span class="codefrag">HttpServletResponse</span>):</p>
+    <pre class="code">response.setContentType(&quot;text/html&quot;);</pre>
+    <p>Esta línea es una cabecera de respuesta, que veremos más adelante cómo
+    utilizar. Hay que ponerla antes de obtener el <span class="codefrag">Writer</span>.</p>
+  </li>
+  <li>Escribir en el flujo de salida el texto necesario para generar la página
+    HTML. La línea que genera el DOCTYPE no es necesaria, aunque sí muy
+    recomendada para que se sepa qué versión de HTML se está empleando.</li>
+</ul>
+<p>Sin embargo, lo normal no es que el servlet genere línea a línea la página
+HTML, sino dejarla definida en un fichero aparte, y hacer que el servlet
+redirija a esta página (HTML, o JSP):</p>
+<pre class="codigo">package ejemplos;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ClaseServletHTML2 extends HttpServlet
+{
+	public void doGet(HttpServletRequest request, 
+	                  HttpServletResponse response) 
+	throws ServletException, IOException
+	{
+		response.setContentType(&quot;text/html&quot;);
+		<strong>response.sendRedirect(&quot;miPagina.jsp&quot;);</strong>
+	}
+}</pre>
+</body>
+</html>

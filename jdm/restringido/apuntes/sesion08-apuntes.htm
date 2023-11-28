@@ -1,0 +1,131 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 8: JSP</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css"></head>
+<body>
+
+<h1> 8. JSP </h1>
+             
+<h2>8.1. Introducci&oacute;n</h2>
+<p>La filosofía de las páginas JSP es la contraria a los servlets: los
+servlets eran clases Java que generaban o mostraban contenido HTML, y las
+páginas JSP son páginas HTML con código Java incrustado en diferentes partes
+de las mismas.</p>
+<p>El denominado <em>contenedor JSP</em> (que sería un componente del servidor
+web) es el encargado de tomar la página, sustituir el código Java que contiene
+por el resultado de su ejecución, y enviarla al cliente. Así, se pueden diseñar
+fácilmente páginas con partes fijas y partes variables. El siguiente es un
+ejemplo muy sencillo de página JSP:</p>
+<pre class="codigo">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0 Transitional//EN&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Mi primera página JSP&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt; Hoy es: 
+&lt;%= new java.util.Date() %&gt; 
+&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>Para ejecutar la p&aacute;gina basta con colocarla en una  aplicaci&oacute;n web (por ejemplo, en Tomcat, dentro de webapps/ROOT).  No es necesario que sea en un directorio espec&iacute;fico como ocurre  con los servlets, sino que puede ir en cualquier directorio en el que  se colocar&iacute;a normalmente un HTML.</p>
+<h2>8.2. Relaci&oacute;n entre servlets y JSP</h2>
+<p>Aunque JSP y servlets parecen a primera vista tecnolog&iacute;as distintas, en
+  realidad el servidor web traduce internamente el JSP a un servlet, lo compila y
+  finalmente lo ejecuta cada vez que el cliente solicita la p&aacute;gina JSP. Por ello,
+  en principio, JSPs y servlets ofrecen la misma funcionalidad, aunque sus
+  caracter&iacute;sticas los hacen apropiados para distinto tipo de tareas. Los JSP son
+  mejores para generar p&aacute;ginas con gran parte de contenido est&aacute;tico. Un servlet
+  que realice la misma funci&oacute;n debe incluir gran cantidad de sentencias del tipo <span class="codefrag">out.println()</span> para producir el HTML. Por el contrario, los servlets son mejores en tareas que
+  generen poca salida, datos binarios o p&aacute;ginas con gran parte de contenido
+  variable. En proyectos m&aacute;s complejos, lo recomendable es combinar ambas
+  tecnolog&iacute;as: los servlets para el procesamiento de informaci&oacute;n y los JSP para
+  presentar los datos al cliente.</p>
+<h2>8.3. Elementos de JSP </h2>
+  <p> Existen tres tipos de elementos JSP que podemos insertar en una  p&aacute;gina web: </p>
+  <ul>
+    <li> <strong>C&oacute;digo</strong>: podemos "incrustar" c&oacute;digo Java de  distintos tipos (declaraciones de variables y/o m&eacute;todos,  expresiones, sentencias) para que lo ejecute el contenedor JSP.</li>
+    <li> <strong>Directivas</strong>: permiten controlar distintos par&aacute;metros  del servlet resultante de la traducci&oacute;n autom&aacute;tica del JSP</li>
+    <li> <strong>Acciones</strong>: normalmente sirven para alterar el flujo normal  de ejecuci&oacute;n de la p&aacute;gina (p.ej. redirecciones), aunque  tienen usos variados.</li>
+  </ul>
+  <p>Se pueden poner comentarios en una p&aacute;gina JSP entre los  s&iacute;mbolos &lt;%-- y --%&gt;. El  contenedor JSP ignorar&aacute; todo lo contenido entre ambos. Dentro de  los fragmentos de c&oacute;digo Java tambi&eacute;n se pueden colocar  comentarios siguiendo la sintaxis habitual del lenguaje. </p>
+<h3>8.4.1. C&oacute;digo </h3>
+<p> Hay tres formas de insertar c&oacute;digo Java en una p&aacute;gina  JSP: </p>
+<ul>
+  <li> <strong>Expresiones</strong> de la forma &lt;%= <em>expresi&oacute;n</em> %&gt;: en este caso, la expresi&oacute;n se eval&uacute;a, su  resultado se convierte a String y se inserta en la  salida.
+    <pre class="codigo">Hoy es &lt;%= new java.util.Date() %&gt; </pre>
+  </li>
+  <li> <strong>Scriptlets</strong> de la forma &lt;% <em>c&oacute;digo</em> %&gt; : el c&oacute;digo se ejecuta dentro del m&eacute;todo _jspService  del servlet generado.
+    <br>
+    <br>
+    Permiten ejecutar c&oacute;digo arbitrario, cuyo resultado no es  necesario enviar a la salida. Si desde un <em>scriptlet</em> se desea  escribir algo en &eacute;sta, bastar&aacute; con utilizar el objeto  predefinido out. Un uso com&uacute;n de los <em>scriptlets</em> es hacer que ciertas partes de c&oacute;digo HTML aparezcan o no en  funci&oacute;n de una condici&oacute;n. Por ejemplo:
+    <pre class="codigo"><strong>&lt;%
+  java.util.Calendar ahora = java.util.Calendar.getInstance();
+  int hora = ahora.get(java.util.Calendar.HOUR_OF_DAY);
+%&gt;</strong>
+&lt;b&gt; Hola mundo, &lt;i&gt;
+<strong>&lt;% if ((hora&gt;20)||(hora&lt;6)) { %&gt; </strong>
+     buenas noches
+<strong>&lt;% }  
+   else if ((hora&gt;=6)&amp;&amp;(hora&lt;=12)) { %&gt;</strong>
+          buenos d&iacute;as
+<strong>&lt;%      }
+	else { %&gt; </strong>
+          buenas tardes
+<strong>&lt;%      } %&gt;</strong>
+&lt;/i&gt; &lt;/b&gt;</pre>
+  </li>
+  <li> <strong>Declaraciones</strong> de la forma &lt;%! <em>c&oacute;digo</em> %&gt;: se insertan en el cuerpo del servlet generado, fuera de  sus m&eacute;todos. <br>
+    <br>
+    <p> Permiten definir variables o m&eacute;todos que se insertar&aacute;n  dentro del cuerpo del servlet generado. Esto da la posibilidad de  sobreescribir los m&eacute;todos jspInit y jspDestroy  que son el equivalente en JSP del init y destroy  de los servlets. Las variables declaradas conservar&aacute;n su valor  entre sucesivas llamadas a la p&aacute;gina, ya que son variables  miembro del servlet y no locales al m&eacute;todo jspService.  Esto nos permite, por ejemplo, crear un contador de accesos a la  p&aacute;gina: </p>
+        <pre class="codigo">&lt;%! private int accesos = 0; %&gt;
+...
+&lt;h1&gt; Visitas: &lt;%= ++accesos %&gt; &lt;/h1&gt;</pre>
+  </li>
+</ul>
+<p><b>Objetos implícitos en JSP</b></p>
+<p>Desde dentro de páginas JSP podemos acceder a objetos que también tienen
+los servlets, como son por ejemplo la petición (<i>request</i>) y la respuesta
+(<i>response</i>). De esta forma, desde una página JSP también podemos
+redirigir a otra página:</p>
+<pre class="codigo">&lt;% reponse.sendRedirect(&quot;mipagina.jsp&quot;); %&gt; </pre>
+<p>u obtener un par&aacute;metro que nos env&iacute;en desde un formulario:</p>
+<pre class="codigo">&lt;% String login = request.getParameter(&quot;login&quot;); %&gt; </pre>
+<h3>8.4.2. Directivas </h3>
+<p> Las <em>directivas</em> influyen en la estructura que tendr&aacute;  el servlet generado a partir de la p&aacute;gina JSP. Hay tres tipos de  directivas: </p>
+<ul>
+  <li> page: tiene varios usos: importar clases de Java,  fijar el tipo MIME de la respuesta, controlar el <em>buffer</em> de  salida,...</li>
+  <li> include: sirve para incluir c&oacute;digo en la  p&aacute;gina <em>antes de que se realice la compilaci&oacute;n del JSP</em>.</li>
+  <li> taglib: se emplea cuando el JSP hace uso de  etiquetas definidas por el usuario.</li>
+</ul>
+<p>El formato gen&eacute;rico de una directiva es:</p>
+<pre class="codigo">&lt;%@ directiva atributo="valor" %&gt;</pre>
+<p> algunas directivas admiten m&aacute;s de un atributo.</p>
+<p>Por ejemplo, podemos utilizar la directiva <em>page</em> para hacer <em>imports</em> de Java con los paquetes que vayamos a utilizar en nuestro c&oacute;digo: </p>
+<pre class="codigo">&lt;%@ page import="java.io.*" %&gt;</pre>
+<p>o utilizar la directiva <em>include</em> para incluir directamente el contenido de otra p&aacute;gina JSP en la nuestra (antes de compilar) </p>
+<pre class="codigo">&lt;%@ include file="config.jsp" %&gt;</pre>
+<h3><b>8.4.3. Acciones</b></h3>
+<p>En JSP, entre otras muchas cosas, también tenemos disponibles unas <b>acciones</b>,
+que permiten hacer mediante etiquetas parecidas a las de HTML una serie de
+operaciones, como por ejemplo, incluir el contenido de otra página en la
+actual (despu&eacute;s de la compilaci&oacute;n, a diferencia de la directiva <em>include</em>):</p>
+<pre class="codigo">&lt;jsp:include page=&quot;otraPagina.jsp&quot;/&gt;</pre>
+<p>o redirigir a otra página sin forzar una nueva petición:</p>
+<pre class="codigo">&lt;jsp:forward page=&quot;error.html&quot;/&gt;</pre>
+<h2>8.5. Más información</h2>
+<p>Para encontrar información sobre servlets y JSP, son de utilidad las
+siguientes direcciones:</p>
+<ul>
+  <li><a href="http://java.sun.com/j2ee/">http://java.sun.com/j2ee/</a>:
+    referencia de todos los elementos que componen J2EE</li>
+  <li><a href="http://java.sun.com/products/jsp">http://java.sun.com/products/jsp</a>:
+    referencia para las últimas actualizaciones en JSP</li>
+  <li><a href="http://java.sun.com/products/servlets">http://java.sun.com/products/servlets</a>:
+    referencia para las últimas actualizaciones en servlets</li>
+</ul>
+</body>
+</html>
