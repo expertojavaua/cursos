@@ -1,0 +1,773 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 13: Gr&aacute;ficos 3D</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+<h1> 13. Gr&aacute;ficos 3D </h1>
+<p>Podemos crear aplicaciones que muestren gr&aacute;ficos en 3D utilizando la 
+API opcional Mobile 3D Graphics for J2ME (JSR-184).</p>
+<div align="center"><img src="imagenes/graficos/m3g_ej2.gif" width="149" height="177">&nbsp; 
+  &nbsp;<img src="imagenes/graficos/m3g_ej1.gif" width="149" height="177"> </div>
+<p class="caption">Figura 8. Ejemplos de aplicaciones 3D para dispositivos m&oacute;viles</p>
+<p>Esta API nos permitir&aacute; a&ntilde;adir contenido 3D a las aplicaciones 
+  de dos modos distintos:</p>
+<ul>
+  <li><strong>Modo inmediato</strong>: Este modo nos servir&aacute; para crear 
+    los gr&aacute;ficos 3D a bajo nivel, creando directamente los pol&iacute;gonos 
+    que va a tener nuestro mundo 3D. Este modo nos permitir&aacute; tener un control 
+    absoluto sobre los pol&iacute;gonos que se dibujan, pero el tener que definir 
+    manualmente estos pol&iacute;gonos hace que este modo no sea adecuado cuando 
+    tengamos que mostrar objetos complejos (por ejemplo personajes de un juego). 
+    Este modo resultar&aacute; &uacute;til por ejemplo para generar gr&aacute;ficos 
+    3D para representar datos. <br>
+  </li>
+  <li><strong>Modo <em>retained</em></strong>: En este modo contaremos con una 
+    serie de objetos ya creados que podremos a&ntilde;adir a la escena. Estos 
+    objetos que utilizamos los podremos cargar de ficheros en los que tendremos 
+    almacenados los distintos objetos 3D que vayamos a mostrar. La escena se representar&aacute; 
+    como un grafo, del que colgar&aacute;n todos los objetos que queramos mostrar 
+    en ella. Este modo ser&aacute; &uacute;til para aplicaciones como juegos, 
+    en las que tenemos que mostrar objetos complejos, como por ejemplo los personajes 
+    del juego. </li>
+</ul>
+<p>M&aacute;s adelante estudiaremos con m&aacute;s detalle c&oacute;mo mostrar 
+  gr&aacute;ficos 3D utilizando cada uno de estos modos.</p>
+<h2><strong>13.1. Renderizaci&oacute;n 3D</strong></h2>
+<p>Para renderizar gr&aacute;ficos 3D en el m&oacute;vil utilizaremos un objeto 
+  de tipo <code>Graphics3D</code>. Para obtener este objeto utilizaremos el siguiente 
+  m&eacute;todo est&aacute;tico:</p>
+<pre class="codigo"><strong>Graphics3D</strong> g3d;
+... 
+g3d = <strong>Graphics3D</strong>.<strong>getInstance</strong>();</pre>
+<p>Podremos declarar este objeto como campo global de la clase y obtenerlo una 
+  &uacute;nica vez durante la inicializaci&oacute;n de la misma.</p>
+<p>Para poder utilizar este objeto, deberemos decirle en qu&eacute; contexto gr&aacute;fico 
+  queremos que vuelque el contenido 3D que genere. Normalmente estableceremos 
+  como objetivo donde volcar el contexto gr&aacute;fico asociado a la pantalla 
+  del m&oacute;vil. </p>
+<p>Esto lo haremos en el m&eacute;todo <code>paint</code>, como se muestra a continuaci&oacute;n:</p>
+<pre class="codigo">protected void <strong>paint</strong>(Graphics g) {<br>  try {<br>    g3d.<strong>bindTarget</strong>(g);<br>    ...
+    g3d.<strong>render</strong>(escena);<br>  } finally {<br>    g3d.<strong>releaseTarget</strong>();			<br>  }<br>}<br></pre>
+<p>Con <code>bindTarget</code> establecemos en qu&eacute; contexto gr&aacute;fico 
+  vamos a volver los gr&aacute;ficos 3D. Una vez hecho esto podremos renderizar 
+  la escena que hayamos definido utilizando el m&eacute;todo <code>render</code> 
+  del objeto <code>Graphics3D</code>. M&aacute;s adelante veremos c&oacute;mo 
+  definir esta escena utilizando tanto el modo inmediato como el modo <em>retained</em>. 
+  Por &uacute;ltimo, con <code>releaseTarget</code> liberamos el contexto gr&aacute;fico 
+  que estabamos utilizando para volcar los gr&aacute;ficos. </p>
+<h2><strong>13.2. Transformaciones geom&eacute;tricas</strong></h2>
+<p>Cuando queramos establecer la posici&oacute;n de un objeto 3D en el mundo, 
+  deberemos transformar sus coordenadas para que &eacute;stas est&eacute;n en 
+  la posici&oacute;n deseada. Para representar estas transformaciones geom&eacute;tricas 
+  en el espacio tenemos la clase <code>Transform</code>.</p>
+<p>Utilizaremos objetos <code>Transform</code> para indicar la posici&oacute;n 
+  y el tama&ntilde;o que van a tener los objetos en el mundo. En la transformaci&oacute;n 
+  podemos establecer traslaciones del objeto, rotaciones, y cambios de escala. 
+</p>
+<p>Normalmente asociaremos a cada objeto que tengamos en el mundo 3D una transformaci&oacute;n, 
+  donde se indicar&aacute; la posici&oacute;n de dicho objeto. Adem&aacute;s, 
+  esto nos servir&aacute; para hacer animaciones, ya que simplemente cambiando 
+  los valores de la transformaci&oacute;n en el tiempo podremos hacer que el objeto 
+  cambie de posici&oacute;n o tama&ntilde;o.</p>
+<p>Utilizando el constructor de <code>Transform</code> podemos crear una transformaci&oacute;n 
+  identidad:</p>
+<pre class="codigo"><strong>Trasform</strong> trans = new <strong>Transform</strong>();</pre>
+<p>Con esta transformaci&oacute;n, el objeto al que se aplique permanecer&aacute; 
+  en sus coordenadas iniciales. Podremos modificar esta transformaci&oacute;n 
+  para cambiar la posici&oacute;n o el tama&ntilde;o del objeto mediante:</p>
+<ul>
+  <li><strong>Traslaci&oacute;n</strong>: Especificamos la traslaci&oacute;n en 
+    (x,y,z) que queremos hacer con el objeto.</li>
+</ul>
+<pre class="codigo">trans.<strong>postTranslate</strong>(tx, ty, tz);</pre>
+<ul>
+  <li><strong>Rotaci&oacute;n</strong>: Especificamos un eje de rotaci&oacute;n 
+    del objeto, dado con el vector (x,y,z) que representa el eje, un un &aacute;ngulo 
+    de rotaci&oacute;n alrededor de dicho eje dado en grados.</li>
+</ul>
+<pre class="codigo">trans.<strong>postRotate</strong>(angulo, vx, vy, vz);</pre>
+<ul>
+  <li><strong>Escala</strong>: Especificamos el factor de escala a aplicar en 
+    cada una de las tres coordenadas. Con factor 1.0 mantendr&aacute; su tama&ntilde;o 
+    actual, y reduciendo o aumentando este valor conseguiremos reducir o agrandar 
+    el objeto en dicha coordenada. </li>
+</ul>
+<pre class="codigo">trans.<strong>postScale</strong>(sx, sy, sz);</pre>
+<p>Podemos hacer que la transformaci&oacute;n vuelva a ser la identidad para volver 
+  a la posici&oacute;n original del objeto:</p>
+<pre class="codigo">trans.<strong>setIdentity</strong>();</pre>
+<h2><strong>13.3. C&aacute;mara</strong></h2>
+<p>Para poder renderizar una escena es imprescindible establecer previamente el 
+  punto de vista desde el que la queremos visualizar. Para hacer esto tendremos 
+  que definir una c&aacute;mara, encapsulada en el objeto <code>Camera</code>.</p>
+<p>Crearemos la c&aacute;mara utilizando el constructor vac&iacute;o de esta clase:</p>
+<pre class="codigo"><strong>Camera</strong> cam;
+... 
+cam = new <strong>Camera</strong>();</pre>
+<p>Con esto tendremos la c&aacute;mara, que siempre estar&aacute; apuntando hacia 
+  la coordenada Z negativa (0, 0, -1). Si queremos mover o rotar la c&aacute;mara, 
+  deberemos hacerlo mediante un objeto <code>Transform</code> que aplicaremos 
+  a la c&aacute;mara:</p>
+<pre class="codigo"><strong>Transform</strong> tCam;
+...
+tCam = new <strong>Transform</strong>();
+tCam.<strong>postTranslate</strong>(0.0f, 0.0f, 2.0f);</pre>
+<p>De la c&aacute;mara deberemos especificar el tipo de proyecci&oacute;n que 
+  queremos utilizar y una serie de par&aacute;metros. Podemos establecer dos tipos 
+  de proyecciones:</p>
+<ul>
+  <li><strong>Paralela</strong>: En este tipo de proyecciones, el centro de proyecci&oacute;n 
+    est&aacute; en el infinito. Las l&iacute;neas que son paralelas en el espacio, 
+    se mantienen paralelas en la imagen proyectada. Estableceremos este tipo de 
+    proyecci&oacute;n con:</li>
+</ul>
+<pre class="codigo">cam.<strong>setParallel</strong>(campoDeVision, relacionAspecto, <br>                planoFrontal, planoPosterior);</pre>
+<ul>
+  <li><strong>Perspectiva</strong>: El centro de proyecci&oacute;n es un punto 
+    finito. En este caso, las l&iacute;neas que son paralelas en el espacio, en 
+    la imagen proyectada convergen en alg&uacute;n punto. Estableceremos este 
+    tipo de proyecci&oacute;n con:</li>
+</ul>
+<pre class="codigo">cam.<strong>setPerspective</strong>(campoDeVision, relacionAspecto, <br>                planoFrontal, planoPosterior);
+</pre>
+<p>En el par&aacute;metro <code>campoDeVision</code> indicaremos el campo visual 
+  de la c&aacute;mara en grados. Este valor normalmente ser&aacute; 45&ordm; o 
+  60&ordm;. Valores superiores a 60&ordm; distorsionan la imagen. En <code>relacionAspecto</code> 
+  indicaremos la proporci&oacute;n entre el ancho y el alto de la pantalla donde 
+  se van a mostrar los gr&aacute;ficos. Adem&aacute;s deberemos establecer dos 
+  planos de recorte: uno cercano (<code>planoFrontal</code>) y uno lejano (<code>planoPosterior</code>), 
+  de forma que s&oacute;lo se ver&aacute;n los objetos que est&eacute;n entre 
+  estos dos planos. Todo aquello m&aacute;s cercano al plano frontal, y m&aacute;s 
+  lejano al plano posterior ser&aacute; recortado.</p>
+<p>Por ejemplo, podemos utilizar una proyecci&oacute;n perspectiva como la siguiente:</p>
+<pre class="codigo">cam.<strong>setPerspective</strong>(60.0f, (float)getWidth()/(float)getHeight(), <br>                   1.0f, 1000.0f);</pre>
+<p>Una vez definida la c&aacute;mara, deberemos establecerla en el objeto <code>Graphics3D</code> 
+  de la siguiente forma:</p>
+<pre class="codigo"> g3d.<strong>setCamera</strong>(cam, tCam);</pre>
+<p>Vemos que al establecer la c&aacute;mara, adem&aacute;s de el objeto <code>Camera</code>, 
+  deberemos especificar la transformaci&oacute;n que se va a aplicar sobra la 
+  misma. Si queremos hacer movimientos de c&aacute;mara no tendremos m&aacute;s 
+  que modificar la transformaci&oacute;n que utilizamos para posicionarla en la 
+  escena.</p>
+<p>Si vamos a dejar la c&aacute;mara fija, podemos establecer la c&aacute;mara 
+  en el objeto <code>Graphics3D</code> una &uacute;nica vez durante la inicializaci&oacute;n. 
+  Sin embargo, si queremos mover la c&aacute;mara, deberemos establecerla dentro 
+  del m&eacute;todo <code>paint</code>, para que cada vez que se redibuje se sit&uacute;e 
+  la c&aacute;mara en su posici&oacute;n actual. </p>
+<h2><strong>13.4. Luces</strong></h2>
+<p>Deberemos tambi&eacute;n definir la iluminaci&oacute;n del mundo. Para crear 
+  luces utilizaremos el objeto <code>Light</code>. Podemos crear una luz utilizando 
+  su constructor vac&iacute;o:</p>
+<pre class="codigo"><strong>Light</strong> luz;
+...
+luz = new <strong>Light</strong>();</pre>
+<p>La luz tendr&aacute; un color y una intensidad, que podremos establecer utilizando 
+  los siguientes m&eacute;todos:</p>
+<pre class="codigo">luz.<strong>setColor</strong>(0x0ffffff);
+luz.<strong>setIntensity</strong>(1.0f);</pre>
+<p>Como color podremos especificar cualquier color RGB, y como intensidad deberemos 
+  introducir un valor dentro del rango [0.0, 1.0]. Estos atributos son comunes 
+  para cualquier tipo de luces.</p>
+<p>Adem&aacute;s, podemos utilizar diferentes tipos de luces con distintas propiedades. 
+  Estos tipos son:</p>
+<ul>
+  <li><strong>Ambiente</strong> (<code>Light.AMBIENT</code>): Esta luz afectar&aacute; 
+    a todos los objetos por igual en todas las direcciones. Es la luz m&iacute;nima 
+    del ambiente, que incide en todas las partes de los objetos. Simula la reflexi&oacute;n 
+    de la luz sobre los objetos que produce dicha luz que est&aacute; &quot;en 
+    todas partes&quot;.<br>
+  </li>
+  <li><strong>Direccional</strong> (<code>Light.DIRECTIONAL</code>): Esta luz 
+    incide en todos los objetos en una misma direcci&oacute;n. Con est&aacute; 
+    luz podemos modelar una fuente de luz muy lejana (en el infinito). Por ejemplo, 
+    nos servir&aacute; para modelar la iluminaci&oacute;n el sol, que incide en 
+    todos los objetos en la misma direcci&oacute;n en cada momento. La luz estar&aacute; 
+    apuntando en la direcci&oacute;n del eje de las Z negativo (0, 0, -1).<br>
+  </li>
+  <li><strong>Omnidireccional</strong> (<code>Light.OMNI</code>): Se trata de 
+    una fuente de luz que ilumina en todas las direcciones. Por ejemplo con esta 
+    luz podemos modela una bombilla, que es un punto que emana luz en todas las 
+    direcciones.<br>
+  </li>
+  <li><strong>Foco</strong> (<code>Light.SPOT</code>): Este tipo produce un cono 
+    de luz. El foco ilumina en una determinada direcci&oacute;n, produciendo un 
+    cono de luz. El foco estar&aacute; orientado en la direcci&oacute;n del eje 
+    de las Z negativo (0, 0, -1).</li>
+</ul>
+<p>Para establecer el tipo de luz que queremos utilizar tenemos el m&eacute;todo 
+  <code>setMode</code>:</p>
+<pre class="codigo">luz.<strong>setMode</strong>(Light.DIRECTIONAL);</pre>
+<p>Dentro de los tipos de luces anteriores, podemos distinguir dos grupos seg&uacute;n 
+  la posici&oacute;n de la fuente. Tenemos luces sin posici&oacute;n (ambiente 
+  y direccional) y luces con posici&oacute;n (omnidireccional y foco). En el caso 
+  de las luces con posici&oacute;n, podemos utilizar el m&eacute;todo <code>setAttenuation</code> 
+  para dar una atenuaci&oacute;n a la luz en funci&oacute;n a la distancia de 
+  la fuente. Con esto haremos que los objetos que est&eacute;n m&aacute;s lejos 
+  de la fuente de luz est&eacute;n menos iluminados que los que est&eacute;n m&aacute;s 
+  cerca. Esto no se puede hacer en el caso de las fuentes de luz sin posici&oacute;n, 
+  ya que en ese caso la distancia de cualquier objeto a la fuente es infinito 
+  o no existe.</p>
+<p>Otra clasificaci&oacute;n que podemos hacer es entre fuentes de luz sin direcci&oacute;n 
+  (ambiente y omnidireccional) y con direcci&oacute;n (direccional y foco). Hemos 
+  visto que las fuentes con direcci&oacute;n siempre est&aacute;n apuntando en 
+  la direcci&oacute;n del eje de las Z negativo. Si queremos modificar este direcci&oacute;n 
+  podemos aplicar una rotaci&oacute;n a la luz mediante un objeto <code>Transform</code>. 
+  De la misma forma, en las fuentes con posici&oacute;n podremos aplicar una traslaci&oacute;n 
+  para modificar la posici&oacute;n de la fuente de luz con este objeto.</p>
+<pre class="codigo"><strong>Transform</strong> tLuz;
+...
+tLuz = new <strong>Transform</strong>();</pre>
+<p>Para a&ntilde;adir las luces al mundo utilizaremos el m&eacute;todo <code>addLight</code> 
+  sobre el objeto de contexto gr&aacute;fico 3D, en el que especificaremos la 
+  luz y la transformaci&oacute;n que se va a realizar:</p>
+<pre class="codigo">g3d.<strong>addLight</strong>(luz, tLuz);</pre>
+<p>Si como transformaci&oacute;n especificamos <code>null</code>, se aplicar&aacute; 
+  la identidad. Por ejemplo en el caso de una luz ambiente no tiene sentido aplicar 
+  ninguna transformaci&oacute;n a la luz, ya que no tiene ni posici&oacute;n ni 
+  direcci&oacute;n.</p>
+<pre class="codigo">g3d.<strong>addLight</strong>(luzAmbiente, null);</pre>
+<p>Al igual que ocurr&iacute;a en el caso de la c&aacute;mara, si las luces van 
+  a permanecer fijas s&oacute;lo hace falta que las a&ntilde;adamos una vez durante 
+  la inicializaci&oacute;n. Sin embargo, si se van a mover, tendremos que establecer 
+  la posici&oacute;n de la luz cada vez que se renderiza para que se apliquen 
+  los cambios. En este caso si a&ntilde;adimos las luces dentro del m&eacute;todo 
+  <code>paint</code> deberemos llevar cuidado, ya que el m&eacute;todo <code>addLight</code> 
+  a&ntilde;ade luces sobre las que ya tiene definidas el mundo. Para evitar que 
+  las luces se vayan acumulando, antes de volver a a&ntilde;adirlas tendremos 
+  que eliminar las que ten&iacute;amos en la iteraci&oacute;n anterior con <code>resetLights</code>. 
+  Una vez hecho esto podremos a&ntilde;adir las dem&aacute;s luces:</p>
+<pre class="codigo">g3d.<strong>resetLights</strong>();<br>g3d.<strong>addLight</strong>(luz, tLuz);<br>g3d.<strong>addLight</strong>(luzAmbiente, null);</pre>
+<h2><strong>13.5. Fondo</strong></h2>
+<p>Tambi&eacute;n deberemos establecer un fondo para el visor antes de renderizar 
+  en &eacute;l los gr&aacute;ficos 3D. Como fondo podemos poner un color s&oacute;lido 
+  o una imagen. El fondo lo representaremos mediante un objeto de la clase <code>Background</code>:</p>
+<pre class="codigo"><strong>Background</strong> fondo;
+...
+fondo = new <strong>Background</strong>();</pre>
+<p>Con el constructor vac&iacute;o construiremos el fondo por defecto que consiste 
+  en un fondo negro. Podemos cambiar el color de fondo con el m&eacute;todo <code>setColor</code>, 
+  o establecer una imagen de fondo con <code>setImage</code>. </p>
+<p>Cada vez que vayamos a renderizar los gr&aacute;ficos en <code>paint</code> 
+  es importante que vaciemos todo el &aacute;rea de dibujo con el color (o la 
+  imagen) de fondo. Para ello utilizaremos el m&eacute;todo <code>clear</code>:</p>
+<pre class="codigo">g3d.<strong>clear</strong>(fondo);</pre>
+<p>Si no hici&eacute;semos esto, es posible que tampoco se visualizasen los gr&aacute;ficos 
+  3D que se rendericen posteriormente. Si no queremos crear ning&uacute;n fondo 
+  y utilizar el fondo negro por defecto, podremos llamar a este m&eacute;todo 
+  proporcionando <code>null</code> como par&aacute;metro:</p>
+<pre class="codigo">g3d.<strong>clear</strong>(null);</pre>
+<p>Vamos a recapitular todo lo visto hasta ahora, y a ver c&oacute;mo quedar&aacute; 
+  el m&eacute;todo <code>paint</code> a&ntilde;adiendo luces, c&aacute;mara y 
+  fondo:</p>
+<pre class="codigo">protected void <strong>paint</strong>(Graphics g) { 
+  try { 
+    g3d.<strong>bindTarget</strong>(g);
+<br>    g3d.<strong>setCamera</strong>(cam, tCam);
+<br>    g3d.<strong>resetLights</strong>();
+    g3d.<strong>addLight</strong>(luz, tLuz);
+    g3d.<strong>addLight</strong>(luzAmbiente, null);
+<br>    g3d.<strong>clear</strong>(fondo);<br><br>    g3d.<strong>render</strong>(vb, tsa, ap, tCubo); 
+  } finally { 
+    g3d.<strong>releaseTarget</strong>();
+  } 
+}</pre>
+<h2><strong>13.6. Modo inmediato</strong></h2>
+<p>Para crear gr&aacute;ficos utilizando este modo deberemos definir la lista 
+  de v&eacute;rtices (x, y, z) de nuestro gr&aacute;fico, y una lista de &iacute;ndices 
+  en la que definimos las caras (pol&iacute;gonos) que se van a mostrar. Cada 
+  cara se construir&aacute; a partir de un conjunto de v&eacute;rtices. Los &iacute;ndices 
+  con los que se define cada cara en la lista de caras, har&aacute;n referencia 
+  a los &iacute;ndices de los v&eacute;rtices que la componen en la lista de v&eacute;rtices.</p>
+<p>A continuaci&oacute;n se muestra un ejemplo de c&oacute;mo crear un cubo utilizando 
+  modo inmediato:</p>
+<pre class="codigo">// Lista de vertices<br>short [] vertexValues = {
+   0, 0, 0, // 0 
+   0, 0, 1, // 1
+   0, 1, 0, // 2
+   0, 1, 1, // 3
+   1, 0, 0, // 4 
+   1, 0, 1, // 5 
+   1, 1, 0, // 6 
+   1, 1, 1  // 7
+};<br><br>// Lista de caras<br>int [] faceIndices = {
+   0, 1, 2, 3,
+   7, 5, 6, 4,
+   4, 5, 0, 1,
+   3, 7, 2, 6,
+   0, 2, 4, 6,
+   1, 5, 3, 7
+};</pre>
+<p>En la lista de v&eacute;rtices podemos ver que tenemos definidas las coordenadas 
+  de las 8 esquinas del cubo. En la lista de caras se definen las 6 caras del 
+  cubo. Cada cara se define a partir de los 4 v&eacute;rtices que la forman. De 
+  estos v&eacute;rtices especificaremos su &iacute;ndice en la lista de v&eacute;rtices.</p>
+<p>En M3G representaremos las caras y v&eacute;rtices de nuestros objetos mediante 
+  los objetos <code>VertexBuffer</code> e <code>IndexBuffer</code> respectivamente. 
+  Estos objetos los crearemos a partir de los arrays de v&eacute;rtices y caras 
+  definidos anteriormente.</p>
+<p>Para crear el objeto <code>VertexBuffer</code> es necesario que le pasemos 
+  los arrays de datos necesarios en forma de objetos <code>VertexArray</code>. 
+  Para construir el objeto <code>VertexArray</code> como par&aacute;metros deberemos 
+  proporcionar:</p>
+<pre class="codigo"><strong>VertexArray</strong> va = new <strong>VertexArray</strong>(numVertices, 
+                                 numComponentes, bytesComponente);</pre>
+<p>Debemos decir en <code>numVertices</code> el n&uacute;mero de v&eacute;rtices 
+  que hemos definido, en <code>numComponentes</code> el n&uacute;mero de componentes 
+  de cada v&eacute;rtice (al tratarse de coordenadas 3D en este caso ser&aacute; 
+  siempre 3: x, y ,z) y el n&uacute;mero de bytes por componente. Es decir, si 
+  se trata de una array de tipo <code>byte</code> tendr&aacute; un byte por componente, 
+  mientras que si es de tipo <code>short</code> tendr&aacute; 2 bytes por componente. 
+</p>
+<p>Una vez creado el array, deberemos llenarlo de datos. Para ello utilizaremos 
+  el siguiente m&eacute;todo:</p>
+<pre class="codigo">va.<strong>set</strong>(verticeInicial, numVertices, listaVertices);</pre>
+<p>Proporcionaremos un array de v&eacute;rtices (<code>listaVertices</code>) como 
+  el visto en el ejemplo anterior para insertar dichos v&eacute;rtices en el objeto 
+  <code>VertexArray</code>. Adem&aacute;s diremos, dentro de este array de v&eacute;rtices, 
+  cual es el v&eacute;rtice inicial a partir del cual queremos empezar a insertar 
+  (<code>verticeInicial</code>) y el n&uacute;mero de v&eacute;rtices, a partir 
+  de dicho v&eacute;rtice, que vamos a insertar (<code>numVertices</code>).</p>
+<p>En el caso del array de v&eacute;rtices de nuestro ejemplo, utilizaremos los 
+  siguientes datos:</p>
+<pre class="codigo"><strong>VertexArray</strong> va = new <strong>VertexArray</strong>(8, 3, 2);
+va.<strong>set</strong>(0, 8, vertexValues);</pre>
+<p>Con esto tendremos construido un objeto <code>VertexArray</code> en el que 
+  tendremos el array de posiciones de los v&eacute;rtices. </p>
+<p>Ahora podremos crear un objeto <code>VertexBuffer</code> y utilizar el objeto 
+  anterior para establecer su lista de coordenadas de los v&eacute;rtices. </p>
+<pre class="codigo"><strong>VertexBuffer</strong> vb;
+...
+vb = new <strong>VertexBuffer</strong>();
+vb.<strong>setPositions</strong>(va, 1.0f, null);</pre>
+<p>Al m&eacute;todo <code>setPositions</code> le podemos proporcionar como segundo 
+  y tercer par&aacute;metro un factor de escala y una traslaci&oacute;n respectivamente, 
+  para transformar las coordenadas de los puntos que hemos proporcionado. Si no 
+  queremos aplicar ninguna transformaci&oacute;n geom&eacute;trica a estos puntos, 
+  simplemente proporcionaremos como escala <code>1.0f</code> y como traslaci&oacute;n 
+  <code>null</code>. </p>
+<p>Una vez creado este objeto, necesitaremos el objeto de &iacute;ndices en el 
+  que se definen las caras. Este objeto ser&aacute; de tipo <code>IndexBuffer</code>, 
+  sin embargo esta clase es abstracta, por lo que deberemos utilizar una de sus 
+  subclases. La &uacute;nica subclase disponible por el momento es <code>TriangleStripArray</code> 
+  que representa las caras a partir de tiras (strips) de tri&aacute;ngulos. </p>
+<p>Para definir cada tira de tri&aacute;ngulos podremos especificar 3 o m&aacute;s 
+  v&eacute;rtices. Si indicamos m&aacute;s de 3 v&eacute;rtices se ir&aacute;n 
+  tomando como tri&aacute;ngulos cada trio adyacente de v&eacute;rtices. Por ejemplo, 
+  si utilizamos la tira <code>{ 1,2,3,4 }</code>, se crear&aacute;n los tri&aacute;ngulos 
+  <code>{ 1,2,3 }</code> y <code>{ 2,3,4 }</code>. </p>
+<div align="center"><img src="imagenes/graficos/faces.gif" width="251" height="183"> 
+</div>
+<p class="caption">Figura 9. Tira de tri&aacute;ngulos para una cara del cubo.</p>
+<p>El orden en el que indiquemos los v&eacute;rtices de cada pol&iacute;gono ser&aacute; 
+  importante. Seg&uacute;n el sentido de giro en el que se defina su cara frontal 
+  y cara trasera ser&aacute; una u otra. La cara frontal ser&aacute; aquella para 
+  la que el sentido de giro de los v&eacute;rtices vaya en el sentido de las agujas 
+  del reloj. </p>
+<p>Cuando creemos este objeto deberemos proporcionar, a parte de la lista de &iacute;ndices, 
+  un array con el tama&ntilde;o de cada strip. </p>
+<p>Por ejemplo, en el caso del ejemplo del cubo, como cada strip se compone de 
+  4 &iacute;ndices, el array de tama&ntilde;os tendr&aacute; el valor 4 para cada 
+  uno de los 6 strips que ten&iacute;amos definidos:</p>
+<pre class="codigo">int [] stripSizes = {
+   4, 4, 4, 4, 4, 4 
+};</pre>
+<p>Con esta informaci&oacute;n ya podremos crear el objeto <code>TriangleStripArray</code>:</p>
+<pre class="codigo"><strong>TriangleStripArray</strong> tsa;
+... 
+tsa = new <strong>TriangleStripArray</strong>(faceIndices, stripSizes);
+</pre>
+<p>Adem&aacute;s de la informaci&oacute;n de v&eacute;rtices y caras, deberemos 
+  darle una apariencia al objeto creado. Para ello podremos utilizar el objeto 
+  <code>Appearance</code>. Podemos crear un objeto con la apariencia por defecto:</p>
+<pre class="codigo"><strong>Appaerance</strong> ap;
+...
+ap = new <strong>Appaerance</strong>();</pre>
+<p>Sobre este objeto podremos cambiar el material o la textura de nuestro objeto 
+  3D. </p>
+<p>Para renderizar el gr&aacute;fico 3D que hemos construido, utilizaremos la 
+  siguiente variante del m&eacute;todo <code>render</code>:</p>
+<pre class="codigo">g3d.<strong>render</strong>(VertexBuffer vertices, IndexBuffer indices, <br>           Appaerance apariencia, Transform transformacion);</pre>
+<p>En ella especificaremos los distintos componentes de nuestra figura 3D, conocida 
+  como <em>submesh</em>: lista de v&eacute;rtices (<code>VertexBuffer</code>), 
+  lista de caras (<code>IndexBuffer</code>) y apariencia (<code>Appaerance</code>). 
+  Adem&aacute;s especificaremos tambi&eacute;n un objeto <code>Transform</code> 
+  con la transformaci&oacute;n geom&eacute;trica que se le aplicar&aacute; a nuestro 
+  objeto al a&ntilde;adirlo a la escena 3D. Podemos crear una transformaci&oacute;n 
+  identidad utilizando el constructor vac&iacute;o de esta clase:</p>
+<pre class="codigo"><strong>Transform</strong> tCubo;
+...
+tCubo = new <strong>Transform</strong>();</pre>
+<p>Aplicando esta transformaci&oacute;n se dibujar&aacute; el cubo en sus coordenadas 
+  originales. Si posteriormente queremos moverlo en el espacio (trasladarlo o 
+  rotarlo) o cambiar su tama&ntilde;o, podremos hacerlo simplemente modificando 
+  esta transformaci&oacute;n.</p>
+<p>Para renderizar nuestro ejemplo del cubo utilizaremos el m&eacute;todo <code>render</code> 
+  como se muestra a continuaci&oacute;n:</p>
+<pre class="codigo">g3d.<strong>render</strong>(vb, tsa, ap, tCubo);
+</pre>
+<p>Con lo que hemos visto hasta ahora, si mostramos el cubo que hemos creado aparecer&aacute; 
+  con el siguiente aspecto:</p>
+<div align="center"><img src="imagenes/graficos/cubo.gif" width="180" height="177"> 
+</div>
+<p>Esta es la apariencia (<code>Appaerance</code>) definida por defecto. En ella 
+  no hay ning&uacute;n material ni textura definidos para el objeto. Al no haber 
+  ning&uacute;n material establecido (el material es <code>null</code>), la iluminaci&oacute;n 
+  no afecta al objeto. </p>
+<p>Vamos ahora a establecer un material para el objeto. Creamos un material (objeto 
+  <code>Material</code>):</p>
+<pre class="codigo"><strong>Material</strong> mat = new <strong>Material</strong>();</pre>
+<p>Esto nos crea un material blanco por defecto. Podremos modificar en este objeto 
+  el color de ambiente, el color difuso, el color especular, y el color emitido 
+  del material.</p>
+<p>Cuando hayamos establecido un material para el objeto, la iluminaci&oacute;n 
+  afectar&aacute; sobre &eacute;l. En este caso ser&aacute; necesario definir 
+  las normales de los v&eacute;rtices del objeto. Si estas normales no estuviesen 
+  definidas, se producir&aacute; un error al renderizar.</p>
+<p>Para asignar las normales a los v&eacute;rtices del objeto utilizaremos un 
+  objeto <code>VertexArray</code> que a&ntilde;adiremos al <code>VertexBuffer</code> 
+  de nuestro objeto utilizando el m&eacute;todo <code>setNormals</code>.</p>
+<pre class="codigo">byte [] normalValues = {
+   -1, -1, -1,
+   -1, -1, 1,
+   -1, 1, -1,
+   -1, 1, 1,
+   1, -1, -1,
+   1, -1, 1,
+   1, 1, -1,
+   1, 1, 1
+};
+<br>...<br>   
+<strong>VertexArray</strong> na = new <strong>VertexArray</strong>(8, 3, 1);
+na.<strong>set</strong>(0, 8, normalValues); 
+<br>...<br>   
+vb.<strong>setNormals</strong>(na);</pre>
+<p>Con esto, al visualizar nuestro cubo con una luz direccional apuntando desde 
+  nuestro punto de vista hacia el cubo, se mostrar&aacute; con el siguiente aspecto:</p>
+<div align="center"><img src="imagenes/graficos/cubo_mat.gif" width="180" height="177"><br>
+</div>
+<p>Vamos a ver ahora como a&ntilde;adir textura al objeto. Para ello lo primero 
+  que debemos hacer es a&ntilde;adir coordenadas de textura a cada v&eacute;rtice. 
+  Para a&ntilde;adir estas coordenadas utilizaremos tambi&eacute;n un objeto <code>VertexArray</code> 
+  que a&ntilde;adiremos al <code>VertexBuffer</code> mediante el m&eacute;todo 
+  <code>setTexCoords</code>. </p>
+<pre class="codigo">short [] tex = {
+   0,0, 0,0, 0,1, 0,1,
+   1,0, 1,0, 1,1, 1,1
+};
+   
+<strong>VertexArray</strong> ta = new <strong>VertexArray</strong>(8, 2, 2);
+ta.set(0, 8, tex);
+   
+vb.<strong>setTexCoords</strong>(0, ta, 1.0f, null);</pre>
+<p>El primer par&aacute;metro que toma <code>setTexCoords</code> es el &iacute;ndice 
+  de la unidad de textura a la que se van a asignar esas coordenadas. Como segundo 
+  par&aacute;metro se proporcionan las coordenadas en forma de <code>VertexArray</code>. 
+  El tercer y cuarto par&aacute;metro nos permiten realizar escalados y traslaciones 
+  de estas coordenadas respectivamente.</p>
+<p>Una vez hecho esto podemos crear la textura a partir de una imagen y a&ntilde;adirla 
+  a la apariencia:</p>
+<pre class="codigo">try {
+  Image img = Image.createImage(&quot;/texture.png&quot;);
+  <strong>Image2D</strong> img2d = new <strong>Image2D</strong>(Image2D.RGB, img);
+   
+  <strong>Texture2D</strong> tex2d = new <strong>Texture2D</strong>(img2d);
+  ap.<strong>setTexture</strong>(0, tex2d);
+} catch (IOException e) { }</pre>
+<p>La textura se establece en el objeto <code>Appaerance</code> mediante el m&eacute;todo 
+  <code>setTexture</code>. A este m&eacute;todo le proporcionamos como par&aacute;metros 
+  el &iacute;ndice de la unidad de textura, y la textura que vamos a establecer 
+  en dicha unidad de textura. De esta forma se podr&aacute;n definir varias unidades 
+  de textura, teniendo cada una de ellas unas coordenadas y una imagen.</p>
+<p>Con esto el aspecto del cubo ser&aacute; el siguiente:</p>
+<div align="center"><img src="imagenes/graficos/cubo_tex.gif" width="180" height="177"> 
+</div>
+<p>Podemos a&ntilde;adir animaci&oacute;n al objeto modificando su transformaci&oacute;n 
+  a lo largo del tiempo. Para ello podemos crear un hilo como el siguiente:</p>
+<pre class="codigo">public void <strong>run</strong>() {
+  while(true) {
+    tCubo.<strong>postTranslate</strong>(0.5f, 0.5f, 0.5f);
+    tCubo.<strong>postRotate</strong>(1.0f, 1.0f, 1.0f, 1.0f);
+    tCubo.<strong>postTranslate</strong>(-0.5f, -0.5f, -0.5f);
+    <strong>repaint</strong>();
+    try {
+      Thread.<strong>sleep</strong>(25);
+    } catch (InterruptedException e) { }
+  }
+}</pre>
+<p>A continuaci&oacute;n mostramos el c&oacute;digo completo del canvas de este 
+  ejemplo:</p>
+<pre class="codigo">package es.ua.j2ee.m3d;<br><br>import java.io.IOException;<br><br>import javax.microedition.lcdui.*;
+import javax.microedition.m3g.*;
+<br>public class Visor3DInmediate extends Canvas implements Runnable {<br><br>  MIDlet3D owner;
+   
+  Graphics3D g3d;
+  Transform tCam;
+  Transform tLuz;
+  Transform tCubo;
+  VertexBuffer vb;
+  IndexBuffer tsa;
+  Appearance ap;
+  Camera cam;
+  Light luz;
+  Light luzAmbiente;
+  Background fondo;
+   
+  short [] vertexValues = {
+    0, 0, 0, // 0 
+    0, 0, 1, // 1
+    0, 1, 0, // 2
+    0, 1, 1, // 3
+    1, 0, 0, // 4 
+    1, 0, 1, // 5 
+    1, 1, 0, // 6 
+    1, 1, 1 // 7
+  };<br><br>  byte [] normalValues = {
+    -1, -1, -1,
+    -1, -1, 1,
+    -1, 1, -1,
+    -1, 1, 1,
+    1, -1, -1,
+    1, -1, 1,
+    1, 1, -1,
+    1, 1, 1
+  };
+   
+  int [] faceIndices = {
+    0, 1, 2, 3,
+    7, 5, 6, 4,
+    4, 5, 0, 1,
+    3, 7, 2, 6,
+    0, 2, 4, 6,
+    1, 5, 3, 7
+  };<br><br>  int [] stripSizes = {
+    4, 4, 4, 4, 4, 4 
+  };
+   
+  short [] tex = {
+    0,0, 0,0, 0,1, 0,1,
+    1,0, 1,0, 1,1, 1,1
+  };
+   
+  public Visor3DInmediate(MIDlet3D owner) {
+    this.owner = owner; 
+    init3D();
+  }<br><br>  public void init3D() {
+   
+    g3d = Graphics3D.getInstance();
+    tCubo = new Transform();
+    tCam = new Transform();
+    tLuz = new Transform();<br><br>    cam = new Camera();
+    cam.setPerspective(60.0f, (float)getWidth()/(float)getHeight(), 1.0f, 10.0f);
+    tCam.postTranslate(0.0f, 0.0f, 2.0f);<br><br>    luz = new Light();
+    luz.setColor(0x0ffffff);
+    luz.setIntensity(1.0f);
+    luz.setMode(Light.DIRECTIONAL);
+    tLuz.postTranslate(0.0f, 0.0f, 5.0f); 
+   
+    luzAmbiente = new Light();
+    luzAmbiente.setColor(0x0ffffff);
+    luzAmbiente.setIntensity(0.5f);
+    luzAmbiente.setMode(Light.AMBIENT);
+   
+    fondo = new Background();
+   
+    VertexArray va = new VertexArray(8, 3, 2);
+    va.set(0, 8, vertexValues);<br><br>    VertexArray na = new VertexArray(8, 3, 1);
+    na.set(0, 8, normalValues);<br><br>    VertexArray ta = new VertexArray(8, 2, 2);
+    ta.set(0, 8, tex);
+   
+    vb = new VertexBuffer();
+    vb.setPositions(va, 1.0f, null);
+    vb.setNormals(na);
+    vb.setTexCoords(0, ta, 1.0f, null);
+   
+    tsa = new TriangleStripArray(faceIndices, stripSizes);
+   
+    ap = new Appearance();
+    Material mat = new Material();
+    ap.setMaterial(mat);
+   
+    try {
+      Image img = Image.createImage(&quot;/texture.png&quot;);
+      Image2D img2d = new Image2D(Image2D.RGB, img);
+   
+      Texture2D tex2d = new Texture2D(img2d);
+      ap.setTexture(0, tex2d);
+    } catch (IOException e) { }
+   
+    tCubo.postTranslate(-0.5f, -0.5f, -0.5f);
+  }
+   
+  protected void showNotify() {
+    Thread t = new Thread(this);
+    t.start();
+  } <br><br>  public void run() {
+    while(true) {
+      tCubo.postTranslate(0.5f, 0.5f, 0.5f);
+      tCubo.postRotate(1.0f, 1.0f, 1.0f, 1.0f);
+      tCubo.postTranslate(-0.5f, -0.5f, -0.5f);
+      repaint();
+      try {
+        Thread.sleep(25);
+      } catch (InterruptedException e) { }
+    }
+  }
+   
+  protected void paint(Graphics g) {
+    try {
+      g3d.bindTarget(g);
+   
+      g3d.setCamera(cam, tCam);
+      g3d.resetLights();
+      g3d.addLight(luz, tLuz);
+      g3d.addLight(luzAmbiente, null);
+      g3d.clear(fondo);
+   
+      g3d.render(vb, tsa, ap, tCubo);
+    } finally {
+      g3d.releaseTarget(); 
+    }
+  }<br>}</pre>
+<h2><strong>13.7. Modo retained</strong></h2>
+<p>Utilizando este modo trabajaremos con un grafo en el que tendremos los distintos 
+  elementos de la escena 3D: objetos 3D, luces, c&aacute;maras, etc. Este grafo 
+  estar&aacute; compuesto por objetos derivados de <code>Node</code> (nodos). 
+  Tenemos los siguientes tipos de nodos disponibles:</p>
+<ul>
+  <li><strong><code>World</code></strong>: El nodo ra&iacute;z de este grafo es 
+    del tipo <code>World</code>, que representa nuestro mundo 3D completo. De 
+    &eacute;l colgaremos todos los objetos del mundo, las c&aacute;maras y las 
+    luces. Adem&aacute;s, el nodo <code>World</code> tendr&aacute; asociado el 
+    fondo (<code>Background</code>) de la escena.<br>
+  </li>
+  <li><strong><code>Group</code></strong>: Grupo de nodos. Nos permite crear grupos 
+    de nodos dentro del grafo. De &eacute;l podremos colgar varios nodos. El tener 
+    los nodos agrupados de esta forma nos permitir&aacute;, aplicando transformaciones 
+    geom&eacute;tricas sobre el grupo, mover todos estos nodos como un &uacute;nico 
+    bloque. Podemos crear un nuevo grupo creando un nuevo objeto <code>Group</code>, 
+    y a&ntilde;adir nodos hijos mediante su m&eacute;todo <code>addChild</code>.<br>
+  </li>
+  <li><strong><code>Camera</code></strong>: Define una c&aacute;mara (punto de 
+    vista) en la escena. Las c&aacute;maras definen la posici&oacute;n del espectador 
+    en la escena. Podemos tener varias c&aacute;maras en el mundo, pero en un 
+    momento dado s&oacute;lo puede haber una c&aacute;mara activa, que ser&aacute; 
+    la que se utilice para renderizar. Se crean como hemos visto en apartados 
+    anteriores. El objeto correspondiente al mundo (<code>World</code>) tiene 
+    un m&eacute;todo <code>setActiveCamera</code> con el que podremos establecer 
+    cu&aacute;l ser&aacute; la c&aacute;mara activa en cada momento.<br>
+  </li>
+  <li><strong><code>Light</code></strong>: Define las luces de la escena. Se crean 
+    como hemos visto en apartados anteriores. <br>
+  </li>
+  <li><strong><code>Mesh</code></strong>: Define un objeto 3D. Este objeto se 
+    puede crear a partir de sus v&eacute;rtices y caras como vimos en el apartado 
+    anterior.</li>
+</ul>
+<pre class="codigo"><strong>Mesh</strong> obj = new <strong>Mesh</strong>(vb, tsa, ap);</pre>
+<ul>
+  <li><strong><code>Sprite3D</code></strong>: Representa una imagen 2D posicionada 
+    dentro de nuestro mundo 3D y alineada con la pantalla.</li>
+</ul>
+<div align="center"><img src="imagenes/graficos/nodos.gif" width="337" height="211"> 
+</div>
+<p class="caption">Figura 10. Ejemplo de grafo de la escena.</p>
+<p>En este modo normalmente cargaremos estos componentes de la escena 3D de un 
+  fichero con formato M3G. Para crear mundo en este formato podremos utilizar 
+  herramientas como Swerve Studio. De este modo podremos modelar objetos 3D complejos 
+  utilizando una herramienta adecuada, y posteriormente importarlos en nuestra 
+  aplicaci&oacute;n.</p>
+<p>Para cargar objetos 3D de un fichero M3G utilizaremos un objeto <code>Loader</code> 
+  de la siguiente forma:</p>
+<pre class="codigo"><strong>World</strong> mundo;<br>...<br>try {
+  <strong>Object3D</strong> [] objs = <strong>Loader</strong>.<strong>load</strong>(&quot;/mundo.m3g&quot;); 
+  mundo = (<strong>World</strong>)objs[0];
+} catch (IOException e) {
+  System.out.println(&quot;Error al cargar modelo 3D: &quot; + e.getMessage());
+}</pre>
+<p>Con <code>load</code> cargaremos del fichero M3G especificado los objetos 3D 
+  que contenga. La clase <code>Object3D</code> es la superclase de todos los tipos 
+  de objetos que podemos utilizar para definir nuestra escena. De esta forma permitimos 
+  que esta funci&oacute;n nos devuelva cualquier tipo de objeto, seg&uacute;n 
+  lo que haya almacenado en el fichero. Estos objetos pueden ser nodos como los 
+  vistos anteriormente, animaciones, im&aacute;genes, etc.</p>
+<p>Por ejemplo, si tenemos un fichero M3G que contiene un mundo 3D completo (objeto 
+  <code>World</code>), cogeremos el primer objeto devuelto y haremos una conversi&oacute;n 
+  cast al tipo adecuado (<code>World</code>).</p>
+<p>Como en este objeto se define la escena completa, no har&aacute; falta a&ntilde;adir 
+  nada m&aacute;s, podemos renderizarlo directamente con:</p>
+<pre class="codigo">protected void <strong>paint</strong>(Graphics g) {
+  try {
+    g3d.<strong>bindTarget</strong>(g);   
+    g3d.<strong>render</strong>(mundo);
+  } finally {
+    g3d.<strong>releaseTarget</strong>(); 
+  }
+}</pre>
+<p>En el mundo 3D del fichero, a parte de los modelos 3D de los objetos, luces 
+  y c&aacute;maras, podemos almacenar animaciones predefinidas sobre elementos 
+  del mundo. Para utilizar esta animaci&oacute;n llamaremos al m&eacute;todo <code>animate</code> 
+  sobre el mundo que queremos animar:</p>
+<pre class="codigo">protected void <strong>paint</strong>(Graphics g) {
+  try {
+    g3d.<strong>bindTarget</strong>(g);<br>    mundo.<strong>animate</strong>(tiempo);
+    g3d.<strong>render</strong>(mundo);
+  } finally {
+    g3d.<strong>releaseTarget</strong>(); 
+  }
+}</pre>
+<p>Le deberemos proporcionar un valor de tiempo, que deberemos ir incrementando 
+  cada vez que se pinta. Podemos crear un hilo que cada cierto periodo incremente 
+  este valor y llame a <code>repaint</code> para volver a renderizar la escena. 
+</p>
+<p>A continuaci&oacute;n vemos el c&oacute;digo completo el ejemplo de mundo que 
+  utiliza modo <em>retained</em>:</p>
+<pre class="codigo">package es.ua.j2ee.m3d;<br><br>import java.io.IOException;<br><br>import javax.microedition.lcdui.*;
+import javax.microedition.m3g.*;<br><br>public class Visor3DRetained extends Canvas implements Runnable {<br><br>  MIDlet3D owner;
+<br>  Graphics3D g3d;
+  World mundo;
+<br>  int tiempo = 0;
+   
+  public Visor3DRetained(MIDlet3D owner) {
+    this.owner = owner;   
+    init3D();
+  }<br><br>  public void init3D() {  
+    g3d = Graphics3D.getInstance();
+   
+    try {
+      Object3D [] objs = Loader.load(&quot;/mundo.m3g&quot;); 
+      mundo = (World)objs[0];
+    } catch (IOException e) {
+      System.out.println(&quot;Error al cargar modelo 3D: &quot; + e.getMessage());
+    }
+  }
+   
+  protected void showNotify() {
+    Thread t = new Thread(this);
+    t.start();
+  }<br><br>  public void run() {
+    while(true) {
+      tiempo+=10;
+      repaint();
+      try {
+        Thread.sleep(25);
+      } catch (InterruptedException e) { }
+    }
+  }
+   
+  protected void paint(Graphics g) {
+    try {
+      g3d.bindTarget(g);
+   
+      mundo.animate(tiempo);
+      g3d.render(mundo);
+    } finally {
+      g3d.releaseTarget(); 
+    }
+  }<br>}</pre>
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 4: Entrada / Salida</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1> 4. Entrada/Salida </h1>
+             
+<p>&nbsp; </p>
+<p>Los programas muy a menudo necesitan enviar datos a un determinado destino,     o bien leerlos de una determinada fuente externa, como por ejemplo puede ser     un fichero para almacenar datos de forma permanente, o bien enviar datos a trav&eacute;s     de la red, a memoria, o a otros programas. Esta entrada/salida de datos en Java     la realizaremos por medio de <em>flujos (streams)</em> de datos, a trav&eacute;s de los     cuales un programa podr&aacute; recibir o enviar datos en serie.&nbsp;</p>
+<h2>4.1 Flujos de datos de entrada/salida</h2>
+<p>Existen varios objetos que hacen de flujos de datos, y que se distinguen por     la finalidad del flujo de datos y por el tipo de datos que viajen a trav&eacute;s de     ellos. Seg&uacute;n el tipo de datos&nbsp; que transporten podemos distinguir:</p>
+<ul>
+  <li>Flujos de caracteres</li>
+  <li>Flujos de bytes</li>
+</ul>
+<p>Dentro de cada uno de estos grupos tenemos varios pares de objetos, de los     cuales uno nos servir&aacute; para leer del flujo y el otro para escribir en &eacute;l. Cada     par de objetos ser&aacute; utilizado para comunicarse con distintos elementos (memoria,     ficheros, red u otros programas). Estas clases, seg&uacute;n sean de entrada o salida     y seg&uacute;n sean de caracteres o de bytes llevar&aacute;n distintos sufijos, seg&uacute;n se muestra     en la siguiente tabla:</p>
+<table border="1" width="100%">
+  <tbody>
+    <tr>
+      <td width="33%">&nbsp;</td>
+      <td width="33%"><strong>Flujo de entrada / lector</strong></td>
+      <td width="34%"><strong>Flujo de salida / escritor</strong></td>
+    </tr>
+    <tr>
+      <td width="33%"><strong>Caracteres</strong></td>
+      <td width="33%">XXXXReader</td>
+      <td width="34%">XXXXWriter</td>
+    </tr>
+    <tr>
+      <td width="33%"><strong>Bytes</strong></td>
+      <td width="33%">XXXXInputStream</td>
+      <td width="34%">XXXXOutputStream</td>
+    </tr>
+  </tbody>
+</table>
+<p>Donde XXXX se referir&aacute; a la fuente o sumidero de los datos. Puede tomar     valores como los que se muestran a continuaci&oacute;n:</p>
+<table border="1" width="100%">
+  <tbody>
+    <tr>
+      <td width="18%"><strong>File</strong></td>
+      <td width="82%">Acceso a ficheros</td>
+    </tr>
+    <tr>
+      <td width="18%"><strong>Piped</strong></td>
+      <td width="82%">Comunicaci&oacute;n entre programas mediante tuber&iacute;as (pipes)</td>
+    </tr>
+    <tr>
+      <td width="18%"><strong>String</strong></td>
+      <td width="82%">Acceso a una cadena en memoria (solo caracteres)</td>
+    </tr>
+    <tr>
+      <td width="18%"><strong>CharArray</strong></td>
+      <td width="82%">Acceso a un array de caracteres en memoria (solo caracteres)</td>
+    </tr>
+    <tr>
+      <td width="18%"><strong>ByteArray</strong></td>
+      <td width="82%">Acceso a un array de bytes en memoria (solo bytes)</td>
+    </tr>
+  </tbody>
+</table>
+<p>Adem&aacute;s podemos distinguir los flujos de datos seg&uacute;n su prop&oacute;sito, pudiendo     ser:</p>
+<ul>
+  <li>Canales de datos, simplemente para leer o escribir datos directamente en       una fuente o sumidero externo.</li>
+  <li>Flujos de procesamiento, que adem&aacute;s de enviar o recibir datos realizan alg&uacute;n       procesamiento con ellos. Tenemos por ejemplo flujos que realizan un filtrado       de los datos que viajan a trav&eacute;s de ellos (con prefijo Filter), conversores       datos (con prefijo Data), bufferes de datos (con prefijo Buffered), preparados       para la impresi&oacute;n de elementos (con prefijo Print), etc.</li>
+</ul>
+<p>Un tipo de filtros de procesamiento a destacar son aquellos que nos permiten     convertir un flujo de bytes a flujo de caracteres. Estos objetos son <strong>InputStreamReader</strong> y <strong>OutputStreamWriter</strong>. Como podemos ver en su sufijo, son flujos de caracteres,     pero se construyen a partir de flujos de bytes, permitiendo de esta manera acceder     a nuestro flujo de bytes como si fuese un flujo de caracteres.</p>
+<p>Para cada uno de los tipos b&aacute;sicos de flujo que hemos visto existe una superclase,     de la que heredaran todos sus subtipos, y que contienen una serie de m&eacute;todos     que ser&aacute;n comunes a todos ellos. Entre estos m&eacute;todos encontramos los m&eacute;todos     b&aacute;sicos para leer o escribir caracteres o bytes en el flujo a bajo nivel. En     la siguiente tabla se muestran los m&eacute;todos m&aacute;s importantes de cada objeto:</p>
+<table border="1" width="100%">
+  <tbody>
+    <tr>
+      <td width="29%"><strong>InputStream</strong></td>
+      <td width="71%"><strong>read</strong>(), <strong>reset</strong>(), <strong>available</strong>(), <strong>close</strong>()</td>
+    </tr>
+    <tr>
+      <td width="29%"><strong>OutputStream</strong></td>
+      <td width="71%"><strong>write</strong>(int b), <strong>flush</strong>(), <strong>close</strong>()</td>
+    </tr>
+    <tr>
+      <td width="29%"><strong>Reader</strong></td>
+      <td width="71%"><strong>read</strong>(), <strong>reset</strong>(), <strong>close</strong>()</td>
+    </tr>
+    <tr>
+      <td width="29%"><strong>Writer</strong></td>
+      <td width="71%"><strong>write</strong>(int c), <strong>flush</strong>(), <strong>close</strong>()</td>
+    </tr>
+  </tbody>
+</table>
+<p>Aparte de estos m&eacute;todos podemos encontrar variantes de los m&eacute;todos de lectura     y escritura, otros m&eacute;todos, y adem&aacute;s cada tipo espec&iacute;fico de flujo contendr&aacute;     sus propios m&eacute;todos. Todas estas clases se encuentran en el paquete <strong>java.io</strong>.     Para m&aacute;s detalles sobre ellas se puede consultar la especificaci&oacute;n de la API     de Java.</p>
+<h2>4.2. Entrada, salida y salida de error est&aacute;ndar</h2>
+<p>Al igual que en C, en Java tambi&eacute;n existen los conceptos de entrada, salida,     y salida de error est&aacute;ndar. La entrada est&aacute;ndar normalmente se refiere a lo     que el usuario escribe en la consola, aunque el sistema operativo puede hacer     que se tome de otra fuente. De la misma forma la salida y la salida de error     est&aacute;ndar lo que hacen normalmente es mostrar los mensajes y los errores del     programa respectivamente en la consola, aunque el sistema operativo tambi&eacute;n     podr&aacute; redirigirlas a otro destino.</p>
+<p>En Java esta entrada, salida y salida de error est&aacute;ndar se tratan de la misma     forma que cualquier otro flujo de datos, estando estos tres elementos encapsulados     en tres objetos de flujo de datos que se encuentran como propiedades est&aacute;ticas     de la clase <strong>System</strong>:</p>
+<table border="1" width="61%">
+  <tbody>
+    <tr>
+      <td width="52%">&nbsp;</td>
+      <td width="23%"><strong>Tipo</strong></td>
+      <td width="25%"><strong>Objeto</strong></td>
+    </tr>
+    <tr>
+      <td width="52%"><strong>Entrada est&aacute;ndar</strong></td>
+      <td width="23%">InputStream</td>
+      <td width="25%">System.<strong>in</strong></td>
+    </tr>
+    <tr>
+      <td width="52%"><strong>Salida est&aacute;ndar</strong></td>
+      <td width="23%">PrintStream</td>
+      <td width="25%">System.<strong>out</strong></td>
+    </tr>
+    <tr>
+      <td width="52%"><strong>Salida de error est&aacute;ndar</strong></td>
+      <td width="23%">PrintStream</td>
+      <td width="25%">System.<strong>err</strong></td>
+    </tr>
+  </tbody>
+</table>
+<p>Para la entrada est&aacute;ndar vemos que se utiliza un objeto <strong>InputStream</strong> b&aacute;sico, sin embargo para la salida se utilizan objetos <strong>PrintWriter</strong> que     facilitan la impresi&oacute;n de texto ofreciendo a parte del m&eacute;todo com&uacute;n de bajo     nivel <em>write(int b)</em> <strong> </strong>para escribir bytes, dos m&eacute;todos m&aacute;s: <em>print(s)</em> <strong> </strong>y <em>println(s)</em>. Estas funciones nos permitir&aacute;n escribir cualquier     cadena, tipo b&aacute;sico, o bien cualquier objeto que defina el m&eacute;todo <em>toString()</em> que devuelva una representaci&oacute;n del objeto en forma de cadena. La &uacute;nica diferencia     entre los dos m&eacute;todos es que el segundo a&ntilde;ade autom&aacute;ticamente un salto de l&iacute;nea     al final del texto impreso, mientras que en el primero deberemos especificar     expl&iacute;citamente este salto.</p>
+<p>Para escribir texto en la consola normalmente utilizaremos:</p>
+<pre class="codigo">System.out.println("Hola mundo");</pre>
+<p>En el caso de la impresi&oacute;n de errores por la salida de error de est&aacute;ndar, deberemos     utilizar:&nbsp;</p>
+<pre class="codigo">System.err.println("Error: Se ha producido un error");</pre>
+<p>Adem&aacute;s la clase <strong>System</strong> nos permite sustituir estos flujos por defecto     por otros flujos, cambiando de esta forma la entrada, salida y salida de error     est&aacute;ndar.</p>
+<h2>4.3. Acceso a ficheros</h2>
+<p>Podremos acceder a ficheros bien por caracteres, o bien de forma binaria (por     bytes). Las clases que utilizaremos en cada caso son:</p>
+<table border="1" width="100%">
+  <tbody>
+    <tr>
+      <td width="33%">&nbsp;</td>
+      <td width="33%"><strong>Lectura</strong></td>
+      <td width="34%"><strong>Escritura</strong></td>
+    </tr>
+    <tr>
+      <td width="33%"><strong>Caracteres</strong></td>
+      <td width="33%">FileReader</td>
+      <td width="34%">FileWriter</td>
+    </tr>
+    <tr>
+      <td width="33%"><strong>Binarios</strong></td>
+      <td width="33%">FileInputStream</td>
+      <td width="34%">FileOutputStream</td>
+    </tr>
+  </tbody>
+</table>
+<p>Para crear un lector o escritor de ficheros deberemos proporcionar al constructor     el fichero del que queremos leer o en el que queramos escribir. Podremos proporcionar     esta informaci&oacute;n bien como una cadena de texto con el nombre del fichero, o     bien construyendo un objeto <strong>File</strong> representando al fichero al que queremos     acceder. Este objeto nos permitir&aacute; obtener informaci&oacute;n adicional sobre el fichero,     a parte de permitirnos realizar operaciones sobre el sistema de ficheros.</p>
+<p>A continuaci&oacute;n vemos un ejemplo simple de la copia de un fichero car&aacute;cter a     car&aacute;cter:</p>
+<pre class="codigo">public void copia_fichero() 
+{  
+	int c;  
+	try 
+	{  
+		<strong>FileReader</strong> in = new <strong>FileReader</strong>("fuente.txt");
+		<strong>FileWriter</strong> out = new <strong>FileWriter</strong>("destino.txt"); 
+		while( (c = in.<strong>read</strong>()) != -1)  
+		{
+			out.write(c);  
+		}
+		in.<strong>close</strong>(); 
+		out.<strong>close</strong>();  
+	} catch(<strong>FileNotFoundException</strong> e1) {  
+		System.err.println("Error: No se encuentra el fichero");
+	} catch(<strong>IOException</strong> e2) {
+		System.err.println("Error leyendo/escribiendo fichero");  
+	}  
+}</pre>
+<p> En el ejemplo podemos ver que para el acceso a un fichero es necesario capturar     dos excepciones, para el caso de que no exista el fichero al que queramos acceder     y por si se produce un error en la E/S.</p>
+<p>Para la escritura podemos utilizar el m&eacute;todo anterior, aunque muchas veces     nos resultar&aacute; mucho m&aacute;s c&oacute;modo utilizar un objeto <strong>PrintWriter </strong>con el     que podamos escribir directamente l&iacute;neas de texto:</p>
+<pre class="codigo">public void escribe_fichero() 
+{
+	<strong>FileWriter</strong> out = null;  
+	<strong>PrintWriter</strong> p_out = null;  
+	try 
+	{
+		out = new <strong>FileWriter</strong>("result.txt");
+		p_out = new <strong>PrintWriter</strong>(out);  
+		p_out.<strong>println</strong>("Este texto ser&aacute; escrito en el fichero de salida"); 
+	} catch(<strong>IOException</strong> e) {  
+		System.err.println("Error al escribir en el fichero");  
+	} finally {  
+		p_out.<strong>close</strong>();  
+	}  
+}</pre>
+<p>Observad tambi&eacute;n el uso del bloque <em>finally</em>, para cerrar el fichero  tanto si se produce un error al escribir en &eacute;l como si no.</p>
+<h3>4.3.1. Un caso particular: ficheros de propiedades</h3>
+<p>La clase <strong>java.util.Properties</strong> permite manejar de forma muy sencilla lo  que se conoce como <em>ficheros de propiedades</em>. Dichos ficheros permiten  almacenar una serie de pares <em>nombre=valor</em>, de forma que tendr&iacute;a una  apariencia como esta:</p>
+<pre class="codigo">#Comentarios  
+elemento1=valor1  
+elemento2=valor2  
+...  
+elementoN=valorN</pre>
+<p>Para leer un fichero de este tipo, basta con crear un objeto <em>Properties</em>,  y llamar a su m&eacute;todo <em>load()</em>, pas&aacute;ndole como par&aacute;metro el fichero que  queremos leer, en forma de flujo de entrada (<em>InputStream</em>):</p>
+<pre class="codigo">Properties p = new Properties();  
+p.load(new FileInputStream("datos.txt");</pre>
+<p align="left">Una vez le&iacute;do, podemos acceder a todos los elementos del  fichero desde el objeto <em>Properties</em> cargado. Tenemos los m&eacute;todos <em>getProperty</em> y <em>setProperty</em> para acceder a y modificar valores:</p>
+<pre class="codigo">String valorElem1 = p.getProperty("elemento1");  
+p.setProperty("elemento2", "otrovalor");</pre>
+<p align="left">Tambi&eacute;n podemos obtener todos los nombres de elementos que hay,  y recorrerlos, mediante el m&eacute;todo <em>propertyNames()</em>, que nos devuelve una <em>Enumeration</em> para ir recorriendo:</p>
+<pre class="codigo">Enumeration en = p.propertyNames();  
+while (en.hasMoreElements())  
+{  	
+	String nombre = (String)(en.nextElement());  	
+	String valor = p.getProperty(nombre);  
+}</pre>
+<p align="left">Una vez hayamos le&iacute;do o modificado lo que quisi&eacute;ramos, podemos  volver a guardar el fichero de propiedades, con el m&eacute;todo <em>store </em>de <em>Properties</em>,  al que se le pasa un flujo de salida (<em>OutputStream</em>) y una cabecera para  el fichero:</p>
+<pre class="codigo">p.store(new FileOutputStream("datos.txt"), "Fichero de propiedades");</pre>
+<h2>4.4. Lectura de tokens</h2>
+<p>Hemos visto c&oacute;mo leer un fichero car&aacute;cter a car&aacute;cter, pero en el caso de ficheros     con una gram&aacute;tica medianamente compleja, esta lectura a bajo nivel har&aacute; muy     dif&iacute;cil el an&aacute;lisis de este fichero de entrada. Necesitaremos leer del fichero     elementos de la gram&aacute;tica utilizada, los llamados <strong>tokens</strong>, como pueden     ser palabras, n&uacute;mero y otros s&iacute;mbolos.</p>
+<p>La clase <strong>StreamTokenizer </strong>se encarga de partir la entrada en <strong>tokens</strong> y nos permitir&aacute; realizar la lectura del fichero directamente como una secuencia     de <strong>tokens</strong>. Esta clase tiene una serie de constantes identificando los     tipos de <strong>tokens</strong> que puede leer:</p>
+<table border="1" width="100%">
+  <tbody>
+    <tr>
+      <td width="28%">StreamTokenizer.<strong>TT_WORD</strong></td>
+      <td width="72%">Palabra</td>
+    </tr>
+    <tr>
+      <td width="28%">StreamTokenizer.<strong>TT_NUMBER</strong></td>
+      <td width="72%">N&uacute;mero real o entero</td>
+    </tr>
+    <tr>
+      <td width="28%">StreamTokenizer.<strong>TT_EOL</strong></td>
+      <td width="72%">Fin de l&iacute;nea</td>
+    </tr>
+    <tr>
+      <td width="28%">StreamTokenizer.<strong>TT_EOF</strong></td>
+      <td width="72%">Fin de fichero</td>
+    </tr>
+    <tr>
+      <td width="28%">Car&aacute;cter de comillas establecido</td>
+      <td width="72%">Cadena de texto encerrada entre comillas</td>
+    </tr>
+    <tr>
+      <td width="28%">S&iacute;mbolos</td>
+      <td width="72%">Vendr&aacute;n representados por el c&oacute;digo del car&aacute;cter ASCII del         s&iacute;mbolo</td>
+    </tr>
+  </tbody>
+</table>
+<p>Dado que un <strong>StreamTokenizer </strong>se utiliza para analizar un fichero de texto,     siempre habr&aacute; que crearlo a partir de un objeto <strong>Reader</strong> (o derivados).</p>
+<pre class="codigo">StreamTokenizer st = new StreamTokenizer(reader);</pre>
+<p>El m&eacute;todo <strong>nextToken() </strong>leer&aacute; el siguiente token que encuentre en el fichero     y nos devolver&aacute; el tipo de <strong> token</strong> del que se trata. Seg&uacute;n este tipo podremos     consultar las propiedades <strong>sval </strong>o <strong>nval</strong> para ver qu&eacute; cadena o n&uacute;mero     respectivamente se ha le&iacute;do del fichero. Tanto cuando se lea un <strong> token</strong> de tipo <strong>TT_WORD </strong>como de tipo cadena de texto entre comillas el valor     de este <strong> token</strong> estar&aacute; almacenado en <strong>sval</strong>. En caso de la lectura  sea un n&uacute;mero, su valor se almacenar&aacute; en <strong>nval </strong>que es de tipo <strong>double</strong>.     Como los dem&aacute;s s&iacute;mbolos ya devuelven el c&oacute;digo del s&iacute;mbolo como tipo de <strong> token</strong> no ser&aacute; necesario acceder a su valor por separado. Podremos consultar     el tipo del &uacute;ltimo <strong> token</strong> le&iacute;do en la propiedad <strong>ttype</strong>.</p>
+<p>Un bucle de procesamiento b&aacute;sico ser&aacute; el siguiente:</p>
+<pre class="codigo">while(st.<strong>nextToken</strong>() != StreamTokenizer.<strong>TT_EOF</strong>) 
+{  
+	switch(st.<strong>ttype</strong>) 
+	{  
+		case StreamTokenizer.<strong>TT_WORD</strong>: 
+				System.out.println("Leida cadena: " + st.<strong>sval</strong>);
+				break;  
+		case StreamTokenizer.<strong>TT_NUMBER</strong>:
+				System.out.println("Leido numero: " + st.<strong>nval</strong>);
+				break;  &nbsp;&nbsp;&nbsp; 
+	}  
+}</pre>
+<p>Podemos distinguir tres tipos de caracteres:</p>
+<table border="1" height="71" width="100%">
+  <tbody>
+    <tr>
+      <td height="17" width="36%">Ordinarios (<strong>ordinaryChars</strong>)</td>
+      <td height="17" width="64%">Caracteres que forman parte de los <em>tokens</em>.</td>
+    </tr>
+    <tr>
+      <td height="18" width="36%">De palabra (<strong>wordChars</strong>)</td>
+      <td height="18" width="64%">Una secuencia formada enteramente por este tipo         de caracteres se considerar&aacute; una palabra.</td>
+    </tr>
+    <tr>
+      <td height="18" width="36%">De espacio en blanco (<strong>whitespaceChars</strong>)</td>
+      <td height="18" width="64%">Estos caracteres no son interpretados como <em>tokens</em>,         simplemente se utilizan para separar <em>tokens</em>. Normalmente estos caracteres         son el espacio, tabulador, y salto de l&iacute;nea.</td>
+    </tr>
+  </tbody>
+</table>
+<p>Para establecer qu&eacute; caracteres pertenecer&aacute;n a cada uno de estos tipos utilizaremos     los m&eacute;todos <em>ordinaryChars</em>, <em>wordChars</em> y <em>whitespaceChars</em> del objeto <strong>StreamTokenizer</strong>respectivamente. A cada uno de estos     m&eacute;todos le pasamos un rango de caracteres (seg&uacute;n su c&oacute;digo ASCII), que ser&aacute;n     establecidos al tipo correspondiente al m&eacute;todo que hayamos llamado. Por ejemplo,     si queremos que una palabra sea una secuencia de cualquier car&aacute;cter imprimible     (con c&oacute;digos ASCII desde 32 a 127) haremos lo siguiente:</p>
+<pre class="codigo">st.<strong>wordChars</strong>(32,127);</pre>
+<p>Los caracteres pueden ser especificados tanto por su c&oacute;digo ASCII num&eacute;rico     como especificando ese car&aacute;cter entre comillas simples. Si ahora queremos hacer     que las palabras sean separadas por el caracter ':' (dos puntos) hacemos la     siguiente llamada:</p>
+<pre class="codigo">st.<strong>whitespaceChars</strong>(':', ':');</pre>
+<p>De esta forma, si hemos hecho las llamadas anteriores el <em>tokenizer</em> leer&aacute;     palabras formadas por cualquier car&aacute;cter imprimible separadas por los dos puntos     ':'. Al querer cambiar un &uacute;nico car&aacute;cter, como siempre deberemos especificar     un rango, deberemos especificar un rango formado por ese &uacute;nico car&aacute;cter como     inicial y final del rango. Si adem&aacute;s quisieramos utilizar el gui&oacute;n '-' para     separar palabras, no siendo caracteres consecutivos gui&oacute;n y dos puntos en la     tabla ASCII, tendremos que hacer una tercera llamada:</p>
+<pre class="codigo">st.<strong>whitespaceChars</strong>('-', '-');</pre>
+<p>As&iacute; tendremos tanto el gui&oacute;n como los dos puntos como separadores, y el resto     de caracteres imprimibles ser&aacute;n caracteres de palabra. Podemos ver que el <strong>StreamTokenizer</strong> internamente implementa una tabla, en la que asocia a cada car&aacute;cter uno de los     tres tipos mencionados. Al llamar a cada uno de los tres m&eacute;todos cambiar&aacute; el     tipo de todo el rango especificado al tipo correspondiente al m&eacute;todo. Por ello     es importante el orden en el que invoquemos este m&eacute;todo. Si en el ejemplo en     el que hemos hecho estas tres llamadas las hubi&eacute;semos hecho en orden inverso,     al establecer todo el rango de caracteres imprimibles como <em>wordChars</em> hubi&eacute;semos sobrescrito el resultado de las otras dos llamadas y por lo tanto     el gui&oacute;n y los dos puntos no se considerar&iacute;an separadores.</p>
+<p>Podremos personalizar el <em> tokenizer</em> indicando para cada car&aacute;cter a que     tipo pertenece. Adem&aacute;s de con los tipos anteriores, podemos especificar el car&aacute;cter     que se utilice para encerrar las cadenas de texto (<strong>quoteChar</strong>), mediante     el m&eacute;todo <em>quoteChar</em>, y el car&aacute;cter para los comentarios (<strong>commentChar</strong>),     mediante <em>commentChar</em>. Esto nos permitir&aacute; definir comentarios de una l&iacute;nea     que comiencen por un determinado car&aacute;cter, como por ejemplo los comentarios     estilo Pascal comenzados por el car&aacute;cter almohadilla ('#'). Adem&aacute;s tendremos     otros m&eacute;todos para activar comentarios tipo C como los comentarios <em>barra-barra </em>(<em>//</em>)y <em>barra-estrella </em>(<em>/* */</em>).</p>
+<h2>4.5. Acceso a ficheros o recursos dentro de un JAR</h2>
+<p>Hemos visto como leer y escribir ficheros, pero cuando ejecutamos una  aplicaci&oacute;n contenida en un fichero JAR, puede que necesitemos leer recursos  contenidos dentro de este JAR.</p>
+<p>Para acceder a estos recursos deberemos abrir un flujo de entrada que se  encargue de leer su contenido. Para ello utilizaremos el m&eacute;todo getResourceAsStream  de la clase Class:</p>
+<pre class="codigo">InputStream in = getClass().<strong>getResourceAsStream</strong>("/datos.txt");</pre>
+<p>De esta forma podremos utilizar el flujo de entrada obtenido para leer el  contenido del fichero que hayamos indicado. Este fichero deber&aacute; estar contenido  en el JAR de la aplicaci&oacute;n.</p>
+<p>Especificamos el car&aacute;cter '/' delante del nombre del recurso  para referenciarlo de forma relativa al directorio ra&iacute;z del JAR. Si no lo  especific&aacute;semos de esta forma se buscar&iacute;a de forma relativa al directorio  correspondiente al paquete de la clase actual.</p>
+<h2>4.6. Codificaci&oacute;n de datos</h2>
+<p>Si queremos guardar datos en un fichero binario deberemos  codificar estos datos en forma de <em>array</em> de <em>bytes</em>. Los flujos  de procesamiento <strong><em>DataInputStream</em></strong> y <strong><em>DataOutputStream</em></strong>  nos permitir&aacute;n codificar y descodificar respectivamente los tipos de datos  simples en forma de <em>array</em> de <em>bytes</em> para ser enviados a trav&eacute;s  de un flujo de datos.</p>
+<p>Por ejemplo, podemos codificar datos en un <em>array</em> en memoria (ByteArrayOutputStream) de la siguiente forma:</p>
+<pre class="codigo">String nombre = "Jose";  
+String edad = 25;    
+<strong>ByteArrayOutputStream</strong> baos = new <strong>ByteArrayOutputStream</strong>();  
+<strong>DataOutputStream</strong> dos = new <strong>DataOutputStream</strong>(baos);    
+dos.<strong>writeUTF</strong>(nombre);  
+dos.<strong>writeInt</strong>(edad);    
+dos.close();  
+baos.close();    
+byte [] datos = baos.<strong>toByteArray</strong>();</pre>
+<p>Podremos descodificar este <em>array</em> de <em>bytes</em> realizando el procedimiento inverso, con un flujo que lea un <em>array</em> de <em>bytes</em> de memoria (ByteArrayInputStream):</p>
+<pre class="codigo"><strong>ByteArrayInputStream</strong> bais = new <strong>ByteArrayInputStream</strong>(datos);
+<strong>DataInputStream</strong> dis = new <strong>DataInputStream</strong>(bais); 
+String nombre = dis.<strong>readUTF</strong>();  
+int edad = dis.<strong>readInt</strong>();</pre>
+<p>Si en lugar de almacenar estos datos codificados en una <em>array</em> en memoria queremos guardarlos codificados en un fichero, haremos lo mismo  simplemente sustituyendo el flujo canal de datos ByteArrayOutputStream  por un FileOutputStream. De esta forma podremos utilizar cualquier  canal de datos para enviar estos datos codificados a trav&eacute;s de &eacute;l.</p>
+<h2>4.7. Serializaci&oacute;n de objetos</h2>
+<p>Si queremos enviar un objeto complejo a trav&eacute;s de un flujo de datos, deberemos convertirlo     en una serie de bytes. Esto es lo que se conoce como serializaci&oacute;n de objetos,     que nos permitir&aacute; leer y escribir objetos. </p>
+<p>Para leer o escribir objetos podemos utilizar los objetos <strong>ObjectInputStream </strong>y <strong>ObjectOutputStream</strong> que incorporan los m&eacute;todos <strong>readObject() </strong>y <strong>writeObject(Object obj) </strong>respectivamente. Los objetos que escribamos en     dicho flujo deben tener la capacidad de ser <em>serializables</em>. </p>
+<p>Ser&aacute;n <em>serializables </em>aquellos objetos que implementan la interfaz <strong>Serializable</strong>.     Cuando queramos hacer que una clase definida por nosotros sea <em>serializable </em>deberemos implementar dicho interfaz, que no define ninguna funci&oacute;n, s&oacute;lo     se utiliza para identificar las clases que son <em>serializables</em>. Para que     nuestra clase pueda ser <em>serializable</em>, todas sus propiedades deber&aacute;n ser     de tipos de datos b&aacute;sicos o bien objetos que tambi&eacute;n sean<em><strong> </strong>serializables</em>. </p>
+<h2>&nbsp;</h2>
+</body>
+</html>

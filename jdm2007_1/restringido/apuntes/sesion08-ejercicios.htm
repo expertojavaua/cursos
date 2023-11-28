@@ -1,0 +1,55 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<title>Ejercicios sesi&oacute;n 8: JSP</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css"></head>
+<body>
+
+<h2>Ejercicios de JSP </h2>
+<p><strong>8.1. </strong>Conversor de euros a pesetas   </p>
+  <p>Crear en la aplicaci&oacute;n de la sesi&oacute;n anterior (en la carpeta <em>WebContent</em>) una p&aacute;gina JSP llamada <strong>conversor.jsp</strong> que:</p>
+  <ul>
+    <li>Si se le llama sin que exista un parametro <em>numero</em>, mostrar&aacute; un    formulario para introducir una  cantidad de euros, llam&aacute;ndose a s&iacute; misma desde ese formulario:<br>
+<pre class="codigo">&lt;form action="conversor.jsp"&gt;
+	Cantidad en euros: &lt;input type="text" name="numero" /&gt;>
+	&lt;input type="submit" value="Convertir" /&gt;
+&lt;/form&gt;</pre>
+</li>
+    <li>Si se la llama con un par&aacute;metro  HTTP numero tomar&aacute; el valor del  par&aacute;metro, realizar&aacute; la conversi&oacute;n euros/pesetas y la mostrar&aacute; en pantalla.</li>
+  </ul>
+  <p> Una vez realizada la parte b&aacute;sica, a&ntilde;adirle tratamiento de errores, de manera  que si se produce una excepci&oacute;n en la p&aacute;gina <strong>conversor.jsp</strong> se salte a la  p&aacute;gina de error, <strong>error.jsp</strong> (que tambi&eacute;n deb&eacute;is crear). Dicha p&aacute;gina deber&aacute; mostrar un mensaje de error u otro dependiendo del error que se haya producido. Por ejemplo, si no se ha rellenado el formulario deber&aacute; decir &quot;Faltan datos&quot;. En caso de que la cantidad que  representa el par&aacute;metro numero sea negativa el mensaje a mostrar ser&aacute; "La cantidad no es correcta". </p>
+<p><strong>8.2. </strong>Contador de visitas </p>
+<p>Crear un fragmento de c&oacute;digo JSP en la p&aacute;gina <strong>contador.jsp </strong>(que deber&eacute;is crear en <em>WebContent</em>) que sirva   como contador de visitas. El objetivo es poder incluir este c&oacute;digo   en otras p&aacute;ginas JSP, por lo que no es necesario (ni conveniente)   que sea una p&aacute;gina web completa, sino solo el texto del contador. Este  debe aparecer con texto HTML en negrita similar al siguiente</p>
+<p> <strong> Esta p&aacute;gina ha sido visitada X veces </strong> </p>
+<p> Valorar si ser&iacute;a m&aacute;s conveniente emplear la directiva include   o la acci&oacute;n del mismo nombre. El c&oacute;digo debe poder incluirse en distintas p&aacute;ginas de  forma que cada una tenga un contador propio. </p>
+<p>A&ntilde;adir esta p&aacute;gina en otra <strong>indexContador.jsp</strong> (que tambi&eacute;n deb&eacute;is crear), para que muestre las visitas a esa p&aacute;gina. </p>
+<p> <strong>(*)</strong> Una vez se tenga funcionando el contador b&aacute;sico, mejorarlo haciendo que       el n&uacute;mero de visitas se conserve, aunque el servidor se apague o se descargue       el JSP de la memoria. Para ello, deber&eacute;is guardar en un fichero cada cambio en la variable del contador, y recuperarlo de fichero para actualizar su valor cada vez. </p>
+<p><strong>(*) 8.3. </strong>Mejorando la aplicaci&oacute;n de alumnos</p>
+<p>Volvamos a la aplicaci&oacute;n de alumnos de la sesi&oacute;n anterior. Vamos a a&ntilde;adir un enlace m&aacute;s en el listado que muestra el servlet <em>ServletAlumnoBD </em>(recordad que, junto a los datos de cada alumno, sacaba ya un enlace para borrar al alumno). Junto al enlace de borrar, pondremos otro para editar sus datos. Dicho enlace llamar&aacute; a una p&aacute;gina <strong>editAlumno.jsp</strong>  (que deber&eacute;is hacer), pas&aacute;ndole como par&aacute;metro el expediente del alumno. Con este expediente, la p&aacute;gina deber&aacute; conectar con la BD, sacar los datos de ese alumno y mostrarlos en un formulario como el de <em>form_alumno.html</em>. Despu&eacute;s, al enviar este nuevo formulario, se llamar&aacute; al servlet <em>ServletAlumnoBD</em> con una nueva <em>accion</em> llamada <em>editar</em>. Esta acci&oacute;n har&aacute; que el servlet llame al m&eacute;todo<em> modificaAlumno</em> de <em>AplicAlumno</em>, para modificar los datos del alumno en la BD. </p>
+<p><strong>AYUDAS (opcionales):</strong></p>
+<p>Para poder seleccionar los datos de un alumno, pod&eacute;is a&ntilde;adir un nuevo m&eacute;todo a la clase <em>AplicAlumnos</em> llamado <em>selectAlumno</em> donde, dado un expediente, saque un array con los datos de ese alumno (expediente, nombre y sexo):</p>
+<pre class="codigo">public String[] selectAlumno(int exp) 
+{	
+	try
+	{
+		ResultSet rs = stmt.executeQuery(&quot;SELECT * FROM alumnos WHERE exp = &quot; + exp);
+		String[] result = new String[3];
+		while (rs.next())
+		{
+			result[0] = &quot;&quot; + rs.getInt(&quot;exp&quot;);
+			result[1] = rs.getString(&quot;nombre&quot;);
+			result[2] = rs.getString(&quot;sexo&quot;);
+		}
+		return result;
+	} catch (Exception ex) {
+		ex.printStackTrace();
+		return null;
+	}
+}</pre>
+En la p&aacute;gina <strong>editAlumno.jsp</strong> simplemente deber&eacute;is conectar a la BD con la clase <em>AplicAlumnos</em><strong>, </strong>llamar a este m&eacute;todo, y colocar cada dato en el campo del formulario correspondiente  
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Ejercicios sesi&oacute;n 20: Aplicaciones corporativas</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2>Ejercicios de aplicaciones corporativas</h2>
+             
+<p><strong>20.1.</strong> En el directorio <code>Agenda</code> de las plantillas de la sesi&oacute;n tenemos implementada una aplicaci&oacute;n de ejemplo. Se trata de una aplicaci&oacute;n de agenda distribuida, que nos permite registrar citas que constar&aacute;n de fecha y hora, asunto, lugar, contacto y posibilidad de programar una alarma.</p>
+<p>Las citas que a&ntilde;adamos se sincronizar&aacute;n con el servidor de la aplicaci&oacute;n, de forma que tendremos las mismas citas en cliente y servidor. El servidor de la aplicaci&oacute;n se incluye en el directorio <code>ejemplos</code> de las plantillas de la sesi&oacute;n de red. Podremos a&ntilde;adir citas utilizando directamente una interfaz web incluida en la aplicaci&oacute;n web, o bien a&ntilde;adirlas en el m&oacute;vil y sincronizarlas con el servidor. </p>
+<p>Podemos encontrar la interfaz web en la direcci&oacute;n:</p>
+<pre class="codigo">http://www.jtech.ua.es/ejemplos-j2me/citas</pre>
+<p>Si a&ntilde;adimos la cita en el servidor, cuando sincronicemos desde el m&oacute;vil veremos dicha cita en nuestro dispositivo m&oacute;vil. Si a&ntilde;adimos la cita en el cliente m&oacute;vil, cuando sincronicemos desde &eacute;ste la cita se a&ntilde;adir&aacute; al servidor.</p>
+<p>Adem&aacute;s podemos utilizar la aplicaci&oacute;n en modo online, que conectar&aacute; al servidor cada vez que solicitemos consultar o a&ntilde;adir datos. De esta forma no har&aacute; falta sincronizar manualmente para actualizar la informaci&oacute;n, aunque tendr&aacute; el inconveniente de que realizar&aacute; un mayor n&uacute;mero de transferencias a trav&eacute;s de la red.</p>
+<p>Probar la aplicaci&oacute;n para estudiar su funcionamiento. Una vez hecho esto, consultar el c&oacute;digo fuente de la aplicaci&oacute;n, en &eacute;l podemos ver:</p>
+<ul>
+  <li>Distinguir los diferentes componentes del modelo de dise&ntilde;o MVC: modelo, vista y controlador.</li>
+  <li>Forma de procesar los eventos en el controlador.</li>
+  <li>Adaptador RMS para el almacenamiento de citas de la agenda.</li>
+  <li><em>Proxy</em> remoto para acceder al servidor y sincronizar datos con &eacute;ste.</li>
+  <li>Ver c&oacute;mo se ha implementado el patr&oacute;n de dise&ntilde;o fachada, y el funcionamiento de los modos <em>online</em> y <em>offline</em>.</li>
+  <li>Estudiar el mecanismo de sincronizaci&oacute;n: estampas de tiempo para recibir mensajes del servidor y marcar las citas como pendientes de enviar para enviar las nuevas citas al servidor.</li>
+</ul>
+<p><strong>20.2.</strong> Vamos a implementar una aplicaci&oacute;n de mensajer&iacute;a 
+  interna para un grupo de trabajo. La aplicaci&oacute;n nos debe permitir enviar 
+  mensajes a todos los usuarios y recibir los mensajes que hayan sido enviados 
+  por otros usuarios.</p>
+<p>Estos mensajes constar&aacute;n de un asunto y un texto. La aplicaci&oacute;n 
+  nos debe permitir:</p>
+<ul>
+  <li>Enviar un mensaje: Introducimos los datos de un mensaje y lo enviamos a 
+    todo el grupo. </li>
+  <li>Ver mensajes: Ver los mensajes que se han enviado al grupo.</li>
+  <li>Sincronizar: Sincronizar los mensajes del m&oacute;vil con los del servidor. 
+    Enviar&aacute; los mensajes que hayamos escrito y que todav&iacute;a no hayan 
+    sido enviados, y recibir&aacute; aquellos mensajes que est&eacute;n en el 
+    servidor y todav&iacute;a no hayamos recibido.</li>
+  <li>Modo <em>online</em> y <em>offline</em>: Deber&aacute; permitir trabajar 
+    en los dos modos. En modo <em>online</em> la sincronizaci&oacute;n con el 
+    servidor es autom&aacute;tica cada vez que hagamos alguna operaci&oacute;n 
+    de consulta o inserci&oacute;n de mensajes.</li>
+</ul>
+<p>Esta aplicaci&oacute;n deber&aacute; seguir el patr&oacute;n MVC. Podemos encontrar 
+  una base para desarrollar la aplicaci&oacute;n en el directorio <code>Mensajes</code> 
+  de las plantillas de la sesi&oacute;n. Encontramos ya implementado el controlador 
+  y la vista, y tenemos una plantilla para la fachada del modelo. Deberemos implementar 
+  el resto de clases para el modelo.</p>
+<p>Para implementar la aplicaci&oacute;n podemos basarnos en la aplicaci&oacute;n 
+  <code>Agenda</code> que vimos como ejemplo en la sesi&oacute;n anterior.</p>
+<p>Podemos seguir los siguientes pasos:</p>
+<p>a) Podemos reutilizar el adaptador RMS que implementamos en la sesi&oacute;n 
+  de almacenamiento persistente para almacenar los mensajes en RMS.</p>
+<p>b) Implementar el subsistema local del modelo. Esto nos debe permitir a&ntilde;adir 
+  y consultar los mensajes que hayamos creado. </p>
+<p>c) Implementar un proxy remoto que nos permita acceder a la funci&oacute;n 
+  de sincronizaci&oacute;n del servidor. Deberemos acceder a la siguiente URL:</p>
+<pre class="codigo">http://www.jtech.ua.es/ejemplos-j2me/servlet/ServletMensajes</pre>
+<p>En la petici&oacute;n deberemos enviar codificados mediante un <code>DataOutputStream</code> 
+  los siguientes datos:</p>
+<pre class="codigo">&lt;<strong>long</strong>&gt; Timestamp cliente
+&lt;<strong>int</strong>&gt; N&uacute;mero de mensajes
+Para cada mensaje
+   Serializar mensaje</pre>
+<p>En la respuesta se recibir&aacute;n los datos con un <code>DataInputStream</code>, 
+  llegando &eacute;stos con el siguiente formato:</p>
+<pre class="codigo">&lt;<strong>long</strong>&gt; Timestamp servidor
+&lt;<strong>int</strong>&gt; Numero de mensajes
+Para cada mensaje
+   Deserializar mensajes</pre>
+<p>Podemos utilizar la interfaz web existente en la siguiente direcci&oacute;n 
+  para crear y consultar mensajes desde el servidor:</p>
+<pre class="codigo">http://www.jtech.ua.es/ejemplos-j2me/mensajes</pre>
+<p>De esta forma podremos hacer pruebas creando mensajes en el servidor y sincronizando 
+  desde el cliente para recibirlo, o cre&aacute;ndolo en el cliente y comprobando 
+  si el mensaje se refleja en el servidor tras sincronizar.</p>
+<p>d) Incorporar la posibilidad de utilizar modo <em>online</em> de conexi&oacute;n, 
+  en el que las conexiones al servidor sean autom&aacute;ticas cada vez que consultamos 
+  o a&ntilde;adimos mensajes.</p>
+</body>
+</html>

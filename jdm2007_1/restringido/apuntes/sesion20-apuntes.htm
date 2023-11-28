@@ -1,0 +1,1098 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 20: Aplicaciones corporativas</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+<h1>20. Aplicaciones corporativas</h1>
+<p>El poder establecer conexiones en red nos permitir&aacute; acceder a aplicaciones 
+  web corporativas desde el m&oacute;vil. De esta forma, podremos hacer que estos 
+  dispositivos m&oacute;viles se comporten como <em>front-end </em>de estas aplicaciones 
+  corporativas.</p>
+<h2>20.1. Front-ends de aplicaciones corporativas</h2>
+<p>Desde los PCs de sobremesa normalmente accedemos a las aplicaciones corporativas 
+  utilizando un navegador web. La aplicaci&oacute;n web genera de forma din&aacute;mica 
+  la presentaci&oacute;n en el servidor en forma de un documento HTML que ser&aacute; 
+  mostrado en los navegadores de los clientes. Podemos aplicar este mismo sistema 
+  al caso de los m&oacute;viles, generando nuestra aplicaci&oacute;n web la respuesta 
+  en forma de alg&uacute;n tipo de documento que pueda ser interpretado y mostrado 
+  en un navegador de tel&eacute;fono m&oacute;vil. Por ejemplo estos documentos 
+  pueden estar en formato WML, cHTML o XHTML. Esto puede ser suficiente para acceder 
+  a algunas aplicaciones desde los m&oacute;viles.</p>
+<p>Utilizar J2ME para realizar este <em>front-end</em> aporta una serie de ventajas 
+  sobre el paradigma anterior, como por ejemplo las siguientes:</p>
+<ul>
+  <li><strong>Interfaz de usuario</strong>. Las aplicaciones J2ME nos permite 
+    crear una interfaz de usuario flexible. La capa de presentaci&oacute;n esta 
+    implementada totalmente en el cliente, por lo que se podr&aacute; ajustar 
+    mejor a las caracter&iacute;sticas de cada dispositivo. <br>
+  </li>
+  <li><strong>Funcionamiento sin conexi&oacute;n</strong>. La aplicaci&oacute;n 
+    J2ME se ejecuta de forma local en el m&oacute;vil, por lo que podremos trabajar 
+    sin conexi&oacute;n. Podemos utilizar RMS para guardar datos mientras trabajamos 
+    en forma local, y conectar al servidor &uacute;nicamente cuando sea necesario.<br>
+  </li>
+  <li><strong>Conexi&oacute;n HTTP</strong>. Estas aplicaciones se conectan utilizando 
+    el protocolo est&aacute;ndar HTTP. No har&aacute; falta conocer la estructura 
+    de la red m&oacute;vil subyacente. El poder establecer conexiones HTTP a Internet 
+    nos permitir&aacute; enlazar las aplicaciones J2EE y J2ME. </li>
+</ul>
+<p>Normalmente ser&aacute; preferible utilizar HTTP a <em>sockets</em> o datagramas 
+  porque esto nos aportar&aacute; una serie de ventajas. Por un lado, HTTP est&aacute; 
+  soportado por todos los dispositivos MIDP. Al utilizar HTTP tampoco tendremos 
+  problema con <em>firewalls</em> intermedios, cosa que puede ocurrir si conectamos 
+  por <em>sockets</em> mediante un puerto que est&eacute; cerrado. Adem&aacute;s 
+  las APIs de Java incluyen facilidades para trabajar con HTTP, por lo que ser&aacute; 
+  sencillo realizar la comunicaci&oacute;n tanto en el cliente como en el servidor. 
+</p>
+<p>La conexi&oacute;n de red en los m&oacute;viles normalmente tiene una alta 
+  latencia, un reducido ancho de banda y es posible que se produzcan interrupciones 
+  cuando la cobertura es baja. Deberemos tener en cuenta todos estos factores 
+  cuando dise&ntilde;emos nuestra aplicaci&oacute;n. Por esta raz&oacute;n deberemos 
+  minimizar la cantidad de datos que se intercambian a trav&eacute;s de la red, 
+  y permitir que la aplicaci&oacute;n pueda continuar trabajando correctamente 
+  sin conexi&oacute;n.</p>
+<h3><strong>20.1.1. Tr&aacute;fico en la red</strong></h3>
+<p>Para reducir el n&uacute;mero de datos que se env&iacute;an por la red, evitando 
+  que se hagan conexiones innecesarias, es conveniente realizar una validaci&oacute;n 
+  de los datos introducidos por el usuario en el cliente. </p>
+<p>Normalmente no podremos validarlos de la misma forma en que se validan en el 
+  servidor, ya que por ejemplo no tenemos acceso a las bases de datos de la aplicaci&oacute;n, 
+  por lo que deber&aacute; volverse a validar por el servidor para realizar la 
+  validaci&oacute;n completa. No obstante, es conveniente realizar esta validaci&oacute;n 
+  en el cliente como una prevalidaci&oacute;n, de forma que detecte siempre que 
+  sea posible los datos err&oacute;neos en el lado del cliente evitando as&iacute; 
+  realizar una conexi&oacute;n innecesaria con el servidor.</p>
+<p>Deberemos env&iacute;ar y recibir s&oacute;lo la informaci&oacute;n necesaria 
+  por la red. Podemos reducir este tr&aacute;fico manteniendo en RMS una copia 
+  de los datos remotos que obtengamos (cach&eacute;), para no tener que volver 
+  a solicitarlos si queremos volver a visualizarlos.</p>
+<h3>20.1.2. Operaciones de larga duraci&oacute;n</h3>
+<p>Dado que la red es lenta, las operaciones que necesiten conectarse a la red 
+  ser&aacute;n costosas. Estas operaciones ser&aacute; conveniente que sean ejecutadas 
+  por hilos en segundo plano, y nunca deberemos establecer una conexi&oacute;n 
+  desde un <em>callback</em>. Otro tipo de operaciones que normalmente son de 
+  larga duraci&oacute;n son las consultas de datos en RMS.</p>
+<p>Cualquier operaci&oacute;n que sea costosa temporalmente deber&aacute; ser 
+  ejecutada de esta forma, para evitar que bloquee la aplicaci&oacute;n. </p>
+<p>Adem&aacute;s siempre que sea posible deberemos mostrar una barra de progreso 
+  mientras se realiza la operaci&oacute;n, de forma que el usuario tenga constancia 
+  de que se est&aacute; haciendo algo. Tambi&eacute;n ser&aacute; conveniente 
+  permitir al usuario que interrumpa estas largas operaciones, siempre que la 
+  interrupci&oacute;n pueda hacerse y no cause inconsistencias en los datos.</p>
+<h3>20.1.3. Personalizaci&oacute;n</h3>
+<p>Un aspecto interesante en los clientes J2ME es la posibilidad de incorporar 
+  personalizaci&oacute;n. La personalizaci&oacute;n consiste en recordar los datos 
+  y las preferencias del usuario, de forma que la aplicaci&oacute;n se adapte 
+  a estas preferencias y el usuario no tenga que introducir estos datos en cada 
+  sesi&oacute;n. Podremos pedir esta informaci&oacute;n de personalizaci&oacute;n 
+  la primera vez que ejecuta la aplicaci&oacute;n y almacenar esta informaci&oacute;n 
+  utilizando RMS o bien registrarla en el servidor de forma remota. Si tuvi&eacute;semos 
+  esta informaci&oacute;n por duplicado, en local y en remoto, deberemos proporcionar 
+  mecanismos para sincronizar ambos registros.</p>
+<p>Normalmente los dispositivos m&oacute;viles son personales, por lo que las 
+  aplicaciones instaladas en un m&oacute;vil s&oacute;lo va a utilizarlas una 
+  persona. Por este motivo puede ser conveniente guardar la informaci&oacute;n 
+  del usuario para que no tenga que volver a introducirla cada vez que utilice 
+  la aplicaci&oacute;n. Podemos hacer que la aplicaci&oacute;n recuerde el login 
+  y el password del usuario.</p>
+<p>Podemos incluir en la ficha de datos del usuario informaci&oacute;n sobre sus 
+  preferencias, de forma que la aplicaci&oacute;n se adapte a sus gustos y resulte 
+  m&aacute;s c&oacute;moda de manejar.</p>
+<h2>20.2. Integraci&oacute;n con aplicaciones corporativas</h2>
+<p>Vamos a considerar que en el servidor tenemos una aplicaci&oacute;n J2EE. En 
+  este caso accederemos a la aplicaci&oacute;n corporativa a trav&eacute;s de 
+  un <code>Servlet</code>. Los <em>servlets</em> son componentes Java en el servidor 
+  que encapsulan el mecanismo petici&oacute;n/respuesta. Es decir, podemos enviar 
+  una petici&oacute;n HTTP a un <em>servlet</em>, y &eacute;ste la analizar&aacute; 
+  y nos devolver&aacute; una respuesta. </p>
+<div align="center"><img src="imagenes/red/j2ee.gif" width="431" height="155"> 
+</div>
+<p class="caption">Figura 30. Integraci&oacute;n de J2ME y J2EE</p>
+<p>La aplicaci&oacute;n J2ME se comunicar&aacute; con un <em>servlet</em>. Dentro 
+  de la aplicaci&oacute;n J2EE en el servidor este <em>servlet</em> utilizar&aacute; 
+  EJBs para realizar las tareas necesarias. Los EJBs son componentes reutilizables 
+  que implementan la l&oacute;gica de negocio de la aplicaci&oacute;n. Estos EJBs 
+  podr&aacute;n utilizar otras APIs para realizar sus funciones, como por ejemplo 
+  JMS para enviar o recibir mensajes, JDBC para acceder a bases de datos, CORBA 
+  para acceder a objetos distribuidos, o bien acceder a Servicios Web utilizando 
+  las APIs de XML.</p>
+<p>Normalmente tendremos <em>servlets</em> que se encarguen de generar una respuesta 
+  para navegadores web HTML. Para las aplicaciones m&oacute;viles esta respuesta 
+  no es adecuada, por lo que deberemos crear otra versi&oacute;n de estos <em>servlets</em> 
+  que devuelvan una respuesta adaptada a las necesidades de los m&oacute;viles. 
+  La arquitectura de capas de J2EE nos permitir&aacute; crear <em>servlets</em> 
+  para distintos tipos de clientes minimizando la cantidad de c&oacute;digo redundante, 
+  ya que la l&oacute;gica de negocio est&aacute; implementada en los EJBs y estos 
+  componentes pueden ser reutilizados desde los diferentes <em>servlets</em>.</p>
+<p>El proceso de comunicaci&oacute;n entre nuestra aplicaci&oacute;n y un <em>servlet</em> 
+  ser&aacute; el siguiente:</p>
+<ul>
+  <li>La aplicaci&oacute;n J2ME env&iacute;a la petici&oacute;n al <em>servlet</em>. 
+    Para ello establece como URL la direcci&oacute;n en la que est&aacute; mapeado 
+    el <em>servlet</em> y a&ntilde;ade al mensaje el contenido que queramos enviar 
+    en la petici&oacute;n. Si incluimos contenido en un mensaje de tipo POST deberemos 
+    establecer la cabecera <code>Content-Type</code> al tipo correcto de datos 
+    que estemos enviando para que el mensaje sea procesado de forma correcta por 
+    los <em>gateways</em> intermedios por los que pase. Si enviamos el contenido 
+    del mensaje codificado como texto, deberemos establecer este tipo a<code> 
+    text/plain</code>, mientras que si los datos se env&iacute;an en binario deberemos 
+    utilizar como tipo <code>application/octet-stream</code>.<br>
+  </li>
+  <li>El <em>servlet</em> recibe la petici&oacute;n, la descodifica, la analiza 
+    y en caso necesario utiliza los EJBs que sean necesarios para realizar las 
+    acciones oportunas.<br>
+  </li>
+  <li>Una vez se ha procesado la petici&oacute;n el <em>servlet</em> construye 
+    la respuesta con los resultados obtenidos y la codifica. Deberemos establecer 
+    las cabeceras <code>Content-Type </code>y <code>Content-Length</code> para 
+    asegurarnos de que el mensaje sea procesado correctamente por los <em>gateways</em> 
+    intermedios igual que en el caso del env&iacute;o de la petici&oacute;n. En 
+    este caso como tipo podremos utilizar por ejemplo<code> text/plain</code> 
+    para texto <code>image/png</code> para devolver una imagen PNG al cliente, 
+    y <code>application/octet-stream</code> para devolver un mensaje codificado 
+    en binario.<br>
+  </li>
+  <li>Para finalizar, el cliente recibir&aacute; y descodificar&aacute; la respuesta 
+    que le ha enviado el <em>servlet</em>. Una vez descodificada podr&aacute; 
+    mostrarla en pantalla utilizando la API LCDUI.</li>
+</ul>
+<h3><strong>20.2.1. Codificaci&oacute;n de los datos</strong></h3>
+<p>Hemos visto que la aplicaci&oacute;n J2ME y el <em>servlet</em> de la aplicaci&oacute;n 
+  J2EE intercambian datos con una determinada codificaci&oacute;n. En J2ME no 
+  tenemos disponibles mecanismos de alto nivel para intercambiar informaci&oacute;n 
+  con componentes remotos, como por ejemplo RMI para la invocaci&oacute;n de m&eacute;todos 
+  de objetos Java remotos, o las API de an&aacute;lisis de XML para intercambiar 
+  informaci&oacute;n en este formato. Por lo tanto deberemos codificar la informaci&oacute;n 
+  con formatos propios. Seremos nosotros los que decidamos qu&eacute; formato 
+  y codificaci&oacute;n deben tener estos datos.</p>
+<p>Podemos movernos entre dos extremos: la codificaci&oacute;n de los datos en 
+  binario y la codificaci&oacute;n en XML.</p>
+<p>La codificaci&oacute;n binaria de los datos ser&aacute; eficiente y compacta. 
+  Ser&aacute; sencillo codificar informaci&oacute;n en este formato utilizando 
+  los objetos <code>DataOutputStream</code> y <code>ByteArrayOutputStream</code>. 
+  Tiene el inconveniente de que tanto el cliente como el servidor deber&aacute;n 
+  conocer c&oacute;mo est&aacute; codificada la informaci&oacute;n dentro del 
+  <em>array</em> de <em>bytes</em>, por lo que estos componentes estar&aacute;n 
+  altamente acoplados.</p>
+<p>Si hemos definido una serializaci&oacute;n para los objetos, podemos aprovechar 
+  esta serializaci&oacute;n para enviarlos a trav&eacute;s de la red. En este 
+  caso la serializaci&oacute;n la hemos definido manualmente nosotros en un m&eacute;todo 
+  del objeto, y no se hace autom&aacute;ticamente como en el caso de J2SE, por 
+  lo que deberemos tener cuidado de que en el objeto del cliente y en el del servidor 
+  se serialice y deserialice de la misma forma. Adem&aacute;s, al transferir un 
+  objeto entre J2ME y J2EE deberemos asegurarnos de que este objeto utiliza solamente 
+  la parte com&uacute;n de la API de Java en ambas plataformas.</p>
+<p>Por ejemplo, si definimos los m&eacute;todos de serializaci&oacute;n para la 
+  clase <code>Cita</code> de la siguiente forma:</p>
+<pre class="codigo">public class Cita {<br><br>  Date fecha;<br>  String asunto;<br>  String lugar;<br>  String contacto;<br>  boolean alarma;<br><br>  public void <strong>serialize</strong>(DataOutputStream dos) throws IOException {
+    dos.writeLong(fecha.getTime());
+    dos.writeUTF(asunto);
+    dos.writeUTF(lugar);
+    dos.writeUTF(contacto);
+    dos.writeBoolean(alarma);
+  }<br><br>  public static Cita <strong>deserialize</strong>(DataInputStream dis) throws IOException {
+    Cita cita = new Cita();<br><br>    cita.setFecha(new Date(dis.readLong()));
+    cita.setAsunto(dis.readUTF());
+    cita.setLugar(dis.readUTF());
+    cita.setContacto(dis.readUTF());
+    cita.setAlarma(dis.readBoolean());<br><br>    return cita;
+  }
+}</pre>
+<p>Podremos intercambiar objetos de este tipo mediante HTTP como se muestra a 
+  continuaci&oacute;n:</p>
+<pre class="codigo">HttpConnection con = (HttpConnection) Connector.open(URL_SERVLET);<br><br>// Envia datos al servidor
+<strong>DataOutputStream</strong> dos = con.<strong>openDataOutputStream</strong>();
+Cita[] citasCliente = datosCliente.getCitas();
+if (citasCliente == null) {
+  dos.<strong>writeInt</strong>(0);
+} else {
+  dos.<strong>writeInt</strong>(citasCliente.length);
+  for (int i = 0; i &lt; citasCliente.length; i++) {
+    citasCliente[i].<strong>serialize</strong>(dos);
+  }
+}<br><br>// Recibe datos del servidor
+<strong>DataInputStream</strong> dis = con.<strong>openDataInputStream</strong>();
+int nCitasServidor = dis.<strong>readInt</strong>();
+Cita[] citasServidor = new Cita[nCitasServidor];
+for (int i = 0; i &lt; nCitasServidor; i++) {
+  citasServidor[i] = Cita.<strong>deserialize</strong>(dis);
+}</pre>
+<p>En el otro extremo, XML es un lenguaje complejo de analizar y la informaci&oacute;n 
+  ocupa m&aacute;s espacio. Como ventaja tenemos que XML es un lenguaje est&aacute;ndar 
+  y autodescriptivo, por lo que reduciremos el acoplamiento de cliente y servidor. 
+  Aunque en MIDP no se incluyen librer&iacute;as para procesar XML, diversos fabricantes 
+  proporcionan sus propias implementaciones de las librer&iacute;as de XML para 
+  J2ME. Podemos utilizar estas librer&iacute;as para crear y analizar estos documentos 
+  en los clientes m&oacute;viles. </p>
+<p>Podemos encontrar incluso implementaciones de librer&iacute;as de XML orientado 
+  a RPC para invocar Servicios Web SOAP directamente desde el m&oacute;vil. Debemos 
+  tener cuidado al invocar Servicios Web directamente desde los m&oacute;viles, 
+  ya que la construcci&oacute;n y el an&aacute;lisis de los mensajes SOAP es una 
+  tarea demasiado costosa para estos dispositivos. Para optimizar la aplicaci&oacute;n, 
+  en lugar de invocarlos desde el mismo m&oacute;vil, podemos hacer que sea la 
+  aplicaci&oacute;n J2EE la que invoque el servicio, y que el m&oacute;vil se 
+  comunique con esta aplicaci&oacute;n a trav&eacute;s de mensajes sencillos.</p>
+<h3><strong>20.2.2. Mantenimiento de sesiones</strong></h3>
+<p>El protocolo HTTP sigue un mecanismo de petici&oacute;n/respuesta, no mantiene 
+  informaci&oacute;n de sesi&oacute;n. Es decir, si realizamos varias peticiones 
+  HTTP a un servidor desde nuestro cliente, cada una de estas peticiones ser&aacute; 
+  tratada independientemente por el servidor, sin identificar que se trata de 
+  un mismo usuario. Para implementar sesiones sobre protocolo HTTP tendremos que 
+  recurrir a mecanismos como la reescritura de URLs o las <em>cookies</em>.</p>
+<p>Normalmente cuando accedamos a una aplicaci&oacute;n web necesitaremos mantener 
+  una sesi&oacute;n para que en todas las peticiones que hagamos al servidor, 
+  &eacute;ste nos identifique como un mismo usuario. De esta forma por ejemplo 
+  podremos ir a&ntilde;adiendo con cada petici&oacute;n productos a un carrito 
+  de la compra en el lado del servidor, sin perder la informaci&oacute;n sobre 
+  los productos a&ntilde;adidos de una petici&oacute;n a otra.</p>
+<p>Para mantener las sesiones lo que se har&aacute; es obtener en el cliente un 
+  identificador de la sesi&oacute;n, de forma que en cada petici&oacute;n que 
+  se haga al servidor se env&iacute;e este identificador para que el servidor 
+  sepa a qu&eacute; sesi&oacute;n pertenece dicha petici&oacute;n. Este identificador 
+  puede ser obtenido mediante <em>cookies</em>, o bien incluirlo como parte de 
+  las URLs utilizando la t&eacute;cnica de reescritura de URLs.</p>
+<p>Los navegadores web normalmente implementan las sesiones mediante <em>cookies</em>. 
+  Estas <em>cookies</em> son informaci&oacute;n que el servidor nos env&iacute;a 
+  en la respuesta y que el navegador almacena de forma local en nuestra m&aacute;quina. 
+  En la primera petici&oacute;n el servidor enviar&aacute; una <em>cookie</em> 
+  al cliente con el identificador de la sesi&oacute;n, y el navegador almacenar&aacute; 
+  esta <em>cookie</em> de forma local en el cliente. Cuando se vaya a hacer otra 
+  petici&oacute;n al servidor, el navegador env&iacute;a esta <em>cookie</em> 
+  para identificarnos ante el servidor como el mismo cliente. De esta forma el 
+  servidor podr&aacute; utilizar el valor de la <em>cookie</em> recibida para 
+  determinar la sesi&oacute;n correspondiente a dicho cliente, y de esta forma 
+  poder acceder a los datos que hubiese almacenado en peticiones anteriores dentro 
+  de la misma sesi&oacute;n. </p>
+<p>Sin embargo, cuando conectamos desde un cliente J2ME estamos estableciendo 
+  una conexi&oacute;n con la URL del <em>servlet</em> desde nuestra propia aplicaci&oacute;n, 
+  no desde un navegador que gestione autom&aacute;ticamente estas <em>cookies</em>. 
+  Por lo tanto ser&aacute; tarea nuestra implementar los mecanismos necesarios 
+  para mantener esta sesi&oacute;n desde el cliente.</p>
+<p>Vamos a ver como implementar los mecanismos para mantenimiento de sesiones 
+  en las aplicaciones J2ME. Ser&aacute; m&aacute;s fiable utilizar reescritura 
+  de URLs, ya que algunos <em>gateways</em> podr&iacute;an filtrar las <em>cookies</em> 
+  y por lo tanto este mecanismo fallar&iacute;a. </p>
+<p>Estos mecanismos de <em>cookies</em> y reescritura de URLs se utilizan para 
+  que los navegadores mantengan las sesiones de una forma est&aacute;ndar para 
+  todas las aplicaciones. Pero lo que pretendemos en &uacute;ltima instancia es 
+  tener un identificador de la sesi&oacute;n en el cliente que pueda ser enviado 
+  al servidor en cada petici&oacute;n. Si nos conectamos desde nuestra propia 
+  aplicaci&oacute;n podremos utilizar nuestro propio identificador y enviarlo 
+  al servidor de la forma que queramos (como cabecera, par&aacute;metro, en el 
+  post, etc). Por ejemplo, podr&iacute;amos hacer que en cada petici&oacute;n 
+  que haga nuestra aplicaci&oacute;n J2ME env&iacute;e nuestro <em>login</em> 
+  al servidor, de forma que esta informaci&oacute;n le sirva al servidor para 
+  identificarnos en cada momento.</p>
+<p>Sin embargo, ser&aacute; conveniente que nuestra aplicaci&oacute;n implemente 
+  alguno de los mecanismos est&aacute;ndar para el mantenimiento de sesiones, 
+  ya que as&iacute; podremos aprovechar las facilidades que ofrecen los componentes 
+  del servidor para mantener las sesiones. Ahora veremos como implementar las 
+  t&eacute;cnicas de reescritura de URLs y <em>cookies</em> en nuestras aplicaciones 
+  J2ME.</p>
+<p><strong>Reescritura de URLs</strong></p>
+<p>Algunos navegadores no soportan <em>cookies</em>. Para mantener sesiones en 
+  este caso podemos utilizar la t&eacute;cnica de reescritura de URLs. Esta t&eacute;cnica 
+  consiste en modificar las URLs a las que acceder&aacute; el cliente incluyendo 
+  en ellas el identificador de sesi&oacute;n como par&aacute;metro.</p>
+<p>Para utilizar esta t&eacute;cnica deberemos codificar la URL en el servidor 
+  y devolverla de alguna forma al cliente. Por ejemplo, podemos devolver esta 
+  URL modificada como una cabecera HTTP propia. Supongamos que devolvemos esta 
+  URL reescrita como una cabecera <code>URL-Reescrita</code>. Podremos obtenerla 
+  en la aplicaci&oacute;n cliente de la siguiente forma:</p>
+<pre class="codigo">String url_con_ID = con.getHeaderField(&quot;URL-Reescrita&quot;);</pre>
+<p>En la pr&oacute;xima petici&oacute;n que hagamos al servidor deberemos utilizar 
+  la URL que hemos obtenido, en lugar de la URL b&aacute;sica a la que conectamos 
+  inicialmente:</p>
+<pre class="codigo">HttpConnection con = (HttpConnection)Connector.open(url_con_ID);</pre>
+<p>De esta forma cuando establezcamos esta segunda conexi&oacute;n el <em>servlet</em> 
+  al que conectamos sabr&aacute; que se trata de la misma sesi&oacute;n y podremos 
+  acceder a la informaci&oacute;n de la sesi&oacute;n dentro del servidor.</p>
+<p>En el c&oacute;digo del <em>servlet</em> que atiende nuestra petici&oacute;n 
+  en el servidor deberemos rescribir la URL y devolv&eacute;rsela al cliente como 
+  la cabecera que hemos visto anteriormente. Esto podemos hacerlo de la siguiente 
+  forma:</p>
+<pre class="codigo">String url = request.getRequestURL().toString();<br>String url_con_ID = response.<strong>encodeURL</strong>(url);<br>response.setHeader(&quot;URL-Reescrita&quot;, url_con_ID);</pre>
+<p><strong>Manejo de cookies</strong></p>
+<p>Los <em>servlets</em> utilizan las <em>cookies</em> para mantener la sesi&oacute;n 
+  siempre que detecten que el cliente soporta <em>cookies</em>. Para el caso de 
+  estas aplicaciones J2ME el <em>servlet</em> detectar&aacute; que el cliente 
+  no soporta <em>cookies</em>, por lo que utilizar&aacute; &uacute;nicamente reescritura 
+  de URLs. Sin embargo, si que podremos crear <em>cookies</em> manualmente en 
+  el <em>servlet</em> para permitir mantener la informaci&oacute;n del usuario 
+  en el cliente durante el tiempo que dure la sesi&oacute;n o incluso durante 
+  m&aacute;s tiempo.</p>
+<p>Desde las aplicaciones J2ME podremos implementar las sesiones utilizando <em>cookies</em>. 
+  Adem&aacute;s con las <em>cookies</em> podremos mantener informaci&oacute;n 
+  del usuario de forma persistente, no &uacute;nicamente durante una sola sesi&oacute;n. 
+  Por ejemplo, podemos utilizar RMS para almacenar las <em>cookies</em> con informaci&oacute;n 
+  sobre el usuario, de forma que cuando se vuelve a utilizar la aplicaci&oacute;n 
+  en otro momento sigamos teniendo esta informaci&oacute;n. Con esto podemos por 
+  ejemplo evitar que el usuario tenga que autentificarse cada vez que entra a 
+  la aplicaci&oacute;n. </p>
+<p>Estas <em>cookies</em> consisten en una pareja <em>&lt;nombre, valor&gt;</em> 
+  y una fecha de caducidad. Con esta fecha de caducidad podemos indicar si la 
+  <em>cookie</em> debe mantenerse s&oacute;lo durante la sesi&oacute;n actual, 
+  o por m&aacute;s tiempo. </p>
+<p>Podemos recibir las <em>cookies</em> que nos env&iacute;a el servidor leyendo 
+  la cabecera <code>set-cookie</code> de la respuesta desde nuestra aplicaci&oacute;n 
+  J2ME:</p>
+<pre class="codigo">String cookie = con.<strong>getHeaderField</strong>(&quot;set-cookie&quot;);</pre>
+<p>Una vez tengamos la <em>cookie</em> podemos guard&aacute;rnosla en memoria, 
+  o bien en RMS si queremos almacenar persistentemente esta informaci&oacute;n. 
+  En las siguientes peticiones que hagamos al servidor deberemos enviarle esta 
+  cookie en la cabecera <code>cookie</code>:</p>
+<pre class="codigo">con.<strong>setRequestProperty</strong>(&quot;cookie&quot;, cookie);</pre>
+<h3><strong>20.2.3. Seguridad</strong></h3>
+<p>Vamos a ver como crear aplicaciones seguras en cuando a la autentificaci&oacute;n 
+  de los usuarios y a la confidencialidad de los datos que circulan por la red.</p>
+<p><strong>Confidencialidad</strong></p>
+<p>Para proteger los datos que circulan por la red, y evitar que alguien pueda 
+  interceptarlos, podemos enviarlos codificados mediante SSL.</p>
+<p>Podemos establecer una conexi&oacute;n segura con el servidor mediante SSL 
+  (<em>Secure Sockets Layer</em>) simplemente indicando como protocolo en la URL 
+  de la conexi&oacute;n <code>https</code> en lugar de <code>http</code>. </p>
+<p>El problema es que la mayor&iacute;a de m&oacute;viles con MIDP 1.0 no soportan 
+  este tipo de protocolo. Si intentamos utilizar HTTPS desde un dispositivo que 
+  no lo soporta, obtendremos una excepci&oacute;n de tipo <code>ConnectionNotFoundException</code>. 
+  Adem&aacute;s de tener que se soportada por el m&oacute;vil, este tipo de conexi&oacute;n 
+  deber&aacute; ser soportada por el servidor.</p>
+<p><strong>Autentificaci&oacute;n</strong></p>
+<p>En muchas aplicaciones necesitaremos que el usuario se autentifique para que 
+  de esa forma pueda acceder a determinados datos privados alojados en el servidor, 
+  o pueda realizar determinadas acciones para las que no todos los usuarios tienen 
+  permiso. </p>
+<p>Para autentificar a los usuarios que se conectan desde el m&oacute;vil a las 
+  aplicaciones corporativas, normalmente utilizaremos seguridad a nivel de la 
+  aplicaci&oacute;n. Es decir, enviaremos nuestros credenciales (<em>login</em> 
+  y <em>password</em>) a un <em>servlet</em> para que los verifique en la base 
+  de datos de usuarios que haya en el servidor. </p>
+<p>Una vez autentificados, podremos mantener esta informaci&oacute;n de registro 
+  en la sesi&oacute;n del usuario, de forma que en sucesivas peticiones podamos 
+  obtener la informaci&oacute;n sin necesidad de volvernos a autentificar en cada 
+  una de ellas.</p>
+<h3>20.2.4. Transacciones</h3>
+<p>Cada petici&oacute;n HTTP que se haga el servidor ser&aacute; una transacci&oacute;n 
+  independiente. Todas las operaciones de la transacci&oacute;n se deben realizar 
+  dentro de esa conexi&oacute;n en el servidor, ya que las peticiones HTTP son 
+  independientes entre si y el dispositivo cliente m&oacute;vil no realiza ninguna 
+  gesti&oacute;n de transacciones. Por lo tanto las transacciones nunca supondr&aacute;n 
+  m&aacute;s de una petici&oacute;n HTTP.</p>
+<p>En el caso en el que la inserci&oacute;n de unos datos en la memoria local 
+  dependa de que los datos sean aceptados por el servidor remoto, siempre realizaremos 
+  antes la petici&oacute;n al servidor remoto, y una vez hayamos enviados estos 
+  datos correctamente, haremos la inserci&oacute;n local. Esto se da por ejemplo 
+  en el caso en que queremos mantener una copia local de los datos que enviamos 
+  al servidor. S&oacute;lo insertaremos los datos en la copia local una vez hayan 
+  sido insertados en el servidor.</p>
+<h3>20.2.5. Gesti&oacute;n de errores</h3>
+<p>Cuando estemos accediendo al lado del servidor de nuestra aplicaci&oacute;n 
+  mediante HTTP, si la petici&oacute;n que hemos hecho produce un error no podremos 
+  gestionar este error mediante excepciones ya que lo &uacute;nico que vamos a 
+  recibir es una respuesta HTTP.</p>
+<p>Para gestionar los errores del servidor deberemos almacenarlos de alguna forma 
+  en el mensaje de respuesta HTTP. </p>
+<p>Podemos utilizar el c&oacute;digo de estado de la respuesta para indicar la 
+  presencia de alg&uacute;n error. Si necesitamos una mayor flexibilidad podemos 
+  establecer nuestra propia codificaci&oacute;n para los errores dentro del contenido 
+  de la respuesta, y hacer que nuestro cliente sea capaz de interpretar dicha 
+  codificaci&oacute;n.</p>
+<h2><strong>20.3. Arquitectura MVC</strong></h2>
+<p>El patr&oacute;n de dise&ntilde;o MVC (Modelo-Vista-Controlador) suele aplicarse 
+  para dise&ntilde;ar las aplicaciones web J2EE. Podemos aplicar este mismo patr&oacute;n 
+  a las aplicaciones cliente J2ME. En una aplicaci&oacute;n cliente tendremos 
+  los siguientes elementos:</p>
+<ul>
+  <li><strong>Modelo</strong>: Datos de la aplicaci&oacute;n.<br>
+  </li>
+  <li><strong>Vista</strong>: Presentaci&oacute;n de la aplicaci&oacute;n. Ser&aacute;n 
+    las distintas pantallas de nuestro MIDlet. <br>
+  </li>
+  <li><strong>Controlador</strong>: El controlador ser&aacute; quien controle 
+    el flujo de la aplicaci&oacute;n. Nos dir&aacute; qu&eacute; pantalla se debe 
+    mostrar y que operaciones se deben ejecutar en cada momento, seg&uacute;n 
+    las acciones realizadas.</li>
+</ul>
+<p>De esta forma con esta arquitectura estamos aislando datos, presentaci&oacute;n 
+  y flujo de control. Es especialmente interesante el haber aislado los datos 
+  del resto de componentes. De esta forma la capa de datos podr&aacute; decidir 
+  si trabajar con datos de forma local con RMS o de forma remota a trav&eacute;s 
+  de HTTP, sin afectar con ello al resto de la aplicaci&oacute;n. Este dise&ntilde;o 
+  nos facilitar&aacute; cambiar de modo remoto a modo local cuando no queramos 
+  tener que establecer una conexi&oacute;n de red.</p>
+<h3>20.3.1. Modelo</h3>
+<p>Normalmente en las aplicaciones para dispositivos m&oacute;viles vamos a trabajar 
+  tanto con datos locales como con datos remotos. Por lo tanto, podemos ver el 
+  modelo dividido en dos subsistemas: modelo local y modelo remoto. </p>
+<p><strong>Modelo local</strong></p>
+<p>El modelo local normalmente utilizar&aacute; un adaptador RMS para acceder 
+  a los datos almacenados de forma persistente en el m&oacute;vil. Por ejemplo, 
+  en nuestra aplicaci&oacute;n de agenda para la gesti&oacute;n de citas podemos 
+  crear la siguiente clase para acceder a los datos locales:</p>
+<pre class="codigo">public class <strong>ModeloLocal</strong> {<br><br>  AdaptadorRMS rms;<br><br>  public <strong>ModeloLocal</strong>() throws RecordStoreException {
+    rms = new AdaptadorRMS();
+  }<br><br>  /*
+   * Agrega una cita indicando si esta pendiente de ser enviada al servidor
+   */
+  public void <strong>addCita</strong>(Cita cita, boolean pendiente) throws IOException,
+                                                   RecordStoreException {
+    int id = rms.addCita(cita);
+    IndiceCita indice = new IndiceCita();
+    indice.setId(id);
+    indice.setFecha(cita.getFecha());
+    indice.setAlarma(cita.isAlarma());
+    indice.setPendiente(pendiente);
+    rms.addIndice(indice);<br>  }<br><br>  /*
+   * Obtiene todas las citas
+   */
+  public Cita[] <strong>listaCitas</strong>() throws RecordStoreException, IOException {
+    return rms.listaCitas();
+  }<br><br>  /*
+   * Obtiene las citas correspondientes a los indices indicados
+   */
+  public Cita[] <strong>listaCitas</strong>(IndiceCita[] indices) throws RecordStoreException,
+                                                        IOException {
+    Cita[] citas = new Cita[indices.length];
+    for (int i = 0; i &lt; indices.length; i++) {
+      citas[i] = rms.getCita(indices[i].getId());
+    }
+<br>    return citas;<br>  } 
+<br>  /*
+   * Busca las citas con alarmas pendientes
+   */
+  public IndiceCita[] <strong>listaAlarmasPendientes</strong>() throws RecordStoreException,
+                                                      IOException {
+    IndiceCita[] indices = rms.buscaCitas(new Date(), true);<br>    return indices;
+  }<br><br>  /*
+   * Busca las citas pendientes de ser enviadas al servidor
+   */
+  public IndiceCita[] <strong>listaCitasPendientes</strong>() throws RecordStoreException,
+                                                    IOException {
+    IndiceCita[] indices = rms.listaCitasPendientes();<br>    return indices;
+  }<br><br>  /*
+   * Marca las citas indicada como enviadas al servidor
+   */
+  public void <strong>marcaEnviados</strong>(IndiceCita[] indices) throws IOException,
+                                                   RecordStoreException {
+    for (int i = 0; i &lt; indices.length; i++) {
+      indices[i].setPendiente(false);
+      rms.updateIndice(indices[i]);
+    }
+  }<br><br>  /*
+   * Obtiene la configuracion local
+   */
+  public InfoLocal <strong>getInfoLocal</strong>() throws RecordStoreException, IOException {<br><br>    try {
+      InfoLocal info = rms.getInfoLocal();
+      return info;
+    } catch (Exception e) { }<br><br>    InfoLocal info = new InfoLocal();
+    rms.setInfoLocal(info);<br><br>    return info;
+  }<br><br>  /*
+   * Modifica la configuracion local
+   */
+  public void <strong>setInfoLocal</strong>(InfoLocal info) throws RecordStoreException,
+                                                  IOException {
+    rms.setInfoLocal(info);
+  }<br><br>  /*
+   * Libera recursos del modelo
+   */
+  public void <strong>destroy</strong>() throws RecordStoreException {
+    rms.cerrar();
+  }
+}</pre>
+<p>En esta clase definiremos m&eacute;todos para acceder a todos los datos locales 
+  que nuestra aplicaci&oacute;n necesite utilizar.</p>
+<p><strong>Modelo remoto</strong></p>
+<p>Adem&aacute;s de la informaci&oacute;n local que almacenamos en el m&oacute;vil, 
+  ser&aacute; importante tener acceso a los datos remotos de nuestra aplicaci&oacute;n 
+  corporativa. Esta parte del modelo normalmente utilizar&aacute; HTTP para acceder 
+  a estos datos. </p>
+<p>Para implementar este subsistema del modelo podemos utilizar el patr&oacute;n 
+  de dise&ntilde;o <em>proxy</em>. Este patr&oacute;n se utiliza cuando accedemos 
+  a componentes remotos, encapsulando dentro de la clase <em>proxy</em> todo el 
+  mecanismo de comunicaci&oacute;n necesario para acceder a las funcionalidades 
+  del servidor.</p>
+<p>De esta forma, cuando utilizamos un <em>proxy</em> para acceder a componentes 
+  remotos, el que estos componentes se est&eacute;n utilizando de forma remota 
+  es transparente para nosotros. El <em>proxy</em> implementa todo el mecanismo 
+  de comunicaci&oacute;n necesario (por ejemplo HTTP), aislando al resto de la 
+  aplicaci&oacute;n de &eacute;l. Invocaremos los m&eacute;todos del <em>proxy</em> 
+  directamente para utilizar funcionalidades de nuestro servidor como si se tratase 
+  de un acceso a un objeto local, sin preocuparnos de que realmente el <em>proxy</em> 
+  est&eacute; realizando una conexi&oacute;n remota.</p>
+<p>Por ejemplo, en el caso de nuestra agenda, el servidor nos proporcionar&aacute; 
+  la funcionalidad de sincronizar las citas almacenadas en el m&oacute;vil con 
+  las notas almacenadas en el servidor, para hacer que en ambos lados se tenga 
+  el mismo conjunto de citas. Podemos encapsular esta operaci&oacute;n en una 
+  clase <em>proxy</em> como la siguiente:</p>
+<pre class="codigo">public class <strong>ProxyRemoto</strong> {<br><br>  public <strong>ProxyRemoto</strong>() {<br>  }<br><br>  public SyncItem <strong>sincroniza</strong>(SyncItem datosCliente) throws IOException {
+    HttpConnection con = (HttpConnection) Connector.open(URL_SERVLET);<br><br>    // Envia datos al servidor
+    DataOutputStream dos = con.openDataOutputStream();
+    Cita[] citasCliente = datosCliente.getCitas();
+    dos.writeLong(datosCliente.getTimeStamp());
+    if (citasCliente == null) {
+      dos.writeInt(0);
+    } else {
+      dos.writeInt(citasCliente.length);
+      for (int i = 0; i &lt; citasCliente.length; i++) {
+        citasCliente[i].serialize(dos);
+      }
+    }<br><br>    // Recibe datos del servidor
+    DataInputStream dis = con.openDataInputStream();
+    long tsServidor = dis.readLong();
+    int nCitasServidor = dis.readInt();
+    Cita[] citasServidor = new Cita[nCitasServidor];
+    for (int i = 0; i &lt; nCitasServidor; i++) {
+      citasServidor[i] = Cita.deserialize(dis);
+    }<br><br>    SyncItem datosServidor = new SyncItem();
+    datosServidor.setTimeStamp(tsServidor);
+    datosServidor.setCitas(citasServidor);<br><br>    return datosServidor;
+  }<br>}</pre>
+<p>De esta forma desde el resto de la aplicaci&oacute;n simplemente tendremos 
+  que invocar el m&eacute;todo <code>sincroniza</code> del <em>proxy</em> para 
+  utilizar esta funcionalidad del servidor.</p>
+<p><strong>Patr&oacute;n de dise&ntilde;o fachada</strong></p>
+<p>Hasta ahora hemos visto que tenemos dos subsistemas en el modelo. Esta divisi&oacute;n 
+  podr&iacute;a causar que el acceso al modelo desde nuestra aplicaci&oacute;n 
+  fuese demasiado complejo. </p>
+<p>Para evitar esto podemos utilizar el patr&oacute;n de dise&ntilde;o fachada 
+  (<em>facade</em>). Este patr&oacute;n consiste un implementar una interfaz &uacute;nica 
+  que integre varios subsistemas, proporcionando de esta forma una interfaz sencilla 
+  para el acceso al modelo.</p>
+<p>Desde el resto de la aplicaci&oacute;n accederemos al modelo siempre a trav&eacute;s 
+  de la fachada, y &eacute;sta ser&aacute; quien se encargue de coordinar los 
+  subsistemas local y remoto. Estos dos subsistemas se mantendr&aacute;n independientes, 
+  pero accederemos a ellos mediante una interfaz &uacute;nica.</p>
+<p>Por ejemplo, para nuestra agenda podemos definir una fachada como la siguiente 
+  para el modelo:</p>
+<pre class="codigo">public class <strong>FachadaModelo</strong> {<br><br>  boolean online;<br>  <strong>ModeloLocal</strong> mLocal;<br>  <strong>ProxyRemoto</strong> mRemoto;<br><br>  public <strong>FachadaModelo</strong>() throws RecordStoreException, IOException    {
+    mLocal = new ModeloLocal();
+    mRemoto = new ProxyRemoto();<br><br>    InfoLocal info = getConfig();
+    online = info.isOnline();
+  }<br><br>  /*
+   * Crea una nueva cita
+   */
+  public void <strong>nuevaCita</strong>(Cita cita) throws IOException, RecordStoreException {
+    mLocal.addCita(cita, true);
+    if (online) {
+      sincroniza();
+    }
+  }<br><br>  /*
+   * Obtiene la lista de todas las citas
+   */
+  public Cita[] <strong>listaCitas</strong>() throws RecordStoreException, IOException {
+    if (online) {
+      sincroniza();
+    }
+    return mLocal.listaCitas();
+  }<br><br>  /*
+   * Obtiene la lista de citas con alarmas pendientes
+   */
+  public Cita[] <strong>listaAlarmasPendientes</strong>() throws RecordStoreException,
+                                                IOException {
+    if (online) {
+      sincroniza();
+    }
+    IndiceCita[] indices = mLocal.listaAlarmasPendientes();
+    return mLocal.listaCitas(indices);
+  }<br> <br>  /*
+   * Obtiene la configuracion local
+   */
+  public InfoLocal <strong>getConfig</strong>() throws RecordStoreException, IOException {
+    return mLocal.getInfoLocal();
+  }<br><br>  /*
+   * Actualiza la configuracion local
+   */
+  public void <strong>updateConfig</strong>(InfoLocal config) throws RecordStoreException,
+                                                    IOException {
+    InfoLocal info = mLocal.getInfoLocal();
+    info.setOnline(config.isOnline());
+    this.online = config.isOnline();
+    mLocal.setInfoLocal(info);
+  }<br><br>  /*
+   * Sincroniza la lista de citas con el servidor
+   */
+  public void <strong>sincroniza</strong>() throws RecordStoreException, IOException {<br><br>    // Obtiene datos del cliente   
+<br>    InfoLocal info = mLocal.getInfoLocal();<br><br>    IndiceCita[] indices = mLocal.listaCitasPendientes();
+    Cita[] citas = mLocal.listaCitas(indices);
+    SyncItem datosCliente = new SyncItem();
+    datosCliente.setCitas(citas);
+    datosCliente.setTimeStamp(info.getTimeStamp());<br><br>    // Envia y recibe   
+<br>    SyncItem datosServidor = mRemoto.sincroniza(datosCliente);<br><br>    mLocal.marcaEnviados(indices);<br><br>    // Agrega los datos recibidos del servidor<br><br>    Cita[] citasServidor = datosServidor.getCitas();
+    if (citasServidor != null) {
+      for (int i = 0; i &lt; citasServidor.length; i++) {
+        mLocal.addCita(citasServidor[i], false);
+      }
+    }<br><br>    info.setTimeStamp(datosServidor.getTimeStamp());
+    mLocal.setInfoLocal(info);
+  }<br><br>  public void <strong>destroy</strong>() throws RecordStoreException {
+    mLocal.destroy();
+  }<br>}</pre>
+<p>Podemos ver en este ejemplo como este modelo nos permite trabajar de forma 
+  <em>online</em> u <em>offline</em>. Seg&uacute;n el modo de conexi&oacute;n, 
+  se utilizar&aacute;n las funciones de uno u otro subsistema. En modo <em>online</em> 
+  siempre que se haga una operaci&oacute;n se acceder&aacute; al servidor para 
+  leer o almacenar las novedades que haya. En modo <em>offline</em> s&oacute;lo 
+  se leer&aacute;n o almacenar&aacute;n los datos de forma local, excepto cuando 
+  solicitemos de forma expl&iacute;cita sincronizar los datos con el servidor.</p>
+<p>En el caso del m&eacute;todo <code>sincroniza</code>, que ser&aacute; el m&eacute;todo 
+  encargado de coordinar informaci&oacute;n local con informaci&oacute;n remota, 
+  podemos ver que la transacci&oacute;n de sincronizaci&oacute;n se realiza en 
+  una &uacute;nica petici&oacute;n HTTP. Adem&aacute;s, los mensajes que se hayan 
+  enviado al servidor no se marcan como enviados hasta despu&eacute;s de haber 
+  completado el env&iacute;o (se llama a <code>marcaEnviados</code> despu&eacute;s 
+  de llamar a <code>sincroniza</code>). </p>
+<h3>20.3.2. Vista</h3>
+<p>Para la vista crearemos una clase para cada pantalla de nuestra aplicaci&oacute;n, 
+  como hemos visto en temas anteriores. La clase correspondiente a una pantalla 
+  heredar&aacute; del tipo de displayable correspondiente y encapsular&aacute; 
+  la creaci&oacute;n de la interfaz y la respuesta a los comandos.</p>
+<p>Por ejemplo, para la edici&oacute;n de datos de las citas en nuestra aplicaci&oacute;n 
+  podemos utilizar la siguiente pantalla:</p>
+<pre class="codigo">public class <strong>EditaCitaUI</strong> extends <strong>Form</strong> implements <strong>CommandListener</strong> {<br><br>  ControladorUI controlador;<br><br>  DateField iFecha;
+  TextField iAsunto;
+  TextField iLugar;
+  TextField iContacto;
+  ChoiceGroup iAlarma;
+  int itemAlarmaOn;
+  int itemAlarmaOff;<br><br>  Command cmdAceptar;
+  Command cmdCancelar;
+  int eventoAceptar = ControladorUI.EVENTO_AGREGA_CITA;
+  int eventoCancelar = ControladorUI.EVENTO_MUESTRA_MENU;<br><br>  Cita cita;
+   <br>  public <strong>EditaCitaUI</strong>(ControladorUI controlador) {
+    super(controlador.getString(Recursos.STR_DATOS_TITULO));<br>    this.controlador = controlador;<br><br>    iFecha = new DateField(<br>      controlador.getString(Recursos.STR_DATOS_ITEM_FECHA), <br>      DateField.DATE_TIME);
+   iAsunto = new TextField(<br>      controlador.getString(Recursos.STR_DATOS_ITEM_ASUNTO), <br>      &quot;&quot;, MAX_LENGHT, TextField.ANY);
+   iLugar = new TextField(<br>      controlador.getString(Recursos.STR_DATOS_ITEM_LUGAR), <br>      &quot;&quot;, MAX_LENGHT, TextField.ANY);
+   iContacto = new TextField(<br>      controlador.getString(Recursos.STR_DATOS_ITEM_CONTACTO), <br>      &quot;&quot;, MAX_LENGHT, TextField.ANY);
+   iAlarma = new ChoiceGroup(<br>      controlador.getString(Recursos.STR_DATOS_ITEM_ALARMA),
+      ChoiceGroup.EXCLUSIVE);
+   itemAlarmaOn = iAlarma.append(<br>      controlador.getString(Recursos.STR_DATOS_ITEM_ALARMA_ON), null);
+   itemAlarmaOff = iAlarma.append(<br>      controlador.getString(Recursos.STR_DATOS_ITEM_ALARMA_OFF), null);<br><br>   this.append(iFecha);
+   this.append(iAsunto);
+   this.append(iLugar);
+   this.append(iContacto);
+   this.append(iAlarma);<br><br>   cmdAceptar = new Command(<br>     controlador.getString(Recursos.STR_CMD_ACEPTAR), Command.OK, 1);
+   cmdCancelar = new Command(<br>     controlador.getString(Recursos.STR_CMD_CANCELAR), Command.CANCEL, 1);
+   this.addCommand(cmdAceptar);
+   this.addCommand(cmdCancelar);<br><br>   this.setCommandListener(this);
+  }<br><br>  private void setCita(Cita cita) {
+    if (cita == null) {
+      this.cita = new Cita();
+   
+      iFecha.setDate(new Date());
+      iAsunto.setString(null);
+      iLugar.setString(null);
+      iContacto.setString(null);
+      iAlarma.setSelectedIndex(itemAlarmaOff, true);
+    } else {
+      this.cita = cita;
+   
+      iFecha.setDate(cita.getFecha());
+      iAsunto.setString(cita.getAsunto());
+      iLugar.setString(cita.getLugar());
+      iContacto.setString(cita.getContacto());
+      if (cita.isAlarma()) {
+        iAlarma.setSelectedIndex(itemAlarmaOn, true);
+      } else {
+        iAlarma.setSelectedIndex(itemAlarmaOff, true);
+      }
+    }
+  }<br><br>  private Cita getCita() {
+    if(cita==null) {
+      this.cita = new Cita(); 
+    }
+    if(iFecha.getDate()==null) {
+      cita.setFecha(new Date());
+    } else {
+      cita.setFecha(iFecha.getDate()); 
+    }
+    cita.setAsunto(iAsunto.getString());
+    cita.setLugar(iLugar.getString());
+    cita.setContacto(iContacto.getString());
+    cita.setAlarma(iAlarma.getSelectedIndex() == itemAlarmaOn);<br>
+    return cita;
+  }<br><br>  public void reset(Cita cita, int eventoAceptar, int eventoCancelar) {
+    this.setCita(cita);
+    this.eventoAceptar = eventoAceptar;
+    this.eventoCancelar = eventoCancelar;
+  }<br><br>  public void <strong>commandAction</strong>(Command cmd, Displayable disp) {
+    if (cmd == cmdAceptar) {
+      controlador.<strong>procesaEvento</strong>(eventoAceptar, this.getCita());
+    } else if (cmd == cmdCancelar) {
+      controlador.<strong>procesaEvento</strong>(eventoCancelar, null);
+    }
+  }
+}</pre>
+<p>Intentaremos llevar la mayor parte de la gesti&oacute;n de eventos al controlador, 
+  para as&iacute; aislar lo m&aacute;s posible la vista del controlador. En la 
+  vista implementaremos la interfaz <code>commandAction</code>, pero el procesamiento 
+  de los eventos lo har&aacute; el controlador mediante el m&eacute;todo <code>procesaEvento</code> 
+  que veremos a continuaci&oacute;n.</p>
+<h3>20.3.3. Controlador</h3>
+<p>El controlador ser&aacute; el encargado de controlar el flujo de la aplicaci&oacute;n. 
+  Seg&uacute;n las acciones realizadas, el controlador mostrar&aacute; distintas 
+  pantalla y realizar&aacute; diferentes operaciones en el modelo.</p>
+<p>Por ejemplo, el controlador para nuestra agenda ser&aacute; el siguiente:</p>
+<pre class="codigo">public class <strong>ControladorUI</strong> {<br>
+  /*
+   * Tipos de eventos
+   */
+  public final static int EVENTO_MUESTRA_MENU = 0;
+  public final static int EVENTO_MUESTRA_NUEVA_CITA = 1;
+  public final static int EVENTO_MUESTRA_LISTA_CITAS = 2;
+  public final static int EVENTO_MUESTRA_DATOS_CITA = 3;
+  public final static int EVENTO_MUESTRA_LISTA_ALARMAS_PENDIENTES = 4;
+  public final static int EVENTO_MUESTRA_DATOS_ALARMA_PENDIENTE = 5;
+  public final static int EVENTO_AGREGA_CITA = 6;
+  public final static int EVENTO_SALIR = 8;
+  public final static int EVENTO_SINCRONIZAR = 9;
+  public final static int EVENTO_MUESTRA_CONFIG =10;
+  public final static int EVENTO_APLICA_CONFIG = 11;<br><br>  /*
+   * Componentes de la UI
+   */
+  <strong>DatosCitaUI</strong> uiDatosCita;
+  <strong>EditaCitaUI</strong> uiEditaCita;
+  <strong>ListaCitasUI</strong> uiListaCitas;
+  <strong>EditaConfigUI</strong> uiEditaConfig;
+  <strong>MenuPrincipalUI</strong> uiMenuPrincipal;
+  <strong>BarraProgresoUI</strong> uiBarraProgreso;
+   
+  /*
+   * Gestor de recursos
+   */
+  <strong>Recursos</strong> recursos;
+   
+  /*
+   * Modelo
+   */
+  <strong>FachadaModelo</strong> modelo;
+   
+  MIDletAgenda midlet;
+  Display display;
+   
+  public ControladorUI(MIDletAgenda midlet) {
+    this.midlet = midlet;
+    display = Display.getDisplay(midlet);
+   
+    init();
+  }
+   
+  /*
+   * Inicializacion de los componentes de la UI
+   */
+  public void init() {
+   
+    // Crea gestor de recursos
+    recursos = new <strong>Recursos</strong>();<br><br>    // Crea UI
+    uiDatosCita = new <strong>DatosCitaUI</strong>(this);
+    uiEditaCita = new <strong>EditaCitaUI</strong>(this);
+    uiListaCitas = new <strong>ListaCitasUI</strong>(this);
+    uiEditaConfig = new <strong>EditaConfigUI</strong>(this);
+    uiMenuPrincipal = new <strong>MenuPrincipalUI</strong>(this);
+    uiBarraProgreso = new <strong>BarraProgresoUI</strong>(this);
+   
+    try {
+      // Crea modelo
+      modelo = new <strong>FachadaModelo</strong>(alarmas);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }  
+  }
+   
+  public void destroy() throws RecordStoreException {
+    modelo.destroy();
+  }
+   
+  public void showMenu() {
+    display.setCurrent(uiMenuPrincipal);
+  }
+   
+  public String getString(int cod) {
+    return recursos.getString(cod);
+  }
+   
+  /*
+   * Lanza el procesamiento de un evento
+   */
+  public void <strong>procesaEvento</strong>(int evento, Object param) {
+    HiloEventos he = new HiloEventos(evento, param);
+    he.start();
+  }
+   
+  /*
+   * Hilo para el procesamiento de eventos
+   */
+  class HiloEventos extends Thread {
+    int evento;
+    Object param;
+   
+    public HiloEventos(int evento, Object param) {
+      this.evento = evento;
+      this.param = param;
+    }
+   
+    public void run() {
+      Cita cita;
+      Cita [] citas;
+      InfoLocal info;
+   
+      try {
+        switch(evento) {
+          case EVENTO_MUESTRA_MENU:
+            showMenu();
+            break;<br>
+          case EVENTO_MUESTRA_NUEVA_CITA:
+            uiEditaCita.reset(null, <br>                ControladorUI.EVENTO_AGREGA_CITA, <br>                ControladorUI.EVENTO_MUESTRA_MENU);
+            display.setCurrent(uiEditaCita); 
+            break;
+<br>          case EVENTO_AGREGA_CITA:
+            cita = (Cita)param;
+            modelo.nuevaCita(cita);
+            showMenu();
+            break;
+<br>          case EVENTO_MUESTRA_LISTA_CITAS:
+            uiBarraProgreso.reset(<br>                getString(Recursos.STR_PROGRESO_CARGA_LISTA), <br>                10, 0, true);
+            display.setCurrent(uiBarraProgreso);
+            citas = modelo.listaCitas();
+            uiListaCitas.reset(citas, <br>                ControladorUI.EVENTO_MUESTRA_DATOS_CITA, <br>                ControladorUI.EVENTO_MUESTRA_MENU);
+            display.setCurrent(uiListaCitas);
+            break;
+<br>          case EVENTO_MUESTRA_DATOS_CITA:
+            cita = (Cita)param;
+            uiDatosCita.reset(cita, <br>                ControladorUI.EVENTO_MUESTRA_LISTA_CITAS);
+            display.setCurrent(uiDatosCita);
+            break;
+<br>          case EVENTO_MUESTRA_LISTA_ALARMAS_PENDIENTES:
+            uiBarraProgreso.reset(<br>                getString(Recursos.STR_PROGRESO_CARGA_LISTA), <br>                10, 0, true);
+            display.setCurrent(uiBarraProgreso);
+            citas = modelo.listaAlarmasPendientes();
+            uiListaCitas.reset(citas, <br>                ControladorUI.EVENTO_MUESTRA_DATOS_ALARMA_PENDIENTE,<br>                ControladorUI.EVENTO_MUESTRA_MENU);
+            display.setCurrent(uiListaCitas);
+            break;
+<br>          case EVENTO_MUESTRA_DATOS_ALARMA_PENDIENTE:
+            cita = (Cita)param;
+            uiDatosCita.reset(cita, <br>                ControladorUI.EVENTO_MUESTRA_LISTA_ALARMAS_PENDIENTES);
+            display.setCurrent(uiDatosCita);
+            break;
+<br>          case EVENTO_SINCRONIZAR: 
+            uiBarraProgreso.reset(<br>                getString(Recursos.STR_PROGRESO_SINCRONIZA), <br>                10, 0, true);
+            display.setCurrent(uiBarraProgreso);
+            modelo.sincroniza();
+            display.setCurrent(uiMenuPrincipal);
+            break;
+<br>          case EVENTO_MUESTRA_CONFIG:
+            info = modelo.getConfig();
+            uiEditaConfig.reset(info, <br>                ControladorUI.EVENTO_APLICA_CONFIG, <br>                ControladorUI.EVENTO_MUESTRA_MENU);
+            display.setCurrent(uiEditaConfig); 
+            break;
+<br>          case EVENTO_APLICA_CONFIG:
+            info = (InfoLocal)param;
+            modelo.updateConfig(info);
+            display.setCurrent(uiMenuPrincipal); 
+            break;
+<br>          case EVENTO_SALIR: 
+            midlet.salir();
+            break;
+        } 
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+  }<br>}</pre>
+<p>Vemos en este ejemplo que el controlador tiene acceso al modelo a trav&eacute;s 
+  de la fachada, y tambi&eacute;n tiene acceso a las diferentes pantallas de la 
+  interfaz de usuario (UI). A trav&eacute;s de estos elementos controlar&aacute; 
+  la presentaci&oacute;n de la aplicaci&oacute;n y la l&oacute;gica de negocio 
+  de la misma.</p>
+<p>Este controlador se encargar&aacute; de dar respuesta a los eventos que se 
+  produzcan en la aplicaci&oacute;n. Vemos que para hacer esto se utiliza un m&eacute;todo 
+  <code>procesaEvento</code> que a su vez utiliza un hilo para procesar el evento 
+  solicitado. Esto se hace as&iacute; para no bloquear el hilo de la aplicaci&oacute;n 
+  al realizar operaciones que normalmente ser&aacute;n de larga duraci&oacute;n.</p>
+<p>Tenemos varios tipos de eventos definidos como constantes, y para cada uno 
+  de ellos especificaremos las operaciones a realizar y los componentes de la 
+  UI que se deben mostrar. Se puede observar en el ejemplo que en las operaciones 
+  que son de m&aacute;s larga duraci&oacute;n, el controlador mientras la realiza 
+  muestra en pantalla una barra de progreso.</p>
+<p>Tambi&eacute;n se puede observar que todas las cadenas de texto se encuentran 
+  centralizadas en la clase <code>Recursos</code>. Todos los componentes de la 
+  aplicaci&oacute;n obtendr&aacute;n el texto de esta clase. Esto nos facilitar&aacute; 
+  tareas como la traducci&oacute;n de nuestra aplicaci&oacute;n a otros idiomas.</p>
+<p>Para la internacionalizaci&oacute;n de la aplicaci&oacute;n, podr&iacute;amos 
+  hacer que la clase <code>Recursos</code> cargase todas las cadenas de texto 
+  de un fichero externo. De esta forma, cambiando este fichero podremos cambiar 
+  el idioma de nuestra aplicaci&oacute;n. Podr&iacute;amos permitir que el usuario 
+  se descargase ficheros con otros idiomas.</p>
+<h2>20.4. Modo sin conexi&oacute;n</h2>
+<p>Hemos visto que en las aplicaciones MIDP es conveniente permitir trabajar sin 
+  conexi&oacute;n, trabajando con datos locales. Tambi&eacute;n hemos visto como 
+  con el patr&oacute;n MVC podemos dividir el modelo en dos subsistemas para permitir 
+  los dos modos de funcionamiento: con y sin conexi&oacute;n.</p>
+<p>Vamos ahora a estudiar m&aacute;s a fondo el funcionamiento de este tipo de 
+  aplicaciones.</p>
+<h3>20.4.1. Tipos de aplicaciones</h3>
+<p>Podemos distinguir varios tipos de aplicaciones:</p>
+<ul>
+  <li><em>Thin</em>: Este tipo de aplicaciones son por ejemplo los navegadores, 
+    en los que todo el procesamiento se realiza en el servidor. En el cliente 
+    tenemos una aplicaci&oacute;n gen&eacute;rica (navegador) que se encarga de 
+    obtener documentos del servidor y mostrarlos en la pantalla.</li>
+  <li><em>Thick</em>: Aplicaciones dedicadas. Son aplicaciones para tareas concretas 
+    que llevan al cliente la l&oacute;gica de presentaci&oacute;n. Permiten realizar 
+    una presentaci&oacute;n sofisticada de datos. Por ejemplo, podremos realizar 
+    una ordenaci&oacute;n de los datos en el cliente. </li>
+  <li><em>Standalone</em>: Llevan todo el procesamiento al cliente. Estas aplicaciones 
+    son por ejemplo el bloc de notas, calculadora, juegos, etc. Pueden conectarse 
+    de forma ocasional al servidor para actualizar datos, normalmente a petici&oacute;n 
+    del usuario.</li>
+</ul>
+<p>Nos centraremos en el estudio de las aplicaciones de tipo thick. Estas aplicaciones 
+  deber&aacute;n trabajar de forma coordinada con el servidor, pero podremos permitir 
+  trabajar sin conexi&oacute;n. El permitir trabajar en este modo nos trae la 
+  ventaja de que minimiza el trafico en la red, sin embargo aumentar&aacute; el 
+  coste de procesamiento, memoria y almacenamiento en el dispositivo local. Deberemos 
+  por lo tanto buscar un compromiso entre estos dos factores.</p>
+<h3>20.4.2. Replicaci&oacute;n de datos</h3>
+<p>Para poder trabajar sin conexi&oacute;n es imprescindible replicar en nuestro 
+  dispositivo datos del servidor. Por lo tanto tendremos dos tipos de datos en 
+  el cliente:</p>
+<ul>
+  <li>Datos replicados: Necesitaremos sincronizarlos con el servidor.</li>
+  <li>Datos propios: Son s&oacute;lo del cliente.</li>
+</ul>
+<p>Adem&aacute;s, dentro de los datos replicados del servidor podemos distinguir:</p>
+<ul>
+  <li>Datos de solo lectura: Cach&eacute; de datos del servidor. S&oacute;lo tendremos 
+    que preocuparnos de renovar estos datos cuando hayan caducado.</li>
+  <li>Datos de lectura/escritura: En este caso necesitaremos sincronizar los datos 
+    locales con el servidor. Si se modifica la copia local, deberemos aplicar 
+    esta modificaci&oacute;n a la copia remota posteriormente.</li>
+</ul>
+<p>El modelo de r&eacute;plica de datos que utilicemos se caracterizar&aacute; 
+  por los siguientes factores:</p>
+<ul>
+  <li>&iquest;Se replican todos los datos o s&oacute;lo una parte de ellos?</li>
+  <li>&iquest;Las estructuras de datos se replican fielmente o no?</li>
+  <li>&iquest;Los datos son de lectura/escritura o de s&oacute;lo lectura?</li>
+  <li>&iquest;Los mismos datos pueden ser compartidos y replicados por muchos 
+    usuarios?</li>
+  <li>&iquest;Los datos tienen fecha de caducidad?</li>
+</ul>
+<p>Seg&uacute;n estos factores deberemos decidir el modelo de sincronizaci&oacute;n 
+  adecuado para nuestra aplicaci&oacute;n.</p>
+<p>Para facilitar la sincronizaci&oacute;n es conveniente reducir la granularidad 
+  de los datos en el almacenamiento, es decir, reducir la cantidad de datos que 
+  se almacenen juntos en el mismo registro.</p>
+<h3>20.4.3. Sincronizaci&oacute;n de los datos</h3>
+<p>Los datos de nuestra aplicaci&oacute;n se pueden transferir de diferentes formas:</p>
+<ul>
+  <li>El cliente descarga peri&oacute;dicamente datos del servidor. En este caso 
+    simplemente deberemos mantener una cach&eacute; de datos. Podremos renovar 
+    esta cach&eacute; cuando haya pasado la fecha de caducidad de los datos, cada 
+    cierto per&iacute;odo fijo, o cuando el usuario lo solicite.</li>
+  <li>El cliente env&iacute;a datos propios (no compartidos) al servidor. Deberemos 
+    actualizar en el servidor los datos que hayamos modificado en el cliente.</li>
+  <li>El cliente env&iacute;a al servidor datos compartidos con varios usuarios. 
+    Este es el caso m&aacute;s complicado, ya que varios clientes podr&iacute;an 
+    estar modificando los mismos datos al mismo tiempo en sus copias locales. 
+  </li>
+</ul>
+<p><strong>Descarga de datos del servidor</strong></p>
+<p>Este caso se puede resolver de forma sencilla. Las actualizaciones de los datos 
+  se pueden hacer de varias formas:</p>
+<ul>
+  <li>Si conocemos cuando caducar&aacute;n los datos, podemos ponerles una fecha 
+    de caducidad, y una vez pasada &eacute;sta forzaremos a que se descargue nuevos 
+    datos de la red. Por ejemplo, si tenemos una aplicaci&oacute;n para consultar 
+    la cartelera de los cines, como sabemos que las pel&iacute;culas se estrenan 
+    los viernes, podemos hacer que los datos caduquen este d&iacute;a. De esta 
+    forma cada viernes cuando utilicemos la aplicaci&oacute;n volver&aacute; a 
+    descargar nuevas pel&iacute;culas.<br>
+  </li>
+  <li>Si desconocemos esta fecha de caducidad, podr&iacute;amos hacer que el m&oacute;vil 
+    los actualice cada cierto per&iacute;odo fijo (<em>polling</em>), o bien dejar 
+    que el usuario decida cuando quiere actualizar estos datos.</li>
+</ul>
+<p>En muchas aplicaciones necesitaremos identificar qu&eacute; datos no descargados 
+  todav&iacute;a hay en el servidor. Por ejemplo, imaginemos nuestra aplicaci&oacute;n 
+  de agenda. Podemos crear nuevas citas utilizando un navegador web en nuestro 
+  PC o desde otro dispositivo. Cuando ejecutemos la aplicaci&oacute;n en nuestro 
+  m&oacute;vil, para actualizar la agenda deber&aacute; descargar las nuevas citas 
+  que se hayan creado en el servidor.</p>
+<p>Pero, &iquest;c&oacute;mo podemos saber qu&eacute; citas son nuevas? Podemos 
+  utilizar estampas de tiempo (timestamps) para etiquetar cada cita, de forma 
+  que cada nueva cita que a&ntilde;adamos al servidor tenga una estampa de tiempo 
+  superior a la de la anterior cita. </p>
+<pre class="codigo">public void sincroniza() throws RecordStoreException, IOException {<br><br>  // Obtiene datos del cliente
+   
+  InfoLocal info = mLocal.getInfoLocal();<br>  IndiceCita[] indices = mLocal.listaCitasPendientes();
+  Cita[] citas = mLocal.listaCitas(indices);
+  SyncItem datosCliente = new SyncItem();
+  datosCliente.setCitas(citas);
+  datosCliente.<strong>setTimeStamp</strong>(info.<strong>getTimeStamp</strong>());<br><br>  // Envia y recibe
+   
+  SyncItem datosServidor = mRemoto.<strong>sincroniza</strong>(datosCliente);<br><br>  mLocal.marcaEnviados(indices);<br>  <br>  // Agrega los datos recibidos del servidor<br>  <br>  Cita[] citasServidor = datosServidor.getCitas();
+  if (citasServidor != null) {
+    for (int i = 0; i &lt; citasServidor.length; i++) {
+      mLocal.addCita(citasServidor[i], false);
+    }
+  }<br><br>  info.<strong>setTimeStamp</strong>(datosServidor.<strong>getTimeStamp</strong>());
+  mLocal.setInfoLocal(info);
+}</pre>
+<p>En nuestro dispositivo nos guardaremos el n&uacute;mero de la &uacute;ltima 
+  estampa de tiempo obtenida. Cuando solicitemos los nuevos datos al servidor, 
+  le proporcionaremos esta estampa de tiempo para que nos devuelva s&oacute;lo 
+  aquellas citas que sean posteriores. Junto a estas citas nos devolver&aacute; 
+  una nueva estampa de tiempo correspondiente al &uacute;ltimo dato que hayamos 
+  recibido. El cliente tendr&aacute; la responsabilidad de almacenar esta estampa 
+  de tiempo para poder utilizarla en la pr&oacute;xima petici&oacute;n.</p>
+<p><strong>Env&iacute;o de datos no compartidos al servidor</strong></p>
+<p>En este caso deberemos actualizar cada cierto per&iacute;odo en el servidor 
+  los datos que hayamos modificado en nuestro dispositivo. La actualizaci&oacute;n 
+  podemos hacer que sea autom&aacute;tica, cada cierto per&iacute;odo de tiempo, 
+  o manual, a petici&oacute;n del usuario.</p>
+<p>Para actualizar los datos deberemos conocer qu&eacute; datos han cambiado desde 
+  la &uacute;ltima actualizaci&oacute;n. Para ello podremos a&ntilde;adir a los 
+  datos almacenados en RMS un atributo que nos diga si hay cambios pendientes 
+  de actualizar en dicho dato.</p>
+<p>Si hemos creado &iacute;ndices para nuestros registros de RMS, podremos a&ntilde;adir 
+  este atributo a los &iacute;ndices, para facilitar de esta forma la b&uacute;squeda 
+  de estos datos.</p>
+<pre class="codigo">public class IndiceCita {<br>  int rmsID;<br>  int id;<br>  Date fecha;<br>  boolean alarma;<br>  boolean <strong>pendiente</strong>;
+}</pre>
+<p>Podemos ver aqu&iacute; la raz&oacute;n por la que preferimos una granularidad 
+  fina de los datos almacenados. Si tuvi&eacute;semos almacenados muchos datos 
+  en un mismo registro, y modificamos una peque&ntilde;a parte de estos datos, 
+  tendremos que marcar todo el registro como modificado, por lo que habr&aacute; 
+  que subir al servidor un mayor volumen de datos. Si estos datos hubiesen estado 
+  repartidos en varios registros, s&oacute;lo hubiese hecho falta actualizar la 
+  parte que hubiese cambiado.</p>
+<p><strong>Env&iacute;o de datos compartidos al servidor</strong></p>
+<p>Este caso es el m&aacute;s complejo. Existe una copia maestra de los datos 
+  almacenada en el servidor, y varias copias locales, conocidas como copias legales, 
+  que se descargan los usuarios a sus dispositivos. </p>
+<p>Si varios clientes han descargado los datos en sus m&oacute;viles, y modifican 
+  su copia legal, cuando actualicen los datos en la copia maestra del servidor 
+  podr&iacute;an sobrescribir el trabajo de otros usuarios.</p>
+<p>Para poder corregir estos conflictos de la mejor forma posible, deberemos tener 
+  una granularidad muy fina de los datos, de forma que los usuarios s&oacute;lo 
+  modifiquen las porciones de los datos que hayan modificado. De esta forma, si 
+  nosotros hemos modificado una parte de los datos que otro usuario no ha tocado, 
+  cuando el otro usuario actualice los datos no sobrescribir&aacute; dicha parte.</p>
+<p>Para decidir qu&eacute; versi&oacute;n de los datos mantener en la copia maestra 
+  podemos tomar diferentes criterios:</p>
+<ul>
+  <li>Sobrescribir directamente el &uacute;ltimo que llegue al servidor</li>
+  <li>Mantener el que tenga fecha de modificaci&oacute;n posterior</li>
+  <li>Mantener el que tenga fecha de modificaci&oacute;n anterior</li>
+  <li>etc</li>
+</ul>
+<p>Deberemos intentar solucionar los conflictos sin necesidad de solicitar la 
+  intervenci&oacute;n del usuario, aunque en ciertas ocasiones la mejor soluci&oacute;n 
+  puede ser preguntar qu&eacute; copia de los datos desea que se mantenga.</p>
+<p></p>
+</body>
+</html>

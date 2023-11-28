@@ -1,0 +1,84 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Ejercicios sesi&oacute;n 17: Conexiones de red</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2>Ejercicios de conexiones de red</h2>
+             
+<p><strong>17.1.</strong> Vamos a ver como ejemplo una aplicaci&oacute;n de chat 
+  para el m&oacute;vil. En el directorio <code>ejemplos</code> de las plantillas 
+  de la sesi&oacute;n se encuentra una aplicaci&oacute;n web con todos los servlets 
+  que necesitaremos para probar los ejemplos. Podremos desplegar esta aplicaci&oacute;n 
+  en Tomcat para hacer pruebas con nuestro propio servidor.</p>
+<p>Podemos encontrar la aplicaci&oacute;n de chat implementada en el directorio 
+  <code>Chat</code>, que realiza las siguientes tareas:</p>
+<ul>
+  <li>Lo primero que se mostrar&aacute; ser&aacute; una pantalla de <em>login</em>, 
+    donde el usuario deber&aacute; introducir el <em>login</em> con el que participar 
+    en el chat. Deberemos enviar este <em>login</em> al servidor para iniciar 
+    la sesi&oacute;n. Para ello abriremos una conexi&oacute;n con la URL del <em>servlet</em> 
+    proporcionando los siguientes par&aacute;metros:</li>
+</ul>
+<blockquote>
+  <p><code>?accion=login&amp;id=&lt;nick_del_usuario&gt;</code></p>
+  <p>Si el <em>login</em> es correcto, el servidor nos devolver&aacute; un c&oacute;digo 
+    de respuesta <code>200 OK</code>. Adem&aacute;s deberemos leer la cabecera 
+    <code>URL-Reescrita</code>, donde nos habr&aacute; enviado la URL rescrita 
+    que deberemos utilizar de ahora en adelante para mantener la sesi&oacute;n.</p>
+</blockquote>
+<ul>
+  <li> Una vez hemos entrado en el chat, utilizaremos la t&eacute;cnica de <em>polling</em> 
+    para obtener los mensajes escritos en el chat y mostrarlos en la pantalla. 
+    Utilizando la URL rescrita, conectaremos al <em>servlet</em> del chat proporcionando 
+    el siguiente par&aacute;metro:</li>
+</ul>
+<blockquote> 
+  <p><code>?accion=lista</code></p>
+  <p>Esto nos devolver&aacute; como respuesta una serie de mensajes, codificados 
+    mediante un objeto <code>DataOutputStream</code> de la siguiente forma:</p>
+  <p><code>&lt;nick1&gt; &lt;mensaje1&gt;<br>
+    &lt;nick2&gt; &lt;mensaje2&gt;</code> <code><br>
+    ...<br>
+    &lt;nickN&gt; &lt;mensajeN&gt;</code></p>
+  <p>De esta forma podremos utilizar un objeto <code>DataInputStream</code> para 
+    ir leyendo con el m&eacute;todo <code>readUTF</code> las cadenas del <em>nick</em> 
+    y del texto de cada mensaje del chat:</p>
+  <pre class="codigo">String nick = dis.readUTF();
+String texto = dis.readUTF();</pre>
+</blockquote>
+<ul>
+  <li>Para enviar mensajes al chat utilizaremos el bloque de contenido, conect&aacute;ndonos 
+    a la URL rescrita proporcionando el siguiente par&aacute;metro:</li>
+</ul>
+<blockquote> 
+  <p><code>?accion=enviar</code></p>
+  <p>El mensaje se deber&aacute; codificar en binario, escribiendo la cadena del 
+    mensaje con el m&eacute;todo <code>writeUTF</code> de un objeto <code>DataOutputStream</code>. 
+    Si obtenemos una respuesta <code>200 OK</code> el mensaje habr&aacute; sido 
+    enviado correctamente.</p>
+</blockquote>
+<h2></h2>
+<p><strong>17.2.</strong> Vamos a acceder desde el m&oacute;vil a nuestra tienda 
+  virtual. Mostraremos en el m&oacute;vil una pantalla en la que aparecer&aacute; 
+  la lista de productos que hay disponibles en nuestra tienda. Al pulsar sobre 
+  cada uno de ellos nos mostrar&aacute; informaci&oacute;n detallada sobre el 
+  producto.</p>
+<p>Tenemos la aplicaci&oacute;n base implementada en el directorio <code>Tienda</code>. 
+  Deberemos a&ntilde;adir en el m&eacute;todo <code>leeProductos</code> de la 
+  clase <code>ListaProductos</code> el c&oacute;digo necesario para leer la lista 
+  de productos de la red.</p>
+<p>Para ello conectaremos a la URL donde tenemos el <em>servlet</em> de nuestra 
+  tienda y leeremos la informaci&oacute;n de los productos que nos env&iacute;a 
+  en la respuesta. La informaci&oacute;n que se env&iacute;a consiste en una serie 
+  de objetos <code>Producto</code> serializados. Para leerlos podremos deserializar 
+  objetos <code>Producto</code> del flujo de entrada hasta que se produzca una 
+  <code>EOFException</code>, indic&aacute;ndonos que se ha llegado al final del 
+  flujo.</p>
+</body>
+</html>

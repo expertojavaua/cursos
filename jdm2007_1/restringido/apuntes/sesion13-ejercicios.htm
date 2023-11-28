@@ -1,0 +1,78 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Ejercicios sesi&oacute;n 13: Gr&aacute;ficos 3D</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2> Ejercicios de gr&aacute;ficos 3D </h2>
+             
+<p><strong>13.1.</strong> En el directorio <code>Prueba3D</code> de las plantillas 
+  de la sesi&oacute;n podemos encontrar un ejemplo de aplicaci&oacute;n M3G. En 
+  ella podemos ver un ejemplo de modo inmediato y otro de modo <em>retained</em>. 
+  Consultar el c&oacute;digo y probar el ejemplo. Para poderlo probar necesitaremos 
+al menos WTK 2.5.</p>
+<p>Una vez probada la aplicaci&oacute;n, vamos a realizar una serie de modificaciones 
+  en la parte del modo <em>retained</em> (<code>Visor3DRetained</code>). Se pide:</p>
+<p><em>a)</em> Realizar una funci&oacute;n recursiva que explore e imprima en la consola 
+  todos los elementos del grafo de escena cargado. Deber&aacute; mostrarse para 
+  cada elemento el nombre de la clase a la que pertenece y la lista de sus hijos. 
+  De cada uno de estos hijos deber&aacute; mostrarse la misma informaci&oacute;n, 
+  y as&iacute; recursivamente hasta explorar todo el arbol.</p>
+<p><em>b)</em> Hacer que la aplicaci&oacute;n cargue el contenido del fichero <code>mundo.m3g</code> 
+  que se encuentra entre los recursos de la aplicaci&oacute;n, en lugar de <code>caja.m3g</code>. 
+  Comprobar que la nueva escena se visualiza correctamente.</p>
+<p><em>c)</em> La escena se ve algo oscura. A&ntilde;adir luz ambiente con intensidad 0.8 
+  para mejorar la visibilidad. Para ello se deber&aacute; a&ntilde;adir el correspondiente 
+  objeto <code>Light</code> al grafo de la escena.</p>
+<p><em>d)</em> Dar la posibilidad de navegar por el mundo de forma subjetiva, utilizando 
+  para ello las teclas del cursor. Para hacer esto deberemos objeter la c&aacute;mara 
+  activa del mundo, y transformar su posici&oacute;n seg&uacute;n las pulsaciones 
+  de las teclas. Para girar la c&aacute;mara deberemos hacerlo alrededor del eje 
+  Y, ya que este eje es la altura en el mundo 3D y esto nos har&aacute; girar 
+  a la izquierda o a la derecha.</p>
+<p>RECOMENDACI&Oacute;N: Ser&aacute; conveniente tener nuestro &aacute;ngulo actual 
+  almacenado en un campo de nuestra clase. Podemos inicializar la c&aacute;mara 
+  con &aacute;ngulo 0&ordm; alrededor de Y, utilizando para ello el m&eacute;todo 
+  <code>setOrientation</code>. Cada vez que se pulsen los cursores izquierdo o 
+  derecho, se modificar&aacute; el &aacute;ngulo actual, y se establecer&aacute; 
+  este &aacute;ngulo en la c&aacute;mara utilizando ese mismo m&eacute;todo.</p>
+<p>Para avanzar o retroceder, deberemos hacerlo en la direcci&oacute;n en la que 
+  estemos mirando. Para ello se deber&aacute;n utilizar las funciones <code>cos</code> 
+  y <code>sin</code> de la clase <code>Math</code> sobre nuestro &aacute;ngulo 
+  actual, para avanzar la correspondiente distancia en los ejes X y Z.</p>
+<p>NOTA: Se debe llevar cuidado, ya que la funci&oacute;n <code>setOrientation</code> 
+  trabaja con &aacute;ngulos en grados, mientras que <code>cos</code> y <code>sin</code> 
+  lo hacen en radianes. Se deber&aacute;n utilizar los m&eacute;todos <code>toRadians</code> 
+  y/o <code>toDegrees</code> de la clase <code>Math</code> para convertir entre 
+  ambas unidades.</p>
+<p><em>e)</em> En lugar de manejar la c&aacute;mara subjetiva, vamos a hacer que lo que 
+  se maneje mediante los cursores sea el coche que aparece en la escena. El grupo 
+  de objetos que componen el coche est&aacute; almacenado en el fichero M3G con 
+  el identificador 101. Podemos localizar un determinado elemento mediante su 
+  identificador utilizando el m&eacute;todo <code>find</code> del mundo.</p>
+<p>Localizar el objeto del coche, y hacer que las transformaciones se apliquen 
+  a este objeto, en lugar de a la c&aacute;mara activa, para conseguir de esta 
+  forma que lo que se mueva sea el coche. </p>
+<p>NOTA: Es posible que haya que intercambiar las funciones <code>sin</code> y 
+  <code>cos</code> y sus signos para que el coche se mueva en la direcci&oacute;n 
+  y sentido correctos, ya que la orientaci&oacute;n con la que est&aacute; almacenado 
+  el coche en el fichero es diferente de la de la c&aacute;mara.</p>
+<p><em>f)</em> El grupo del coche, a parte de las piezas que lo componen, incorpora una 
+  c&aacute;mara con la que se ve el coche desde detr&aacute;s. Vamos a hacer que 
+  la c&aacute;mara siga el coche conforme lo movemos. Para ello estableceremos 
+  como c&aacute;mara activa la c&aacute;mara del coche. Esta c&aacute;mara tiene 
+  un identificador 102. </p>
+<p><em>g)</em> Al movernos por el mundo podemos ver que el plano de corte posterior de 
+  la c&aacute;mara es demasiado cercano, y esto produce que los objetos s&oacute;lo 
+  aparezcan cuando nos acercamos lo suficiente. Hacer que el plano de corte posterior 
+  sea m&aacute;s lejano (utilizando el m&eacute;todo <code>setPerspective</code> 
+  de la c&aacute;mara), para que podamos ver los tres molinos al mismo tiempo 
+  desde un punto lo suficientemente lejano. </p>
+<p><em>h)</em> Cambiar el fondo del mundo por un fondo de color anaranjado.</p>
+</body>
+</html>

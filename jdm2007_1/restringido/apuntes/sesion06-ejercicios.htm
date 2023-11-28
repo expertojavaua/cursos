@@ -1,0 +1,56 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<title>Ejercicios sesi&oacute;n 6: Fuentes de datos</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css"></head>
+<body>
+
+<h2>Ejercicios de Fuentes de datos </h2>
+<p><strong>6.1. </strong>Instalaci&oacute;n de la BD  </p>
+<p>En las plantillas de la sesi&oacute;n tienes un fichero <em>alumnosBD.sql</em>, con una serie de sentencias para crear la base de datos de alumnos vista en teor&iacute;a en un servidor MySQL, y otro <em>alumnosDat.sql</em> con unos datos de prueba para rellenar la base de datos. Tienes tambi&eacute;n un fichero Ant llamado <em>build.xml</em> con dos <em>targets</em>: uno llamado <em>creaBD</em> que servir&aacute; para crear la base de datos (ejecutando el fichero <em>alumnosBD.sql</em>), y otro <em>datosBD</em> que rellenar&aacute; la BD con los datos del fichero <em>alumnosDat.sql</em>). Ejecuta los dos <em>targets</em> de Ant, en ese orden (primero crear, y luego rellenar con datos).</p>
+<p><strong>6.2. </strong>Aplicaci&oacute;n contra BD</p>
+<p>En el paquete <em>es.ua.jtech.sesion6</em> tienes la clase <em>AplicAlumnos</em>, inicialmente casi vac&iacute;a, que vamos a ir completando para hacer una aplicaci&oacute;n que, en modo texto, comunicar&aacute; con la BD de alumnos y nos permitir&aacute; realizar operaciones sobre ella. Para ello:</p>
+<p><strong>a)</strong> Rellena el m&eacute;todo <strong>conectaBD</strong>. Dicho m&eacute;todo debe conectar con la BD MySQL &quot;alumnos&quot; cargada antes, devolver <em>true</em> y ha podido conectar bien, o <em>false</em> si ha habido alg&uacute;n error. Ver&aacute;s que el m&eacute;todo <em>main </em>utiliza este m&eacute;todo antes que nada para saber si puede seguir o no.</p>
+<p>NOTA: Deja como variables globales de la clase los objetos <em>Connection</em> y <em>Statement</em> que crees. Los necesitar&aacute;s en otros m&eacute;todos de la clase. </p>
+<p><strong>b) </strong>Tienes tambi&eacute;n los m&eacute;todos </p>
+<pre class="codigo">int insertaAlumno(int exp, String nombre, String sexo) 
+int borraAlumno(int exp)
+int modificaAlumno (int exp, String nombre, String sexo)
+ResultSet listaAlumnos()</pre> 
+<p>todos ellos est&aacute;n vac&iacute;os, y sirven, cada uno, para hacer cada una de las 4 operaciones b&aacute;sicas contra la BD: </p>
+<ul>
+  <li>insertar un alumno nuevo dados su expediente, nombre y sexo </li>
+  <li>borrar un alumno de la BD dado su expediente</li>
+  <li>modificar el nombre y sexo de un alumno dado su expediente</li>
+  <li>Listar todos los alumnos de la BD</li>
+</ul>
+<p>Rellena el c&oacute;digo de todos estos m&eacute;todos. Define tambi&eacute;n en el m&eacute;todo <em>main</em> (despu&eacute;s de ver que se ha conectado a la BD) una llamada a cada uno de ellos para comprobar que funcionan adecuadamente.</p>
+<p><strong>c)</strong> Una vez compruebes que tus m&eacute;todos b&aacute;sicos funcionan, vamos a sustituir los ejemplos de prueba de esos m&eacute;todos que hiciste en el paso <em>b)</em> por una aplicaci&oacute;n en modo texto. Para ello, despu&eacute;s del c&oacute;digo que comprueba si se ha conectado a la BD:</p>
+<ul>
+  <li>Obtendremos un buffer de entrada estandar, para poder introducir comandos desde el teclado:
+  <pre class="codigo">BufferedReader ent = new BufferedReader(new InputStreamReader(System.in));</pre></li>
+  <li>Montaremos una estructura de bucles y men&uacute;s donde el programa nos d&eacute; 4 opciones:
+    <ol>
+      <li>Listar alumnos</li>
+      <li>Insertar nuevo alumno</li>
+      <li>Borrar alumno</li>
+      <li>Editar datos alumno</li>
+      <li>Salir</li>
+    </ol>
+  </li>
+</ul>
+<ol>
+  <li>Si pulsamos 1, llamaremos al m&eacute;todo <em>listaAlumnos</em> para obtener el listado, que sacaremos despu&eacute;s por pantalla (recorriendo el <em>ResultSet</em>).<br>
+    </li>
+  <li>Si pulsamos 2, nos ir&aacute; pidiendo el n&uacute;mero de expediente, nombre y sexo, y despu&eacute;s llamar&aacute; a <em>insertaAlumno</em> para hacer la inserci&oacute;n. Mostraremos por pantalla si se ha podido hacer bien o no.</li>
+  <li>Si pulsamos 3, nos pedir&aacute; el n&uacute;mero de expediente, y con &eacute;l llamar&aacute; a <em>borraAlumno</em> para hacer el borrado. Mostraremos por pantalla si se ha podido hacer bien o no.</li>
+  <li>Si pulsamos 4, nos ir&aacute; pidiendo el n&uacute;mero de expediente, nombre y sexo, y despu&eacute;s llamar&aacute; a <em>modificaAlumno</em> para hacer la modificaci&oacute;n. Mostraremos por pantalla si se ha podido hacer bien o no.</li>
+  <li>Si pulsamos 5, saldremos del bucle.</li>
+</ol>
+<p>Al finalizar cada operaci&oacute;n (salvo que pulsemos 5), nos volver&aacute; a mostrar el men&uacute; de operaciones para que elijamos qu&eacute; queremos hacer a continuaci&oacute;n. </p>
+<blockquote>&nbsp;</blockquote>
+</body>
+</html>

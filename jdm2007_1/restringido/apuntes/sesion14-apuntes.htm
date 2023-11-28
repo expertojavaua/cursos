@@ -1,0 +1,1335 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 14: Juegos</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+<h1> 14. Juegos</h1>
+<p>Sin duda una de las aplicaciones que m&aacute;s famosas se han hecho con el 
+  surgimiento de los tel&eacute;fonos m&oacute;viles MIDP son los juegos Java. 
+  Con estos tel&eacute;fonos los usuarios pueden descargar estos juegos de Internet, 
+  normalmente previo pago de una tarifa, e instalarlos en el tel&eacute;fono. 
+  De esta forma podr&aacute;n a&ntilde;adir f&aacute;cilmente al m&oacute;vil 
+  cualquier juego realizado en Java, sin limitarse as&iacute; a tener &uacute;nicamente 
+  el t&iacute;pico juego de &quot;la serpiente&quot; y similares que vienen preinstalados 
+  en determinados tel&eacute;fonos.</p>
+<p>Vamos a ver en esta secci&oacute;n los conceptos b&aacute;sicos de la programaci&oacute;n 
+  de videojuegos y las APIs de MIDP dedicadas a esta tarea. Comenzaremos viendo 
+  una introducci&oacute;n a los tipos de videojuegos que normalmente encontraremos 
+  en los tel&eacute;fonos m&oacute;viles.</p>
+<h2>14.1. Tipos de juegos</h2>
+<p>Podemos distinguir diferentes tipos de juegos:</p>
+<ul>
+  <li><strong>Juegos de mesa</strong>: Podemos encontrar juegos de mesa como por 
+    ejemplo juegos de cartas, ajedrez, reversi, etc. Estos juegos suelen ser muy 
+    sencillos, y la velocidad con la que se ejecuten no es cr&iacute;tica como 
+    ocurre en el caso de los juegos de acci&oacute;n.<br>
+  </li>
+  <li><strong>Puzzles</strong>: Son juegos de inteligencia, normalmente con una 
+    mec&aacute;nica bastante sencilla. Lo fundamental en estos juegos es superar 
+    las pruebas propuestas, sin necesitar unos gr&aacute;ficos complejos ni tener 
+    ninguna componente de acci&oacute;n.<br>
+  </li>
+  <li><strong>Juegos de acci&oacute;n 2D</strong>: Consideremos juegos de acci&oacute;n 
+    2D aquellos juegos en los que debemos manejar a un personaje u objeto. Podemos 
+    encontrar multitud de g&eacute;neros dentro de este tipo de juegos: <em>shoot'em 
+    ups</em>, simuladores, plataformas, lucha, etc.<br>
+  </li>
+  <li><strong>Juegos de acci&oacute;n 3D</strong>: Con la evoluci&oacute;n de 
+    los procesadores gr&aacute;ficos los juegos de acci&oacute;n han ido pasando 
+    de desarrollarse con gr&aacute;ficos 2D a desarrollarse con gr&aacute;ficos 
+    en 3D. Podemos encontrar pr&aacute;cticamente los mismos g&eacute;neros que 
+    en el caso de los juegos 2D. Este tipo de juegos todav&iacute;a es demasiado 
+    complejo para los modelos de m&oacute;viles actuales, por lo que no lo tendremos 
+    en consideraci&oacute;n.</li>
+</ul>
+<table width="50%" border="0" align="center" cellpadding="2" cellspacing="2">
+  <tr align="center"> 
+    <td><img src="imagenes/juegos/prince_1.gif" width="176" height="208"></td>
+    <td><img src="imagenes/juegos/siberian_1.gif" width="176" height="208"></td>
+    <td><img src="imagenes/juegos/speed_1.gif" width="176" height="208"></td>
+  </tr>
+  <tr align="center"> 
+    <td><img src="imagenes/juegos/prince_2.gif" width="176" height="208"></td>
+    <td><img src="imagenes/juegos/siberian_2.gif" width="176" height="208"></td>
+    <td><img src="imagenes/juegos/speed_2.gif" width="176" height="208"></td>
+  </tr>
+  <tr align="center"> 
+    <td><img src="imagenes/juegos/prince_3.gif" width="128" height="128"></td>
+    <td><img src="imagenes/juegos/siberian_3.gif" width="128" height="128"></td>
+    <td><img src="imagenes/juegos/speed_3.gif" width="128" height="128"></td>
+  </tr>
+  <tr align="center"> 
+    <td><img src="imagenes/juegos/prince_4.gif" width="96" height="65"></td>
+    <td><img src="imagenes/juegos/siberian_4.gif" width="96" height="65"></td>
+    <td><img src="imagenes/juegos/speed_4.gif" width="96" height="65"></td>
+  </tr>
+  <tr align="center"> 
+    <td><img src="imagenes/juegos/prince_5.gif" width="176" height="112"></td>
+    <td><img src="imagenes/juegos/siberian_5.gif" width="176" height="112"></td>
+    <td><img src="imagenes/juegos/speed_5.gif" width="176" height="112"></td>
+  </tr>
+</table>
+<p class="caption">Figura 1. Capturas de juegos para diferentes modelos de m&oacute;viles</p>
+<p>Los primeros juegos que pod&iacute;amos encontrar en los m&oacute;viles eran 
+  normalmente juegos muy sencillos tipo puzzle o de mesa, o en todo caso juegos 
+  de acci&oacute;n muy simples similares a los primeros videojuegos aparecidos 
+  antes de los 80. En los m&oacute;viles con soporte para Java podremos tener 
+  juegos m&aacute;s complejos, como los que se pod&iacute;an ver en los ordenadores 
+  y consolas de 8 bits, y estos juegos ir&aacute;n mejorando conforme evolucionen 
+  los tel&eacute;fonos m&oacute;viles.</p>
+<p>Adem&aacute;s tenemos las ventajas de que existe una gran comunidad de programadores 
+  en Java, a los que no les costar&aacute; aprender a desarrollar este tipo de 
+  juegos para m&oacute;viles, por lo que el n&uacute;mero de juegos disponible 
+  crecer&aacute; r&aacute;pidamente. El poder descargar y a&ntilde;adir estos 
+  juegos al m&oacute;vil de forma sencilla, como cualquier otra aplicaci&oacute;n 
+  Java, har&aacute; estos juegos especialmente atractivos para los usuarios, ya 
+  que de esta forma podr&aacute;n estar disponiendo continuamente de nuevos juegos 
+  en su m&oacute;vil.</p>
+<p>Los juegos que se ejecutan en un m&oacute;vil tendr&aacute;n distintas caracter&iacute;sticas 
+  que los juegos para ordenador o videoconsolas, debido a las peculiaridades de 
+  estos dispositivos. </p>
+<ul>
+  <li><strong>Escasa memoria</strong>. No podremos crear demasiados objetos. Adem&aacute;s 
+    el tama&ntilde;o del JAR con todos los datos del juegos tambi&eacute;n suele 
+    estar limitado, muchas veces deberemos hacer un juego en 64KB. Esto nos obligar&aacute; 
+    a rescatar viejas t&eacute;cnicas de programaci&oacute;n de videojuegos de 
+    los tiempos de los 8 bits a mediados/finales de los 80.<br>
+  </li>
+  <li><strong>CPU lenta</strong>. La CPU de los m&oacute;viles es bastante lenta 
+    comparada con la de los ordenadores de sobremesa y las videoconsolas. Es importante 
+    que los juegos vayan de forma fluida, por lo que antes de distribuir nuestra 
+    aplicaci&oacute;n deberemos probarla en m&oacute;viles reales para asegurarnos 
+    de que funcione bien, ya que muchas veces los emuladores funcionar&aacute;n 
+    a velocidades distintas.<br>
+  </li>
+  <li><strong>Pantalla reducida</strong>. Deberemos tener esto en cuenta en los 
+    juegos, y hacer que todos los objetos se vean correctamente. Podemos utilizar 
+    <em>zoom</em> en determinadas zonas para poder visualizar mejor los objetos 
+    de la escena.<br>
+  </li>
+  <li><strong>Almacenamiento limitado</strong>. En el m&oacute;vil el espacio 
+    para guardar datos sobre la partida tambi&eacute;n est&aacute; bastante limitado. 
+    Ser&aacute; interesante permitir guardar la partida, para que el usuario puede 
+    continuar m&aacute;s adelante donde se qued&oacute;. Esto es especialmente 
+    importante en los m&oacute;viles, ya que muchas veces se utilizan estos juegos 
+    mientras el usuario viaja en autob&uacute;s, o est&aacute; esperando, de forma 
+    que puede tener que finalizar la partida en cualquier momento. Deberemos hacer 
+    esto utilizando la m&iacute;nima cantidad de espacio posible.<br>
+  </li>
+  <li><strong>Poco ancho de banda</strong>. Si desarrollamos juegos en red deberemos 
+    tener en cuenta la baja velocidad y la latencia de la red. Deberemos minimizar 
+    el tr&aacute;fico que circula por la red.<br>
+  </li>
+  <li><strong>Teclado peque&ntilde;o</strong>. El teclado de los m&oacute;viles 
+    es muy peque&ntilde;o y si hacemos que deban utilizarse muchas teclas puede 
+    resultar inc&oacute;modo y complicado de manejar. Deberemos intentar proporcionar 
+    un manejo c&oacute;modo, haciendo que el control sea lo m&aacute;s sencillo 
+    posible, con un n&uacute;mero reducido de posibles acciones.<br>
+  </li>
+  <li><strong>Posibles interrupciones</strong>. En el m&oacute;vil es muy probable 
+    que se produzca una interrupci&oacute;n involuntaria de la partida, por ejemplo 
+    cuando recibimos una llamada entrante. Deberemos permitir que esto ocurra. 
+    Adem&aacute;s tambi&eacute;n es conveniente que el usuario pueda pausar la 
+    partida f&aacute;cilmente.</li>
+</ul>
+<p>Ante todo, estos videojuegos deben ser atractivos para los jugadores, ya que 
+  su &uacute;nica finalidad es entretener.</p>
+<h2>14.2. Desarrollo de juegos para m&oacute;viles</h2>
+<p>Hemos visto que los juegos son aplicaciones que deben resultar atractivas para 
+  los usuarios. Por lo tanto deben tener gr&aacute;ficos personalizados e innovadores. 
+  La API de bajo nivel de LCDUI nos ofrece el control suficiente sobre lo que 
+  dibujamos en pantalla para poder crear cualquier interfaz gr&aacute;fica que 
+  queramos que tengan nuestros juegos. Esto, junto al control a bajo nivel que 
+  nos ofrece sobre los eventos de entrada, hace que esta API sea suficiente para 
+  desarrollar videojuegos para m&oacute;viles.</p>
+<p>Adem&aacute;s, en MIDP 2.0 se incluyen una serie de clases adicionales en el 
+  paquete <code>javax.microedition.lcdui.game</code> que bas&aacute;ndose en la 
+  API a bajo nivel de LCDUI nos ofrecer&aacute;n facilidades para el desarrollo 
+  de juegos. En estas clases tendremos implementados los objetos gen&eacute;ricos 
+  que solemos encontrar en todos los juegos. Si queremos desarrollar juegos con 
+  MIDP 1.0, deberemos implementar nosotros manualmente todos estos objetos.</p>
+<p>Los juegos se instalar&aacute;n en el m&oacute;vil como cualquier otra aplicaci&oacute;n 
+  Java. En el caso concreto de los tel&eacute;fonos Nokia, podemos establecer 
+  en el fichero JAD un atributo propio de esta marca con el que especificamos 
+  el tipo de aplicaci&oacute;n:</p>
+<p><code>Nokia-MIDlet-Category: Game</code></p>
+<p>Especificando que se trata de un juego, cuando lo instalemos en el tel&eacute;fono 
+  los guardar&aacute; directamente en la carpeta <em>juegos</em>, y no en la carpeta 
+  <em>aplicaciones</em> como lo har&iacute;a por defecto.</p>
+<p>Para ilustrar las explicaciones, utilizaremos como ejemplo un clon del cl&aacute;sico 
+  <em>Frogger</em>. El mecanismo de este juego es muy sencillo:</p>
+<ul>
+  <li>Tenemos una carretera con varios carriles por los que circulan coches.</li>
+  <li>Por cada carril los coches circulan a distinta velocidad y con distinta 
+    separaci&oacute;n entre ellos.</li>
+  <li>Debemos cruzar la carretera pasando entre los coches sin ser atropellados.</li>
+  <li>Cuando consigamos llegar al otro lado de la carretera habremos completado 
+    el nivel.</li>
+  <li>Si un coche nos atropella, perderemos una vida.</li>
+</ul>
+<div align="center"><img src="imagenes/juegos/frogger1.gif" width="176" height="208"> &nbsp;
+  <img src="imagenes/juegos/frogger2.gif" width="176" height="208"> </div>
+<p class="caption">Figura 2. Ejemplo de juego</p>
+<h3><strong>14.2.1. Aplicaci&oacute;</strong><strong>n conducida por los datos</strong></h3>
+<p>Cuando desarrollamos juegos, ser&aacute; conveniente llevar a la capa de datos 
+  todo lo que podamos, dejando la parte del c&oacute;digo lo m&aacute;s simple 
+  y gen&eacute;rica posible. </p>
+<p>Por ejemplo, podemos crear ficheros de datos donde se especifiquen las caracter&iacute;sticas 
+  de cada nivel del juego, el tipo y el comportamiento de los enemigos, los textos, 
+  etc.</p>
+<p>Normalmente los juegos consisten en una serie de niveles. Cada vez que superemos 
+  un nivel, entraremos en uno nuevo en el que se habr&aacute; incrementado la 
+  dificultad, pero la mec&aacute;nica del juego en esencia ser&aacute; la misma. 
+  Por esta raz&oacute;n es conveniente que el c&oacute;digo del programa se encargue 
+  de implementar esta mec&aacute;nica gen&eacute;rica, que conoceremos como motor 
+  del juego, y lea de ficheros de datos todas las caracter&iacute;sticas de cada 
+  nivel concreto.</p>
+<p>De esta forma, si queremos a&ntilde;adir o modificar niveles del juego, cambiar 
+  la inteligencia artificial de los enemigos, a&ntilde;adir nuevos tipos de enemigos, 
+  o cualquier otro cambio de este tipo, no tendremos que modificar el c&oacute;digo 
+  fuente, simplemente bastar&aacute; con cambiar los ficheros de datos.</p>
+<p>Es recomendable tambi&eacute;n centralizar la carga y la gesti&oacute;n de 
+  los recursos en una &uacute;nica clase. De esta forma quedar&aacute; m&aacute;s 
+  claro qu&eacute; recursos carga la aplicaci&oacute;n, ya que no tendremos la 
+  carga de recursos dispersa por todo el c&oacute;digo de las clases del juego. 
+  En este mismo fichero podemos tener los textos que se muestren en pantalla, 
+  lo que nos facilitar&aacute; realizar traducciones del juego, ya qu&eacute; 
+  s&oacute;lo tendremos que modificar este fichero.</p>
+<p>Por ejemplo, podemos tener un clase <code>Resources</code> donde se centralice 
+  la carga de los recursos como la siguiente:</p>
+<pre class="codigo">public class Resources {<br><br>  // Identificadores de las imagenes
+  public static final int IMG_TIT_TITULO = 0;
+  public static final int IMG_SPR_CROC = 1;
+  public static final int IMG_BG_STAGE_1 = 2;
+  public static final int IMG_CAR_TYPE_1 = 3;
+  public static final int IMG_CAR_TYPE_2 = 4;
+  public static final int IMG_CAR_TYPE_3 = 5;
+  public static final int IMG_FACE_LIVES = 6;<br>
+  // Imagenes y datos del juego<br>  public static Image[] img;
+  public static Image splashImage;
+  public static StageData[] stageData;<br><br>  // MIDlet principal del juego
+  public static MIDletJuego midlet;<br>
+  // Nombres de los ficheros de las imagenes  <br>  private static String[] imgNames =
+  {
+    &quot;/title.png&quot;,
+    &quot;/sprite.png&quot;,
+    &quot;/stage01.png&quot;,
+    &quot;/car01.png&quot;,
+    &quot;/car02.png&quot;,
+    &quot;/car03.png&quot;,
+    &quot;/face.png&quot;
+  };
+  private static String splashImageFile = &quot;/logojava.png&quot;;
+  private static String stageFile = &quot;/stages.dat&quot;;<br>
+  // Obtiene una imagen<br>  public static Image getImage(int imgIndex) {
+    return img[imgIndex];
+  }<br>
+  // Obtiene los datos de una fase<br>  public static StageData getStage(int stageIndex) {
+    return stageData[stageIndex];
+  }
+  
+  // Carga los recursos<br>  public static void init() throws IOException {
+    // Carga las imagenes
+    loadCommonImages();<br><br>    // Carga datos de niveles
+    InputStream in = <br>           stageFile.getClass().<strong>getResourceAsStream</strong>(stageFile);
+    stageData = loadStageData(in);
+  }<br><br>  // Inicializa los recursos para la pantalla splash
+  public static void initSplash(MIDletJuego pMidlet) <br>                                      throws IOException {
+    midlet = pMidlet;
+    splashImage = Image.<strong>createImage</strong>(splashImageFile);
+  }<br><br>  // Carga imagenes
+  private static void loadCommonImages() throws IOException {
+    int nImg = imgNames.length;<br><br>    img = new Image[nImg];<br><br>    for (int i = 0; i &lt; nImg; i++) {
+      img[i] = Image.<strong>createImage</strong>(imgNames[i]);
+    }
+  }<br>
+  // Carga los datos de los niveles<br>  public static StageData[] loadStageData(InputStream in)
+    throws IOException {<br><br>    StageData[] stages = null;<br><br>    <strong>DataInputStream</strong> dis = new <strong>DataInputStream</strong>(in);<br><br>    int stageNum = dis.<strong>readInt</strong>();
+    stages = new StageData[stageNum];
+    for (int i = 0; i &lt; stageNum; i++) {
+      stages[i] = StageData.<strong>deserialize</strong>(dis);
+    }<br><br>    return stages;
+  }<br>}</pre>
+<p>Cuando se inicie el juego, llamaremos al m&eacute;todo <code>init</code> de 
+  esta clase para que se inicialicen los recursos, en este momento se cargar&aacute;n 
+  todas las im&aacute;genes y los datos que necesitemos. Una vez inicializado, 
+  podremos utilizar el m&eacute;todo <code>getImage</code> para obtener las im&aacute;genes 
+  que vayamos a utilizar desde cualquier parte del c&oacute;digo. </p>
+<p>Como la carga de recursos suele ser lenta, normalmente mostraremos una pantalla 
+  de presentaci&oacute;n, llamada <em>Splash Screen</em>, mientras &eacute;stos 
+  se cargan. En esta pantalla se suele mostrar el logo de nuestra compa&ntilde;&iacute;a 
+  e informaci&oacute;n sobre el <em>copyright</em> de la aplicaci&oacute;n. </p>
+<p>Por esta raz&oacute;n existe en la clase <code>Resources</code> anterior un 
+  m&eacute;todo <code>initSplash</code>, que hace una inicializaci&oacute;n previa 
+  de los recursos que necesita esta pantalla <em>splash</em>, que normalmente 
+  ser&aacute; el logo que se vaya a mostrar. De esta forma, cuando carguemos la 
+  aplicaci&oacute;n, se cargar&aacute;n estos recursos b&aacute;sicos para la 
+  pantalla de <em>splash</em>, se mostrar&aacute; la pantalla <em>splash</em>, 
+  y mientras &eacute;sta se muestra se cargar&aacute;n el resto de recursos. </p>
+<p>Tambi&eacute;n debemos destacar que proporcionamos en la inicializaci&oacute;n 
+  el MIDlet principal de nuestra aplicaci&oacute;n. De esta forma, a trav&eacute;s 
+  de la clase de recursos desde cualquier lugar de la aplicaci&oacute;n tendremos 
+  acceso a este MIDlet, que ser&aacute; necesario para poder cambiar de pantalla 
+  o salir de la aplicaci&oacute;n.</p>
+<p>Por &uacute;ltimo, como hemos comentado, es recomendable llevar a la capa de 
+  datos toda la informaci&oacute;n posible. Esta clase <code>Resources</code> 
+  tiene un m&eacute;todo <code>loadStageData</code> que la funci&oacute;n que 
+  realiza es cargar desde un fichero la informaci&oacute;n sobre las fases del 
+  juego.</p>
+<p>En el ejemplo de nuestro clon de <em>Frogger</em>, para cada fase consideraremos 
+  los siguientes datos:</p>
+<ul>
+  <li>T&iacute;tulo de la fase</li>
+  <li>Carriles de la carretera. Para cada carril tendremos los siguientes datos:
+    <ul>
+      <li>Velocidad de los coches que circulan por &eacute;l.</li>
+      <li>Separaci&oacute;n que hay entre los coches del carril.</li>
+      <li>Tipo de coche que circula por el carril.</li>
+    </ul>
+  </li>
+</ul>
+<p>Toda esta informaci&oacute;n ser&aacute; conveniente tenerla almacenada en 
+  un fichero, de forma que simplemente editando el fichero, podremos editar las 
+  fases del juego. Por ejemplo, podemos utilizar un objeto <code>DataOutputStream</code> 
+  para codificar esta informaci&oacute;n de forma binaria con la siguiente estructura:</p>
+<pre class="codigo">&lt;<strong>int</strong>&gt; Numero de fases
+Para cada fase
+  &lt;<strong>UTF</strong>&gt; Titulo
+  &lt;<strong>byte</strong>&gt; N&uacute;mero de carriles
+  Para cada carril
+    &lt;<strong>byte</strong>&gt; Velocidad
+    &lt;<strong>short</strong>&gt; Separaci&oacute;n
+    &lt;<strong>byte</strong>&gt; Tipo de coche
+</pre>
+<p>Para leer en nuestro juego este tipo de informaci&oacute;n, podemos crear los    m&eacute;todos de deserializaci&oacute;n oportunos en las clases que encapsulen    estos datos.</p>
+<p>En el m&eacute;todo <code>loadStageData</code> de la clase <code>Resources</code> 
+  se lee el primer valor con el n&uacute;mero de fases, y para cada fase deserializaremos 
+  la informaci&oacute;n utilizando el objeto que encapsula los datos de las fases:</p>
+<pre class="codigo">public class StageData {<br><br>  public String title;
+  public TrackData [] tracks;
+   
+  public static StageData <strong>deserialize</strong>(DataInputStream dis) <br>                                       throws IOException    {
+    StageData data = new StageData();
+<br>    data.title = dis.<strong>readUTF</strong>();<br>    byte nTracks = dis.<strong>readByte</strong>();
+<br>    data.tracks = new TrackData[nTracks];
+    for(byte i=0;i&lt;nTracks;i++) {
+      data.tracks[i] = TrackData.<strong>deserialize</strong>(dis);
+    }
+   
+    return data;
+  }  
+}</pre>
+<p>De la misma forma, utilizaremos la clase que encapsula los datos de los carriles 
+  para deserializar la informaci&oacute;n de los mismos:</p>
+<pre class="codigo">public class TrackData {<br><br>  public byte velocity;
+  public short distance;
+  public byte carType;<br><br>  public static TrackData <strong>deserialize</strong>(DataInputStream dis) <br>                                          throws IOException {
+    TrackData data = new TrackData();
+<br>    data.velocity = dis.<strong>readByte</strong>();
+    data.distance = dis.<strong>readShort</strong>();
+    data.carType = dis.<strong>readByte</strong>();<br> <br>    return data;
+  }<br>}</pre>
+<h3>14.2.2. Portabilidad</h3>
+<p>Al utilizar la API de bajo nivel para desarrollar el juego, la portabilidad 
+  de la aplicaci&oacute;n se reducir&aacute;, ya que la implementaci&oacute;n 
+  ser&aacute; dependiente de par&aacute;metros como el tama&ntilde;o de la pantalla, 
+  el n&uacute;mero de colores, el teclado del dispositivo, etc.</p>
+<p>Para poder adaptar nuestra aplicaci&oacute;n f&aacute;cilmente a distintos 
+  tipos de dispositivos, conviene definir toda esta informaci&oacute;n como constantes 
+  centralizadas en una &uacute;nica clase, de forma que simplemente cambiando 
+  la informaci&oacute;n sobre las dimensiones de los distintos elementos del juego 
+  podremos adaptarlo a distintos tama&ntilde;os de pantalla. </p>
+<p>Por ejemplo, podr&iacute;amos definir una clase como la siguiente:</p>
+<pre class="codigo">public class CommonData {<br><br>  // Numero de vidas total
+  public static final int NUM_LIVES = 3;<br><br>  // Dimensiones de la pantalla
+  public final static int SCREEN_WIDTH = 176;
+  public final static int SCREEN_HEIGHT = 208;<br><br>  // Dimensiones del sprite
+  public final static int SPRITE_WIDTH = 16;
+  public final static int SPRITE_HEIGHT = 22;<br><br>  // Posicion inicial y velocidad del personaje
+  public final static int SPRITE_STEP = 2;
+  public final static int SPRITE_INI_X = 80;
+  public final static int SPRITE_INI_Y = 180;
+  public final static int SPRITE_END_Y = 20;<br><br>  // Datos del texto de la pantalla de titulo
+  public static final int GAME_START_X = 88;
+  public static final int GAME_START_Y = 150;
+  public static final String GAME_START_TEXT = <br>      &quot;PULSA START PARA COMENZAR&quot;;
+  public static final int GAME_START_COLOR = 0x0FFFF00;
+  public static final Font GAME_START_FONT = <br>      Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL);<br><br>  ...
+}</pre>
+<p>En ella definimos el tama&ntilde;o de la pantalla, el tama&ntilde;o de nuestro 
+  personaje, las coordenadas (x,y) donde ubicar distintos elementos del juego, 
+  etc. De esta forma, para hacer una nueva versi&oacute;n s&oacute;lo tendremos 
+  que editar este fichero y dar a cada elemento el tama&ntilde;o y las coordenadas 
+  adecuadas. </p>
+<h3><strong>14.2.3. Optimizaci&oacute;n</strong></h3>
+<p>Los juegos deben funcionar de manera fluida y dar una respuesta r&aacute;pida 
+  al usuario para que estos resulten jugables y atractivos. Por lo tanto, ser&aacute; 
+  conveniente optimizar el c&oacute;digo todo lo posible, sobretodo en el caso 
+  de los dispositivos m&oacute;viles en el que trabajamos con poca memoria y CPUs 
+  lentas.</p>
+<p>No debemos cometer el error de intentar escribir un c&oacute;digo optimizado 
+  desde el principio. Es mejor comenzar con una implementaci&oacute;n clara, y 
+  una vez funcione esta implementaci&oacute;n, intentar optimizar todo lo que 
+  sea posible.</p>
+<p>Para optimizar el c&oacute;digo deberemos detectar primero en qu&eacute; lugar 
+  se est&aacute; invirtiendo m&aacute;s tiempo. Por ejemplo, si lo que est&aacute; 
+  ralentizando el juego es el volcado de los gr&aacute;ficos, deberemos optimizar 
+  esta parte, mientras que si es la l&oacute;gica interna del juego la que requiere 
+  un tiempo alto, deberemos fijarnos en c&oacute;mo optimizar este c&oacute;digo.</p>
+<p>El dibujado de los gr&aacute;ficos suele ser bastante costoso. Para optimizar 
+  este proceso deberemos intentar dibujar s&oacute;lo aquello que sea necesario, 
+  es decir, lo que haya cambiado de un fotograma al siguiente. Muchas veces en 
+  la pantalla se est&aacute; moviendo s&oacute;lo un personaje peque&ntilde;o, 
+  ser&iacute;a una p&eacute;rdida de tiempo redibujar toda la pantalla cuando 
+  podemos repintar &uacute;nicamente la zona en la que se ha movido este personaje. 
+  Esto lo podemos hacer con una variante del m&eacute;todo <code>repaint</code> 
+  que nos permite redibujar s&oacute;lo el &aacute;rea de pantalla indicada.</p>
+<p>Por otro lado, dentro del c&oacute;digo del juego deberemos utilizar las t&eacute;cnicas 
+  de optimizaci&oacute;n que conocemos, propias del lenguaje Java. Es importante 
+  intentar crear el m&iacute;nimo n&uacute;mero de objetos posibles, reutilizando 
+  objetos siempre que podamos. Esto evita el tiempo que requiere la instanciaci&oacute;n 
+  de objetos y su posterior eliminaci&oacute;n por parte del colector de basura.</p>
+<p>Tambi&eacute;n deberemos tener en cuenta que la memoria del m&oacute;vil es 
+  muy limitada, por lo que deberemos permitir que se desechen todos los objetos 
+  que ya no necesitamos. Para que un objeto pueda ser eliminado por el colector 
+  de basura deberemos poner todas las referencias que tengamos a dicho objeto 
+  a <code>null</code>, para que el colector de basura sepa que ya nadie va a poder 
+  usar ese objeto por lo que puede eliminarlo.</p>
+<h2>14.3. Componentes de un videojuego</h2>
+<p>Cuando dise&ntilde;emos un juego deberemos identificar las distintas entidades 
+  que encontraremos en &eacute;l. Normalmente en los juegos de acci&oacute;n en 
+  2D tendremos una pantalla del juego, que tendr&aacute; un fondo y una serie 
+  de personajes u objetos que se mueven en este escenario. Estos objetos que se 
+  mueven en el escenario se conocen como <em>sprites</em>. Adem&aacute;s, tendremos 
+  un motor que se encargar&aacute; de conducir la l&oacute;gica interna del juego. 
+  Podemos abstraer los siguientes componentes:</p>
+<ul>
+  <li><strong>Sprites</strong>: Objetos o personajes que pueden moverse por la 
+    pantalla y/o con los que podemos interactuar. <br>
+  </li>
+  <li><strong>Fondo</strong>: Escenario de fondo, normalmente est&aacute;tico, 
+    sobre el que se desarrolla el juego. Muchas veces tendremos un escenario m&aacute;s 
+    grande que la pantalla, por lo que tendr&aacute; <em>scroll</em> para que 
+    la pantalla se desplace a la posici&oacute;n donde se encuentra nuestro personaje.<br>
+  </li>
+  <li><strong>Pantalla</strong>: En la pantalla se muestra la escena del juego. 
+    Aqu&iacute; es donde se deber&aacute; dibujar todo el contenido, tanto el 
+    fondo como los distintos <em>sprites</em> que aparezcan en la escena y otros 
+    datos que se quieran mostrar.<br>
+  </li>
+  <li><strong>Motor del juego</strong>: Es el c&oacute;digo que implementar&aacute; 
+    la l&oacute;gica del juego. En &eacute;l se leer&aacute; la entrada del usuario, 
+    actualizar&aacute; la posici&oacute;n de cada elemento en la escena, comprobando 
+    las posibles interacciones entre ellos, y dibujar&aacute; todo este contenido 
+    en la pantalla.</li>
+</ul>
+<div align="center"><img src="imagenes/juegos/componentes.gif" width="305" height="154"> 
+</div>
+<p class="caption">Figura 3. Componentes de un juego</p>
+<p>A continuaci&oacute;n veremos con m&aacute;s detalle cada uno de estos componentes, 
+  viendo como ejemplo las clases que MIDP 2.0 nos proporciona para crear cada 
+  uno de ellos.</p>
+<p>Esto es lo que encontraremos en la pantalla de juego, mientras dure la partida. 
+  Sin embargo los juegos normalmente constar&aacute;n de varias pantallas. Las 
+  m&aacute;s usuales son las siguientes:</p>
+<ul>
+  <li><strong>Pantalla de presentaci&oacute;n (<em>Splash screen</em>)</strong>. 
+    Pantalla que se muestra cuando cargamos el juego, con el logo de la compa&ntilde;&iacute;a 
+    que lo ha desarrollado y los cr&eacute;ditos. Aparece durante un tiempo breve 
+    (se puede aprovechar para cargar los recursos necesarios en este tiempo), 
+    y pasa autom&aacute;ticamente a la pantalla de t&iacute;tulo.<br>
+  </li>
+  <li><strong>T&iacute;tulo y men&uacute;</strong>. Normalmente tendremos una 
+    pantalla de t&iacute;tulo principal del juego donde tendremos el men&uacute; 
+    con las distintas opciones que tenemos. Normalmente podremos comenzar una 
+    nueva partida, reanudar una partida anterior, ver las puntuaciones m&aacute;s 
+    altas, ver las instrucciones, o bien salir del juego.<br>
+  </li>
+  <li><strong>Hi-score</strong>. Pantalla de puntuaciones m&aacute;s altas obtenidas. 
+    Se mostrar&aacute; el <em>ranking</em> de puntuaciones, donde aparecer&aacute; 
+    el nombre o iniciales de los jugadores junto a su puntuaci&oacute;n obtenida.<br>
+  </li>
+  <li><strong>Instrucciones</strong>. Nos mostrar&aacute; un texto con las instrucciones 
+    del juego.<br>
+  </li>
+  <li><strong>Juego</strong>. Ser&aacute; la pantalla donde se desarrolle el juego, 
+    que tendr&aacute; los componentes que hemos visto anteriormente.</li>
+</ul>
+<div align="center"><img src="imagenes/juegos/estados.gif" width="528" height="253"> 
+</div>
+<p class="caption">Figura 4. Mapa de pantallas t&iacute;pico de un juego</p>
+<p>Hemos de decidir qu&eacute; API utilizar para desarrollar cada pantalla. La 
+  pantalla de juego claramente debe realizarse utilizando la API de bajo nivel. 
+  Sin embargo con esta API hemos visto que no podemos introducir texto de una 
+  forma sencilla. Si utilizamos la API de alto nivel para la pantalla de puntuaciones 
+  m&aacute;s altas se nos facilitar&aacute; bastante la tarea. El inconveniente 
+  es que siempre tendr&aacute; un aspecto m&aacute;s atractivo y propio del juego 
+  si utilizamos la API de bajo nivel, aunque nos cueste m&aacute;s programarla.</p>
+<p>Es importante poder salir en todo momento del juego, cuando el usuario quiera 
+  de terminar de jugar. Durante la partida se deber&aacute; permitir volver al 
+  men&uacute; principal, o incluso salir directamente del juego. Para las acciones 
+  de salir y volver al men&uacute; se deben utilizas las teclas asociadas a las 
+  esquinas de la pantalla (<em>soft-keys</em>). No es recomendable utilizar estas 
+  teclas para acciones del juego.</p>
+<h2>14.4. Sprites</h2>
+<p>Los <em>sprites</em> hemos dicho que son todos aquellos objetos que aparecen 
+  en la escena que se mueven y/o podemos interactuar con ellos de alguna forma. 
+</p>
+<h3><strong>14.4.1. Animaci&oacute;n</strong></h3>
+<p>Estos objetos pueden estar animados. Para ello deberemos definir los distintos 
+  fotogramas (o <em>frames</em>) de la animaci&oacute;n. Podemos definir varias 
+  animaciones para cada <em>sprite</em>, seg&uacute;n las acciones que pueda hacer. 
+  Por ejemplo, si tenemos un personaje podemos tener una animaci&oacute;n para 
+  andar hacia la derecha y otra para andar hacia la izquierda.</p>
+<p>El <em>sprite</em> tendr&aacute; un determinado tama&ntilde;o (ancho y alto), 
+  y cada fotograma ser&aacute; una imagen de este tama&ntilde;o. Para no tener 
+  un n&uacute;mero demasiado elevado de im&aacute;genes lo que haremos ser&aacute; 
+  juntar todos los fotogramas del <em>sprite</em> en una misma imagen, dispuestos 
+  como un mosaico.</p>
+<div align="center"><img src="imagenes/juegos/sprite.gif" width="167" height="50"> 
+</div>
+<p class="caption">Figura 5. Mosaico con los frames de un sprite</p>
+<p>Cambiando el fotograma que se muestra del <em>sprite</em> en cada momento podremos 
+  animarlo. En MIDP 2.0 se proporciona la clase <code>Sprite</code> que nos permite 
+  manejar este tipo de mosaicos para definir los fotogramas del <em>sprite</em> 
+  y animarlo. Podemos crear el <em>sprite</em> de la siguiente forma:</p>
+<pre class="codigo">Sprite personaje = new <strong>Sprite</strong>(imagen, ancho_fotograma, alto_fotograma);</pre>
+<p>Proporcionamos la imagen donde tenemos el mosaico de fotogramas, y definimos 
+  las dimensiones de cada fotograma. De esta forma esta clase se encargar&aacute; 
+  de separar los fotogramas que hay dentro de esta imagen. </p>
+<p>Cada fotograma tendr&aacute; un &iacute;ndice que se empezar&aacute; a numerar 
+  a partir de cero. La ordenaci&oacute;n de los <em>frames</em> en la imagen se 
+  realiza por filas y de izquierda a derecha, por lo que el <em>frame</em> de 
+  la esquina superior izquierda ser&aacute; el <em>frame</em> <code>0</code>. 
+  Podemos establecer el <em>frame</em> a mostrar actualmente con:</p>
+<pre class="codigo">personaje.<strong>setFrame</strong>(indice);</pre>
+<p>Podremos definir determinadas secuencias de <em>frames</em> para crear animaciones.</p>
+<h3><strong>14.4.2. Desplazamiento</strong></h3>
+<p>Adem&aacute;s el <em>sprite</em> se podr&aacute; desplazar por la pantalla, 
+  por lo que deberemos tener alg&uacute;n m&eacute;todo para moverlo. El <em>sprite</em> 
+  tendr&aacute; una cierta localizaci&oacute;n, dada en coordenadas <em>(x,y) 
+  </em>de la pantalla, y podremos o bien establecer una nuevas coordenadas o desplazar 
+  el <em>sprite</em> respecto a su posici&oacute;n actual:</p>
+<pre class="codigo">personaje.<strong>setPosition</strong>(x, y);
+personaje.<strong>move</strong>(dx, dy);</pre>
+<p>Con el primer m&eacute;todo damos la posici&oacute;n absoluta donde queremos 
+  posicionar el <em>sprite</em>. En el segundo caso indicamos un desplazamiento, 
+  para desplazarlo desde su posici&oacute;n actual. Normalmente utilizaremos el 
+  primer m&eacute;todo para posicionarlo por primera vez en su posici&oacute;n 
+  inicial al inicio de la partida, y el segundo para moverlo durante el transcurso 
+  de la misma.</p>
+<h3><strong>14.4.3. Colisiones</strong></h3>
+<p>Otro aspecto de los <em>sprites</em> es la interacci&oacute;n entre ellos. 
+  Nos interesar&aacute; saber cuando somos tocados por un enemigo o una bala para 
+  disminuir la vida, o cuando alcanzamos nosotros a nuestro enemigo. Para ello 
+  deberemos detectar las colisiones entre <em>sprites</em>. La colisi&oacute;n 
+  con <em>sprites</em> de formas complejas puede resultar costosa de calcular. 
+  Por ello se suele realizar el c&aacute;lculo de colisiones con una forma aproximada 
+  de los <em>sprites</em> con la que esta operaci&oacute;n resulte m&aacute;s 
+  sencilla. Para ello solemos utilizar el <em>bounding box</em>, es decir, un 
+  rect&aacute;ngulo que englobe el <em>sprite</em>. La intersecci&oacute;n de 
+  rect&aacute;ngulos es una operaci&oacute;n muy sencilla, podremos comprobarlo 
+  simplemente con una serie de comparaciones menor que <code>&lt;</code> y mayor 
+  que <code>&gt;</code>. </p>
+<p>La clase <code>Sprite</code> nos permite realizar esta comprobaci&oacute;n 
+  de colisiones utilizando un <em>bounding box</em>. Podemos comprobar si nuestro 
+  personaje est&aacute; tocando a un enemigo con:</p>
+<pre class="codigo">personaje.<strong>collidesWith</strong>(enemigo, false);</pre>
+<p>Con el segundo par&aacute;metro a <code>true</code> le podemos decir que compruebe 
+  la colisi&oacute;n a nivel de <em>pixels</em>, es decir, que en lugar de usar 
+  el <em>bounding box</em> compruebe <em>pixel</em> a <em>pixel</em> si ambos 
+  <em>sprites</em> colisionan. Esto ser&aacute; bastante m&aacute;s costoso. Si 
+  necesitamos hacer la comprobaci&oacute;n a este nivel, podemos comprobar primero 
+  si colisionan sus <em>bounding boxes</em> para descartar as&iacute; de forma 
+  eficiente bastantes casos, y en caso de que los <em>bounding boxes</em> si que 
+  intersecten, hacer la comprobaci&oacute;n a nivel de <em>pixels</em> para comprobar 
+  si realmente colisionan o no. Normalmente las implementaciones har&aacute;n 
+  esto internamente cuando comprobemos la colisi&oacute;n a nivel de <em>pixels</em>.</p>
+<h3>14.4.4. Ejemplo</h3>
+<p>Vamos a ver como ejemplo la creaci&oacute;n del sprite de nuestro personaje 
+  para el clon del <em>Frogger</em>. Para cada sprite podemos crear una subclase 
+  de <code>Sprite</code> que se especialice en el tipo de sprite concreto del 
+  que se trate. </p>
+<pre class="codigo">public class CrocSprite extends <strong>Sprite</strong> {<br><br>  public final static int MOVE_UP = 0;
+  public final static int MOVE_DOWN = 1;
+  public final static int MOVE_LEFT = 2;
+  public final static int MOVE_RIGHT = 3;
+  public final static int MOVE_STAY = 4;
+   
+  int lastMove;
+   
+  public CrocSprite() {
+    super(Resources.getImage(Resources.IMG_SPR_CROC), <br>        CommonData.SPRITE_WIDTH, CommonData.SPRITE_HEIGHT);
+    this.<strong>defineCollisionRectangle</strong>(CommonData.SPRITE_CROP_X, <br>        CommonData.SPRITE_CROP_Y, CommonData.SPRITE_CROP_WIDTH, <br>        CommonData.SPRITE_CROP_HEIGHT);
+    reset();
+  }<br><br>  public void reset() {
+    // Inicializa frame y movimiento actual
+    lastMove = MOVE_STAY;
+    this.<strong>setFrameSequence</strong>(null);
+    this.<strong>setFrame</strong>(CommonData.SPRITE_STAY_UP);<br><br>    // Inicializa posici&oacute;n
+    this.<strong>setPosition</strong>(CommonData.SPRITE_INI_X, CommonData.SPRITE_INI_Y);
+  }
+   
+  public void stay() {
+    switch(lastMove) {
+      case MOVE_UP:
+        this.<strong>setFrameSequence</strong>(null);
+        this.<strong>setFrame</strong>(CommonData.SPRITE_STAY_UP);
+        break;
+      case MOVE_DOWN:
+        this.<strong>setFrameSequence</strong>(null);
+        this.<strong>setFrame</strong>(CommonData.SPRITE_STAY_DOWN);
+        break;
+      case MOVE_LEFT:
+        this.<strong>setFrameSequence</strong>(null);
+        this.<strong>setFrame</strong>(CommonData.SPRITE_STAY_LEFT);
+        break;
+      case MOVE_RIGHT:
+        this.<strong>setFrameSequence</strong>(null);
+        this.<strong>setFrame</strong>(CommonData.SPRITE_STAY_RIGHT);
+        break;
+    }
+    lastMove = MOVE_STAY;
+  }
+   
+  public void die() {
+    this.<strong>setFrameSequence</strong>(null);
+    this.<strong>setFrame</strong>(CommonData.SPRITE_STAY_DIED);
+    lastMove = MOVE_STAY;
+  }<br><br>  public void moveUp() {
+    if(lastMove != MOVE_UP) {
+      this.<strong>setFrameSequence</strong>(CommonData.SPRITE_MOVE_UP); 
+    }
+    lastMove = MOVE_UP;
+    this.<strong>move</strong>(0,-CommonData.SPRITE_STEP);
+    this.<strong>nextFrame</strong>();
+  }<br><br>  public void moveDown() {
+    if(lastMove != MOVE_DOWN) {
+      this.<strong>setFrameSequence</strong>(CommonData.SPRITE_MOVE_DOWN); 
+    }
+    lastMove = MOVE_DOWN;
+    this.<strong>move</strong>(0,CommonData.SPRITE_STEP);
+    this.<strong>nextFrame</strong>();
+  }<br><br>  public void moveLeft() {
+    if(lastMove != MOVE_LEFT) {
+      this.<strong>setFrameSequence</strong>(CommonData.SPRITE_MOVE_LEFT); 
+    }
+    lastMove = MOVE_LEFT;
+    this.<strong>move</strong>(-CommonData.SPRITE_STEP,0);
+    this.<strong>nextFrame</strong>();
+  }<br><br>  public void moveRight() {
+    if(lastMove != MOVE_RIGHT) {
+      this.<strong>setFrameSequence</strong>(CommonData.SPRITE_MOVE_RIGHT); 
+    }
+    lastMove = MOVE_RIGHT;
+    this.<strong>move</strong>(CommonData.SPRITE_STEP,0);
+    this.<strong>nextFrame</strong>();
+  }<br>}</pre>
+<p>En este ejemplo vemos como para los movimientos que requieran animaci&oacute;n 
+  (como por ejemplo andar en las distintas direcciones) podemos indicar una secuencia 
+  de frames que componen esta animaci&oacute;n con <code>setFrameSequence</code>, 
+  y mediante el m&eacute;todo <code>nextFrame</code> ir pasando al siguiente. 
+</p>
+<p>Si queremos volver a disponer del conjunto de frames completo deberemos llamar 
+  al m&eacute;todo <code>setFrameSequence</code> pas&aacute;ndole como par&aacute;metro 
+  <code>null</code>.</p>
+<p>Otro problema que nos puede surgir es por ejemplo que no queramos que las colisiones 
+  se calculen con el rect&aacute;ngulo completo de nuestro sprite, sino s&oacute;lo 
+  con un subrect&aacute;ngulo de &eacute;ste. Por ejemplo, si en nuestro juego 
+  tenemos a un cocodrilo que debe cruzar la calle, no querremos que cuando un 
+  coche pise su cola se considere que lo han atropellado, el jugador se sentir&aacute; 
+  frustrado si cada vez que un coche roza su cola pierde una vida. </p>
+<p>La parte inferior de la imagen del cocodrilo s&oacute;lo contiene la cola, 
+  de forma que por defecto, como el rect&aacute;ngulo de colisi&oacute;n es del 
+  tama&ntilde;o de la imagen, cuando haya un coche que colisione con esta parte 
+  inferior se considerar&aacute; que nos han atropellado. Podemos establecer un 
+  nuevo rect&aacute;ngulo para el c&aacute;lculo de colisiones con el m&eacute;todo 
+  <code>defineCollisionRectangle</code>, de forma que ya no consideremos toda 
+  la imagen, sino s&oacute;lo el &aacute;rea de la misma en la que est&aacute; 
+  el cuerpo del cocodrilo.</p>
+<h2>14.5. Fondo</h2>
+<p>En los juegos normalmente tendremos un fondo sobre el que se mueven los personajes. 
+  Muchas veces los escenarios del juego son muy extensos y no caben enteros en 
+  la pantalla. De esta forma lo que se hace es ver s&oacute;lo la parte del escenario 
+  donde est&aacute; nuestro personaje, y conforme nos movamos se ir&aacute; desplazando 
+  esta zona visible para enfocar en todo momento el lugar donde est&aacute; nuestro 
+  personaje. Esto es lo que se conoce como <em>scroll</em>. </p>
+<p>El tener un fondo con <em>scroll</em> ser&aacute; m&aacute;s costoso computacionalmente, 
+  ya que siempre que nos desplacemos se deber&aacute; redibujar toda la pantalla, 
+  debido a que se est&aacute; moviendo todo el fondo. Adem&aacute;s para poder 
+  dibujar este fondo deberemos tener una imagen con el dibujo del fondo para poder 
+  volcarlo en pantalla. Si tenemos un escenario extenso, ser&iacute;a totalmente 
+  prohibitivo hacer una imagen que contenga todo el fondo. Esta imagen podr&iacute;a 
+  llegar a ocupar el tama&ntilde;o m&aacute;ximo permitido para los ficheros JAR 
+  es muchos m&oacute;viles.</p>
+<p>Para evitar este problema lo que haremos normalmente en este tipo de juegos 
+  es construir el fondo como un mosaico. Nos crearemos una imagen con los elementos 
+  b&aacute;sicos que vamos a necesitar para nuestro fondo, y construiremos el 
+  fondo como un mosaico en el que se utilizan estos elementos. </p>
+<div align="center"><img src="imagenes/juegos/fondo.gif" width="160" height="120"> 
+</div>
+<p class="caption">Figura 6. Mosaico de elementos del fondo</p>
+<p>Al igual que hac&iacute;amos con los <em>sprites</em>, tomaremos estos distintos 
+  elementos de una misma imagen. A cada elemento se le asociar&aacute; un &iacute;ndice 
+  con el que lo referenciaremos posteriormente. El fondo lo crearemos como un 
+  mosaico del tama&ntilde;o que queramos, en el que cada celda contendr&aacute; 
+  el &iacute;ndice del elemento que se quiere mostrar en ella.</p>
+<p>La clase <code>TiledLayer</code> de MIDP 2.0 nos permite realizar esto. Deberemos 
+  especificar el n&uacute;mero de filas y columnas que va a tener el mosaico, 
+  y despu&eacute;s la imagen que contiene los elementos y el ancho y alto de cada 
+  elemento.</p>
+<pre class="codigo"><strong>TiledLayer</strong> fondo = new <strong>TiledLayer</strong>(columnas, filas, imagen, ancho, alto);</pre>
+<div align="center"><img src="imagenes/juegos/fondo_matriz.gif" width="160" height="120"> 
+</div>
+<p class="caption">Figura 7. &Iacute;ndices de los elementos del mosaico</p>
+<p>De esta forma el fondo tendr&aacute; un tama&ntilde;o en <em>pixels</em> de 
+  <code>(columnas*ancho)x(filas*alto)</code>. Ahora podemos establecer el elemento 
+  que contendr&aacute; cada celda del mosaico con el m&eacute;todo:</p>
+<pre class="codigo">fondo.<strong>setCell</strong>(columna, fila, indice);</pre>
+<p>Como <code>indice</code> especificaremos el &iacute;ndice del elemento en la 
+  imagen que queremos incluir en esa posici&oacute;n del mosaico, <code>0</code> 
+  si queremos dejar esa posici&oacute;n vac&iacute;a con el color del fondo, o 
+  un n&uacute;mero negativo para crear celdas con animaci&oacute;n.</p>
+<div align="center"><img src="imagenes/juegos/ej_fondo.gif" width="200" height="160"> 
+</div>
+<p class="caption">Figura 8. Ejemplo de fondo construido con los elementos anteriores</p>
+<p>A continuaci&oacute;n mostramos el c&oacute;digo que podr&iacute;amos utilizar 
+  para generar la carretera de nuestro juego:</p>
+<pre class="codigo">public class Background extends <strong>TiledLayer</strong> {<br>
+  public Background() {
+    super(CommonData.BG_H_TILES, CommonData.BG_V_TILES, <br>          Resources.getImage(Resources.IMG_BG_STAGE_1),    <br>          CommonData.BG_TILE_WIDTH, CommonData.BG_TILE_HEIGHT); 
+  }<br><br>  public void reset(StageData stage) {
+    TrackData [] tracks = stage.tracks;
+    int nTracks = tracks.length;
+   
+    int row;
+    
+    // Filas superiores de cesped
+    for(row=0;row&lt;CommonData.BG_V_TOP_TILES;row++) {
+      for(int col=0;col&lt;CommonData.BG_H_TILES; col++) {
+        this.<strong>setCell</strong>(col, row, CommonData.BG_TILE_GRASS);
+      }
+    }
+   
+    // Margen superior de la carretera
+    for(int col=0;col&lt;CommonData.BG_H_TILES; col++) {
+      this.<strong>setCell</strong>(col, row, CommonData.BG_TILE_TOP);
+    }
+    row++;
+   
+    // Parte interna de la carreteta
+    for(;row&lt;CommonData.BG_V_TOP_TILES + nTracks - 1;row++) {
+      for(int col=0;col&lt;CommonData.BG_H_TILES; col++) {
+        this.<strong>setCell</strong>(col, row, CommonData.BG_TILE_CENTER);
+      }
+    }<br><br>    // Margen inferior de la carretera
+    for(int col=0;col&lt;CommonData.BG_H_TILES; col++) {
+      this.<strong>setCell</strong>(col, row, CommonData.BG_TILE_BOTTOM);
+    }
+    row++;
+   
+    // Hierba en la zona inferior
+    for(;row&lt;CommonData.BG_V_TILES;row++) {
+      for(int col=0;col&lt;CommonData.BG_H_TILES; col++) {
+        this.<strong>setCell</strong>(col, row, CommonData.BG_TILE_GRASS);
+      }
+    }
+  }
+}</pre>
+<h2>14.6. Pantalla</h2>
+<p>En la pantalla se dibujar&aacute;n todos los elementos anteriores para construir 
+  la escena del juego. De esta manera tendremos el fondo, nuestro personaje, los 
+  enemigos y otros objetos que aparezcan durante el juego, adem&aacute;s de marcadores 
+  con el n&uacute;mero de vidas, puntuaci&oacute;n, etc.</p>
+<p>La pantalla la vamos a dibujar por capas. Cada <em>sprite</em> y cada fondo 
+  que incluyamos ser&aacute; una capa, de esta forma poniendo una capa sobre otra 
+  construiremos la escena. Tanto la clase <code>Sprite</code> como la clase <code>TiledLayer</code> 
+  heredan de <code>Layer</code>, que es la clase que define de forma gen&eacute;rica 
+  las capas, por lo que podr&aacute;n comportarse como tales. Todas las capas 
+  podr&aacute;n moverse o cambiar de posici&oacute;n, para mover de esta forma 
+  su contenido en la pantalla.</p>
+<p>Construiremos el contenido de la pantalla superponiendo una capa sobre otra. 
+  Tenemos la clase <code>LayerManager</code> en MIDP 2.0 que nos permitir&aacute; 
+  construir esta superposici&oacute;n de capas. Este objeto contendr&aacute; todo 
+  lo que se vaya a mostrar en pantalla, encarg&aacute;ndose &eacute;l internamente 
+  de gestionar y dibujar esta superposici&oacute;n de capas. Podemos crear este 
+  objeto con:</p>
+<pre class="codigo"><strong>LayerManager</strong> escena = new <strong>LayerManager</strong>();</pre>
+<p>Ahora deberemos a&ntilde;adir por orden las capas que queramos que se muestren. 
+  El orden en el que las a&ntilde;adamos indicar&aacute; el orden<em> z</em>, 
+  es decir, la profundidad de esta capa en la escena. La primera capa ser&aacute; 
+  la m&aacute;s cercana al punto de vista del usuario, mientras que la &uacute;ltima 
+  ser&aacute; la m&aacute;s lejana. Por lo tanto, las primeras capas que a&ntilde;adamos 
+  quedar&aacute;n por delante de las siguientes capas. Para a&ntilde;adir capas 
+  utilizaremos:</p>
+<pre class="codigo">escena.<strong>append</strong>(personaje);
+escena.<strong>append</strong>(enemigo);
+escena.<strong>append</strong>(fondo);</pre>
+<p>Tambi&eacute;n podremos insertar capas en una determinada posici&oacute;n de 
+  la lista, o eliminar capas de la lista con los m&eacute;todos <code>insert</code> 
+  y <code>remove</code> respectivamente.</p>
+<p>El &aacute;rea dibujada del <code>LayerManager</code> puede ser bastante extensa, 
+  ya que abarcar&aacute; por lo menos toda la extensi&oacute;n del fondo que hayamos 
+  puesto. Deberemos indicar qu&eacute; porci&oacute;n de esta escena se va a mostrar 
+  en la pantalla, especificando la ventana de vista. Moviendo esta ventana podremos 
+  implementar <em>scroll</em>. Podemos establecer la posici&oacute;n y tama&ntilde;o 
+  de esta ventana con:</p>
+<pre class="codigo">escena.<strong>setViewWindow</strong>(x, y, ancho, alto);</pre>
+<p>La posici&oacute;n de esta ventana de vista es referente al sistema de coordenadas 
+  de la escena (de la clase <code>LayerManager</code>).</p>
+<p>Debemos tener en cuenta al especificar el tama&ntilde;o del visor que diferentes 
+  modelos de m&oacute;viles tendr&aacute;n pantallas de diferente tama&ntilde;o. 
+  Podemos hacer varias cosas para que el juego sea lo m&aacute;s portable posible. 
+  Podr&iacute;amos crear un visor del tama&ntilde;o m&iacute;nimo de pantalla 
+  que vayamos a considerar, y en el caso de que la pantalla sea de mayor tama&ntilde;o 
+  mostrar este visor centrado. Otra posibilidad es establecer el tama&ntilde;o 
+  de la ventana de vista seg&uacute;n la pantalla del m&oacute;vil, haciendo que 
+  en los m&oacute;viles con pantalla m&aacute;s grande se vea un mayor trozo del 
+  escenario.</p>
+<p>Una vez hemos establecido esta ventana de vista, podemos dibujarla en el contexto 
+  gr&aacute;fico <code>g</code> con:</p>
+<pre class="codigo">escena.<strong>paint</strong>(g, x, y);</pre>
+<p>Donde daremos las coordenadas donde dibujaremos esta vista, dentro del espacio 
+  de coordenadas del contexto gr&aacute;fico indicado.</p>
+<h2>14.7. Motor del juego</h2>
+<p>Hemos visto que los juegos suelen constar de varias pantallas. En la mayor&iacute;a 
+  de los casos tenemos una pantalla de t&iacute;tulo, la pantalla en la que se 
+  desarrolla la partida, la pantalla de <em>game over</em>, una pantalla de demo 
+  en la que vemos el juego funcionar autom&aacute;ticamente como ejemplo, etc. 
+</p>
+<p>Normalmente lo primero que veremos ser&aacute; el t&iacute;tulo, de aqu&iacute; 
+  podremos pasar al juego o al modo demo. Si transcurre un determinado tiempo 
+  sin que el usuario pulse ninguna tecla pasar&aacute; a demo, mientras que si 
+  el usuario pulsa la tecla <em>start</em> comienza el juego. La demo finalizar&aacute; 
+  pasado un tiempo determinado, tras lo cual volver&aacute; al t&iacute;tulo. 
+  El juego finalizar&aacute; cuando el jugador pierda todas sus vidas, pasando 
+  a la pantalla de <em>game over</em>, y de ah&iacute; volver&aacute; al t&iacute;tulo. 
+</p>
+<h3><strong>14.7.1. Ciclo del juego</strong></h3>
+<p>Vamos a centrarnos en c&oacute;mo desarrollar la pantalla en la que se desarrolla 
+  la partida. Aqu&iacute; tendremos lo que se conoce como ciclo del juego (o <em>game 
+  loop</em>). Se trata de un bucle infinito en el que tendremos el c&oacute;digo 
+  fuente que implementa el funcionamiento del juego. Dentro de este bucle se efect&uacute;an 
+  las siguientes tareas b&aacute;sicas:</p>
+<ul>
+  <li><strong>Leer la entrada</strong>: Lee la entrada del usuario para conocer 
+    si el usuario ha pulsado alguna tecla desde la &uacute;ltima iteraci&oacute;n.<br>
+  </li>
+  <li><strong>Actualizar escena</strong>: Actualiza las posiciones de los <em>sprites</em> 
+    y su fotograma actual, en caso de que est&eacute;n siendo animados, la posici&oacute;n 
+    del fondo si se haya producido <em>scroll</em>, y cualquier otro elemento 
+    del juego que deba cambiar. Para hacer esta actualizaci&oacute;n se pueden 
+    tomar diferentes criterios. Podemos mover el personaje seg&uacute;n la entrada 
+    del usuario, la de los enemigos seg&uacute;n su inteligencia artificial, o 
+    seg&uacute;n las interacciones producidas entre ellos y cualquier otro objeto 
+    (por ejemplo al ser alcanzados por un disparo, colisionando el <em>sprite</em> 
+    del disparo con el del enemigo), etc.<br>
+  </li>
+  <li><strong>Redibujar</strong>: Tras actualizar todos los elementos del juego, 
+    deberemos redibujar la pantalla para mostrar la escena tal como ha quedado 
+    en el instante actual. <br>
+  </li>
+  <li><strong>Dormir</strong>: Normalmente tras cada iteraci&oacute;n dormiremos 
+    un determinado n&uacute;mero de milisegundos para controlar la velocidad a 
+    la que se desarrolla el juego. De esta forma podemos establecer a cuantos 
+    fotogramas por segundo (<em>fps</em>) queremos que funcione el juego, siempre 
+    que la CPU sea capaz de funcionar a esta velocidad.</li>
+</ul>
+<p>La clase <code>GameCanvas</code> es un tipo especial de <em>canvas</em> para 
+  el desarrollo de juegos presente en MIDP 2.0. Esta clase nos ofrecer&aacute; 
+  los m&eacute;todos necesarios para realizar este ciclo del juego, ofreci&eacute;ndonos 
+  un acceso a la entrada del usuario y un m&eacute;todo de <em>render</em> adecuados 
+  para este tipo de aplicaciones. Para hacer la pantalla del juego crearemos una 
+  subclase de <code>GameCanvas</code> en la que introduciremos el ciclo del juego. 
+</p>
+<p>La forma en la que dibujaremos los gr&aacute;ficos utilizando esta clase ser&aacute; 
+  distinta a la que hemos visto para la clase <code>Canvas</code>. En el caso 
+  del <code>Canvas</code> utilizamos <em>render</em> pasivo, es decir, nosotros 
+  definimos en el m&eacute;todo <code>paint</code> la forma en la que se dibuja 
+  y es el sistema el que llama a este m&eacute;todo. Ahora nos interesa poder 
+  dibujar en cada iteraci&oacute;n los cambios que se hayan producido en la escena 
+  directamente desde el bucle del ciclo del juego. Es decir, seremos nosotros 
+  los que decidamos el momento en el que dibujar, utilizaremos <em>render</em> 
+  activo. Para ello en cualquier momento podremos obtener un contexto gr&aacute;fico 
+  asociado al <code>GameCanvas</code> desde dentro de este mismo objeto con:</p>
+<pre class="codigo">Graphics g = <strong>getGraphics</strong>();</pre>
+<p>Este contexto gr&aacute;fico estar&aacute; asociado a un <em>backbuffer</em> 
+  del <em>canvas</em> de juegos. De esta forma durante el ciclo del juego podremos 
+  dibujar el contenido de la pantalla en este <em>backbuffer</em>. Cuando queramos 
+  que este <em>backbuffer</em> se vuelque a pantalla, llamaremos al m&eacute;todo:</p>
+<pre class="codigo"><strong>flushGraphics</strong>();</pre>
+<p>Existe tambi&eacute;n una versi&oacute;n de este m&eacute;todo en la que especificamos 
+  la regi&oacute;n que queremos que se vuelque, de forma que s&oacute;lo tenga 
+  que volcar la parte de la pantalla que haya cambiado. </p>
+<p>Vamos a ver ahora el esqueleto de un ciclo del juego b&aacute;sico que podemos 
+  realizar: </p>
+<pre class="codigo">Graphics g = getGraphics();
+<br>while(true) {
+    leeEntrada();<br>    actualizaEscena();<br>    dibujaGraficos(g);
+   
+    flushGraphics();
+}</pre>
+<p>Ser&aacute; conveniente dormir un determinado tiempo tras cada iteraci&oacute;n 
+  para controlar as&iacute; la velocidad del juego. Vamos a considerar que <code>CICLO</code> 
+  es el tiempo que debe durar cada iteraci&oacute;n del juego. Lo que podremos 
+  hacer es obtener el tiempo que ha durado realmente la iteraci&oacute;n, y dormir 
+  el tiempo restante hasta completar el tiempo de ciclo. Esto podemos hacerlo 
+  de la siguiente forma:</p>
+<pre class="codigo">Graphics g = getGraphics();
+long t1, t2, td;
+<br>while(true) {
+    t1 = System.currentTimeMillis();
+<br>    leeEntrada();<br>    actualizaEscena();<br>    dibujaGraficos();   
+   
+    flushGraphics();
+
+    t2 = System.currentTimeMillis();
+    td = t2 - t1;
+    td = td&lt;CICLO?td:CICLO;
+
+    try {
+        Thread.sleep(CICLO - td);
+    } catch(InterruptedException e) { }
+}</pre>
+<p>Todo este bucle donde se desarrolla el ciclo del juego lo ejecutaremos como 
+  un hilo independiente. Un buen momento para poner en marcha este hilo ser&aacute; 
+  el momento en el que se muestre el <em>canvas</em>:</p>
+<pre class="codigo">public class Juego extends <strong>GameCanvas</strong> implements Runnable {
+    public void showNotify() {<br>        Thread t = new Thread(this);<br>        t.start();<br>    }<br><br>    public void run() {<br>        // Ciclo del juego<br>        ...<br>    }<br>}</pre>
+<h3>14.7.2. M&aacute;quina de estados</h3>
+<p>Hemos visto c&oacute;mo implementar el ciclo del juego en el que en cada momento 
+  se lea la entrada del usuario, se actualice la escena, y se vuelquen los gr&aacute;ficos 
+  a la pantalla.</p>
+<p>Sin embargo, este ciclo no siempre deber&aacute; comportarse de la misma forma. 
+  El juego podr&aacute; pasar por distintos estados, y en cada uno de ellos deber&aacute;n 
+  realizarse una tareas e ignorarse otras.</p>
+<p>Podemos modelar esto como una m&aacute;quina de estados, en la que en cada 
+  momento, seg&uacute;n el estado actual, se realicen unas funciones u otras, 
+  y cuando suceda un determinado evento, se pasar&aacute; a otro estado.</p>
+<p>Por ejemplo, en un juego podremos encontrar com&uacute;nmente los siguientes 
+  estados durante el desarrollo del mismo.</p>
+<div align="center"><img src="imagenes/juegos/statem.gif" width="434" height="220"> 
+</div>
+<p class="caption">Figura 9. Diagrama de estados del juego</p>
+<ul>
+  <li><em>INICIO</em>: Al comienzo de la fase, se muestra durante un instante 
+    la fase en la que se va a jugar y el t&iacute;tulo de la misma para que el 
+    jugador se vaya preparando. En este momento todav&iacute;a no se deja al usuario 
+    manejar al personaje. Pasado un determinado tiempo, pasar&aacute; a estado 
+    <em>JUGANDO</em>.</li>
+  <li><em>JUGANDO</em>: En este estado el jugador tiene el control sobre el personaje. 
+    Si el jugador muere, pasar&aacute; a estado <em>MUERTO</em>, mientras que 
+    si consigue completar el nivel pasar&aacute; a estado <em>COMPLETADO</em>.</li>
+  <li><em>MUERTO</em>: Se muestra la muerte del personaje. Aqu&iacute; el usuario 
+    ya no tendr&aacute; el control sobre el mismo. Una vez pasado un tiempo, nos 
+    restar&aacute; una vida y pasar&aacute; a estado de <em>INICIO</em>, o si 
+    no nos quedan vidas finalizar&aacute; el juego.</li>
+  <li><em>COMPLETADO</em>: Se muestra un letrero en el que se indique se el jugador 
+    ha conseguido completar este nivel y posiblemente un resumen de lo conseguido 
+    en &eacute;l, como por ejemplo la puntuaci&oacute;n, el tiempo que ha sobrado, 
+    etc. Una vez pasado un tiempo, pasar&aacute; a estado <em>INICIO</em> para 
+    la siguiente fase del juego, o bien si est&aacute;bamos en la &uacute;ltima 
+    fase finalizar&aacute; el juego.</li>
+</ul>
+<h2>14.8. Entrada de usuario en juegos</h2>
+<h3>14.8.1. Acciones de juegos en MIDP 1.0</h3>
+<p>La clase <code>Canvas</code> en MIDP 1.0 ofrece facilidades para leer la entrada 
+  de usuario para juegos. Hemos visto en el tema anterior que asocia a los c&oacute;digos 
+  de las teclas lo que se conoce como acciones de juegos, lo cual nos facilitar&aacute; 
+  el desarrollo de aplicaciones que se controlan mediante estas acciones (arriba, 
+  abajo, izquierda, derecha, fuego), que principalmente son juegos. </p>
+<p>Cuando se lee una tecla en cualquier evento de pulsaci&oacute;n de teclas (<code>keyPressed</code>, 
+  <code>keyRepeated</code> o <code>keyReleased</code>), se nos proporciona como 
+  par&aacute;metro el c&oacute;digo de dicha tecla. Podemos comprobar a qu&eacute; 
+  acci&oacute;n de juego corresponde dicha tecla de forma independiente a la plataforma 
+  con el m&eacute;todo <code>getGameAction</code> como se muestra en el siguiente 
+  ejemplo:</p>
+<pre class="codigo">public void keyPressed(int keyCode) {
+<br>    int action = <strong>getGameAction</strong>(keyCode);
+<br>    if (action == LEFT) {
+        moverIzquierda();
+    } else if (action == RIGHT) {
+        moverDerecha();<br>    } else if (action == FIRE) {
+        disparar();<br>    }
+}</pre>
+<p>Tambi&eacute;n podemos obtener la tecla principal asociada a una acci&oacute;n 
+  de juego con el m&eacute;todo <code>getKeyCode</code>, pero dado que una acci&oacute;n 
+  puede estar asociada a varias teclas, si usamos este m&eacute;todo no estaremos 
+  considerando las teclas secundarias asociadas a esa misma acci&oacute;n. A pesar 
+  de que en algunos ejemplos podamos ver c&oacute;digo como el que se muestra 
+  a continuaci&oacute;n, esto no debe hacerse:</p>
+<pre class="codigo">public class MiCanvas extends Canvas {<br><br>    // NO HACER ESTO!<br><br>    int izq, der, fuego;
+<br>    public MiCanvas() {
+        izq = <strong>getKeyCode</strong>(LEFT);
+        der = <strong>getKeyCode</strong>(RIGHT);
+        fuego = <strong>getKeyCode</strong>(FIRE);
+    }
+<br>    public void keyPressed(int keyCode) {
+        if (keyCode == izq) {
+            moverIzquierda();
+        } else if (keyCode = der) {
+            moverDerecha();
+        } else if (keyCode = fuego) {
+            disparar();
+        }
+    }<br>}</pre>
+<p>Hemos de tener en cuenta que muchos modelos de m&oacute;viles no nos permiten 
+  mantener pulsadas m&aacute;s de una tecla al mismo tiempo. Hay otros que, aunque 
+  esto se permita, el <em>joystick</em> no puede mantener posiciones diagonales, 
+  s&oacute;lo se puede pulsar una de las cuatro direcciones b&aacute;sicas al 
+  mismo tiempo.</p>
+<p>Esto provoca que si no tenemos suficiente con estas cuatro direcciones b&aacute;sicas 
+  y necesitamos realizar movimientos en diagonal, tendremos que definir nosotros 
+  manualmente los c&oacute;digos de las teclas para cada una de estas acciones. 
+  Esto reducir&aacute; portabilidad a la aplicaci&oacute;n, ser&aacute; el precio 
+  que tendremos que pagar para poder establecer una serie de teclas para movimiento 
+  diagonal. </p>
+<p>Si definimos nosotros las acciones directamente a partir de los c&oacute;digos 
+  de teclas a bajo nivel deberemos intentar respetar en la medida de lo posible 
+  el comportamiento que suele tener cada tecla en los m&oacute;viles. Por ejemplo, 
+  las teclas asociadas a las esquinas de la pantalla (<em>soft keys</em>) deben 
+  utilizarse para terminar el juego y volver al men&uacute; principal o bien salir 
+  directamente del juego. </p>
+<h3><strong>14.8.2. Acceso al teclado con MIDP 2.0</strong></h3>
+<p>Hasta ahora hemos visto las facilidades que nos ofrece MIDP para leer la entrada 
+  del usuario en los juegos desde su versi&oacute;n 1.0. Sin embargo, MIDP 2.0 
+  incluye facilidades adicionales en la clase <code>GameCanvas</code>. </p>
+<p>Podremos leer el estado de las teclas en cualquier momento, en lugar de tener 
+  que definir <em>callbacks</em> para ser notificados de las pulsaciones de las 
+  teclas. Esto nos facilitar&aacute; la escritura del c&oacute;digo, pudiendo 
+  obtener directamente esta informaci&oacute;n desde el ciclo del juego.</p>
+<p>Podemos obtener el estado de las teclas con el m&eacute;todo <code>getKeyStates</code> 
+  como se muestra a continuaci&oacute;n:</p>
+<pre class="codigo">int keyState = <strong>getKeyStates</strong>();</pre>
+<p>Esto nos devolver&aacute; un n&uacute;mero entero en el que cada uno de sus 
+  <em>bits</em> representa una tecla. Si el <em>bit</em> vale <code>0</code> la 
+  tecla est&aacute; sin pulsar, y si vale <code>1</code> la tecla estar&aacute; 
+  pulsada. Tenemos definidos los <em>bits</em> asociados a cada tecla como constantes, 
+  que podremos utilizar como m&aacute;scaras <em>booleanas</em> para extraer el 
+  estado de cada tecla a partir del n&uacute;mero entero de estado obtenido:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td><code>GameCanvas.LEFT_PRESSED</code></td>
+    <td>Movimiento a la izquierda</td>
+  </tr>
+  <tr> 
+    <td><code>GameCanvas.RIGHT_PRESSED</code></td>
+    <td>Movimiento a la derecha</td>
+  </tr>
+  <tr> 
+    <td><code>GameCanvas.UP_PRESSED</code></td>
+    <td>Movimiento hacia arriba</td>
+  </tr>
+  <tr> 
+    <td><code>GameCanvas.DOWN_PRESSED</code></td>
+    <td>Movimiento hacia abajo</td>
+  </tr>
+  <tr> 
+    <td><code>GameCanvas.FIRE_PRESSED</code></td>
+    <td>Fuego</td>
+  </tr>
+</table>
+<p>Por ejemplo, para saber si est&aacute;n pulsadas las teclas izquierda o derecha 
+  haremos la siguiente comprobaci&oacute;n:</p>
+<pre class="codigo">if ((keyState &amp; LEFT_PRESSED) != 0) {
+    moverIzquierda();
+}
+
+if ((keyState &amp; RIGHT_PRESSED) != 0) {
+    moverDerecha();
+}</pre>
+<p>Vamos a ver ahora un ejemplo de ciclo de juego sencillo completo:</p>
+<pre class="codigo">public class CanvasJuego extends <strong>GameCanvas</strong> implements Runnable {<br>    private final static int CICLO = 50;<br><br>    public CanvasJuego() {
+        super(true);
+    }
+
+    public void showNotify() {
+        Thread t = new Thread(this);
+        t.start();<br>    }
+
+    public void run() {
+        Graphics g = <strong>getGraphics</strong>();
+        long t1, t2, td;
+<br>        // Carga sprites<br>        <strong>CrocSprite</strong> personaje = new <strong>CrocSprite</strong>();
+        personaje.<strong>reset</strong>();<br><br>        // Crea fondo
+        <strong>Background</strong> fondo = new <strong>Background</strong>(Resources.getStage(0));
+        fondo.<strong>reset</strong>();<br><br>        // Crea escena<br>        <strong>LayerManager</strong> escena = new <strong>LayerManager</strong>();<br>        escena.<strong>append</strong>(personaje); <br>        escena.<strong>append</strong>(fondo); <br><br>        while(true) {
+            t1 = System.currentTimeMillis(); <br><br>            // Lee entrada del teclado   
+            int keyState = <strong>getKeyStates</strong>(); <br><br>            if ((keyState &amp; <strong>LEFT_PRESSED</strong>) != 0) {
+                personaje.<strong>moveLeft</strong>();
+            } else if ((keyState &amp; <strong>RIGHT_PRESSED</strong>) != 0) {
+                personaje.<strong>moveRight</strong>();
+            } else if ((keyState &amp; <strong>UP_PRESSED</strong>) != 0) {
+                personaje.<strong>moveUp</strong>();
+            } else if ((keyState &amp; <strong>DOWN_PRESSED</strong>) != 0) {
+                personaje.<strong>moveDown</strong>();
+            }   <br><br>            escena.<strong>paint</strong>(g);
+   
+            <strong>flushGraphics</strong>(); <br><br>            t2 = System.currentTimeMillis();
+            td = t2 - t1;
+            td = td&lt;CICLO?td:CICLO; <br><br>            try {
+                Thread.sleep(CICLO - td);
+            } catch(InterruptedException e) {}
+        }
+    }<br>}
+</pre>
+<h2>14.9. Ejemplo de motor de juego</h2>
+<p>Una vez hemos visto todos los elementos necesarios para desarrollar nuestro 
+  juego, vamos a ver un ejemplo de motor de juego completo que utilizaremos para 
+  nuestro clon de <em>Frogger</em>.</p>
+<p>La siguiente clase ser&aacute; la encargada de realizar el ciclo b&aacute;sico 
+  del juego. En ella implementaremos la posibilidad de realizar pausas en el juego, 
+  lo cual ya hemos comentado que es muy importante en juegos para m&oacute;viles:</p>
+<pre class="codigo">public class GameEngine extends <strong>GameCanvas</strong> implements Runnable {<br><br>  // Milisegundos que transcurren entre dos frames consecutivos
+  public final static int CICLO = 50;<br>
+  // Codigos de las teclas soft<br>  public final static int LEFT_SOFTKEY = -6;
+  public final static int RIGHT_SOFTKEY = -7;
+   
+  // Escena actual
+  Scene escena;
+   
+  // Estado de pausa
+  boolean isPaused;<br><br>  // Hilo del juego
+  Thread t;
+   
+  // Fuente pausa
+  Font font;<br><br>  public GameEngine(Scene escena) {
+    super(false);
+    this.<strong>setFullScreenMode</strong>(true);<br><br>    // Establece la escena actual
+    this.escena = escena;<br><br>    // Inicializa fuente para el texto de la pausa
+    font = Font.getFont(Font.FACE_SYSTEM, <br>                        Font.STYLE_BOLD, Font.SIZE_MEDIUM);
+  }<br><br>  // Cambia la escena<br>  public void setScene(Scene escena) {
+    this.escena = escena;
+  }
+  
+  public void <strong>showNotify</strong>() {
+    start();
+  }
+   
+  public void <strong>hideNotify</strong>() {
+    stop();
+  }<br><br>  public void <strong>keyPressed</strong>(int keyCode) {<br><br>    if(isPaused) {
+      if(keyCode == LEFT_SOFTKEY) {
+        start();
+      } else if(keyCode == RIGHT_SOFTKEY) {
+        Resources.midlet.exitGame();
+      }
+    } else {
+      if(keyCode == LEFT_SOFTKEY || keyCode == RIGHT_SOFTKEY) {
+        stop();
+      }
+    }
+  }<br><br>  // Pausa el juego<br>  public synchronized void stop() {
+    t = null;<br>    isPaused = true;<br><br>    <strong>Graphics</strong> g = <strong>getGraphics</strong>();
+    render(g);
+    <strong>flushGraphics</strong>();
+  }<br><br>  // Reanuda el juego<br>  public synchronized void start() {
+    isPaused = false;<br><br>    t = new Thread(this);
+    t.start(); 
+  }<br><br>  // Ciclo del juego<br>  public void run() {<br><br>    // Obtiene contexto gr&aacute;fico
+    <strong>Graphics</strong> g = <strong>getGraphics</strong>();<br><br>    while (t == Thread.currentThread()) {<br><br>      long t_ini, t_dif;
+      t_ini = System.currentTimeMillis();<br><br>      // Lee las teclas
+      int keyState = this.<strong>getKeyStates</strong>();<br><br>      // Actualiza la escena<br>      escena.<strong>tick</strong>(keyState);<br><br>      // Vuelca los graficos
+      render(g);
+      <strong>flushGraphics</strong>();<br><br>      t_dif = System.currentTimeMillis() - t_ini;<br><br>      // Duerme hasta el siguiente frame<br>      if (t_dif &lt; CICLO) {
+        try {
+          Thread.sleep(CICLO - t_dif);
+        } catch (InterruptedException e) { }
+      }
+    }
+  }<br><br>  public void render(Graphics g) {<br><br>    escena.<strong>render</strong>(g);
+   
+    if(isPaused) {
+      g.setColor(0x000000);
+      for(int i=0;i&lt;CommonData.SCREEN_HEIGHT;i+=2) {
+        g.drawLine(0,i,CommonData.SCREEN_WIDTH,i);
+      }<br><br>      g.setColor(0x0FFFF00);
+      g.setFont(font);
+      g.drawString(&quot;Reanudar&quot;, 0, CommonData.SCREEN_HEIGHT, <br>                   Graphics.LEFT | Graphics.BOTTOM);
+      g.drawString(&quot;Salir&quot;, CommonData.SCREEN_WIDTH, <br>                   CommonData.SCREEN_HEIGHT, <br>                   Graphics.RIGHT | Graphics.BOTTOM);
+      g.drawString(&quot;PAUSADO&quot;, CommonData.SCREEN_WIDTH/2, <br>                   CommonData.SCREEN_HEIGHT/2,    <br>                   Graphics.HCENTER | Graphics.BOTTOM);
+    }<br>  }
+}</pre>
+<p>Con los m&eacute;todo <code>stop</code> y <code>start</code> definidos en esta 
+  clase podremos pausar y reanudar el juego. En el estado pausado se detiene el 
+  hilo del ciclo del juego y en la pantalla se muestra el mensaje de que el juego 
+  ha sido pausado. </p>
+<p>Podemos ver tambi&eacute;n que este ciclo de juego es gen&eacute;rico, deberemos 
+  proporcionar una clase que implemente la interfaz <code>Scene</code> en la que 
+  se especificar&aacute; el comportamiento y el aspecto de la escena. Esta interfaz 
+  tiene los siguientes m&eacute;todos: </p>
+<pre class="codigo">public interface Scene
+{
+  public void <strong>tick</strong>(int k);
+  public void <strong>render</strong>(Graphics g);
+}</pre>
+<p>Con <code>tick</code> nos referimos a cada actualizaci&oacute;n instant&aacute;nea 
+  de la escena. En cada ciclo se invocar&aacute; una vez este m&eacute;todo <code>tick</code> 
+  para que la escena se actualice seg&uacute;n la entrada del usuario y las interacciones 
+  entre los distintos objetos que haya en ella. Por otro lado, en render definiremos 
+  la forma de dibujar la escena.</p>
+<p>La escena para nuestro clon de <em>Frogger</em> ser&aacute; la siguiente:</p>
+<pre class="codigo">public class GameScene implements Scene {<br><br>  public static int E_INICIO = 0;
+  public static int E_JUGANDO = 1;
+  public static int E_MUERTO = 2;
+  public static int E_CONSEGUIDO = 3;
+   
+  int numLives;
+  int state;
+  int timer;
+  int stage;
+   
+  CrocSprite croc;
+  Background bg;
+  Tracks tracks;
+  Image face;
+   
+  Vector cars;
+   
+  public GameScene() {
+   
+    croc = new CrocSprite();
+    bg = new Background();
+    tracks = new Tracks();
+    face = Resources.getImage(Resources.IMG_FACE_LIVES);
+   
+    cars = new Vector();
+   
+    reset();
+  }
+   
+  // Reiniciado de la partida
+  public void reset() {
+    numLives = CommonData.NUM_LIVES;
+    stage = 0;<br><br>    reset(stage);
+  }
+   
+  // Reiniciado de una fase
+  public void reset(int nStage) {
+    StageData stage = Resources.stageData[nStage];
+    croc.reset();
+    bg.reset(stage);
+    tracks.reset(stage);
+   
+    cars.removeAllElements();
+   
+    this.setState(E_INICIO);
+  }
+   <br>  // Cambia el estado actual del juego
+  public void setState(int state) {
+    this.state = state;<br><br>    if(state==E_INICIO) {
+      timer = 50;
+    } else if(state==E_MUERTO) {
+      timer = 30;
+      croc.die();
+    } else if(state==E_CONSEGUIDO) {
+      timer = 50;
+    }
+  }
+   
+  public void tick(int keyState) {<br><br>    // Decrementa el tiempo de espera
+    if(state==E_INICIO || state==E_MUERTO || state==E_CONSEGUIDO) {
+      timer--;
+    }<br><br>    // Comienza el juego
+    if(state==E_INICIO &amp;&amp; timer &lt;= 0) {
+      this.setState(E_JUGANDO);
+    }
+   
+    // Reinicia el nivel o termina el juego
+    if(state==E_MUERTO &amp;&amp; timer &lt;= 0) {
+      numLives--;
+      if(numLives&lt;0) {
+        Resources.midlet.showTitle();
+      } else {
+        this.reset(stage);
+        return;
+      }
+    }
+   <br>    // Pasa de fase
+    if(state==E_CONSEGUIDO &amp;&amp; timer &lt;= 0) {
+      stage++;
+      if(stage &gt;= Resources.stageData.length) {
+        stage = 0;
+      }<br><br>      this.reset(stage);
+      return;
+    }
+   
+    // Permite controlar el personaje si el estado es JUGANDO<br>    if(state==E_JUGANDO) {
+<br>      // Control del sprite
+      if( (keyState &amp; GameCanvas.UP_PRESSED)!=0 <br>                 &amp;&amp; croc.getY() &gt; 0 ) {
+        croc.moveUp();
+      } else if( (keyState &amp; GameCanvas.DOWN_PRESSED)!=0 <br>                 &amp;&amp; croc.getY() &lt; CommonData.SCREEN_HEIGHT<br>                                 - CommonData.SPRITE_HEIGHT) {
+        croc.moveDown();
+      } else if( (keyState &amp; GameCanvas.LEFT_PRESSED)!=0 <br>                 &amp;&amp; croc.getX() &gt; 0) {
+        croc.moveLeft();
+      } else if( (keyState &amp; GameCanvas.RIGHT_PRESSED)!=0 <br>                 &amp;&amp; croc.getX() &lt; CommonData.SCREEN_WIDTH<br>                                 - CommonData.SPRITE_WIDTH) {
+        croc.moveRight();
+      } else {
+        croc.stay();
+      } 
+    }
+   
+    // Crea nuevos coches en los carriles si ha llegado el momento
+    tracks.checkTracks(cars);<br><br>    // Actualiza coches y comprueba colisiones
+    Enumeration enum = cars.elements();
+    while(enum.hasMoreElements()) {
+      CarSprite car = (CarSprite)enum.nextElement();
+      car.tick();<br><br>      if(state == E_JUGANDO &amp;&amp; car.collidesWith(croc, false)) {
+        this.setState(E_MUERTO);
+      }
+    }
+   
+    // Ha conseguido cruzar la carretera<br>    if(state == E_JUGANDO &amp;&amp; croc.getY()&lt;CommonData.SPRITE_END_Y) {
+      this.setState(E_CONSEGUIDO);
+    }
+   
+    return;
+  }<br><br>  public void render(Graphics g) {<br><br>    bg.paint(g);
+    croc.paint(g);
+   
+    Enumeration enum = cars.elements();
+    while(enum.hasMoreElements()) {
+      CarSprite car = (CarSprite)enum.nextElement();
+      car.paint(g);
+    } 
+   
+    for(int i=0;i&lt;this.numLives;i++) {
+      g.drawImage(face, i*CommonData.FACE_WIDTH, 0, <br>          Graphics.TOP | Graphics.LEFT);
+    }<br><br>    if(state==E_INICIO) {
+      g.setFont(CommonData.STAGE_TITLE_FONT);
+      g.setColor(CommonData.STAGE_TITLE_COLOR);
+      g.drawString(Resources.stageData[stage].title, <br>          CommonData.STAGE_TITLE_X, CommonData.STAGE_TITLE_Y,    <br>          Graphics.HCENTER | Graphics.TOP); 
+    }<br><br>    if(state==E_CONSEGUIDO) {
+      g.setFont(CommonData.STAGE_TITLE_FONT);
+      g.setColor(CommonData.STAGE_TITLE_COLOR);
+      g.drawString(CommonData.STAGE_COMPLETED_TEXT, <br>          CommonData.STAGE_TITLE_X, CommonData.STAGE_TITLE_Y,    <br>          Graphics.HCENTER | Graphics.TOP); 
+    }   
+  }<br>}</pre>
+<p>Los m&eacute;todos <code>reset</code> nos permiten reiniciar el juego. Si no 
+  proporcionamos ning&uacute;n par&aacute;metro, se reiniciar&aacute; el juego 
+  desde el principio, nos servir&aacute; para empezar una nueva partida. Si proporcionamos 
+  como par&aacute;metro un n&uacute;mero de fase, comenzaremos a jugar desde esa 
+  fase con las vidas que nos queden actualmente. Esta segunda forma nos servir&aacute; 
+  para empezar de nuevo una fase cuando nos hayan matado, o cuando hayamos pasado 
+  al siguiente nivel. </p>
+<p>De esta forma no tendremos que instanciar nuevos objetos, sino que simplemente 
+  llamaremos a este m&eacute;todo para reiniciar los valores del objeto actual.</p>
+<p>Por otro lado podemos observar en este ejemplo c&oacute;mo se ha modelado la 
+  m&aacute;quina de estados para el juego. Tenemos los estados <code>E_INICIO</code>, 
+  <code>E_JUGANDO</code>, <code>E_MUERTO</code> y <code>E_CONSEGUIDO</code>. El 
+  estado <code>E_JUGANDO</code> durar&aacute; hasta que nos maten o hayamos pasado 
+  a la siguiente fase. Los dem&aacute;s estados durar&aacute;n un tiempo fijo 
+  durante el cual se mostrar&aacute; alg&uacute;n gr&aacute;fico o mensaje en 
+  pantalla, y una vez pasado este tiempo se pasar&aacute; a otro estado. </p>
+<p>Podemos ver que en <code>tick</code> es donde se implementa toda la l&oacute;gica 
+  del juego. Dentro de este m&eacute;todo podemos ver las distintas comprobaciones 
+  y acciones que se realizan, que variar&aacute;n seg&uacute;n el estado actual.</p>
+<p>En <code>render</code> podemos ver tambi&eacute;n algunos elementos que se 
+  dibujar&aacute;n s&oacute;lo en determinados estados.</p>
+</body>
+</html>

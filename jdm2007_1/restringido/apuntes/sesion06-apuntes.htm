@@ -1,0 +1,115 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 6: Fuentes de datos</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1>6. Fuentes de datos </h1>
+             
+<h2>6.1. Introducci&oacute;n a JDBC </h2>
+<p>En la mayor&iacute;a de las aplicaciones que nos vamos a encontrar, aparecer&aacute; una base   de datos como fuente de informaci&oacute;n. JDBC nos va a permitir acceder a bases de   datos (BD) desde Java. Con JDBC no es necesario escribir distintos programas   para distintas BD, sino que un &uacute;nico programa sirve para acceder a BD de   distinta naturaleza. Incluso, podemos acceder a m&aacute;s de una BD de distinta fuente   (Oracle, Access, MySql, etc.) en la misma aplicaci&oacute;n. Podemos pensar en JDBC   como el puente entre una base de datos y nuestro programa Java.</p>
+<img src="imagenes/jdbc/jdbc.bmp" />
+<p>Un programa Java que utilice JDBC primero deber&aacute; establecer una conexi&oacute;n con el   SGBD (MySQL, Oracle, Access, etc). Para realizar dicha conexi&oacute;n haremos uso de un driver espec&iacute;fico para cada   SGBD que estemos utilizando. Una vez establecida la conexi&oacute;n ya podemos   interrogar la BD con cualquier comando SQL (select, update, create, etc.). </p>
+<h2>6.2. Los drivers </h2>
+<p>Los drivers para poder acceder a cada SGBD no forman parte de la distribuci&oacute;n de   Java por lo que deberemos obtenerlos por separado.</p>
+<p>Para instalar el driver lo &uacute;nico que deberemos hacer es incluir el fichero JAR   que lo contiene en el CLASSPATH. Con el driver instalado, podremos cargarlo desde nuestra aplicaci&oacute;n   simplemente cargando din&aacute;micamente la clase correspondiente al driver. Por ejemplo, para MySQL: </p>
+<PRE class="codigo">Class.forName("<STRONG>com.mysql.jdbc.Driver</STRONG>");  </PRE>
+<p>Java incorpora un driver para JDBC-ODBC. Es &uacute;til, por ejemplo, para conectar con base de datos Access, definiendo el origen ODBC previamente en Windows. Este driver se carga como se muestra a continuaci&oacute;n:</p>
+<PRE class="codigo">Class.forName("<STRONG>sun.jdbc.odbc.JdbcOdbcDriver</STRONG>");  </PRE>
+<h2>6.3. Conectar a la BD </h2>
+<p>Una vez tenemos los drivers cargados con el c&oacute;digo anterior, ya podremos conectar con la BD en cuesti&oacute;n. Para ello, utilizaremos alguno de los m&eacute;todos : </p>
+<PRE class="codigo"><STRONG>Connection</STRONG> con = DriverManager.<STRONG>getConnection</STRONG>(url);  
+<STRONG>Connection</STRONG> con = DriverManager.<STRONG>getConnection</STRONG>(url, login, password);</PRE>
+<p>El primero se utiliza cuando se puede conectar sin autentificar a la BD.</p>
+<p>Por ejemplo, para conectar por MySQL con una BD llamada &quot;prueba&quot; en la m&aacute;quina local, con un usuario &quot;root&quot; y password &quot;root&quot;, pondr&iacute;amos algo como:</p>
+<PRE class="codigo"><STRONG>Connection</STRONG> con = 
+DriverManager.<STRONG>getConnection</STRONG>("<STRONG>jdbc:mysql://localhost/prueba</STRONG>", "root", "root");</PRE>
+<p>Si esta misma conexi&oacute;n la quisi&eacute;ramos hacer por ODBC ser&iacute;a:</p>
+<PRE class="codigo"><STRONG>Connection</STRONG> con = DriverManager.<STRONG>getConnection</STRONG>("<STRONG>jdbc:odbc:prueba</STRONG>",...);</PRE>
+<h2>6.4. Operaciones contra la BD </h2>
+<p>Una vez obtenida la conexi&oacute;n a la BD, podemos utilizarla para realizar   consultas, inserci&oacute;n y/o borrado de datos de dicha BD. Todas estas operaciones   se realizar&aacute;n mediante lenguaje SQL. La clase <STRONG>Statement</STRONG> es la   que permite realizar todas estas operaciones. La instanciaci&oacute;n de esta clase se   realiza haciendo uso del siguiente m&eacute;todo que proporciona el objeto <STRONG>Connection</STRONG>:</p>
+<PRE class="codigo"><STRONG>Statement</STRONG> stmt = con.createStatement();
+</PRE>
+<h3>6.4.1. Consultas </h3>
+<p>Para obtener datos almacenados en la BD podemos realizar una consulta SQL   (<EM>query</EM>). Podemos ejecutar la consulta utilizando el objeto <STRONG>Statement</STRONG>, pero ahora haciendo uso del m&eacute;todo <STRONG>executeQuery </STRONG>al que le pasaremos una cadena con la consulta   SQL. Los datos resultantes nos los devolver&aacute; como un objeto <STRONG>ResultSet</STRONG>.</p>
+<PRE class="codigo">String query = "SELECT * FROM ALUMNOS WHERE sexo = 'M'";  
+<strong>ResultSet</strong> result = stmt.<strong>executeQuery</strong>(query)<strong>;</strong></PRE>
+<p>El objeto <STRONG>ResultSet </STRONG>dispone de un <EM>cursor</EM> que estar&aacute;   situado en el registro que podemos consultar en cada momento. Este <EM>cursor</EM> en un principio estar&aacute; situado en una posici&oacute;n anterior al   primer registro de la tabla. Podemos mover el cursor al siguiente registro con   el m&eacute;todo <STRONG>next</STRONG> del <STRONG>ResultSet</STRONG>. La llamada a   este m&eacute;todo nos devolver&aacute; <STRONG>true</STRONG> mientras pueda pasar al   siguiente registro, y <STRONG>false </STRONG>en el caso de que ya estuvi&eacute;ramos   en el &uacute;ltimo registro de la tabla. Para la consulta de todos los registros   obtenidos utilizaremos normalmente un bucle como el siguiente:</p>
+<PRE class="codigo">while(result.<STRONG>next</STRONG>()) {        
+	// Leer registro
+}</PRE>
+<p>Ahora necesitamos obtener los datos del registro que marca el <EM>cursor</EM>, para lo cual podremos acceder a los campos de dicho registro.   Esto lo haremos utilizando los m&eacute;todos <STRONG>getXXXX(campo)</STRONG> donde <STRONG>XXXX</STRONG> ser&aacute; el tipo de datos de Java en el que queremos que nos   devuelva el valor del campo. Hemos de tener en cuenta que el tipo del campo en   la tabla debe ser convertible al tipo de datos Java solicitado. Para especificar   el campo que queremos leer podremos utilizar bien su nombre en forma de cadena,   o bien su &iacute;ndice que depender&aacute; de la ordenaci&oacute;n de los campos que devuelve la   consulta. Tambi&eacute;n debemos tener en cuenta que no podemos acceder al mismo campo   dos veces seguidas en el mismo registro. Si lo hacemos nos dar&aacute; una   excepci&oacute;n.</p>
+<p>Si queremos imprimir todos los datos obtenidos de nuestra tabla ALUMNOS del   ejemplo podremos hacer lo siguiente:</p>
+<PRE class="codigo">int exp;  
+String nombre;  
+String sexo;    
+
+
+while(result.next()) {      
+	exp = result.getInt("exp");      
+	nombre = result.getString("nombre");
+	sexo = result.getString("sexo");
+	System.out.println(exp + "\t" + nombre + "\t" + sexo); 
+}</PRE>
+<h3>6.4.2. Actualizaciones </h3>
+<p>Las actualizaciones (inserciones, borrados y modificaciones) en una BD se realizan mediante el objeto <STRONG>Statement</STRONG>, pero ahora haciendo uso del m&eacute;todo <STRONG>executeUpdate </STRONG>al que le pasaremos una cadena con la operaci&oacute;n   SQL. Nos devolver&aacute; un entero indicando cu&aacute;ntas filas se han visto afectadas por la operaci&oacute;n (si el n&uacute;mero de filas fuese 0, significar&aacute; que no ha podido realizarla). </p>
+<PRE class="codigo">String upd = "INSER INTO ALUMNOS (exp, nombre, sexo)<br>VALUES(1234, 'Pepe G&oacute;mez', 'M')";  
+<strong>int</strong> res = stmt.<strong>executeUpdate</strong>(upd)<strong>;
+...
+</strong>if (res == 0)
+
+	System.err.println(&quot;Error al realizar la operacion&quot;);</PRE>
+<h2>6.5. Fuentes de datos con servidores web </h2>
+<p>Si estamos realizando una aplicaci&oacute;n web, podemos acceder a las bases de datos de nuestra aplicaci&oacute;n desde nuestros servlets y p&aacute;ginas JSP con el c&oacute;digo que hemos visto aqu&iacute;. Sin embargo, tambi&eacute;n tenemos otra alternativa. En Tomcat, por ejemplo, podemos definir la conexi&oacute;n a una base de datos mediante una fuente de datos (<em>DataSource</em>), especificando los par&aacute;metros de conexi&oacute;n en un fichero XML (normalmente el fichero <em>META-INF/context.xml</em>, dentro de la aplicaci&oacute;n web):</p>
+<PRE class="codigo">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;Context&gt;
+    &lt;Resource
+        name="jdbc/alumnos"
+        type="javax.sql.DataSource"
+        auth="Container"
+        username="root"
+        password="root"
+        driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://localhost:3306/alumnos?autoReconnect=true"/&gt;
+            
+        &lt;ResourceParams name="miBD"&gt;
+            
+            &lt;parameter&gt;
+                &lt;name&gt;maxActive&lt;/name&gt;
+                &lt;value&gt;20&lt;/value&gt;
+            &lt;/parameter&gt;
+            
+            &lt;parameter&gt;
+                &lt;name&gt;maxIdle&lt;/name&gt;
+                &lt;value&gt;5&lt;/value&gt;
+            &lt;/parameter&gt;
+            
+            &lt;parameter&gt;
+                &lt;name&gt;maxWait&lt;/name&gt;
+                &lt;value&gt;10000&lt;/value&gt;
+            &lt;/parameter&gt;
+            
+        &lt;/ResourceParams&gt;
+
+&lt;/Context&gt;</PRE>
+<p>Notar que indicamos la URL de la BD, el nombre del driver, usuario y password (como hac&iacute;amos mediante c&oacute;digo para conectar). Tambi&eacute;n podemos especificar (en <em>ResourceParams</em>) un pool de conexiones para mantener varias abiertas y solventar problemas de concurrencia en el acceso.</p>
+<p>Despu&eacute;s, para conectar con esta BD desde alg&uacute;n servlet, JSP, o clase Java interna que utilicemos en nuestra aplicaci&oacute;n web, usaremos un c&oacute;digo como:</p>
+<pre class="codigo">Context initCtx = new InitialContext();
+Context envCtx = (Context) initCtx.lookup("java:comp/env");<br>
+<strong>// Despu&eacute;s buscamos el DataSource con el nombre 
+// (atributo <em>name</em> del <em>Resource</em> del fichero XML) que hayamos indicado</strong>
+DataSource ds = (DataSource)envCtx.lookup("jdbc/alumnos");	
+
+<strong>Connection</strong> con = ds.getConnection();<br>
+<strong>//A partir de aqu&iacute;, ya creamos las sentencias SQL igual que antes:</strong>
+Statement stmt = con.createStatement();
+...
+</pre>
+<p>&nbsp;</p>
+</body>
+</html>
