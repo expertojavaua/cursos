@@ -1,0 +1,262 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Ejercicios del contenedor de beans de Spring</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Spring" src="images/baner_j2ee_der.gif" title="Spring"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-web.html'">Aplicaciones Web</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-ent.html'">Aplicaciones Enterprise</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../charlas.html'">Charlas</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto</a>
+</li>
+<li>
+<a class="base-not-selected" href="index.html">Spring</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion01-ejercicios.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Ejercicios del contenedor de beans de Spring</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Instalaci%C3%B3n+de+SpringIDE">Instalaci&oacute;n de SpringIDE</a>
+</li>
+<li>
+<a href="#La+aplicaci%C3%B3n+AmigosSpring">La aplicaci&oacute;n AmigosSpring</a>
+</li>
+<li>
+<a href="#Uso+de+Spring+para+definir+beans+y+resolver+dependencias">Uso de Spring para definir beans y resolver dependencias</a>
+</li>
+<li>
+<a href="#Beans+con+distintos+%C3%A1mbitos">Beans con distintos &aacute;mbitos</a>
+</li>
+<li>
+<a href="#Inicializaci%C3%B3n+de+las+propiedades+de+un+bean+con+XML">Inicializaci&oacute;n de las propiedades de un bean con XML</a>
+</li>
+</ul>
+</div>
+    
+<a name="N1000C"></a><a name="Instalaci%C3%B3n+de+SpringIDE"></a>
+<h2 class="underlined_10">Instalaci&oacute;n de SpringIDE</h2>
+<div class="section">
+<p>SpringIDE es un conjunto de plugins de Spring para Eclipse que nos ayudar&aacute; a trabajar con el framework. Para
+        instalarlo vamos a seguir estos pasos:</p>
+<ul>
+        	
+<li>Descargar <a href="material/ajdt_1.6.1a_for_eclipse_3.4.zip">AJDT (AspectJ Development Tools)</a>, un prerequisito para SpringIDE. Descomprimir el zip en la
+        	carpeta de eclipse. Los archivos dentro de "plugins" y de "features" del .zip deben "mezclarse" por tanto
+        	 con los que tenemos ya en Eclipse</li>
+        	 
+<li>Instalar SpringIDE. El "update site" para actualizarlo desde la web es <span class="codefrag">http://dist.springframework.org/release/IDE</span>,
+        	 pero lo m&aacute;s r&aacute;pido es descargarse el <a href="material/spring-ide_updatesite_2.2.0_v200809261800.zip">"update site" en un .zip</a> e instalar los plugins en modo local. &iexcl;Cuidado! no descomprim&aacute;is este .zip en Eclipse, hay que instalarlo a
+        	 trav&eacute;s de la opci&oacute;n <span class="codefrag">Help&gt;Software updates&gt;Add site&gt;Archive</span>. Navegamos en local hasta donde est&aacute; el .zip en nuestra m&aacute;quina
+        	 y nos aparecer&aacute; un nuevo "sitio" de actualizaci&oacute;n con el prefijo <span class="codefrag">jar:/</span>. Istalar este, d&aacute;ndole al bot&oacute;n <span class="codefrag">Install</span> 
+</li>
+        
+</ul>
+</div>
+ 
+<a name="N10033"></a><a name="La+aplicaci%C3%B3n+AmigosSpring"></a>
+<h2 class="underlined_10">La aplicaci&oacute;n AmigosSpring</h2>
+<div class="section">
+<p>En las plantillas de la sesi&oacute;n se encuentra una aplicaci&oacute;n denominada AmigosSpring. El objetivo de esta
+y otras sesiones del m&oacute;dulo consistir&aacute; en ir refactorizando la aplicaci&oacute;n para introducir
+caracter&iacute;sticas de Spring.</p>
+<p>Se trata de una aplicaci&oacute;n en la que los usuarios pueden entrar con login y password, ver los otros usuarios en el sistema y mandarles mensajes.
+De manera resumida, los <strong>casos de uso</strong> son:</p>
+<ul>
+    
+<li>Hacer login, hacer logout</li>
+    
+<li>Ver la p&aacute;gina personal propia. Veremos nuestro cr&eacute;dito actual, adem&aacute;s de nuestros datos p&uacute;blicos</li>
+    
+<li>Ver nuestro buz&oacute;n. Solo es posible si tenemos cr&eacute;dito.</li>
+    
+<li>Leer un mensaje. Solo es posible si nos queda cr&eacute;dito.</li>
+    
+<li>Enviar un mensaje a otro usuario. Cuesta una cierta cantidad.</li>
+    
+<li>Buscar usuarios por varios criterios (sexo, edad, localidad)</li>
+    
+<li>Ver la p&aacute;gina personal de otros usuarios</li>
+
+</ul>
+<p>En cuanto a la <strong>implementaci&oacute;n</strong>, la capa de negocio consta de dos objetos (singleton):</p>
+<ul>
+
+<li>
+<span class="codefrag">GestorUsuarios</span>: clase que implementa todos los casos de uso relativos a usuarios (registrar, buscar, etc).</li>
+
+<li>
+<span class="codefrag">GestorMensajes</span>: implementa todos los casos de uso relativos a mensajes (enviar, leer, etc).</li>
+
+</ul>
+<p>En la capa de acceso a datos tambi&eacute;n tenemos dos DAOs, uno para mensajes y otro para usuarios.</p>
+<p>En la capa de presentaci&oacute;n, por cada caso de uso hay un servlet. Todos est&aacute;n
+dentro del paquete <span class="codefrag">es.ua.jtech.spring.presentacion.servlets</span>.</p>
+<p>El siguiente es un diagrama de clases UML de las capas de negocio y acceso a datos.</p>
+<p>
+<img alt="Diagrama de clases UML de AmigosSpring" content-width="10cm" src="imagenes/umlAmigos.jpg"></p>
+<p>Para <strong>instalar la aplicaci&oacute;n</strong>:</p>
+<ol>
+    
+<li>La plantilla es un proyecto de Eclipse que debes importar a tu workspace</li>
+    
+<li>En la vista "Navigator" busca la carpeta "database". Dentro tiene un script de Ant para inicializar
+la base de datos (bot&oacute;n derecho &gt; Run as &gt; Ant build).</li>
+	
+<li>Para activar SpringIDE para este proyecto, dale al proyecto con el bot&oacute;n derecho, <span class="codefrag">Spring tools &gt; Add
+	Spring project nature </span> 
+</li>
+	
+<li>Desplegar la aplicaci&oacute;n en el servidor para comprobar que al menos arranca. NO FUNCIONARA EL LOGIN, ya que
+	hay que introducir la configuraci&oacute;n de Spring.</li>
+    
+</ol>
+</div>
+
+<a name="N10098"></a><a name="Uso+de+Spring+para+definir+beans+y+resolver+dependencias"></a>
+<h2 class="underlined_10">Uso de Spring para definir beans y resolver dependencias</h2>
+<div class="section">
+<p>Los objetos de la capa de negocio no aprovechan las posibilidades que ofrece el contenedor de Spring.
+Vamos a transformarlos en beans de Spring y a configurarlos adecuadamente</p>
+<ol>
+
+<li>
+<strong>Crear un fichero de definici&oacute;n de beans</strong> <span class="codefrag">File &gt; New &gt; Spring &gt; Bean definition file</span>.
+El fichero deber&iacute;a llamarse <span class="codefrag">spring.xml</span> y estar dentro de <span class="codefrag">WEB-INF</span> ya que as&iacute; est&aacute; referenciado
+en el <span class="codefrag">web.xml</span> (aunque tambi&eacute;n pod&eacute;is cambiar este &uacute;ltimo archivo).</li>
+
+<li> En el <span class="codefrag">spring.xml</span> hay que decirle al framework que busque autom&aacute;ticamente las anotaciones en las clases
+de ciertos paquetes (consultar en los apuntes el uso de <span class="codefrag">&lt;context:component-scan&gt;</span>)</li>
+    
+<li>
+<strong>En las clases de negocio y DAOS</strong>, introducir las anotaciones necesarias para que Spring reconozca los objetos como beans
+y resuelva las dependencias. Ayudaos del diagrama UML para ver m&aacute;s claramente las dependencias.
+Tened en cuenta que el <span class="codefrag">DataSource</span> debe ser tambi&eacute;n en un bean de Spring. Tambi&eacute;n fijaos en que
+ninguno de los beans tiene estado y por tanto lo m&aacute;s l&oacute;gico es usar &aacute;mbito singleton (recuerda
+que es el &aacute;mbito por defecto).</li>
+    
+<li>
+<strong>En los servlets</strong>, hay que introducir el c&oacute;digo necesario para acceder a los beans de la capa
+de negocio. Recordar que se hace a trav&eacute;s de una "factor&iacute;a de beans" que implementa la clase
+<span class="codefrag">WebApplicationContext</span>. <strong>Esto ya lo ten&eacute;is hecho para mayor facilidad, salvo en el
+ <span class="codefrag">BuscarUsuariosServlet</span></strong>. Completa su c&oacute;digo fij&aacute;ndote en el de los otros servlets (menos en personal y logout
+ que no usan beans) y comprueba que efectivamente se pueden buscar usuarios.</li>
+
+</ol>
+</div>
+
+
+<a name="N100D4"></a><a name="Beans+con+distintos+%C3%A1mbitos"></a>
+<h2 class="underlined_10">Beans con distintos &aacute;mbitos</h2>
+<div class="section">
+<p>Supongamos que queremos mantener una lista de "usuarios cuya p&aacute;gina hemos
+    visto durante la sesi&oacute;n". Desde el punto de vista de la implementaci&oacute;n, esto se podr&iacute;a
+guardar directamente en la sesi&oacute;n HTTP, pero eso nos obligar&iacute;a a implementar la gesti&oacute;n desde los servlets.
+Vamos a usar un bean con &aacute;mbito de sesi&oacute;n para guardar la informaci&oacute;n, lo que nos
+permitir&aacute; implementar el c&oacute;digo directamente en negocio.</p>
+<p>Usa la clase <span class="codefrag">Visitas</span> del paquete <span class="codefrag">es.ua.jtech.amigosSpring.negocio</span>
+para definir un bean con &aacute;mbito de sesi&oacute;n. Haz que este bean colabore con GestorUsuarios
+enlaz&aacute;ndolo con &eacute;l. Para ello tendr&aacute;s que:</p>
+<ol>
+	
+<li>Incluir en el proyecto la librer&iacute;a <a href="material/cglib-nodep-2.1_3.jar">CGLIB</a>, que permite
+	crear proxys de manera autom&aacute;tica para una clase dada (en nuestro caso Visitas)</li>
+    
+<li>En el web.xml se debe definir
+un listener especial para que funcionen los &aacute;mbitos de petici&oacute;n y sesi&oacute;n.</li>
+
+<li>Definir con las anotaciones apropiadas la clase <span class="codefrag">Visitas</span> como un bean con &aacute;mbito de sesi&oacute;n.
+Hacer que <span class="codefrag">GestorUsuarios</span> dependa de este bean y mantenga una referencia a &eacute;l</li>
+
+<li>En el XML de definici&oacute;n de beans (applicationContext.xml), a&ntilde;adir el atributo <span class="codefrag">scoped-proxy="targetClass"</span>
+    a la etiqueta <span class="codefrag">context:component-scan</span>. Recuerda que esto hay que hacerlo porque Spring
+necesita definir <em>proxies</em> cuando hay dependencias entre beans con distintos &aacute;mbitos.</li>
+
+<li>El m&eacute;todo <span class="codefrag">GestorUsuarios.getUsuario()</span> es el llamado cuando hacemos una visita
+a otro usuario. Por tanto, aqu&iacute; es donde debemos guardar el login del visitado llamando a
+<span class="codefrag">addVisita(login)</span> de la clase <span class="codefrag">Visitas</span>.</li>
+
+<li>En el servlet <span class="codefrag">PersonalServlet</span> debemos sacar la lista de logins visitados
+accediendo al bean Visitas y llamando a su m&eacute;todo <span class="codefrag">getLogins()</span>. Gu&aacute;rdalo como
+un atributo de la petici&oacute;n llamado "logins" para que el JSP pueda mostrarlo.</li>
+
+<li>El JSP "personal.jsp" debe mostrar los resultados. <strong>Ya lo tienes implementado</strong> para mayor facilidad. F&iacute;jate
+en que usando tags de JSTL vamos iterando por la variable "logins".</li>
+
+</ol>
+</div>    
+
+<a name="N10124"></a><a name="Inicializaci%C3%B3n+de+las+propiedades+de+un+bean+con+XML"></a>
+<h2 class="underlined_10">Inicializaci&oacute;n de las propiedades de un bean con XML</h2>
+<div class="section">
+<p>El bean GestorMensajes tiene una constante COSTE_MENSAJE con el precio de enviar
+un mensaje. Ser&iacute;a mejor tener este dato fuera del fuente para que no fuera necesario recompilarlo
+si cambia el precio. Usa XML para definir el bean e inicializar el coste desde all&iacute;. Puedes
+eliminar las anotaciones de GestorMensajes, ya no son necesarias.</p>
+</div>
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2006-2007 Depto. CCIA</div>
+</div>
+</body>
+</html>

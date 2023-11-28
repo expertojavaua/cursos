@@ -1,0 +1,646 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Componentes web: el registro presencial</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Proyecto de Integracion" src="images/baner_j2ee_der.gif" title="Proyecto de Integracion"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="external" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li class="current">
+<a class="external" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Proyecto SIGEM</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Proyecto de Integraci&oacute;n">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion00-apuntes.html" title="Sesi&oacute;n 0: Puesta en marcha del SIGEM">Sesi&oacute;n 0</a>
+</div>
+<div class="menuitem">
+<a href="sesion01-apuntes.html" title="Sesi&oacute;n 1: CVS, base de datos y pruebas">Sesi&oacute;n 1</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesi&oacute;n 2</div>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html" title="Sesi&oacute;n 3: Persistencia Java">Sesi&oacute;n 3</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion02-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Componentes web: el registro presencial</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Preparaci%C3%B3n+del+workspace+y+prueba+de+la+aplicaci%C3%B3n">Preparaci&oacute;n del workspace y prueba de la aplicaci&oacute;n</a>
+</li>
+<li>
+<a href="#Organizaci%C3%B3n+general+del+c%C3%B3digo">Organizaci&oacute;n general del c&oacute;digo</a>
+<ul class="minitoc">
+<li>
+<a href="#Dependencias+entre+m%C3%B3dulos">Dependencias entre m&oacute;dulos</a>
+</li>
+<li>
+<a href="#Proyectos+web+que+dependen+de+proyectos+java">Proyectos web que dependen de proyectos java</a>
+</li>
+<li>
+<a href="#M%C3%B3dulos+web">M&oacute;dulos web</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Flujo+de+ejecuci%C3%B3n.+Logs+HTTP">Flujo de ejecuci&oacute;n. Logs HTTP</a>
+</li>
+<li>
+<a href="#La+capa+web+del+m%C3%B3dulo+de+registro">La capa web del m&oacute;dulo de registro</a>
+<ul class="minitoc">
+<li>
+<a href="#Ejemplo+de+refactorizaci%C3%B3n">Ejemplo de refactorizaci&oacute;n</a>
+</li>
+<li>
+<a href="#Ejercicios+propuestos">Ejercicios propuestos</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Ap%C3%A9ndice%3A+algunas+herramientas+%C3%BAtiles">Ap&eacute;ndice: algunas herramientas &uacute;tiles</a>
+</li>
+</ul>
+</div>
+
+
+<p>En esta sesi&oacute;n vamos a analizar una de las aplicaciones web que componen SIGEM: el registro
+presencial. Lo ejecutaremos desde Eclipse, lo que nos permitir&aacute; modificar y depurar el
+c&oacute;digo.</p>
+
+
+<a name="N1000F"></a><a name="Preparaci%C3%B3n+del+workspace+y+prueba+de+la+aplicaci%C3%B3n"></a>
+<h2 class="underlined_10">Preparaci&oacute;n del workspace y prueba de la aplicaci&oacute;n</h2>
+<div class="section">
+<p>Como ya se ha visto en la sesi&oacute;n anterior, SIGEM est&aacute; dividido en un gran n&uacute;mero
+de proyectos de Eclipse con diversas dependencias entre s&iacute;. Ya se vio en esta sesi&oacute;n c&oacute;mo ir
+importando proyectos a Eclipse y arreglando las dependencias. Para simplificar
+el trabajo de hoy, se dispone de un <em>workspace</em> ya configurado. No obstante, tambi&eacute;n vamos
+a dar las gu&iacute;as generales para ir resolviendo las dependencias una a una.</p>
+<p>Para empezar a trabajar con el registro presencial, descomprimir el workspace
+en cualquier carpeta. Generar&aacute; una carpeta llamada <span class="codefrag">workspaceRegistro</span>. Bastar&aacute;
+con elegir esta carpeta como <em>workspace</em> de Eclipse al arrancar el programa.</p>
+<p>En el workspace est&aacute;n contenidos los proyectos que componen el registro as&iacute; como configurado
+el servidor web. Para probar la aplicaci&oacute;n de registro habr&aacute; que seguir estos pasos:</p>
+<ol>
+
+<li>Arrancar la base de datos postgres
+<pre class="code">
+&gt; su postgres
+&gt; pg_ctl start -D /usr/local/pgsql/data
+</pre>
+
+</li>
+
+<li>Arrancar el servidor web. En &eacute;l deben aparecer tres proyectos: <span class="codefrag">SIGEM_RegistroPresencialWebIE</span>
+<span class="codefrag">SIGEM_AutenticacionBackOfficeWeb</span> y <span class="codefrag">SIGEM_AdministracionSesionesBackOfficeWS</span>.
+M&aacute;s adelante explicaremos qu&eacute; hace cada uno de ellos.
+<p>Es posible que el servidor web no consiga arrancar en el tiempo m&aacute;ximo
+que tiene asignado por defecto en Eclipse (45 segundos). Si esta situaci&oacute;n se da de manera repetida,
+podemos probar a aumentar este tiempo.</p>
+
+<p>Para ello, en la vista <span class="codefrag">Servers</span>, hacer doble clic sobre el nombre del servidor. Aparecer&aacute;
+un formulario mediante el que podemos editar su configuraci&oacute;n. En la parte superior derecha
+del mismo, hay una solapa llamada <strong>timeouts</strong> que contiene la opci&oacute;n
+que buscamos. Incrementaremos el tiempo que Eclipse espera al servidor.</p>
+
+</li>
+
+<li>La aplicaci&oacute;n solo funciona con Internet Explorer, por lo que la prueba habr&aacute; que
+hacerla desde fuera de la m&aacute;quina virtual.
+<ul>
+ 
+<li>Averiguar la IP que tiene nuestra m&aacute;quina virtual mediante <span class="codefrag">ifconfig</span>.
+ Habr&aacute; que ejecutar la orden como <em>root</em>
+</li>
+ 
+<li>En windows, abrir el Explorer y acceder a la URL
+ <pre class="code">
+ http://<em>IP_DE_LA_VM</em>:8080/SIGEM_RegistroPresencialWeb
+ </pre>
+ 
+</li>
+ 
+<li>Debe aparecer la pantalla en la que SIGEM nos solicita usuario y contrase&ntilde;a. Introducir
+ <em>sigem</em> en los dos campos.</li>
+ 
+<li>Ahora debe aparecer la pantalla inicial del registro presencial, desde la que podemos
+ entrar en los libros de entrada y salida que tengamos dados de alta.</li>
+
+</ul>
+
+</li>
+
+</ol>
+</div>
+
+
+<a name="N1006B"></a><a name="Organizaci%C3%B3n+general+del+c%C3%B3digo"></a>
+<h2 class="underlined_10">Organizaci&oacute;n general del c&oacute;digo</h2>
+<div class="section">
+<p>Antes de hacer modificaciones sobre el c&oacute;digo del registro, vamos a ver c&oacute;mo est&aacute; organizado</p>
+<a name="N10074"></a><a name="Dependencias+entre+m%C3%B3dulos"></a>
+<h3 class="underlined_5">Dependencias entre m&oacute;dulos</h3>
+<p>Como ya se vio en la sesi&oacute;n anterior, un proyecto de Eclipse puede contener
+referencias a los proyectos de los que depende, y SIGEM usa esta caracter&iacute;stica
+de manera extensiva. A modo de ejemplo, el
+siguiente gr&aacute;fico muestra las dependencias entre los proyectos que componen el 
+registro presencial:</p>
+<p> 
+<img alt="dependencias" src="imagenes/s2/dependencias.gif" width="750"> </p>
+<p>El gr&aacute;fico anterior se ha obtenido gracias a un <em>plugin</em> de eclipse denominado <a class="external" href="http://code.google.com/p/epdv/">
+<em>Eclipse Project Dependencies Viewer</em></a>. En el sitio web ten&eacute;is las instrucciones
+de instalaci&oacute;n. Una vez instalado, simplemente hay que pulsar con el bot&oacute;n derecho
+sobre el proyecto que deseemos y elegir la opci&oacute;n de <span class="codefrag">Show top-down project references</span>
+para ver las dependencias de un proyecto en forma gr&aacute;fica.</p>
+<p>N&oacute;tese que las dependencias anteriores son simplemente dependencias <em>est&aacute;ticas</em>. Es
+decir, las necesarias para que el c&oacute;digo compile.
+En una aplicaci&oacute;n distribuida como SIGEM puede haber dependencias entre proyectos
+web que no se detectar&aacute;n hasta tiempo de ejecuci&oacute;n. Por ejemplo, en el grafo
+anterior no aparece el proyecto <span class="codefrag">SIGEM_AutenticacionBackOfficeWeb</span>, que sin
+embargo es necesario para ejecutar el registro. Aunque no se incluyen gr&aacute;ficos con las
+dependencias est&aacute;ticas de los otros proyectos web, son f&aacute;ciles de obtener con el <em>plugin</em>
+de Eclipse ya mencionado.</p>
+<div class="frame warning">
+<div class="label">Aviso</div>
+<div class="content">
+Adem&aacute;s de no contener las dependencias entre proyectos, el fuente de SIGEM
+presenta otros problemas. Ciertas librer&iacute;as de terceros son necesarias pero no est&aacute;n inclu&iacute;das en
+el <em>build path</em> en varios proyectos y hay problemas en el c&oacute;digo fuente. En concreto,
+la l&iacute;nea 89 de la clase <span class="codefrag">UserImpl</span>, en el proyecto <span class="codefrag">GestionUsuariosBackOffice</span>
+no compila por un problema de par&aacute;metros en la llamada a un m&eacute;todo. <strong>Hemos modificado el fuente para que
+compile</strong>, pero evidentemente <em>la modificaci&oacute;n podr&iacute;a no ser correcta</em>, ya que el c&oacute;digo
+carece de comentarios.
+</div>
+</div>
+<a name="N100B3"></a><a name="Proyectos+web+que+dependen+de+proyectos+java"></a>
+<h3 class="underlined_5">Proyectos web que dependen de proyectos java</h3>
+<p>Como se ha visto en los m&oacute;dulos de servidores y de componentes web, las librer&iacute;as
+que necesita una aplicaci&oacute;n web deben colocarse dentro de <span class="codefrag">WEB-INF/lib</span>. Cuando
+son librer&iacute;as "de terceros" basta con colocar el JAR en el directorio, pero cuando el proyecto
+web depende de otros proyectos es necesario configurarlo en Eclipse. Esto se hace a trav&eacute;s
+de la opci&oacute;n <span class="codefrag">Java EE Module dependencies</span> que aparece en la ventana de propiedades
+del proyecto (bot&oacute;n derecho sobre el mismo <span class="codefrag">&gt; Properties</span>)</p>
+<p> 
+<img alt="dependencias java EE" content-width="14cm" src="imagenes/s2/pantModulos.gif" width="700"> </p>
+<p>Al activar estas opciones, Eclipse empaquetar&aacute; en JARs el c&oacute;digo de los proyectos
+de los que dependa nuestro proyecto web y los meter&aacute; en <span class="codefrag">WEB-INF/lib</span>.</p>
+<div class="frame warning">
+<div class="label">Aviso</div>
+<div class="content">
+Para que se puedan incluir los JARs en WEB-INF/lib de modo autom&aacute;tico es necesario que
+nuestros proyectos java tengan activado el <em>facet</em> denominado <span class="codefrag">Utility module</span>
+(en los Java de los que depende nuestro proyecto web, NO en el propio proyecto web).
+Como ya se vio en la sesi&oacute;n anterior, la versi&oacute;n actual del c&oacute;digo fuente de SIGEM
+contiene errores en los proyectos de Eclipse. Como resultado, la mayor parte de proyectos
+Java no tienen activado este <em>facet</em>. Para activarlo, ir a las propiedades del proyecto
+y a la opci&oacute;n de <span class="codefrag">Project facets</span>. El <em>facet</em> de <span class="codefrag">Utility module</span>
+requiere activar tambi&eacute;n el de <span class="codefrag">Java</span>. <strong>Esto ya est&aacute; hecho en el workspace que se os proporciona</strong>.
+</div>
+</div>
+<a name="N100F0"></a><a name="M%C3%B3dulos+web"></a>
+<h3 class="underlined_5">M&oacute;dulos web</h3>
+<p>Como se ha visto al poner en marcha el servidor, el registro requiere
+de la puesta en marcha de tres m&oacute;dulos web:</p>
+<ul>
+
+<li>
+<span class="codefrag">SIGEM_RegistroPresencialWebIE</span>: es el registro presencial propiamente dicho.</li>
+
+<li>
+<span class="codefrag">SIGEM_AutenticacionBackOfficeWeb</span>: es el m&oacute;dulo que se encarga de la autenticaci&oacute;n
+de los usuarios. Al hacer login en SIGEM se genera un "identificador de sesi&oacute;n" para el usuario cuya
+existencia se chequea en todas las aplicaciones de SIGEM.</li>
+
+<li>
+<span class="codefrag">SIGEM_AdministracionSesionesBackOfficeWS</span>: es el servicio web de autenticaci&oacute;n, en el que
+se apoya el m&oacute;dulo anterior.</li>
+
+</ul>
+<p>Como se vio en el m&oacute;dulo de servidores, un elemento fundamental en una aplicaci&oacute;n
+web es la configuraci&oacute;n del servidor. Vimos que hay dos sitios donde se suelen configurar
+las aplicaciones web en Tomcat: el <span class="codefrag">server.xml</span>, global a todas las aplicaciones,
+y los <span class="codefrag">context.xml</span> propios de cada aplicaci&oacute;n.
+</p>
+<p>Si examin&aacute;is el <span class="codefrag">server.xml</span>, ver&eacute;is que el incluido en la m&aacute;quina virtual
+incluye diversas fuentes de datos, necesarias para las aplicaciones de SIGEM. Dichas
+fuentes de datos se definen como recursos JNDI globales (es decir, accesibles por todas
+las aplicaciones). Por ejemplo, a partir de la l&iacute;nea 81 se define un DataSource
+para el registro</p>
+<pre class="code">
+
+&lt;!-- DATASOURCE SIGEM REGISTRO--&gt;
+    &lt;Resource auth="Container" name="jdbc/registroDS_000" type="javax.sql.DataSource"/&gt;
+    &lt;ResourceParams name="jdbc/registroDS_000"&gt;
+	    &lt;parameter&gt;
+		    &lt;name&gt;username&lt;/name&gt;
+		    &lt;value&gt;postgres&lt;/value&gt;
+	    &lt;/parameter&gt;
+	    &lt;parameter&gt;
+		    &lt;name&gt;password&lt;/name&gt;
+		    &lt;value&gt;postgres&lt;/value&gt;
+	    &lt;/parameter&gt;
+	    &lt;parameter&gt;
+		    &lt;name&gt;driverClassName&lt;/name&gt;
+		    &lt;value&gt;org.postgresql.Driver&lt;/value&gt;
+	    &lt;/parameter&gt;
+	    &lt;parameter&gt;
+		    &lt;name&gt;url&lt;/name&gt;
+		    &lt;value&gt;jdbc:postgresql://localhost/registro_000&lt;/value&gt;
+	    &lt;/parameter&gt;
+	    &lt;parameter&gt;
+		    &lt;name&gt;maxActive&lt;/name&gt;
+		    &lt;value&gt;20&lt;/value&gt;
+	    &lt;/parameter&gt;	    
+	    &lt;parameter&gt;
+		    &lt;name&gt;maxIdle&lt;/name&gt;
+		    &lt;value&gt;10&lt;/value&gt;
+	    &lt;/parameter&gt;	
+	    &lt;parameter&gt;
+		    &lt;name&gt;removeAbandoned&lt;/name&gt;
+		    &lt;value&gt;true&lt;/value&gt;
+	    &lt;/parameter&gt;	
+	    &lt;parameter&gt;
+		    &lt;name&gt;removeAbandonedTimeout&lt;/name&gt;
+		    &lt;value&gt;5&lt;/value&gt;
+	    &lt;/parameter&gt;
+    &lt;/ResourceParams&gt;
+</pre>
+<p>Cuando se definen los recursos JNDI como globales, es necesario referenciarlos de nuevo
+en el <span class="codefrag">context.xml</span> propio de la aplicaci&oacute;n. Esto se hace a trav&eacute;s de la etiqueta
+XML <span class="codefrag">&lt;ResourceLink&gt;</span>. Curiosamente, en los m&oacute;dulos de SIGEM no se
+usa esta etiqueta sino que se <em>vuelve a definir el recurso</em>. En realidad sobrar&iacute;a
+una de las dos definiciones (local o global).</p>
+</div>
+
+<a name="N1012C"></a><a name="Flujo+de+ejecuci%C3%B3n.+Logs+HTTP"></a>
+<h2 class="underlined_10">Flujo de ejecuci&oacute;n. Logs HTTP</h2>
+<div class="section">
+<p>Cuando trabajamos con proyectos sencillos, se puede seguir el flujo de ejecuci&oacute;n
+ejecutando el c&oacute;digo en modo depuraci&oacute;n. El problema de hacerlo as&iacute; con SIGEM es que el
+flujo se mueve entre muchos proyectos y entre varios m&oacute;dulos web. Para hacerse una idea
+de la secuencia general de llamadas, en estos casos puede resultar m&aacute;s &uacute;til crear
+un <em>log</em> de las peticiones HTTP al servidor. Ya vimos en el m&oacute;dulo de servidores
+c&oacute;mo configurar Tomcat para generar este tipo de logs. Basta con crear un <span class="codefrag">Valve</span>
+al nivel deseado, ya sea para todo el host o solamente para una aplicaci&oacute;n.</p>
+<p>Como inicialmente no sabemos el orden de las llamadas entre m&oacute;dulos, vamos a crear
+un <em>log</em> para todo el servidor. En el <span class="codefrag">server.xml</span>, debajo de la
+definici&oacute;n del host, introduciremos el siguiente c&oacute;digo:</p>
+<pre class="code">
+&lt;Host appBase="webapps" autoDeploy="true" debug="0" name="localhost"...
+<strong>&lt;Valve className="org.apache.catalina.valves.AccessLogValve" 
+       directory="logs" pattern="common" 
+       prefix="mod_registro_log." resolveHosts="false" 
+       suffix=".txt"/&gt;</strong>
+
+</pre>
+<p>Probad ahora a acceder al registro desde Explorer y examinad el <em>log</em>
+con las peticiones HTTP realizadas. Es importante sobre todo la parte inicial de
+la URL, que nos indica la aplicaci&oacute;n web que se est&aacute; ejecutando. Tambi&eacute;n ser&aacute;n
+ilustrativas las llamadas a los servlets y a los JSP. Estas &uacute;ltimas son m&aacute;s f&aacute;cilmente
+identificables, ya que suelen tener como es l&oacute;gico extensi&oacute;n .jsp. Para los servlets
+no suele haber una extensi&oacute;n determinada.</p>
+<div class="frame warning">
+<div class="label">Aviso</div>
+<div class="content">
+En SIGEM hay ciertos servlets cuya URL est&aacute; configurada con .jsp. Examinad cuidadosamente
+el <span class="codefrag">web.xml</span> de la aplicaci&oacute;n web en cuesti&oacute;n para ver si se trata de p&aacute;ginas 
+JSP o
+son realmente servlets. 
+</div>
+</div>
+<p>Si nos interesa restringir el <em>log</em> a una sola aplicaci&oacute;n, colocaremos
+el <span class="codefrag">Valve</span> dentro del <span class="codefrag">context.xml</span> de la misma.</p>
+<p>Un problema de estos logs es que cuando se realiza una petici&oacute;n de tipo POST
+no se muestran los par&aacute;metros. Hay otro Valve en Tomcat que muestra toda la informaci&oacute;n
+disponible sobre la petici&oacute;n HTTP, llamado <em>request dumper valve</em>. Simplemente
+habr&iacute;a que introducir al nivel adecuado (host o aplicaci&oacute;n) lo siguiente:</p>
+<pre class="code">
+&lt;Valve className="org.apache.catalina.valves.RequestDumperValve"/&gt;
+</pre>
+</div>
+
+<a name="N1016E"></a><a name="La+capa+web+del+m%C3%B3dulo+de+registro"></a>
+<h2 class="underlined_10">La capa web del m&oacute;dulo de registro</h2>
+<div class="section">
+<p>Los diferentes m&oacute;dulos de SIGEM usan tecnolog&iacute;as diversas. En concreto, la capa
+web del m&oacute;dulo de registro presencial es una aplicaci&oacute;n web convencional JavaEE, basada
+por tanto en servlets y JSPs. Tambi&eacute;n usa algo de Struts, aunque esto lo dejaremos hasta
+la sesi&oacute;n de integraci&oacute;n correspondiente.</p>
+<p>Para empezar a analizar una aplicaci&oacute;n web, el primer sitio 
+en el que "hay que mirar" es el archivo <span class="codefrag">web.xml</span>. El del m&oacute;dulo de registro
+contiene b&aacute;sicamente:</p>
+<ul>
+
+<li>La definici&oacute;n de <span class="codefrag">__index.jsp</span> como p&aacute;gina inicial. Si examinamos el c&oacute;digo de esta
+p&aacute;gina, veremos que se limita a leer el <em>locale</em> del navegador y a saltar a
+<span class="codefrag">default.jsp</span>.</li>
+
+<li>La definici&oacute;n de un filtro (clase <span class="codefrag">LoginCheckFilter</span>), asociado a todas las URL del m&oacute;dulo, que chequear&aacute; si
+estamos logueados o no.</li>
+
+<li>La definici&oacute;n y el mapeo de los servlets que componen la capa web.</li>
+
+</ul>
+<p>Como ejemplo, vamos a ver el servlet que se encarga de realizar b&uacute;squedas en el registro.
+Para encontrarlo, en la pantalla de uno de los libros de registro realizaremos una b&uacute;squeda por
+ejemplo de la &uacute;ltima entrada (bot&oacute;n "Buscar &uacute;ltimo").</p>
+<p>
+<img alt="pantalla de b&uacute;squeda en registro" content-width="15cm" src="imagenes/s2/pantRegistro1.gif" width="700"></p>
+<p> En el log HTTP deber&iacute;a quedar
+constancia de los servlets/JSP que se han solicitado. Si lo examinamos veremos en las &uacute;ltimas l&iacute;neas algo como</p>
+<pre class="code">
+..."<strong>POST /SIGEM_RegistroPresencialWeb/tbltext.jsp</strong>?SessionPId=CDEC...
+..."GET /SIGEM_RegistroPresencialWeb/scripts/tbltext.js HTTP/1.1" 304 -
+..."GET /SIGEM_RegistroPresencialWeb/images/docemp.gif HTTP/1.1" ...
+</pre>
+<p>donde se han eliminado ciertos datos del log para que el registro quepa en una sola l&iacute;nea. Obs&eacute;rvese
+que el que parece "hacer el trabajo" es el JSP <span class="codefrag">tbltext.jsp</span>. No
+obstante, si vamos al web.xml veremos que dicha URL est&aacute; mapeada en realidad 
+con un servlet de la clase <span class="codefrag">TblText</span>
+</p>
+<p>Mediante un examen cuidadoso del c&oacute;digo de dicha clase podemos ver que es un servlet
+convencional (es decir, es una clase que hereda de <span class="codefrag">HttpServlet</span>) y m&aacute;s o menos deducir c&oacute;mo hace el trabajo</p>
+<pre class="code">
+public class TblText extends HttpServlet implements Keys {
+...
+    public void init() throws ServletException {
+        super.init();
+
+        factory = TransformerFactory.newInstance();
+        bookUseCase = new BookUseCase();
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+    			throws ServletException, IOException {
+        doWork(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+    			throws ServletException,IOException {
+        doWork(request, response);
+    }
+
+    private void doWork(HttpServletRequest request, HttpServletResponse response)
+    			throws ServletException, IOException {
+        <strong>//OBTENER PARAMETROS de la operaci&oacute;n (est&aacute;n en petici&oacute;n y sesi&oacute;n)</strong>
+ 	// Identificador de la consulta.
+        Integer fdrQryPId = RequestUtils.parseRequestParameterAsInteger(request, "FdrQryPId");
+        // Tipo de consulta: Aceptar(TypeSearch=0), BuscarUltimo(TypeSearch=1).
+        Integer typeSearch = RequestUtils.parseRequestParameterAsInteger(request,
+							"TypeSearch", new Integer(0));
+        // Obtenemos la sesi&oacute;n asociada al usuario.
+        HttpSession session = request.getSession();
+        // Obtenemos el objeto de configuraci&oacute;n del servidor de aplicaciones y el identificador
+        // de sesi&oacute;n para este usuario en el servidor de aplicaciones.
+        UseCaseConf useCaseConf = (UseCaseConf) session.getAttribute(J_USECASECONF);
+        // Recuperamos el id de libro
+        Integer bookID = (Integer) session.getAttribute(Keys.J_BOOK);
+        // Texto del idioma. Ej: EU_
+        String idioma = (String) session.getAttribute(Keys.J_IDIOMA);
+        // N&uacute;mero del idioma. Ej: 10
+        Long numIdioma = (Long) session.getAttribute(Keys.J_NUM_IDIOMA);
+	PrintWriter writer = response.getWriter ();
+	<strong>//LOGICA DE NEGOCIO</strong>
+        try {
+            Document xmlDocument = null;
+            List badCtrls = null;
+            if (typeSearch.equals(Keys.SEARCH_WITH_FILTER)) {
+                badCtrls = bookUseCase.validateQueryParams(useCaseConf, bookID, request);
+                <strong>...</strong>
+            } else {
+                xmlDocument = bookUseCase.getLastRegisterForUser(useCaseConf, bookID);
+            }
+            <strong>//DEVOLVER EL RESULTADO</strong>
+            if (xmlDocument != null) {
+                // Transformamos el xml mediante la xsl en html.
+                // Los errores pueden ser de comunicaci&oacute;n, de validaci&oacute;n,etc...
+                String xslPath = session.getServletContext().
+                				getRealPath(XSL_TBLTEXT_RELATIVE_PATH);
+                <strong>...</strong>				
+ 	}
+</pre>
+<p>Podemos resumir el servlet en algunos puntos interesantes:</p>
+<ul>
+
+<li>La secuencia de operaciones es la t&iacute;pica en un servlet: obtener y validar los par&aacute;metros,
+disparar la l&oacute;gica de negocio y devolver el resultado.</li>
+
+<li>La l&oacute;gica de negocio para este caso de uso se implementa en la clase <span class="codefrag">BookUseCase</span>, que
+parece ocuparse de todo lo relacionado con los libros de registro.</li>
+
+<li>Los resultados del registro se obtienen en formato XML. Se ha optado por usar
+una hoja de estilo XSL para transformarlo en HTML y enviarlo directamente al navegador.
+Esta forma de trabajar es la que m&aacute;s complica el c&oacute;digo de generaci&oacute;n de la respuesta.</li>
+
+</ul>
+<a name="N101DC"></a><a name="Ejemplo+de+refactorizaci%C3%B3n"></a>
+<h3 class="underlined_5">Ejemplo de refactorizaci&oacute;n</h3>
+<p>El que el servlet sea el responsable de generar directamente la respuesta HTML es sobre
+todo lo que acaba alargando m&aacute;s el c&oacute;digo. Por ejemplo, n&oacute;tese en la l&iacute;nea 113 el c&oacute;digo
+empleado para generar una respuesta HTML cuando hay alg&uacute;n error en un campo. En este caso,hay
+que generar HTML con Javascript incrustado que muestre el/los campos err&oacute;neos. Probar
+por ejemplo a meter una fecha no v&aacute;lida en el campo "Fecha de registro".</p>
+<p> Dicho c&oacute;digo se podr&iacute;a sacar del servlet si se hiciera una redirecci&oacute;n a un JSP externo, donde el
+HTML y Javascript ser&iacute;an m&aacute;s f&aacute;ciles de localizar, editar y mantener. Vamos a hacer dicha tarea.
+</p>
+<p>Analizando cuidadosamente el flujo de ejecuci&oacute;n del servlet podemos observar que cuando
+hay alg&uacute;n campo de b&uacute;squeda err&oacute;neo se producen dos efectos:</p>
+<ul>
+
+<li>A partir de la l&iacute;nea 113 se genera el bloque principal de HTML y javascript:
+<pre class="code">
+writer.write("&lt;HTML&gt;&lt;HEAD&gt;&lt;SCRIPT LANGUAGE=JavaScript&gt;top.ShowQuery(); 
+   top.Main.Workspace.Query.ClearAllInvalids();");
+for (Iterator it = badCtrls.iterator(); it.hasNext();) {
+  writer.write("top.Main.Workspace.Query.SetBadField(\"" + it.next().toString()
+                 + "\");");
+}
+writer.write("&lt;/SCRIPT&gt;&lt;/HEAD&gt;&lt;BODY tabIndex=-1&gt;&lt;LINK REL=\"stylesheet\" 
+  TYPE=\"text/css\" HREF=\"css/global.css\"/&gt;\")&lt;/BODY&gt;&lt;/HTML&gt;");
+</pre>
+
+
+</li>
+
+<li>De la 144 a la 147, se escribe el c&oacute;digo javascript que muestra el error, usando
+un par de m&eacute;todos Java auxiliares:
+<pre class="code">
+ } else if (badCtrls != null &amp;&amp; !badCtrls.isEmpty()) {
+      ResponseUtils.generateJavaScriptLog(writer, 
+              RBUtil.getInstance(useCaseConf.getLocale())
+              .getProperty(Keys.I18N_ISICRESSRV_QRY_ABORT_CAUSE_INVALID_TEXT));
+      writer.write(ACTIVATE_SEVERAL);
+ </pre>
+
+</li>
+
+</ul>
+<p>Podemos sustituir el c&oacute;digo anterior por un c&oacute;digo que guarde los errores concretos
+como atributos de la petici&oacute;n y pase el control al JSP, que ser&aacute; el encargado de mostrarlos.
+El simple cambio en este servlet no nos va a dar demasiados beneficios por s&iacute; solo, pero
+esta filosof&iacute;a, repetida, nos lleva a simplificar la capa web y reutilizar c&oacute;digo, que incrustado
+en el servlet no es posible volver a usar.</p>
+<p>El c&oacute;digo de la l&iacute;nea 113 quedar&iacute;a:</p>
+<pre class="code">
+request.setAttribute("badCtrls", badCtrls);
+</pre>
+<p>Es decir, lo &uacute;nico que necesitamos es pasarle al JSP la informaci&oacute;n de los campos con
+datos err&oacute;neos. Desde all&iacute; es desde donde generaremos el javascript para mostrar los errores.</p>
+<p>Nos quedar&iacute;a modificar la segunda parte (l&iacute;neas 144 a 147)</p>
+<pre class="code">
+request.setAttribute("problema", RBUtil.getInstance(useCaseConf.getLocale())
+                        .getProperty(Keys.I18N_ISICRESSRV_QRY_ABORT_CAUSE_INVALID_TEXT));
+RequestDispatcher rd = getServletContext().getRequestDispatcher("/errorBusqueda.jsp");
+rd.forward(request, response);
+</pre>
+<p>donde guardamos el mensaje con el problema que se ha producido en el atributo
+de petici&oacute;n "problema" y pasamos el control al JSP. N&oacute;tese que la complejidad
+de c&oacute;digo se debe sobre todo a la internacionalizaci&oacute;n. Ser&iacute;a m&aacute;s sencillo buscar
+directamente desde el JSP el mensaje con etiquetas que soporten internacionalizaci&oacute;n
+(JSTL, por ejemplo). Eso s&iacute;, requerir&iacute;a cambios m&aacute;s laboriosos de hacer
+que en esta peque&ntilde;a prueba.</p>
+<p>Finalmente, el JSP "errorBusqueda.jsp" quedar&iacute;a:</p>
+<pre class="code">
+
+&lt;%@ page import="java.util.List, java.util.Iterator"%&gt;
+&lt;%
+  List badCtrls = (List) request.getAttribute("badCtrls");
+%&gt;
+&lt;HTML&gt;
+&lt;HEAD&gt;
+&lt;SCRIPT LANGUAGE=JavaScript&gt;
+top.ShowQuery(); top.Main.Workspace.Query.ClearAllInvalids();
+&lt;%
+Iterator it;
+for (it = badCtrls.iterator(); it.hasNext();) {
+    out.println("top.Main.Workspace.Query.SetBadField(\"" + it.next().toString() + "\");");
+}
+%&gt;
+&lt;/SCRIPT&gt;
+&lt;/HEAD&gt;
+&lt;BODY tabIndex=-1&gt;
+ &lt;LINK REL="stylesheet" TYPE="text/css" HREF="css/global.css"/&gt;")
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+&lt;script&gt;alert('&lt;%= request.getAttribute("problema")%&gt;');&lt;/script&gt; 
+&lt;script language=javascript&gt;top.g_TreeFunc=true;
+top.Main.Workspace.ToolBarQry.EnabledTool();&lt;/script&gt;
+
+</pre>
+<p>N&oacute;tese que esta soluci&oacute;n no es para reducir l&iacute;neas de c&oacute;digo (de hecho han aumentado
+ligeramente), sino para mejorar
+la organizaci&oacute;n y mantenibilidad. Ahora el JSP se puede probar de manera independiente al servlet,
+y el javascript ya no est&aacute; "escondido" dentro del Java.</p>
+<a name="N1021E"></a><a name="Ejercicios+propuestos"></a>
+<h3 class="underlined_5">Ejercicios propuestos</h3>
+<p>Se proponen las siguientes pruebas con el objeto de familiarizarse con el c&oacute;digo del 
+registro y probar posibles cambios:</p>
+<ul>
+
+<li>Averiguar cu&aacute;l es el servlet o JSP que obtiene el &aacute;rbol con los libros de registro disponibles,
+ que aparece nada m&aacute;s entrar al m&oacute;dulo. Observar en qu&eacute; clases y m&eacute;todos de la capa de negocio
+ se apoya.</li>
+
+<li>Modificar la transformaci&oacute;n XSL que se aplica en la mayor&iacute;a de servlets de registro
+para generar el HTML. Ser&iacute;a m&aacute;s sencillo aplicarla directamente en un JSP usando etiquetas
+JSTL, en lugar de tener que hacerlo por c&oacute;digo.</li>
+
+</ul>
+</div>
+
+<a name="N10232"></a><a name="Ap%C3%A9ndice%3A+algunas+herramientas+%C3%BAtiles"></a>
+<h2 class="underlined_10">Ap&eacute;ndice: algunas herramientas &uacute;tiles</h2>
+<div class="section">
+<p>Como la versi&oacute;n del c&oacute;digo fuente y la de la m&aacute;quina virtual no son exactamente la misma, puede
+ser interesante en algunos casos descompilar los fuentes de la m&aacute;quina virtual para observar
+posibles diferencias. Afortunadamente en Java es posible descompilar los .class obteniendo
+el c&oacute;digo fuente original (salvo comentarios, por supuesto) a menos que se emplee alguna tecnolog&iacute;a
+de "ofuscaci&oacute;n de c&oacute;digo", lo que no es el caso de SIGEM.</p>
+<p>Aunque hay muchas herramientas de este tipo, dos os pueden resultar especialmente &uacute;tiles:</p>
+<ul>
+
+<li>
+<a class="external" href="http://www.kpdus.com/jad.html">JAD</a>: descompilador de java disponible
+en m&uacute;ltiples plataformas. Sencillo (un &uacute;nico ejecutable) y ocupa poco espacio.</li>
+
+<li>
+<a class="external" href="http://jarbrowser.sourceforge.net/">JAR browser</a>, herramienta para buscar clases dentro de ficheros .JAR.
+Nos evita tener que descomprimir los archivos y hacer las b&uacute;squedas manualmente. Adem&aacute;s,
+al hacer doble clic sobre una clase llama al "jad" autom&aacute;ticamente si est&aacute; instalado</li>
+
+</ul>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007-2008 Depto. CCIA</div>
+</div>
+</body>
+</html>

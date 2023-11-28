@@ -1,0 +1,790 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>De JPA a Hibernate</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="JPA con Hibernate" src="images/baner_j2ee_der.gif" title="JPA con Hibernate"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Persistencia</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">JPA</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="JPA">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 8</div>
+</div>
+<div class="menuitem">
+<a href="roadmap.html">Roadmap JPA</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-ejercicios.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-ejercicios.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-ejercicios.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-ejercicios.html">Sesion 8</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion08-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>De JPA a Hibernate</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#De+JPA+a+Hibernate">De JPA a Hibernate</a>
+</li>
+<li>
+<a href="#Configuraci%C3%B3n+de+Hibernate">Configuraci&oacute;n de Hibernate</a>
+</li>
+<li>
+<a href="#Mapeo+de+entidades">Mapeo de entidades</a>
+<ul class="minitoc">
+<li>
+<a href="#Tipos+de+valores">Tipos de valores</a>
+</li>
+<li>
+<a href="#M%C3%A9todos+equals+y+hashMap">M&eacute;todos equals y hashMap</a>
+</li>
+<li>
+<a href="#Componentes">Componentes</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Mapeo+de+relaciones">Mapeo de relaciones</a>
+<ul class="minitoc">
+<li>
+<a href="#Relaci%C3%B3n+uno-a-muchos">Relaci&oacute;n uno-a-muchos</a>
+</li>
+<li>
+<a href="#Relaci%C3%B3n+muchos-a-muchos">Relaci&oacute;n muchos-a-muchos</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Relaciones+de+herencia">Relaciones de herencia</a>
+</li>
+<li>
+<a href="#Arquitectura+de+Hibernate">Arquitectura de Hibernate</a>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="De+JPA+a+Hibernate"></a>
+<h2 class="underlined_10">De JPA a Hibernate</h2>
+<div class="section">
+<p>Una vez que hemos visto en profundidad el enfoque de JPA para solucionar el problema de la persistencia en Java, vamos a dedicar un par de sesiones a explorar c&oacute;mo se puede hacer todo esto utilizando Hibernate Core, sin las extensiones para implementar JPA. En la actualidad hay muchos proyectos en funcionamiento que fueron implementados en Hibernate y que no se han portado a JPA. Si un proyecto Hibernate funciona correctamente y no hay que a&ntilde;adir demasiadas caracter&iacute;sticas nuevas, no es necesario moverse a JPA.</p>
+<p>Tambi&eacute;n hay que decir que JPA, al ser un est&aacute;ndar, es una versi&oacute;n relativamente simplificada de Hibernate. Hibernate es m&aacute;s potente y flexible. En palabras de Gavin King, el creador y l&iacute;der del proyecto Hibernate, la especificaci&oacute;n de JPA cubre el 95% de las necesidades cubiertas con Hibernate. Hay un 5% de funcionalidades que ofrece Hibernate y que no es posible conseguir en JPA. Sin embargo, estas funcionalidades van m&aacute;s all&aacute; del tiempo que tenemos para comentar Hibernate. En este cap&iacute;tulo y el siguiente resaltaremos principalmente las equivalencias entre ambos frameworks, y explicaremos c&oacute;mo hacer en Hibernate lo que ya sabemos hacer en JPA.</p>
+<p>Por &uacute;ltimo, una ventaja de Hibernate es la buena integraci&oacute;n con frameworks como Spring y en otros proyectos Open Source. Esto es debido, b&aacute;sicamente, a la madurez del framework. Es de suponer que con el tiempo aumentar&aacute; la integraci&oacute;n de JPA en Spring y otros frameworks populares, as&iacute; como en entornos de desarrollo.</p>
+<p>Repaso: hola mundo en JPA y Hola mundo en Hibernate.</p>
+<p>Recordemos el programa <span class="codefrag">HolaMundo</span> en JPA:</p>
+<pre class="code">public class HolaMundo {
+   public static void main(String[] args) {
+      ...
+      EntityManagerFactory emf = Persistence
+            .createEntityManagerFactory("simplejpa");
+      EntityManager em = emf.createEntityManager();
+      
+      em.getTransaction().begin();
+         // Busco el autor y lo creo si no existe
+      autor = em.find(Autor.class, autorStr);
+      if (autor == null) {
+         autor = new Autor();
+         autor.setNombre(autorStr);
+         autor.setCorreo(autorStr + "@ua.es");
+         em.persist(autor);
+      }
+      // Miro si el autor ya un mensaje
+      if (autor.getMensaje() == null) {
+         // Nuevo mensaje
+         mensaje = new Mensaje();
+         mensaje.setAutor(autor);
+         mensaje.setTexto(mensStr);
+         em.persist(mensaje);
+      } else {
+         // Modifico el mensaje que ya existe
+         Long mensId = autor.getMensaje().getId();
+         mensaje = em.find(Mensaje.class, mensId);
+         mensaje.setTexto(mensStr);
+      }
+         em.getTransaction().commit();
+      em.close();
+      emf.close();
+   }
+}</pre>
+<p>Y esta es la versi&oacute;n del mismo programa en Hibernate:</p>
+<pre class="code">import org.hibernate.*;
+
+import entity.Autor;
+import entity.Mensaje;
+
+public class HolaMundo {
+
+   public static void main(String[] args) {
+      Autor autor;
+      Mensaje mensaje;
+      String autorStr, mensStr;
+
+      SessionFactory sessionFactory = 
+         new Configuration().configure().buildSessionFactory();
+      Session session = sessionFactory.getCurrentSession();
+      // Leo el mensaje y el autor
+      try {
+           BufferedReader in = new BufferedReader(
+              new InputStreamReader(System.in));
+         System.out.print("Nombre: ");
+         autorStr = in.readLine();
+         System.out.print("Mensaje: ");
+         mensStr = in.readLine();
+      } catch (IOException e) {
+         autorStr = "Error";
+         mensStr = "Error";
+      }
+
+      session.beginTransaction();
+
+      // Busco el autor y lo creo si no existe
+      autor = (Autor) session.get(Autor.class, autorStr);
+      if (autor == null) {
+         autor = new Autor();
+         autor.setNombre(autorStr);
+         autor.setCorreo(autorStr + "@ua.es");
+         session.save(autor);
+      }
+
+      // Creo el mensaje
+      mensaje = new Mensaje();
+      mensaje.setAutor(autor);
+      mensaje.setTexto(mensStr);
+      session.save(mensaje);
+
+      // Lo a&ntilde;ado al autor
+      Collection&lt;Mensaje&gt; mensajes = autor.getMensajes();
+      mensajes.add(mensaje);      
+      session.getTransaction().commit();            
+
+      // Imprimimos todos los mensajes del autor
+      System.out.println(autor.getNombre() + " ha escrito " + mensajes.size() + " mensajes:");
+      Iterator&lt;Mensaje&gt; it = mensajes.iterator();
+      while (it.hasNext()) {
+         Mensaje mens = it.next();
+         System.out.println(mens.getTexto());
+      }
+      sessionFactory.close();
+   }
+}</pre>
+<p>Como se puede comprobar, el funcionamiento de Hibernate es muy similar al de JPA. Existe una factor&iacute;a de la que se obtiene una sesi&oacute;n de Hibernate (objeto <span class="codefrag">Session</span> equivalente al <span class="codefrag">EntityManager</span> de JPA). Con la sesi&oacute;n podemos abrir y cerrar la transacci&oacute;n, obtener entidades y guardarlas en la base de datos.</p>
+<p>En lo que respecta a las entidades, son tambi&eacute;n similares a las de JPA. Se trata de POJOs en forma de Java Beans (objetos Java con atributos accedidos por los <em>setters</em> y <em>getters</em>). Se recuperan de la base de datos llamando al m&eacute;todo <span class="codefrag">get</span> de la sesi&oacute;n (en lugar del <span class="codefrag">find</span> sobre el <em>entityManager</em>). Se graban en la base de datos utilizando el m&eacute;todo <span class="codefrag">save</span> de la sesi&oacute;n (en lugar del <span class="codefrag">persist</span> del entityManager).</p>
+<p>Las entidades siguen funcionado como objetos Java que est&aacute;n relacionados y que pueden recorrerse. El c&oacute;digo Java propiamente dicho es el mismo en la versi&oacute;n JPA y en la versi&oacute;n Hibernate.</p>
+<p>En cuanto a las diferencias m&aacute;s importantes, veremos m&aacute;s adelante que la definici&oacute;n de entidades en Hibernate es mucho m&aacute;s complicada que en JPA, ya que Hibernate define el mapeo de las entidades a tablas mediante ficheros XML. </p>
+<p>La configuraci&oacute;n de la conexi&oacute;n de Hibernate con la base de datos se define tambi&eacute;n en en un fichero XML similar al <span class="codefrag">persistence.xml</span> de JPA.</p>
+<p>Todos estos detalles los veremos m&aacute;s adelante. En esta primera sesi&oacute;n explicaremos c&oacute;mo Hibernate define el mapeo entidad-relaci&oacute;n. La segunda sesi&oacute;n la utilizaremos para detallar el uso de las sesiones y del funcionamiento din&aacute;mico de Hibernate, as&iacute; como para repasar algunos ejemplos de queries.</p>
+</div>
+
+
+<a name="N10060"></a><a name="Configuraci%C3%B3n+de+Hibernate"></a>
+<h2 class="underlined_10">Configuraci&oacute;n de Hibernate</h2>
+<div class="section">
+<p>Para poder utilizar Hibernate en nuestra aplicaci&oacute;n hay que instalar un conjunto de librer&iacute;as en el CLASSPATH y configurar sus caracter&iacute;sticas.</p>
+<p>Las librer&iacute;as necesarias son las propias del proyecto <em>Hibernate Core</em> m&aacute;s un conjunto de librer&iacute;as de otros proyectos open source que utiliza Hibernate. Todas est&aacute;n disponibles en el paquete <em>Hibernate Core</em> de la <a href="http://www.hibernate.org/">web de Hibernate</a>. La versi&oacute;n m&aacute;s reciente es la 3.3.1.GA, lanzada en septiembre de 2008. En la distribuci&oacute;n se encuentran las siguientes librer&iacute;as necesarias:</p>
+<ul>
+	
+<li>antlr-2.7.5.jar</li>
+	
+<li>commons-collections-3.1.jar</li>
+	
+<li>dom4j-1.6.1.jar</li>
+	
+<li>hibernate3.jar</li>
+	
+<li>hibernate-testing.jar</li>
+	
+<li>javassist-3.4.GA.jar</li>
+	
+<li>jta-1.1.jar</li>
+	
+<li>slf4j-api-1.5.2.jar</li>
+	
+<li>slf4j-simple-1.5.2.jar</li>
+	
+<li>mysql-connector-java-5.1.6-bin.jar</li>
+
+</ul>
+<p>La librer&iacute;a <span class="codefrag">slf4j-simple-1.5.2.jar</span> no est&aacute; incluida en la distribuci&oacute;n original y hay que a&ntilde;adirla si se quiere mostrar los mensajes de log por la salida est&aacute;ndar.</p>
+<p>El fichero <span class="codefrag">hibernate.cfg.xml</span> define la configuraci&oacute;n de Hibernate. Debe llamarse de esa forma y encontrarse en la ra&iacute;z del <em>classpath</em>.</p>
+<pre class="code">&lt;?xml version='1.0' encoding='utf-8'?&gt;
+  &lt;!DOCTYPE hibernate-configuration PUBLIC
+   "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"&gt;
+
+&lt;hibernate-configuration&gt;
+  &lt;session-factory&gt;
+    &lt;property name="connection.url"&gt;jdbc:mysql://localhost/jpa&lt;/property&gt;
+    &lt;property name="connection.username"&gt;root&lt;/property&gt;
+    &lt;property name="connection.password"&gt;root&lt;/property&gt;
+    &lt;property name="connection.driver_class"&gt;com.mysql.jdbc.Driver
+	   &lt;/property&gt;
+    &lt;property name="dialect"&gt;org.hibernate.dialect.MySQLDialect
+	   &lt;/property&gt;
+    &lt;property name="current_session_context_class"&gt;thread&lt;/property&gt;
+    &lt;property name="transaction.factory_class"&gt;
+	   org.hibernate.transaction.JDBCTransactionFactory&lt;/property&gt;
+    &lt;property name="cache.provider_class"&gt;
+	   org.hibernate.cache.NoCacheProvider&lt;/property&gt;
+    &lt;property name="hibernate.show_sql"&gt;true&lt;/property&gt;
+    &lt;property name="hbm2ddl.auto"&gt;update&lt;/property&gt;
+<strong>    &lt;mapping resource="mappings.hbm.xml"/&gt;</strong>
+  &lt;/session-factory&gt;
+&lt;/hibernate-configuration&gt;</pre>
+<p>El elemento <span class="codefrag">mapping</span> define la localizaci&oacute;n en el <em>classpath</em> de los ficheros de mapeo. Se pueden definir tantos ficheros de mapeo como se desee. Las dos opciones m&aacute;s utilizadas son crear un &uacute;nico fichero de mapeo en el que se definen todos los mapeos de todas las clases o separar en tantos ficheros de mapeo como clases se definan en la aplicaci&oacute;n. En este &uacute;ltimo caso se suele nombrar los ficheros de mapeo con el nombre de la clase y la extensi&oacute;n <span class="codefrag">.hbm.xml</span> (por ejemplo: <span class="codefrag">Autor.hbm.xml</span>). </p>
+</div>
+
+
+<a name="N100BD"></a><a name="Mapeo+de+entidades"></a>
+<h2 class="underlined_10">Mapeo de entidades</h2>
+<div class="section">
+<p>El concepto de <em>entidad</em> en Hibernate es el mismo que en JPA: una entidad existe independientemente de las referencias que otros objetos mantienen hacia ella. Esto contrasta con el modelo usual de Java en el que los objetos no referenciados se eliminan con la recolecci&oacute;n de basura. Las entidades deben ser borradas y grabadas expl&iacute;citamente (excepto en el caso de que sea un borrado o un grabado en cascada desde una entidad padre a su hijo).</p>
+<p>En Hibernate el c&oacute;digo Java de las entidades es el mismo que el de JPA. Son clases Java con <em>setters</em> y <em>getters</em>, un identificador y un constructor vac&iacute;o.</p>
+<p>Las clases deben cumplir cuatro condiciones:</p>
+<ul>
+	
+<li>La clase debe tener un constructor sin argumento.</li>
+	
+<li>Un atributo debe hacer de identificador. Se recomienda que el este identificador sea de un tipo <em>nullable</em> (esto es, no primitivo).</li>
+	
+<li>Clases no finales. Todos los m&eacute;todos deben ser p&uacute;blicos y no finales, para que Hibernate pueda sobrecargarlos e implementar los <em>proxies</em> que permiten acceder de forma <em>lazy</em> a otras entidades.</li>
+	
+<li>Declarar m&eacute;todos de acceso para los atributos persistentes. Los m&eacute;todos pueden llamarse <span class="codefrag">getFoo</span>, <span class="codefrag">isFoo</span> y <span class="codefrag">setFoo</span> y no es necesario que sean p&uacute;blicos.</li>
+
+</ul>
+<p>Por ejemplo, la clase persistente <span class="codefrag">Autor</span> es la siguiente:</p>
+<pre class="code">public class Autor {
+   private String nombre;
+   private String correo;
+   private Integer edad;
+   private Set&lt;Mensaje&gt; mensajes = new HashSet&lt;Mensaje&gt;();
+
+   public Autor() {}
+   public String getNombre() {return nombre;}
+   public void setNombre(String nombre) {this.nombre = nombre;}
+   public String getCorreo() {return correo;}
+   public void setCorreo(String correo) {this.correo = correo;}
+   public Set&lt;Mensaje&gt; getMensajes() {return mensajes;}
+   public void setMensajes(Set&lt;Mensaje&gt; mensajes) {
+      this.mensajes = mensajes;}
+}</pre>
+<pre class="code">package entity;
+
+import java.util.Date;
+
+public class Mensaje {
+   private long id;
+   private String texto;
+   private Date creado;
+   Autor autor;
+
+   public Mensaje() {}
+   public long getId() {return id;}
+   public void setId(long id) {this.id = id;}
+   public String getTexto() {return texto;}
+   public void setTexto(String texto) {this.texto = texto;}
+   public Autor getAutor() {return autor;}
+   public void setAutor(Autor autor) {this.autor = autor;}
+   public Date getCreado() {return creado;}
+   public void setCreado(Date creado) {this.creado = creado;}
+}</pre>
+<p>Vemos que se cumplen todas las condiciones. La clase tiene un constructor vac&iacute;o. El atributo <span class="codefrag">nombre</span> hace de identificador. Los m&eacute;todos no son finales. Y los m&eacute;todos de los atributos que van a ser persistentes (todos) son del tipo <span class="codefrag">get</span> y <span class="codefrag">set</span>.</p>
+<p>El fichero de mapeo es</p>
+<pre class="code">&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"&gt;
+
+&lt;hibernate-mapping&gt;
+   &lt;class name="entity.Autor" table="Autor"&gt;
+      &lt;id name="nombre" type="string" column="nombre"/&gt;   
+         &lt;property name="correo" type="string" column="correo"/&gt;
+         &lt;property name="edad" type="integer" column="edad"/&gt;
+         &lt;set name="mensajes" inverse="true"&gt;
+            &lt;key column="autor_nombre"/&gt;
+               &lt;one-to-many class="entity.Mensaje"/&gt;
+         &lt;/set&gt;
+   &lt;/class&gt;
+
+   &lt;class name="entity.Mensaje" table="Mensaje"&gt;
+      &lt;id name="id" column="id"&gt;   
+         &lt;generator class="native"/&gt;
+      &lt;/id&gt;
+      &lt;property name="texto" type="string" column="texto" not-null="true"/&gt;
+      &lt;property name="creado" type="date" column="creado"/&gt;
+      &lt;many-to-one name="autor"
+         column="autor_nombre"
+         class="entity.Autor"
+         not-null="true"/&gt;
+    &lt;/class&gt;
+&lt;/hibernate-mapping&gt;</pre>
+<p>M&aacute;s adelante explicaremos con m&aacute;s detalle el mapeo de las relaciones entre entidades.</p>
+<a name="N1011A"></a><a name="Tipos+de+valores"></a>
+<h3 class="underlined_5">Tipos de valores</h3>
+<p>Una entidad Java puede estar compuesta de valores primitivos, componentes o referencias a otras entidades (en forma de relaciones).</p>
+<p>En la aplicaci&oacute;n Java, todos estos elementos son tipos y objetos Java. El trabajo de Hibernate es mapearlos a tipos de la base de datos relacional. Para ello, se definen los siguientes mapeos b&aacute;sicos de Hibernate:</p>
+<ul>
+	
+<li>
+<span class="codefrag">integer</span>,<span class="codefrag">long</span>,<span class="codefrag">short</span>,<span class="codefrag">float</span>,<span class="codefrag">double</span>,<span class="codefrag">character</span>,<span class="codefrag">byte</span>,<span class="codefrag">boolean</span>,<span class="codefrag">yes_no</span>,<span class="codefrag">true_false</span>: estos mapeos transforman los tipos b&aacute;sicos de Java (y sus clases wrappers) en los tipos SQL apropiados (dependientes del vendedor). Los mapeos <span class="codefrag">boolean</span>, <span class="codefrag">yes_no</span> y <span class="codefrag">true_false</span> son distintos nombres para booleanos.</li>
+	
+<li>
+<span class="codefrag">string</span>: mapeo de <span class="codefrag">java.lang.String</span> a <span class="codefrag">VARCHAR</span> (o <span class="codefrag">VARCHAR2</span> de Oracle).</li>
+	
+<li>
+<span class="codefrag">date</span>,<span class="codefrag">time</span>,<span class="codefrag">timestamp</span>: mapeo de la clase <span class="codefrag">java.util.Date</span> y sus subclases a los tipos SQL <span class="codefrag">DATE</span>,<span class="codefrag">TIME</span> y <span class="codefrag">TIMESTAMP</span> (o equivalentes).</li>
+	
+<li>
+<span class="codefrag">calendar</span>,<span class="codefrag">calendar_date</span>: mapeo de <span class="codefrag">java.util.Calendar</span> a los tipos SQL <span class="codefrag">TIMESTAMP</span> y <span class="codefrag">DATE</span> (o equivalentes).</li>
+	
+<li>
+<span class="codefrag">locale</span>,<span class="codefrag">timezone</span>,<span class="codefrag">currency</span>: mapeo de <span class="codefrag">java.util.Locale</span>,<span class="codefrag">java.util.Timezone</span> y <span class="codefrag">java.util.Currency</span> a <span class="codefrag">VARCHAR</span> (o <span class="codefrag">VARCHAR2</span> de Oracle). Las instancias de <span class="codefrag">Locale</span> y <span class="codefrag">Currency</span> se mapean a sus c&oacute;digos ISO. Las instancias de <span class="codefrag">TimeZone</span> se mapean a su ID.</li>
+	
+<li>
+<span class="codefrag">binary</span>: mapeo de array de bytes al tipo binario SQL apropiado.</li>
+	
+<li>
+<span class="codefrag">text</span>: mapeo de cadenas largas de Java al tipo SQL <span class="codefrag">TEXT</span> o <span class="codefrag">CLOB</span>.</li>
+	
+<li>
+<span class="codefrag">serializable</span>: mapeo de un tipo Java serializable a un tipo binario SQL.</li>
+
+</ul>
+<a name="N101C1"></a><a name="M%C3%A9todos+equals+y+hashMap"></a>
+<h3 class="underlined_5">M&eacute;todos equals y hashMap</h3>
+<p>Una caracter&iacute;stica importante de las clases persistentes es que debemos definir los m&eacute;todos <span class="codefrag">equals</span> y <span class="codefrag">hashCode</span> para que funcione correctamente la comprobaci&oacute;n de igualdad entre dos entidades y el contrato con la clase <span class="codefrag">Set</span> en las entidades desconcectadas.</p>
+<p>Por defecto, Java define la igualdad <span class="codefrag">equals</span> entre dos objetos como igualdad de referencia. Dos variables son iguales en t&eacute;rminos <span class="codefrag">equals</span> si apuntan al mismo objeto. Sin embargo, cuando estamos tratando con objetos que contienen datos en sus atributos, la mayor&iacute;a de las veces nos interesa interpretar como iguales a objetos que tienen el mismo contenido.</p>
+<p>Cuando los objetos se encuentran en la misma sesi&oacute;n de Hibernate y est&aacute;n gestionados, las instancias que se refieren a un mismo registro no se duplican, y la comparaci&oacute;n con el <span class="codefrag">==</span> es correcta. Por ejemplo:</p>
+<pre class="code">Autor autor1 = (Autor) session.get(Autor.class, autorStr);
+Autor autor2 = (Autor) session.get(Autor.class, autorStr);
+if (autor1 == autor2) {
+   System.out.println("Iguales en referencia");
+} 
+if (autor1.equals(autor2) {
+   System.out.println("Iguales en contenido");
+}</pre>
+<p>Sin embargo, si en alg&uacute;n momento vamos a desconectar las entidades es muy recomendable sobrecargar <span class="codefrag">equals</span> para que se realice la comparaci&oacute;n mediante el contenido de los objetos. Por ejemplo: </p>
+<pre class="code">Collection&lt;Mensaje&gt; mensajes = Collection&lt;Mensaje&gt; autorEAO.allMensajesAutor(autor);
+Mensaje mejorMensaje = mensajeEAO.findMejorMensaje();
+if (mensajes.contains(mejorMensaje)) {
+    autor.setMejor(true);
+    ...
+}</pre>
+<p>La soluci&oacute;n recomendada por Hibernate es implementar <span class="codefrag">equals</span> en terminos de una <em>clave de negocio</em> (<em>business key</em>) que identifica de forma un&iacute;voca el objeto. Por ejemplo, en el caso del <span class="codefrag">Autor</span> ser&iacute;a el <span class="codefrag">nombre</span> (se deber&iacute;a llamar <span class="codefrag">login</span>), un identificador &uacute;nico. En el caso en que el identificador sea autogenerado por Hibernate, deber&iacute;amos obtener otro propio del objeto, ya que el identificador autogenerado s&oacute;lo se crea en el momento de hacer persistente el objeto. &iquest;Qu&eacute; suceder&iacute;a si queremos comprar un objeto antes de insertarlo en un registro de la tabla? Por ello es necesario definir el m&eacute;todo <span class="codefrag">equals</span> de forma que se utilicen s&oacute;lo atributos del objeto.</p>
+<p>Ejemplo:</p>
+<pre class="code">public class Cat {
+    ...
+    public boolean equals(Object other) {
+       if (this == other) return true;
+       if ( !(other instanceof Cat) ) return false;
+       final Cat cat = (Cat) other;
+       if ( !cat.getId().equals( getId() ) ) return false;
+       if ( !cat.getMother().equals( getMother() ) ) return false;
+	       return true;
+    }
+
+    public int hashCode() {
+       int result;
+       result = getMother().hashCode();
+       result = 29 * result + getLitterId();
+       return result;
+    }
+}</pre>
+<p>La &uacute;nica condici&oacute;n para la implementaci&oacute;n de <span class="codefrag">hashCode</span> es que dos objetos deben devolver el mismo <em>hashCode</em> cuando <span class="codefrag">equals()</span> devuelve <span class="codefrag">true</span>.</p>
+<a name="N1021F"></a><a name="Componentes"></a>
+<h3 class="underlined_5">Componentes</h3>
+<p>En una entidad pueden existir atributos que son de clases definidas por el programador, pero que no se mapean en entidades. Queremos que estos atributos se mapeen directamente en columnas de la tabla. En JPA ten&iacute;amos la anotaci&oacute;n <span class="codefrag">@embedded</span>, en Hibernate tenemos el elemento <span class="codefrag">component</span>.</p>
+<p>Veamos el siguiente ejemplo. Definimos una clase <span class="codefrag">Persona</span> en la que uno de los atributos de tipo <span class="codefrag">Nombre</span>. A su vez, la clase <span class="codefrag">Nombre</span> est&aacute; formada por tres atributos de tipo <span class="codefrag">String</span>. No queremos que los objetos de tipo <span class="codefrag">Nombre</span> sean entidades (no queremos que un nombre pueda estar relacionado con m&aacute;s de una persona), sino que representen valores primitivos que se guardan en la base de datos, como un conjunto de columnas.</p>
+<pre class="code">public class Persona {
+   private String key; 
+   private java.util.Date cumpleanyos; 
+   private Nombre nombre; 
+
+   public Persona() {}
+
+   private void setKey(String key) { 
+      this.key=key; 
+   } 
+   public String getKey() { 
+      return key; 
+   } 
+   public java.util.Date getCumpleanyos() { 
+      return cumpleanyos; 
+   } 
+   public void setCumpleanyosy(java.util.Date cumpleanyos) { 
+      this.cumpleanyos = cumpleanyos; 
+   } 
+   public Nombre getNombre() { 
+      return nombre; 
+   } 
+   public void setName(Nombre nombre) { 
+      this.nombre = nombre; 
+   } 
+}</pre>
+<pre class="code">public class Nombre { 
+   String nombre; 
+   String primerApellido; 
+   String segundoApellido; 
+    
+   public String getPrimerApellido() { 
+      return primerApellido; 
+   } 
+   void setPrimerApellido(String apellido) { 
+      this.primerApellido = apellido; 
+   } 
+   public String getSegundoApellido() { 
+      return segundoApellido; 
+   } 
+   void setLast(String segundoApellido) { 
+      this.segundoApellido = segundoApellido; 
+   } 
+   public String getNombre() { 
+      return nombre; 
+   } 
+   void setInitial(String nombre) { 
+      this.nombre = nombre; 
+   } 
+}</pre>
+<p>Para guardar los atributos de los <span class="codefrag">Nombre</span> embebidos en la tabla <span class="codefrag">Persona</span>, Hibernate utiliza el elemento <span class="codefrag">component</span> en la descripci&oacute;n del mapeo.</p>
+<pre class="code">&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"&gt;
+
+&lt;hibernate-mapping&gt;
+   &lt;class name="entity.Persona" table="Persona"&gt;
+   &lt;id name="Key" column="pid" type="string"&gt; 
+      &lt;generator class="uuid"/&gt; 
+   &lt;/id&gt; 
+   &lt;property name="cumpleanyos" type="date"/&gt; 
+   &lt;component name="Nombre" class="entity.Nombre"&gt; 
+      &lt;property name="nombre"/&gt; 
+      &lt;property name="primerApellido"/&gt; 
+      &lt;property name="segundoApellido"/&gt; 
+   &lt;/component&gt; 
+   &lt;/class&gt;
+&lt;/hibernate-mapping&gt;</pre>
+<p>De esta forma, se la tabla <span class="codefrag">Persona</span> se define con los campos correspondientes a los atributos de la clase <span class="codefrag">Nombre</span>. Cuando se lee un registro de la tabla, se crea un objeto de clase <span class="codefrag">Nombre</span> y se guarda una referencia a &eacute;l en el nuevo objeto de tipo <span class="codefrag">Persona</span>.</p>
+</div>
+
+
+<a name="N10269"></a><a name="Mapeo+de+relaciones"></a>
+<h2 class="underlined_10">Mapeo de relaciones</h2>
+<div class="section">
+<p>Vamos a presentar dos ejemplos para comprobar c&oacute;mo se realiza el mapeo de relaciones en Hibernate: el ejemplo cl&aacute;sico de relaci&oacute;n uno-a-muchos y la relaci&oacute;n muchos-a-muchos.</p>
+<p>B&aacute;sicamente existen dos formas de mapear una relaci&oacute;n entre dos entidades. La primera es utilizando una clave ajena en una de las tablas que referencia a la clave primaria de la otra tabla. La segunda es utilizando una <em>tabla join</em> con claves ajenas a las claves primarias de ambas tablas. Dependiendo del tipo de relaci&oacute;n definida se usa una estrategia u otra. Por ejemplo, para definir una relaci&oacute;n uno-a-muchos bidireccional se usa una clave ajena, mientras que una relaci&oacute;n muchos-a-muchos bidireccional se implementa con una tabla join. Para conocer todas las posibles combinaciones y formas de construir relaciones, es aconsejable consultar el <a href="http://www.hibernate.org/hib_docs/v3/reference/en-US/pdf/hibernate_reference.pdf">manual de referencia de Hibernate</a>.</p>
+<a name="N1027C"></a><a name="Relaci%C3%B3n+uno-a-muchos"></a>
+<h3 class="underlined_5">Relaci&oacute;n uno-a-muchos</h3>
+<p>Veamos por el caso m&aacute;s sencillo, una relaci&oacute;n uno-a-muchos bidireccional de tipo padre-hijo. Es la relaci&oacute;n que definimos en el ejemplo entre un autor y los mensajes que ha escrito. En una relaci&oacute;n padre-hijo la entidad padre tiene una referencia a una colecci&oacute;n de entidades que, conceptualmente, forman parte de &eacute;l. Por ejemplo, es la relaci&oacute;n que se podr&iacute;a definir entre un producto y sus partes o entre una factura y sus art&iacute;culos. Las relaciones de este tipo se definen en cascada y si se borra o graba el padre tambi&eacute;n se deben borrar los hijos asociados.</p>
+<p>Vamos a utilizar el ejemplo de la relaci&oacute;n entre <span class="codefrag">Autor</span> y <span class="codefrag">Mensaje</span>. En la entidad <span class="codefrag">Autor</span> debemos definir un atributo que sea una colecci&oacute;n de objetos <span class="codefrag">Mensaje</span>. Esta colecci&oacute;n puede ser cualquiera de las interfaces del framework de colecciones Java: <span class="codefrag">Set</span>, <span class="codefrag">Collection</span>, <span class="codefrag">List</span>, <span class="codefrag">Map</span> o <span class="codefrag">Map</span>. Escogeremos una u otra dependiendo del tipo de colecci&oacute;n Java que necesitemos utilizar en la aplicaci&oacute;n. Hibernate puede mapear cualquiera de estos tipos. Si queremos que la relaci&oacute;n sea bidireccional en <span class="codefrag">Mesaje</span> debemos definir un atributo en el que se guardar&aacute; el <span class="codefrag">Autor</span> con el que cada mensaje est&aacute; relacionado.</p>
+<p>El siguiente fichero de mapeo muestra c&oacute;mo se define la relaci&oacute;n:</p>
+<pre class="code">&lt;hibernate-mapping&gt;
+   &lt;class name="Autor"&gt;
+      &lt;id name="autorId"&gt;
+	     &lt;generator class="sequence"/&gt;
+      &lt;/id&gt;
+      &lt;property name="nombre" type="string"/&gt;
+
+      &lt;set name="mensajes"&gt;
+	     &lt;key column="autorId"/&gt;
+	     &lt;one-to-many class="Mensaje"/&gt;
+	  &lt;/set&gt;
+
+   &lt;/class&gt;
+
+   &lt;class name="Mensaje"&gt;
+   &lt;id name="mensajeId" column="mensajeId"&gt;   
+      &lt;generator class="sequence"/&gt;
+   &lt;/id&gt;
+   &lt;property name="texto" type="string"/&gt;
+
+   &lt;many-to-one name="autor"
+      column="autorId"
+      class="Autor"
+      not-null="true"/&gt;
+
+   &lt;/class&gt;
+&lt;/hibernate-mapping&gt;</pre>
+<p>Esto se mapea con las siguiente definiciones SQL de tablas:</p>
+<pre class="code">create table autor (autorId bigint not null primary key,
+nombre varchar(255))
+create table mensaje (mensajeId bigint not null primary key, 
+texto varchar(255), autorId bigint ) 
+alter table mensaje add constraint mensajefk0 (autorId) references autor 
+</pre>
+<p>Es muy importante recordar que cuando se define una relaci&oacute;n bidireccional, hay que marcar uno de los lados con la etiqueta <em>inverse</em>. B&aacute;sicamente, esto le dice a Hibernate que no ignore esa relaci&oacute;n y que la obtenga a partir de su relaci&oacute;n <em>espejo</em> en el otro lado. Cuando actualicemos una relaci&oacute;n bidireccional, hay que asegurarse de actualizar siempre el lado no inverso. Aunque una recomendaci&oacute;n mejor es actualizar siempre ambos lados de la relaci&oacute;n (evitamos errores y mantenemos consistente la relaci&oacute;n en memoria por si no se hace un <em>flush</em>).</p>
+<p>Vemos que es una t&iacute;pica relaci&oacute;n definida por una clave ajena de <span class="codefrag">mensaje</span> a <span class="codefrag">autor</span>.</p>
+<p>Si queremos hacer la relaci&oacute;n bidireccional debemos a&ntilde;adir al mensaje el atributo que apunta a su autor. En el fichero de mapeo declaramos que este atributo se corresponde a una relaci&oacute;n muchos-a-uno (la inversa de la definida en autor) y en el mapeo de autor debemos indicar que se ha definido la relaci&oacute;n bidireccional poniendo el elemento <span class="codefrag">inverse</span> a <span class="codefrag">true</span>. Tambi&eacute;n ponemos el elemento <span class="codefrag">not-null</span> de <span class="codefrag">mensaje</span> a <span class="codefrag">true</span> para indicar que no puede haber mensajes sin autores.</p>
+<pre class="code">&lt;hibernate-mapping&gt;
+   &lt;class name="Autor"&gt;
+      &lt;id name="autorId"&gt;
+	     &lt;generator class="native"/&gt;
+      &lt;/id&gt;
+      &lt;property name="nombre" type="string"/&gt;
+
+      &lt;set name="mensajes"&gt;
+	     &lt;key column="autorId" inverse="true"/&gt;
+	     &lt;one-to-many class="Mensaje"/&gt;
+	  &lt;/set&gt;
+
+   &lt;/class&gt;
+
+   &lt;class name="Mensaje"&gt;
+   &lt;id name="id" column="id"&gt;   
+      &lt;generator class="native"/&gt;
+   &lt;/id&gt;
+   &lt;property name="texto" type="string"/&gt;
+
+   &lt;many-to-one name="autor"
+      column="autorId"
+      class="Autor"
+      not-null="true"/&gt;
+
+   &lt;/class&gt;
+&lt;/hibernate-mapping&gt;</pre>
+<p>La definici&oacute;n de clases anteriores genera las siguientes tablas:</p>
+<pre class="code">create table parent ( id bigint not null primary key ) 
+create table child ( id bigint not null 
+                     primary key, 
+                     name varchar(255), 
+                     parent_id bigint not null ) 
+alter table child add constraint childfk0 (parent_id) references 
+ parent 
+</pre>
+<p>Al igual que en JPA, para hacer persistente esta relaci&oacute;n hay que actualizar el campo <span class="codefrag"></span>
+</p>
+<p>Un ejemplo de c&oacute;mo a&ntilde;adir objetos a la relaci&oacute;n:</p>
+<pre class="code">Cat cat = new DomesticCat(); 
+Cat kitten = new DomesticCat(); 
+.... 
+Set kittens = new HashSet(); 
+kittens.add(kitten); 
+cat.setKittens(kittens); 
+session.persist(cat); 
+kittens = cat.getKittens(); // Okay, kittens collection is a Set 
+(HashSet) cat.getKittens(); // Error!
+</pre>
+<a name="N102F5"></a><a name="Relaci%C3%B3n+muchos-a-muchos"></a>
+<h3 class="underlined_5">Relaci&oacute;n muchos-a-muchos</h3>
+<p>Por otro lado, si un mensaje puede tener m&aacute;s de un autor debemos definir una relaci&oacute;n muchos-a-muchos. Supongamos que la relaci&oacute;n es unidireccional y que en la definici&oacute;n de clases un <span class="codefrag">Autor</span> tiene una colecci&oacute;n de mensajes escritos y que m&aacute;s de un autor puede haber sido autor del mismo mensaje. Debemos definir la relaci&oacute;n como <span class="codefrag">many-to-many</span> en el lado del autor y utilizar una tabla m&aacute;s en el modelo relacional. Se trata de la tabla <span class="codefrag">autor-mensaje</span> que define la relaci&oacute;n muchos-a-muchos relacionando las parejas de <span class="codefrag">autor</span> y <span class="codefrag">mensaje</span>
+</p>
+<pre class="code">&lt;hibernate-mapping&gt; 
+   &lt;class name="Autor"&gt; 
+      &lt;id name="autorId"&gt;
+	     &lt;generator class="native"/&gt;
+      &lt;/id&gt;
+      &lt;property name="nombre" type="string"/&gt;
+
+      &lt;set name="mensajes" table="autor-mensaje"&gt; 
+      &lt;key column="autorId"/&gt; 
+         &lt;many-to-many class="mensaje" column="mensajeId"/&gt; 
+      &lt;/set&gt; 
+   &lt;/class&gt; 
+
+   &lt;class name="Mensaje"&gt; 
+      &lt;id name="mensajeId"&gt; 
+         &lt;generator class="sequence"/&gt; 
+      &lt;/id&gt; 
+      &lt;property name="texto"/&gt; 
+   &lt;/class&gt; 
+&lt;/hibernate-mapping&gt; 
+</pre>
+<p>Las definiciones de tablas generadas son:</p>
+<pre class="code">create table autor (autorId bigint not null primary key,
+   nombre varchar(255))
+create table mensaje (mensajeId bigint not null primary key, 
+   texto varchar(255))
+create table autor-nombre (autorId bigint not null, 
+   mensajeId bigint not null, 
+   primary key (autorId, mensajeId))</pre>
+</div>
+
+
+<a name="N10319"></a><a name="Relaciones+de+herencia"></a>
+<h2 class="underlined_10">Relaciones de herencia</h2>
+<div class="section">
+<p>Al igual que JPA, Hibernate permite tres estrategias para implementar el mapeo de las relaciones de herencia:</p>
+<ul>
+	
+<li>Tabla &uacute;nica por jerarqu&iacute;a de clases</li>
+	
+<li>Tabla por subclase</li>
+	
+<li>Tabla por clase concreta</li>
+
+</ul>
+<p>Veamos un ejemplo de la primera opci&oacute;n, la m&aacute;s com&uacute;n. Supongamos la misma jerarqu&iacute;a de clases que vimos en JPA.</p>
+<p>La entidad <span class="codefrag">EmpleadoContratado</span> extiende la clase <span class="codefrag">Empleado</span>, a&ntilde;adiendo el atributo <span class="codefrag">planPensiones</span>:</p>
+<pre class="code">public class EmpleadoContratado extends Empleado {
+   private Long planPensiones;
+
+   public Long getPlanPensiones() {
+      return planPensiones;
+   }
+
+   public void setPlanPensiones(Long planPensiones) {
+      this.planPensiones = planPensiones;
+   }
+}</pre>
+<p>La entidad <span class="codefrag">EmpleadoBecario</span> extiende la clase <span class="codefrag">Empleado</span>, a&ntilde;adiendo el atributo <span class="codefrag">seguroMedico</span>:</p>
+<pre class="code">public class EmpleadoBecario extends Empleado {
+   private Long seguroMedico;
+
+   public Long getSeguroMedico() {
+      return seguroMedico;
+   }
+
+   public void setSeguroMedico(Long seguroMedico) {
+      this.seguroMedico = seguroMedico;
+   }
+}</pre>
+<p>Para definir el mapeo, al igual que en JPA, hay que indicar la tabla que va a contener toda la jerarqu&iacute;a, la columna y los valores discriminantes. Un elemento <span class="codefrag">class</span> define toda la jerarqu&iacute;a:</p>
+<pre class="code">&lt;class name="Empleado" table="EMPLEADO"&gt;
+    &lt;id name="empleadoId" type="long" column="EMPLEADO_ID"&gt;
+        &lt;generator class="native"/&gt;
+    &lt;/id&gt;
+    &lt;discriminator column="TIPO" type="string"/&gt;
+    &lt;property name="nombre" type="string" column="NOMBRE"/&gt;
+    ...
+    &lt;subclass name="EmpleadoContratado" discriminator-value="contrato"&gt;
+        &lt;property name="planPensiones" type="long" column="PLAN_PENSIONES"/&gt;
+    &lt;/subclass&gt;
+    &lt;subclass name="EmpleadoBecario" discriminator-value="beca"&gt;
+        &lt;property name="seguroMedico" type="long" column="SEGURO_MEDICO"/&gt;
+    &lt;/subclass&gt;
+&lt;/class&gt;</pre>
+</div>
+
+
+
+<a name="N1035C"></a><a name="Arquitectura+de+Hibernate"></a>
+<h2 class="underlined_10">Arquitectura de Hibernate</h2>
+<div class="section">
+<p>La arquitectura de Hibernate es id&eacute;ntica a la de JPA, cambiando los nombres de los elementos:</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/arquitectura-hibernate.png" width="500"></p>
+<p>El ciclo de vida de una entidad es el mismo que en JPA, cambiando los nombres de los m&eacute;todos:</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/hibernate-jpa.jpg" width="500"></p>
+</div>
+
+
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007-2008 Depto. CCIA</div>
+</div>
+</body>
+</html>

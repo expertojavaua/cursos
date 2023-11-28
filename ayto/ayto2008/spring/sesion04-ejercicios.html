@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Ejercicios de Acceso Remoto</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Spring" src="images/baner_j2ee_der.gif" title="Spring"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-web.html'">Aplicaciones Web</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-ent.html'">Aplicaciones Enterprise</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../charlas.html'">Charlas</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto</a>
+</li>
+<li>
+<a class="base-not-selected" href="index.html">Spring</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion04-ejercicios.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Ejercicios de Acceso Remoto</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Acceso+remoto+con+HttpInvoker">Acceso remoto con HttpInvoker</a>
+</li>
+<li>
+<a href="#Eficiencia+en+el+acceso+remoto">Eficiencia en el acceso remoto</a>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="Acceso+remoto+con+HttpInvoker"></a>
+<h2 class="underlined_10">Acceso remoto con HttpInvoker</h2>
+<div class="section">
+<p>Vamos a acceder a la b&uacute;squeda de usuarios de manera remota. Para ello creamos un interfaz
+con la operaci&oacute;n accesible desde el exterior</p>
+<pre class="code">
+package es.ua.jtech.amigosSpring.negocio;
+
+import java.util.List;
+
+import es.ua.jtech.amigosSpring.AmigosSpringException;
+import es.ua.jtech.amigosSpring.modelo.Sexo;
+import es.ua.jtech.amigosSpring.modelo.UsuarioTO;
+
+public interface IGestorUsuariosRemoto {
+    public List&lt;UsuarioTO&gt; buscar(String localidad, int edadMin, int edadMax,
+            Sexo sexo) throws AmigosSpringException;
+
+}
+</pre>
+<p>Por supuesto, habr&aacute; que hacer que la clase <span class="codefrag">GestorUsuarios</span> implemente
+este nuevo interfaz.</p>
+<div class="frame warning">
+<div class="label">Aviso</div>
+<div class="content">En <span class="codefrag">UsuarioDAO</span> hay un "agujero de seguridad" porque en el m&eacute;todo
+<span class="codefrag">crearUsuarioTO</span> se rellena tambi&eacute;n el password del usuario. Evidentemente
+esto es un problema si vamos a permitir el acceso remoto al usuario. Quitar la l&iacute;nea
+192 de <span class="codefrag">UsuarioDAO</span>.</div>
+</div>
+<p>
+<strong>Seguir los pasos necesarios para hacer accesible remotamente el interfaz mediante HttpInvoker:</strong>
+</p>
+<ol>
+
+<li>Crear la clase y el interfaz anteriores en su paquete.</li>
+
+<li>Convertir los Transfer Object en serializables, porque deben viajar por la red. Bastar&aacute; con "Sexo"
+y "UsuarioTO"</li>
+
+<li>Mapear el servlet "Dispatcher" tambi&eacute;n con las URL de tipo "/remoting"</li>
+
+<li>En el "dispatcher-servlet.xml", configurar el bean necesario para la parte del servidor. Una vez
+creado, pod&eacute;is comprobar que est&aacute; inicializado intentando acceder a trav&eacute;s de un navegador a su URL.
+No funcionar&aacute;, ya que el HttpInvoker no devuelve HTML, pero al menos mostrar&aacute; una excepci&oacute;n Java de tipo EOFException,
+y sabremos "que est&aacute; ah&iacute;"</li>
+
+<li>Crear un proyecto de tipo Aplicaci&oacute;n Java (de consola) para implementar el cliente. Necesitaremos a&ntilde;adir a este proyecto:
+<ul>
+
+<li> las librer&iacute;as
+de Spring 2.5 y la "commons-logging" de Apache (copiadlas del proyecto AmigosSpring)</li>
+
+<li>
+<a href="material/commons-httpclient.jar">Commons HTTPClient</a> y 
+<a href="material/commons-codec.jar">commons-codec</a> para el cliente HTTP</li>
+
+<li>Adem&aacute;s las clases referenciadas: el interfaz IGestorUsuariosRemoto y las clases
+dependientes (UsuarioTO, Sexo y AmigosSpringException)</li>
+
+</ul>
+
+</li>
+
+<li>La clase Main del proyecto cliente debe cargar el XML con el bean necesario para comunicarse desde este
+lado y acceder&aacute; a los datos de un usuario, imprimi&eacute;ndolos por la salida est&aacute;ndar.</li>
+
+</ol>
+</div>
+
+<a name="N10058"></a><a name="Eficiencia+en+el+acceso+remoto"></a>
+<h2 class="underlined_10">Eficiencia en el acceso remoto</h2>
+<div class="section">
+<p>Hacer accesible el "IGestorUsuariosRemoto" tambi&eacute;n mediante RMI y comparar la eficiencia de este m&eacute;todo
+contra la de HttpInvoker haciendo 10000 veces de manera remota la misma b&uacute;squeda.</p>
+</div>
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2006-2007 Depto. CCIA</div>
+</div>
+</body>
+</html>

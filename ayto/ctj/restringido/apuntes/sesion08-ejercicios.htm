@@ -1,0 +1,134 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Ejercicios sesión 8: Java para MIDs</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2>Ejercicios de Java para MIDs</h2>
+             
+<p><strong>8.1.</strong> Vamos a hacer nuestra primera aplicaci&oacute;n <em>&quot;Hola 
+  mundo&quot;</em> en J2ME. Para ello debemos:</p>
+<p><em>a)</em> Abrir el proyecto <code>PruebaAplicacion</code> creado en la sesi&oacute;n 
+  anterior con WTK. Si no lo tuviesemos creado, crear el proyecto, cuyo MIDlet 
+  principal ser&aacute; <code>es.ua.jtech.ctj.sesion8.prueba.MIDletPrueba</code>. </p>
+<p><em>b)</em> Una vez creado abriremos el proyecto desde Eclipse, crearemos la 
+  clase del MIDlet principal, e introduciremos en ella el siguiente c&oacute;digo:</p>
+<pre class="codigo">package es.ua.jtech.ctj.sesion8.prueba;<br><br>import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;<br><br>public class MIDletPrueba extends MIDlet {<br><br>    protected void startApp() throws MIDletStateChangeException {
+        Form f = new Form(&quot;Hola mundo&quot;);
+        Display d = Display.getDisplay(this);
+        d.setCurrent(f);
+    }<br><br>    protected void pauseApp() {
+    }<br><br>    protected void destroyApp(boolean incondicional) <br>        throws MIDletStateChangeException    {
+    }
+}</pre>
+<p><em>c)</em> Guardar el fichero y desde WTK compilar y ejecutar la aplicaci&oacute;n 
+  en emuladores, comprobando que funciona correctamente.</p>
+<p><em>d) </em>Modificar el ejemplo para hacerlo parametrizable. Ahora en lugar 
+  de mostrar siempre el mensaje <em>&quot;Hola mundo&quot;</em>, tomaremos el 
+  mensaje a mostrar del par&aacute;metro <code>msg.bienvenida</code>. Crear este 
+  par&aacute;metro dentro del fichero JAD, y leerlo dentro del MIDlet para mostrarlo 
+  como t&iacute;tulo del formulario.</p>
+<p><strong>8.2.</strong> Vamos a a&ntilde;adir recursos a nuestra aplicaci&oacute;n. 
+  Mostraremos una imagen en la pantalla, introduciendo el siguiente c&oacute;digo 
+  en el m&eacute;todo <code>startApp</code> de nuestro MIDlet:</p>
+<pre class="codigo">protected void startApp() throws MIDletStateChangeException {
+    Form f = new Form(&quot;Hola mundo&quot;);
+    try {
+        f.append(Image.createImage(&quot;/logo.png&quot;));
+    } catch(Exception e) {}
+   
+    Display d = Display.getDisplay(this);
+    d.setCurrent(f);
+}</pre>
+<p>Para poder mostrar esta imagen deberemos a&ntilde;adirla como recurso a la 
+  <em>suite</em>. A&ntilde;adir una imagen con nombre <code>logo.png</code> al 
+  directorio de recursos. Puedes encontrar esta imagen en el directorio <code>PruebaAplicacion/res</code> 
+  de las plantillas de la sesi&oacute;n.</p>
+<p>Compilar y ejecutar la aplicaci&oacute;n para comprobar que la imagen se muestra 
+  correctamente. Utilizar para ello tanto <code>Wireless Toolkit</code> como la herramienta 
+  <em>ant</em> desde Eclipse.</p>
+<p><strong>8.3.</strong> Ahora a&ntilde;adiremos sonido a la aplicaci&oacute;n. 
+  Para ello deberemos utilizar la API multimedia que es una API adicional. Deberemos:</p>
+<p><em>a)</em> Incorporar la librer&iacute;a MMAPI a nuestro proyecto en Eclipse. 
+</p>
+<p><em>b)</em> Una vez hecho esto podremos utilizar esta API multimedia en el 
+  editor de Eclipse sin que nos muestre errores en el c&oacute;digo. Modificaremos 
+  el c&oacute;digo del MIDlet de la siguiente forma:</p>
+<pre class="codigo">package es.ua.jtech.ctj.sesion8.prueba;<br><br>import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+<strong>import javax.microedition.media.*;</strong><br><br>public class MIDletPrueba extends MIDlet {<br><br>    protected void startApp() throws MIDletStateChangeException {
+        Form f = new Form(&quot;Hola mundo&quot;);
+        try {
+            f.append(Image.createImage(&quot;/logo.png&quot;));
+        } catch(Exception e) {}<br><br>        <strong>try {
+            Manager.playTone(80, 1000, 100);
+        } catch(MediaException e) {}</strong>
+   
+        Display d = Display.getDisplay(this);
+        d.setCurrent(f);
+    }<br><br>    protected void pauseApp() {
+    }<br><br>    protected void destroyApp(boolean incondicional)<br>        throws MIDletStateChangeException {
+    }
+}</pre>
+<p><em>c)</em> Guardar y compilar desde WTK. Comprobar que la aplicaci&oacute;n 
+  funciona correctamente.</p>
+<p> <strong>8.4. </strong>Vamos a incorporar un temporizador a una aplicaci&oacute;n. 
+  Lo &uacute;nico que haremos ser&aacute; mostrar un mensaje de texto en la consola 
+  cuando se dispare el temporizador, por lo que no ser&aacute; una aplicaci&oacute;n 
+  &uacute;til para visualizar en el m&oacute;vil.</p>
+<p><em>a)</em> En el directorio <code>Temporizador</code> de las plantillas de 
+  la sesi&oacute;n se encuentra implementado este temporizador. Compilarlo y ejecutarlo 
+  con WTK. </p>
+<p><em>b)</em> Modificar este temporizador para que en lugar de dispararse pasado 
+  cierto intervalo, se dispare a una hora fija.</p>
+<p><strong>8.5.</strong> Vamos a ver ahora como leer datos codificados de forma 
+  binaria. Tendremos entre los recursos de la aplicaci&oacute;n un fichero de 
+  datos donde &eacute;stos se encuentran almacenados de forma binaria con un formato 
+  dado. Vamos a ver c&oacute;mo leer este formato.</p>
+<p><em>a)</em> En el directorio <code>Serializacion</code> de las plantillas de 
+  la sesi&oacute;n tenemos una aplicaci&oacute;n que lee un fichero binario y 
+  muestra los datos le&iacute;dos en la consola. El fichero del que lee (<code>curso.dat</code>) 
+  almacena la informaci&oacute;n sobre un curso codificada de la siguiente forma:</p>
+<pre class="codigo">&lt;<strong>UTF</strong>&gt;Nombre
+&lt;<strong>UTF</strong>&gt;Departamento
+&lt;<strong>short</strong>&gt;N&uacute;mero de horas</pre>
+<p>En la aplicaci&oacute;n esta informaci&oacute;n se deserializa en el m&eacute;todo 
+  <code>deserialize</code> de la clase <code>Curso</code>. Este m&eacute;todo 
+  nos devolver&aacute; un objeto <code>Curso</code> con los datos le&iacute;dos 
+  del fichero.</p>
+<p>Compilar y probar la aplicaci&oacute;n con WTK. Nos dar&aacute; una salida 
+  como la siguiente:</p>
+<pre class="codigo">Nombre: Programacion de Dispositivos Moviles
+Departamento: DCCIA
+Horas: 24</pre>
+<p><em>b)</em> Vamos a hacer lo mismo, pero en este caso para leer datos de un 
+  alumno. En el fichero <code>alumno.dat</code> tenemos estos datos almacenados 
+  de la siguiente forma:</p>
+<pre class="codigo">&lt;<strong>UTF</strong>&gt;DNI
+&lt;<strong>UTF</strong>&gt;Nombre
+&lt;<strong>UTF</strong>&gt;Apellidos
+&lt;<strong>char</strong>&gt;Sexo
+&lt;<strong>short</strong>&gt;Edad
+&lt;<strong>UTF</strong>&gt;Tel&eacute;fono
+&lt;<strong>boolean</strong>&gt;Casado</pre>
+<p>Implementar un m&eacute;todo <code>deserialize</code> para la clase <code>Alumno</code>, 
+  que deserialice los datos almacenados en este formato y obtenga un objeto <code>Alumno</code> 
+  que los contenga.</p>
+<p>Deserializar este fichero desde nuestro MIDlet e imprimir el objeto <code>Alumno</code> 
+  resultante. En este caso deberemos obtener una salida como la siguiente:</p>
+<pre class="codigo">DNI: 48123456-A
+Nombre: Pedro
+Apellidos: Lopez
+Sexo: V
+Edad: 24
+Telefono: 965123456
+Soltero
+</pre>
+</body>
+</html>

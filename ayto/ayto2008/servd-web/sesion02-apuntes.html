@@ -1,0 +1,612 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Desarrollo de aplicaciones web con Eclipse Webtools y Ant</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servidores Web" src="images/baner_j2ee_der.gif" title="Servidores Web"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Servidores web</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Servidores Web</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Servidores Web">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 2</div>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html">Roadmap</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion02-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Desarrollo de aplicaciones web con Eclipse Webtools y Ant</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Desarrollo+y+despliegue+con+WebTools">Desarrollo y despliegue con WebTools</a>
+<ul class="minitoc">
+<li>
+<a href="#Gesti%C3%B3n+de+servidores+web+con+WebTools">Gesti&oacute;n de servidores web con WebTools</a>
+</li>
+<li>
+<a href="#Creaci%C3%B3n+y+desarrollo+de+una+aplicaci%C3%B3n+web+con+WebTools">Creaci&oacute;n y desarrollo de una aplicaci&oacute;n web con WebTools</a>
+</li>
+<li>
+<a href="#Despliegue+de+aplicaciones+web+con+WebTools">Despliegue de aplicaciones web con WebTools</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Desarrollo+de+aplicaciones+web+con+Ant">Desarrollo de aplicaciones web con Ant</a>
+<ul class="minitoc">
+<li>
+<a href="#Construcci%C3%B3n+de+la+aplicaci%C3%B3n">Construcci&oacute;n de la aplicaci&oacute;n</a>
+</li>
+<li>
+<a href="#Despliegue+de+la+aplicaci%C3%B3n">Despliegue de la aplicaci&oacute;n</a>
+<ul class="minitoc">
+<li>
+<a href="#Copiar+al+directorio+de+aplicaciones">Copiar al directorio de aplicaciones</a>
+</li>
+<li>
+<a href="#Tareas+de+Ant+para+despliegue">Tareas de Ant para despliegue</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Un+ejemplo+completo">Un ejemplo completo</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<a name="N1000C"></a><a name="Desarrollo+y+despliegue+con+WebTools"></a>
+<h2 class="underlined_10">Desarrollo y despliegue con WebTools</h2>
+<div class="section">
+<p>WebTools es un plugin ya integrado con Eclipse, que permite gestionar aplicaciones web como proyectos, teni&eacute;ndolo todo integrado y a mano para poder empaquetar, probar y desplegar la aplicaci&oacute;n de forma c&oacute;moda. Para ello, desde WebTools podremos, entre otras cosas:</p>
+<ul>
+		
+<li>Gestionar el servidor web sobre el que queremos desplegar y/o probar la aplicaci&oacute;n, pudiendo editar su configuraci&oacute;n, y pararlo y reanudarlo cuando lo necesitemos, desde el propio Eclipse</li>
+		
+<li>Crear y desarrollar las aplicaciones web que vayamos a desplegar. Para cada una, Eclipse nos organizar&aacute; los ficheros seg&uacute;n la estructura que digamos (carpeta de fuentes Java, carpeta WEB-INF, librer&iacute;as, etc)</li>
+		
+<li>Desplegar y testear las aplicaciones sobre el servidor tantas veces como queramos, manteniendo siempre el control sobre su ejecuci&oacute;n desde Eclipse</li>
+	
+</ul>
+<p>Para trabajar con este tipo de elementos, trabajaremos desde la perspectiva Java EE de Eclipse. Veremos c&oacute;mo realizar estas tareas a continuaci&oacute;n.</p>
+<a name="N10024"></a><a name="Gesti%C3%B3n+de+servidores+web+con+WebTools"></a>
+<h3 class="underlined_5">Gesti&oacute;n de servidores web con WebTools</h3>
+<p>Para dar de alta en Eclipse el servidor web sobre el que queremos trabajar, vamos a <em>Window - Show View - Servers</em>, para abrir la vista de Servidores, y despu&eacute;s, pinchando sobre ella con el bot&oacute;n derecho, vamos a <em>New - Server</em>. Podemos llegar igualmente desde el men&uacute; <em>Window - Preferences</em>, yendo a la opci&oacute;n <em>Server - Installed Runtimes</em>, y luego pulsando <em>Add</em> para a&ntilde;adir el nuevo servidor. Despu&eacute;s, en la ventana que aparece, simplemente rellenamos los datos del nombre del host (por defecto, <em>localhost</em>), y el tipo de servidor web que usamos.</p>
+<p>
+<img alt="Configuracion del servidor web en WebTools" content-width="10cm" height="519" src="imagenes/wtserver.jpg" width="513"></p>
+<p>Es posible, si no detecta la instalaci&oacute;n, que en un paso posterior nos pida que indiquemos el directorio de instalaci&oacute;n de dicho servidor.</p>
+<p>Despu&eacute;s, en la vista <em>Servers</em> ya tendremos a&ntilde;adido el nuevo servidor. Haciendo click con el bot&oacute;n derecho sobre &eacute;l, accedemos a las opciones para pararlo, reanudarlo, asociarle aplicaciones, etc</p>
+<p>
+<img alt="Gesti&oacute;n del servidor incorporado" content-width="6cm" height="354" src="imagenes/wtserver2.jpg" width="323"></p>
+<a name="N10059"></a><a name="Creaci%C3%B3n+y+desarrollo+de+una+aplicaci%C3%B3n+web+con+WebTools"></a>
+<h3 class="underlined_5">Creaci&oacute;n y desarrollo de una aplicaci&oacute;n web con WebTools</h3>
+<p>Para crear un proyecto de aplicaci&oacute;n web desde WebTools, vamos al men&uacute; <em>File - New - Project... - Web - Dynamic Web Project</em>
+</p>
+<p>
+<img alt="Creaci&oacute;n del proyecto web" content-width="12cm" height="513" src="imagenes/wtproyecto.jpg" width="613"></p>
+<p>En los siguientes pasos del asistente podemos elegir su configuraci&oacute;n, y las carpetas donde alojar contenido web y fuentes Java. La <strong>estructura de carpetas</strong> que mantendremos en nuestros proyectos web ser&aacute; la siguiente:</p>
+<ul>
+			
+<li>Carpeta <strong>src</strong>: carpeta de fuentes, con todas las clases Java y paquetes que hagamos para nuestra aplicaci&oacute;n (clases auxiliares, servlets, etc)</li>
+			
+<li>Carpeta <strong>resources</strong>: ser&aacute; una carpeta de fuentes, pero con todos los ficheros auxiliares (por ejemplo, ficheros <span class="codefrag">.properties</span>) que queramos tener disponibles en el CLASSPATH).</li>
+			
+<li>Carpeta <strong>test</strong>: otra carpeta de fuentes, con las clases de prueba (JUnit) para las clases que tengamos en <span class="codefrag">src</span>. Los nombres de paquetes que tengamos aqu&iacute; ser&aacute;n los mismos que los utilizados en <span class="codefrag">src</span>, y las clases de prueba se llamar&aacute;n igual que las originales, pero acabadas en <span class="codefrag">...Test</span>.</li>
+			
+<li>
+					Carpeta <strong>WebContent</strong>: con la estructura de la aplicaci&oacute;n web. En su carpeta ra&iacute;z podremos colocar las p&aacute;ginas HTML / JSP (organizadas en subcarpetas si queremos)
+					<ul>
+						
+<li>Subcarpeta <strong>WebContent/WEB-INF</strong>: con el fichero descriptor de la aplicaci&oacute;n (<span class="codefrag">web.xml</span>)</li>
+						
+<li>Subcarpeta <strong>WebContent/WEB-INF/lib</strong>: con las librer&iacute;as JAR que necesite nuestra aplicaci&oacute;n</li>
+						
+<li>Subcarpeta <strong>WebContent/WEB-INF/classes</strong>: inicialmente vac&iacute;a, en ella se copiar&aacute;n despu&eacute;s autom&aacute;ticamente los ficheros fuente de <span class="codefrag">src</span>
+</li>
+					
+</ul>
+			
+</li>
+			
+<li>Carpeta <strong>build</strong>: para dejar la aplicaci&oacute;n web integrada y lista para desplegarse, con los ficheros fuente ya copiados en <span class="codefrag">WEB-INF/classes</span>, y todos los ficheros y directorios ya organizados.</li>
+			
+<li>Carpeta <strong>dist</strong>: para guardar un fichero WAR con toda la aplicaci&oacute;n de la carpeta <span class="codefrag">build</span> ya empaquetada y lista para distribuirse.</li>
+			
+<li>Carpeta <strong>conf</strong>: para ficheros de configuraci&oacute;n adicionales de la aplicaci&oacute;n</li>
+			
+<li>Carpeta <strong>db</strong>: con los scripts y elementos para la base de datos</li>
+			
+<li>Carpeta <strong>doc</strong>: con ficheros de documentaci&oacute;n</li>
+		
+</ul>
+<p>Algunas de estas carpetas las crear&aacute; el propio asistente al terminar de crear el proyecto (como <span class="codefrag">src</span>, o <span class="codefrag">WebContent</span> y sus subcarpetas). Otras deberemos crearlas nosotros a mano. Una vez tengamos el proyecto creado, ya podemos irlo desarrollando.</p>
+<p>
+<strong>Interdependencias entre proyectos</strong>
+</p>
+<p>En ocasiones deberemos relacionar alg&uacute;n proyecto de clases Java que tengamos hecho, con un nuevo proyecto web que vayamos a hacer, para poder utilizar e incorporar las clases del proyecto Java en nuestro proyecto web. Para ello, vamos con el bot&oacute;n derecho del rat&oacute;n sobre el proyecto, y vamos a sus <em>Properties</em>. En ellas, vamos a <em>Project References</em>, y marcamos con el rat&oacute;n los proyectos que queramos asociar al actual:</p>
+<p>
+<img alt="Asociaciones entre proyectos" content-width="11cm" height="507" src="imagenes/wtproyectoref.jpg" width="574"></p>
+<a name="N100F6"></a><a name="Despliegue+de+aplicaciones+web+con+WebTools"></a>
+<h3 class="underlined_5">Despliegue de aplicaciones web con WebTools</h3>
+<p>Una vez tengamos la aplicaci&oacute;n web lista para probar en el servidor web, tenemos dos alternativas para desplegarla y probarla:</p>
+<ul>
+			
+<li>Utilizar las facilidades de despliegue sobre el servidor que ofrece WebTools. Esta opci&oacute;n la utilizaremos en fase de desarrollo y depuraci&oacute;n, para probar de forma c&oacute;moda y r&aacute;pida los cambios que vayamos haciendo sobre nuestra aplicaci&oacute;n.</li>
+			
+<li>Utilizar un fichero <span class="codefrag">build.xml</span> de Ant con las tareas necesarias para compilar, empaquetar y desplegar. Este m&eacute;todo se vio en la sesi&oacute;n 2 del m&oacute;dulo, y lo utilizaremos cuando tengamos la aplicaci&oacute;n ya probada, y queramos hacer el empaquetamiento y despliegue definitivo.</li>
+		
+</ul>
+<p>Para poder desplegar la aplicaci&oacute;n utilizando WebTools, simplemente tenemos que pinchar con el bot&oacute;n derecho sobre el proyecto web y elegir la opci&oacute;n <em>Run As - Run on Server</em>. Inicialmente, ya le hemos asignado el servidor al proyecto, cuando lo creamos, as&iacute; que WebTools ya sabe sobre qu&eacute; servidor desplegar los cambios.</p>
+</div>
+
+<a name="N10113"></a><a name="Desarrollo+de+aplicaciones+web+con+Ant"></a>
+<h2 class="underlined_10">Desarrollo de aplicaciones web con Ant</h2>
+<div class="section">
+<p>Aunque Webtools es una herramienta muy intuitiva, en proyectos complejos podemos necesitar un control total sobre
+	el proceso de compilaci&oacute;n y despliegue. En estos casos, podemos usar <strong>Ant</strong>.</p>
+<a name="N1011F"></a><a name="Construcci%C3%B3n+de+la+aplicaci%C3%B3n"></a>
+<h3 class="underlined_5">Construcci&oacute;n de la aplicaci&oacute;n</h3>
+<p>Cuando iniciamos el servidor web, autom&aacute;ticamente carga en el <span class="codefrag">CLASSPATH</span> del servidor lo necesario para trabajar con servlets y p&aacute;ginas JSP, y tambi&eacute;n carga las clases que haya en los directorios <span class="codefrag">WEB-INF/classes</span> y <span class="codefrag">WEB-INF/lib</span> de las aplicaciones, para que sepan d&oacute;nde encontrarlas. </p>
+<p>Sin embargo, para poder construir una aplicaci&oacute;n (implementar y compilar los servlets y p&aacute;ginas JSP que la componen), necesitaremos tambi&eacute;n tener estos datos configurados, pues de lo contrario no conseguiremos compilar. Veremos ahora qu&eacute; pasos hay que seguir para esto. </p>
+<p>
+<strong>Directorio de trabajo</strong>
+</p>
+<p>Primero debemos crear un directorio de trabajo donde colocar nuestras aplicaciones Web. Es recomendable que dicho directorio quede fuera del directorio de instalaci&oacute;n del servidor. </p>
+<p>Para que la aplicaci&oacute;n est&eacute; disponible tendremos que instalarla dentro del servidor de aplicaciones, por lo que tendremos que copiar la aplicaci&oacute;n de nuestro directorio de desarrollo al directorio del servidor web. Este proceso es lo que se conoce como despliegue, y lo estudiaremos con mayor detalle m&aacute;s adelante. </p>
+<p>Podemos estructurar el directorio de desarrollo de la siguiente forma:</p>
+<ul>
+			
+<li>
+<strong><span class="codefrag">src</span></strong>: C&oacute;digo fuente (servlets y otras clases)</li>
+			
+<li>
+<strong><span class="codefrag">web</span></strong> (o <span class="codefrag">WebContent</span>): Elementos que no necesitan ser compilados (recursos est&aacute;ticos, JSPs, <span class="codefrag">WEB-INF/web.xml</span>, librer&iacute;as)</li>
+			
+<li>
+<strong><span class="codefrag">build</span></strong>: Aplicaci&oacute;n completa tal como se instalar&aacute; en el servidor</li>
+			
+<li>
+<strong><span class="codefrag">dist</span></strong>: Aplicaci&oacute;n empaquetada (fichero WAR)</li>
+		
+</ul>
+<p>De esta forma separamos las clases Java de nuestra aplicaci&oacute;n, que deben ser compiladas antes de desplegar la aplicaci&oacute;n, del resto de elementos de la aplicaci&oacute;n.</p>
+<p>
+<strong>Establecer el CLASSPATH</strong>
+</p>
+<p>Tenemos que a&ntilde;adir al <span class="codefrag">CLASSPATH</span> el lugar donde se encuentran las APIs de servlets y JSP. Cada servidor proporciona mediante unos ficheros JAR estas librer&iacute;as, que deberemos a&ntilde;adir. En el caso de Tomcat, tenemos los ficheros <strong><span class="codefrag">servlet-api.jar</span></strong> para poder compilar nuestros servlets. Las p&aacute;ginas requieren otras librer&iacute;as, como <strong><span class="codefrag">jsp-api.jar</span></strong>. Todos estos ficheros se encuentran localizados en el directorio <strong><span class="codefrag">common/lib</span></strong>. Normalmente s&oacute;lo necesitamos a&ntilde;adir el fichero <span class="codefrag">servlet-api.jar</span>, puesto que las p&aacute;ginas JSP las compila autom&aacute;ticamente el servidor si no lo est&aacute;n, y &eacute;l ya encuentra solo los JAR. </p>
+<p>Tambi&eacute;n deberemos a&ntilde;adir los directorios y ficheros JAR de otras clases que necesitemos y no formen parte de la API de Java (incluyendo librer&iacute;as del directorio <span class="codefrag">WEB-INF/classes</span> o <span class="codefrag">WEB-INF/lib</span> de la aplicaci&oacute;n). </p>
+<p>La herramienta <em>ant</em> nos facilitar&aacute; esta tarea, ya que podremos introducir en el <em>classpath</em> todas las librer&iacute;as que incluye Tomcat de forma sencilla. Podemos incluir la librer&iacute;as necesarias como se muestra a continuaci&oacute;n:</p>
+<pre class="code">&lt;path id="compile.classpath"&gt;  
+	&lt;pathelement location="<strong>${catalina.home}/common/classes</strong>"/&gt;  
+	&lt;fileset dir="<strong>${catalina.home}/common/endorsed</strong>"&gt;    
+		&lt;include name="*.jar"/&gt;  
+	&lt;/fileset&gt;  
+	&lt;fileset dir="<strong>${catalina.home}/common/lib</strong>"&gt;    
+		&lt;include name="*.jar"/&gt;  
+	&lt;/fileset&gt;  
+	&lt;pathelement location="<strong>${catalina.home}/shared/classes</strong>"/&gt;  
+	&lt;fileset dir="<strong>${catalina.home}/shared/lib</strong>"&gt;    
+		&lt;include name="*.jar"/&gt;  
+	&lt;/fileset&gt;
+&lt;/path&gt;</pre>
+<p>Donde <span class="codefrag">${catalina.home}</span> ser&aacute; la ruta donde tengamos instalado Tomcat. </p>
+<p>
+<strong>Construcci&oacute;n de la aplicaci&oacute;n</strong>
+</p>
+<p>Deberemos escribir todo el c&oacute;digo fuente de las clases Java de nuestra aplicaci&oacute;n en el subdirectorio <span class="codefrag">src</span> del directorio de desarrollo, y generar el resto de recursos en el subdirectorio <span class="codefrag">web</span> (siempre ser&aacute; necesario tener al menos el descriptor de despliegue <span class="codefrag">/WEB-INF/web.xml</span> para que la aplicaci&oacute;n funcione).</p>
+<p>Una vez hemos desarrollado los componentes de nuestra aplicaci&oacute;n, deberemos construir la aplicaci&oacute;n. Construiremos la aplicaci&oacute;n final en el subdirectorio <span class="codefrag">build</span>, seg&uacute;n la organizaci&oacute;n descrita anteriormente. </p>
+<p>Una vez construida, podemos empaquetarla de forma opcional en un fichero WAR para facilitar su distribuci&oacute;n. Este fichero WAR lo generaremos dentro del directorio <span class="codefrag">dist</span>.</p>
+<p>Para construir la aplicaci&oacute;n seguiremos los siguientes pasos:</p>
+<p>
+<strong>1. Preparaci&oacute;n</strong>
+</p>
+<p>En esta fase deberemos construir en el directorio <span class="codefrag">build</span> la estructura b&aacute;sica de la aplicaci&oacute;n web. Crearemos los directorios <span class="codefrag">/WEB-INF</span>, <span class="codefrag">/WEB-INF/lib</span> y <span class="codefrag">/WEB-INF/classes</span> y copiaremos todo el contenido que no necesita ser compilado (directorio <span class="codefrag">web</span>) a este directorio <span class="codefrag">build</span>.</p>
+<p>Podemos utilizar <em>ant</em> para realizar esta tarea. Podemos hacerlo como se muestra a continuaci&oacute;n:</p>
+<pre class="code">&lt;target name="prepare"&gt;  
+	&lt;mkdir dir="<strong>${build.home}</strong>"/&gt;  
+	&lt;mkdir dir="<strong>${build.home}/WEB-INF</strong>"/&gt;  
+	&lt;mkdir dir="<strong>${build.home}/WEB-INF/classes</strong>"/&gt;  
+	&lt;mkdir dir="<strong>${build.home}/WEB-INF/lib</strong>"/&gt;  
+	&lt;copy todir="<strong>${build.home}</strong>"&gt;    
+		&lt;fileset dir="<strong>${web.home}</strong>"/&gt;  
+	&lt;/copy&gt;
+&lt;/target&gt;</pre>
+<p>
+<strong>2. Compilaci&oacute;n</strong>
+</p>
+<p>Hasta ahora tenemos en <span class="codefrag">build</span> todo el contenido de la aplicaci&oacute;n web que no necesita ser compilado, y la estructura de directorios de <span class="codefrag">/WEB-INF</span> creada. </p>
+<p>Ahora ya podemos compilar todas las clases Java que hayamos desarrollado en <span class="codefrag">src</span>. El c&oacute;digo compilado resultante lo guardaremos en el directorio <span class="codefrag">/WEB-INF/classes</span> dentro de <span class="codefrag">build</span>, que es donde se deben ubicar estas clases Java. Para la compilaci&oacute;n deberemos tener establecido el <em>classpath</em> con todas las librer&iacute;as necesarias, tal como hemos visto en el punto anterior.</p>
+<p>Utilizando <em>ant</em> podemos realizar esta compilaci&oacute;n de la siguiente forma:</p>
+<pre class="code">&lt;target name="compile" depends="prepare" 
+        description="Compila los fuentes Java"&gt;  
+	&lt;javac srcdir="<strong>${src.home}</strong>" 
+	       destdir="<strong>${build.home}/WEB-INF/classes</strong>" 
+	       debug="${compile.debug}" 
+	       deprecation="${compile.deprecation}" 
+	       optimize="${compile.optimize}"&gt;    
+	 	&lt;classpath refid="<strong>compile.classpath</strong>"/&gt;  
+	&lt;/javac&gt;
+&lt;/target&gt;</pre>
+<p>
+<strong>3. Empaquetamiento</strong>
+</p>
+<p>Por &uacute;ltimo, y de forma opcional, podemos empaquetar la aplicaci&oacute;n en un fichero WAR para facilitar su distribuci&oacute;n. En alg&uacute;n caso este paso puede ser obligatorio, ya que para desplegar las aplicaciones algunos servidores de aplicaciones nos fuerzan a utilizar un fichero WAR.</p>
+<p>Deberemos utilizar la herramienta JAR para empaquetar todo el contenido del directorio <span class="codefrag">build</span> en un fichero con extensi&oacute;n WAR. Este fichero lo guardaremos en el directorio <span class="codefrag">dist</span>. </p>
+<p>Podemos hacer esto con <em>ant</em> de la siguiente forma:</p>
+<pre class="code">&lt;target name="dist" depends="compile" 
+        description="Crea el fichero WAR de la aplicacion"&gt;  
+	&lt;mkdir dir="${dist.home}"/&gt;  
+	&lt;jar jarfile="<strong>${dist.home}/${war.name}</strong>" basedir="<strong>${build.home}</strong>"/&gt;
+&lt;/target&gt;</pre>
+<a name="N1024D"></a><a name="Despliegue+de+la+aplicaci%C3%B3n"></a>
+<h3 class="underlined_5">Despliegue de la aplicaci&oacute;n</h3>
+<p>Una vez hemos construido la aplicaci&oacute;n deberemos <strong>desplegarla</strong> en el servidor de aplicaciones para que dicha aplicaci&oacute;n est&eacute; disponible al acceder al servidor desde la web. Este proceso es conocido como despliegue o <em>deployment</em>. Cada servidor de aplicaciones tiene sus propios m&eacute;todos para desplegar las aplicaciones. Por ejemplo, casi siempre tenemos disponible una interfaz web a trav&eacute;s de la cual podemos subir y desplegar una aplicaci&oacute;n en el servidor.</p>
+<p>Vamos a ver las posibles formas en las que el servidor web Tomcat nos permite desplegar las aplicaciones, pero antes veremos d&oacute;nde se almacenan las aplicaciones desplegadas en Tomcat. </p>
+<p>Tomcat tiene un directorio <span class="codefrag">webapps</span> (<span class="codefrag">${tomcat.home}/webapps</span>) donde est&aacute;n todas las aplicaciones web instaladas en el servidor. Cada aplicaci&oacute;n web est&aacute; contenida dentro de un subdirectorio de <span class="codefrag">webapps</span>, y este subdirectorio contendr&aacute; toda la estructura de directorios y ficheros correspondiente a la aplicaci&oacute;n web. Por ejemplo, podremos tener:</p>
+<pre class="code">${tomcat.home}/webapps/aplic/
+${tomcat.home}/webapps/aplic/index.htm
+${tomcat.home}/webapps/aplic/WEB-INF/
+${tomcat.home}/webapps/aplic/WEB-INF/web.xml
+${tomcat.home}/webapps/aplic/WEB-INF/classes/
+${tomcat.home}/webapps/aplic/WEB-INF/lib/</pre>
+<p>De esta forma tendremos un contexto (aplicaci&oacute;n web) <span class="codefrag">aplic</span> instalado en Tomcat. Por defecto Tomcat asigna como ruta de cada contexto el mismo nombre del directorio del mismo, por lo que para acceder a esta aplicaci&oacute;n <span class="codefrag">aplic</span> anterior deberemos introducir la siguiente URL:</p>
+<pre class="code">http://localhost:8080/aplic/index.htm</pre>
+<p>Considerando que tenemos Tomcat instalado en nuestra m&aacute;quina local y atendiendo en el puerto <span class="codefrag">8080</span> (es el puerto por defecto de Tomcat). </p>
+<p>M&aacute;s adelante veremos c&oacute;mo podemos configurar Tomcat para asignar a cada contexto la ruta que queramos. Al instalar Tomcat encontramos una aplicaci&oacute;n instalada por defecto en un directorio <span class="codefrag">ROOT</span> (<span class="codefrag">${tomcat.home}/webapps/ROOT</span>). Esta aplicaci&oacute;n tiene asignada la ruta <span class="codefrag">/</span>, por lo que cuando accedamos a la URL:</p>
+<pre class="code">http://localhost:8080/</pre>
+<p>Ser&aacute; esta la aplicaci&oacute;n a la que se estar&aacute; accediendo, que nos muestra la p&aacute;gina de bienvenida de Tomcat y enlaces a documentaci&oacute;n y a la aplicaci&oacute;n de gesti&oacute;n del servidor. </p>
+<p>Si copiamos recursos a este directorio <span class="codefrag">ROOT</span>, podremos acceder a ellos a partir de esta URL ra&iacute;z del servidor. Por ejemplo, si copiamos la siguiente p&aacute;gina HTML:</p>
+<pre class="code">${tomcat.home}/webapps/ROOT/pagina.htm</pre>
+<p>Podremos acceder a ella utilizando la siguiente URL:</p>
+<pre class="code">http://localhost:8080/pagina.htm</pre>
+<p>Tambi&eacute;n podremos configurar Tomcat para que sea cualquier otra de las aplicaciones instaladas la que tenga asignada esta ruta ra&iacute;z, simplemente cambiando la ruta asignada a cada contexto como se ver&aacute; m&aacute;s adelante.</p>
+<p>Vamos a ver las dos alternativas que tenemos para desplegar la aplicaci&oacute;n usando Ant. La m&aacute;s sencilla ser&iacute;a simplemente
+		copiar los archivos al directorio adecuado. La otra, m&aacute;s sofisticada, ser&iacute;a usar un conjunto de tareas especiales
+		de Ant que incorpora Tomcat.</p>
+<a name="N102AC"></a><a name="Copiar+al+directorio+de+aplicaciones"></a>
+<h4>Copiar al directorio de aplicaciones</h4>
+<p>Esta forma de despliegue es la m&aacute;s sencilla. Simplemente copiamos el contenido de nuestra aplicaci&oacute;n, que habremos generado en el directorio <span class="codefrag">build</span> de nuestro directorio de desarrollo, al directorio <span class="codefrag">webapps</span> de Tomcat. Esta copia la podemos hacer utilizando tareas de <em>ant</em> como se muestra a continuaci&oacute;n:</p>
+<pre class="code">&lt;target name="deploy" depends="compile" 
+        description="Despliega la aplicacion"&gt;  
+	&lt;mkdir dir="<strong>${catalina.home}/${app.name}</strong>"/&gt;  
+	&lt;copy todir="<strong>${catalina.home}/${app.name}</strong>"&gt;    
+		&lt;fileset dir="<strong>${build.home}</strong>"/&gt;  
+	&lt;/copy&gt;
+&lt;/target&gt;</pre>
+<p>Tambi&eacute;n podremos copiar directamente el fichero WAR con la aplicaci&oacute;n al directorio <span class="codefrag">webapps</span> de Tomcat. En este caso, cuando reiniciemos Tomcat, &eacute;ste desempaquetar&aacute; el fichero WAR creando la estructura de directorios de la aplicaci&oacute;n bajo <span class="codefrag">webapps</span>. Esto es el comportamiento por defecto, pero podremos configurar Tomcat para que no desempaquete los WAR, sino que acceda a la aplicaci&oacute;n usando directamente el fichero WAR como veremos m&aacute;s adelante.</p>
+<a name="N102D5"></a><a name="Tareas+de+Ant+para+despliegue"></a>
+<h4>Tareas de Ant para despliegue</h4>
+<p>Adem&aacute;s de la interfaz HTML, el manager de Tomcat cuenta con una interfaz en forma de servicio, con la que podremos utilizar la funciones del manager enviando comandos en la misma URL. </p>
+<p>Tomcat proporciona una serie de tareas adicionales de <em>ant</em> que utilizan estos servicios del manager para realizar las tareas de despliegue y gesti&oacute;n de la aplicaciones web. De esta forma podremos desplegar aplicaciones directamente utilizando tareas de <em>ant</em>. Esta librer&iacute;a de tareas de <em>ant</em> est&aacute; contenida en el fichero <span class="codefrag">catalina-ant.jar</span> ubicado en:</p>
+<p>
+<span class="codefrag">${tomcat.home}/lib/catalina-ant.jar</span>
+</p>
+<p>Por lo tanto, para poder utilizar estas tareas de ant necesitaremos tener este fichero en el <em>classpath</em>. Si estamos utilizando la versi&oacute;n de <em>ant</em> incluida en Eclipse deberemos configurarlo para que incluya esta librer&iacute;a al ejecutar <em>ant</em>. Para ello nos vamos a <em>Window &gt; Preferences</em> e introducimos este fichero en el <em>classpath</em> de <em>ant</em>:</p>
+<p>
+<img alt="" content-width="10cm" height="370" src="imagenes/eclipse.gif" width="500"></p>
+<p>Una vez tenemos esta librer&iacute;a de tareas en el <em>classpath</em>, deberemos declarar estas tareas dentro de nuestro fichero <span class="codefrag">build.xml</span> para poder utilizarlas. Las tareas disponibles son:</p>
+<pre class="code">&lt;taskdef name="<strong>deploy</strong>" 
+         classname="org.apache.catalina.ant.DeployTask"/&gt;
+&lt;taskdef name="<strong>install</strong>" 
+         classname="org.apache.catalina.ant.InstallTask"/&gt;
+&lt;taskdef name="<strong>list</strong>" 
+         classname="org.apache.catalina.ant.ListTask"/&gt;
+&lt;taskdef name="<strong>reload</strong>" 
+         classname="org.apache.catalina.ant.ReloadTask"/&gt;
+&lt;taskdef name="<strong>remove</strong>" 
+         classname="org.apache.catalina.ant.RemoveTask"/&gt;
+&lt;taskdef name="<strong>resources</strong>" 
+         classname="org.apache.catalina.ant.ResourcesTask"/&gt;
+&lt;taskdef name="<strong>roles</strong>" 
+         classname="org.apache.catalina.ant.RolesTask"/&gt;
+&lt;taskdef name="<strong>start</strong>" 
+         classname="org.apache.catalina.ant.StartTask"/&gt;
+&lt;taskdef name="<strong>stop</strong>" 
+         classname="org.apache.catalina.ant.StopTask"/&gt;
+&lt;taskdef name="<strong>undeploy</strong>" 
+         classname="org.apache.catalina.ant.UndeployTask"/&gt;</pre>
+<p>Vamos a ver ahora como utilizar las tareas principales de Tomcat.</p>
+<p>
+<strong><em>Despliegue</em></strong>
+</p>
+<p>Para desplegar una aplicaci&oacute;n podemos utilizar la tarea <span class="codefrag">deploy</span> como se muestra a continuaci&oacute;n:</p>
+<pre class="code">&lt;target name="deploy" depends="dist" description="Despliega la aplicacion"&gt;  
+	&lt;deploy <strong>url</strong>="${manager.url}"
+	        <strong>username</strong>="${manager.nombre}"
+	        <strong>password</strong>="${manager.passwd}"
+	        <strong>path</strong>="${app.path}"
+	        <strong>war</strong>="file:${dist.home}/${war.name}"/&gt;
+&lt;/target&gt;</pre>
+<p>Donde <span class="codefrag">${manager.url}</span> es la direcci&oacute;n en la que se encuentra el manager de Tomcat. Normalmente esta URL ser&aacute; la siguiente:</p>
+<pre class="code">http://localhost:8080/manager</pre>
+<p>Si tenemos el servidor en nuestra m&aacute;quina local en el puerto <span class="codefrag">8080</span>. Para poder acceder a este manager debemos indicar tambi&eacute;n el nombre y el password de alg&uacute;n usuario con el rol <span class="codefrag">manager</span>, ya que no se debe permitir que cualquier usuario pueda desplegar y modificar las aplicaciones del servidor. Si no contamos con este usuario deberemos crearlo como vimos en el punto anterior.</p>
+<p>Sobre la aplicaci&oacute;n que vamos a desplegar, deberemos indicar la ruta que le vamos a asignar al contexto (<span class="codefrag">path</span>) y que la identificar&aacute; dentro del servidor, y adem&aacute;s deberemos proporcionar en <span class="codefrag">war</span> el fichero WAR que contiene la aplicaci&oacute;n web que vamos a desplegar.</p>
+<p>
+<strong><em>Eliminar la aplicaci&oacute;n</em></strong>
+</p>
+<p>Podemos eliminar de forma permanente una aplicaci&oacute;n instalada con la tarea <span class="codefrag">undeploy</span>. Con esta tarea se borrar&aacute;n del servidor todos los ficheros de la aplicaci&oacute;n.</p>
+<pre class="code">&lt;target name="undeploy" description="Desinstala la aplicacion"&gt;  
+	&lt;undeploy <strong>url</strong>="${manager.url}"
+	          <strong>username</strong>="${manager.nombre}"
+	          <strong>password</strong>="${manager.passwd}"
+	          <strong>path</strong>="${app.path}"/&gt;
+&lt;/target&gt;</pre>
+<p>En este caso, al igual que con la tarea anterior, debemos proporcionar la URL del manager y el nombre y el password de un usuario administrador que pueda gestionar las aplicaciones del servidor.</p>
+<p>Adem&aacute;s tendremos que indicar la ruta de la aplicaci&oacute;n que queremos eliminar. Esta ruta, como hemos visto anteriormente, ser&aacute; la que identifique cada aplicaci&oacute;n, y por lo tanto deberemos proporcionarla siempre que queramos realizar alguna operaci&oacute;n con cualquiera de las aplicaciones, para indicar a qu&eacute; aplicaci&oacute;n nos referimos.</p>
+<p>
+<strong><em>Lista de aplicaciones</em></strong>
+</p>
+<p>Podemos obtener una lista de todas las aplicaciones instaladas en el servidor utilizando la tarea <span class="codefrag">list</span>. </p>
+<pre class="code">&lt;target name="list" description="Lista las aplicaciones instaladas"&gt;  
+	&lt;list <strong>url</strong>="${manager.url}"        
+	      <strong>username</strong>="${manager.nombre}"
+	      <strong>password</strong>="${manager.passwd}"/&gt;
+&lt;/target&gt;</pre>
+<p>Esta tarea mostrar&aacute; una lista de todas las aplicaciones y el estado de las mismas, adem&aacute;s de la ruta donde est&aacute;n instaladas en el servidor. </p>
+<p>
+<strong><em>Detener, reanudar y recargar</em></strong>
+</p>
+<p>Si queremos que una aplicaci&oacute;n deje de estar disponible al acceder al servidor desde la web, pero no queremos eliminarla, podemos detenerla utilizando la tarea <span class="codefrag">stop</span>:</p>
+<pre class="code">&lt;target name="stop" description="Detiene la aplicacion"&gt;  
+	&lt;stop <strong>url</strong>="${manager.url}"
+	      <strong>username</strong>="${manager.nombre}"
+	      <strong>password</strong>="${manager.passwd}"
+	      <strong>path</strong>="${app.path}"/&gt;
+&lt;/target&gt;</pre>
+<p>Posteriormente podremos volver a reanudar su ejecuci&oacute;n para que la aplicaci&oacute;n vuelva a estar disponible con <span class="codefrag">start</span>:</p>
+<pre class="code">&lt;target name="start" description="Reanuda la aplicacion"&gt;  
+	&lt;start <strong>url</strong>="${manager.url}"
+	       <strong>username</strong>="${manager.nombre}"
+	       <strong>password</strong>="${manager.passwd}"
+	       <strong>path</strong>="${app.path}"/&gt;
+&lt;/target&gt;</pre>
+<p>Cuando hayamos hecho cambios en la aplicaci&oacute;n, es posible que nos interese que Tomcat recargue la aplicaci&oacute;n para que se reflejen los cambios realizados. Podremos recargar una aplicaci&oacute;n con la tarea <span class="codefrag">reload</span>:</p>
+<pre class="code">&lt;target name="reload" description="Recarga la aplicacion"&gt;  
+	&lt;reload<strong> url</strong>="${manager.url}"
+	        <strong>username</strong>="${manager.nombre}"            
+	        <strong>password</strong>="${manager.passwd}"
+	        <strong>path</strong>="${app.path}"/&gt;
+&lt;/target&gt;</pre>
+<p>
+<strong><em>Instalaci&oacute;n temporal</em></strong>
+</p>
+<p>En lugar de desplegar una aplicaci&oacute;n, podemos instalarla de forma temporal. La diferencia es que si realizamos una instalaci&oacute;n temporal, la aplicaci&oacute;n estar&aacute; disponible en el servidor tras instalarla, como si hubiese sido desplegada, pero la pr&oacute;xima vez que se inicie el servidor esta aplicaci&oacute;n ya no estar&aacute;. </p>
+<p>Para realizar esta instalaci&oacute;n temporal podemos utilizar la tarea <span class="codefrag">install</span>:</p>
+<pre class="code">&lt;target name="install" depends="dist" description="Instala la aplicacion"&gt;  
+	&lt;install <strong>url</strong>="${manager.url}"           
+	         <strong>username</strong>="${manager.nombre}"
+	         <strong>password</strong>="${manager.passwd}"
+	         <strong>path</strong>="${app.path}"
+	         <strong>war</strong>="file:${dist.home}/${war.name}"/&gt;
+&lt;/target&gt;</pre>
+<p>Para eliminar las aplicaciones instaladas de forma temporal, utilizaremos la tarea <span class="codefrag">remove</span>:</p>
+<pre class="code">&lt;target name="remove" description="Desinstala la aplicacion"&gt;  
+	&lt;remove <strong>url</strong>="${manager.url}"
+	        <strong>username</strong>="${manager.nombre}"
+	        <strong>password</strong>="${manager.passwd}"
+	        <strong>path</strong>="${app.path}" /&gt;
+&lt;/target&gt;</pre>
+<a name="N10432"></a><a name="Un+ejemplo+completo"></a>
+<h3 class="underlined_5">Un ejemplo completo</h3>
+<p>Vamos a ver a continuaci&oacute;n un ejemplo de un fichero <span class="codefrag">build.xml</span> completo que podremos utilizar para desarrollar nuestras aplicaciones.</p>
+<pre class="code">&lt;project name="AplicWeb" default="compile" basedir="."&gt;  
+
+&lt;!-- Propiedades --&gt;  
+
+&lt;property name="catalina.home" value="/home/JavaEE/jakarta-tomcat-4.1.29"/&gt;  
+&lt;property name="manager.url" value="http://localhost:8080/manager"/&gt;  
+&lt;property name="manager.nombre" value="admin"/&gt;  
+&lt;property name="manager.passwd" value="JavaEE"/&gt;  
+&lt;property name="app.name" value="aplic"/&gt;  
+&lt;property name="app.path" value="/${app.name}"/&gt;  
+&lt;property name="app.home" value="${catalina.home}/webapps/${app.name}"/&gt;  
+&lt;property name="war.name" value="${app.name}.war"/&gt;  
+&lt;property name="build.home" value="${basedir}/build"/&gt;  
+&lt;property name="dist.home" value="${basedir}/dist"/&gt;  
+&lt;property name="docs.home" value="${basedir}/docs"/&gt;  
+&lt;property name="src.home" value="${basedir}/src"/&gt;  
+&lt;property name="web.home" value="${basedir}/web"/&gt;
+&lt;property name="compile.debug" value="true"/&gt;
+&lt;property name="compile.deprecation" value="false"/&gt;
+&lt;property name="compile.optimize" value="true"/&gt;  
+
+&lt;!-- Declaracion de tareas de Tomcat --&gt;  
+
+&lt;taskdef name="deploy" 
+         classname="org.apache.catalina.ant.DeployTask"/&gt;  
+&lt;taskdef name="install" 
+         classname="org.apache.catalina.ant.InstallTask"/&gt;  
+&lt;taskdef name="list" 
+         classname="org.apache.catalina.ant.ListTask"/&gt;  
+&lt;taskdef name="reload" 
+         classname="org.apache.catalina.ant.ReloadTask"/&gt;  
+&lt;taskdef name="remove" 
+         classname="org.apache.catalina.ant.RemoveTask"/&gt;  
+&lt;taskdef name="resources" 
+         classname="org.apache.catalina.ant.ResourcesTask"/&gt;  
+&lt;taskdef name="roles" 
+         classname="org.apache.catalina.ant.RolesTask"/&gt;  
+&lt;taskdef name="start" 
+         classname="org.apache.catalina.ant.StartTask"/&gt;  
+&lt;taskdef name="stop" 
+         classname="org.apache.catalina.ant.StopTask"/&gt;  
+&lt;taskdef name="undeploy" 
+         classname="org.apache.catalina.ant.UndeployTask"/&gt;  
+
+&lt;!-- Classpath --&gt;  
+
+&lt;path id="compile.classpath"&gt;    
+	&lt;pathelement location="${catalina.home}/common/classes"/&gt;    
+	&lt;fileset dir="${catalina.home}/common/endorsed"&gt;      
+		&lt;include name="*.jar"/&gt;    
+	&lt;/fileset&gt;    
+	&lt;fileset dir="${catalina.home}/common/lib"&gt;      
+		&lt;include name="*.jar"/&gt;    
+	&lt;/fileset&gt;    
+	&lt;pathelement location="${catalina.home}/shared/classes"/&gt;    
+	&lt;fileset dir="${catalina.home}/shared/lib"&gt;      
+		&lt;include name="*.jar"/&gt;    
+	&lt;/fileset&gt;  
+&lt;/path&gt;  
+
+&lt;!-- Objetivos --&gt;  
+
+&lt;target name="all" depends="clean,compile" description="Compila todo"/&gt;  
+&lt;target name="clean" description="Borra directorios build, dist y docs"&gt;    
+	&lt;delete dir="${build.home}"/&gt;    
+	&lt;delete dir="${dist.home}"/&gt;    
+	&lt;delete dir="${docs.home}"/&gt;  
+&lt;/target&gt;  
+&lt;target name="compile" depends="prepare" description="Compila los .java"&gt;
+	&lt;javac srcdir="${src.home}" destdir="${build.home}/WEB-INF/classes"
+	       debug="${compile.debug}"
+	       deprecation="${compile.deprecation}"
+	       optimize="${compile.optimize}"&gt;
+		&lt;classpath refid="compile.classpath"/&gt;
+	&lt;/javac&gt;  
+&lt;/target&gt;  
+&lt;target name="prepare"&gt;    
+	&lt;mkdir dir="${build.home}"/&gt;    
+	&lt;mkdir dir="${build.home}/WEB-INF"/&gt;    
+	&lt;mkdir dir="${build.home}/WEB-INF/classes"/&gt;    
+	&lt;mkdir dir="${build.home}/WEB-INF/lib"/&gt;    
+	&lt;copy todir="${build.home}"&gt;      
+		&lt;fileset dir="${web.home}"/&gt;    
+	&lt;/copy&gt;  
+&lt;/target&gt;  
+&lt;target name="dist" depends="compile" 
+        description="Crea el fichero WAR de la aplicacion"&gt;    
+	&lt;mkdir dir="${dist.home}"/&gt;    
+	&lt;jar jarfile="${dist.home}/${war.name}" basedir="${build.home}"/&gt;  
+&lt;/target&gt;  
+&lt;target name="javadoc" depends="compile" 
+        description="Genera documentacion Javadoc"&gt;    
+	&lt;mkdir dir="${docs.home}"/&gt;    
+	&lt;javadoc sourcepath="${src.home}" destdir="${docs.home}"
+	         packagenames="*"&gt;      
+		&lt;classpath refid="compile.classpath"/&gt;    
+	&lt;/javadoc&gt;  
+&lt;/target&gt;  
+&lt;target name="deploy" depends="dist" description="Despliega la aplicacion"&gt;    
+	&lt;deploy url="${manager.url}" 
+	        username="${manager.nombre}" 
+	        password="${manager.passwd}"            
+	        path="${app.path}"            
+	        war="file:${dist.home}/${war.name}"/&gt;  
+&lt;/target&gt;  
+&lt;target name="undeploy" description="Desinstala la aplicacion"&gt;    
+	&lt;undeploy url="${manager.url}"
+	          username="${manager.nombre}"
+	          password="${manager.passwd}"
+	          path="${app.path}"/&gt;  
+&lt;/target&gt;
+&lt;target name="list" description="Lista las aplicaciones instaladas"&gt;    
+	&lt;list url="${manager.url}"          
+	      username="${manager.nombre}"
+	      password="${manager.passwd}"/&gt;  
+&lt;/target&gt;
+&lt;/project&gt;</pre>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007 Depto. CCIA</div>
+</div>
+</body>
+</html>

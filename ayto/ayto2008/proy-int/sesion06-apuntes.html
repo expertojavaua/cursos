@@ -1,0 +1,693 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Spring en SIGEM</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Proyecto de Integracion" src="images/baner_j2ee_der.gif" title="Proyecto de Integracion"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="external" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="external" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_1.1', 'skin/')" id="menu_1.1Title" class="menutitle">Proyecto SIGEM</div>
+<div id="menu_1.1" class="menuitemgroup">
+<div class="menuitem">
+<a href="index.html" title="Proyecto de Integraci&oacute;n">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.2', 'skin/')" id="menu_1.1.2Title" class="menutitle">Teor&iacute;a</div>
+<div id="menu_1.1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion00-apuntes.html" title="Sesi&oacute;n 0: Puesta en marcha del SIGEM">Sesi&oacute;n 0</a>
+</div>
+<div class="menuitem">
+<a href="sesion01-apuntes.html" title="Sesi&oacute;n 1: CVS, base de datos y pruebas">Sesi&oacute;n 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html" title="Sesi&oacute;n 2: Despliegue y componentes web">Sesi&oacute;n 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html" title="Sesi&oacute;n 3: Persistencia Java">Sesi&oacute;n 3</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion06-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Spring en SIGEM</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Uso+de+Spring+en+SIGEM">Uso de Spring en SIGEM</a>
+<ul class="minitoc">
+<li>
+<a href="#Configuraci%C3%B3n+de+los+beans">Configuraci&oacute;n de los beans</a>
+<ul class="minitoc">
+<li>
+<a href="#Inicializaci%C3%B3n+%22diferida%22+%28lazy%29">Inicializaci&oacute;n "diferida" (lazy)</a>
+</li>
+<li>
+<a href="#Par%C3%A1metros+de+configuraci%C3%B3n+en+archivos+.properties">Par&aacute;metros de configuraci&oacute;n en archivos .properties</a>
+</li>
+<li>
+<a href="#Acceso+a+recursos+JNDI">Acceso a recursos JNDI</a>
+</li>
+<li>
+<a href="#Alias+para+beans">Alias para beans</a>
+</li>
+<li>
+<a href="#Factory+beans">Factory beans</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Uso+de+los+beans">Uso de los beans</a>
+<ul class="minitoc">
+<li>
+<a href="#Acceso+a+la+capa+SOA">Acceso a la capa SOA</a>
+</li>
+<li>
+<a href="#Acceso+a+los+DataSources">Acceso a los DataSources</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Enlace+de+Spring+con+la+capa+web">Enlace de Spring con la capa web</a>
+<ul class="minitoc">
+<li>
+<a href="#Configuraci%C3%B3n+del+plugin">Configuraci&oacute;n del plugin</a>
+</li>
+<li>
+<a href="#Uso+del+plugin">Uso del plugin</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Acceso+remoto+con+Spring">Acceso remoto con Spring</a>
+<ul class="minitoc">
+<li>
+<a href="#Proyecto+para+exportar+el+servicio">Proyecto para exportar el servicio</a>
+</li>
+<li>
+<a href="#Proyecto+cliente">Proyecto cliente</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="Uso+de+Spring+en+SIGEM"></a>
+<h2 class="underlined_10">Uso de Spring en SIGEM</h2>
+<div class="section">
+<p>Podr&iacute;amos decir que el uso de Spring en SIGEM es bastante limitado, ya que se reduce al uso
+del contenedor de beans. No obstante, esta funcionalidad est&aacute; en el n&uacute;cleo
+de SIGEM y es b&aacute;sica para el sistema. Los beans de Spring son los que 
+hacen posible el acceso a la capa SOA 
+de manera transparente, independientemente
+de que la implementaci&oacute;n sea local o a trav&eacute;s de servicios web.</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Como el &uacute;nico componente de Spring que se usa en SIGEM es el n&uacute;cleo (<em>core</em>), ser&iacute;a mucho m&aacute;s eficiente
+incluir en los proyectos solo este m&oacute;dulo en lugar de la distribuci&oacute;n completa de Spring (que es lo que incluye
+ahora mismo SIGEM). El <span class="codefrag">spring-core.jar</span> se puede obtener de la distribuci&oacute;n de Spring,en la
+carpeta <span class="codefrag">modules</span>, accesible a trav&eacute;s de la <a class="external" href="http://www.springframework.org">web de Spring</a>
+</div>
+</div>
+<p>La versi&oacute;n de Spring usada en SIGEM es la 2.0. En concreto, los JARs incluidos son de la 2.0.6. Hay que tener en cuenta que el uso de anotaciones para definir beans 
+empez&oacute; a usarse extensivamente a partir de la 2.5. Por lo dem&aacute;s lo visto en clase es totalmente aplicable a la 2.0. Si se
+van a usar m&aacute;s caracter&iacute;sticas de Spring y no se desea migrar a la 2.5 se recomienda consultar
+las secciones de los apuntes que tratan de la configuraci&oacute;n en formato XML.</p>
+<a name="N10027"></a><a name="Configuraci%C3%B3n+de+los+beans"></a>
+<h3 class="underlined_5">Configuraci&oacute;n de los beans</h3>
+<p>El fichero principal de configuraci&oacute;n de Spring est&aacute; en el m&oacute;dulo <span class="codefrag">SIGEM_Core</span>, que como veremos
+es tambi&eacute;n el m&oacute;dulo encargado de instanciar los beans. Adem&aacute;s, varios m&oacute;dulos incluyen ficheros adicionales,
+pero se reducen a referenciar ficheros <span class="codefrag">.properties</span> adicionales.</p>
+<p>En la configuraci&oacute;n se hacen uso de algunas construcciones de Spring que no hemos visto hasta
+el momento en el curso por motivos de tiempo. Vamos a verlas brevemente. Por supuesto, en la documentaci&oacute;n de Spring
+aparecen descritas con m&aacute;s detalle.</p>
+<a name="N10039"></a><a name="Inicializaci%C3%B3n+%22diferida%22+%28lazy%29"></a>
+<h4>Inicializaci&oacute;n "diferida" (lazy)</h4>
+<p>En todos los ejemplos que hemos hecho en las distintas sesiones de Spring, los beans
+con &aacute;mbito <em>singleton</em> se instanciaban 
+durante el arranque del contenedor. Esta es la configuraci&oacute;n por defecto de Spring, bas&aacute;ndose en el razonamiento
+de que permite detectar los fallos en las dependencias durante el arranque, facilitando el
+mantenimiento. No obstante, en SIGEM la mayor&iacute;a de beans se inicializan de manera <em>lazy</em>,
+es decir, solo cuando se solicitan (desde otro bean o desde el c&oacute;digo java). Para ello basta con poner un atributo
+<span class="codefrag">lazy-init="true"</span> en la configuraci&oacute;n del bean.</p>
+<a name="N1004C"></a><a name="Par%C3%A1metros+de+configuraci%C3%B3n+en+archivos+.properties"></a>
+<h4>Par&aacute;metros de configuraci&oacute;n en archivos .properties</h4>
+<p>La clase <span class="codefrag">PropertyPlaceholderConfigurer</span> se usa para externalizar propiedades
+a un fichero <span class="codefrag">.properties</span>. De este modo se pueden modificar propiedades
+que depender&aacute;n del entorno de instalaci&oacute;n (como URLs de bases de datos, usuarios, passwords, etc)
+sin tocar el XML con los beans, que puede ser complejo o "intimidatorio" para el administrador sin experiencia
+previa en Spring.</p>
+<p>La propiedad <span class="codefrag">locations</span> especifica la localizaci&oacute;n f&iacute;sica del archivo .properties.
+Para usar una propiedad se pone su clave en dicho archivo en el formato <span class="codefrag">${clave}</span>.</p>
+<p>Por ejemplo, veamos las l&iacute;neas 166 a 176 del <span class="codefrag">SIGEM_Spring.xml</span>
+</p>
+<pre class="code">
+
+166 &lt;bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"&gt;
+167      &lt;property name="locations" value="classpath:database.properties"/&gt;
+168 &lt;/bean&gt;
+169
+170 &lt;!-- Para utilizar desde fuera del servidor de aplicaciones --&gt;
+171 &lt;bean id="DATASOURCE_STANDALONE"
+	 class="ieci.tecdoc.sgm.core.db.impl.DataSourceSpringImpl" lazy-init="true"&gt;
+172    &lt;property name="driverClassName" value="${sigem.springDatasource.driver}"/&gt;
+173    &lt;property name="url" value="${sigem.springDatasource.database}"/&gt;
+174    &lt;property name="username" value="${sigem.springDatasource.user}"/&gt;
+175    &lt;property name="password" value="${sigem.springDatasource.password}"/&gt;
+176 &lt;/bean&gt;
+    
+</pre>
+<p>Como se especifica en <span class="codefrag">locations</span> el fichero .properties debe estar en el 
+classpath y su nombre f&iacute;sico es <span class="codefrag">database.properties</span>.</p>
+<a name="N10077"></a><a name="Acceso+a+recursos+JNDI"></a>
+<h4>Acceso a recursos JNDI</h4>
+<p>En el curso hemos visto c&oacute;mo acceder a recursos JNDI usando la etiqueta <span class="codefrag">&lt;jee:jndi-lookup/&gt;</span>.
+Antes de la introducci&oacute;n de esta etiqueta, el acceso a recursos JNDI en Spring se hac&iacute;a a trav&eacute;s
+de la clase <span class="codefrag">JndiObjectFactoryBean</span>, que se sigue manteniendo por motivos de 
+compatibilidad.</p>
+<p>Por ejemplo, en las l&iacute;neas 178 a 184 del <span class="codefrag">SIGEM_Spring.xml</span> Se define un bean 
+llamado
+<span class="codefrag">DATASOURCE_ADMINISTRACION</span> que sirve para acceder a un DataSource,
+ y se le inyecta el Datasource JNDI correspondiente.</p>
+<pre class="code">
+
+178 &lt;!-- Configuraci&oacute;n para el origen de datos de Administraci&oacute;n de SIGEM --&gt;
+179 &lt;bean id="DATASOURCE_ADMINISTRACION" 
+     class="ieci.tecdoc.sgm.core.db.impl.DataSourceJNDISpringImpl" 
+     lazy-init="true"&gt;
+180    &lt;property name="jndiDataSource" ref="jndiDataSource"/&gt;
+181 &lt;/bean&gt;
+182 &lt;bean id="jndiDataSource" 
+     class="org.springframework.jndi.JndiObjectFactoryBean"
+     lazy-init="true"&gt;
+183   &lt;property name="jndiName" value="${sigem.administracion.jndiDatasource.jndiName}"/&gt;
+184 &lt;/bean&gt;
+
+</pre>
+<p>Aunque <span class="codefrag">&lt;jee:jndi-lookup/&gt;</span> ya existe en la versi&oacute;n 2.0 de Spring, no
+se puede usar directamente en el archivo ya que esta etiqueta necesita del uso del schema XML mientras
+que el archivo de configuraci&oacute;n SIGEM usa el formato antiguo, basado en DTD. Esta era la forma
+de archivo de configuraci&oacute;n m&aacute;s com&uacute;n en Spring 1.x y probablemente se haya "heredado"  de esa &eacute;poca en la versi&oacute;n
+actual de SIGEM. </p>
+<a name="N1009A"></a><a name="Alias+para+beans"></a>
+<h4>Alias para beans</h4>
+<p>Esta es una caracter&iacute;stica de Spring que nos permite poner alias a un bean de modo que
+distintos m&oacute;dulos de la aplicaci&oacute;n lo puedan llamar de distinta manera. Continuando con 
+el <span class="codefrag">SIGEM_Spring.xml</span>:</p>
+<pre class="code">
+
+160 &lt;alias name="DATASOURCE_ADMINISTRACION" alias="SIGEM_ADMIN_DATASOURCE"/&gt;
+...
+178 &lt;!-- Configuraci&oacute;n para el origen de datos de Administraci&oacute;n de SIGEM --&gt;
+179 &lt;bean id="DATASOURCE_ADMINISTRACION" 
+     class="ieci.tecdoc.sgm.core.db.impl.DataSourceJNDISpringImpl" lazy-init="true"&gt;
+
+</pre>
+<p>As&iacute;, desde nuestro c&oacute;digo, o desde otros beans, podemos referenciar a &eacute;ste de modo indiferente
+como DATASOURCE_ADMINISTRACION (su nombre "real") o como SIGEM_ADMIN_DATASOURCE (su alias). En realidad la primera
+denominaci&oacute;n no se usa en ning&uacute;n sitio de SIGEM, pero esa ya es otra cuesti&oacute;n...</p>
+<a name="N100AE"></a><a name="Factory+beans"></a>
+<h4>Factory beans</h4>
+<p>Cuando se usan "factor&iacute;as de objetos" en un API, no se crean objetos llamando a new() sino
+a trav&eacute;s de alg&uacute;n m&eacute;todo. As&iacute; el c&oacute;digo se independiza de la clase concreta a crear.
+Estas factor&iacute;as ser&iacute;an el equivalente en c&oacute;digo Java a la abstracci&oacute;n
+proporcionada por el contenedor de Spring. Si un bean de Spring depende de un objeto que
+se crea con una factor&iacute;a, tenemos que configurarlo con el atributo <span class="codefrag">factory-method</span>,
+en el que decimos qu&eacute; m&eacute;todo hay que llamar para obtener una nueva instancia del bean. El 
+objeto que implementa este m&eacute;todo ser&aacute; el bean referenciado con <span class="codefrag">factory-bean</span>.</p>
+<a name="N100BF"></a><a name="Uso+de+los+beans"></a>
+<h3 class="underlined_5">Uso de los beans</h3>
+<p>En SIGEM, los beans de Spring se usan b&aacute;sicamente para dos prop&oacute;sitos:</p>
+<ul>
+
+<li>Acceder a los DataSources</li>
+
+<li>Acceder a los servicios de la capa SOA. Como ya visteis en la sesi&oacute;n de integraci&oacute;n
+de servicios web, cada servicio tiene dos implementaciones distintas: la remota
+y la local. Ambas son beans de Spring e instanciamos una o la otra distingui&eacute;ndolas por el nombre
+del bean.</li>
+
+</ul>
+<p>Hay un tercer uso, importante pero casi "anecd&oacute;tico". Se emplea un fichero de beans para definir
+la lista de idiomas que soporta SIGEM. Dicha lista est&aacute; en un fichero properties, por lo que se
+usa la clase <span class="codefrag">PropertiesFactoryBean</span>, que en versiones 1.x de Spring era la &uacute;nica
+alternativa para referenciar un .properties. En la versi&oacute;n actual de Spring se usar&iacute;a
+la etiqueta "util:properties":</p>
+<pre class="code">
+&lt;util:properties id="idiomas.propiedades" 
+location="classpath:com.ieci.tecdoc....idiomas.properties"/&gt;
+</pre>
+<p>Para ver los otros dos usos, emplearemos como ejemplo el m&oacute;dulo de administraci&oacute;n del registro presencial, que ya vimos
+en el proyecto de integraci&oacute;n de Struts (aunque solo la capa web).</p>
+<a name="N100DE"></a><a name="Acceso+a+la+capa+SOA"></a>
+<h4>Acceso a la capa SOA</h4>
+<p>Los servlets o las acciones de Struts necesitan de los servicios de la capa de negocio. Estos
+servicios se obtienen a trav&eacute;s de la clase <span class="codefrag">LocalizadorServicios</span> del m&oacute;dulo
+<span class="codefrag">SIGEM_Core</span>.</p>
+<p>Por ejemplo, en la acci&oacute;n <span class="codefrag">ListadoLibrosAction</span>, que se ejecuta al entrar en el m&oacute;dulo
+de administraci&oacute;n de registro presencial, podemos ver la llamada al localizador:</p>
+<pre class="code">
+19 public class ListadoLibrosAction extends RPAdminWebAction {
+
+21	private static final Logger logger = Logger.getLogger(ListadoLibrosAction.class);
+22	public ActionForward executeAction(ActionMapping mapping, ActionForm form,
+23			HttpServletRequest request, HttpServletResponse response) throws Exception {
+24
+25		<strong>ServicioRPAdmin oServicio = LocalizadorServicios.getServicioRPAdmin();</strong>
+
+</pre>
+<p>El m&eacute;todo de localizaci&oacute;n del servicio usa como nombre del mismo "RPADMIN_SERVICE_DEFAULT_IMPL",
+es decir la implementaci&oacute;n local. Al final se acaba llamando a otro m&eacute;todo que carga
+la definici&oacute;n del bean de un fichero de configuraci&oacute;n de Spring:</p>
+<pre class="code">
+774	public static ServicioRPAdmin getServicioRPAdmin(Config poConfig, String pcImpl) ...
+775		if(poConfig != null){
+776			ServicioRPAdmin oService = null;
+777			try {
+778			  <strong>oService = (ServicioRPAdmin)poConfig.getBean(pcImpl);</strong>
+779			} catch (Exception e) {
+780			  throw new SigemException(SigemException.EXC_GENERIC_EXCEPCION, e);
+781			}
+782			return oService;
+783		}else{
+784			throw new SigemException(SigemException.EXC_GENERIC_EXCEPCION);
+785		}
+786	}
+</pre>
+<p>B&aacute;sicamente la clase <span class="codefrag">Config</span> no es m&aacute;s que una capa sobre
+ un <span class="codefrag">ClassPathXMLContext</span> de Spring, como se puede comprobar si vamos
+a su c&oacute;digo fuente. Dicho context es el que finalmente
+ carga el bean "RPADMIN_SERVICE_DEFAULT_IMPL" del archivo ya nombrado "SIGEM_Spring.xml".
+ Finalmente, en dicho archivo podemos ver que la clase que se usar&aacute; es
+ <span class="codefrag">ServicioRPAdminAdapter</span>.</p>
+<pre class="code">
+ 
+&lt;alias name="&amp;RPADMIN;.&amp;SIGEM;.&amp;API;" alias="RPADMIN_SERVICE_DEFAULT_IMPL"/&gt;
+
+&lt;bean abstract="true" id="&amp;RPADMIN;" 
+   class="ieci.tecdoc.sgm.core.services.rpadmin.ServicioRPAdmin"&gt;
+&lt;/bean&gt;
+
+&lt;bean id="&amp;RPADMIN;.&amp;SIGEM;.&amp;API;" class="ieci.tecdoc.sgm.rpadmin.ServicioRPAdminAdapter"
+  parent="&amp;RPADMIN;" lazy-init="true"&gt;
+&lt;/bean&gt;
+
+</pre>
+<p>Como puede observarse en la definici&oacute;n anterior, el bean que implementa el servicio (<span class="codefrag">ServicioRPAdminAdapter</span>)
+es "hijo" del interfaz <span class="codefrag">ServicioRPAdmin</span>. Esta idea de bean "hijo" se usa en Spring
+para heredar la configuraci&oacute;n del bean padre. En este caso el padre no tiene ninguna configuraci&oacute;n
+especial, pero es de suponer que era la idea inicial del dise&ntilde;o especificar las propiedades
+en los beans "padre". </p>
+<a name="N1011E"></a><a name="Acceso+a+los+DataSources"></a>
+<h4>Acceso a los DataSources</h4>
+<p>Los beans tambi&eacute;n se usan para abstraer los datasources. En este caso, las encargadas de cargar el bean son
+las clases <span class="codefrag">DataSourceManager</span> y <span class="codefrag">DataSourceManagerMultiEntidad</span>,
+del m&oacute;dulo <span class="codefrag">SIGEM_Core</span>. El mecanismo de carga es muy similar al del acceso a la capa SOA,por
+lo que no nos extenderemos m&aacute;s en &eacute;l (Uso de la clase propia <span class="codefrag">Config</span> que
+enmascara un <span class="codefrag">ClassPathXMLApplicationContext</span>).</p>
+</div>
+
+<a name="N10139"></a><a name="Enlace+de+Spring+con+la+capa+web"></a>
+<h2 class="underlined_10">Enlace de Spring con la capa web</h2>
+<div class="section">
+<p>Como vimos en una sesi&oacute;n anterior, la capa web del m&oacute;dulo de administraci&oacute;n del registro
+presencial est&aacute; implementada en Struts. Por muchas que sean las ventajas de Spring MVC frente a Struts, este
+es un <em>framework</em> muy probado y no tiene sentido hacer el cambio salvo que estuvi&eacute;ramos
+implementando un m&oacute;dulo desde cero. Otra cuesti&oacute;n que s&iacute; es mejorable es el enlace entre la capa web (Struts) y la
+de negocio (Spring).</p>
+<p>El c&oacute;digo del localizador de servicios es demasiado complejo para una tarea tan sencilla como
+la de cargar un bean. Si se observa el fuente se ver&aacute; que es muy repetitivo. El problema es que al no ser las acciones de struts beans ellas mismas, no
+pueden recibir la inyecci&oacute;n de componentes de negocio. Reconociendo el problema, los desarrolladores
+de Spring realizaron hace tiempo un plugin para Struts que permite enlazar acciones con
+beans de modo transparente, <strong>permitiendo la inyecci&oacute;n de un bean en una acci&oacute;n de Struts</strong>.
+Esto elimina la necesidad del c&oacute;digo del localizador de servicios. Vamos a introducir esta modificaci&oacute;n
+a modo de ejemplo en una acci&oacute;n concreta (la de listar oficinas, que se ejecuta nada m&aacute;s entrar
+en el m&oacute;dulo).</p>
+<a name="N1014B"></a><a name="Configuraci%C3%B3n+del+plugin"></a>
+<h3 class="underlined_5">Configuraci&oacute;n del plugin</h3>
+<p>El plugin se distribuye junto con los dem&aacute;s JARs de Spring, en un fichero
+<a href="recursos/spring-struts.jar">spring-struts.jar</a>. Nosotros tomaremos aqu&iacute; el
+correspondiente a la versi&oacute;n 2.0.6, que es la usada en SIGEM.</p>
+<p>Se trata de un plugin de Struts, por lo que hay que configurarlo en el <span class="codefrag">struts-config.xml</span>.
+Debemos hacer dos cosas:</p>
+<ul>
+
+<li> Instanciar el plugin, indicando d&oacute;nde est&aacute;n los archivos de definici&oacute;n de beans. Adem&aacute;s del original
+de "SIGEM_Spring.xml" nosotros usaremos uno adicional para hacer el enlace entre Spring y Struts, 
+llamado "spring-struts.xml". N&oacute;tese que el primero se incluye desde el m&oacute;dulo Core dentro de un JAR, y por
+eso indicamos que est&aacute; "en el classpath" (prefijo <span class="codefrag">classpath:</span>). El segundo
+es propio del m&oacute;dulo web y por eso lo hemos puesto dentro de <span class="codefrag">WEB-INF</span>.
+<pre class="code">
+
+<em>(al final del struts-config, justo despu&eacute;s del otro plugin)</em>
+
+&lt;plug-in className="org.springframework.web.struts.ContextLoaderPlugIn"&gt;
+		&lt;set-property property="contextConfigLocation" 
+		  value="classpath:SIGEM_spring.xml,WEB-INF/spring-struts.xml" /&gt;
+&lt;/plug-in&gt;
+
+</pre>
+
+</li>
+
+<li>Definir un controlador para Struts que en realidad est&aacute; implementado en la librer&iacute;a
+ de Spring. Su trabajo ser&aacute; inyectar
+los beans de negocio en las acciones antes de ejecutarlas.
+<pre class="code">
+
+<em>(sustituyendo a la etiqueta &lt;controller/&gt; vac&iacute;a del struts-config)</em>
+<em>(es decir, despu&eacute;s de los action-mappings)</em>
+
+&lt;controller&gt;
+  &lt;set-property property="processorClass"
+	 value="org.springframework.web.struts.DelegatingRequestProcessor" /&gt;
+&lt;/controller&gt;
+</pre>
+
+</li>
+
+</ul>
+<a name="N1017F"></a><a name="Uso+del+plugin"></a>
+<h3 class="underlined_5">Uso del plugin</h3>
+<p>En nuestro fichero de definici&oacute;n de beans (WEB-INF/spring-struts.xml) debemos
+definir un bean por cada acci&oacute;n. Su nombre ser&aacute; el "path" de la acci&oacute;n en
+el struts-config y su clase la de la acci&oacute;n. A este bean le inyectaremos
+los de la capa de negocio. Por ejemplo:</p>
+<pre class="code">
+
+&lt;!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+   "http://www.springframework.org/dtd/spring-beans.dtd"&gt;
+&lt;beans&gt;
+	&lt;bean name="/listadoOficinas" 
+	    class="ieci.tecdoc.sgm.rpadmin.struts.acciones.oficinas.ListadoOficinasAction"&gt;
+	      &lt;property name="servicioOficinas" ref="RPADMIN_SERVICE_DEFAULT_IMPL"&gt;&lt;/property&gt;
+	&lt;/bean&gt;
+&lt;/beans&gt;
+
+</pre>
+<p>N&oacute;tese que referenciamos el bean "RPADMIN_SERVICE_DEFAULT_IMPL" del fichero Spring
+principal de SIGEM</p>
+<p>Y ahora cambiamos el c&oacute;digo Java de <span class="codefrag">ListadoOficinasAction</span> para
+a&ntilde;adirle un "setter" para la propiedad "servicioOficinas", y en &eacute;l instanciamos
+el objeto de negocio:</p>
+<pre class="code">
+public class ListadoOficinasAction extends RPAdminWebAction {
+	<strong>ServicioRPAdmin serv;</strong>
+	
+	private static final Logger logger = Logger.getLogger(ListadoOficinasAction.class);
+
+<strong>	public void setServicioOficinas(ServicioRPAdmin serv) {
+		this.serv = serv;
+		logger.log(Priority.INFO, "servicio RPAdmin inyectado");
+	}</strong>
+	
+	public ActionForward executeAction(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) 
+			   throws Exception {
+
+	Oficinas oficinas = serv.obtenerOficinas(
+	                          SesionHelper.obtenerEntidad(request));
+
+</pre>
+<p>N&oacute;tese que la mejora no es en la acci&oacute;n en s&iacute;, sino en la simplificaci&oacute;n del acceso al
+objeto de negocio, eliminando totalmente la dependencia del LocalizadorServicios. Tenemos
+una capa menos y a&uacute;n as&iacute; seguimos conservando la abstracci&oacute;n, ya que realmente nos la daba
+el XML de Spring, no el localizador.</p>
+<p>Una mejora evidente a la configuraci&oacute;n ser&iacute;a usar el "autowiring" en el XML,
+simplific&aacute;ndolo:</p>
+<pre class="code">
+
+&lt;!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+   "http://www.springframework.org/dtd/spring-beans.dtd"&gt;
+&lt;beans&gt;
+	&lt;bean name="/listadoOficinas" 
+	    class="ieci.tecdoc.sgm.rpadmin.struts.acciones.oficinas.ListadoOficinasAction"
+	    autowire="byType"&gt;
+	&lt;/bean&gt;
+&lt;/beans&gt;
+
+</pre>
+</div>
+
+<a name="N101AB"></a><a name="Acceso+remoto+con+Spring"></a>
+<h2 class="underlined_10">Acceso remoto con Spring</h2>
+<div class="section">
+<p>Podemos usar Spring para hacer accesibles ciertos servicios de modo remoto, para clientes
+Swing o Java en la intranet. Para este tipo de cliente, la maquinaria que requiere un servicio
+web es excesiva y el rendimiento en la comunicaci&oacute;n no ser&aacute; muy grande. Una soluci&oacute;n Java-a-Java
+es m&aacute;s eficiente. Vamos a hacer accesible el servicio por HTTP, pero ser&iacute;a pr&aacute;cticamente igual
+hacerlo con un protocolo nativo Java como RMI.</p>
+<p>Vamos a hacer accesible el servicio de administraci&oacute;n del registro presencial.</p>
+<a name="N101B7"></a><a name="Proyecto+para+exportar+el+servicio"></a>
+<h3 class="underlined_5">Proyecto para exportar el servicio</h3>
+<p>Crearemos un proyecto de tipo web llamado "ServicioRPAdminExporter". Haremos la configuraci&oacute;n: </p>
+<ol>
+
+<li>
+Configuraci&oacute;n de las librer&iacute;as
+<ul>
+
+<li>Dependencia de otros proyectos: en las propiedades del proyecto, opci&oacute;n "Java EE module dependencies" marcaremos las dependencias
+de este servicio: SIGEM_Core, SIGEM_ClasesBase y SIGEM_RegistroPresencialAdmin</li>
+
+<li>JARs: necesitamos el commons-logging y el spring.jar que podemos copiar de alg&uacute;n otro
+proyecto de SIGEM.</li>
+
+</ul>
+
+</li>
+
+<li>en la carpeta META-INF introduciremos el siguiente "context.xml", necesario para poder acceder
+a las fuentes de datos.
+<pre class="code">
+
+&lt;Context&gt;
+  &lt;ResourceLink global="jdbc/sigemAdmin" name="jdbc/sigemAdmin" 
+                type="javax.sql.DataSource"/&gt;		
+  &lt;ResourceLink global="jdbc/registroDS_000" name="jdbc/registroDS_000" 
+                type="javax.sql.DataSource"/&gt;		
+&lt;/Context&gt;
+
+</pre>
+
+</li>
+
+<li>En el web.xml configuraremos 
+<ul>
+
+<li>La localizaci&oacute;n del fichero con los beans de spring. Ser&aacute; en realidad el que viene con SIGEM,
+que es donde est&aacute; implementada la capa de negocio.</li>
+
+<li>El servlet dispatcher para permitir acceso remoto
+a trav&eacute;s de URLs del tipo /remoting/*</li>
+
+</ul>
+
+<pre class="code">
+&lt;web-app id="WebApp_ID" version="2.4"
+ xmlns="http://java.sun.com/xml/ns/j2ee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+   http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"&gt;
+ &lt;display-name&gt;ServicioRPAdminExporter&lt;/display-name&gt;
+ <strong>&lt;context-param&gt;
+  &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+  &lt;param-value&gt;classpath:SIGEM_spring.xml&lt;/param-value&gt;
+ &lt;/context-param&gt;
+ &lt;listener&gt;
+  &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
+ &lt;/listener&gt;
+ &lt;servlet&gt;
+  &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;
+  &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+ &lt;/servlet&gt;
+ &lt;servlet-mapping&gt;
+  &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;
+  &lt;url-pattern&gt;/remoting/*&lt;/url-pattern&gt;
+ &lt;/servlet-mapping&gt;</strong>
+...
+</pre>
+
+
+
+</li>
+
+<li>Crearemos un WEB-INF/dispatcher-servlet con la configuraci&oacute;n del servicio exportado:
+<pre class="code">
+
+&lt;!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+  "http://www.springframework.org/dtd/spring-beans.dtd"&gt;
+&lt;beans&gt;
+	&lt;bean name="/RPAdmin" 
+	  class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter"&gt;
+		&lt;property name="service" ref="RPADMIN_SERVICE_DEFAULT_IMPL"/&gt;
+		&lt;property name="serviceInterface" 
+		    value="ieci.tecdoc.sgm.core.services.rpadmin.ServicioRPAdmin"&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+&lt;/beans&gt;
+
+</pre>
+
+</li>
+
+<li>Comprobaremos a trav&eacute;s del navegador que la URL "http://localhost:8080/ServicioRPAdminExporter/remoting/RPAdmin"
+no da un 404. Dar&aacute; una excepci&oacute;n de tipo EOF ya que accedemos a ella con un cliente que no es 
+el adecuado.</li>
+
+</ol>
+<a name="N101F4"></a><a name="Proyecto+cliente"></a>
+<h3 class="underlined_5">Proyecto cliente</h3>
+<p>Crearemos un proyecto de tipo Java llamado "ClienteRPAdmin"</p>
+<ol>
+
+<li>Librer&iacute;as y dependencias: 
+<ul>
+<li>en el "Configure Build Path", solapa "Projects" marcaremos
+como requerido el proyecto "SIGEM_Core" ya que en &eacute;l se encuentra definido el interfaz del servicio
+al que vamos a acceder.</li>
+
+<li>Copiaremos los JARs de spring y de commons-logging de cualquier otro proyecto y los
+a&ntilde;adiremos al build path.</li>
+
+</ul>
+</li>
+
+<li>Crearemos un spring.xml en la ra&iacute;z de los fuentes (carpeta src) con el bean
+cliente:
+<pre class="code">
+
+&lt;!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+   "http://www.springframework.org/dtd/spring-beans.dtd"&gt;
+&lt;beans&gt;
+	&lt;bean id="RPAdmin"
+	   class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean"&gt;
+		&lt;property name="serviceUrl" 
+		    value="http://localhost:8080/ServicioRPAdminExporter/remoting/RPAdmin"/&gt;
+		&lt;property name="serviceInterface"
+		    value="ieci.tecdoc.sgm.core.services.rpadmin.ServicioRPAdmin"&gt;&lt;/property&gt;
+	&lt;/bean&gt;
+
+&lt;/beans&gt;
+</pre>
+Por desgracia, en Eclipse por defecto cuando se crea un XML no se copia a la carpeta de binarios
+junto con las clases. Necesitamos que est&eacute; ah&iacute; porque lo vamos a cargar desde el classpath. Debemos
+ir a las propiedades del proyecto y en la opci&oacute;n Java compiler &gt; Building &gt; Enable specific settings
+&gt; Filtered resources debemos eliminar el *.xml, para indicar que SI queremos que se copie junto
+con los .class al compilar.
+</li>
+
+<li>Crearemos una clase que act&uacute;e de cliente. Dicha clase tendr&aacute; un c&oacute;digo
+como el siguiente, que acceder&iacute;a a la lista de oficinas de una entidad:
+<pre class="code">
+package sigem;
+
+import java.util.Iterator;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import ieci.tecdoc.sgm.core.services.dto.Entidad;
+import ieci.tecdoc.sgm.core.services.rpadmin.Oficinas;
+import ieci.tecdoc.sgm.core.services.rpadmin.RPAdminException;
+import ieci.tecdoc.sgm.core.services.rpadmin.ServicioRPAdmin;
+
+public class Cliente {
+	public static void main(String[] args) throws RPAdminException {
+		ClassPathXmlApplicationContext contexto;
+		
+		contexto = new ClassPathXmlApplicationContext("spring.xml");
+		ServicioRPAdmin servicio = (ServicioRPAdmin) contexto.getBean("RPAdmin");
+		Entidad e = new Entidad();
+		e.setIdentificador("000");
+		Oficinas lista = servicio.obtenerOficinas(e);
+		for(int i=0;i&lt;lista.count();i++) {
+			System.out.println(lista.get(i).getNombre());
+		}
+		
+	}
+}
+
+</pre>
+
+</li>
+
+<li>Necesitaremos que las clases que van a viajar por la red sean serializables. Esto
+nos pasar&aacute; con la clase Oficina, Oficinas y Entidad (la del paquete "ieci.tecdoc.sgm.core.services.dto")
+</li>
+
+
+<li>Una vez hecho todo esto, ya podemos probar el cliente, ejecut&aacute;ndolo como una aplicaci&oacute;n Java (&iexcl;no
+en el servidor!).</li>
+
+
+
+</ol>
+</div>
+
+<p class="pageBreakAfter"></p>
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007-2008 Depto. CCIA</div>
+</div>
+</body>
+</html>

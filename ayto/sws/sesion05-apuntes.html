@@ -1,0 +1,857 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Servicios web seguros. Almac&eacute;n de certificados</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/cursos/sws"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servicios Web seguros" src="images/baner_j2ee_der.gif" title="Servicios Web seguros"></a>
+</div>
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Apuntes</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Servicios Web seguros</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Servicios Web seguros">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesi&oacute;n 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesi&oacute;n 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesi&oacute;n 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesi&oacute;n 4</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesi&oacute;n 5</div>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesi&oacute;n 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesi&oacute;n 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesi&oacute;n 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesi&oacute;n 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesi&oacute;n 10</a>
+</div>
+<div class="menuitem">
+<a href="sesion11-apuntes.html">Sesi&oacute;n 11</a>
+</div>
+<div class="menuitem">
+<a href="sesion12-apuntes.html">Sesi&oacute;n 12</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html" title="Roadmap">Roadmap</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion05-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Servicios web seguros. Almac&eacute;n de certificados</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Generar+el+par+de+claves">Generar el par de claves</a>
+</li>
+<li>
+<a href="#Configurar+una+autoridad+certificadora">Configurar una autoridad certificadora</a>
+</li>
+<li>
+<a href="#Importar+certificados+al+almac%C3%A9n">Importar certificados al almac&eacute;n</a>
+</li>
+<li>
+<a href="#Ejercicios">Ejercicios</a>
+<ul class="minitoc">
+<li>
+<a href="#Contenido+de+los+almacenes+de+claves">Contenido de los almacenes de claves</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+
+<a name="N1000E"></a><a name="Generar+el+par+de+claves"></a>
+<h2 class="underlined_10">Generar el par de claves</h2>
+<div class="section">
+<p>Para usar infraestructura de clave p&uacute;blica, PKI (public key infrastructure), 
+necesitamos poseer una clave privada, un certificado que podamos enviar 
+a otros (que contendr&aacute; nuestra clave p&uacute;blica), y certificados de aquellas 
+personas a las que vamos a enviar algo confidencial. Para obtener los 
+certificados necesitaremos tener previamente las claves p&uacute;blicas de las 
+autoridades certificadoras (CA) que los distribuyen y certifican. 
+Estas claves p&uacute;blicas de las CA, est&aacute;n contenidas en certificados, 
+que van firmados por las propias CA (con su propia clave privada). 
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+  	
+<th colspan="1" rowspan="1">Clave privada</th>
+  	<th colspan="1" rowspan="1">Certificado</th>
+  	<th colspan="1" rowspan="1">Firmado por...</th>
+  	<th colspan="1" rowspan="1">Uso</th>
+  
+</tr>
+  
+<tr>
+  	
+<td colspan="1" rowspan="1">c1-privada</td>
+  	<td colspan="1" rowspan="1">CN=Boyan, DC=jtech, ... Cl.P&uacute;blica=c1-publica</td>
+  	<td colspan="1" rowspan="1">cCA-privada</td>
+  	<td colspan="1" rowspan="1">Para m&iacute;, y para enviar el certificado a otros</td>
+  
+</tr>
+  
+<tr>
+    
+<td colspan="1" rowspan="1">(no disponible)</td>
+    <td colspan="1" rowspan="1">CN=Certificate Authority, DC=verysign, ... Cl.P&uacute;blica=cCA-publica</td>
+  	<td colspan="1" rowspan="1">cCA-privada</td>
+    <td colspan="1" rowspan="1">Para comunicar con la CA (y as&iacute; obtener los certificados de los amigos)</td>
+  
+</tr>
+  
+<tr>
+    
+<td colspan="1" rowspan="1">(no disponible)</td>
+    <td colspan="1" rowspan="1">CN=Amigo1,DC=dominio1, ... Cl.P&uacute;blica=c2-publica</td>
+  	<td colspan="1" rowspan="1">cCA-privada</td>
+    <td colspan="1" rowspan="1">Para cifrar cuando env&iacute;o a Amigo1</td>
+  
+</tr>
+  
+<tr>
+    
+<td colspan="1" rowspan="1">(no disponible)</td>
+    <td colspan="1" rowspan="1">CN=Amigo2,DC=dominio2, ... Cl.P&uacute;blica=c3-publica</td>
+  	<td colspan="1" rowspan="1">cCA-privada</td>
+    <td colspan="1" rowspan="1">Para cifrar cuando env&iacute;o a Amigo2</td>
+  
+</tr>
+
+</table>
+<p>Este almac&eacute;n de claves (keystore) se almacena en un archivo, 
+donde cada entrada est&aacute; compuesta por un conjunto de:</p>
+<ul>
+  
+<li>Alias; Clave privada (si procede); Certificado.</li>
+
+</ul>
+<p>En Java se utiliza la utilidad keytool , que se encuentra en la carpeta 
+<span class="codefrag">bin</span> del JDK, en nuestro caso est&aacute; en:</p>
+<pre class="code">/opt/jdk1.6.0_20/bin/keytool</pre>
+<p>Si tenemos <span class="codefrag">/opt/jdk1.6.0_20/bin/</span> a&ntilde;adido al PATH, no har&aacute; falta 
+especificar la ruta completa del comando (se a&ntilde;ade con export 
+<span class="codefrag">PATH=$PATH:$JAVA_HOME/bin/</span> en sistemas unix-like y estando la 
+variable <span class="codefrag">JAVA_HOME</span> definida). Si tecleamos <span class="codefrag">keytool</span> 
+sin argumentos en una terminal, podremos comprobar si est&aacute; en el path o no 
+(deber&aacute; mostrar una extensa lista de argumentos con los que se usa).</p>
+<pre class="code"> 
+servicios@servicios:~$ keytool
+sintaxis de keytool:
+
+-certreq     [-v] [-protected]
+	     [-alias &lt;alias&gt;] [-sigalg &lt;algoritmo_firma&gt;]
+	     [-file &lt;archivo_csr&gt;] [-keypass &lt;contrase&ntilde;a_clave&gt;]
+	     [-keystore &lt;almac&eacute;n_claves&gt;] [-storepass &lt;contrase&ntilde;a_almac&eacute;n&gt;]
+	     [-storetype &lt;storetype&gt;] [-providername &lt;name&gt;]
+	     [-providerclass &lt;provider_class_name&gt; [-providerarg &lt;arg&gt;]] ...
+	     [-providerpath &lt;pathlist&gt;]
+
+-changealias [-v] [-protected] -alias &lt;alias&gt; -destalias &lt;destalias&gt;
+	     [-keypass &lt;contrase&ntilde;a_claves&gt;]
+	     [-keystore &lt;almac&eacute;n_claves&gt;] [-storepass &lt;contrase&ntilde;a_almac&eacute;n&gt;]
+	     [-storetype &lt;storetype&gt;] [-providername &lt;name&gt;]
+	     [-providerclass &lt;provider_class_name&gt; [-providerarg &lt;arg&gt;]] ...
+	     [-providerpath &lt;pathlist&gt;]
+
+-delete      [-v] [-protected] -alias &lt;alias&gt;
+	     [-keystore &lt;almac&eacute;n_claves&gt;] [-storepass &lt;contrase&ntilde;a_almac&eacute;n&gt;]
+	     [-storetype &lt;storetype&gt;] [-providername &lt;name&gt;]
+	     [-providerclass &lt;provider_class_name&gt; [-providerarg &lt;arg&gt;]] ...
+	     [-providerpath &lt;pathlist&gt;]
+
+-exportcert  [-v] [-rfc] [-protected]
+	     [-alias &lt;alias&gt;] [-file &lt;archivo_cert&gt;]
+	     [-keystore &lt;almac&eacute;n_claves&gt;] [-storepass &lt;contrase&ntilde;a_almac&eacute;n&gt;]
+	     [-storetype &lt;storetype&gt;] [-providername &lt;name&gt;]
+	     [-providerclass &lt;provider_class_name&gt; [-providerarg &lt;arg&gt;]] ...
+	     [-providerpath &lt;pathlist&gt;]
+
+-genkeypair  [-v] [-protected]
+	     [-alias &lt;alias&gt;]
+	     [-keyalg &lt;algoritmo_clave&gt;] [-keysize &lt;tama&ntilde;o_clave&gt;]
+	     [-sigalg &lt;algoritmo_firma&gt;] [-dname &lt;nombre_d&gt;]
+	     [-validity &lt;d&iacute;as_validez&gt;] [-keypass &lt;contrase&ntilde;a_clave&gt;]
+	     [-keystore &lt;almac&eacute;n_claves&gt;] [-storepass &lt;contrase&ntilde;a_almac&eacute;n&gt;]
+	     [-storetype &lt;storetype&gt;] [-providername &lt;name&gt;]
+	     [-providerclass &lt;provider_class_name&gt; [-providerarg &lt;arg&gt;]] ...
+	     [-providerpath &lt;pathlist&gt;]
+
+-genseckey   [-v] [-protected]
+	     [-alias &lt;alias&gt;] [-keypass &lt;keypass&gt;]
+	     [-keyalg &lt;algoritmo_clave&gt;] [-keysize &lt;tama&ntilde;o_clave&gt;]
+	     [-keystore &lt;almac&eacute;n_claves&gt;] [-storepass &lt;contrase&ntilde;a_almac&eacute;n&gt;]
+	     [-storetype &lt;storetype&gt;] [-providername &lt;name&gt;]
+	     [-providerclass &lt;provider_class_name&gt; [-providerarg &lt;arg&gt;]] ...
+	     [-providerpath &lt;pathlist&gt;]
+
+-help
+
+-importcert  [-v] [-noprompt] [-trustcacerts] [-protected]
+	     [-alias &lt;alias&gt;]
+	     [-file &lt;archivo_cert&gt;] [-keypass &lt;contrase&ntilde;a_clave&gt;]
+	     [-keystore &lt;almac&eacute;n_claves&gt;] [-storepass &lt;contrase&ntilde;a_almac&eacute;n&gt;]
+	     [-storetype &lt;storetype&gt;] [-providername &lt;name&gt;]
+	     [-providerclass &lt;provider_class_name&gt; [-providerarg &lt;arg&gt;]] ...
+	     [-providerpath &lt;pathlist&gt;]
+
+-importkeystore [-v] 
+	     [-srckeystore &lt;srckeystore&gt;] [-destkeystore &lt;destkeystore&gt;]
+	     [-srcstoretype &lt;srcstoretype&gt;] [-deststoretype &lt;deststoretype&gt;]
+	     [-srcstorepass &lt;srcstorepass&gt;] [-deststorepass &lt;deststorepass&gt;]
+	     [-srcprotected] [-destprotected]
+	     [-srcprovidername &lt;srcprovidername&gt;]
+	     [-destprovidername &lt;destprovidername&gt;]
+	     [-srcalias &lt;srcalias&gt; [-destalias &lt;destalias&gt;]
+	       [-srckeypass &lt;srckeypass&gt;] [-destkeypass &lt;destkeypass&gt;]]
+	     [-noprompt]
+	     [-providerclass &lt;provider_class_name&gt; [-providerarg &lt;arg&gt;]] ...
+	     [-providerpath &lt;pathlist&gt;]
+
+-keypasswd   [-v] [-alias &lt;alias&gt;]
+	     [-keypass &lt;contrase&ntilde;a_clave_antigua&gt;] [-new &lt;nueva_contrase&ntilde;a_clave&gt;]
+	     [-keystore &lt;almac&eacute;n_claves&gt;] [-storepass &lt;contrase&ntilde;a_almac&eacute;n&gt;]
+	     [-storetype &lt;storetype&gt;] [-providername &lt;name&gt;]
+	     [-providerclass &lt;provider_class_name&gt; [-providerarg &lt;arg&gt;]] ...
+	     [-providerpath &lt;pathlist&gt;]
+
+-list        [-v | -rfc] [-protected]
+	     [-alias &lt;alias&gt;]
+	     [-keystore &lt;almac&eacute;n_claves&gt;] [-storepass &lt;contrase&ntilde;a_almac&eacute;n&gt;]
+	     [-storetype &lt;storetype&gt;] [-providername &lt;name&gt;]
+	     [-providerclass &lt;provider_class_name&gt; [-providerarg &lt;arg&gt;]] ...
+	     [-providerpath &lt;pathlist&gt;]
+
+-printcert   [-v] [-file &lt;archivo_certif&gt;]
+
+-storepasswd [-v] [-new &lt;nueva_contrase&ntilde;a_almac&eacute;n&gt;]
+	     [-keystore &lt;almac&eacute;n_claves&gt;] [-storepass &lt;contrase&ntilde;a_almac&eacute;n&gt;]
+	     [-storetype &lt;storetype&gt;] [-providername &lt;name&gt;]
+	     [-providerclass &lt;provider_class_name&gt; [-providerarg &lt;arg&gt;]] ...
+	     [-providerpath &lt;pathlist&gt;]
+
+</pre>
+<p>Creamos una carpeta <span class="codefrag">~/claves</span> y nos situamos en ella. 
+Generamos un par de claves p&uacute;blica y privada  para nuestro cliente de 
+servicios web, y le ponemos el alias "<span class="codefrag">cliente1</span>". Lo almacenamos 
+en el almac&eacute;n <span class="codefrag">cliente.ks</span> (ks de keystore), y le indicamos a 
+keytool que el algoritmo para generar la clave ser&aacute; el RSA, mientras que el 
+de la firma digital ser&aacute; SHA1 con RSA (por defecto se hubiera usado MD5withRSA, 
+pero SHA1 es m&aacute;s seguro). </p>
+<pre class="code"> 
+servicios@servicios:~/claves$ keytool -genkey -alias cliente1 
+  -keystore cliente.ks -dname cn=cliente1,dc=jtech,dc=ua,dc=es 
+  -keyalg RSA -sigalg SHA1withRSA
+Escriba la contrase&ntilde;a del almac&eacute;n de claves: cliente1-kspass
+Volver a escribir la contrase&ntilde;a nueva: cliente1-kspass
+Escriba la contrase&ntilde;a clave para &lt;cliente1&gt;
+	(INTRO si es la misma contrase&ntilde;a que la del almac&eacute;n de claves):cliente1-pass
+Volver a escribir la contrase&ntilde;a nueva: cliente1-pass
+
+</pre>
+<p>La contrase&ntilde;a <span class="codefrag">cliente1-kspass</span> es un string que se a&ntilde;adir&aacute; 
+al contenido del almac&eacute;n antes de generar el c&oacute;digo hash. Si alguien
+malintencionado modifica el almac&eacute;n, no ser&aacute; capaz de actualizar 
+el hash de forma correcta y cuando keytool abra un almac&eacute;n con el 
+hash incorrecto, nos avisar&aacute;. Por otro lado, la contrase&ntilde;a <span class="codefrag">cliente1-pass</span> 
+se usar&aacute; para encriptar la clave privada de <span class="codefrag">cliente1</span>, para que 
+otras personas no sean capaces de leer la clave privada (es fundamental 
+mantenerla en secreto). 
+</p>
+<p>Comprobamos que la entrada ha sido a&ntilde;adida, y keytool nos pregunta 
+la contrase&ntilde;a del almac&eacute;n de claves, para poder calcular el hash:
+</p>
+<pre class="code"> 
+&lt;servicios@servicios:~/claves$ keytool -list -v -keystore cliente.ks 
+Escriba la contrase&ntilde;a del almac&eacute;n de claves:  cliente1-kspass
+
+Tipo de almac&eacute;n de claves: JKS
+Proveedor de almac&eacute;n de claves: SUN
+
+Su almac&eacute;n de claves contiene entrada 1
+
+Nombre de alias: cliente1
+Fecha de creaci&oacute;n: 16-may-2010
+Tipo de entrada: PrivateKeyEntry
+Longitud de la cadena de certificado: 1
+Certificado[1]:
+Propietario: CN=cliente1, DC=jtech, DC=ua, DC=es
+Emisor: CN=cliente1, DC=jtech, DC=ua, DC=es
+N&uacute;mero de serie: 4befa3e3
+V&aacute;lido desde: Sun May 16 09:50:59 CEST 2010 hasta: Sat Aug 14 09:50:59 CEST 2010
+Huellas digitales del certificado:
+	 MD5:  55:09:20:EE:52:2A:FD:EC:40:9D:95:C6:F0:87:22:8E
+	 SHA1: C2:99:10:31:4F:B5:0A:20:CE:98:2E:59:FD:57:9E:95:4F:B0:36:EB
+	 Nombre del algoritmo de firma: SHA1withRSA
+	 Versi&oacute;n: 3
+
+
+*******************************************
+*******************************************
+
+</pre>
+<p>El hecho de que el propietario y el emisor sean los mismos, como se puede 
+observar en la entrada mostrada, significa que es un certificado autofirmado 
+(self-signed). Necesitamos que una autoridad certificadora (CA) nos lo firme, 
+y para ello generaremos una petici&oacute;n de certificado:
+</p>
+<pre class="code">
+servicios@servicios:~/claves$ keytool -certreq -alias cliente1 
+  -keystore cliente.ks -file cliente1.csr
+Escriba la contrase&ntilde;a del almac&eacute;n de claves:  cliente1-kspass
+Escriba la contrase&ntilde;a clave para &lt;cliente1&gt;: cliente1-pass
+
+servicios@servicios:~/claves$ ls
+cliente1.csr  cliente.ks
+</pre>
+<p>Ahora podr&iacute;amos enviar el archivo <span class="codefrag">cliente1.csr</span> a alguna CA conocida, 
+pagando el precio que &eacute;sta haya establecido por el servicio.</p>
+</div> 
+
+<a name="N100E6"></a><a name="Configurar+una+autoridad+certificadora"></a>
+<h2 class="underlined_10">Configurar una autoridad certificadora</h2>
+<div class="section">
+<p>Para configurar una autoridad certificadora (CA) vamos a necesitar la 
+herramienta OpenSSL que se encuentra en 
+<a href="www.openssl.org">www.openssl.org</a>. Si no se encuentra en el 
+sistema, se puede descargar de la p&aacute;gina, o lo que es preferible, 
+instalarla con el gestor de paquetes de su sistema operativo. </p>
+<p>Creamos la carpeta <span class="codefrag">~/autoridad</span> y nos situamos en ella. 
+En primer lugar indicamos en una variable de entorno el nombre de fichero 
+que OpenSSL podr&aacute; usar para grabar informaci&oacute;n de semillas aleatorias:</p>
+<pre class="code">export RANDFILE=rand</pre>
+<p>Ahora vamos a ejecutar el comando <span class="codefrag">openssl</span> indic&aacute;ndole que 
+genere una petici&oacute;n de certificado (<span class="codefrag">-req</span>) creando una nueva 
+clave privada (<span class="codefrag">-new</span>), coloc&aacute;ndola en el archivo 
+<span class="codefrag">CAkey.pem</span>, y colocando el la petici&oacute;n de certificado en 
+<span class="codefrag">CAreq.pem</span>. 
+</p>
+<pre class="code"> 
+servicios@servicios:~/autoridad$ openssl req -new -keyout CAkey.pem 
+  -out CAreq.pem
+Generating a 1024 bit RSA private key
+..........................++++++
+......++++++
+writing new private key to 'CAkey.pem'
+Enter PEM pass phrase: ca-pass
+Verifying - Enter PEM pass phrase: ca-pass
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:ES
+State or Province Name (full name) [Some-State]:Alicante
+Locality Name (eg, city) []:Alicante
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Universidad de 
+  Alicante
+Organizational Unit Name (eg, section) []:JTech
+Common Name (eg, YOUR name) []:Boyan Bonev
+Email Address []:boyan@ua.es
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:    
+An optional company name []:
+
+</pre>
+<p>No introducimos ninguna "challenge password", para que no se nos 
+requiera al iniciar Apache. </p>
+<p>A continuaci&oacute;n generamos un certificado autofirmado, indicando que sea 
+v&aacute;lido hasta dentro de 7120 d&iacute;as, que cumple el est&aacute;ndar x509, 
+que lo genere en el archivo <span class="codefrag">CAcert.pem</span>, y le pasamos la 
+clave privada con la que debe autofirmarlo (<span class="codefrag">CAkey.pem</span>), 
+as&iacute; como el archivo que contiene la petici&oacute;n de certificado (<span class="codefrag">CAreq.pem</span>), 
+y tambi&eacute;n la ruta del archivo de configuraci&oacute;n de OpenSSL 
+para que a&ntilde;ada opciones extendidas en la secci&oacute;n v3_ca del certificado.
+</p>
+<pre class="code"> 
+servicios@servicios:~/autoridad$ openssl x509 -signkey CAkey.pem -req 
+  -days 7120 -in CAreq.pem -out CAcert.pem -extfile /etc/ssl/openssl.cnf 
+  -extensions v3_ca
+Signature ok
+subject=/C=ES/ST=Alicante/L=Alicante/O=Universidad de Alicante/OU=JTech/
+                                 CN=Boyan Bonev/emailAddress=boyan@ua.es
+Getting Private key
+Enter pass phrase for CAkey.pem: ca-pass
+
+servicios@servicios:~/autoridad$ ls
+CAcert.pem  CAkey.pem  CAreq.pem  rand
+
+</pre>
+<p>Ya podemos utilizar esta autoridad certificadora para firmar la 
+petici&oacute;n de certificado del cliente1: <span class="codefrag">cliente1.csr</span>. En primer 
+lugar generamos un archivo de texto con n&uacute;meros de serie en hexadecimal 
+que OpenSSL utilizar&aacute; para ir asignando a cada nuevo certificado que emita.
+</p>
+<pre class="code"> 
+servicios@servicios:~/autoridad$ echo 02 &gt; nserie.txt
+servicios@servicios:~/autoridad$ cat nserie.txt 
+02
+
+</pre>
+<p>Ahora, para firmar la petici&oacute;n de certificado de cliente1, 
+indicamos con qu&eacute; certificado lo debe hacer (<span class="codefrag">CAcert.pem</span>), 
+la clave privada de la autoridad certificadora (<span class="codefrag">CAkey.pem</span>), 
+el request en s&iacute; (<span class="codefrag">~/claves/cliente1.csr</span>), e indicamos tambi&eacute;n 
+que se genere en la carpeta de claves, con el nombre <span class="codefrag">cliente1.cer</span> 
+(<span class="codefrag">~/claves/cliente1.cer</span>). </p>
+<pre class="code"> 
+servicios@servicios:~/autoridad$ openssl x509 -CA CAcert.pem -CAkey CAkey.pem 
+  -CAserial nserie.txt -req -in ../claves/cliente1.csr 
+  -out ../claves/cliente1.cer -days 365 
+Signature ok
+subject=/DC=es/DC=ua/DC=jtech/CN=cliente1
+Getting CA Private Key
+Enter pass phrase for CAkey.pem: ca-pass
+servicios@servicios:~/autoridad$ cd ../claves/
+
+servicios@servicios:~/claves$ ls
+cliente1.cer  cliente1.csr  cliente.ks
+
+</pre>
+</div> 
+
+<a name="N10149"></a><a name="Importar+certificados+al+almac%C3%A9n"></a>
+<h2 class="underlined_10">Importar certificados al almac&eacute;n</h2>
+<div class="section">
+<p>Nuestro almac&eacute;n de certificados es <span class="codefrag">cliente.ks</span>. Vamos a 
+importar en &eacute;l el certificado autofirmado de la autoridad certificadora 
+que hemos configurado. As&iacute;, cuando importemos el certificado de cliente1, 
+que es certificado por nuestra propia CA, &eacute;ste no ser&aacute; rechazado porque 
+ya contamos con la clave p&uacute;blica de la CA. </p>
+<pre class="code"> 
+servicios@servicios:~/claves$ keytool -import -alias miCA 
+  -file ../autoridad/CAcert.pem -keystore cliente.ks 
+Escriba la contrase&ntilde;a del almac&eacute;n de claves:  
+Propietario: EMAILADDRESS=boyan@ua.es, CN=Boyan Bonev, OU=JTech, O=Universidad 
+  de Alicante, L=Alicante, ST=Alicante, C=ES
+Emisor: EMAILADDRESS=boyan@ua.es, CN=Boyan Bonev, OU=JTech, O=Universidad 
+  de Alicante, L=Alicante, ST=Alicante, C=ES
+N&uacute;mero de serie: 8f4d2f01cd666191
+V&aacute;lido desde: Sun May 16 10:45:07 CEST 2010 hasta: Mon Nov 12 09:45:07 CET 2029
+Huellas digitales del certificado:
+	 MD5:  7D:7D:55:38:13:A8:A5:3C:9D:43:C7:8F:3D:08:D0:F4
+	 SHA1: 4C:FE:89:5C:7A:B2:1C:B0:6E:9E:66:2B:9D:EE:91:87:9B:1F:4F:78
+	 Nombre del algoritmo de firma: SHA1withRSA
+	 Versi&oacute;n: 3
+
+Extensiones: 
+
+#1: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: C0 84 F6 A8 8E 15 0F F4   FF 2C AF 1C 06 A6 D3 3F  .........,.....?
+0010: 7D 60 BA A9                                        .`..
+]
+]
+
+#2: ObjectId: 2.5.29.19 Criticality=false
+BasicConstraints:[
+  CA:true
+  PathLen:2147483647
+]
+
+#3: ObjectId: 2.5.29.35 Criticality=false
+AuthorityKeyIdentifier [
+KeyIdentifier [
+0000: C0 84 F6 A8 8E 15 0F F4   FF 2C AF 1C 06 A6 D3 3F  .........,.....?
+0010: 7D 60 BA A9                                        .`..
+]
+
+[EMAILADDRESS=boyan@ua.es, CN=Boyan Bonev, OU=JTech, O=Universidad de Alicante, 
+  L=Alicante, ST=Alicante, C=ES]
+SerialNumber: [    8f4d2f01 cd666191]
+]
+
+&iquest;Confiar en este certificado? [no]:  si
+Se ha a&ntilde;adido el certificado al almac&eacute;n de claves
+
+</pre>
+<p>Se pregunta expl&iacute;citamente al usuario si conf&iacute;a en el certificado, 
+ya que &eacute;ste es autofirmado, y por tanto se trata de una cuesti&oacute;n de 
+confianza. Si confiamos y lo importamos, entonces autom&aacute;ticamente 
+confiamos en todos los certificados digitales emitidos por &eacute;l. 
+Ahora ya podemos importar el certificado de cliente1, que est&aacute; certificado 
+por la CA con cuyo certificado cuenta el almac&eacute;n de claves. 
+Especificamos el alias (cliente1) el archivo con el certificado 
+(<span class="codefrag">cliente1.cer</span>), y el almac&eacute;n de claves (<span class="codefrag">cliente.ks</span>):
+</p>
+<pre class="code"> 
+servicios@servicios:~/claves$ keytool -import -alias cliente1 
+  -file cliente1.cer -keystore cliente.ks 
+Escriba la contrase&ntilde;a del almac&eacute;n de claves:  cliente1-kspass
+Escriba la contrase&ntilde;a clave para &lt;cliente1&gt;: cliente1-pass
+Se ha instalado la respuesta del certificado en el almac&eacute;n de claves
+
+</pre>
+<p>Ahora podemos comprobar el contenido del almac&eacute;n, o 
+bien utilizando de nuevo la herramienta keytool,
+</p>
+<pre class="code"> 
+servicios@servicios:~/claves$ keytool -list -v -keystore cliente.ks 
+Escriba la contrase&ntilde;a del almac&eacute;n de claves:  
+
+Tipo de almac&eacute;n de claves: JKS
+Proveedor de almac&eacute;n de claves: SUN
+
+Su almac&eacute;n de claves contiene 2 entradas
+
+Nombre de alias: mica
+Fecha de creaci&oacute;n: 16-may-2010
+Tipo de entrada: trustedCertEntry
+
+Propietario: EMAILADDRESS=boyan@ua.es, CN=Boyan Bonev, OU=JTech, O=Universidad 
+  de Alicante, L=Alicante, ST=Alicante, C=ES
+Emisor: EMAILADDRESS=boyan@ua.es, CN=Boyan Bonev, OU=JTech, O=Universidad de 
+  Alicante, L=Alicante, ST=Alicante, C=ES
+N&uacute;mero de serie: 8f4d2f01cd666191
+V&aacute;lido desde: Sun May 16 10:45:07 CEST 2010 hasta: Mon Nov 12 09:45:07 CET 2029
+Huellas digitales del certificado:
+	 MD5:  7D:7D:55:38:13:A8:A5:3C:9D:43:C7:8F:3D:08:D0:F4
+	 SHA1: 4C:FE:89:5C:7A:B2:1C:B0:6E:9E:66:2B:9D:EE:91:87:9B:1F:4F:78
+	 Nombre del algoritmo de firma: SHA1withRSA
+	 Versi&oacute;n: 3
+
+Extensiones: 
+
+#1: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: C0 84 F6 A8 8E 15 0F F4   FF 2C AF 1C 06 A6 D3 3F  .........,.....?
+0010: 7D 60 BA A9                                        .`..
+]
+]
+
+#2: ObjectId: 2.5.29.19 Criticality=false
+BasicConstraints:[
+  CA:true
+  PathLen:2147483647
+]
+
+#3: ObjectId: 2.5.29.35 Criticality=false
+AuthorityKeyIdentifier [
+KeyIdentifier [
+0000: C0 84 F6 A8 8E 15 0F F4   FF 2C AF 1C 06 A6 D3 3F  .........,.....?
+0010: 7D 60 BA A9                                        .`..
+]
+
+[EMAILADDRESS=boyan@ua.es, CN=Boyan Bonev, OU=JTech, O=Universidad de Alicante, 
+  L=Alicante, ST=Alicante, C=ES]
+SerialNumber: [    8f4d2f01 cd666191]
+]
+
+
+
+*******************************************
+*******************************************
+
+
+Nombre de alias: cliente1
+Fecha de creaci&oacute;n: 16-may-2010
+Tipo de entrada: PrivateKeyEntry
+Longitud de la cadena de certificado: 2
+Certificado[1]:
+Propietario: CN=cliente1, DC=jtech, DC=ua, DC=es
+Emisor: EMAILADDRESS=boyan@ua.es, CN=Boyan Bonev, OU=JTech, O=Universidad de 
+  Alicante, L=Alicante, ST=Alicante, C=ES
+N&uacute;mero de serie: 3
+V&aacute;lido desde: Sun May 16 10:56:50 CEST 2010 hasta: Mon May 16 10:56:50 CEST 2011
+Huellas digitales del certificado:
+	 MD5:  B4:8D:FE:CB:2B:B7:8A:56:DF:9F:75:42:61:75:34:0B
+	 SHA1: 79:6F:CF:5A:9C:04:79:76:E6:F7:0C:24:66:5C:5A:9A:15:D5:52:75
+	 Nombre del algoritmo de firma: SHA1withRSA
+	 Versi&oacute;n: 1
+Certificado[2]:
+Propietario: EMAILADDRESS=boyan@ua.es, CN=Boyan Bonev, OU=JTech, O=Universidad 
+  de Alicante, L=Alicante, ST=Alicante, C=ES
+Emisor: EMAILADDRESS=boyan@ua.es, CN=Boyan Bonev, OU=JTech, O=Universidad de 
+  Alicante, L=Alicante, ST=Alicante, C=ES
+N&uacute;mero de serie: 8f4d2f01cd666191
+V&aacute;lido desde: Sun May 16 10:45:07 CEST 2010 hasta: Mon Nov 12 09:45:07 CET 2029
+Huellas digitales del certificado:
+	 MD5:  7D:7D:55:38:13:A8:A5:3C:9D:43:C7:8F:3D:08:D0:F4
+	 SHA1: 4C:FE:89:5C:7A:B2:1C:B0:6E:9E:66:2B:9D:EE:91:87:9B:1F:4F:78
+	 Nombre del algoritmo de firma: SHA1withRSA
+	 Versi&oacute;n: 3
+
+Extensiones: 
+
+#1: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: C0 84 F6 A8 8E 15 0F F4   FF 2C AF 1C 06 A6 D3 3F  .........,.....?
+0010: 7D 60 BA A9                                        .`..
+]
+]
+
+#2: ObjectId: 2.5.29.19 Criticality=false
+BasicConstraints:[
+  CA:true
+  PathLen:2147483647
+]
+
+#3: ObjectId: 2.5.29.35 Criticality=false
+AuthorityKeyIdentifier [
+KeyIdentifier [
+0000: C0 84 F6 A8 8E 15 0F F4   FF 2C AF 1C 06 A6 D3 3F  .........,.....?
+0010: 7D 60 BA A9                                        .`..
+]
+
+[EMAILADDRESS=boyan@ua.es, CN=Boyan Bonev, OU=JTech, O=Universidad de Alicante, 
+  L=Alicante, ST=Alicante, C=ES]
+SerialNumber: [    8f4d2f01 cd666191]
+]
+
+
+
+*******************************************
+*******************************************
+
+</pre>
+<p>O bien utilizando alguna herramienta con entorno gr&aacute;fico, como por 
+ejemplo la herramienta Portecle, que es de c&oacute;digo libre y est&aacute; hecha en 
+Java, utiliznado la librer&iacute;a (mejor dicho, la biblioteca) BouncyCastle. 
+La herramienta se puede descargar de 
+<a href="http://sourceforge.net/projects/portecle/">http://sourceforge.net/projects/portecle/</a> 
+y es suficiente con descomprimirla y ejecutar con el comando</p>
+<pre class="code">java -jar portecle-1.5/portecle.jar</pre>
+<p>Podemos abrir el archivo <span class="codefrag">cliente.ks</span>, nos preguntar&aacute; por la password, 
+introducimos <span class="codefrag">cliente1-kspass</span>, y obtenemos una vista como la siguiente:</p>
+<p>
+<img alt="Interfaz de Portecle" content-width="7.22cm" src="imagenes/sws/25.png" width="602"></p>
+<p>Si hacemos doble click sobre cliente1, obtendremos una ventana que nos 
+muestra dos certificados:</p>
+<p>
+<img alt="Certificado 1 de 'cliente1'" content-width="7.22cm" src="imagenes/sws/26.png" width="602"></p>
+<p>y:</p>
+<p>
+<img alt="Certificado 2 de 'cliente1'" content-width="7.22cm" src="imagenes/sws/27.png" width="602"></p>
+<p>El primero de ellos es el certificado del cliente, y ha sido emitido 
+por la autoridad certificadora cuyo certificado tenemos en segundo lugar, 
+v&eacute;ase c&oacute;mo el Issuer del primer certificado coincide con el Subject 
+(que deber&iacute;a llamarse Owner - propietario) del segundo certificado. 
+Finalmente abrimos el certificado de miCA (el alias est&aacute; en min&uacute;sculas 
+porque no es case-sensitive):</p>
+<p>
+<img alt="Certificado de 'miCA'" content-width="7.22cm" src="imagenes/sws/28.png" width="602"></p>
+<p>Y podemos comprobar c&oacute;mo este certificado es autofirmado (Owner e 
+Issuer coinciden) y adem&aacute;s podemos comprobar, tambi&eacute;n por el n&uacute;mero de 
+serie, c&oacute;mo este certificado es el mismo que el segundo que vimos en cliente1. 
+</p>
+<p>De la misma manera que hemos generado la petici&oacute;n de certificado, 
+y hemos importado el certificado obtenido en el almac&eacute;n <span class="codefrag">cliente.ks</span>, 
+vamos a generar otro certificado para el servidor, y lo vamos a importar en 
+un almac&eacute;n llamado <span class="codefrag">servidor.ks</span>:
+</p>
+<pre class="code"> 
+servicios@servicios:~/claves$ keytool -genkey -alias servidor1 
+  -keystore servidor.ks -dname cn=Servidor1,dc=jtech,dc=ua,dc=es 
+  -keyalg RSA -sigalg SHA1withRSA
+Escriba la contrase&ntilde;a del almac&eacute;n de claves:  servidor1-kspass
+Volver a escribir la contrase&ntilde;a nueva: servidor1-kspass
+Escriba la contrase&ntilde;a clave para &lt;servidor1&gt;
+  (INTRO si es la misma contrase&ntilde;a que la del almac&eacute;n de claves):servidor1-pass
+Volver a escribir la contrase&ntilde;a nueva: servidor1-pass
+
+</pre>
+<pre class="code"> 
+servicios@servicios:~/claves$ keytool -certreq -alias servidor1 
+  -keystore servidor.ks -file servidor1.csr
+Escriba la contrase&ntilde;a del almac&eacute;n de claves:  servidor1-kspass
+Escriba la contrase&ntilde;a clave para &lt;servidor1&gt;: servidor1-pass
+
+</pre>
+<pre class="code"> 
+servicios@servicios:~/claves$ openssl x509 -CA ../autoridad/CAcert.pem 
+  -CAkey ../autoridad/CAkey.pem -CAserial ../autoridad/nserie.txt -req 
+  -in servidor1.csr -out servidor1.cer -days 365
+Signature ok
+subject=/DC=es/DC=ua/DC=jtech/CN=Servidor1
+Getting CA Private Key
+Enter pass phrase for ../autoridad/CAkey.pem: ca-pass
+
+</pre>
+<pre class="code"> 
+servicios@servicios:~/claves$ keytool -import -alias miCA 
+  -keystore servidor.ks -file ../autoridad/CAcert.pem 
+Escriba la contrase&ntilde;a del almac&eacute;n de claves:  servidor1-kspass
+Propietario: EMAILADDRESS=boyan@ua.es, CN=Boyan Bonev, OU=JTech, O=Universidad 
+  de Alicante, L=Alicante, ST=Alicante, C=ES
+Emisor: EMAILADDRESS=boyan@ua.es, CN=Boyan Bonev, OU=JTech, O=Universidad 
+  de Alicante, L=Alicante, ST=Alicante, C=ES
+N&uacute;mero de serie: 8f4d2f01cd666191
+V&aacute;lido desde: Sun May 16 10:45:07 CEST 2010 hasta: Mon Nov 12 09:45:07 CET 2029
+Huellas digitales del certificado:
+	 MD5:  7D:7D:55:38:13:A8:A5:3C:9D:43:C7:8F:3D:08:D0:F4
+	 SHA1: 4C:FE:89:5C:7A:B2:1C:B0:6E:9E:66:2B:9D:EE:91:87:9B:1F:4F:78
+	 Nombre del algoritmo de firma: SHA1withRSA
+	 Versi&oacute;n: 3
+
+Extensiones: 
+
+#1: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: C0 84 F6 A8 8E 15 0F F4   FF 2C AF 1C 06 A6 D3 3F  .........,.....?
+0010: 7D 60 BA A9                                        .`..
+]
+]
+
+#2: ObjectId: 2.5.29.19 Criticality=false
+BasicConstraints:[
+  CA:true
+  PathLen:2147483647
+]
+
+#3: ObjectId: 2.5.29.35 Criticality=false
+AuthorityKeyIdentifier [
+KeyIdentifier [
+0000: C0 84 F6 A8 8E 15 0F F4   FF 2C AF 1C 06 A6 D3 3F  .........,.....?
+0010: 7D 60 BA A9                                        .`..
+]
+
+[EMAILADDRESS=boyan@ua.es, CN=Boyan Bonev, OU=JTech, O=Universidad de Alicante, 
+  L=Alicante, ST=Alicante, C=ES]
+SerialNumber: [    8f4d2f01 cd666191]
+]
+
+&iquest;Confiar en este certificado? [no]:  si
+Se ha a&ntilde;adido el certificado al almac&eacute;n de claves
+
+</pre>
+<pre class="code"> 
+servicios@servicios:~/claves$ keytool -import -alias servidor1 
+  -keystore servidor.ks -file servidor1.cer 
+Escriba la contrase&ntilde;a del almac&eacute;n de claves:  servidor1-kspass
+Escriba la contrase&ntilde;a clave para &lt;servidor1&gt;: servidor1-pass
+Se ha instalado la respuesta del certificado en el almac&eacute;n de claves
+
+</pre>
+<p>Ahora s&oacute;lo falta a&ntilde;adir en el almac&eacute;n de claves del cliente, 
+el certificado del servidor. El cliente necesitar&aacute; la clave p&uacute;blica del 
+servidor porque el servidor utilizar&aacute; su propia clave privada para firmar 
+o para encriptar. Por otro lado, el servidor no necesitar&iacute;a la clave 
+p&uacute;blica del cliente en el almac&eacute;n de certificados, ya que el cliente 
+env&iacute;a su certificado junto con el mensaje. Procedemos a importar el 
+certificado <span class="codefrag">servidor1.cer</span> al almac&eacute;n <span class="codefrag">cliente.ks</span>:
+</p>
+<pre class="code">
+servicios@servicios:~/claves$ keytool -import -alias servidor1 
+  -keystore cliente.ks -file servidor1.cer 
+Escriba la contrase&ntilde;a del almac&eacute;n de claves:  cliente1-kspass
+Se ha a&ntilde;adido el certificado al almac&eacute;n de claves
+</pre>
+<pre class="code">
+servicios@servicios:~/claves$ ls
+cliente1.cer  cliente.ks     servidor1.csr
+cliente1.csr  servidor1.cer  servidor.ks
+</pre>
+<p>Ya tenemos hechos los keystore del cliente y del servidor, y ser&aacute;n v&aacute;lidos 
+durante un a&ntilde;o, seg&uacute;n hemos especificado en los certificados.</p>
+</div> 
+
+
+<p class="pageBreakAfter"></p>
+
+<a name="N101E0"></a><a name="Ejercicios"></a>
+<h2 class="underlined_10">Ejercicios</h2>
+<div class="section">
+<a name="N101E6"></a><a name="Contenido+de+los+almacenes+de+claves"></a>
+<h3 class="underlined_5">Contenido de los almacenes de claves</h3>
+<p>En <a href="https://xwss.dev.java.net/">https://xwss.dev.java.net/</a>
+podemos descargarnos almacenes de certificados (keystore) y almacenes
+de confianza (truststore) v&aacute;lidos. Est&uacute;diense sus certificados y sus
+emisores, y la relaci&oacute;n que existe entre ellos, para repasar los
+conceptos de la sesi&oacute;n.</p>
+</div>
+
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010 Depto. CCIA</div>
+</div>
+</body>
+</html>

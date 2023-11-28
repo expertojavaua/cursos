@@ -1,0 +1,598 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Seguridad a nivel de mensaje. Encriptaci&oacute;n y env&iacute;o de login</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/cursos/sws"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servicios Web seguros" src="images/baner_j2ee_der.gif" title="Servicios Web seguros"></a>
+</div>
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Apuntes</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Servicios Web seguros</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Servicios Web seguros">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesi&oacute;n 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesi&oacute;n 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesi&oacute;n 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesi&oacute;n 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesi&oacute;n 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesi&oacute;n 6</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesi&oacute;n 7</div>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesi&oacute;n 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesi&oacute;n 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesi&oacute;n 10</a>
+</div>
+<div class="menuitem">
+<a href="sesion11-apuntes.html">Sesi&oacute;n 11</a>
+</div>
+<div class="menuitem">
+<a href="sesion12-apuntes.html">Sesi&oacute;n 12</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html" title="Roadmap">Roadmap</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion07-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Seguridad a nivel de mensaje. Encriptaci&oacute;n y env&iacute;o de login</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Encriptaci%C3%B3n+de+mensajes+SOAP">Encriptaci&oacute;n de mensajes SOAP</a>
+</li>
+<li>
+<a href="#Login+en+el+mensaje">Login en el mensaje</a>
+</li>
+<li>
+<a href="#Ejercicios">Ejercicios</a>
+<ul class="minitoc">
+<li>
+<a href="#Encriptar+la+firma">Encriptar la firma</a>
+</li>
+<li>
+<a href="#Saldo">Saldo</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+<a name="N1000E"></a><a name="Encriptaci%C3%B3n+de+mensajes+SOAP"></a>
+<h2 class="underlined_10">Encriptaci&oacute;n de mensajes SOAP</h2>
+<div class="section">
+<p>Para encriptar los mensajes vamos a modificar el documento WSDL de los 
+proyectos <span class="codefrag">SWSeguroCliente</span> y <span class="codefrag">SWSeguroServicio</span> 
+(por supuesto, va a ser el mismo documento para ambos). Inmediatamente 
+despu&eacute;s del cierre de la etiqueta <span class="codefrag">&lt;/sp:SignedParts&gt;</span>
+vamos a a&ntilde;adir: 
+</p>
+<pre class="code"> 
+    &lt;sp:EncryptedParts&gt; 
+    	&lt;sp:Body /&gt; 
+    &lt;/sp:EncryptedParts&gt; 
+
+</pre>
+<p>Con eso indicamos que queremos que se encripte el cuerpo. 
+Opcionalmente (pero es muy deseable) podemos pedir que que se encripte 
+antes de firmar. Eso es deseable para evitar que alguien pueda construir un 
+"diccionario", de textos y firmas asociadas, y usarlo para as&iacute; calcular 
+el contenido de un mensaje a partir de su firma. Si encriptamos antes de 
+firmar el mensaje, el resultado de la encriptaci&oacute;n ser&aacute; distinto cada vez, 
+y la firma se calcular&aacute; a partir de dicho resultado encriptado, con lo 
+cu&aacute;l el problema de seguridad est&aacute; resuelto. Para indicar que la encriptaci&oacute;n 
+se hace antes de firmar, insertamos la siguiente etiqueta despu&eacute;s del cierre de 
+<span class="codefrag">&lt;/sp:AlgorithmSuite&gt;</span>, pero antes de cerrar la
+<span class="codefrag">&lt;/wsp:Policy&gt;</span>:
+</p>
+<pre class="code"> 
+        &lt;sp:EncryptBeforeSigning/&gt; 
+
+</pre>
+<p>Nota: Existen otras alternativas para solucionar el problema de 
+seguridad con las firmas y la encriptaci&oacute;n. Una ser&iacute;a insertar un valor 
+aleatorio en el texto, as&iacute; la firma nunca ser&iacute;a igual para el mismo mensaje.
+Otra forma ser&iacute;a indicar en el WSDL que la firma tambi&eacute;n debe encriptarse. 
+Para hacerlo, tenemos que a&ntilde;adir, despu&eacute;s de la secci&oacute;n 
+<span class="codefrag">&lt;sp:EncryptedParts&gt;</span>, otra a trav&eacute;s de la cual se 
+indica que tambi&eacute;n encripten aquellos elementos XML del mensaje SOAP, 
+cuyo nombre sea "<span class="codefrag">Signature</span>":</p>
+<pre class="code"> 
+    &lt;sp:EncryptedElements&gt;
+    	&lt;sp:XPath&gt;
+    		//*[local-name()='Signature']
+    	&lt;/sp:XPath&gt;
+    &lt;/sp:EncryptedElements&gt;
+
+
+</pre>
+<p>Esta &uacute;ltima alternativa no la vamos a utilizar porque puede dar 
+problemas con Axis2. 
+</p>
+<p>Ahora podemos eliminar los paquetes 
+<span class="codefrag">es.ua.jtech.seguro</span> de ambos proyectos (&iexcl;pero no su subpaquete 
+<span class="codefrag">es.ua.jtech.seguro.custom</span>!, que es donde mantenemos el c&oacute;digo 
+que no queremos que se sobreescriba durante la generaci&oacute;n). Volvemos a 
+generar el c&oacute;digo (en ambos) y los refrescamos. Las clases 
+<span class="codefrag">Seguro_SeguroSOAP_Client</span> y <span class="codefrag">Seguro_SeguroSOAP_Server</span> que se 
+generan de nuevo en el paquete <span class="codefrag">es.ua.jtech.seguro</span>, las podemos 
+eliminar, ya que tenemos las nuestras en <span class="codefrag">es.ua.jtech.seguro.custom</span>. 
+Vamos a abrir las nuestras, para a&ntilde;adir las propiedades de encriptaci&oacute;n, 
+indicando el nombre de usuario para encriptar 
+(<span class="codefrag">cliente1</span> en el caso del servidor, y <span class="codefrag">servidor1</span> en el 
+caso del cliente), y una vez m&aacute;s, el archvio "<span class="codefrag">crypto.properties</span>". 
+</p>
+<p>Empezamos por <span class="codefrag">Seguro_SeguroSOAP_Server.java</span>, a&ntilde;adiendo las propiedades:</p>
+<pre class="code">
+      properties.put(SecurityConstants.ENCRYPT_USERNAME, "useReqSigCert"); 
+      properties.put(SecurityConstants.ENCRYPT_PROPERTIES, "crypto.properties"); 
+</pre>
+<p>En <span class="codefrag">Seguro_SeguroSOAP_Client</span> a&ntilde;adimos las siguientes:</p>
+<pre class="code">
+      properties.put(SecurityConstants.ENCRYPT_USERNAME, "servidor1"); 
+      properties.put(SecurityConstants.ENCRYPT_PROPERTIES, "crypto.properties"); 
+</pre>
+<p>Se puede observar que en el servidor, en lugar de indicar el nombre 
+"<span class="codefrag">cliente1</span>" para el <span class="codefrag">ENCRYPT_USERNAME</span>, hemos asignado 
+"<span class="codefrag">useReqSigCert</span>", valor que indica al servidor que use el 
+certificado del cliente para encriptar el mensaje de respuesta. 
+Recordemos que el certificado del cliente va incluido en el mensaje, 
+y que dicho certificado incluye la clave p&uacute;blica del cliente. 
+Si el servidor encripta con ella, el cliente podr&aacute; desencriptarlo con la 
+clave privada, que nadie m&aacute;s conoce.</p>
+<p>Podemos ejecutar servidor y cliente, con el TCPMonitor o sin &eacute;l, y 
+comprobar que la comunicaci&oacute;n se establece correctamente. </p>
+<p>Antes de incorporar la encriptaci&oacute;n, el cuerpo 
+(<span class="codefrag">&lt;Body&gt;</span>) del mensaje que enviaba el cliente ten&iacute;a el 
+siguiente aspecto:</p>
+<pre class="code"> 
+   &lt;soap:Body xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/
+     oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="Id-18227730"&gt;
+      &lt;ns2:saluda xmlns:ns2="http://jtech.ua.es/Seguro/"&gt;
+         &lt;nombre&gt;Boyan&lt;/nombre&gt;
+         &lt;apellido&gt;Bonev&lt;/apellido&gt;
+      &lt;/ns2:saluda&gt;
+   &lt;/soap:Body&gt;
+
+</pre>
+<p>y el de respuesta por parte del servidor,</p>
+<pre class="code"> 
+   &lt;soap:Body xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/
+     oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="Id-33008558"&gt;
+      &lt;ns2:saludaResponse xmlns:ns2="http://jtech.ua.es/Seguro/"&gt;
+         &lt;saludo&gt;&iexcl;Hola, B. Bonev!&lt;/saludo&gt;
+      &lt;/ns2:saludaResponse&gt;
+   &lt;/soap:Body&gt;
+
+</pre>
+<p>Con la encriptaci&oacute;n los cuerpos de los dos mensajes respectivamente 
+pasan a ser:
+</p>
+<pre class="code"> 
+   &lt;soap:Body xmlns:wsu="http://docs.oasis-open.org/4d5wss/2004/01/
+     oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="Id-16865950"&gt;
+      &lt;xenc:EncryptedData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" 
+        Id="EncDataId-1" Type="http://www.w3.org/2001/04/xmlenc#Content"&gt;
+         &lt;xenc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/
+           xmlenc#tripledes-cbc" /&gt;
+         &lt;ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#"&gt;
+            &lt;wsse:SecurityTokenReference xmlns:wsse="http://docs.oasis-open.org/
+               wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"&gt;
+               &lt;wsse:Reference xmlns:wsse="http://docs.oasis-open.org/wss/2004/
+                  01/oasis-200401-wss-wssecurity-secext-1.0.xsd" 
+                 URI="#EncKeyId-42419DE053BAC3557812741332427872" /&gt;
+            &lt;/wsse:SecurityTokenReference&gt;
+         &lt;/ds:KeyInfo&gt;
+         &lt;xenc:CipherData&gt;
+            &lt;xenc:CipherValue&gt;575x5QxJXVErqWnjzpc5aL7p1UqI/zIUSbnOz4pYDMXxD37IV
+              Qq2OLf0YYU1xwQXYrOQcdpQ8p/nJsEbFojhktOS+nn0u/V62tg+/MCGhz7FK3tu6h
+              EdXYZrASs9eOHwUga8aQebnHConML+lHlwo4Bxzhs/jv+SuTkKFCOpGhCAf6oled0
+              zd5ayTmh25y69EW95Gh+fw6a+mQQNEUVFUXAW43Fj9qBHuVmhVEZgN4Uo4Q6aUGf7
+              cbcBCDkTONND/NGhHP8l1vNvLm0Bq3rL6STD0hxXLmP7ksR4RFUcyisJZK3O0zcP+
+              TqubqyJG7Y2/GfBqKCAd1Fah7C8NER4oLq3LiQAPaNfsns/v+NtMUVm6kDwmbQ+mr
+              wFPYFI1i0yhHw9yN50nQjQb36DpEDau4J9FPKRQhBhx4IB79sFco4=
+            &lt;/xenc:CipherValue&gt;
+         &lt;/xenc:CipherData&gt;
+      &lt;/xenc:EncryptedData&gt;
+   &lt;/soap:Body&gt;
+
+</pre>
+<p>y:</p>
+<pre class="code"> 
+   &lt;soap:Body xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/
+     oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="Id-25059489"&gt;
+      &lt;xenc:EncryptedData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" 
+        Id="EncDataId-1" Type="http://www.w3.org/2001/04/xmlenc#Content"&gt;
+         &lt;xenc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/
+           xmlenc#tripledes-cbc" /&gt;
+         &lt;ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#"&gt;
+            &lt;wsse:SecurityTokenReference xmlns:wsse="http://docs.oasis-open.org/
+              wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"&gt;
+               &lt;wsse:Reference xmlns:wsse="http://docs.oasis-open.org/wss/2004/
+                  01/oasis-200401-wss-wssecurity-secext-1.0.xsd" 
+                 URI="#EncKeyId-E7426DF1A3141E447812741332453672" /&gt;
+            &lt;/wsse:SecurityTokenReference&gt;
+         &lt;/ds:KeyInfo&gt;
+         &lt;xenc:CipherData&gt;
+            &lt;xenc:CipherValue&gt;hpXpVo8j3iuzuzbmTR8uHGA3hgBXP0p818qr5gE5/7Lzjn/no
+              nWLZGqjQjx9NzcX0olWmUl/6qdVcAyOXBVCTFMNKqJi1IpZu2ZGkei/wgPmyXkPu0
+              6WiWanBachCmfo2GNin2o0zKw9f6DuewRdCKtEnaL+/dL7P/eEOzRxUs6wR/peQWI
+              xeENTQw9C08N85bNMwhRdWgOVGydAw+eolximnM3Vwdr125wGQHlx9P73uq40jVAm
+              duGcnB9r7Z040NiC4p4tAF9ommRVPXX5LLf3X/Gm1cyzhq7ViuOm0MJJzTgG8m+Hd
+              xzE+Q5FoKlchNpMT99raE0jw7/RpwZ5ApAkipc5BH1Rzu2B01HzP66j8rogXO+l93
+              q0fuh9Qeu5W5eIZrm0+FgvdnuHLklD61090yYzgfUAb4vIKssLn7k=
+            &lt;/xenc:CipherValue&gt;
+         &lt;/xenc:CipherData&gt;
+      &lt;/xenc:EncryptedData&gt;
+   &lt;/soap:Body&gt;
+
+</pre>
+</div> 
+
+<a name="N100A4"></a><a name="Login+en+el+mensaje"></a>
+<h2 class="underlined_10">Login en el mensaje</h2>
+<div class="section">
+<p>Para enviar informaci&oacute;n de login, es decir, nombre de usuario y password, 
+existe un token dedicado a ese fin. Para incluirlo debemos modificar el 
+WSDL de ambos proyectos, a&ntilde;adiendo, despu&eacute;s de la secci&oacute;n 
+<span class="codefrag">&lt;/sp:EncryptedParts&gt;</span>, el token de nombre de usuario, 
+firmado:</p>
+<pre class="code"> 
+    &lt;sp:SignedSupportingTokens&gt;
+    	&lt;wsp:Policy&gt;
+    		&lt;sp:UsernameToken sp:IncludeToken="http://docs.oasis-open.org/ws-sx/
+    		  ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient"/&gt;    	
+   		&lt;/wsp:Policy&gt;
+    &lt;/sp:SignedSupportingTokens&gt;
+
+</pre>
+<p>El documento <span class="codefrag">Seguro.wsdl</span> completo habr&aacute; quedado as&iacute;:</p>
+<pre class="code"> 
+&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+xmlns:tns="http://jtech.ua.es/Seguro/" 
+xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"
+xmlns:wsp="http://www.w3.org/2006/07/ws-policy"
+xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/
+  oasis-200401-wss-wssecurity-utility-1.0.xsd"
+name="Servicio" targetNamespace="http://jtech.ua.es/Seguro/"&gt;
+  &lt;wsp:Policy wsu:Id="p1"&gt;
+    &lt;sp:AsymmetricBinding&gt;
+      &lt;wsp:Policy&gt;
+        &lt;sp:InitiatorToken&gt;
+          &lt;wsp:Policy&gt;
+          	&lt;sp:X509Token sp:IncludeToken="http://docs.oasis-open.org/ws-sx/
+          	  ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient"&gt;
+          	  &lt;wsp:Policy&gt;
+          	  	&lt;sp:WssX509V3Token10 /&gt;
+          	  &lt;/wsp:Policy&gt;
+          	&lt;/sp:X509Token&gt;
+          &lt;/wsp:Policy&gt;
+        &lt;/sp:InitiatorToken&gt;
+        &lt;sp:RecipientToken&gt;
+          &lt;wsp:Policy&gt;
+          	&lt;sp:X509Token sp:IncludeToken="http://docs.oasis-open.org/ws-sx/
+          	  ws-securitypolicy/200702/IncludeToken/Never"&gt;
+          	  &lt;wsp:Policy&gt;
+          	  	&lt;sp:WssX509V3Token10 /&gt;
+          	  &lt;/wsp:Policy&gt;
+          	&lt;/sp:X509Token&gt;
+          &lt;/wsp:Policy&gt;
+        &lt;/sp:RecipientToken&gt;
+        &lt;sp:AlgorithmSuite&gt;
+          &lt;wsp:Policy&gt;
+            &lt;sp:TripleDesRsa15 /&gt;
+          &lt;/wsp:Policy&gt;
+        &lt;/sp:AlgorithmSuite&gt;
+        &lt;sp:EncryptBeforeSigning/&gt;
+      &lt;/wsp:Policy&gt;
+    &lt;/sp:AsymmetricBinding&gt;
+    &lt;sp:Wss10&gt;
+      &lt;wsp:Policy&gt;
+        &lt;sp:MustSupportRefEmbeddedToken /&gt;
+        &lt;sp:MustSupportRefIssuerSerial /&gt;
+      &lt;/wsp:Policy&gt;
+    &lt;/sp:Wss10&gt;
+    &lt;sp:SignedParts&gt;
+    	&lt;sp:Body /&gt;
+    &lt;/sp:SignedParts&gt;
+    &lt;sp:EncryptedParts&gt;
+    	&lt;sp:Body /&gt;
+    &lt;/sp:EncryptedParts&gt;
+    &lt;sp:SignedSupportingTokens&gt;
+    	&lt;wsp:Policy&gt;
+    		&lt;sp:UsernameToken sp:IncludeToken="http://docs.oasis-open.org/ws-sx/
+    		  ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient"/&gt;    	
+   		&lt;/wsp:Policy&gt;
+    &lt;/sp:SignedSupportingTokens&gt;
+  &lt;/wsp:Policy&gt;
+  &lt;wsdl:types&gt;
+    &lt;xsd:schema targetNamespace="http://jtech.ua.es/Seguro/"&gt;
+      &lt;xsd:element name="saluda"&gt;
+      	&lt;xsd:complexType&gt;
+      		&lt;xsd:sequence&gt;
+      			&lt;xsd:element name="nombre" type="xsd:string" /&gt;
+      			&lt;xsd:element name="apellido" type="xsd:string"&gt;&lt;/xsd:element&gt;
+      		&lt;/xsd:sequence&gt;
+      	&lt;/xsd:complexType&gt;
+      &lt;/xsd:element&gt;
+      &lt;xsd:element name="saludaResponse"&gt;
+        &lt;xsd:complexType&gt;
+          &lt;xsd:sequence&gt;
+            &lt;xsd:element name="saludo" type="xsd:string"/&gt;
+          &lt;/xsd:sequence&gt;
+        &lt;/xsd:complexType&gt;
+      &lt;/xsd:element&gt;
+    &lt;/xsd:schema&gt;
+  &lt;/wsdl:types&gt;
+  &lt;wsdl:message name="saludaRequest"&gt;
+    &lt;wsdl:part element="tns:saluda" name="parameters"/&gt;
+  &lt;/wsdl:message&gt;
+  &lt;wsdl:message name="saludaResponse"&gt;
+    &lt;wsdl:part element="tns:saludaResponse" name="parameters"/&gt;
+  &lt;/wsdl:message&gt;
+  &lt;wsdl:portType name="Seguro"&gt;
+    &lt;wsdl:operation name="saluda"&gt;
+      &lt;wsdl:input message="tns:saludaRequest"/&gt;
+      &lt;wsdl:output message="tns:saludaResponse"/&gt;
+    &lt;/wsdl:operation&gt;
+  &lt;/wsdl:portType&gt;
+  &lt;wsdl:binding name="SeguroSOAP" type="tns:Seguro"&gt;
+    &lt;soap:binding style="document" 
+      transport="http://schemas.xmlsoap.org/soap/http"/&gt;
+    &lt;wsdl:operation name="saluda"&gt;
+      &lt;wsp:PolicyReference URI="#p1" wsdl:required="true"/&gt;
+      &lt;soap:operation soapAction="http://jtech.ua.es/Servicio/saluda"/&gt;
+      &lt;wsdl:input&gt;
+        &lt;soap:body use="literal"/&gt;
+      &lt;/wsdl:input&gt;
+      &lt;wsdl:output&gt;
+        &lt;soap:body use="literal"/&gt;
+      &lt;/wsdl:output&gt;
+    &lt;/wsdl:operation&gt;
+  &lt;/wsdl:binding&gt;
+  &lt;wsdl:service name="Seguro"&gt;
+    &lt;wsdl:port binding="tns:SeguroSOAP" name="SeguroSOAP"&gt;
+      &lt;soap:address location="http://localhost:8080/"/&gt;
+    &lt;/wsdl:port&gt;
+  &lt;/wsdl:service&gt;
+&lt;/wsdl:definitions&gt;
+
+</pre>
+<p>Eliminamos los paquetes <span class="codefrag">es.ua.jtech.seguro</span> que llevan .java 
+autogenerados, y ejecutamos las clases <span class="codefrag">GeneraCodigo</span> de ambos 
+proyectos, refresc&aacute;ndolos despu&eacute;s. De las clases que se han generado, 
+eliminamos las clases innecesarias (<span class="codefrag">es.ua.jtech.seguro.Seguro_SeguroSOAP_Server</span> y <span class="codefrag">Client</span>) 
+que ya tenemos implementadas (<span class="codefrag">en es.ua.jtech.seguro.custom.*</span>).</p>
+<p>Ahora debemos incluir el nombre de usuario y la contrase&ntilde;a en la 
+llamada que realiza el cliente.
+</p>
+<pre class="code"> 
+        properties.put(SecurityConstants.USERNAME, "boyan");
+        properties.put(SecurityConstants.PASSWORD, "boyan-pass");
+
+</pre>
+<p>Nota: estos nombre de usuario y contrase&ntilde;a no tienen nada que ver 
+con los del alias de los certificados ni la contrase&ntilde;a del almac&eacute;n o 
+del certificado. Tampoco tienen nada que ver con el nombre y apellido 
+pasados como par&aacute;metros a la operaci&oacute;n "<span class="codefrag">saluda</span>".
+</p>
+<p>Ahora en el servidor se puede comprobar esta informaci&oacute;n de login. 
+Vamos a introducir una funci&oacute;n que devuelva verdadero si el login es 
+correcto, y falso en caso contrario. En aplicaciones reales se tratar&iacute;a 
+de que el servidor consultara a un servidor LDAP o hiciera una consulta 
+en una base de datos para comprobar que el usuario es v&aacute;lido, y para 
+obtener su rol o sus permisos. Vamos a hacer los cambios en la clase 
+que implementa la operaci&oacute;n, para as&iacute; comprobar el usuario antes de saludar. 
+La clase <span class="codefrag">es.ua.jtech.seguro.custom.SeguroImpl</span> queda as&iacute;:</p>
+<pre class="code"> 
+package es.ua.jtech.seguro.custom; 
+
+import java.util.Vector; 
+
+import javax.annotation.Resource; 
+import javax.jws.WebService; 
+import javax.xml.ws.WebServiceContext; 
+
+import org.apache.ws.security.WSConstants; 
+import org.apache.ws.security.WSSecurityEngineResult; 
+import org.apache.ws.security.WSUsernameTokenPrincipal; 
+import org.apache.ws.security.handler.WSHandlerConstants; 
+import org.apache.ws.security.handler.WSHandlerResult; 
+
+import es.ua.jtech.seguro.Seguro; 
+
+@WebService( 
+		endpointInterface="es.ua.jtech.seguro.Seguro", 
+		wsdlLocation="file:src/main/resources/Seguro.wsdl", 
+		targetNamespace="http://jtech.ua.es/Seguro/", 
+		serviceName="Seguro") 
+public class SeguroImpl implements Seguro { 
+
+	@Resource 
+	WebServiceContext wsContext; 
+	 
+	@Override 
+	public String saluda(String nombre, String apellido) { 
+		if(loggedIn()){ 
+			return "&iexcl;Hola, "+nombre.substring(0,1) + ". " + apellido + "!"; 
+		}else{ 
+			return "Login incorrecto, le retiro el saludo."; 
+		} 
+	} 
+	 
+	@SuppressWarnings("unchecked") 
+	private boolean loggedIn(){ 
+		Vector&lt;WSHandlerResult&gt; handlerResults = (Vector&lt;WSHandlerResult&gt;)
+		  wsContext.getMessageContext().get(WSHandlerConstants.RECV_RESULTS); 
+		for(WSHandlerResult handlerResult : handlerResults){ 
+			for(WSSecurityEngineResult handler : 
+			  (Vector&lt;WSSecurityEngineResult&gt;)handlerResult.getResults()){ 
+				int action = ((Integer)handler.get(WSSecurityEngineResult.
+				  TAG_ACTION)).intValue(); 
+				if(action == WSConstants.UT){ 
+					WSUsernameTokenPrincipal utp = (WSUsernameTokenPrincipal)
+					  handler.get(WSSecurityEngineResult.TAG_PRINCIPAL); 
+					if(utp!=null){ 
+						if(utp.getName().equals("boyan") &amp;&amp; utp.getPassword().
+						  equals("boyan-pass")){ 
+							return true; 
+						} 
+					} 
+				} 
+			} 
+		} 
+		return false; 
+	} 
+ 
+} 
+
+</pre>
+<p>Ejecutamos servidor y cliente, y obtenemos la salida esperada: </p>
+<pre class="code">
+saluda.result=&iexcl;Hola, B. Bonev!
+
+</pre>
+<p>Si ahora cambiamos la contrase&ntilde;a del login que tenemos en el 
+cliente a otra diferente,
+</p>
+<pre class="code">        properties.put(SecurityConstants.PASSWORD, "otra-pass");
+</pre>
+<p>y ejecutamos el cliente, obtenemos: </p>
+<pre class="code">
+saluda.result=Login incorrecto, le retiro el saludo.
+
+</pre>
+</div> 
+
+<p class="pageBreakAfter"></p>
+
+<a name="N10102"></a><a name="Ejercicios"></a>
+<h2 class="underlined_10">Ejercicios</h2>
+<div class="section">
+<a name="N10107"></a><a name="Encriptar+la+firma"></a>
+<h3 class="underlined_5">Encriptar la firma</h3>
+<p>Desarr&oacute;llese un servicio web seguro con CXF (y su cliente) 
+que realice la suma de dos n&uacute;meros
+enteros y devuelva el resultado en otro n&uacute;mero entero.
+El servicio deber&aacute; ir firmado por el cliente y encriptado. 
+Para evitar exponerse a que un hacker cree un diccionario y 
+desencripte el mensaje, la firma tambi&eacute;n deber&aacute; ir firmada.
+En lugar de hacerlo con:
+</p>
+<pre class="code"> 
+        &lt;sp:EncryptBeforeSigning/&gt;,
+</pre>
+<p>
+h&aacute;gase con:
+</p>
+<pre class="code"> 
+    &lt;sp:EncryptedElements&gt;
+    	&lt;sp:XPath&gt;
+    		//*[local-name()='Signature']
+    	&lt;/sp:XPath&gt;
+    &lt;/sp:EncryptedElements&gt;
+
+</pre>
+<a name="N1011C"></a><a name="Saldo"></a>
+<h3 class="underlined_5">Saldo</h3>
+<p>En este ejercicio se pide implementar el servicio Saldo
+con una operaci&oacute;n obtenerSaldo que devolver&aacute;:</p>
+<ul>
+
+<li>1000 si el usuario es "pepe" (contrase&ntilde;a "1234")</li>
+
+<li>20 si el usuario es "juan" (contrase&ntilde;a "abcd")</li>
+
+<li>-1 si el usuario no se ha logueado correctamente</li>
+
+</ul>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010 Depto. CCIA</div>
+</div>
+</body>
+</html>

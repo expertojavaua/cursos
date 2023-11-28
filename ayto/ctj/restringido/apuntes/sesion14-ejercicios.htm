@@ -1,0 +1,98 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Ejercicios sesión 14: Conexiones avanzadas</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2>Ejercicios de conexiones avanzadas</h2>
+             
+<p><strong>14.1.</strong> En el directorio <code>PruebaBT</code> podemos encontrar 
+  una aplicaci&oacute;n sencilla de ejemplo que establece una conexi&oacute;n 
+  bluetooth. Podemos cargar varios emuladores que se conecten como esclavos y 
+un emulador que haga el papel de maestro. Realizaremos lo siguiente:</p>
+<ul>
+  <li>Cargar un emulador que se comporte como esclavo, publicando su servicio 
+    y esperando una conexi&oacute;n entrante.</li>
+  <li>Cargar un emulador que se comporte como maestro, descubriendo los dispositivos 
+    y servicios de su entorno.</li>
+  <li>Establecer una conexi&oacute;n con el dispositivo esclavo que habr&aacute; 
+    localizado. </li>
+</ul>
+
+<p>Una vez probada la aplicaci&oacute;n, se pide:</p>
+<p><em>a)</em> Convertir la aplicaci&oacute;n en un chat. Para ello se crear&aacute; un nuevo 
+  formulario para la pantalla de chat, que tendr&aacute; como items un cuadro de texto
+  donde podremos introducir nuevos mensajes, y a continuaci&oacute;n una lista de los 
+  mensajes enviados por los usuarios.</p>
+
+<p>Este formulario de chat utilizar&aacute; los flujos de entrada y salida abiertos por 
+  la conexi&oacute;n bluetooth para recibir y enviar mensajes respectivamente.</p>
+
+<p>AYUDA: El formulario puede tener un <code>TextField</code> para enviar mensajes y a continuaci&oacute;n
+  una serie de <code>StringItem</code> con los mensajes que se intercambian en la conversaci&oacute;n. Cada 
+  vez que se recibe un mensaje, se puede insertar en la segunda posici&oacute;n del formulario,
+  justo despu&eacute;s del cuadro de texto, para tener siempre arriba los &uacute;ltimos 
+  mensajes recibidos.</p>
+
+<p>Cada vez que se escribe un mensaje, se puede enviar a trav&eacute;s del flujo de 
+  salida como una cadena UTF. Para recibir mensajes, podemos tener un hilo ejecut&aacute;ndose
+  indefinidamente esperando leer cadenas UTF del flujo de entrada. Cada vez que llegue una
+  nueva cadena se mostrar&aacute; como mensaje en el formulario.</p>
+
+<p><em>b)</em> Hacer que el chat realice una conexi&oacute;n punto-a-multipunto, para permitir tener
+  conectados m&uacute;ltiples usuarios. Para ello el maestro deber&aacute; conectarse a 
+  todos los esclavos que haya localizado durante la busqueda, manteniendo abierto un par
+  de flujos entrada/salida para cada uno de ellos.</p>
+
+<p>El maestro ser&aacute; el responsable de reenviar los mensajes que le lleguen de cada esclavo
+  a todos los esclavos conectados. Para ello se propone el siguiente mecanismo:</p>
+
+<ul>
+  <li>Cuando se escriba un mensaje en un dispositivo esclavo, este mensaje ser&aacute; enviado
+  al maestro.</li>
+  <li>Los esclavos esperar&aacute;n recibir del maestro los mensajes publicados por cualquier
+  usuario, incluido &eacute;l mismo y el usuario del dispositivo maestro.</li>
+  <li>Cuando el maestro reciba un mensaje de cualquier esclavo, lo añadir&aacute; a la lista de
+  mensajes recibidos y adem&aacute;s lo difundir&aacute; a todos los esclavos conectados. </li>
+  <li>Cuando se escriba un mensaje en el dispositivos maestro, se har&aacute; lo mismo que en
+  el caso anterior: lo añadir&aacute; a la lista de mensajes recibidos y lo difundir&aacute; 
+  a todos los esclavos conectados. </li>
+</ul>
+
+<p>RECOMENDACIONES: Como recomandaci&oacute;n para el diseño de las clases, se recomienda crear una
+  interfaz <code>ConexionChat</code>, que incorpore dos m&eacute;todos <code>envia</code> y 
+  <code>recibe</code> que sirvan para enviar y recibir respectivamente mensajes a trav&eacute;s 
+  de la red. Se har&aacute;n dos implementaciones de esta interfaz: <code>ConexionCliente</code> y 
+  <code>ConexionServidor</code>, que gestionen la conexi&oacute;n de los esclavos y del maestro 
+  respectivamente.</p>
+
+<p>En el caso del cliente (esclavos), los m&eacute;todos <code>envia</code> y <code>recibe</code> 
+  siemplemente enviar&aacute;n y recibir&aacute;n cadenas UTF a trav&eacute;s de los flujos de
+  entrada/salida.</p>
+
+<p>El caso del servidor (maestro) ser&aacute; m&aacute;s complejo. La clase <code>ConexionServidor</code>
+  deber&aacute; gestionar una lista de clientes conectados. De cada uno de ellos se almacenar&aacute;n
+  los flujos de entrada/salida para comunicarse con &eacute;l. Deber&aacute; haber un hilo por cada
+  cliente conectado, esperando recibir datos de ese cliente. Cada vez que se reciba algo de un cliente,
+  se añadir&aacute; a una lista de mensajes recibidos y se difundir&aacute; a los dem&aacute;s clientes.</p>
+  
+<p>El m&eacute;todo <code>recibe</code> comprobar&aacute; si hay mensajes en la lista de mensajes 
+  recibidos, y de ser as&iacute; sacar&aacute; el primero de la lista y lo devolver&aacute;. Si no, se
+  quedar&aacute; esperando hasta que se reciba un mensaje.</p>
+
+<p>El m&eacute;todo <code>envia</code> añadir&aacute; el mensaje a la lista de mensajes recibidos (para
+  que lo reciba tambi&eacute;n el mismo servidor), y difundir&aacute; el mensaje a todos los clientes
+  conectados.</p>
+<p><strong>14.2.</strong> En el directorio <code>PruebaSW</code> se encuentra 
+  una aplicaci&oacute;n que utiliza un servicio web sencillo. El servicio web 
+  que se utiliza se puede encontrar en el directorio <code>HolaMundoSW</code>, 
+  implementado con JWSDP. Desplegar el servicio en JWSDP y probar la aplicaci&oacute;n 
+  <code>PruebaSW</code> en un emulador. Comprobar que se conecta correctamente 
+  al servicio.</p>
+</body>
+</html>

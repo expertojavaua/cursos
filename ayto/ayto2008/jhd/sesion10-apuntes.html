@@ -1,0 +1,699 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Transacciones, optimizaci&oacute;n de sentencias y patrones de datos</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Java y Herramientas de Desarrollo" src="images/baner_j2ee_der.gif" title="Java y Herramientas de Desarrollo"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Java y Herramientas de Desarrollo</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Materiales</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Java y Herramientas de Desarrollo">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesion 9</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 10</div>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html">Roadmap</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-ejercicios.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-ejercicios.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-ejercicios.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-ejercicios.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-ejercicios.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-ejercicios.html">Sesion 10</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion10-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Transacciones, optimizaci&oacute;n de sentencias y patrones de datos</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Optimizaci%C3%B3n+de+sentencias">Optimizaci&oacute;n de sentencias</a>
+<ul class="minitoc">
+<li>
+<a href="#SQL+injection">SQL injection</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Transacciones">Transacciones</a>
+</li>
+<li>
+<a href="#Data+Access+Object+%28DAO%29">Data Access Object (DAO)</a>
+<ul class="minitoc">
+<li>
+<a href="#Problema+a+resolver">Problema a resolver</a>
+</li>
+<li>
+<a href="#Discusi%C3%B3n+y+beneficios">Discusi&oacute;n y beneficios</a>
+</li>
+<li>
+<a href="#Relaci%C3%B3n+con+otros+patrones">Relaci&oacute;n con otros patrones</a>
+</li>
+<li>
+<a href="#Ejemplo">Ejemplo</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="Optimizaci%C3%B3n+de+sentencias"></a>
+<h2 class="underlined_10">Optimizaci&oacute;n de sentencias</h2>
+<div class="section">
+<p>Cuando ejecutamos una sentencia SQL, esta se compila y se manda al
+SGBD. Si la vamos a invocar repetidas veces, puede ser conveniente
+dejar esa sentencia preparada (precompilada) para que pueda ser
+ejecutada de forma m&aacute;s eficiente. Para hacer esto utilizaremos
+la interfaz <strong>PreparedStatement</strong>, que podr&aacute; obtenerse a
+partir de la conexi&oacute;n a la BD de la siguiente forma:</p>
+<pre class="code">
+
+<strong>PreparedStatement</strong> ps = con.<strong>prepareStatement</strong>("UPDATE FROM alumnos
+    SET sexo = 'H' WHERE exp&gt;1200 AND exp&lt;1300");
+</pre>
+<p>Vemos que a este objeto, a diferencia del objeto <strong>Statement</strong>
+visto anteriormente, le proporcionamos la sentencia SQL en el momento
+de su creaci&oacute;n, por lo que estar&aacute; preparado y optimizado
+para la ejecuci&oacute;n de dicha sentencia posteriormente.</p>
+<p>Sin embargo, lo m&aacute;s com&uacute;n es que necesitemos hacer
+variaciones sobre la sentencia, ya que normalmente no ser&aacute;
+necesario ejecutar repetidas veces la misma sentencia exactamente, sino
+variaciones de ella. Por ello, este objeto nos permite parametrizar la
+sentencia. Estableceremos las posiciones de los par&aacute;metros con
+el car&aacute;cter '?' dentro de la cadena de la sentencia, tal como se
+muestra a continuaci&oacute;n:</p>
+<pre class="code">
+
+<strong>PreparedStatement</strong> ps = con.<strong>prepareStatement</strong>("UPDATE FROM alumnos
+    SET sexo = 'H' WHERE exp &gt; ? AND exp &lt; ?");
+</pre>
+<p>En este caso tenemos dos par&aacute;metros, que ser&aacute; el
+n&uacute;mero de expediente m&iacute;nimo y el m&aacute;ximo del rango
+que queremos actualizar. Cuando ejecutemos esta sentencia, el sexo de
+los alumnos desde expediente inferior hasta expediente superior se
+establecer&aacute; a 'H'.</p>
+<p>Para dar valor a estos par&aacute;metros utilizaremos los
+m&eacute;todos <strong>setXXX</strong> donde <strong>XXX</strong> ser&aacute; el tipo de
+los datos que asignamos al par&aacute;metro (recordad los
+m&eacute;todos del <strong>ResultSet</strong>), indicando el n&uacute;mero del
+par&aacute;metro (que empieza desde 1) y el valor que le queremos dar.
+Por ejemplo, para asignar valores enteros a los par&aacute;metros de
+nuestro ejemplo haremos:</p>
+<pre class="code">
+ps.<strong>setInt</strong>(1,1200);
+ps.<strong>setInt</strong>(2,1300);
+</pre>
+<p>Una vez asignados los par&aacute;metros, podremos ejecutar la
+sentencia llamando al m&eacute;todo <strong>executeUpdate</strong> (ahora sin
+par&aacute;metros) del objeto <strong>PreparedStatement</strong>:</p>
+<pre class="code">
+int n = ps.<strong>executeUpdate</strong>();
+</pre>
+<p>Igual que en el caso de los objetos <strong>Statement</strong>, podremos
+utilizar cualquier otro de los m&eacute;todos para la ejecuci&oacute;n
+de sentencias, <strong>executeQuery</strong> o <strong>execute</strong>, seg&uacute;n el
+tipo de sentencia que vayamos a ejecutar.</p>
+<p>Una caracter&iacute;stica importante es que los par&aacute;metros
+s&oacute;lo sirven para datos, es decir, no podemos sustituir el nombre
+de la tabla o de una columna por el signo '?'. Otra cosa a tener en
+cuenta es que una vez asignados los par&aacute;metros, estos no
+desaparecen, sino que se mantienen hasta que se vuelvan a asignar o se
+ejecute una llamada al m&eacute;todo <strong>clearParameters</strong>.</p>
+<a name="N10070"></a><a name="SQL+injection"></a>
+<h3 class="underlined_5">SQL injection</h3>
+<p>Un problema de seguridad en la base de datos que se nos puede plantear es el <strong>SQL injection</strong>. 
+Se trata de insertar c&oacute;digo SQL dentro de otro c&oacute;digo SQL, para alterar su funcionamiento y conseguir que se 
+ejecute alguna sentencia maliciosa. Imaginad que tenemos el siguiente c&oacute;digo en una p&aacute;gina .jsp o en una clase Java:</p>
+<pre class="code">
+String s="SELECT * FROM usuarios WHERE nombre='"+nombre+"';";
+</pre>
+<p>La variable <strong>nombre</strong> es una cadena cuyo valor viene de un campo que es introducido por el usuario. 
+Al introducir el usuario un nombre cualquiera, el c&oacute;digo SQL se ejecuta y nada extra&ntilde;o pasa. Pero esta opci&oacute;n nos
+permite a&ntilde;adir c&oacute;digo propio que nos permita da&ntilde;ar o incluso permitirnos tomar el control de la BD. Imaginad que el
+usuario ha introducido el siguiente c&oacute;digo: <strong>Miguel'; drop table usuarios; select * from usuarios; grant all
+privileges ...</strong>. Entonces el c&oacute;digo que se ejecutar&iacute;a ser&iacute;a:
+</p>
+<pre class="code">
+SELECT * FROM usuarios WHERE nombre='Miguel'; drop table usuarios; 
+select * from usuarios; grant all privileges ...
+</pre>
+<p>
+Para evitar la inyecci&oacute;n de SQL se recurre, en Java, a usar una sentencia preparada. De esta manera tendr&iacute;amos:
+</p>
+<pre class="code">PreparedStatement ps = con.prepareStatement(
+                  "SELECT * FROM usuarios WHERE nombre=?");
+ps.setString(nombre);
+</pre>
+<p>Y la sentencia SQL que se ejecutar&iacute;a, con la misma entrada que antes, es:</p>
+<pre class="code">SELECT * FROM usuarios WHERE nombre="Miguel'; drop table usuarios; 
+select * from usuarios; grant all privileges ...";
+</pre>
+</div>
+
+<a name="N1009D"></a><a name="Transacciones"></a>
+<h2 class="underlined_10">Transacciones</h2>
+<div class="section">
+<p>Muchas veces, cuando tengamos que realizar una serie de acciones,
+queremos que todas se hayan realizado correctamente, o bien que no se
+realice ninguna de ellas, pero no que se realicen algunas y otras no.</p>
+<p>Podemos ver esto mediante un ejemplo, en el que se va a hacer una
+reserva de vuelos para ir desde Alicante a Osaka. Para hacer esto
+tendremos que hacer trasbordo en dos aeropuertos, por lo que tenemos
+que reservar un vuelo Alicante-Madrid, un vuelo Madrid-Amsterdam y un
+vuelo Amsterdam-Osaka. Si cualquiera de estos tres vuelos estuviese
+lleno y no pudi&eacute;semos reservar, no queremos reservar ninguno de
+los otros dos porque no nos servir&iacute;a de nada. Por lo tanto,
+s&oacute;lo nos interesa que la reserva se lleve a cabo si podemos
+reservar los tres vuelos.</p>
+<p>Una transacci&oacute;n es un conjunto de sentencias que deben ser
+ejecutadas como una unidad, de forma que si una de ellas no puede
+realizarse, no se llevar&aacute; a cabo ninguna. Dicho de otra manera,
+las transacciones hacen que la BD pase de un estado consistente al
+siguiente. </p>
+<p>Pero para hacer esto encontramos un problema. Pensemos en nuestro
+ejemplo de la reserva de vuelos, en la que necesitaremos realizar las
+siguientes inserciones (reservas):</p>
+<pre class="code">try {
+    stmt.executeUpdate("INSERT INTO RESERVAS(pasajero, origen, " +
+        + "destino) VALUES('Paquito', 'Alicante', 'Madrid')");
+    stmt.executeUpdate("INSERT INTO RESERVAS(pasajero, origen, " + 
+        + "destino) VALUES('Paquito', 'Madrid', 'Amsterdam')");
+    stmt.executeUpdate("INSERT INTO RESERVAS(pasajero, origen, " + 
+        + "destino) VALUES('Paquito', 'Amsterdam', 'Osaka')");
+} 
+catch(SQLException e) {
+    // &iquest;D&oacute;nde ha fallado? &iquest;Qu&eacute; hacemos ahora?
+}
+</pre>
+<p>En este caso, vemos que si falla la reserva de uno de los tres
+vuelos obtendremos una excepci&oacute;n, pero en ese caso,
+&iquest;c&oacute;mo podremos saber d&oacute;nde se ha producido el
+fallo y hasta qu&eacute; acci&oacute;n debemos deshacer? Con la
+excepci&oacute;n lo &uacute;nico que sabemos es que algo ha fallado,
+pero no sabremos d&oacute;nde ha sido, por lo que de esta forma no
+podremos saber hasta qu&eacute; acci&oacute;n debemos deshacer.</p>
+<p>Para hacer esto de una forma limpia asegurando la consistencia de
+los datos, utilizaremos las operaciones de <em>commit</em> y <em>rollback</em>.</p>
+<p>Cuando realicemos cambios en la base de datos, estos cambios se
+har&aacute;n efectivos en ella de forma persistente cuando realicemos
+la operaci&oacute;n <em>commit</em>. En el modo de operaci&oacute;n que
+hemos visto hasta ahora, por defecto tenemos activado el modo <em>auto-commit</em>,
+de forma que siempre que ejecutamos alguna sentencia se realiza <em>commit</em>
+autom&aacute;ticamente. Sin embargo, en el caso de las transacciones
+con m&uacute;ltiples sentencias, no nos interesar&aacute; hacer estos
+cambios persistentes hasta haber comprobado que todos los cambios se
+pueden hacer de forma correcta. Para ello desactivaremos este modo con:</p>
+<pre class="code">con.<strong>setAutoCommit</strong>(false); 
+</pre>
+<p>Al desactivar este modo, una vez hayamos hecho las modificaciones de
+forma correcta, deberemos hacerlas persistentes mediante la
+operaci&oacute;n <em>commit</em> llamando de forma expl&iacute;cita a:</p>
+<pre class="code">con.<strong>commit</strong>();
+</pre>
+<p>Si por el contrario hemos obtenido alg&uacute;n error, no queremos
+que esas modificaciones se lleven a cabo finalmente en la BD, por lo
+que podremos deshacerlas llamando a:</p>
+<pre class="code">con.<strong>rollback</strong>();
+</pre>
+<p>Por lo tanto, la operaci&oacute;n <em>rollback</em> deshar&aacute;
+todos los cambios que hayamos realizado para los que todav&iacute;a no
+hubi&eacute;semos hecho <em>commit</em> para hacerlos persistentes,
+permiti&eacute;ndonos de esta forma implementar estas transacciones de
+forma at&oacute;mica.</p>
+<p>Nuestro ejemplo de la reserva de vuelos deber&iacute;a hacerse de la
+siguiente forma:</p>
+<pre class="code">try {
+    con.<strong>setAutoCommit</strong>(false);
+    stmt.executeUpdate("INSERT INTO RESERVAS(pasajero, origen, " +
+           + "destino) VALUES('Paquito', 'Alicante', 'Madrid')");
+    stmt.executeUpdate("INSERT INTO RESERVAS(pasajero, origen, " +  
+           + "destino) VALUES('Paquito', 'Madrid', 'Amsterdam')");
+    stmt.executeUpdate("INSERT INTO RESERVAS(pasajero, origen, " +
+           + "destino) VALUES('Paquito', 'Amsterdam', 'Osaka')");
+    // Hemos podido reservar los tres vuelos correctamente
+    con.<strong>commit</strong>();
+} 
+catch(SQLException e) {
+    // Alguno de los tres ha fallado, deshacemos los cambios
+    try {
+        con.<strong>rollback</strong>();
+    }
+    catch(SQLException e) {};
+}
+</pre>
+<p>Una caracter&iacute;stica relacionada con las transacciones es la
+concurrencia en el acceso a la BD. Dicho de otra forma, qu&eacute;
+sucede cuando varios usuarios se encuentran accediendo a la vez a los
+mismos datos y pretenden modificarlos. Un ejemplo sencillo: tenemos una
+tienda y dos usuarios est&aacute;n accediendo al mismo disco, del cual
+s&oacute;lo queda una unidad. El primero de los usuarios consulta el
+disponible, comprueba que existe una unidad y lo introduce en su cesta
+de la compra. El otro usuario en ese preciso momento tambi&eacute;n
+est&aacute; consultando el disponible, tambi&eacute;n le aparece una
+unidad y tambi&eacute;n intenta introducirlo en su cesta de la compra.
+Al segundo usuario el sistema no deber&iacute;a dejarle actualizar los
+datos que est&aacute; manejando el primero.</p>
+<p> La concurrencia es manejada por los distintos SGBD de manera
+distinta. PostGres permite nivel de lectura confirmada. En este nivel,
+si una transacci&oacute;n lee una fila de la BD y otra
+transacci&oacute;n cambia la misma fila, en el momento que la primera
+transacci&oacute;n intente leer de nuevo se actualiza el valor. Si las
+dos intentan modificar la misma fila la segunda se bloquear&aacute;
+hasta que la primera finalice la transacci&oacute;n. Esto &uacute;ltimo
+hay que tenerlo en cuenta para evitar bloqueos. Para saber el nivel
+concurrencia permitido por el SGBD podemos utilizar el siguiente
+m&eacute;todo de la clase <strong>Connection:</strong> 
+</p>
+<pre class="code">int con.<strong>getTransactionIsolation</strong>();
+</pre>
+<p>Los valores m&aacute;s comunes que puede devolver este m&eacute;todo
+son: Connection.<strong>TRANSACTION_NONE</strong> (no soporta transacciones),
+Connection.<strong>TRANSACTION_READ_UNCOMMITTED</strong> (soporta transacciones
+en su nivel m&aacute;s bajo), Connection.<strong>TRANSACTION_READ_COMMITTED</strong>
+(el nivel de PostGres antes comentado). MySQL incorpora transacciones
+en sus &uacute;ltimas versiones. Sin embargo, su
+funcionamiento es diferente a PostGres. Si una aplicaci&oacute;n
+actualiza una fila y dentro de su transacci&oacute;n otra
+aplicaci&oacute;n intenta modificarla, MySQL permite la
+actualizaci&oacute;n y no se produce ning&uacute;n problema.
+</p>
+<p>Un posible problema en las transacciones es el interbloqueo. Un
+interbloqueo se produce en la siguiente situaci&oacute;n: una
+aplicaci&oacute;n tiene que modificar dos registros. Otra
+aplicaci&oacute;n modifica los mismos, pero en orden inverso. Se
+empiezan a ejecutar las dos aplicaciones a la vez y al haber modificado
+un registro no dejan que la otra lo modifique. Sin embargo, ninguna de
+las dos terminan porque est&aacute;n esperando que se desbloquee su
+registro. MySQL no detecta esta situaci&oacute;n. Es m&aacute;s,
+permite cambiar los datos que una transacci&oacute;n sin finalizar haya
+realizado. PostGres, al bloquear los registros s&iacute; que provoca un
+interbloqueo que detecta y lanza una excepci&oacute;n.
+</p>
+</div>
+
+
+<a name="N10122"></a><a name="Data+Access+Object+%28DAO%29"></a>
+<h2 class="underlined_10">Data Access Object (DAO)</h2>
+<div class="section">
+<a name="N10128"></a><a name="Problema+a+resolver"></a>
+<h3 class="underlined_5">Problema a resolver</h3>
+<p>Supongamos que el c&oacute;digo de acceso a los recursos de datos (normalmente bases de datos relacionales)
+ est&aacute; inclu&iacute;do dentro de clases que tienen adem&aacute;s otras responsabilidades diferentes. Por ejemplo supongamos
+ que en una biblioteca tuvi&eacute;ramos una clase 
+ <span class="codefrag">GestorPrestamos</span> que se ocupara de realizar y gestionar los pr&eacute;stamos de libros. En una primera
+ aproximaci&oacute;n podr&iacute;amos hacer que esta clase se encargara tanto de la l&oacute;gica de negocio (por ejemplo comprobar
+ si un usuario es "moroso" antes de prestarle un libro) como del acceso a datos (introducir el pr&eacute;stamo
+ en una hipot&eacute;tica tabla de pr&eacute;stamos). </p>
+<p> Este tipo de enfoque lleva a sistemas poco modulares y dif&iacute;cilmente mantenibles. En nuestro caso, el cambio de
+ las reglas de negocio implicar&iacute;a cambios en <span class="codefrag">GestorPrestamos</span>.
+ El problema es que adem&aacute;s, un cambio en la base de datos tambi&eacute;n implica cambios 
+ en <span class="codefrag">GestorPrestamos</span>.</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">
+<strong>Distintas responsabilidades no deben ser delegadas en la misma clase</strong>. Este es un principio b&aacute;sico del
+ desarrollo de software, propuesto originalmente por Dijkstra en los a&ntilde;os 70 (aunque no exactamente en esta forma), que lo llam&oacute; <em>separation of concerns</em> 
+ o separaci&oacute;n de incumbencias.</div>
+</div>
+<p>Claramente la implementaci&oacute;n de <span class="codefrag">GestorPrestamos</span> descrita con anterioridad viola el principio de separaci&oacute;n
+ de incumbencias. Si nos llevamos la persistencia de datos a una clase separada y dejamos <span class="codefrag">GestorPrestamos</span>
+ solo con la l&oacute;gica de negocio conseguimos un sistema mucho m&aacute;s modular y mantenible.</p>
+<a name="N1014F"></a><a name="Discusi%C3%B3n+y+beneficios"></a>
+<h3 class="underlined_5">Discusi&oacute;n y beneficios</h3>
+<p>El <strong>DAO (<em>Data Access Object)</em></strong> es un patr&oacute;n de dise&ntilde;o directamente basado en el <em>separation of concerns</em>,
+ en el que <strong>se separa la persistencia de datos del resto de funcionalidades</strong> del sistema. El siguiente esquema UML muestra
+ una estructura de clases t&iacute;pica para el DAO de pr&eacute;stamos de la biblioteca:</p>
+<p>
+<img alt="Patr&oacute;n DAO. Ejemplo de la biblioteca" content-width="15cm" src="imagenes/daobiblio.jpg"></p>
+<p>Como se observa en la figura, el DAO es el punto de entrada al almac&eacute;n de datos (aqu&iacute; representado por un <span class="codefrag">DataSource</span> JDBC)
+y proporciona operaciones de tipo CRUD (<em>Create-Read-Update-Delete</em>).</p>
+<p>Destacamos algunos puntos importantes:</p>
+<ul>
+  
+<li> Como se ve, el DAO no tiene por qu&eacute; implementar todas las operaciones CRUD (quiz&aacute; en nuestro sistema no se puedan borrar los pr&eacute;stamos, solo devolver el libro quedando
+el registro del pr&eacute;stamo en la base de datos).</li>
+  
+<li> En general (aunque esto es una decisi&oacute;n de dise&ntilde;o), por cada objeto de negocio en nuestro sistema, crearemos un DAO distinto. En nuestro caso adem&aacute;s del <span class="codefrag">PrestamosDAO</span>
+podr&iacute;amos tener tambi&eacute;n un <span class="codefrag">UsuarioDAO</span> y un <span class="codefrag">LibroDAO</span>.</li>
+  
+<li>Aunque aqu&iacute; el almac&eacute;n de datos se representa como una base de datos compatible JDBC no tiene por qu&eacute;
+  ser siempre as&iacute;, como discutiremos a continuaci&oacute;n</li>
+  
+<li>La informaci&oacute;n que devuelve o se le pasa al DAO se encapsula en objetos de tipo <em>transfer object</em> (en nuestro caso
+  la clase <span class="codefrag">Prestamo)</span>, que, simplificando, no son 
+ m&aacute;s que "contenedores de informaci&oacute;n" y que trataremos en la discusi&oacute;n del patr&oacute;n correspondiente.</li>
+
+</ul>
+<p>Hay que tener en cuenta que si el DAO se considera un patr&oacute;n J2EE (o hablando m&aacute;s en general un patr&oacute;n de aplicaciones
+de tipo <em>enterprise</em>) es porque pr&aacute;cticamente todas las aplicaciones J2EE de cierta dimensi&oacute;n hacen
+uso intensivo de almacenes persistentes de datos (normalmente bases de datos relacionales) aunque muchas
+aplicaciones J2SE no lo hagan.</p>
+<p>Otro importante beneficio del DAO es la <strong>independencia del almac&eacute;n de datos</strong>: el cambio de motor de base de datos
+o el paso de usar un peque&ntilde;o archivo XML a usar una base de datos relacional para almacenar datos solo afectar&aacute; al DAO y no a las clases encargadas de
+la l&oacute;gica de negocio o de presentaci&oacute;n. Se suele usar el patr&oacute;n <em>Factory</em>
+para poder instanciar los DAOs reduciendo al m&aacute;ximo la dependencia del DAO concreto a crear (por ejemplo de MySQL, Oracle, XML, fichero <span class="codefrag">.properties,</span> ...) </p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Un principio b&aacute;sico de un buen dise&ntilde;o es <strong>identificar los aspectos de la
+aplicaci&oacute;n que cambian o pueden cambiar y separarlos de los que van a permanecer fijos</strong>.
+ Muchos patrones de dise&ntilde;o se basan en encapsular de alguna forma la parte que cambia
+para hacer m&aacute;s f&aacute;cil la extensi&oacute;n del sistema. En este caso, el DAO encapsula la parte que puede
+variar (la interacci&oacute;n con la fuente de datos).</div>
+</div>
+<a name="N101AC"></a><a name="Relaci%C3%B3n+con+otros+patrones"></a>
+<h3 class="underlined_5">Relaci&oacute;n con otros patrones</h3>
+<p>El DAO se relaciona com&uacute;nmente con los siguientes patrones:</p>
+<ul>
+
+<li>
+<strong>Transfer object</strong>: la informaci&oacute;n que se env&iacute;a/recibe del DAO se "empaqueta" en estos objetos.</li>
+
+<li>
+<strong>Factory:</strong> con el objeto de conseguir la independencia del almac&eacute;n de datos, com&uacute;nmente
+se usa este patr&oacute;n para instanciar los DAOs.  </li>
+
+</ul>
+<a name="N101C3"></a><a name="Ejemplo"></a>
+<h3 class="underlined_5">Ejemplo</h3>
+<p>Vamos a ilustrar el uso de estos patrones con un ejemplo. En primer lugar, 
+para instanciar los DAOs utilizaremos el patr&oacute;n factor&iacute;a. Nuestra factor&iacute;a
+tendr&aacute; una serie de m&eacute;todos con los que podremos obtener los diferentes DAOs.</p>
+<pre class="code">public class FactoriaDAOs {
+  private static FactoriaDAOs me = new FactoriaDAOs();
+
+  private FactoriaDAOs() {
+  }
+
+  public static FactoriaDAOs getInstance() {
+    return me;
+  }
+
+  public ILibroDAO getLibroDAO() {
+    return new LibroJDBCDAO();
+  }
+
+  public IClienteDAO getClienteDAO() {
+    return new ClienteJDBCDAO();
+  }
+
+}</pre>
+<p>Podemos observar que el tipo de datos que realmente devuelven los m&eacute;todos de la factor&iacute;a 
+son las interfaces que definen nuestros DAOs. De esta forma, si queremos cambiar la implementaci&oacute;n
+del DAO (por ejemplo para acceder a los datos mediante JPA, en lugar de JDBC), lo
+&uacute;nico que tendremos que hacer es instanciar en la factor&iacute;a otra implementaci&oacute;n distinta de
+la correspondiente interfaz, y el resto de la aplicaci&oacute;n no se ver&aacute; afectada. En esta interfaz definiremos
+las operaciones que nos ofrece el DAO:</p>
+<pre class="code">public interface ILibroDAO {
+
+  LibroTO selectLibro(String isbn) throws DAOException;
+  void addLibro(LibroTO libro) throws DAOException;
+  int delLibro(String isbn) throws DAOException;
+  List&lt;LibroTO&gt; getAllLibros() throws DAOException;
+  int updateLibro(LibroTO libro) throws DAOException;
+
+}</pre>
+<p>Una posible implementaci&oacute;n de la anterior interfaz es la siguiente:</p>
+<pre class="code">public class LibroJDBCDAO implements ILibroDAO {
+
+  public LibroTO selectLibro(String isbn) throws DAOException {
+	
+    LibroTO libro = null;
+
+    Connection conn = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+
+    try {
+      String query = "select * from LIBRO where ISBN = ?";			
+
+      conn = FuenteDatosJDBC.getInstance().createConnection();
+
+      st = conn.prepareStatement(query);
+      st.setString(1, isbn);
+      rs=st.executeQuery();
+
+      if (rs.next()) {
+        libro = new LibroTO();
+        libro.setIsbn(isbn);
+        libro.setTitulo(rs.getString("titulo"));
+        libro.setAutor(rs.getString("autor"));
+        libro.setNumPaginas(rs.getInt("numPaginas"));
+        libro.setFechaAlta(rs.getDate("fechaAlta"));
+      }
+
+    } catch (SQLException sqle) {
+      throw new DAOException("Error en el select de libro", sqle);
+    } finally {
+      try {
+        if (rs != null) {
+          rs.close();
+          rs = null;
+        }
+        if (st != null) {
+          st.close();
+          st = null;
+        }
+        if (conn != null) {
+          conn.close();
+          conn = null;
+        }
+      } catch (SQLException sqlError) {
+        throw new RuntimeException("Error cerrando las conexiones",
+                                   sqlError);
+      }
+    }
+
+    return libro;
+  }
+  ...
+}</pre>
+<p>En esta implementaci&oacute;n se utiliza JDBC para acceder a los datos. Hemos de destacar en ella
+el uso de <em>nested exceptions</em> para encapsular los errores que puedan producirse en la 
+utilizaci&oacute;n de JDBC. De esta manera, a la capa superior siempre le llegar&aacute;n excepciones de tipo
+<span class="codefrag">DAOException</span>, lo cual nos aislar&aacute; de la implementaci&oacute;n concreta que utilicemos
+para acceder a los datos (esto no ser&iacute;a as&iacute; si devolviesemos <span class="codefrag">SQLException</span>, que pertenece a 
+la librer&iacute;a JDBC). Tambi&eacute;n es importante cerrar las conexiones siempre en el bloque <span class="codefrag">finally</span>,
+tal como podemos ver en el ejemplo, para as&iacute; asegurarnos de que siempre se cierren, pase lo que 
+pase en el m&eacute;todo.</p>
+<p>Destacamos tambi&eacute;n el uso del patr&oacute;n <em>transfer object</em> (TO) para encapsular y 
+devolver los datos obtenidos. El objeto TO tiene como campos todos los datos que se 
+obtienen en la consulta, y los correspondientes <em>getters</em> y <em>setters</em> 
+para acceder a ellos:</p>
+<pre class="code">public class LibroTO {
+
+  private static final long serialVersionUID = 
+                                  5874144497759547336L;
+
+  private String isbn;
+  private String titulo;
+  private String autor;
+  private int numPaginas;
+  private Date fechaAlta;
+
+  public LibroTO() {
+  }
+
+  public LibroTO(String isbn, String titulo, String autor, 
+                 int numPaginas, Date fechaAlta) {
+    this.init(isbn, titulo, autor, numPaginas, fechaAlta);
+  }
+
+  public LibroTO(LibroTO libro) {
+    this.init(libro.isbn, libro.titulo, libro.autor, 
+              libro.numPaginas, libro.fechaAlta);
+  }
+
+  private void init(String isbn, String titulo, String autor, 
+                    int numPaginas, Date fechaAlta) {
+    this.isbn = isbn;
+    this.titulo = titulo;
+    this.autor = autor;
+    this.numPaginas = numPaginas;
+    this.fechaAlta = fechaAlta;
+  }
+
+  public String getAutor() {
+    return autor;
+  }
+
+  public void setAutor(String autor) {
+    this.autor = autor;
+  }
+
+  // Resto de getters y setters
+  ...
+}</pre>
+<p>Utilizaremos este tipo de objetos para encapsular los datos que nuestro 
+DAO intercambie con las capas superiores. Estos ser&aacute;n los datos que se obtengan
+en las consultas, o bien los datos que queramos insertar o modificar.</p>
+<p>Por &uacute;ltimo, hemos visto que nuestro DAO obten&iacute;a las conexiones a trav&eacute;s de
+un objeto <span class="codefrag">FuenteDatosJDBC</span>. Este objeto nos permitir&aacute; independizarnos
+de la forma de obtener las conexiones. De esta forma, posteriormente podr&iacute;a
+ser modificado para que en lugar de crear nuevas conexiones directamente, las 
+obtenga a partir de una fuente de datos gestionada por un servidor de aplicaciones.</p>
+<pre class="code">public class FuenteDatosJDBC { 
+
+  private static FuenteDatosJDBC me = new FuenteDatosJDBC();
+
+  private static Log logger = 
+       LogFactory.getLog(FuenteDatosJDBC.class.getName());
+
+  private FuenteDatosJDBC() {
+    try {
+      Class.forName("com.mysql.jdbc.Driver");
+    } catch (ClassNotFoundException cnfe) {
+      logger.fatal("No se encuentra el Driver de MySQL ",cnfe);
+    }
+  }
+
+  public static FuenteDatosJDBC getInstance() {
+    return me;
+  }
+
+  public Connection createConnection() {
+    Connection conn = null;
+
+    try {
+      conn = DriverManager.getConnection(
+             "jdbc:mysql://localhost/biblioteca", "root", "");
+    } catch (SQLException sqle) {
+      logger.fatal("No se ha podido crear la conexion", sqle);
+    }
+
+    return conn;
+  }
+
+}</pre>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2008-2009 Depto. CCIA</div>
+</div>
+</body>
+</html>

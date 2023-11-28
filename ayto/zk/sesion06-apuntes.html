@@ -1,0 +1,1095 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Sesi&oacute;n 6: Eventos y data binding</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/banner-aplicaciones-ria.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/baner_j2ee_der.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Apuntes</a>
+</li>
+<li>
+<a class="base-not-selected" href="software.html">Software</a>
+</li>
+<li>
+<a class="base-not-selected" href="doc.html">Documentaci&oacute;n</a>
+</li>
+<li>
+<a class="base-not-selected" href="enlaces.html">Enlaces</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Apuntes</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 6</div>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesion 10</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion06-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Sesi&oacute;n 6: Eventos y data binding</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Eventos">Eventos</a>
+<ul class="minitoc">
+<li>
+<a href="#Ciclo+de+vida">Ciclo de vida</a>
+</li>
+<li>
+<a href="#Manejadores+de+eventos">Manejadores de eventos</a>
+</li>
+<li>
+<a href="#Manejadores+de+eventos+en+Java">Manejadores de eventos en Java</a>
+</li>
+<li>
+<a href="#El+atributo+forward">El atributo forward</a>
+</li>
+<li>
+<a href="#Especificando+el+evento+en+forward">Especificando el evento en forward</a>
+</li>
+<li>
+<a href="#C%C3%B3mo+utilizar+variables+en+escuchadores+de+eventos">C&oacute;mo utilizar variables en escuchadores de eventos</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Data+Binding">Data Binding</a>
+<ul class="minitoc">
+<li>
+<a href="#El+modelo">El modelo</a>
+</li>
+<li>
+<a href="#Asociaci%C3%B3n+entre+componentes+y+JavaBeans">Asociaci&oacute;n entre componentes y JavaBeans</a>
+</li>
+<li>
+<a href="#C%C3%B3mo+actualizar+los+datos+del+JavaBean">C&oacute;mo actualizar los datos del JavaBean</a>
+</li>
+<li>
+<a href="#C%C3%B3mo+hacer+el+binding+de+una+colecci%C3%B3n">C&oacute;mo hacer el binding de una colecci&oacute;n</a>
+</li>
+<li>
+<a href="#C%C3%B3mo+asociar+el+mismo+JavaBean+con+m%C3%BAltiples+componentes">C&oacute;mo asociar el mismo JavaBean con m&uacute;ltiples componentes</a>
+</li>
+<li>
+<a href="#Como+modificar+el+contenido+de+un+listbox+utilizando+el+atributo+model">Como modificar el contenido de un listbox utilizando el atributo model</a>
+</li>
+<li>
+<a href="#Conversi%C3%B3n+entre+los+datos+y+la+interfaz">Conversi&oacute;n entre los datos y la interfaz</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Una+aplicaci%C3%B3n+completa">Una aplicaci&oacute;n completa</a>
+<ul class="minitoc">
+<li>
+<a href="#C%C3%B3digo+Java">C&oacute;digo Java</a>
+</li>
+<li>
+<a href="#C%C3%B3digo+ZUML">C&oacute;digo ZUML</a>
+</li>
+<li>
+<a href="#Ejercicio">Ejercicio</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+
+<a name="N1000C"></a><a name="Eventos"></a>
+<h2 class="underlined_10">Eventos</h2>
+<div class="section">
+<a name="N10012"></a><a name="Ciclo+de+vida"></a>
+<h3 class="underlined_5">Ciclo de vida</h3>
+<p>Hemos visto en la arquitectura de ZK que el m&oacute;dulo de cliente de ZK es un c&oacute;digo JavaScript que reside en el cliente y es responsable de gestionar la interfaz de usuario. Cuando el usuario pulsa un bot&oacute;n o realiza una determinada acci&oacute;n que genera un evento, se invoca al servidor utiizando la tecnolog&iacute;a Ajax. En el servidor se recibe el evento y se lanza el ciclo de vida de la actualizaci&oacute;n de p&aacute;ginas.</p>
+<p>El motor de actualizaci&oacute;n de ZK realiza tres fases para procesar las peticiones de los clientes: la fase de procesamiento de la petici&oacute;n, la fase de procesamiento del evento y la fase de renderizado.</p>
+<p>El motor de actualizaci&oacute;n encola las peticiones que vienen del mismo escritorio y se procesan de forma secuencial. Peticiones de distintos escritorios se procesan en paralelo.</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/zk-actualizando-html.png" width="700"></p>
+<p>Las fases son las siguientes:</p>
+<ul>
+
+<li>
+<strong>Fase de procesamiento de la petici&oacute;n</strong>: dependiendo de la petici&oacute;n, el motor de actualizaci&oacute;n de ZK podr&iacute;a actualizar el contenido de los componentes de forma que su contenido sea el mismo que se muestra en el cliente. Luego, lanza los eventos correspondientes a la cola.</li>
+
+<li>
+<strong>Fase de procesamiento del evento</strong>: se procesan los eventos uno por uno, cada un en un thread independiente. Para ello se lanza la funci&oacute;n que hace de manejador del evento detectado.</li>
+
+<li>
+<strong>Fase de renderizado</strong>: despu&eacute;s de que se han procesado los eventos, ZK renderiza los componentes afectados, genera las correspondientes respuestas, y env&iacute;a las respuestas de vuelta al cliente. En el cliente, el motor de ZK actualiza el &aacute;rbol DOM del navegador bas&aacute;ndose en la respuesta. El que se haga un redibujado de todos los componentes o s&oacute;lo de la parte que cambia depende de la implementaci&oacute;n realizada por los desarrolladores de componentes.</li>
+
+</ul>
+<a name="N1003E"></a><a name="Manejadores+de+eventos"></a>
+<h3 class="underlined_5">Manejadores de eventos</h3>
+<p>Es posible escribir c&oacute;digo de gesti&oacute;n de eventos en zscript o en c&oacute;digo Java.</p>
+<p>Un ejemplo de evento procesado en c&oacute;digo zscript. EL c&oacute;digo se eval&uacute;a cuando se pulsa el bot&oacute;n.</p>
+<pre class="code">&lt;window&gt;
+   &lt;button onClick='alert("here is a zcript")'/&gt;
+&lt;/window&gt;</pre>
+<p>Para hacerlo m&aacute;s legible se puede utilizar <span class="codefrag">attribute</span>:</p>
+<pre class="code">&lt;window&gt;
+   &lt;button&gt;
+      &lt;attribute name="onClick"&gt;
+         alert("here is a zscript");
+      &lt;/attribute&gt;
+   &lt;/button&gt;
+&lt;/window&gt;</pre>
+<p>Otra forma m&aacute;s de hacerlo es escribir un m&eacute;todo en zscript y llamarlo desde el evento:</p>
+<pre class="code">&lt;window&gt;
+   &lt;zscript&gt;
+      public void showAlert(){
+         alert("here is a zcript too");
+      }
+   &lt;/zscript&gt;   
+   &lt;button onClick="showAlert()"/&gt;
+&lt;/window&gt;</pre>
+<a name="N10060"></a><a name="Manejadores+de+eventos+en+Java"></a>
+<h3 class="underlined_5">Manejadores de eventos en Java</h3>
+<p>Para manejar eventos en Java tenemos tambi&eacute;n varias opciones. Podemos usar un m&eacute;todo est&aacute;tico o utilizar los atributos zk <span class="codefrag">use</span> o <span class="codefrag">apply</span>.</p>
+<p>Ejemplo con m&eacute;todo est&aacute;tico:</p>
+<pre class="code">&lt;window&gt;
+   &lt;button onClick="MyManager.showAlert()"/&gt;
+&lt;/window&gt;</pre>
+<p>Y la clase Java MyManager.java es:</p>
+<pre class="code">import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Window;
+&nbsp;
+public class MyManager {
+   public static void showAlert(){
+      try {
+         Messagebox.show("handle event in java");
+      } catch (Exception e) {
+         e.printStackTrace();
+      }   
+   }
+}</pre>
+<p>El siguiente ejemplo usa el atributo zk <span class="codefrag">use</span>:</p>
+<pre class="code">&lt;window id="win_1" use="MyWindow"&gt;
+   &lt;button onClick="win_1.showAlert()"/&gt;
+&lt;/window&gt;
+</pre>
+<pre class="code">import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Window;
+&nbsp;
+public class MyWindow extends Window {
+   public void showAlert(){
+      try {
+         Messagebox.show("handle event in java");
+      } catch (Exception e) {
+         e.printStackTrace();
+      }   
+   }
+}</pre>
+<p>Por &uacute;ltimo, el siguiente ejemplo usa el atributo zk <span class="codefrag">apply</span>. Hay que notar que el nombre del m&eacute;todo que maneja los eventos debe ser <span class="codefrag">onXXX</span>.</p>
+<pre class="code">&lt;window apply="MyComposer"&gt;
+   &lt;button forward="onShowAlert()"/&gt;
+&lt;/window&gt;</pre>
+<pre class="code">import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.util.GenericComposer;
+import org.zkoss.zul.Messagebox;
+&nbsp;
+public class MyComposer extends GenericComposer {
+   public void onShowAlert(Event evt) {
+      try {
+         Messagebox.show("handle event in java");
+      } catch (Exception e) {
+         e.printStackTrace();
+      }   
+   }
+}
+</pre>
+<a name="N1009D"></a><a name="El+atributo+forward"></a>
+<h3 class="underlined_5">El atributo forward</h3>
+<p>El atributo ZK <span class="codefrag">forward</span> se utiliza para reenviar un evento capturado por un componente a otro componente. Si no se define el componente, quien recibe el nuevo evento es el propietario del espacio de identificadores. Es posible tambi&eacute;n modificar tambi&eacute;n el tipo de evento que se reenv&iacute;a.</p>
+<p> Tiene la siguiente sintaxis:</p>
+<pre class="code">forward="original_event=target_event_expr"
+forward="target_event_expr"</pre>
+<p>El segundo formato asume que el evento original es <span class="codefrag">onClick</span>. Por ejemplo, las dos expresiones siguientes producen el mismo resultado, renombran el evento <span class="codefrag">onClick</span> como <span class="codefrag">onOK</span> y lo reenv&iacute;an al propietario del espacio ID en el que reside el bot&oacute;n.</p>
+<pre class="code">&lt;button forward="onOK"/&gt;
+&lt;button forward="onClick=onOK"/&gt;</pre>
+<p>Veamos un ejemplo de uso de esta t&eacute;cnica para implementar un controlador de la ventana que responde a eventos generados en sus botones.</p>
+<p>En el fichero <span class="codefrag">di-hola.zul</span> se definen los componentes ZK. El atributo <span class="codefrag">apply</span> de la ventana indica la clase Java que va a gestionar los eventos que se lancen sobre la ventana. El atributo <span class="codefrag">forward</span> del bot&oacute;n hace los eventos del bot&oacute;n sean redirigidos al componente padre (la ventana en este caso). </p>
+<pre class="code">&lt;?page title="Di hola" contentType="text/html;charset=UTF-8"?&gt;
+&lt;zk&gt;
+&lt;window title="Di hola" border="normal" apply="controller.MiControlador"&gt;
+   &lt;button label="Di hola" forward="onDiHola" /&gt;
+&lt;/window&gt;
+&lt;/zk&gt;</pre>
+<p>En la clase Java <span class="codefrag">controller.MiControlador</span> se define un m&eacute;todo p&uacute;blico <span class="codefrag">onDiHola</span> con un par&aacute;metro de tipo <span class="codefrag">Event</span> en el que se recoge la informaci&oacute;n del evento. En este caso, se a&ntilde;ade un componente hijo de tipo <span class="codefrag">Label</span> a la ventana que ha recibido el evento.</p>
+<pre class="code">package controller;
+
+import org.zkoss.zk.ui.util.GenericComposer;
+import org.zkoss.zk.ui.event.Event; 
+import org.zkoss.zul.Label;
+
+public class MiControlador extends GenericComposer {
+   private static final long serialVersionUID = 1L;
+
+   public void oDiHola(Event evt) {
+      evt.getTarget().appendChild(new Label("Hola"));
+   }
+}</pre>
+<p>Es posible reenviar m&aacute;s de un evento separ&aacute;ndolos entre comas:</p>
+<pre class="code">&lt;textbox forward="onChanging=onUpdating, onChange=some.onUpdate"/&gt;
+</pre>
+<a name="N100EE"></a><a name="Especificando+el+evento+en+forward"></a>
+<h3 class="underlined_5">Especificando el evento en forward</h3>
+<p>La expresi&oacute;n que se utiliza para definir el evento que es reenviado puede tener uno de los siguiente formatos:</p>
+<pre class="code">event-name
+target-id.event-name
+id1/id2/id3.event-name
+${el-expr}.event-name
+</pre>
+<p>Vemos que se puede definir el componente al que se reenv&iacute;a el evento. Por ejemplo, si queremos reenviar el evento <span class="codefrag">onClick</span> de un bot&oacute;n a una ventana en concreto podemos definir un identificador y usarlo en la expresi&oacute;n del evento:</p>
+<pre class="code"> &lt;window id="w" use="MyWindow"&gt;
+     ...
+     &lt;button label="Submit" forward="onClick=w.onOK"/&gt;
+ &lt;/window&gt;
+</pre>
+<p>Despu&eacute;s podemos manejar el evento en la clase <span class="codefrag">MyWindow</span>:</p>
+<pre class="code">public class MyWindow extends Window {
+   public void onOK() {
+      //maneja el evento
+   }
+}</pre>
+<p>Es posible tambi&eacute;n en la expresi&oacute;n del evento pasar datos utilizando una expresi&oacute;n EL. La informaci&oacute;n puede ser recuperada con el m&eacute;todo <span class="codefrag">getData</span> de la clase <span class="codefrag">ForwardEvent</span>:</p>
+<p>Por ejemplo, si definimos el evento enviado de la siguiente forma:</p>
+<pre class="code">&lt;button forward="onCancel(abort)"/&gt;</pre>
+<p>El m&eacute;todo <span class="codefrag">getData</span> devolver&aacute; la cadena "<span class="codefrag">abort</span>".</p>
+<p>Podemos enviar el tipo de dato que queramos utilizando zscript y expresiones EL:</p>
+<pre class="code"> &lt;window id="win" title="ZK app 6" apply="MyComposer"&gt;
+   &lt;zscript&gt;&lt;![CDATA[  
+      Date now = new Date();
+   &lt;/zscript&gt;
+   &lt;button label="Say Hello" forward="onSayHello(${now})" /&gt;
+&lt;/window&gt;</pre>
+<p>El par&aacute;metro <span class="codefrag">now</span> es de tipo <span class="codefrag">Date</span>. Por ejemplo, en el controlador podemos guardarlo en un campo <span class="codefrag">Date</span> de los objetos del modelo o imprimirlo:</p>
+<pre class="code">public class MyComposer extends GenericComposer {
+   public void onDiFecha(Event evt) {
+      Date fecha = (Date) evt.getData();
+      Locale locale = new Locale("es");
+      DateFormat formatter = new SimpleDateFormat("EEEE, d 'de' MMMM 'de' yyyy", locale);
+      String strFecha = formatter.format(fecha);
+      evt.getTarget().appendChild(new Label(strFecha));
+   }
+}</pre>
+<p>Tambi&eacute;n es posible utilizar expresiones EL para especificar el identificador o el path del componente al que se env&iacute;a el evento:</p>
+<pre class="code">&lt;button forward='${mainWnd}.onOK(${c:getProperty("status")})'/&gt;</pre>
+<a name="N10147"></a><a name="C%C3%B3mo+utilizar+variables+en+escuchadores+de+eventos"></a>
+<h3 class="underlined_5">C&oacute;mo utilizar variables en escuchadores de eventos</h3>
+<p>Un problema que sucede a menudo es que se intenta acceder desde los manejadores de eventos a variables definidas en la fase de creaci&oacute;n de los componentes de la p&aacute;gina. Esto no es posible, ya que ambas fases son distintas. </p>
+<p>Por ejemplo, no es posible acceder a las variables <span class="codefrag">forEach</span> y <span class="codefrag">each</span> desde los escuchadores de eventos. El siguiente c&oacute;digo no es correcto ya que cuando se llama al escuchador de <span class="codefrag">onClick</span>, la variable <span class="codefrag">each</span> no est&aacute; disponible.</p>
+<pre class="code">&lt;window title="Countries" border="normal" width="100%"&gt;
+   &lt;zscript&gt;&lt;![CDATA[    
+      String[] countries = {    
+         "China", "France", "Germany", "United Kindom", "United States"};        
+   ]]&gt;&lt;/zscript&gt;    
+   &lt;hbox&gt;    
+      &lt;button label="${each}" forEach="${countries}"        
+         onClick="alert(each)"/&gt; &lt;!-- incorrect!! --&gt;            
+   &lt;/hbox&gt;    
+&lt;/window&gt;</pre>
+<p>Las etiquetas de los botones se definen correctamente cuando se crean los componentes, pero la variable <span class="codefrag">each</span> ya no est&aacute; disponible en el momento de procesar el evento y cuando se ejecuta el zscript. Es importante notar tambi&eacute;n que el c&oacute;digo que se define en el evento <span class="codefrag">onClick</span> es c&oacute;digo zscript y no una expresi&oacute;n EL.</p>
+<p>&iquest;C&oacute;mo solucionarlo? Una forma es almacenar el contenido de cada <span class="codefrag">each</span> en alg&uacute;n lugar que est&eacute; disponible cuando el evento se procese. Se puede almacenar donde queramos, pero una forma sencilla de hacerlo es la siguiente:</p>
+<pre class="code">&lt;window title="Personas" border="normal" width="100%"&gt;
+   &lt;zscript&gt;&lt;![CDATA[    
+     import model.Persona;
+     
+     ArrayList personas = new ArrayList();
+     Persona p1 = new Persona("Pepito", "P&eacute;rez", 30);
+     Persona p2 = new Persona("Isabel", "Gallego", 23);
+     Persona p3 = new Persona("Antonio", "Pomares", 24);
+     personas.add(p1);
+     personas.add(p2);
+     personas.add(p3);
+     
+   void doAlert() {
+      Persona p = (Persona) self.getAttribute("persona");
+      String str = p.getNombre() + " " + p.getApellidos() + " " + p.getEdad();
+      alert(str);
+   }   
+   ]]&gt;&lt;/zscript&gt;    
+&nbsp;
+   &lt;hbox&gt;    
+      &lt;button label="${each.nombre}" forEach="${personas}"        
+         onClick="doAlert()"&gt;        
+            &lt;custom-attributes persona="${each}"/&gt;            
+      &lt;/button&gt;        
+   &lt;/hbox&gt;   
+&lt;/window&gt;</pre>
+<p>Podemos definir un atributo custom <span class="codefrag">country</span> y darle el valor de la etiqueta <span class="codefrag">each</span>. Despu&eacute;s podemos utilizar el m&eacute;todo <span class="codefrag">getAttribute</span> (estamos usando zscript) para recuperar el valor del atributo.</p>
+</div>
+
+
+
+
+
+
+<a name="N10184"></a><a name="Data+Binding"></a>
+<h2 class="underlined_10">Data Binding</h2>
+<div class="section">
+<p>Uno de los aspectos m&aacute;s importantes del patr&oacute;n MVC es que la vista y el modelo deben estar conectados de alguna manera. Tanto la visualizaci&oacute;n como la actualizaci&oacute;n del modelo deben ser lo m&aacute;s sencillas posibles. Hemos visto que ZK permite utilizar expresiones EL para mostrar el contenido de JavaBeans. Pero por ahora no hemos visto ninguna forma de actualizarlos. Vamos a ver a continuaci&oacute;n el mecanismo de <em>data binding</em> que permite esto.</p>
+<p>El mecanismo de <em>data binding</em> permite conectar los elementos de la vista con los datos que mantienen la aplicaci&oacute;n. De una forma sencilla podemos ligar valores componentes con campos de objetos JavaBean. El mecanismo se encarga directamente de leer los campos y pintarlos en la interfaz as&iacute; como de actualizarlos cuando son modificados en ella.</p>
+<a name="N10196"></a><a name="El+modelo"></a>
+<h3 class="underlined_5">El modelo</h3>
+<p>El modelo es una clase JavaBean con sus campos, sus getters y sus setters. Un ejemplo es la siguiente clase <span class="codefrag">Person.java</span>:</p>
+<pre class="code">public class Person {
+   private String firstName = "";
+   private String lastName = "";
+
+   // getter y setters
+   public void setFirstName(String firstName) {
+      this.firstName = firstName;
+   }
+
+   public String getFirstName() {
+      return firstName;
+   }
+
+   public void setLastName(String lastName) {
+      this.lastName = lastName;
+   }
+
+   public String getLastName() {
+      return lastName;
+   }
+
+   public void setFullName(String fullName) {
+      // no hacemos nada
+   }
+
+   public String getFullName() {
+      return firstName + " " + lastName;
+   }
+}</pre>
+<a name="N101A7"></a><a name="Asociaci%C3%B3n+entre+componentes+y+JavaBeans"></a>
+<h3 class="underlined_5">Asociaci&oacute;n entre componentes y JavaBeans</h3>
+<p>En primer lugar debemos activar el gestor de data binding defini&eacute;ndolo en la declaraci&oacute;n de inicializaci&oacute;n de la p&aacute;gina:</p>
+<pre class="code">&lt;?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?&gt;</pre>
+<p>Esto hace lo siguiente:</p>
+<ol>
+
+<li>Crea una instancia de la clase <span class="codefrag">AnnotateDataBinder</span> y le da el nombre de variable <span class="codefrag">binder</span>.</li>
+
+<li>Llama al m&eacute;todo <span class="codefrag">DataBinder.loadAll()</span> para inicializar todos los atributos de los componentes a partir de los JavaBeans.</li>
+
+</ol>
+<p>Para asociar los objetos de la interfaz al JavaBean debemos utilizar la siguiente sintaxis:</p>
+<pre class="code">&lt;component-name attribute-name="@{bean-name.bean-property}"/&gt;</pre>
+<ul>
+
+<li>
+<span class="codefrag">component-name</span> representa un componente de la interfaz de usuario</li>
+
+<li>
+<span class="codefrag">attribute-name</span> representa un atributo del elemento</li>
+
+<li>
+<span class="codefrag">bean-name</span> es la variable que referencia el JavaBean</li>
+
+<li>
+<span class="codefrag">bean-property</span> es una propiedad del JavaBean</li>
+
+</ul>
+<p>Vamos a ver un ejemplo en el que utilizamos un componente de tipo <span class="codefrag">Grid</span> y lo asociamos con un JavaBean <span class="codefrag">Person</span> que creamos en zscript:</p>
+<pre class="code">&lt;?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?&gt;
+&nbsp;
+&lt;window&gt;
+   &lt;zscript&gt;
+      Person person = new Person();
+      person.setFirstName("Albert");
+      person.setLastName("Einstein");
+   &lt;/zscript&gt;
+&nbsp;
+   &lt;grid width="400px"&gt;
+      &lt;rows&gt;
+      &lt;row&gt; First Name: &lt;textbox value="@{person.firstName}"/&gt;&lt;/row&gt;
+      &lt;row&gt; Last Name: &lt;textbox value="@{person.lastName}"/&gt;&lt;/row&gt;
+      &lt;row&gt; Full Name: &lt;label value="@{person.fullName}"/&gt;&lt;/row&gt;
+      &lt;/rows&gt;
+   &lt;/grid&gt;
+&lt;/window&gt;</pre>
+<a name="N101F5"></a><a name="C%C3%B3mo+actualizar+los+datos+del+JavaBean"></a>
+<h3 class="underlined_5">C&oacute;mo actualizar los datos del JavaBean</h3>
+<p>La conexi&oacute;n entre el JavaBean y el componente no es autom&aacute;tica (como sucede en JSF, por ejemplo), sino que hay que definir expl&iacute;citamente cuando queremos que se guarden los datos de la interfaz en el JavaBean. Debemos asociarlo con alg&uacute;n evento, utilizando la anotaci&oacute;n <span class="codefrag">save-when</span>:</p>
+<pre class="code">&lt;component-name attribute-name="@{bean-name.attribute-name,
+                                                    save-when='component-id.event-name'}"/&gt;
+</pre>
+<p>Por ejemplo, podemos asociar los datos de la persona con campos de texto y ligar su actualizaci&oacute;n al evento <span class="codefrag">onChange</span>. Vamos tambi&eacute;n a cambiar el tipo de componente y utilizar un <span class="codefrag">listbox</span> en lugar de un <span class="codefrag">grid</span>:</p>
+<pre class="code">&lt;?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?&gt;
+&nbsp;
+&lt;window width="500px"&gt;
+&lt;zscript&gt;&lt;![CDATA[
+      Person person = new Person();
+      person.setFirstName("Albert");
+      person.setLastName("Einstein");
+]]&amp;gt;&lt;![CDATA[&lt;/zscrip&gt;
+&nbsp;
+   &lt;listbox&gt;
+      &lt;listhead&gt;
+         &lt;listheader label="First Name" width="100px"/&gt;
+         &lt;listheader label="Last Name" width="100px"/&gt;
+         &lt;listheader label="Full Name" width="100px"/&gt;
+      &lt;/listhead&gt;
+      &lt;listitem&gt;
+         &lt;listcell&gt;
+            &lt;textbox id="firstName" value="@{person.firstName, save-when='self.onChange'}"/&gt;
+         &lt;/listcell&gt;
+         &lt;listcell&gt;
+            &lt;textbox id="lastName" value="@{person.lastName, save-when='self.onChange'}"/&gt;
+         &lt;/listcell&gt;
+         &lt;listcell label="@{person.fullName}"/&gt;
+      &lt;/listitem&gt;
+   &lt;/listbox&gt;
+&lt;/window&gt;
+</pre>
+<p>Despu&eacute;s de construidos los componentes en la fase de carga de la p&aacute;gina, es necesario definir expl&iacute;citamente cu&aacute;ndo queremos que se actualicen a partir de los datos del JavaBean. Para ello debemos utilizar la anotaci&oacute;n <span class="codefrag">load-when</span> y relacionarla con un evento:</p>
+<pre class="code">&lt;component-name attribute-name="@{bean-name.attribute-name, 
+                                                      load-when='component-id.event-name'}"/&gt;</pre>
+<p>Modificamos el ejemplo para que el nombre completo se cargue del JavaBean cuando se modifique cualquiera de los otros atributos. Para ello utilizamos el evento <span class="codefrag">onChange</span>
+</p>
+<pre class="code">        &lt;listcell label="@{person.fullName
+        load-when='firstName.onChange,lastName.onChange'}"/&gt;
+</pre>
+<p>Por defecto los datos est&aacute;n ligados a estos eventos si no explicitamos ning&uacute;n evento. De esta forma s&oacute;lo con el primer ejemplo bastar&iacute;a para definir una interfaz que actualizara los datos de la persona.</p>
+<a name="N1022C"></a><a name="C%C3%B3mo+hacer+el+binding+de+una+colecci%C3%B3n"></a>
+<h3 class="underlined_5">C&oacute;mo hacer el binding de una colecci&oacute;n</h3>
+<p>Muy a menudo necesitamos mostrar y actualizar colecciones de elementos. Podemos hacerlo ligando el atributo <span class="codefrag">model</span> de un componente con el objeto colecci&oacute;n que queremos mostrar. El componente puede ser alguno de los que permite listar elementos bajo &eacute;l: <span class="codefrag">Listbox</span>, <span class="codefrag">Grid</span> o <span class="codefrag">Tree</span>.</p>
+<p>Para trabajar con bindings de colecciones debemos asociar la colecci&oacute;n con el atributo <span class="codefrag">model</span> del componente que muestra la colecci&oacute;n. Despu&eacute;s podemos iterar por los elementos de la colecci&oacute;n utilizando el atributo <span class="codefrag">each</span> y lig&aacute;ndolo al componente hijo (un <span class="codefrag">listitem</span>, <span class="codefrag">row</span> o <span class="codefrag">treeitem</span>).</p>
+<p>El siguiente ejemplo muestra c&oacute;mo definir este binding:</p>
+<pre class="code">&lt;?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?&gt;
+&nbsp;
+&lt;window width="500px"&gt;
+&lt;zscript&gt;&lt;![CDATA[
+     //prepare the example persons List
+      int count = 30;
+      List persons = new ArrayList();
+      for(int j= 0; j &amp;lt; count; ++j) {
+         Person personx = new Person();
+         personx.setFirstName("Tom"+j);
+         personx.setLastName("Hanks"+j);      
+         persons.add(personx);
+      }
+]]&gt;&lt;/zscript&gt;
+
+&nbsp;
+   &lt;listbox rows="4" model="@{persons}"&gt;
+      &lt;listhead&gt;
+         &lt;listheader label="First Name" width="100px" /&gt;
+         &lt;listheader label="Last Name" width="100px" /&gt;
+         &lt;listheader label="Full Name" width="100px" /&gt;
+      &lt;/listhead&gt;
+      &lt;!-- define variable person here--&gt;
+      &lt;listitem self="@{each='person'}"&gt;
+         &lt;listcell&gt;
+            &lt;textbox value="@{person.firstName}" /&gt;
+         &lt;/listcell&gt;
+         &lt;listcell&gt;
+            &lt;textbox value="@{person.lastName}" /&gt;
+         &lt;/listcell&gt;
+         &lt;listcell label="@{person.fullName}" /&gt;
+      &lt;/listitem&gt;
+   &lt;/listbox&gt;
+&lt;/window&gt;
+</pre>
+<a name="N1025B"></a><a name="C%C3%B3mo+asociar+el+mismo+JavaBean+con+m%C3%BAltiples+componentes"></a>
+<h3 class="underlined_5">C&oacute;mo asociar el mismo JavaBean con m&uacute;ltiples componentes</h3>
+<p>Es posible asociar el mismo JavaBean con m&aacute;s de un componente de la IU. Por ejemplo, podemos modificar el ejemplo anterior a&ntilde;adiendo la variable zscript <span class="codefrag">selected</span> de tipo <span class="codefrag">Person</span> que ligamos con la fila seleccionada. Podemos usar esa misma variable en otro componente:</p>
+<p>Modificamos el ejemplo anterior, sustituyendo el componente <span class="codefrag">textbox</span> del <span class="codefrag">listitem</span> por un <span class="codefrag">label</span> y a&ntilde;adimos una nueva variable que referencia el &iacute;tem seleccionado ligada a un nuevo campo de texto:</p>
+<pre class="code">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?&gt;
+
+
+&lt;window width="500px"&gt;
+   &lt;zscript&gt;&lt;![CDATA[
+      ...      
+      Person selected;
+      ...
+    &lt;/zscript&gt;
+&nbsp;
+   &lt;listbox rows="10" model="@{persons}" selectedItem="@{selected}"&gt;
+      &lt;listhead&gt;
+         &lt;listheader label="First Name" width="100px" /&gt;
+         &lt;listheader label="Last Name" width="100px" /&gt;
+         &lt;listheader label="Full Name" width="100px" /&gt;
+      &lt;/listhead&gt;
+      &lt;!-- define variable person here--&gt;
+      &lt;listitem self="@{each='person'}"&gt;
+         &lt;listcell&gt;
+            &lt;label value="@{person.firstName}" /&gt;
+         &lt;/listcell&gt;
+         &lt;listcell&gt;
+            &lt;label value="@{person.lastName'}" /&gt;
+         &lt;/listcell&gt;
+         &lt;listcell label="@{person.fullName}" /&gt;
+      &lt;/listitem&gt;
+   &lt;/listbox&gt;
+      &lt;!-- show the detail of the selected person --&gt;
+   &lt;grid&gt;
+      &lt;rows&gt;
+         &lt;row&gt;
+            First Name:
+            &lt;textbox value="@{selected.firstName}" /&gt;
+         &lt;/row&gt;
+         &lt;row&gt;
+            Last Name:
+            &lt;textbox value="@{selected.lastName}" /&gt;
+         &lt;/row&gt;
+      &lt;/rows&gt;
+   &lt;/grid&gt;
+&lt;/window&gt;</pre>
+<a name="N1027B"></a><a name="Como+modificar+el+contenido+de+un+listbox+utilizando+el+atributo+model"></a>
+<h3 class="underlined_5">Como modificar el contenido de un listbox utilizando el atributo model</h3>
+<p>Es posible modificar el contenido de un listbox actualizado la lista que guarda en el atributo model. Pero es muy importante obtener la lista utilizando el m&eacute;todo <span class="codefrag">getModel</span> del objeto listbox. No basta con modificar la colecci&oacute;n original que pasamos al listbox.</p>
+<p>Como ejemplo, supongamos que queremos a&ntilde;adir nuevos elementos a la colecci&oacute;n de personas del ejemplo anterior. Definimos un nuevo bot&oacute;n <em>A&ntilde;adir</em> que realiza esta acci&oacute;n. En alg&uacute;n ejemplo de otra sesi&oacute;n esta acci&oacute;n de a&ntilde;adir se hace en dos pasos: se a&ntilde;ade el dato a la colecci&oacute;n y se actualizan los elementos del listbox. El atributo model, sin embargo, permite hacer las dos cosas al mismo tiempo. Si modificamos la lista que devuelve el m&eacute;todo <span class="codefrag">getModel</span> autom&aacute;ticamente se actualiza el modelo y la vista.</p>
+<p>El c&oacute;digo de la funci&oacute;n <span class="codefrag">add()</span> es el siguiente:</p>
+<pre class="code">   void doAdd() {
+      Person p = new Person();
+      p.setFirstName("Tom" + persons.size());
+      p.setLastName("Hanks" + persons.size());
+      List personas = lista.getModel();
+      personas.add(p);
+   }</pre>
+<p>Podemos hacer algo similar para borrar el &iacute;tem seleccionado. La siguiente funci&oacute;n recorre toda la lista de personas y borra los que tienen el mismo nombre.</p>
+<pre class="code">   void doDelete(Person person) {
+      List personas = lista.getModel();
+      for (int i = 0; i &lt; personas.size(); i++) {
+         Person p = (Person) personas.get(i);
+         if (p.getFirstName().equals(person.getFirstName())){
+            personas.remove(i);
+            i--;
+         }
+      }
+   }</pre>
+<p>Si probamos a a&ntilde;adir un bot&oacute;n que llame a la funci&oacute;n vemos que se borra la persona seleccionada tanto de la lista original como del listbox. El objeto <span class="codefrag">personas</span> que devuelve el m&eacute;todo <span class="codefrag">getModel</span> es de la clase <span class="codefrag">ListModel</span>. Esta clase implementa la interfaz <span class="codefrag">List</span> ocup&aacute;ndose tambi&eacute;n de mantener la lista original y el listbox.</p>
+<a name="N102B1"></a><a name="Conversi%C3%B3n+entre+los+datos+y+la+interfaz"></a>
+<h3 class="underlined_5">Conversi&oacute;n entre los datos y la interfaz</h3>
+<p>Cuando hacemos un data binding es posible tambi&eacute;n especificar los m&eacute;todos que convierten los objetos Java en componentes de la interfaz. Normalmente, estos componentes de la interfaz van a ser cadenas o im&aacute;genes. Para realizar la conversi&oacute;n, debemos definir el atributo <span class="codefrag">converter</span>:</p>
+<pre class="code">&lt;component-name attribute-name="@{bean-name.attribute- name,converter='class-name'}"/&gt;</pre>
+<p>En la expresi&oacute;n se referencia una clase Java que debe implementar la interfaz <span class="codefrag">TypeConverter</span> en la que se deben definer los m&eacute;todos <span class="codefrag">coerceToBean</span> y <span class="codefrag">coerceToUI</span>.</p>
+<p>Por ejemplo, el siguiente m&eacute;todo pinta un booleano (true o false) con un par de im&aacute;genes (<span class="codefrag">/img/true.png</span> y <span class="codefrag">/img/false.png</span>:</p>
+<pre class="code">import org.zkoss.zkplus.databind.TypeConverter;
+import org.zkoss.zul.Listcell;
+ 
+public class myTypeConverter implements TypeConverter {
+	public Object coerceToBean(java.lang.Object val,
+			org.zkoss.zk.ui.Component comp) {
+		return null;
+	}
+ 
+	public Object coerceToUi(java.lang.Object val,
+			org.zkoss.zk.ui.Component comp) {
+		boolean married = (Boolean) val;
+		if (married)
+			((Listcell) comp).setImage("/img/true.png");
+		else
+			((Listcell) comp).setImage("/img/false.png");
+		return null;
+	}
+}]</pre>
+<p>Un ejemplo de uso:</p>
+<pre class="code">&lt;?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?&gt;
+ 
+&lt;window width="500px"&gt;
+&lt;zscript&gt;&lt;![CDATA[
+     //prepare the example persons List
+     List persons = new ArrayList();
+     persons.add(new Person("Tom", "Yeh", true));
+     persons.add(new Person("Henri", "Chen", true));
+     persons.add(new Person("Jumper", "Chen", false));
+     persons.add(new Person("Robbie", "Cheng", false));
+]]&gt;&lt;/zscript&gt;
+ 
+	&lt;listbox rows="4" model="@{persons}"&gt;
+		&lt;listhead&gt;
+			&lt;listheader label="First Name" width="100px" /&gt;
+			&lt;listheader label="Last Name" width="100px" /&gt;
+			&lt;listheader label="Married" width="100px" /&gt;
+		&lt;/listhead&gt;
+		&lt;listitem self="@{each=person}"&gt;
+			&lt;listcell label="@{person.firstName}" /&gt;
+			&lt;listcell label="@{person.lastName}" /&gt;
+			&lt;listcell
+				label="@{person.married, converter='myTypeConverter'}" /&gt;
+		&lt;/listitem&gt;
+	&lt;/listbox&gt;
+&lt;/window&gt;</pre>
+</div>
+
+
+
+<a name="N102E3"></a><a name="Una+aplicaci%C3%B3n+completa"></a>
+<h2 class="underlined_10">Una aplicaci&oacute;n completa</h2>
+<div class="section">
+<p>Vamos a ver un ejemplo completo en el que trabajamos con una lista de datos y podemos a&ntilde;adir y modificar elementos (clientes). El aspecto de la aplicaci&oacute;n es el siguiente:</p>
+<p>
+<img alt="" content-width="11cm" src="imagenes/customer.png" width="700"></p>
+<a name="N102F3"></a><a name="C%C3%B3digo+Java"></a>
+<h3 class="underlined_5">C&oacute;digo Java</h3>
+<p>En la clase <strong>model.Customer</strong> definimos el JavaBean que hace de modelo de los datos de la aplicaci&oacute;n. Definimos sus atributos:</p>
+<pre class="code">package model;
+
+import java.util.Date;
+
+public class Customer {
+   private int id=0;
+   private String name;
+   private Date date;
+   private boolean deleted;
+</pre>
+<p>Los constructores y los getters y setters:</p>
+<pre class="code">
+
+   public Customer() {
+   }
+
+   public Customer(int id, String name, Date date, boolean deleted) {
+      this.id = id;
+      this.name = name;
+      this.date = date;
+      this.deleted = deleted;
+   }
+
+   public String getName() {
+      return name;
+   }
+
+   public void setName(String name) {
+      this.name = name;
+   }
+
+   public int getId() {
+      return id;
+   }
+
+   public void setId(int id) {
+      this.id = id;
+   }
+   
+   public Date getDate() {
+      return date;
+   }
+
+   public void setDate(Date date) {
+      this.date = date;
+   }
+
+   public void setDeleted(boolean deleted) {
+      this.deleted = deleted;
+   }
+
+   public boolean getDeleted() {
+      return deleted;
+   }
+</pre>
+<p>Y un m&eacute;todo especial que nos sirve para construir un JavaBean id&eacute;ntico al actual:</p>
+<pre class="code">
+   // copia (clonado) de un customer
+   public Customer copy() {
+      Customer copy = new Customer();
+      copy.setId(this.getId());
+      copy.setName(this.getName());
+      copy.setDate(this.getDate());
+      copy.setDeleted(this.getDeleted());
+      return copy;
+   }
+
+}</pre>
+<p>Definimos una clase DAO <strong>model.CutomerDao</strong> para gestionar el acceso a una supuesta base de datos en la que guardamos todos los clientes. Por simplificar, vamos a utilizar una colecci&oacute;n en memoria en la que guardamos todos los clientes, definida en el atributo <span class="codefrag">customers</span> del singleton <span class="codefrag">MyCustomerSingleton</span>.</p>
+<pre class="code">package model;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import model.Customer;
+
+public class CustomerDao {
+   MyCustomersSingleton model;
+
+   public CustomerDao() {
+      model = MyCustomersSingleton.getInstance();
+   }
+
+</pre>
+<p>Definimos el m&eacute;todo privado <span class="codefrag">find</span> para obtener un cliente a partir de su identificador que utilizaremos en varias partes del c&oacute;digo. Obtenemos la colecci&oacute;n con el m&eacute;todo <span class="codefrag">getCustomers()</span>. Definimos el m&eacute;todo p&uacute;blico <span class="codefrag">getCustomer</span> que toma como par&aacute;metro una cadena:</p>
+<pre class="code">
+   /**
+    * @param id  El identificador del cliente
+    * @return El objeto cliente del ArrayList, null si no existe
+    */
+   private Customer findCustomer(int id) {
+      List&lt;Customer&gt; customers = model.getCustomers();
+      Customer foundCustomer = null;
+      for (Customer cust : customers)
+         if (cust.getId() == id)
+            foundCustomer = cust;
+      return foundCustomer;
+   }
+
+   public Customer getCustomer(String strId) throws Exception {
+      Customer foundCustomer;
+      int id = Integer.parseInt(strId);
+      foundCustomer = this.findCustomer(id);
+      if (foundCustomer == null) {
+         throw new RuntimeException("No existe cliente " + id);
+      } else
+         return foundCustomer.copy();
+   }
+
+</pre>
+<p>Definimos el m&eacute;todo <span class="codefrag">getAllCustomers</span> que copia todos los clientes en un array que devuelve como resultado.</p>
+<pre class="code">
+
+   public List&lt;Customer&gt; getAllCustomers() {
+      ArrayList&lt;Customer&gt; allCustomers = new ArrayList&lt;Customer&gt;();
+      for (Iterator&lt;Customer&gt; iterator = model.getCustomers()
+            .iterator(); iterator.hasNext();) {
+         Customer customer = (Customer) iterator.next();
+         allCustomers.add(customer.copy());
+      }
+      return allCustomers;
+   }
+ 
+</pre>
+<p>Definimos el m&eacute;todo <span class="codefrag">addCustomer()</span> que a&ntilde;ade un cliente nuevo a la colecci&oacute;n. El identificador del cliente es autogenerado.</p>
+<pre class="code">
+   public int getCustomerCount() {
+      return model.getCustomers().size();
+   }
+
+
+   public void addCustomer(Customer customer) throws Exception {
+      List&lt;Customer&gt; customers = model.getCustomers();
+      if (findCustomer(customer.getId()) == null) {
+         Customer cust = customer.copy();
+         int id = model.getLastCustomId()+1;
+         cust.setId(id);
+         model.setLastCustomId(id);
+         customers.add(cust);
+      }
+      else
+         throw new RuntimeException("Ya existe el cliente"
+               + customer.getId());
+   }
+</pre>
+<p>Por &uacute;ltimo definimos el m&eacute;todo <span class="codefrag">updateCustomer</span> para actualizar los datos de un cliente.</p>
+<pre class="code">
+   public void updateCustomer(Customer customer)
+         throws Exception {
+      Customer foundCustomer;
+      foundCustomer = findCustomer(customer.getId());
+      if (foundCustomer == null) {
+         throw new RuntimeException("No existe cliente "
+               + customer.getId());
+      } else {
+         foundCustomer.setName(customer.getName());
+         foundCustomer.setDate(customer.getDate());
+         foundCustomer.setDeleted(customer.getDeleted());
+      }
+   }
+}</pre>
+<p>La clase <strong>model.MyCustomersSingleton</strong> define el singleton que hace el papel de variable global de la aplicaci&oacute;n en la que guardamos la colecci&oacute;n de clientes y el &uacute;ltimo identificador autogenerado:</p>
+<pre class="code">package model;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class MyCustomersSingleton {
+   private static MyCustomersSingleton instance = null;
+   List&lt;Customer&gt; customers;
+   int lastCustomId;
+
+   public static MyCustomersSingleton getInstance() {
+      if (instance == null) {
+         instance = new MyCustomersSingleton();
+         ArrayList&lt;Customer&gt; customers = new ArrayList&lt;Customer&gt;();
+         customers.add(new Customer(1, "Pepito P&eacute;rez", new Date(), false));
+         customers.add(new Customer(2, "Juan Cotinos", new Date(), false));
+         instance.setMyCustomers(customers);
+         instance.setLastCustomId(2);
+      }
+      return instance;
+   }
+
+   public void setMyCustomers(List&lt;Customer&gt; customers) {
+      this.customers = customers;
+   }
+
+   public List&lt;Customer&gt; getCustomers() {
+      return this.customers;
+   }
+
+   public int getLastCustomId() {
+      return lastCustomId;
+   }
+
+   public void setLastCustomId(int lastCustomId) {
+      this.lastCustomId = lastCustomId;
+   }  
+}</pre>
+<a name="N1035A"></a><a name="C%C3%B3digo+ZUML"></a>
+<h3 class="underlined_5">C&oacute;digo ZUML</h3>
+<p>Definimos el fichero <strong>index.zul</strong> en el que construimos la p&aacute;gina principal con un men&uacute; y una lista de clientes:</p>
+<pre class="code">&lt;?page id="manageCust" title="Manage Customers" cacheable="false" 
+language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8"?&gt;
+&lt;?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?&gt;
+&lt;zk&gt;
+&lt;zscript&gt;&lt;![CDATA[
+   import model.*;
+
+   CustomerDao custDao = new CustomerDao();
+   myList = custDao.getAllCustomers();
+
+   public void submit() {
+      List myList;
+      CustomerDao custDao = new CustomerDao();
+      myList = custDao.getAllCustomers();
+   }
+   public void showEdit(String custId) throws Exception {
+      Map args = new HashMap();
+      args.put("custId", custId);
+      Window win = (Window) Executions.createComponents("editCustomer.zul", null, args);
+      win.setAttribute("custId", custId);
+      win.setTitle("Enter Customer Data");
+      win.setClosable(true);
+      win.setMaximizable(true);
+      win.doModal();
+   }
+   public void addNew() throws Exception {
+      Window win = (Window) Executions.createComponents("addCustomer.zul", null,
+            null);
+      win.setTitle("Enter Customer Data");
+      win.setClosable(true);
+      win.setMaximizable(true);      
+      win.doModal();
+   }
+]]&gt;&lt;/zscript&gt;
+   &lt;window id="win" border="normal" width="810px" minheight="300"&gt;
+      &lt;caption label="Manage Customers" /&gt;
+      &lt;borderlayout height="30px"&gt;
+         &lt;north border="none"&gt;
+            &lt;menubar id="menubar" width="800px"&gt;
+               &lt;menu label="Manage Customers"&gt;
+                  &lt;menupopup&gt;
+                     &lt;menuitem label="Register New Customer" onClick="addNew()"/&gt;
+                     &lt;menuseparator /&gt;
+                     &lt;menuitem label="Exit"
+                        onClick="win.detach()" /&gt;
+                  &lt;/menupopup&gt;
+               &lt;/menu&gt;
+            &lt;/menubar&gt;
+         &lt;/north&gt;
+      &lt;/borderlayout&gt;
+      &lt;vbox&gt;
+         &lt;listbox id="customerList" model="@{myList}" mold="paging" pageSize="5"
+            width="800px"&gt;
+            &lt;listhead sizable="true"&gt;
+               &lt;listheader label="Id" sort="auto(id)"/&gt;
+               &lt;listheader label="Name" sort="auto(name)"/&gt;
+               &lt;listheader label="Active Date" sort="auto(date)"/&gt;
+               &lt;listheader label="Deleted?" /&gt;
+            &lt;/listhead&gt;
+            &lt;listitem self="@{each=myList}" onClick="showEdit(self.getLabel())"&gt;
+               &lt;listcell label="@{myList.id}" /&gt;
+               &lt;listcell label="@{myList.name}" /&gt;
+               &lt;listcell label="@{myList.date}" /&gt;
+               &lt;listcell label="@{myList.deleted}"/&gt;
+            &lt;/listitem&gt;
+         &lt;/listbox&gt;
+      &lt;/vbox&gt;
+   &lt;/window&gt;
+&lt;/zk&gt;</pre>
+<p>La p&aacute;gina <strong>editCustomer.zul</strong> permite editar un cliente seleccionado:</p>
+<pre class="code">&lt;?page title="Edit Customer" contentType="text/html;charset=UTF-8"?&gt;
+&lt;zk&gt;
+&lt;window id="editCustomerWin" title="Edit Customer" border="normal"&gt;
+
+&lt;zscript&gt;&lt;![CDATA[
+    import model.*;
+    CustomerDao custDao = new CustomerDao();
+    String customerId = (String)Executions.getCurrent().getArg().get("custId");
+    Customer cust = custDao.getCustomer(customerId);
+    
+    public void submit() throws Exception {
+      int l_custId = Integer.valueOf(myCustId.getValue());
+      Customer cust = new Customer();
+      cust.setId(l_custId);
+      cust.setName(customerName.getValue());
+      cust.setDate(new java.sql.Date(date.getValue().getTime()));
+      cust.setDeleted(deleted.isChecked());
+      CustomerDao custDao = new CustomerDao();
+      custDao.updateCustomer(cust);
+      Executions.getCurrent().sendRedirect("index.zul");
+      editCustomerWin.detach();
+   }
+]]&gt;&lt;/zscript&gt;
+
+&lt;grid fixedLayout="true" width="450px"&gt;
+&lt;rows&gt;
+   &lt;row&gt;
+      &lt;label value="Customer Name"/&gt;
+      &lt;textbox id="customerName" constraint="no empty" value="${cust.name }"/&gt;
+   &lt;/row&gt;
+   &lt;row&gt;
+      &lt;label value="Date"/&gt;
+      &lt;datebox id="date" constraint="no empty" value = "${cust.date }"/&gt;
+   &lt;/row&gt;
+   &lt;row&gt;
+      &lt;textbox id="myCustId" visible="false" value="${cust.id }"/&gt;
+   &lt;/row&gt;
+   &lt;row&gt;
+      &lt;label value="Delete?"/&gt;
+      &lt;hbox&gt;
+         &lt;checkbox id="deleted" name="deleted" checked="${cust.deleted}"/&gt;
+         &lt;label value="whats this?" style="font:9;cursor:help;valign:center"
+          popup="help"/&gt;
+      &lt;/hbox&gt;
+      &lt;popup id="help" width="400px"&gt;
+         &lt;html&gt;Checking this box will enable soft delete of the record.&lt;/html&gt;
+      &lt;/popup&gt;
+   &lt;/row&gt;
+   &lt;row&gt;
+      &lt;button label="Save" onClick="submit()"/&gt;
+      &lt;button label="Cancel" onClick="editCustomerWin.detach()"/&gt;
+   &lt;/row&gt;
+&lt;/rows&gt;
+&lt;/grid&gt;
+&lt;/window&gt;
+&lt;/zk&gt;</pre>
+<p>La p&aacute;gina <strong>addCustomer.zul</strong> permite a&ntilde;adir un nuvo cliente:</p>
+<pre class="code">&lt;?page title="Add Customer" contentType="text/html;charset=UTF-8"?&gt;
+&lt;zk&gt;
+   &lt;window id="addCustomerWin" title="Register New Customer"
+      border="normal"&gt;
+&lt;zscript&gt;&lt;![CDATA[
+   import model.*;
+   
+   void submit() throws Exception {
+      Customer cust = new Customer();
+      cust.setName(customerName.getValue());
+      java.util.Date utilDate = date.getValue();
+      cust.setDate(utilDate);
+      CustomerDao customerDao = new CustomerDao();
+      customerDao.addCustomer(cust);
+      Executions.getCurrent().sendRedirect("index.zul");
+      addCustomerWin.detach();
+   }
+]]&gt;&lt;/zscript&gt;
+      &lt;grid fixedLayout="true" width="450px"&gt;
+         &lt;rows&gt;
+            &lt;row&gt;
+               &lt;label value="Customer Name" /&gt;
+               &lt;textbox id="customerName" constraint="no empty" /&gt;
+            &lt;/row&gt;
+            &lt;row&gt;
+               &lt;label value="Date" /&gt;
+               &lt;datebox id="date" constraint="no empty"/&gt;
+            &lt;/row&gt;
+            &lt;row&gt;
+               &lt;button label="Save" onClick="submit()" /&gt;
+               &lt;button label="Cancel"
+                  onClick="addCustomerWin.detach()" /&gt;
+            &lt;/row&gt;
+         &lt;/rows&gt;
+      &lt;/grid&gt;
+   &lt;/window&gt;</pre>
+<a name="N1037F"></a><a name="Ejercicio"></a>
+<h3 class="underlined_5">Ejercicio</h3>
+<p>A&ntilde;adir una columna adicional con un bot&oacute;n "Borrar" que realiza un borrado real del cliente. Antes de realizar el borrado se debe pedir confirmaci&oacute;n.</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010 Depto. CCIA</div>
+</div>
+</body>
+</html>

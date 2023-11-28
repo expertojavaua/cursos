@@ -1,0 +1,598 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Sesi&oacute;n 2: El lenguaje ZUML</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/banner-aplicaciones-ria.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/baner_j2ee_der.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Apuntes</a>
+</li>
+<li>
+<a class="base-not-selected" href="software.html">Software</a>
+</li>
+<li>
+<a class="base-not-selected" href="doc.html">Documentaci&oacute;n</a>
+</li>
+<li>
+<a class="base-not-selected" href="enlaces.html">Enlaces</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Apuntes</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 2</div>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesion 10</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion02-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Sesi&oacute;n 2: El lenguaje ZUML</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Ejemplo+dos+botones">Ejemplo dos botones</a>
+<ul class="minitoc">
+<li>
+<a href="#Ejemplo+b%C3%A1sico">Ejemplo b&aacute;sico</a>
+</li>
+<li>
+<a href="#Componentes+y+acciones+del+usuario">Componentes y acciones del usuario</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#El+lenguaje+ZUML">El lenguaje ZUML</a>
+</li>
+<li>
+<a href="#ZUML+y+XML">ZUML y XML</a>
+<ul class="minitoc">
+<li>
+<a href="#Elementos%2C+etiquetas+y+datos+de+texto">Elementos, etiquetas y datos de texto</a>
+</li>
+<li>
+<a href="#Atributos"> Atributos </a>
+</li>
+<li>
+<a href="#Caracteres+especiales">Caracteres especiales</a>
+</li>
+<li>
+<a href="#Secciones+CDATA">Secciones CDATA</a>
+</li>
+<li>
+<a href="#Comentarios">Comentarios</a>
+</li>
+<li>
+<a href="#Instrucciones+de+procesamiento">Instrucciones de procesamiento</a>
+</li>
+<li>
+<a href="#Espacios+de+nombres">Espacios de nombres</a>
+</li>
+<li>
+<a href="#Reglas+de+los+documentos+XML+bien+formados">Reglas de los documentos XML bien formados</a>
+</li>
+<li>
+<a href="#Ejemplo+ZUML">Ejemplo ZUML</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="Ejemplo+dos+botones"></a>
+<h2 class="underlined_10">Ejemplo dos botones</h2>
+<div class="section">
+<a name="N10012"></a><a name="Ejemplo+b%C3%A1sico"></a>
+<h3 class="underlined_5">Ejemplo b&aacute;sico</h3>
+<p>1. Creamos el proyecto <em>02-lenguaje-ZUML</em>. Creamos el fichero <em>dos-botones.zul</em> en el que definimos una sencilla p&aacute;gina con dos botones y una etiqueta. Para ello, pulsamos el bot&oacute;n derecho sobre la carpeta <em>WebContent</em> y escogemos la opci&oacute;n <em>New &gt; ZUL</em>. Ponemos como nombre de fichero <em>dos-botones.zul</em> y como nombre de p&aacute;gina <em>Dos botones</em>.</p>
+<p>2. Se crear&aacute; una p&aacute;gina nueva con los datos indicados y con una ventana inicial con el t&iacute;tulo que hemos dado. La ventana contiene el texto <em>New Content Here!</em> que debemos borrar y sustituir por dos botones y una etiqueta. Utilizamos la paleta de componentes para arrastrar esos elementos y comprobamos en el editor visual de ZUL el aspecto que va adquiriendo la interfaz.</p>
+<p>3. El &aacute;rbol de componentes de la p&aacute;gina debe ser como muestra la siguiente figura:</p>
+<p>
+<img alt="" content-width="5cm" src="imagenes/arbol-dos-botones.png" width="312"></p>
+<p>3. Modificamos las propiedades de los componentes. Podemos hacerlo manualmente, escribiendo el c&oacute;digo XML o con el panel de propiedades. El panel de propiedades se encuentra en la parte inferior de la ventana de Eclipse. Cuando pinchamos en un componente en el editor de texto o en el editor visual el panel cambia, mostrando las propiedades del componente seleccionado. Por ejemplo, la siguiente figura muestra las propiedades de uno de los botones.</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/panel-propiedades.png" width="621"></p>
+<p>A&ntilde;adimos las siguientes propiedades:</p>
+<ul>
+   
+<li>
+<strong>Ventana</strong>
+   
+<ul>
+      
+<li>
+<em>title</em>: <span class="codefrag">Dos botones</span>
+</li>
+      
+<li>
+<em>width</em>: <span class="codefrag">300px</span>
+</li>
+      
+<li>
+<em>border</em>: <span class="codefrag">normal</span>
+</li>
+   
+</ul>
+</li>
+   
+<li>
+<strong>Primer bot&oacute;n</strong>
+	
+<ul>
+		
+<li>
+<em>id</em>: <span class="codefrag">btn1</span>
+</li>
+		
+<li>
+<em>label</em>: <span class="codefrag">Mostrar</span>
+</li>
+	
+</ul>
+</li>
+   
+<li>
+<strong>Segundo bot&oacute;n</strong>
+	
+<ul>
+		
+<li>
+<em>id</em>: <span class="codefrag">btn2</span>
+</li>
+		
+<li>
+<em>label</em>: <span class="codefrag">Esconder</span>
+</li>
+	
+</ul>
+</li>
+   
+<li>
+<strong>Etiqueta</strong>
+	
+<ul>
+		
+<li>
+<em>id</em>: <span class="codefrag">label1</span>
+</li>
+		
+<li>
+<em>visible</em>: <span class="codefrag">false</span>
+</li>
+		
+<li>
+<em>value</em>: <span class="codefrag">Ahora me ves, ahora no</span>
+</li>
+	
+</ul>
+</li>
+
+</ul>
+<p>4. Podemos comprobar el aspecto de la p&aacute;gina en el editor visual ZK, accediendo a la direcci&oacute;n <em>http://localhost:8080/sesion1/dos-botones.zul</em> o pulsando sobre el fichero <em>dos-botones.zul</em> el bot&oacute;n derecho y seleccionado <em>Run As &gt; Run on Server</em>. Aparecer&aacute;n los botones, pero no la etiqueta. Y no se ejecutar&aacute; ninguna acci&oacute;n al pulsar los botones.</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/dos-botones.png" width="579"></p>
+<p>5. Por &uacute;ltimo, vamos a a&ntilde;adir un c&oacute;digo a ejecutar en el momento en que el usuario pulse el bot&oacute;n. Ya veremos m&aacute;s adelante que hay distintas formas de hacerlo. Por ahora, vamos a utilizar una de las m&aacute;s sencillas: modificar desde un componente una propiedad de otro componente.</p>
+<p>En el c&oacute;digo XML, vemos que los atributos <em>onClick</em> est&aacute;n vac&iacute;os. Escribimos en el bot&oacute;n <em>Mostrar</em>:</p>
+<pre class="code">onClick="label1.visible = true"</pre>
+<p>Y en el bot&oacute;n <em>Esconder</em> escribimos lo contrario:</p>
+<pre class="code">onClick="label1.visible = false"</pre>
+<p>6. Salvamos la p&aacute;gina en Eclipse, la recargamos en el navegador y comprobamos el funcionamiento del c&oacute;digo que acabamos de a&ntilde;adir. Hemos ligado el evento <em>onClick</em> de cada bot&oacute;n con la modificaci&oacute;n de la propiedad <em>visible</em> que hace que el componente se visualice o no en la ventana.</p>
+<p>El c&oacute;digo completo del ejemplo es:</p>
+<pre class="code">&lt;?page title="Dos botones" contentType="text/html;charset=UTF-8"?&gt;
+&lt;zk&gt;
+   &lt;window title="Dos botones" border="normal" width="300px"&gt;
+      &lt;button label="Mostrar" onClick="label1.visible = true" id="btn1"/&gt;
+      &lt;button label="Esconder" onClick="label1.visible = false" id="btn2"/&gt;
+      &lt;label value="Ahora me ves, ahora no" id="label1" visible="false"/&gt;
+   &lt;/window&gt;
+&lt;/zk&gt;</pre>
+<p>7. Por &uacute;ltimo, podemos analizar el paso de mensajes entre el cliente y el servidor utilizando alg&uacute;n depurador y monitorizador de la conexi&oacute;n HTTP. Uno muy recomendable es el que est&aacute; incluido en el &uacute;til plugin <em>Firebug</em> de <em>Firefox</em>. El plugin se encuentra disponible en la direcci&oacute;n <a href="http://getfirebug.com/">http://getfirebug.com/</a>
+</p>
+<p>Si observamos la primera petici&oacute;n, veremos que el <em>loader</em> de ZK devuelve una p&aacute;gina completa HTML con la informaci&oacute;n sobre la ventana, los botones y la etiqueta.</p>
+<p>Cuando ZK utiliza el enfoque Ajax es cuando el usuario pulsa uno de los botones. Por ejemplo, cuando se pulsa el bot&oacute;n <em>Mostrar</em> podemos comprobar entonces que se env&iacute;a una petici&oacute;n POST con los siguientes datos:</p>
+<pre class="code">cmd.0:	onClick
+data.0:	24
+data.0:	7
+data.0:	
+dtid:	gi161
+uuid.0:	z_i1_2</pre>
+<p>Se est&aacute; enviando al motor de actualizaci&oacute;n en el servidor de ZK una petici&oacute;n que contiene el comando <em>onClic</em> y los datos necesarios para que el servidor la procese correctamente, como el identificador del componente que ha originado el evento.</p>
+<p>El servidor de actualizaci&oacute;n devuelve una respuesta en formato XML, en la que indica el atributo <em>visibility</em> del componente <em>z_il_4</em> se debe cambiar a <em>true</em>: </p>
+<pre class="code">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;rs&gt;
+   &lt;rid&gt;9&lt;/rid&gt;
+   &lt;r&gt;
+      &lt;c&gt;setAttr&lt;/c&gt;
+      &lt;d&gt;z_i1_4&lt;/d&gt;
+      &lt;d&gt;visibility&lt;/d&gt;
+      &lt;d&gt;true&lt;/d&gt;
+   &lt;/r&gt;
+&lt;/rs&gt;</pre>
+<p>Se trata de c&oacute;digo XML que es interpretado por el motor ZK en el cliente. No se ha devuelto como respuesta la p&aacute;gina completa, sino &uacute;nicamente la indicaci&oacute;n del cambio en uno de los componentes.</p>
+<p>Todo este funcionamiento Ajax es transparente a nosotros como desarrolladores ZK. Para nosotros el cliente a generado un evento que ha cambiado una determinada propiedad de uno de los componentes.</p>
+<a name="N10125"></a><a name="Componentes+y+acciones+del+usuario"></a>
+<h3 class="underlined_5">Componentes y acciones del usuario</h3>
+<p>Cada componente de ZK captura un determinado tipo de evento de la interacci&oacute;n con el usuario. Por ejemplo, el componente <span class="codefrag">button</span> detecta cuando el usuario pincha el cursor sobre &eacute;l. O un &iacute;tem de un men&uacute; detecta cuando el usuario hace click sobre &eacute;l. Todas estas interacciones del usuario generan eventos sobre el componente que pueden ser capturados y a los que la aplicaci&oacute;n puede responder con una determinada acci&oacute;n. En el ejemplo anterior, hemos comprobado que una forma de acci&oacute;n es la modificaci&oacute;n de los atributos de otros componentes. M&aacute;s adelante veremos ejemplos mucho m&aacute;s elaborados de acciones, en las que se utiliza c&oacute;digo JavaScript o c&oacute;digo Java.</p>
+<p>Existen acciones del usuario que captura y procesa el propio componente sin que se tenga que definir ning&uacute;n comportamiento en la aplicaci&oacute;n. Vamos a ver un ejemplo.</p>
+<p>1. Modificamos el componente <span class="codefrag">window</span> del ejemplo, definiendo los atributos <span class="codefrag">sizable</span>, <span class="codefrag">minheight</span> y <span class="codefrag">minwidth</span> de la siguiente forma:</p>
+<pre class="code">&lt;window title="Dos botones" height="100px" width="300px" border="normal" 
+minheight="100" minwidth="300" sizable="true"&gt;</pre>
+<p>2. Accedemos desde el navegador a la p&aacute;gina del ejemplo para comprobar el funcionamiento del ejemplo.</p>
+<p>Podemos ver que el atributo <span class="codefrag">sizable="true"</span> permite que el usuario modifique el tama&ntilde;o de la ventana. Los atributos <span class="codefrag">minheight</span> y <span class="codefrag">minwidth</span> definen su tama&ntilde;o m&iacute;nimo. Cuando el usuario mueve el cursor sobre los bordes de la ventana o sobre su esquina inferior izquierda cambia su forma, indicando que puede cambiar sus dimensiones. Si pincha el bot&oacute;n y lo arrastra, aparecer&aacute; una previsualizaci&oacute;n del nuevo tama&ntilde;o con un borde discontinuo. Cuando el usuario suelta el bot&oacute;n, la ventana se redimensiona y sus componentes se reorganizan.</p>
+<p>Todas estas acciones est&aacute;n predefinidas en el comportamiento del propio componente de ZK; no tenemos que definirlas en el c&oacute;digo de la aplicaci&oacute;n. Est&aacute;n incluidas en el c&oacute;digo JavaScript del componente y se ejecutan en el lado del cliente, sin generar ning&uacute;n evento.</p>
+</div>
+
+<a name="N1015B"></a><a name="El+lenguaje+ZUML"></a>
+<h2 class="underlined_10">El lenguaje ZUML</h2>
+<div class="section">
+<p>El lenguaje en el que se definen las interfaces de usuario en ZK se denomina ZUML (<em>ZK User Interface Markup Language</em>). Es un lenguaje basado en XML. Veamos r&aacute;pidamente sus elementos principales junto con algunos ejemplos:</p>
+<p>
+<strong>Componentes</strong>: Cada elemento de una p&aacute;gina ZK define un componente que es creado por el ZK Loader. Los atributos del componente definen los valores iniciales que se asignan al componente reci&eacute;n creado.</p>
+<p>En el siguiente ejemplo se definen varios componentes: una ventana (<span class="codefrag">window</span>) que contiene una etiqueta (<span class="codefrag">label</span>), un separador (<span class="codefrag">separator</span>) y dos botones (<span class="codefrag">button</span>). Los atributos de esos componentes definen el estado inicial de la interfaz: el t&iacute;tulo de la ventana, el contenido de la etiqueta</p>
+<pre class="code">&lt;window title="Vota" border="normal"&gt; 
+   &lt;label id="label"&gt;Te gusta ZK? &lt;/label&gt; 
+   &lt;separator/&gt; 
+   &lt;button label="Si" onClick="label.value = self.label"/&gt; 
+   &lt;button label="No" onClick="label.value = self.label"/&gt;
+&lt;/window&gt;</pre>
+<p>
+<strong>Instrucciones de procesamiento ZK</strong>: directivas globales que se escriben al comienzo de la p&aacute;gina y permiten definir ciertos comportamientos que afectan a toda la p&aacute;gina, como macros o c&oacute;digo de inicializaci&oacute;n.</p>
+<pre class="code">&lt;!-- special.zul: Common Definitions --&gt; 
+&lt;?init zscript="/WEB-INF/macros/special.zs"?&gt; 
+&lt;?component name="special" macroURI="/WEB-INF/macros/special.zuml" class="Special"?&gt; 
+&lt;?component name="another" macroURI="/WEB-INF/macros/another.zuml"?&gt;</pre>
+<p>
+<strong>Lenguaje de expresiones EL</strong>: lenguaje similar al de JSP, que permite acceder a variables y componentes. Utilizan la sintaxis <span class="codefrag">${exp}</span>
+</p>
+<pre class="code">&lt;element attr1=&rdquo;${bean.property}&rdquo;.../&gt; 
+${map[entry]}
+&lt;another-element&gt; ${3+counter} is ${empty map}&lt;/another-element&gt;</pre>
+<p>
+<strong>Objetos impl&iacute;citos</strong>: son como variables globales manejadas por el sistema. Se pueden utilizar para obtener informaci&oacute;n sobre el sistema y el cliente. Tambi&eacute;n son una forma pasar informaci&oacute;n entre p&aacute;ginas.</p>
+<p>Ejemplos: <span class="codefrag">self</span>, <span class="codefrag">event</span>, <span class="codefrag">page</span>, <span class="codefrag">session</span>, <span class="codefrag">each</span>.</p>
+<pre class="code">&lt;?page title="Hola navegador" contentType="text/html;charset=UTF-8"?&gt;
+&lt;zk&gt;
+&lt;window title="Hola navegador" border="normal"&gt;
+   ${execution.userAgent}:
+   ${execution.localName}:
+   ${execution.serverPort}:
+   ${execution.parameterMap}:
+   ${param.par1}
+&lt;/window&gt;
+&lt;/zk&gt;</pre>
+<p>
+<strong>zscript</strong>: lenguaje de script en el que expresar acciones realizadas por los componentes a respuesta de eventos producidos por la interacci&oacute;n con el usuario.</p>
+<pre class="code">&lt;window title="Hello" border="normal"&gt; 
+   &lt;button label="Say Hello" onClick="sayHello()"/&gt; 
+   &lt;zscript&gt;
+      int count = 0; 
+      void sayHello() { //declare a global function
+         alert("Hello World! "+ ++count);
+      }
+   &lt;/zscript&gt;
+&lt;/window&gt;</pre>
+<p>
+<strong>Atributos ZK</strong>: son atributos de los componentes propios de ZK, utilizados para controlar el componente desde el framework. Proporcionan utilidades como el evaluador condicional <span class="codefrag">if</span> o iteradores <span class="codefrag">foreach</span>.</p>
+<pre class="code">&lt;zscript&gt;
+   contacts = new String[] {"Monday", "Tuesday", "Wednesday"};
+&lt;/zscript&gt;
+&lt;listbox width="100px"&gt;
+   &lt;listitem label="${each}" forEach="${contacts}"/&gt; 
+&lt;/listbox&gt;</pre>
+<p>
+<strong>Espacios de nombres XML</strong>: ZUML permite combinar instrucciones y componentes ZK con elementos XHTML. Para ello utiliza varios tipos de espacios de nombres con los que se identifican claramente el tipo de elemento que se est&aacute; utilizando en cada momento.</p>
+<pre class="code">&lt;window title="mix HTML demo" xmlns:h="http://www.w3.org/1999/xhtml"&gt;
+     &lt;h:table border="1"&gt;
+         &lt;h:tr id="row1"&gt;
+             &lt;h:td&gt; Columna 1&lt;/h:td&gt;
+             &lt;h:td&gt; Casilla 1&lt;/h:td&gt;
+         &lt;/h:tr&gt;
+     &lt;/h:table&gt;
+     &lt;button label="add" onClick="row1.appendChild(new org.zkoss.zhtml.Td())"/&gt;
+ &lt;/window&gt;</pre>
+</div>
+
+
+
+<a name="N101D0"></a><a name="ZUML+y+XML"></a>
+<h2 class="underlined_10">ZUML y XML</h2>
+<div class="section">
+<p>Las interfaces de usuario ZK se definen con el lenguaje ZUML (<em>ZK User Interface Marckup Language</em>) que es un lenguaje XML. Vamos a repasar algunas de las caracter&iacute;sticas principales de XML, que tambi&eacute;n deben cumplir los documentos ZUML.</p>
+<p>XML define un est&aacute;ndar para el marcado de documentos. Define una sintaxis gen&eacute;rica usada para marcar los datos con etiquetas sencillas y legibles por humanos. Proporciona un formato est&aacute;ndar para documentos que es lo suficientemente flexible para ser f&aacute;cilmente adaptado para dominios tan diversos como sitios web (XHTML), libros (DocBook), intercambio de datos, Ajax, gr&aacute;ficos vectoriales (SVG), genealog&iacute;a, serializaci&oacute;n de objetos, llamadas a procedimientos remotos, etc.</p>
+<p>Los documentos XML definen elementos estructurados, con atributos, organizados jer&aacute;rquicamente, que pueden ser recorridos, analizados y validados de forma sencilla y automatizada.</p>
+<p>El siguiente es un ejemplo de c&oacute;digo XML, a partir del que podemos hacer notar alguna de las caracter&iacute;sticas: </p>
+<pre class="code">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;people xmlns="http://www.cafeconleche.org/namespaces/people"&gt;
+     
+  &lt;person born="1912" died="1954"&gt;
+    &lt;name&gt;
+      &lt;first_name&gt;Alan&lt;/first_name&gt;
+      &lt;last_name&gt;Turing&lt;/last_name&gt;
+    &lt;/name&gt;
+    &lt;profession&gt;computer scientist&lt;/profession&gt;
+    &lt;profession&gt;mathematician&lt;/profession&gt;
+    &lt;profession&gt;cryptographer&lt;/profession&gt;
+  &lt;/person&gt;
+     
+  &lt;person born="1918" died="1988"&gt;
+    &lt;name&gt;
+      &lt;first_name&gt;Richard&lt;/first_name&gt;
+      &lt;middle_initial&gt;P&lt;/middle_initial&gt;
+      &lt;last_name&gt;Feynman&lt;/last_name&gt;
+    &lt;/name&gt;
+    &lt;profession&gt;physicist&lt;/profession&gt;
+    &lt;hobby&gt;Playing the bongoes&lt;/hobby&gt;
+  &lt;/person&gt;
+     
+&lt;/people&gt;</pre>
+<p>En primer lugar, un documento XML contiene s&oacute;lo texto nunca datos binarios. El texto est&aacute; codificado con la codificaci&oacute;n especificada en la cabecera, UTF-8 en este caso. &Eacute;sta es la codificaci&oacute;n por defecto de un documento XML si no se define ning&uacute;n valor para el atributo <em>encoding</em>.</p>
+<a name="N101EF"></a><a name="Elementos%2C+etiquetas+y+datos+de+texto"></a>
+<h3 class="underlined_5">Elementos, etiquetas y datos de texto</h3>
+<p>Los documentos XML contienen <em>elementos</em>, <em>etiquetas</em> y <em>datos de texto</em>. Algunos de los elementos del ejemplo son <span class="codefrag">people</span>, <span class="codefrag">person</span>, <span class="codefrag">name</span>, <span class="codefrag">first_name</span> o <span class="codefrag">profession</span>. Cada elemento est&aacute; delimitado por una etiqueta de comienzo y una etiqueta de final. Por ejemplo, el elemento <span class="codefrag">first_name</span> comienza por la etiqueta <span class="codefrag">&lt;first_name&gt;</span> y la etiqueta <span class="codefrag">&lt;/first_name&gt;</span>. Entre ambas etiquetas se describe el contenido del elemento, una cadena de texto o tambi&eacute;n otros elementos.</p>
+<p>Es posible tambi&eacute;n definir elementos vac&iacute;os con una &uacute;nica etiqueta. En ese caso, la etiqueta debe contener el car&aacute;cter de finalizaci&oacute;n. Por ejemplo, el elemento <span class="codefrag">br</span> en XHTML se define con una &uacute;nica etiqueta:</p>
+<pre class="code">&lt;br/&gt;</pre>
+<p>XML es sensible a las may&uacute;sculas. Los elementos <span class="codefrag">person</span> y <span class="codefrag">Person</span> son distintos. En el caso de ZK, todos los elementos est&aacute;n definidos en min&uacute;sculas.</p>
+<p>
+<strong>&Aacute;rboles XML</strong>
+</p>
+<p>Una caracter&iacute;stica fundamental de XML es su car&aacute;cter estructurado. Los documentos XML definen &aacute;rboles de elementos, en los que algunos elementos contienen a otros <em>elementos hijos</em>. Por ejemplo, en el ejemplo anterior el primer elemento <span class="codefrag">person</span> contiene cuatro elementos hijo: un elemento <span class="codefrag">name</span> y tres elementos <span class="codefrag">profession</span>. El elemento <span class="codefrag">name</span> a su vez otros dos elementos, <span class="codefrag">first_name</span> y <span class="codefrag">last_name</span>.</p>
+<p>En la ra&iacute;z del &aacute;rbol se encuentra el denominado <em>elemento ra&iacute;z</em>, un &uacute;nico elemento que no tiene padre. Tambi&eacute;n se denomina el <em>elemento del documento</em>. Debido a que los elementos no pueden solaparse y a que todos los elementos salvo el ra&iacute;z tienen un &uacute;nico padre, los datos en un documento XML forman un &aacute;rbol. La estructura en forma de &aacute;rbol del primer elemento <span class="codefrag">person</span> es la que se representa en la siguiente figura.</p>
+<p>
+<img alt="" content-width="12cm" src="imagenes/arbol-xml.png" width="600"></p>
+<p>En una p&aacute;gina ZK los componentes tambi&eacute;n se organizan en forma de &aacute;rbol. Por ejemplo, como hemos visto anteriormente, una ventana contiene dos botones y una etiqueta. Esta estructura viene definida por el documento ZUML. Los elementos de los documentos ZUML son los componentes de la interfaz de usuario y todo el documento define el &aacute;rbol de componentes. </p>
+<a name="N1025F"></a><a name="Atributos"></a>
+<h3 class="underlined_5"> Atributos </h3>
+<p>Los elementos XML pueden tener <em>atributos</em>. Un atributo es una pareja nombre-valor incluida en la etiqueta de comienzo del elemento. Los nombres est&aacute;n separados de los valores por un signo igual y con espacio en blanco opcional. Los valores est&aacute;n incluidos entre dobles comillas. En el ejemplo, el primer elemento <span class="codefrag">person</span> tiene un atributo <span class="codefrag">born</span> con el valor <span class="codefrag">1912</span>. Un elemento puede tener tantos atributos como se desee, separados por espacio. El orden en el que aparecen los atributos no es relevante.</p>
+<p>Al igual que los nombres de los elementos, los nombres de los atributos se pueden definir libremente, dependiendo del dominio en el que se est&eacute; utilizando el documento XML.</p>
+<p>La combinaci&oacute;n de atributos y datos proporciona bastante libertad a la hora de definir el documento XML. Por ejemplo, el primer elemento <span class="codefrag">person</span> podr&iacute;a tambi&eacute;n describirse de la forma que sigue, utilizando elementos vac&iacute;os, sin datos, y definiendo los datos en los atributos.</p>
+<pre class="code">&lt;person born="1912" died="1954"&gt;
+    &lt;name first="Alan" last="Turing"/&gt;
+    &lt;profession value="computer scientist"/&gt;
+    &lt;profession value="mathematician"/&gt;
+    &lt;profession value="cryptographer"/&gt;
+&lt;/person&gt;</pre>
+<p>En el caso de ZK la mayor&iacute;a de componentes son de este tipo, elementos vac&iacute;os definidos por sus atributos.</p>
+<a name="N10285"></a><a name="Caracteres+especiales"></a>
+<h3 class="underlined_5">Caracteres especiales</h3>
+<p>Debido a que los caracteres como los par&eacute;ntesis angulares (<span class="codefrag">&lt;</span> o <span class="codefrag">&gt;</span>) se utilizan en las etiquetas para delimitar los elementos no es posible utilizarlos como datos. Hay que sustituirlos por una <em>referencia de entidad</em> (<span class="codefrag">&amp;lt;</span>, para el car&aacute;cter <span class="codefrag">&lt;</span>), por la <em>referencia num&eacute;rica del car&aacute;cter</em> (<span class="codefrag">&amp;#60</span>) o por la <em>referencia hexadecimal del car&aacute;cter</em> (<span class="codefrag">&amp;#x3C</span>). Cuando el <em>parser</em> lea el documento remmplazar&aacute; todas esas referencias por el car&aacute;cter real (<span class="codefrag">&lt;</span>). Por ejemplo, en el caso de ZK:</p>
+<pre class="code">&lt;zscript language="javascript"&gt; 
+   alert('Say Hi in JavaScript'); 
+   new Label("Hi, JavaScript!").setParent(win);
+   if (location.host.tolowercase().indexOf("jtech") &amp;lt; 0 {
+      location.href="http://jtech.ua.es/zk/";
+   }
+&lt;/zscript&gt;</pre>
+<p>Otros caracteres que pueden causar confusi&oacute;n al parser son las dobles comillas (<span class="codefrag">"</span>), el ap&oacute;strofo (<span class="codefrag">'</span>) o el ampersand (<span class="codefrag">&amp;</span>). En concreto, existen cinco entidades predefinidas en XML que se pueden utilizar en lugar de sus respectivos caracteres:</p>
+<ul>
+
+<li>
+<span class="codefrag">&amp;lt;</span>: el corchete abierto angular o signo menor que (<span class="codefrag">&lt;</span>)</li>
+
+<li>
+<span class="codefrag">&amp;amp;</span>: el ampersand (<span class="codefrag">&amp;</span>)</li>
+
+<li>
+<span class="codefrag">&amp;gt;</span>: el corchete de cierre angular o signo mayor que (<span class="codefrag">&gt;</span>)</li>
+
+<li>
+<span class="codefrag">&amp;quot;</span>: las dobles comillas (<span class="codefrag">"</span>)</li>
+
+<li>
+<span class="codefrag">&amp;apos;</span>: la tilde o ap&oacute;strofo (<span class="codefrag">'</span>)</li>
+
+</ul>
+<a name="N102EB"></a><a name="Secciones+CDATA"></a>
+<h3 class="underlined_5">Secciones CDATA</h3>
+<p>Cuando en un documento XML es necesario incluir c&oacute;digo fuente (HTML, SVG, JavaScript o incluso XML) es frecuente que aparezcan bastantes caracteres especiales como <span class="codefrag">&lt;</span> o <span class="codefrag">&amp;</span>. En este caso se hace bastante farragoso utilizar las referencias vistas anteriormente. En su lugar, es habitual utilizar las denominadas <em>secciones CDATA</em> que sirven para definir datos de texto que son tratados en crudo por el parser de XML. Las secciones CDATA deben comenzar por <span class="codefrag">&lt;![CDATA[</span> y terminar por <span class="codefrag">]]&gt;</span>. Todo lo que escribamos entre estas dos etiquetas se lee tal cual por el parser de XML.</p>
+<p>En el caso de ZUML es habitual utilizar secciones CDATA para incluir en ellas c&oacute;digo script:</p>
+<pre class="code">&lt;zscript&gt; 
+&lt;![CDATA[
+void myfunc(int a, int b) {
+   if (a &lt; 0 &amp;&amp; b &gt; 0) { //do something
+   } ]]&gt;
+&lt;/zscript&gt;</pre>
+<a name="N1030B"></a><a name="Comentarios"></a>
+<h3 class="underlined_5">Comentarios</h3>
+<p>En los documentos XML se pueden incluir comentarios que no son parte del documento. Se definen de la misma forma que HTML, comenzando con <span class="codefrag">&lt;!--</span> y terminando con <span class="codefrag">--&gt;</span>. Por ejemplo:</p>
+<pre class="code">&lt;!-- A continuaci&oacute;n se definen los componentes principales --&gt;</pre>
+<p>Dentro de los comentarios no puede aparecer el doble gui&oacute;n <span class="codefrag">--</span> en ninguna parte.</p>
+<a name="N10325"></a><a name="Instrucciones+de+procesamiento"></a>
+<h3 class="underlined_5">Instrucciones de procesamiento</h3>
+<p>En los documentos XML es posible incluir instrucciones que no son parte del documento pero que se utilizan para pasar informaci&oacute;n a la aplicaci&oacute;n que est&aacute; proces&aacute;ndolo. Se denominan <em>instrucciones de procesamiento</em> o <em>directivas</em>.</p>
+<p>Una instrucci&oacute;n de procesamiento comienza con <span class="codefrag">&lt;?</span> y termina con <span class="codefrag">?&gt;</span>. Inmediatamente despu&eacute;s de <span class="codefrag">&lt;?</span> debe aparecer un nombre llamado el <span class="codefrag">target</span>, un identificador significativo para la aplicaci&oacute;n que est&aacute; procesando el documento. El resto de la instrucci&oacute;n de procesamiento contiene texto en un formato apropiado para la aplicaci&oacute;n.</p>
+<p>Por ejemplo, en el caso de ZK, la directiva <span class="codefrag">&lt;?component</span> sirve para definir un nuevo componente:</p>
+<pre class="code">&lt;?component name="bluebutton" extends="button" 
+    style="border:1px solid blue" label="OK"?&gt;</pre>
+<p>Al igual que los comentarios, las directivas pueden aparecer en cualquier parte del documento XML.</p>
+<a name="N10351"></a><a name="Espacios+de+nombres"></a>
+<h3 class="underlined_5">Espacios de nombres</h3>
+<p>Los espacios de nombres se utilizan en XML para distinguir nombres de elementos y atributos iguales que pertenecen a distintos vocabularios. La forma de implementarlos es a&ntilde;adiendo un prefijo a cada elemento y atributo. Los prefijos se mapean a URIs con atributos de la forma <span class="codefrag">xmlns:</span><em>prefijo</em>. Los elementos y atributos que se mapean a una misma URI comparten el mismo espacio de nombres.</p>
+<p>Por ejemplo, un documento XHTML puede contener dibujos SVG y ecuaciones MathML y ambos contienen elementos con el mismo nombre. Un documento ZUML puede contener elementos XHTML y elementos ZUL con el mismo nombre. Es necesario identificar el espacio de nombres al que pertenece cada elemento para reconocer si se trata de uno u otro caso.</p>
+<p>La declaraci&oacute;n del espacio de nombres se puede realizar en cualquier elemento padre del elemento en el que utiliza el prefijo al que est&aacute; asociado. Normalmente se hace en el elemento ra&iacute;z del documento.</p>
+<p>Vemos un ejemplo de c&oacute;digo XHTML en el que se utilizan tambi&eacute;n elementos ZUML y c&oacute;digo script ZK.</p>
+<pre class="code">&lt;html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:x="http://www.zkoss.org/2005/zul"
+      xmlns:zk="http://www.zkoss.org/2005/zk"&gt; 
+&lt;head&gt;
+   &lt;title&gt;ZHTML Demo&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt; 
+   &lt;h1&gt;ZHTML Demo&lt;/h1&gt;
+   &lt;table&gt;
+      &lt;tr&gt;
+         &lt;td&gt;&lt;x:textbox/&gt;&lt;/td&gt;
+         &lt;td&gt;&lt;x:button label="Now" zk:onClick="addItem()"/&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+   &lt;/table&gt;
+   &lt;zk:zscript&gt;
+      void addItem() {
+      }
+   &lt;/zk:zscript&gt; 
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>En el ejemplo se definen tres espacios de nombres identificados como <span class="codefrag">http://www.w3.org/1999/xhtml</span>, <span class="codefrag">http://www.zkoss.org/2005/zul</span> y <span class="codefrag">http://www.zkoss.org/2005/zk</span>. El primero es el que se utiliza por defecto en aquellos elementos que no tienen prefijo, al segundo se le asigna el prefijo <span class="codefrag">x</span> y al &uacute;ltimo el prefijo <span class="codefrag">zk</span>.</p>
+<p>La declaraci&oacute;n se realiza en el elemento ra&iacute;z <span class="codefrag">html</span> y cualquier elemento hijo puede utilizar los prefijos. Por ejemplo, el elemento <span class="codefrag">x:textbox</span> est&aacute; definido en el espacio de nombres <span class="codefrag">http://www.zkoss.org/2005/zul</span> o el atributo <span class="codefrag">zk:onClick</span> est&aacute; definido en el espacio de nombres <span class="codefrag"> xmlns:zk="http://www.zkoss.org/2005/zk</span>. En cualquiera de estos dos ejemplos, si no pusi&eacute;ramos el prefijo, el elemento o atributo estar&iacute;a definido en el espacio de nombres XHTML.</p>
+<p>Las URIs que se utilizan como identificadores de los espacios de nombres son &uacute;nicamente identificadores &uacute;nicos formales. No es necesario que sean direcciones de p&aacute;ginas web reales. Aunque a menudo s&iacute; que lo son y, por conveniencia, suelen describir las caracter&iacute;sticas del espacio de nombres. </p>
+<a name="N10394"></a><a name="Reglas+de+los+documentos+XML+bien+formados"></a>
+<h3 class="underlined_5">Reglas de los documentos XML bien formados</h3>
+<p>Todos los documentos XML deben cumplir un conjunto de reglas formales. Hemos comentado ya algunas de ellas. Resaltamos las m&aacute;s importantes:</p>
+<ol>
+   
+<li>Toda etiqueta de comienzo debe estar emparejada con una etiqueta final.</li>
+   
+<li>Los elementos pueden anidarse, pero no solaparse.</li>
+   
+<li>S&oacute;lo puede existir un &uacute;nico elemento ra&iacute;z.</li>
+   
+<li>Los valores de los atributos deben estar entre comillas.</li>
+   
+<li>Un elemento no puede tener dos atributos con el mismo nombre</li>
+   
+<li>Los comentarios y las instrucciones de procesamiento no pueden aparecer dentro de las etiquetas.</li>
+   
+<li>Los caracteres <span class="codefrag">&lt;</span> o <span class="codefrag">&amp;</span> no pueden aparecer en el texto de un elemento o de un atributo.</li>
+
+</ol>
+<a name="N103BC"></a><a name="Ejemplo+ZUML"></a>
+<h3 class="underlined_5">Ejemplo ZUML</h3>
+<p>ZUML (<em>ZK User Interface Marckup Language</em>) es el lenguaje en el que se definen las p&aacute;ginas de ZK. Es un lenguaje XML y debe cumplir todas las reglas vistas en el apartado anterior.</p>
+<p>Vamos a comprobar algunas caracter&iacute;sticas de XML y de ZUML escribiendo c&oacute;digo ZUML en el editor de Eclipse. A continuaci&oacute;n se muestra un ejemplo de un programa ZK en el que se utiliza alguna de las caracter&iacute;sticas vistas sobre los documentos XML</p>
+<pre class="code">&lt;?page title="Saludo" contentType="text/html;charset=UTF-8"?&gt;
+&lt;zk&gt;
+&lt;window title="Saludo" border="normal"&gt;
+   &lt;label value="Escribe tu nombre"/&gt;
+   &lt;textbox width="60%" id="username"&gt;
+      &lt;attribute name="onChanging"&gt;&lt;![CDATA[
+        if (event.getValue().length() &gt; 0 &amp;&amp;
+            event.getValue.().trim().length() &gt; 0) {
+        	botonSaludo.setVisible(true);
+        }
+        else botonSaludo.setVisible(false);
+		]]&gt;
+      &lt;/attribute&gt;
+   &lt;/textbox&gt;
+   &lt;button id="botonSaludo" label="Di hola" visible="false"
+           onClick="alert(&amp;quot;Hola &amp;quot; + username.value);"/&gt;
+&lt;/window&gt;
+&lt;/zk&gt;</pre>
+<p>Veamos primer el elemento <span class="codefrag">button</span>. En &eacute;l se define un atributo <span class="codefrag">onClick</span> en el que se incluye c&oacute;digo Java. Ya veremos que este c&oacute;digo se ejecuta en el servidor. En el c&oacute;digo Java hay que escribir unas dobles comillas. No podemos escribirlas tal cual, porque confundir&iacute;amos al analizador de ZK. En su lugar hay que sustituirlas por la entidad <span class="codefrag">&amp;quot;</span>.</p>
+<p>En el elemento <span class="codefrag">textbox</span> vemos otra forma alternativa de incluir c&oacute;digo en un atributo. En este caso, se trata del atributo <span class="codefrag">onChangig</span> del elemento <span class="codefrag">textbox</span>. En lugar de incluir el c&oacute;digo en el propio atributo se utiliza el elemento de ZK <span class="codefrag">attribute</span>. Con ese elemento es posible <em>sacar</em> el atributo de la etiqueta y definir su contenido utilizando una secci&oacute;n CDATA. Recordemos que las secciones CDATA son procesadas tal cual y que dentro de ellas podemos utilizar s&iacute;mbolos prohibidos en XML como el ampersand (&amp;) o el signo mayor-que (&gt;). No es posible utilizar una secci&oacute;n CDATA en una atributo dentro de una etiqueta.</p>
+<p>Como ejemplo guiado, vamos a escribir esta p&aacute;gina ZK en Eclipse, para comprobar algunas de las caracter&iacute;sticas del editor relacionadas con el c&oacute;digo XML.</p>
+<p>1. Tenemos que incluir la p&aacute;gina en el proyecto <span class="codefrag">02-lenguaje-ZUML</span>. Creamos un proyecto con ese nombre si todav&iacute;a no lo hemos hecho.</p>
+<p>2. Creamos un nuevo documento ZUML llamado <span class="codefrag">saludo.zul</span>. Vamos a escribir en &eacute;l el contenido del ejemplo y comprobar al mismo tiempo alguna de las ayudas de que dispone el editor de Eclipse para escribir documentos XML y ZUML.</p>
+<p>Entre estas caracter&iacute;sticas destacamos las siguientes:</p>
+<p>
+<strong>Autocompletaci&oacute;n de c&oacute;digo</strong>. El editor cierra autom&aacute;ticamente todas las etiquetas XML que escribimos. Podemos comprobarlo escribiendo cualquier etiqueta, aunque sea una inventada. El editor autom&aacute;ticamente completar&aacute; la etiqueta de cierre.</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/completar-xml.png" width="618"></p>
+<p>
+<strong>Ayuda contextual para completar elementos de ZUML</strong>. Cuando comenzamos  a escribir el nombre de un elemento podemos pulsar CTRL+espacio y aparecer&aacute; un men&uacute; desplegable con todas los elementos posibles que comienzan por las letras que hemos escrito. Podemos movernos con las teclas del cursor para seleccionar un elemento o seguir escribiendo y la lista de elementos se ajusta de forma din&aacute;mica. </p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/sugerir-elemento.png" width="618"></p>
+<p>
+<strong>Ayuda contextual para completar atributos</strong>. Igual que con los elementos, si pulsamos CTRL+espacio dentro de una etiqueta el editor nos ofrece ayuda contextual para escribir los atributos espec&iacute;ficos de la etiqueta en la que nos encontramos.</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/sugerir-atributo.png" width="629"></p>
+<p>
+<strong>Detecci&oacute;n de errores de XML</strong>. Si borramos alg&uacute;n final de etiqueta o no lo escribimos, el editor detecta que el documento XML no est&aacute; bien formado y lo indica con una peque&ntilde;a marca junto a la barra de scroll.</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/error-xml.png" width="619"></p>
+<p>3. Escribimos el ejemplo completo, utilizando las ayudas del editor. Una vez escrito, lo ejecutamos para comprobar su funcionamiento.</p>
+</div>
+
+
+
+
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010 Depto. CCIA</div>
+</div>
+</body>
+</html>

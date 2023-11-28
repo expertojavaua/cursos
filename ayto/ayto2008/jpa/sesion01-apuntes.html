@@ -1,0 +1,685 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Introducci&oacute;n a JPA</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="JPA con Hibernate" src="images/baner_j2ee_der.gif" title="JPA con Hibernate"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Persistencia</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">JPA</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="JPA">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menupage">
+<div class="menupagetitle">Sesion 1</div>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="roadmap.html">Roadmap JPA</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-ejercicios.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-ejercicios.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-ejercicios.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-ejercicios.html">Sesion 8</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion01-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Introducci&oacute;n a JPA</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Introducci%C3%B3n+a+JPA">Introducci&oacute;n a JPA</a>
+<ul class="minitoc">
+<li>
+<a href="#Un+poco+de+historia">Un poco de historia</a>
+</li>
+<li>
+<a href="#JPA">JPA</a>
+</li>
+<li>
+<a href="#Entidades+persistentes">Entidades persistentes</a>
+</li>
+<li>
+<a href="#Relaciones+entre+entidades+y+ORM">Relaciones entre entidades y ORM</a>
+</li>
+<li>
+<a href="#Entity+Manager+y+transacciones">Entity Manager y transacciones</a>
+</li>
+<li>
+<a href="#Implementaciones+de+JPA">Implementaciones de JPA</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Un+ejemplo+completo+con+Hibernate">Un ejemplo completo con Hibernate</a>
+</li>
+<li>
+<a href="#Anatom%C3%ADa+de+una+aplicaci%C3%B3n+JPA+en+Java+SE">Anatom&iacute;a de una aplicaci&oacute;n JPA en Java SE</a>
+<ul class="minitoc">
+<li>
+<a href="#Entidades">Entidades</a>
+</li>
+<li>
+<a href="#Relaciones">Relaciones</a>
+</li>
+<li>
+<a href="#Unidad+de+trabajo+JPA">Unidad de trabajo JPA</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Aplicaci%C3%B3n+web+ejemplo">Aplicaci&oacute;n web ejemplo</a>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="Introducci%C3%B3n+a+JPA"></a>
+<h2 class="underlined_10">Introducci&oacute;n a JPA</h2>
+<div class="section">
+<p>En esta primera sesi&oacute;n del m&oacute;dulo de Java Persistence API (JPA) vamos a ver una introducci&oacute;n a esta nueva tecnolog&iacute;a Java que permite trabajar con entidades persistentes conectadas a una base de datos. Introduciremos los conceptos principales de JPA que iremos desarrollando en posteriores sesiones y proporcionaremos un ejemplo completo en el que describiremos la instalaci&oacute;n b&aacute;sica de JPA utilizando Eclipse como entorno de desarrollo y Hibernate como implementaci&oacute;n de JPA. Este ejemplo ser&aacute; la base de las pr&aacute;cticas de la sesi&oacute;n.</p>
+<p>Entre los conceptos principales que trataremos sobre JPA destacamos los siguientes:</p>
+<ul>
+   
+<li>uso de anotaciones para especificar propiedades</li>
+   
+<li>entidades persistentes y relaciones entre entidades</li>
+   
+<li>mapeado objeto-relacional</li>
+   
+<li>gesti&oacute;n de contextos de persistencia y de transacciones</li>
+   
+<li>diferencias entre JPA gestionado por la aplicaci&oacute;n y gestionado por el contenedor</li>
+   
+<li>lenguaje de <em>queries</em>
+</li>
+
+</ul>
+<p>Estudiaremos estos conceptos en profundidad a lo largo del m&oacute;dulo. En la sesi&oacute;n de hoy realizaremos &uacute;nicamente una introducci&oacute;n. Primero los explicaremos brevemente para despu&eacute;s pasar a un ejemplo pr&aacute;ctico en el que se podr&aacute;n comprobar bastantes caracter&iacute;sticas de JPA.</p>
+<a name="N10032"></a><a name="Un+poco+de+historia"></a>
+<h3 class="underlined_5">Un poco de historia</h3>
+<p>El framework Hibernate, un conjunto de librer&iacute;as que implementaba un mapeado ORM (Mapeado Objeto-Relacional), comenz&oacute; a ser desarrollado por Gavin King y un grupo de colaboradores a finales de 2001. Desde sus inicios se estableci&oacute; como un proyecto Java open source. Pronto gan&oacute; popularidad y el grupo de desarrolladores fue contratado por JBoss, integrando el producto en el servidor de aplicaciones de la compa&ntilde;&iacute;a. En la actualidad JBoss ha sido adquirido por RedHat, que ha incorporado su servidor de aplicaciones en algunas de sus distribuciones de Linux.</p>
+<p>En paralelo al desarrollo y popularizaci&oacute;n de Hibernate, la especificaci&oacute;n oficial de Java EE tambi&eacute;n intentaba definir <em>entidades persistentes</em>. En concreto, se defin&iacute;a en la arquitectura EJB (Enterprise JavaBeans) el uso de <em>entity beans</em>, objetos persistentes distribuidos gestionados por contenedores. Junto a los <em>entity beans</em>, Sun tambi&eacute;n apoy&oacute; la especificaci&oacute;n de JDO (Java Data Objects), otro framework alternativo de gesti&oacute;n de entidades persistentes que no requiere el uso de contenedores EJB. Ninguno de los dos frameworks tuvo demasiado &eacute;xito. Los EJB de entidad siempre fueron denostados por ser muy poco eficientes y complejos de utilizar. JDO, por otra parte, tard&oacute; bastante en ser implementado de una forma robusta y sencilla de manejar.</p>
+<p>En este contexto se crea en Mayo de 2003 el grupo de trabajo que definir&aacute; la siguiente (actual) especificaci&oacute;n de EJB (EJB 3.0). En este grupo de trabajo pronto se tiene que adoptar un modelo para la gesti&oacute;n de entidades persistentes y se decide apostar por la soluci&oacute;n que ya ha adoptado de hecho la comunidad: el enfoque basado en POJOs de Hibernate. Tras tres a&ntilde;os de trabajo, en Abril de 2006 se realiza la votaci&oacute;n que aprueba la nueva especificaci&oacute;n. En declaraciones de Gavin King, la especificaci&oacute;n de JPA recoge el 95% de las funcionalidades de Hibernate.</p>
+<p>En la actualidad Hibernate ofrece una implementaci&oacute;n de la especificaci&oacute;n de JPA. Una de las diferencias fundamentales con las versiones cl&aacute;sicas de Hibernate es que &eacute;stas utilizan ficheros de configuraci&oacute;n XML para definir el mapeado de las entidades con la base de datos. JPA (y su implementaci&oacute;n Hibernate) recurre a anotaciones y a opciones por defecto para simplificar la configuraci&oacute;n.</p>
+<a name="N1004E"></a><a name="JPA"></a>
+<h3 class="underlined_5">JPA</h3>
+<p>Java Persistence API (JPA) es la tecnolog&iacute;a est&aacute;ndar de Java para gestionar <strong>entidades persistentes</strong> que se incluye en la &uacute;ltima versi&oacute;n de Java EE (Java EE 5). La descripci&oacute;n oficial del est&aacute;ndar est&aacute; definida en el <a href="http://www.jcp.org/en/jsr/detail?id=220">JSR 220</a> en el que se especifica la arquitectura completa EJB 3.0. JPA es una parte del est&aacute;ndar EJB 3.0, aunque est&aacute; especificado en un documento separado y autocontenido. Si quieres obtener una visi&oacute;n completa y detallada de lo que hace JPA, te ser&aacute; muy &uacute;til consultar este documento. Como la mayor&iacute;a de los documentos que especifican las JSR, es un documento bastante legible, muy bien estructurado, muy conciso y con bastante ejemplos. Adem&aacute;s, por ser la especificaci&oacute;n original, es completo. Cualquier caracter&iacute;stica de JPA debe estar reflejada en este documento. Te aconsejo, por tanto, que lo tengas a mano, que le eches un vistazo inicial (despu&eacute;s de haber le&iacute;do los apuntes de este m&oacute;dulo, por supuesto) y que lo utilices como primera referencia ante cualquier duda.</p>
+<p>La idea de trabajar con entidades persistentes ha estado presente en la Programaci&oacute;n Orientada a Objetos desde sus comienzos. Este enfoque intenta aplicar las ideas de la POO a las bases de datos, de forma que las clases y los objetos de una aplicaci&oacute;n puedan ser almacenados, modificados y buscados de forma eficiente en unidades de persistencia. Sin embargo, aunque desde comienzos de los 80 hubo aplicaciones que implementaban bases de datos orientadas a objetos de forma nativa, la idea nunca ha terminado de cuajar. La tecnolog&iacute;a dominante en lo referente a bases de datos siempre han sido los sistemas de gesti&oacute;n de bases de datos relacionales (RDBMS). De ah&iacute; que la soluci&oacute;n propuesta por muchas tecnolog&iacute;as para conseguir entidades persistentes haya sido realizar un <em>mapeado</em> del modelo de objetos al modelo relacional (<em>ORM</em>, <em>Object-Relational Mapping</em> en ingl&eacute;s). JPA es una de estas tecnolog&iacute;as.</p>
+<a name="N1006B"></a><a name="Entidades+persistentes"></a>
+<h3 class="underlined_5">Entidades persistentes</h3>
+<p>De la misma forma que en Programaci&oacute;n Orientada a Objetos se trabaja con clases e instancias, en JPA se definen los conceptos de <strong>clase entidad</strong> (<em>entity class</em>) e instancia de una clase entidad a la que llamaremos <strong>instancia entidad</strong> (<em>entity instance</em>). Una clase entidad define un conjunto de atributos persistentes que van a compartir todas sus instancias. Por ejemplo, si estamos escribiendo una aplicaci&oacute;n para una agencia de viajes ser&aacute; normal que usemos clases entidades como <span class="codefrag">Hotel</span>, <span class="codefrag">Reserva</span> o <span class="codefrag">Vuelo</span>. Las clases entidades se mapean directamente en tablas de la base de datos. Por otro lado, las instancias entidad son objetos concretos de la clase entidad (un <span class="codefrag">hotel</span>, o un <span class="codefrag">vuelo</span>) y en el mapeado relacional se corresponden con filas concretas de las tablas definidas por la clase entidad.</p>
+<p>A diferencia del anterior est&aacute;ndar de persistencia en Java EE (EntityBeans en EJB 2.1), las entidades JPA son POJOs (<em>Plain Old Java Object</em>), objetos Java est&aacute;ndar que se crean con una llamada a <span class="codefrag">new</span>, que pueden ser pasados como par&aacute;metros y que tienen un conjunto de m&eacute;todos con los que acceder a sus atributos.</p>
+<a name="N10099"></a><a name="Relaciones+entre+entidades+y+ORM"></a>
+<h3 class="underlined_5">Relaciones entre entidades y ORM</h3>
+<p>En JPA tambi&eacute;n es posible definir <strong>relaciones entre entidades</strong>, similares a las relaciones entre tablas en el modelo relacional. As&iacute;, una entidad puede estar relacionada con una o muchas otras entidades, definiendo relaciones <strong>uno-a-uno</strong>, <strong>uno-a-muchos</strong> o <strong>muchos-a-muchos</strong>. Estas relaciones se definen en JPA por medio de variables de instancia de las entidades y de m&eacute;todos <em>getters</em> y <em>setters</em> que las actualizan. Por ejemplo, una propiedad de una entidad <span class="codefrag">Reserva</span> ser&aacute; el <span class="codefrag">Vuelo</span> sobre el que se ha hecho la reserva. Las instancias de <span class="codefrag">Reserva</span> tendr&aacute;n asociadas instancias de <span class="codefrag">Vuelo</span> a las que podremos acceder f&aacute;cilmente con un m&eacute;todo como <span class="codefrag">getVuelo</span>. De esta forma, podremos obtener la(s) instancia(s) asociadas con una instancia dada llamando a un m&eacute;todo de la entidad, sin tener que realizar ninguna consulta SQL. Esta es una de las ventajas fundamentales de JPA: es posible hacer de forma programativa (llamando a m&eacute;todos definidos en las entidades) lo que en el modelo relacional s&oacute;lo se puede hacer mediante consultas SQL.</p>
+<p>Otra de las caracter&iacute;sticas principales de JPA frente a otros frameworks que realizan un ORM es su simplicidad. Hasta ahora otros frameworks (como Hibernate) han utilizado ficheros de configuraci&oacute;n XML para especificar el mapeado entre clases Java y tablas de la BD relacional. Esto hac&iacute;a complicado la definici&oacute;n y el mantenimiento de las entidades. La novedad de JPA en este sentido es la utilizaci&oacute;n de <strong>anotaciones</strong>, una importante caracter&iacute;stica de Java aportada en su release 5.0. Veremos que el uso de anotaciones simplifica bastante la definici&oacute;n de entidades y de sus relaciones.</p>
+<a name="N100CA"></a><a name="Entity+Manager+y+transacciones"></a>
+<h3 class="underlined_5">Entity Manager y transacciones</h3>
+<p>El <em>Entity Manager</em> es el objeto de JPA que gestiona los contextos de persistencia y las transacciones. Una de las caracter&iacute;sticas m&aacute;s importantes de JPA es que no es invisible. Las entidades deben cargarse, borrarse, modificarse, etc. de forma activa por parte de la aplicaci&oacute;n que est&aacute; utilizando JPA (con la excepci&oacute;n, quiz&aacute;s, de las llamadas a los m&eacute;todos <span class="codefrag">set</span>). Cuando una entidad se obtiene de la base de datos se guarda en una especie de cach&eacute; en memoria que mantiene JPA. Esta cach&eacute; se denomina <strong>contexto de persistencia</strong>, y se mantiene en el objeto <span class="codefrag">EntityManager</span> que utiliza la aplicaci&oacute;n.</p>
+<p>Es posible utilizar JPA en dos configuraciones. Por un lado puede ser usado en aplicaciones de escritorio implementadas en Java SE y en aplicaciones web sin utilizar ning&uacute;n servidor de aplicaciones. En este caso, la gesti&oacute;n de la persistencia la realiza la aplicaci&oacute;n Java y se habla de JPA gestionado por la aplicaci&oacute;n (<em>application-managed</em>). En el segundo es el servidor de aplicaciones Java EE el que proporciona el <em>entityManager</em> y se dice que JPA est&aacute; gestionado por el contenedor (<em>container-managed</em>).</p>
+<p>Una diferencia fundamental entre ambas configuraciones es la gesti&oacute;n de las transacciones realizada por el <em>Entity Manager</em>. En el primer caso (persistencia gestionada por la aplicaci&oacute;n) JPA implementa la gesti&oacute;n de transacciones utilizando el gestor de transacciones local del recurso con el que est&aacute; trabajando, transacciones nativas definidas por el driver de JDBC. Las transacciones de este tipo son locales y no pueden participar en una conversaci&oacute;n gestionada por una transacci&oacute;n de mayor &aacute;mbito. En el segundo caso (persistencia gestionada por el contenedor) se utiliza el API de gesti&oacute;n de transacciones JTA. Con &eacute;l es posible utilizar transacciones extendidas y hacer que distintas transacciones elementales participen en una transacci&oacute;n com&uacute;n a todas ellas. Para trabajar con JPA gestionado por un contenedor necesitamos un servidor de aplicaciones que de soporte a la gesti&oacute;n de componentes Enterprise JavaBeans (EJB). </p>
+<a name="N100F2"></a><a name="Implementaciones+de+JPA"></a>
+<h3 class="underlined_5">Implementaciones de JPA</h3>
+<p>JPA es un est&aacute;ndar que necesita ser implementado por desarrolladores o empresas. Al ser una especificaci&oacute;n incluida en Java EE 5 cualquier servidor de aplicaciones compatible con Java EE debe proporcionar una implementaci&oacute;n de este est&aacute;ndar. Por otro lado, dado que tambi&eacute;n es posible utilizar JPA en Java SE, existen bastantes implementaciones de JPA en forma de librer&iacute;as Java (ficheros JAR) disponibles para incluir en aplicaciones de escritorio o aplicaciones web. La m&aacute;s popular es <a href="http://jpa.hibernate.org/">Hibernate</a>, que tambi&eacute;n se incluye en el servidor de aplicaciones JBoss. Otras implementaciones gratuitas son <a href="http://openjpa.apache.org/">Apache OpenJPA</a> (incluida en el servidor de aplicaciones Jeronimo) y <a href="http://www.oracle.com/technology/products/ias/toplink/jpa/index.html">Oracle TopLink</a> (incluida en el servidor de aplicaciones GlassFish de Sun). La &uacute;nica implementaci&oacute;n comercial de JPA existente en la actualidad es <a href="http://www.thoughtinc.com/cber_index.html">CocoBase PURE POJO</a>.</p>
+<p>La implementaci&oacute;n de Hibernate es la m&aacute;s popular del est&aacute;ndar. La gran aceptaci&oacute;n de Hibernate en la comunidad de desarrolladores Java se refleja en que en la actualidad hay muchas empresas que utilizan Hibernate como capa de persistencia y no han dado todav&iacute;a el salto a JPA. Es previsible que lo hagan pr&oacute;ximamente.</p>
+</div>
+
+
+<a name="N10110"></a><a name="Un+ejemplo+completo+con+Hibernate"></a>
+<h2 class="underlined_10">Un ejemplo completo con Hibernate</h2>
+<div class="section">
+<p>Vamos a analizar los distintos elementos que componen una aplicaci&oacute;n JPA con un ejemplo pr&aacute;ctico. Vamos a centrarnos en una aplicaci&oacute;n de escritorio desarrollada en Java SE. M&aacute;s adelante veremos como se incorporan estos elementos en una aplicaci&oacute;n web. El ejemplo que vamos a usar es muy sencillo, una aplicaci&oacute;n que gestiona mensajes creados por autores. Se definen dos entidades: <span class="codefrag">Autor</span> y <span class="codefrag">Mensaje</span> as&iacute; como una relaci&oacute;n uno a muchos entre ellos. Un autor tiene asociado la lista de mensajes escritos. Queremos que sea una relaci&oacute;n denominada padre-hijo, en la que el <span class="codefrag">Autor</span> sea el propietario de la relaci&oacute;n. Si se elimina un autor de la base de datos, se deben eliminar los mensajes que ha escrito.</p>
+<p>Comenzamos en esta secci&oacute;n listando los ficheros que vamos a utilizar y despu&eacute;s comentaremos los elementos necesarios para configurar y ejecutar la aplicaci&oacute;n en Eclipse. En el apartado siguiente analizaremos los conceptos m&aacute;s importantes de JPA bas&aacute;ndonos en este ejemplo.</p>
+<p>
+<strong>Fichero <span class="codefrag">ayto/Autor.java</span></strong>:</p>
+<pre class="code">package ayto;
+
+import java.util.Collection;
+import javax.persistence.*;
+
+@Entity
+public class Autor {
+   @Id
+   private String nombre;
+   private String correo;
+   @OneToMany(mappedBy = "autor", cascade=CascadeType.ALL)
+   private Set&lt;Mensaje&gt; mensajes = new HashSet&lt;Mensaje&gt;();
+
+   public Autor() { }
+   public String getNombre() { return nombre; }
+   public void setNombre(String nombre) { this.nombre = nombre; }
+   public String getCorreo() { return correo; }
+   public void setCorreo(String correo) { this.correo = correo; }
+   public Set&lt;Mensaje&gt; getMensajes() { return mensajes; }
+   public void setMensajes(Set&lt;Mensaje&gt; mensajes) {
+      this.mensajes = mensajes; }
+}</pre>
+<p>El fichero <span class="codefrag">Autor.java</span> define la clase entidad <span class="codefrag">Autor</span>. La entidad tiene los atributos <span class="codefrag">nombre</span> (nombre del autor, debe ser &uacute;nico por ser el identificador de la entidad), <span class="codefrag">correo</span> (su direcci&oacute;n de correo electr&oacute;nico) y <span class="codefrag">mensajes</span>. Los mensajes est&aacute;n precedidos con la anotaci&oacute;n <span class="codefrag">@OneToMany</span> para indicar que el <span class="codefrag">Autor</span> tiene una relaci&oacute;n uno-a-muchos con las entidades <span class="codefrag">Mensaje</span> (m&aacute;s adelante explicaremos la anotaci&oacute;n <span class="codefrag">mappedBy</span>). La anotaci&oacute;n <span class="codefrag">cascade</span> indica que las acciones de borrado, <em>persist</em> y <em>merge</em> se propagan en cascada a los mensajes hijos.</p>
+<p>
+<strong>Fichero <span class="codefrag">ayto/Mensaje.java</span></strong>
+</p>
+<pre class="code">package ayto;
+
+import javax.persistence.*;
+
+@Entity
+public class Mensaje {
+
+   @Id @GeneratedValue
+   private long id;
+   private String texto;
+   @ManyToOne
+   private Autor autor;
+
+   public Mensaje() { }
+   public long getId() { return id; }
+   public void setId(long id) { this.id = id; }
+   public String getTexto() { return texto; }
+   public void setTexto(String texto) { this.texto = texto; }
+   public Autor getAutor() { return autor; }
+   public void setAutor(Autor autor) { this.autor = autor; }
+}</pre>
+<p>El fichero <span class="codefrag">Mensaje.java</span> define la clase entidad <span class="codefrag">Mensaje</span>. La entidad tiene los atributos <span class="codefrag">id</span> (identificador &uacute;nico del mensaje), <span class="codefrag">texto</span> (el texto del mensaje) y <span class="codefrag">autor</span> (el autor del mensaje, una instancia entidad de tipo <span class="codefrag">Autor</span> con la que se define la relaci&oacute;n inversa a la definida en autor).</p>
+<p>A continuaci&oacute;n el fichero <span class="codefrag">HolaMundo.java</span> define el programa principal que usa las entidades anteriores. Se pide al usuario un mensaje y un nombre de autor, se busca el nombre de autor y si no existe se crea uno nuevo y se crea el nuevo mensaje asociado al autor indicado. Por &uacute;ltimo, se listan todos los mensajes asociados a ese autor.</p>
+<p>
+<strong>Fichero <span class="codefrag">ayto/HolaMundo.java</span></strong>
+</p>
+<pre class="code">package ayto;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+import javax.persistence.*;
+
+public class HolaMundo {
+
+   public static void main(String[] args) {
+      String mensStr;
+      String autorStr;
+
+      EntityManagerFactory emf = Persistence
+            .createEntityManagerFactory("simplejpa");
+
+      EntityManager em = emf.createEntityManager();
+
+      try {
+         BufferedReader in = new BufferedReader(
+               new InputStreamReader(System.in));
+         System.out.print("Nombre: ");
+         autorStr = in.readLine();
+         System.out.print("Mensaje: ");
+         mensStr = in.readLine();
+      } catch (IOException e) {
+         autorStr = "Error";
+         mensStr = "Error";
+      }
+
+      em.getTransaction().begin();
+
+      Autor autor = em.find(Autor.class, autorStr);
+      if (autor == null) {
+         autor = new Autor();
+         autor.setNombre(autorStr);
+         autor.setCorreo(autorStr + "@ua.es");
+         em.persist(autor);
+      }
+
+      Mensaje mensaje = new Mensaje();
+      mensaje.setTexto(mensStr);
+      mensaje.setFecha(new Date());
+      em.persist(mensaje);
+
+      mensaje.setAutor(autor);
+      Set&lt;Mensaje&gt; mensajes = autor.getMensajes();
+      mensajes.add(mensaje);
+
+      em.getTransaction().commit();
+
+      System.out.println(autor.getNombre() + " ha enviado "
+            + mensajes.size() + " mensaje(s):");
+      Iterator&lt;Mensaje&gt; it = mensajes.iterator();
+      while (it.hasNext()) {
+         Mensaje mens = it.next();
+         System.out.println(mens.getTexto() + " - "
+               + mens.getFecha().toString());
+      }
+      em.close();
+      emf.close();
+   }
+}</pre>
+<p>Por &uacute;ltimo, el fichero <span class="codefrag">persistence.xml</span> es el fichero de configuraci&oacute;n de JPA. En &eacute;l se especifica el driver SQL que se utiliza, la URL de la conexi&oacute;n a la base de datos, el gestor de base de datos (MySQL) y se configura el pool de conexiones <span class="codefrag">c3p0</span> implementado por Hibernate. Este fichero de configuraci&oacute;n debe encontrarse en el directorio <span class="codefrag">META-INF</span> del classpath.</p>
+<p>Al poner la propiedad <span class="codefrag">hibernate.hbm2ddl.auto</span> a <span class="codefrag">update</span> estamos indicando que Hibernate cree autom&aacute;ticamente las tablas necesarias para el mapeo de las entidades. Y la propiedad <span class="codefrag">hibernate.show_sql</span> hace que Hibernate muestre por la salida est&aacute;ndar las sentencias SQL que se lanzan al proveedor de base de datos.</p>
+<p>
+<strong>Fichero <span class="codefrag">META-INF/persistence.xml</span></strong>:</p>
+<pre class="code">&lt;persistence xmlns="http://java.sun.com/xml/ns/persistence"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+version="1.0"&gt;
+
+&lt;persistence-unit name="simplejpa"&gt;
+   &lt;properties&gt;
+      &lt;property name="hibernate.archive.autodetection"
+                value="class, hbm" /&gt;
+      &lt;property name="hibernate.connection.driver_class"
+                value="com.mysql.jdbc.Driver" /&gt;
+      &lt;property name="hibernate.connection.url"
+                value="jdbc:mysql://localhost:3306/jpa" /&gt;
+      &lt;property name="hibernate.connection.username"
+                value="root" /&gt;
+      &lt;property name="hibernate.connection.password"
+                value="root" /&gt;
+      &lt;property name="hibernate.c3p0.min_size"
+                value="5" /&gt;
+      &lt;property name="hibernate.c3p0.max_size" 
+                value="20" /&gt;
+      &lt;property name="hibernate.c3p0.timeout" 
+                value="300" /&gt;
+      &lt;property name="hibernate.c3p0.max_statements" 
+                value="50" /&gt;
+      &lt;property name="hibernate.c3p0.idle_test_period"
+                value="3000" /&gt;
+      &lt;property name="hibernate.dialect"
+                value="org.hibernate.dialect.MySQL5Dialect" /&gt;
+      &lt;property name="hibernate.hbm2ddl.auto" 
+                value="update" /&gt;
+      &lt;property name="hibernate.show_sql" 
+	            value="true"/&gt;
+	  &lt;property name="hibernate.format_sql" 
+	            value="false"/&gt;
+   &lt;/properties&gt;
+&lt;/persistence-unit&gt;
+&lt;/persistence&gt;</pre>
+<p>Para poder ejecutar el ejemplo en Eclipse, debemos crear un proyecto, incluir en &eacute;l las librer&iacute;as de Hibernate JPA (disponibles en <a href="http://www.jtech.ua.es/ayto2008/software.html">esta direcci&oacute;n</a>) y configurar en Eclipse la siguiente estructura de directorios:</p>
+<p>
+<img alt="" content-width="6cm" src="imagenes/directorios-jpa.png" width="327"></p>
+<p>Hay que hacer notar que el directorio <span class="codefrag">etc</span> contiene los ficheros de configuraci&oacute;n de la aplicaci&oacute;n (<span class="codefrag">META-INF/persistence.xml</span> y <span class="codefrag">log4j.properties</span>) y que hay que configurarlo como una carpeta de fuentes (<em>source folder</em>) en el build path de Eclipse. De esta forma, Eclipse copia el contenido de esta carpeta al directorio <span class="codefrag">bin</span> en el que coloca los ficheros <em>class</em> ya compilados (directorio que no se muestra en la perspectiva <em>Package Explorer</em>) y est&aacute;n accesibles en la ejecuci&oacute;n de la aplicaci&oacute;n.</p>
+<p>El directorio <span class="codefrag">lib</span> contiene todas las librer&iacute;as de Hibernate JPA (no visibles porque se encuentran en el apartado <em>Referenced Libraries</em>).</p>
+<p>Por completitud, a continuaci&oacute;n listamos el fichero de configuraci&oacute;n de Log4Java <span class="codefrag">log4j.properties</span> con el que se configuran los mensajes de <em>log</em> generados por Hibernate:</p>
+<p>
+<strong>Fichero <span class="codefrag">log4j.properties</span></strong>:</p>
+<pre class="code"># Direct log messages to stdout
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.Target=System.out
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%d{ABSOLUTE} %5p %c{1}:%L - %m%n
+
+# Root logger option
+log4j.rootLogger=WARN, stdout
+
+# Hibernate logging options (INFO only shows startup messages)
+#log4j.logger.org.hibernate=INFO
+
+# Log JDBC bind parameter runtime arguments
+#log4j.logger.org.hibernate.type=DEBUG
+</pre>
+<p>Para ejecutar la aplicaci&oacute;n en Eclipse hay que lanzar la clase <span class="codefrag">HolaMundo</span> como una aplicaci&oacute;n Java.</p>
+</div>
+
+
+<a name="N101F3"></a><a name="Anatom%C3%ADa+de+una+aplicaci%C3%B3n+JPA+en+Java+SE"></a>
+<h2 class="underlined_10">Anatom&iacute;a de una aplicaci&oacute;n JPA en Java SE</h2>
+<div class="section">
+<p>Terminamos la sesi&oacute;n explicando los elementos de JPA m&aacute;s importantes presentes en el ejemplo anterior. M&aacute;s adelante profundizaremos en estos conceptos.</p>
+<a name="N101FC"></a><a name="Entidades"></a>
+<h3 class="underlined_5">Entidades</h3>
+<p>En la aplicaci&oacute;n se definen dos entidades: <span class="codefrag">Mensaje</span> y <span class="codefrag">Autor</span>. El siguiente c&oacute;digo define la entidad <span class="codefrag">Mensaje</span>.</p>
+<pre class="code">package ayto;
+
+import java.util.Date;
+
+import javax.persistence.*;
+
+@Entity
+public class Mensaje {
+
+   @Id @GeneratedValue
+   private long id;
+   private String texto;
+   private Date fecha;
+   @ManyToOne
+   private Autor autor;
+
+   public Mensaje() { }
+   public long getId() { return id; }
+   public void setId(long id) { this.id = id; }
+   public String getTexto() { return texto; }
+   public void setTexto(String texto) { this.texto = texto; }
+   public Autor getAutor() { return autor; }
+   public void setAutor(Autor autor) { this.autor = autor; }
+   public Date getFecha() { return fecha; }
+   public void setFecha(Date fecha) { this.fecha = fecha; }
+}</pre>
+<p>Vemos que la entidad se define como un JavaBean: una clase Java con un conjunto de atributos privados con sus m&eacute;todos de acceso (<em>getters</em> y <em>setters</em>) y con un constructor sin par&aacute;metros. La definici&oacute;n como entidad JPA se realiza con la anotaci&oacute;n <span class="codefrag">@Entity</span>. Esta anotaci&oacute;n har&aacute; que la clase se mapee autom&aacute;ticamente en una tabla en la base de datos definida por el gestor JPA. JPA tambi&eacute;n realiza autom&aacute;tica la conversi&oacute;n de los atributos de la entidad a columnas de la tabla (aunque podr&iacute;amos especificar con anotaciones los nombres de las columnas asociadas a cada atributo; lo veremos m&aacute;s adelante).</p>
+<p>En el ejemplo definimos los siguientes atributos en la entidad <span class="codefrag">Mensaje</span>.</p>
+<ul>
+
+<li>
+<strong><span class="codefrag">Long id</span></strong>: identificador &uacute;nico que va a tener cada <span class="codefrag">mensaje</span>. Las instancias entidad deben ser &uacute;nicas y debe existir alg&uacute;n atributo que las identifique de forma inequ&iacute;voca. Este campo juega este papel. El hecho de definir el tipo del atributo como <span class="codefrag">Long</span> (una clase Java, en lugar del tipo primitivo <span class="codefrag">long</span>) permite que en la variable de instancia podamos guardar <span class="codefrag">null</span> (aunque no en este caso, porque estamos definiendo una clave primaria que no puede estar vac&iacute;a). Vemos tambi&eacute;n en el c&oacute;digo las anotaciones de JPA <span class="codefrag">@Id</span> y <span class="codefrag">@GeneratedValue</span>. La primera identifica este campo como el que define la identidad de las instancias e indica la clave primaria en la tabla generada por el mapeo entidad-relaci&oacute;n (lo veremos m&aacute;s adelante). La segunda anotaci&oacute;n indica que el valor del atributo se genera de forma autom&aacute;tica cada vez que se crea una nueva instancia.</li>
+
+<li>
+<strong><span class="codefrag">String texto</span></strong>: texto del mensaje. Se trata de un atributo de tipo <span class="codefrag">String</span>.</li>
+
+<li>
+<strong><span class="codefrag">Date fecha</span></strong>: fecha de creaci&oacute;n del mensaje. Se trata de un atributo de tipo <span class="codefrag">java.util.Date</span> que se mapea con una columna de la tabla SQL de tipo <span class="codefrag">DATETIME</span>. El tipo concreto de fecha SQL depende del gestor de base de datos que utilicemos (Mysql, Oracle, etc.); el gestor de persistencia de Hibernate es convierte el tipo Java al tipo SQL correspondiente.</li>
+
+<li>
+<strong><span class="codefrag">Autor autor</span></strong>: autor del mensaje. Con este atributo se est&aacute; definiendo una relaci&oacute;n con otra entidad, indicada por el tipo del atributo (un <span class="codefrag">Autor</span>). La anotaci&oacute;n <span class="codefrag">@ManyToOne</span> especifica que existe una relaci&oacute;n muchos-a-uno entre mensajes y autores (muchos mensajes pueden pertenecer al mismo autor).</li>
+
+</ul>
+<p>La tabla generada en el mapeo entidad-relaci&oacute;n es la siguiente (utilizando el gestor de base de datos MySQL):</p>
+<pre class="code">CREATE TABLE Mensaje (
+  id bigint(20) NOT NULL auto_increment,
+  texto varchar(255) default NULL,
+  fecha datetime default NULL,
+  autor_nombre varchar(255) default NULL,
+  PRIMARY KEY  (id),
+  KEY FK9BDD22BF8FD5366D (autor_nombre),
+  CONSTRAINT FK9BDD22BF8FD5366D FOREIGN KEY (autor_nombre) REFERENCES autor (nombre)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+</pre>
+<p>La columna <span class="codefrag">autor_nombre</span> define una clave ajena a la otra tabla <span class="codefrag">Autor</span> definida en la aplicaci&oacute;n.</p>
+<a name="N10271"></a><a name="Relaciones"></a>
+<h3 class="underlined_5">Relaciones</h3>
+<p>En la aplicaci&oacute;n ejemplo definimos una relaci&oacute;n una-a-muchos bidireccional entre mensajes y autores. Un autor puede haber escrito muchos mensajes. </p>
+<p>La relaci&oacute;n es bidireccional porque podemos obtener el autor asociado a un mensaje en las instancias <span class="codefrag">mensaje</span>, y podemos obtener la colecci&oacute;n de mensajes asociados a un autor en las instancias <span class="codefrag">autor</span>. Para ello en la entidad <span class="codefrag">Mensaje</span> definimos el m&eacute;todo <span class="codefrag">getAutor</span> y en la entidad <span class="codefrag">Autor</span> definimos el m&eacute;todo <span class="codefrag">getMensajes</span> que devuelve la colecci&oacute;n de mensajes asociada al autor.</p>
+<p>En las dos clases implicadas en la relaci&oacute;n debemos marcar con anotaciones los atributos que intervienen en la misma. La entidad <span class="codefrag">Mensaje</span> es la <em>propietaria</em> de la relaci&oacute;n y contiene la clave ajena a la entidad <span class="codefrag">Autor</span>. Esto lo indicamos con la anotaci&oacute;n <span class="codefrag">@ManyToOne</span> que indica que muchos mensajes pueden pertenecer al mismo autor. El m&eacute;todo <span class="codefrag">setAutor</span> asocia un mensaje con un autor. Hay que pasarle como par&aacute;metro una instancia entidad.</p>
+<pre class="code">@Entity
+public class Mensaje {
+   @Id
+   @GeneratedValue
+   private Long id;
+   private String texto;
+   @ManyToOne
+   private Autor autor;
+
+   ...
+
+   public void setAutor(Autor autor) { this.autor = autor; }
+   public Autor getAutor() { return this.autor  ; }
+}</pre>
+<p>Por otro lado, en la entidad <span class="codefrag">Autor</span> declaramos el atributo <span class="codefrag">mensajes</span> de tipo <span class="codefrag">Set&lt;Mensaje&gt;</span> precedido por la anotaci&oacute;n <span class="codefrag">@OneToMany(mappedBy = "autor")</span>. Lo inicializamos a un <span class="codefrag">HashSet</span> vac&iacute;o, para indicar que no pueden haber elementos repetidos en la colecci&oacute;n. De esta forma definimos la relaci&oacute;n inversa a la anterior. El atributo <span class="codefrag">mappedBy="autor"</span> indica que la clave ajena en la entidad <span class="codefrag">Mensaje</span> es el campo <span class="codefrag">autor</span>. Se define tambi&eacute;n el m&eacute;todo de acceso <span class="codefrag">getMensajes</span> que devuelve los mensajes asociados al autor. JPA transformar&aacute; este m&eacute;todo en una consulta SQL que realiza la b&uacute;squeda en la tabla de mensajes. Y se define el m&eacute;todo de actualizaci&oacute;n <span class="codefrag">setMensajes</span> con el que inicializar la colecci&oacute;n de mensajes. </p>
+<pre class="code">@Entity
+public class Autor {
+   @Id
+   private String nombre;
+   private String correo;
+   @OneToMany(mappedBy = "autor", cascade=CascadeType.ALL)
+   private Set&lt;Mensaje&gt; mensajes = new HashSet();
+
+   ...
+
+   public Set&lt;Mensaje&gt; getMensajes() { return this.mensajes; }
+   public void setMensajes(Set&lt;Mensaje&gt; mensajes) { this.mensajes = mensajes}
+   }</pre>
+<p>Para a&ntilde;adir un nuevo mensaje a un autor hay que obtener su colecci&oacute;n de mensajes y a&ntilde;adirle (con el m&eacute;todo <span class="codefrag">add</span> de la colecci&oacute;n) el nuevo mensaje.</p>
+<p>Hay que hacer notar que en lo referido a la persistencia, el &uacute;nico campo que es importante (es el que se guarda en la base de datos) es el atributo <span class="codefrag">autor</span> de la entidad <span class="codefrag">Mensaje</span>. Bastar&iacute;a con actualizar ese campo para que la relaci&oacute;n en se actualizara en la base de datos. Sin embargo, en la aplicaci&oacute;n debemos asegurarnos de que el mensaje tambi&eacute;n se a&ntilde;ada en el campo del autor, para que la relaci&oacute;n se mantenga correctamente en memoria. El siguiente fragmento de c&oacute;digo de la aplicaci&oacute;n es el que hace esta actualizaci&oacute;n:</p>
+<pre class="code">mensaje.setAutor(autor);
+Set&lt;Mensaje&gt; mensajes = autor.getMensajes();
+mensajes.add(mensaje);</pre>
+<p>Es exactamente el mismo c&oacute;digo que escribir&iacute;amos si las entidades fueran objetos normales Java no persistentes.</p>
+<p>La siguiente figura muestra la relaci&oacute;n muchos-a-uno entre mensajes y autores y las tablas en las que se mapea. Notar que el elemento <span class="codefrag">mappedBy</span> definido en la entidad <span class="codefrag">Autor</span> es el que define la clave ajena en la entidad propietaria de la relaci&oacute;n (el atributo <span class="codefrag">autor</span> en la entidad <span class="codefrag">Mensaje</span>).</p>
+<p>
+<img alt="" content-width="9cm" src="imagenes/mensaje-autor.png" width="478"></p>
+<a name="N102F7"></a><a name="Unidad+de+trabajo+JPA"></a>
+<h3 class="underlined_5">Unidad de trabajo JPA</h3>
+<p>El elemento fundamental del framework JPA es la clase <span class="codefrag">EntityManager</span>. De forma similar a las conexiones JDBC, los objetos de esta clase son los encargados de gestionar la persistencia de las entidades declaradas en la aplicaci&oacute;n. La unidad de trabajo habitual en JPA con Java SE consiste en: (1) crear un <em>entity manager</em>, (2) comenzar una transacci&oacute;n, (3) realizar operaciones sobre las entidades, (4) cerrar la transacci&oacute;n y (5) cerrar el <em>entity manager</em>. Todas las entidades que se crean en un entity manager son gestionadas por &eacute;l y viven en su <em>contexto de persistencia</em>. Cuando el entity manager se cierra, las entidades siguen existiendo como objetos Java, pero a partir de ese momento se encuentran desconectadas (<em>detached</em>) de la base de datos.</p>
+<p>Los cambios en las entidades no se propagan autom&aacute;ticamente a la base de datos. Es cuando se realiza un commit de la transacci&oacute;n cuando JPA chequea el contexto de persistencia, detecta los cambios que se han producido en las entidades, utiliza el proveedor de persistencia para generar las sentencias SQL asociadas a los cambios y vuelca (<em>flush</em>) esas sentencias en la base de datos.</p>
+<p>A continuaci&oacute;n copiamos un ejemplo de una unidad de trabajo JPA. En una aplicaci&oacute;n es habitual hacer una unidad de trabajo completo en cada caso de uso. Hibernate define un <em>pool</em> de entity managers, de forma que su creaci&oacute;n no sea costosa.</p>
+<pre class="code">// (1) Creamos el Entity Manager
+EntityManager em = emf.createEntityManager();
+
+// (2) Creamos la transacci&oacute;n
+em.getTransaction().begin();
+
+// (3) Operaciones sobre las entidades
+Autor autor = em.find(Autor.class, "ritchie");
+Mensaje mensaje = new Mensaje("Hola mundo");
+em.persist(mensaje);
+mensaje.setAutor(autor);
+autor.getMensajes().add(mensaje);
+
+// (4) Cerramos la transaccion
+em.getTransaction().commit();
+
+// (5) Cerramos el Entity Manager
+em.close();</pre>
+</div>
+
+
+<a name="N10321"></a><a name="Aplicaci%C3%B3n+web+ejemplo"></a>
+<h2 class="underlined_10">Aplicaci&oacute;n web ejemplo</h2>
+<div class="section">
+<p>Vamos a terminar convirtiendo el ejemplo en una aplicaci&oacute;n web. Definimos el servlet <span class="codefrag">AddMensaje</span> que procesa una petici&oacute;n con los par&aacute;metros <span class="codefrag">mensaje</span> y <span class="codefrag">autor</span>. El servlet realiza la unidad de trabajo JPA de la misma forma que vimos en la aplicaci&oacute;n de escritorio, obteniendo las entidades persistentes y a&ntilde;adiendo el mensaje y el autor. Una vez terminada la transacci&oacute;n y hechos persistentes los cambios, el servlet coloca la entidad <span class="codefrag">Autor</span> y la colecci&oacute;n de entidades <span class="codefrag">Mensaje</span> en la petici&oacute;n y la redirige a la p&aacute;gina JSP <span class="codefrag">listaMensaje.jsp</span> que es la encargada de mostrar el autor y su lista de mensajes.</p>
+<p>El siguiente listado muestra el c&oacute;digo del servlet <span class="codefrag">AddMensaje.java</span>:</p>
+<p>Fichero <strong>AddMensaje.java</strong>:</p>
+<pre class="code">package es.ua.jtech.jpa;
+
+import java.io.*;
+import java.util.Collection;
+
+import javax.persistence.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+
+public class AddMensaje extends HttpServlet {
+   private static final long serialVersionUID = 1L;
+
+   public void doGet(HttpServletRequest request, 
+         HttpServletResponse response) 
+   throws ServletException, IOException   {
+
+      String mensStr =
+         request.getParameter("mensaje");
+      String autorStr =
+         request.getParameter("autor");
+      EntityManagerFactory emf = Persistence
+                            .createEntityManagerFactory("simplejpa");
+
+      EntityManager em = emf.createEntityManager();
+
+      em.getTransaction().begin();
+      Autor autor = em.find(Autor.class, autorStr);
+      if (autor == null) {
+         autor = new Autor();
+         autor.setNombre(autorStr);
+         autor.setCorreo(autorStr+"@ua.es");
+         em.persist(autor);
+      }
+      Mensaje mensaje = new Mensaje(mensStr);
+      em.persist(mensaje);
+
+      mensaje.setAutor(autor);
+      Set&lt;Mensaje&gt; mensajes = autor.getMensajes();
+      mensajes.add(mensaje);
+ 
+      em.getTransaction().commit();
+
+      request.setAttribute("autor", autor);
+      request.setAttribute("mensajes", mensajes);
+
+      getServletContext().getRequestDispatcher("/listaMensajes.jsp")
+                         .forward(request, response);
+  
+      em.close();
+      emf.close();
+   }
+}</pre>
+<p>La p&aacute;gina inicial HTML en la que el usuario introduce el nombre del autor y el texto del mensaje es la siguiente:</p>
+<p>Fichero <strong>index.html</strong>
+</p>
+<pre class="code">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+"http://www.w3.org/TR/html4/loose.dtd"&gt;
+&lt;html&gt;
+   &lt;head&gt;
+      &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+      &lt;title&gt;A&ntilde;adir mensaje&lt;/title&gt;
+   &lt;/head&gt;
+&lt;body&gt;
+
+   &lt;form action="servlet/AddMensaje"&gt;
+      Mensaje:  &lt;input type="text" name="mensaje"&gt; &lt;br&gt;
+      Autor: &lt;input type="text" name="autor"&gt;&lt;br&gt;
+     &lt;input type="submit" value="Enviar"&gt;
+   &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>El siguiente c&oacute;digo muestra la p&aacute;gina JSP <span class="codefrag">listaMensajes.jsp</span> que muestra el autor y sus mensajes. Utiliza la librer&iacute;a de tags JSTL.</p>
+<p>Fichero <strong>listaMensajes.jsp</strong>
+</p>
+<pre class="code">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt; 
+	&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%&gt; 
+	&lt;html&gt; 
+	  &lt;head&gt; 
+	    &lt;title&gt;Lista Mensajes&lt;/title&gt; 
+	  &lt;/head&gt; 
+	     &lt;body&gt; 
+	    &lt;table&gt; 
+	      &lt;thead&gt; 
+	        &lt;tr&gt; 
+	          &lt;th&gt;Autor&lt;/th&gt; 
+	          &lt;th&gt;Mensaje&lt;/th&gt; 
+	        &lt;/tr&gt; 
+	     &lt;/thead&gt; 
+	      &lt;tbody&gt; 
+	        &lt;c:forEach items="${mensajes}" var="mens"&gt; 
+	          &lt;tr&gt; 
+	            &lt;td&gt;&lt;c:out value="${autor.nombre}"/&gt;&lt;/td&gt; 
+	            &lt;td&gt;&lt;c:out value="${mens.texto}"/&gt;&lt;/td&gt; 
+	          &lt;/tr&gt; 
+	        &lt;/c:forEach&gt; 
+	      &lt;/tbody&gt; 
+	    &lt;/table&gt; 
+	  &lt;/body&gt; 
+	&lt;/html&gt;</pre>
+<p>Y, por &uacute;ltimo, la parte del fichero <span class="codefrag">web.xml</span> que mapea el servlet es la siguiente:</p>
+<p>Fichero <strong>web.xml</strong>:</p>
+<pre class="code">&lt;servlet&gt;
+   &lt;servlet-name&gt;AddMensaje&lt;/servlet-name&gt;
+   &lt;servlet-class&gt;es.ua.jtech.jpa.AddMensaje&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+   &lt;servlet-name&gt;AddMensaje&lt;/servlet-name&gt;
+   &lt;url-pattern&gt;/servlet/AddMensaje&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;</pre>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007-2008 Depto. CCIA</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,803 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Comunicaci&oacute;n con clientes ricos y AJAX</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Componentes Web" src="images/baner_j2ee_der.gif" title="Componentes Web"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Componentes Web</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Componentes Web</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Componentes Web">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesion 9</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 10</div>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html">Roadmap</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-ejercicios.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-ejercicios.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-ejercicios.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-ejercicios.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-ejercicios.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-ejercicios.html">Sesion 10</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion10-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Comunicaci&oacute;n con clientes ricos y AJAX</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Servlets+y+clientes+ricos">Servlets y clientes ricos</a>
+<ul class="minitoc">
+<li>
+<a href="#HTTP+Tunneling">HTTP Tunneling</a>
+</li>
+<li>
+<a href="#Paso+de+objetos">Paso de objetos</a>
+</li>
+<li>
+<a href="#Env%C3%ADo+de+datos+en+la+petici%C3%B3n">Env&iacute;o de datos en la petici&oacute;n</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Servlets+y+Javascript%3A+AJAX">Servlets y Javascript: AJAX</a>
+<ul class="minitoc">
+<li>
+<a href="#Petici%C3%B3n+HTTP+desde+Javascript">Petici&oacute;n HTTP desde Javascript</a>
+</li>
+<li>
+<a href="#Lectura+de+la+respuesta">Lectura de la respuesta</a>
+</li>
+<li>
+<a href="#Aplicaciones+de+AJAX">Aplicaciones de AJAX</a>
+</li>
+<li>
+<a href="#Frameworks+AJAX%3A+jMaki">Frameworks AJAX: jMaki</a>
+<ul class="minitoc">
+<li>
+<a href="#Instalaci%C3%B3n+en+Eclipse">Instalaci&oacute;n en Eclipse</a>
+</li>
+<li>
+<a href="#Componentes+de+los+widgets">Componentes de los widgets</a>
+</li>
+<li>
+<a href="#Tipos+de+widgets">Tipos de widgets</a>
+</li>
+<li>
+<a href="#Ejemplo%3A+M%C3%BAltiples+pesta%C3%B1as">Ejemplo: M&uacute;ltiples pesta&ntilde;as</a>
+</li>
+<li>
+<a href="#Ejemplo%3A+Google+Maps">Ejemplo: Google Maps</a>
+</li>
+<li>
+<a href="#Ejemplo%3A+Autocompletar+texto">Ejemplo: Autocompletar texto</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="Servlets+y+clientes+ricos"></a>
+<h2 class="underlined_10">Servlets y clientes ricos</h2>
+<div class="section">
+<p>Vamos a ver a continuaci&oacute;n c&oacute;mo establecer una comunicaci&oacute;n entre clientes
+ricos y <em>servlets</em> utilizando el protocolo HTTP. Este protocolo es la interfaz
+que nos ofrecen los servidores para comunicarnos con los componentes web que contengan,
+por lo tanto podremos utilizarlo desde un cliente rico Java para comunicarnos con
+los <em>servlets</em> o JSP alojados en el servidor. Adem&aacute;s tiene la ventaja de que al 
+ser un protocolo web est&aacute;ndar nos va a permitir realizar las comunicaciones sin problemas,
+ya que los firewalls intermedios normalmente dejar&aacute;n pasar las conexiones de este tipo. 
+Aunque los navegadores web normalmente utilizan este protocolo simplemente para obtener
+contenido HTML, a continuaci&oacute;n veremos que podemos utilizarlo para intercambiar cualquier
+tipo de contenido.</p>
+<a name="N1001B"></a><a name="HTTP+Tunneling"></a>
+<h3 class="underlined_5">HTTP Tunneling</h3>
+<p>Si queremos establecer una comunicaci&oacute;n entre un cliente rico y un <em>servlet</em>, 
+deberemos establecer desde el cliente una conexi&oacute;n con la URL en la que est&aacute; publicado
+el <em>servlet</em>. La informaci&oacute;n se intercambiar&aacute; a trav&eacute;s de la conexi&oacute;n HTTP con 
+dicha URL, y esto es lo que se denomina <em>HTTP tunneling</em>. Lo que haremos 
+ser&aacute; construir en el cliente un objeto <span class="codefrag">URL</span> con la URL del servlet 
+que queramos utilizar, y abrir una conexi&oacute;n con dicha URL para realizar la 
+petici&oacute;n y recibir el resultado generado por el servlet. Al realizar la conexi&oacute;n
+en conveniente indicar que no utilice la cach&eacute;, para que siempre se solicite al 
+servidor que genere nuevamente el contenido:</p>
+<pre class="code">URLConnection con = url.<strong>openConnection</strong>();
+con.<strong>setUseCaches</strong>(false);</pre>
+<p>Ahora podemos establecer las cabeceras de la petici&oacute;n que queramos. De 
+esta forma podemos proporcionar informaci&oacute;n sencilla mediante pares <em>(clave, valor)</em>:</p>
+<pre class="code">con.<strong>setRequestProperty</strong>("header", "valor");</pre>
+<p>Entonces ya podemos crear la conexi&oacute;n con la URL:</p>
+<pre class="code">InputStream in = con.<strong>getInputStream</strong>();</pre>
+<p>Es en este momento cuando se establece la conexi&oacute;n con el servlet
+  y    &eacute;ste genera el resultado. Mediante el flujo de entrada que
+obtenemos      podremos leer desde nuestro applet el contenido generado.
+Este flujo de  entrada    podr&aacute; ser de cualquier tipo, seg&uacute;n
+el tipo de contenido  generado    por el servlet. Podemos leer directamente
+la secuencia de bytes,  transformarlo    a un flujo de car&aacute;cteres, o bien
+a un flujo de procesamiento m&aacute;s complejo (por ejemplo <span class="codefrag">DataInputStream</span>). </p>
+<a name="N10058"></a><a name="Paso+de+objetos"></a>
+<h3 class="underlined_5">Paso de objetos</h3>
+<p>Tambi&eacute;n podremos hacer que el servlet nos devuelva objetos. Si
+el servlet    serializa un objeto y lo escribe en la respuesta (utilizando
+un <span class="codefrag">ObjectOutputStream</span>), desde el cliente podremos utilizar un 
+<span class="codefrag">ObjectInputStream</span> para leer dicho objeto:</p>
+<pre class="code">ObjectInputStream ois = new ObjectInputStream(in);
+MiClase obj = (MiClase)ois.<strong>readObject</strong>();</pre>
+<p>Por &uacute;ltimo, una vez leido todo el contenido, cerraremos el flujo
+  de    entrada:</p>
+<pre class="code">in.<strong>close</strong>();</pre>
+<p>Para que el servlet devuelva un objeto deber&aacute; especificar como
+tipo    del contenido generado el siguiente tipo MIME:</p>
+<pre class="code">application/x-java-serialized-object</pre>
+<p>Y lo &uacute;nico que tendr&aacute; que hace entonces ser&aacute; obtener
+  un    <span class="codefrag">ObjectOutputStream</span> a partir del flujo de salida de la respuesta,
+  y escribir    el objeto en &eacute;l:</p>
+<pre class="code">MiClase result = generaObjetoResultante();
+response.<strong>setContentType</strong>("application/x-java-serialized-object");
+ObjectOutputStream oos = new ObjectOutputStream(response.getOutputStream());
+oos.<strong>writeObject</strong>(result);
+oos.<strong>flush</strong>();</pre>
+<p>Hemos visto que el applet podr&aacute; realizar una petici&oacute;n 
+  al    servlet, y como resultado podr&aacute; devolvernos cualquier tipo
+de  datos,    pudiendo incluso enviarnos un objeto. A continuaci&oacute;n veremos
+que tambi&eacute;n es posible enviar datos desde el cliente al servidor utilizando
+esta petici&oacute;n HTTP.</p>
+<a name="N10096"></a><a name="Env%C3%ADo+de+datos+en+la+petici%C3%B3n"></a>
+<h3 class="underlined_5">Env&iacute;o de datos en la petici&oacute;n</h3>
+<p>Para poder enviar informaci&oacute;n al servidor podremos utilizar el bloque de contenido
+del mensajes de petici&oacute;n HTTP. Para ello la conexi&oacute;n que abrimos con la
+ URL debe ser de lectura/escritura:</p>
+<pre class="code">URLConnection con = url.<strong>openConnection</strong>();
+con.<strong>setUseCaches</strong>(false);
+con.<strong>setDoOutput</strong>(true);</pre>
+<p>A continuaci&oacute;n crearemos un array de bytes donde escribiremos la
+  informaci&oacute;n que enviaremos al servidor:</p>
+<pre class="code">ByteArrayOutputStream baos = new ByteArrayOutputStream();</pre>
+<p>Podemos usar distintos tipos de flujos sobre este objeto, seg&uacute;n
+  vayamos a escribir car&aacute;cteres (<span class="codefrag">PrintWriter</span>), datos 
+  codificados en binario (<span class="codefrag">DataOutputStream</span>) u objetos serializados
+(<span class="codefrag">ObjectOutputStream</span>), por ejemplo.</p>
+<p>Una vez escrito este contenido, deberemos establecer una cabecera con
+la longitud    de dicho contenido:</p>
+<pre class="code">con.setRequestProperty("<strong>Content-Length</strong>", String.valueOf(baos.size()));</pre>
+<p>Por cuesti&oacute;n de compatibilidad entre navegadores, ser&aacute; conveniente
+     establecer manualmente el tipo de contenido: </p>
+<pre class="code">connection.setRequestProperty("<strong>Content-Type</strong>", 
+                              "application/x-java-serialized-object");</pre>
+<p>Tipos MIME que podemos utilizar comunmente para intercambiar informaci&oacute;n son:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">application/x-www-form-urlencoded</span></td>
+<td colspan="1" rowspan="1">Se env&iacute;an los datos codificados de la misma forma en la que son codificados por un formulario HTML con m&eacute;todo POST.</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">text/plain</span></td>
+<td colspan="1" rowspan="1">Se env&iacute;a como contenido texto ASCII.</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">application/octet-stream</span></td>
+<td colspan="1" rowspan="1">Se env&iacute;a como contenido datos binarios. Dentro de la secuencia de bytes podremos codificar la informaci&oacute;n como queramos. Por ejemplo, podemos codificar de forma binaria un objeto serializado, utilizando un <span class="codefrag">DataOutputStream</span>.</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">application/x-java-serialized-object</span></td>
+<td colspan="1" rowspan="1">Se env&iacute;a como contenido un objeto Java serializado.</td>
+
+</tr>
+
+</table>
+<p>En este momento ya podremos enviar los datos al flujo
+  de    salida de la conexi&oacute;n:</p>
+<pre class="code">baos.writeTo(connection.<strong>getOutputStream</strong>());</pre>
+<p>Una vez hecho esto ya podemos obtener el flujo de entrada de la conexi&oacute;n,
+     para realizar la petici&oacute;n y obtener contenido que genera el servlet como respuesta, 
+     de la misma forma que lo haciamos en el caso anterior.</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Si no abrimos el flujo de entrada (ni intentamos consultar ninguna otra propiedad
+de las respuesta que genera el <em>servlet</em>), la petici&oacute;n no se llegar&aacute; a realizar
+y por lo tanto el <em>servlet</em> no recibir&aacute; los datos que hayamos escrito para ser 
+enviados)
+</div>
+</div>
+</div>
+
+<a name="N1012C"></a><a name="Servlets+y+Javascript%3A+AJAX"></a>
+<h2 class="underlined_10">Servlets y Javascript: AJAX</h2>
+<div class="section">
+<p>AJAX (<em>Asynchronous Javascript And Xml</em>) no es una tecnolog&iacute;a, sino una 
+t&eacute;cnica de desarrollo que combina una serie de tecnolog&iacute;as para hacer que un navegador 
+en el lado del cliente pueda obtener informaci&oacute;n del servidor sin tener que recargar 
+la p&aacute;gina que se est&eacute; mostrando. Las tecnolog&iacute;as que se utilizan son:</p>
+<ul>
+
+<li>
+<strong>HTML</strong> y <strong>CSS</strong> para presentar la informaci&oacute;n.</li>
+
+<li>
+<strong>XML</strong> para intercambiar informaci&oacute;n con el servidor.</li>
+
+<li>
+<strong>DOM</strong> y <strong>Javascript</strong> para analizar esta informaci&oacute;n.</li>
+
+</ul>
+<p>Esta t&eacute;cnica consistir&aacute; en hacer una petici&oacute;n HTTP utilizando el objeto 
+<span class="codefrag">XMLHttpRequest</span> de <em>Javascript</em>. Con esto obtendremos del 
+servidor un documento XML con la informaci&oacute;n requerida, que podremos analizar 
+con el DOM (tambi&eacute;n de <em>Javascript</em>) Una vez tengamos los datos obtenidos 
+del servidor, podemos actualizarlos en el documento HTML utilizando nuevamente 
+el DOM.</p>
+<a name="N1015C"></a><a name="Petici%C3%B3n+HTTP+desde+Javascript"></a>
+<h3 class="underlined_5">Petici&oacute;n HTTP desde Javascript</h3>
+<p>Lo primero que deberemos hacer es obtener el objeto <span class="codefrag">XMLHttpRequest</span> que nos permita hacer una petici&oacute;n HTTP desde <em>Javascript</em>. Deberemos distinguir entre IE y Firefox:</p>
+<pre class="code">function verMensajes() {
+   //Preparar objeto para lanzar peticion   
+   if (window.XMLHttpRequest) {		//Firefox,etc
+      peticion = new XMLHttpRequest();     
+   } else if (window.ActiveXObject) {   //Explorer   
+      peticion = new ActiveXObject("Microsoft.XMLHTTP");
+   }</pre>
+<p>Una vez obtenido este objeto, deberemos especificar a qu&eacute; funci&oacute;n se deber&aacute; llamar cuando se reciba la respuesta HTTP del servidor. Especificaremos esta funci&oacute;n <em>callback</em> de la siguiente forma:</p>
+<pre class="code">   //a quien llamar cuando el servidor responda
+   peticion.onreadystatechange = atenderPeticion;</pre>
+<p>Por &uacute;ltimo, efectuaremos la petici&oacute;n propiamente dicha, especificando el tipo de petici&oacute;n, la URL a la que vamos a conectar, y si la llamada es as&iacute;ncrona. Si no fuese as&iacute;ncrona, el programa quedar&iacute;a bloqueado hasta recibir la respuesta. Por lo tanto, deberemos poner este &uacute;ltimo par&aacute;metro siempre a <span class="codefrag">true</span> para evitar que la web queda bloqueada mientras se obtiene la informaci&oacute;n:</p>
+<pre class="code">   //lanzar la peticion propiamente dicha
+   peticion.open("GET", "http://localhost:7001/ChatXml/chat/listaMensajesXml.jsp", true);
+   peticion.send(null);
+}</pre>
+<p>NOTA: Por motivo de seguridad, s&oacute;lo se permitir&aacute; hacer peticiones mediante el objeto <span class="codefrag">XMLHttpRequest</span> al servidor del que se ha descargado esta p&aacute;gina.</p>
+<p>Una vez se reciba la respuesta, se llamar&aacute; a la funci&oacute;n especificada como <em>callback</em>. Deberemos fijarnos en el estado en el que se encuentra la petici&oacute;n:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">0</span></td><td colspan="1" rowspan="1">No inicializada</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">1</span></td><td colspan="1" rowspan="1">Cargando</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">2</span></td><td colspan="1" rowspan="1">Cargada</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">3</span></td><td colspan="1" rowspan="1">Interactiva</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">4</span></td><td colspan="1" rowspan="1">Completada</td>
+</tr>
+
+</table>
+<p>El significado de cada uno de estos estados es:</p>
+<ul>
+
+<li>
+<strong>No inicializada.</strong> Se ha creado el objeto de la petici&oacute;n HTTP pero &eacute;sta todav&iacute;a no se ha efectuado.</li>
+
+<li>
+<strong>Cargando.</strong> Se ha realizado la petici&oacute;n HTTP y se est&aacute; esperando a recibir la respuesta.</li>
+
+<li>
+<strong>Cargada.</strong> La respuesta HTTP se ha recibido, pero todav&iacute;a no se puede acceder al modelo DOM que representa al documento obtenido.</li>
+
+<li>
+<strong>Interactiva.</strong> El modelo DOM se ha empezado a construir pero todav&iacute;a no est&aacute; completo. Podremos consultar las partes del modelo que ya se hayan construido.</li>
+
+<li>
+<strong>Completada.</strong> El modelo DOM del documento obtenido est&aacute; completo.</li>
+
+</ul>
+<p>S&oacute;lo nos interesar&aacute; el caso en el que la petici&oacute;n haya sido completada. Adem&aacute;s tambi&eacute;n deberemos comprobar que la respuesta del servidor no nos haya devuelto un c&oacute;digo de error. Si todo ha ido bien, el estado de la respuesta deber&iacute;a ser <span class="codefrag">200 OK</span>:</p>
+<pre class="code">function atenderPeticion() {
+   if (peticion.readyState == 4) {
+      //analizar respuesta
+      if (peticion.status!=200) {
+         alert("ha habido un error");
+         return;
+      }</pre>
+<p>En este punto tendremos el contenido de la respuesta en las propiedades <span class="codefrag">peticion.responseText</span> y <span class="codefrag">peticion.responseXML</span>. La primera de ellas nos ofrecer&aacute; la respuesta como una cadena de texto, mientras que la segunda es un objeto del tipo <span class="codefrag">XMLDocument</span> al que podremos acceder mediante el DOM.</p>
+<a name="N101FF"></a><a name="Lectura+de+la+respuesta"></a>
+<h3 class="underlined_5">Lectura de la respuesta</h3>
+<p>Normalmente utilizaremos <span class="codefrag">responseText</span> cuando queramos incluir directamente en el HTML el contenido devuelto por el servidor, y <span class="codefrag">responseXML</span> cuando estemos intercambiando estructuras de datos.</p>
+<p>A continuaci&oacute;n se muestra un ejemplo en el que se analiza el documento XML obtenido para incluir la informaci&oacute;n formateada en el HTML:</p>
+<pre class="code">      //mostrar mensajes   
+      var areaMensajes = document.getElementById("mensajesChat");   
+	  var textoHTML = "";
+
+	  docXml = peticion.responseXML;
+	  var raiz = docXml.getElementsByTagName('mensajes');
+	  mensajes = raiz[0].getElementsByTagName('mensaje');
+	  for(i=0;i&lt;mensajes.length;i++) {
+	  	  var nick = mensajes[i].getElementsByTagName('nick').item(0).firstChild.data;
+	  	  var texto = mensajes[i].getElementsByTagName('texto').item(0).firstChild.data;
+	  	  textoHTML += "&lt;strong&gt;&amp;lt;" + nick + "&amp;gt;&lt;/strong&gt; " + texto + "&lt;br/&gt;";
+	  }
+	  
+      areaMensajes.innerHTML = textoHTML;
+   }
+}</pre>
+<p>En el caso de este ejemplo, para intercambiar la informaci&oacute;n estar&iacute;amos utilizando un documento XML con el siguiente formato:</p>
+<pre class="code">&lt;mensajes&gt;
+&lt;mensaje&gt;
+  &lt;nick&gt;Ana&lt;/nick&gt;
+  &lt;texto&gt;Hola&lt;/texto&gt;
+&lt;/mensaje&gt;
+&lt;mensaje&gt;
+  &lt;nick&gt;Jose&lt;/nick&gt;
+  &lt;texto&gt;Que tal?&lt;/texto&gt;
+&lt;/mensaje&gt;
+&lt;/mensajes&gt;</pre>
+<p>Podremos invocar la funci&oacute;n que efectua la petici&oacute;n HTTP de diferentes formas. Podemos utilizar un temporizador para hacer que la informaci&oacute;n se actualice peri&oacute;dicamente, o bien podemos hacer que se invoque como respuesta a alg&uacute;n evento del usuario (por ejemplo cuando pulse un bot&oacute;n).</p>
+<p>Como alternativa a XML, resulta de especial inter&eacute;s el formato JSON. 
+Se trata de un lenguaje 
+ligero de intercambio de informaci&oacute;n, que puede utilizarse en lugar 
+de XML (que resulta considerablemente m&aacute;s pesado) para estas aplicaciones 
+AJAX. De hecho, en Javascript puede leerse este tipo de formato 
+simplemente utilizando el m&eacute;todo <span class="codefrag">eval()</span>.</p>
+<a name="N10226"></a><a name="Aplicaciones+de+AJAX"></a>
+<h3 class="underlined_5">Aplicaciones de AJAX</h3>
+<p>Esta t&eacute;cnica tiene numerosas aplicaciones, como por ejemplo:</p>
+<ul>
+
+<li>
+<em>Validaci&oacute;n de formularios</em>: Podremos validar la informaci&oacute;n introducida en un formulario en el lado del servidor antes de enviarlo. Por ejemplo, al registrarnos en una web podemos comprobar si un <em>login</em> ya est&aacute; utilizado.</li>
+
+<li>
+<em>Autocompletar campos</em>: Mientras escribimos en un campo de un formulario, podemos consultar en el servidor las coincidencias con lo que llevamos escrito para que nos muestre una lista con las posibilidades existentes.</li>
+
+<li>
+<em>Mostrar datos actualizados</em>: Podemos mantener informaci&oacute;n de &uacute;ltima hora en la web sin tener que recargar. Por ejemplo, podemos ver el marcador de un partido de f&uacute;tbol que se est&aacute; jugando en este momento, la clasificaci&oacute;n de la F&oacute;rmula 1, o informaci&oacute;n de la bolsa.</li>
+
+
+</ul>
+<a name="N10245"></a><a name="Frameworks+AJAX%3A+jMaki"></a>
+<h3 class="underlined_5">Frameworks AJAX: jMaki</h3>
+<p>Hemos visto hasta ahora los fundamentos de AJAX y como utilizar
+esta t&eacute;cnica programando directamente JavaScript a bajo nivel. Sin
+embargo, esta forma de trabajar puede resultar compleja, sobretodo
+si no se cuenta con suficiente experiencia en JavaScript, y puede
+dar lugar a grandes cantidades de c&oacute;digo mal estructurado y dif&iacute;cil
+de entender, haciendo la aplicaci&oacute;n poco mantenible.</p>
+<p>Por este motivo, y debido al &eacute;xito que AJAX ha cosechado, aparecen
+multitud de librer&iacute;as y <em>frameworks</em> destinados a facilitarnos
+el uso de esta t&eacute;cnica en nuestras aplicaciones. Tenemos por ejemplo
+librer&iacute;as JavaScript como Scriptaculous o DOJO, que nos ofrecen una
+serie de componentes de la interfaz de usuario predefinidos, con los
+que a&ntilde;adir contenido din&aacute;mico a nuestras webs (AJAX, animaciones, etc). 
+Tambi&eacute;n podemos encontrar componentes basados en AJAX proporcionados
+por diferentes proveedores, como Google (mapas, b&uacute;squeda) o Yahoo, 
+que podemos introducir en nuestras p&aacute;ginas utilizando las librer&iacute;as
+necesarias.</p>
+<p>Aqu&iacute; encontramos el problema de que cada proveedor ofrece su 
+propia API JavaScript para utilizar los componentes AJAX que 
+proporciona, lo cual nos forzar&aacute; a aprender cada una de estas APIs
+para poder introducir los correspondientes componentes en nuestra
+web. Para evitar este problema aparecen <em>frameworks</em> como
+jMaki que tratan de definir un modelo &uacute;nico de acceso a los
+diferentes tipos de componentes.</p>
+<p>Pasaremos a continuaci&oacute;n a estudiar jMaki con m&aacute;s detalle. Este
+<em>framework</em> est&aacute; soportado por los principales entornos de 
+desarrollo (Eclipse, NetBeans), y nos permitir&aacute; introducir en
+nuestras p&aacute;ginas componentes AJAX proporcionados por diferentes
+proveedores (Google, Yahoo, DOJO, etc) simplemente mediante el 
+uso de <em>tags</em> en nuestros JSPs.</p>
+<a name="N10263"></a><a name="Instalaci%C3%B3n+en+Eclipse"></a>
+<h4>Instalaci&oacute;n en Eclipse</h4>
+<p>Vamos a comenzar viendo como instalar en Eclipse el <em>plugin</em>
+que nos permita trabajar con jMaki.</p>
+<p>Lo primero que deberemos hacer es ir al men&uacute; <em>Help &gt; Software Updates ...</em>. 
+Aqu&iacute; a&ntilde;adiremos el repositorio en el que se encuentra este <em>plugin</em>:</p>
+<pre class="code">https://ajax.dev.java.net/eclipse</pre>
+<p>Una vez hecho esto, desplegaremos el contenido de este repositorio,
+seleccionaremos el elemento <em>jMaki Ajax</em>, y pulsamos sobre el bot&oacute;n <em>Install ...</em>
+</p>
+<p>Con esto habremos instalado el <em>plugin</em>. Ahora cuando estemos
+editanto un JSP, abriremos la ventana <em>Snippets</em> y en ella veremos
+la paleta de componentes (<em>widgets</em>) jMaki que podemos incorporar en nuestra web, simplemente
+arrastr&aacute;ndolos sobre el lugar del JSP en el que queramos incluirlo.</p>
+<a name="N10291"></a><a name="Componentes+de+los+widgets"></a>
+<h4>Componentes de los widgets</h4>
+<p>A la hora de desarrollar nuestra web simplemente utilizaremos etiquetas
+jMaki en nuestros JSPs. Cuando esta p&aacute;gina se genere, dichas etiquetas se 
+transformar&aacute;n en elementos HTML y llamadas a librer&iacute;as JavaScript que puedan
+ser correctamente interpretadas por el navegador. La forma de renderizar 
+estos <em>widgets</em> se define mediante 3 ficheros en jMaki. Estos 
+ficheros son:</p>
+<ul>
+
+<li>
+<span class="codefrag">component.html</span>: Define una plantilla del c&oacute;digo HTML
+que compondr&aacute; el <em>widget</em> en la p&aacute;gina.</li>
+
+<li>
+<span class="codefrag">component.js</span>: Define una clase JavaScript que har&aacute;
+de adaptador entre la llamada al <em>widget</em> desde la <em>taglib</em> y 
+la librer&iacute;a concreta que implementa las funcionalidades del <em>widget</em>
+que estemos utilizando. Esta capa es la que nos va a permitir tener
+una interfaz de acceso &uacute;nica a <em>widgets</em> proporcionados por
+diferentes proveedores.</li>
+
+<li>
+<span class="codefrag">component.css</span>: Incluye los componentes de estilo
+necesarios para mostrar el <em>widget</em>.</li>
+
+</ul>
+<p>Cada <em>widget</em> estar&aacute; definido en un directorio distinto, que
+contendr&aacute;, por lo menos, estos tres ficheros. El directorio asociado a
+cada <em>widget</em> corresponde a su nombre, de forma similar a lo que
+ocurre con los paquetes en Java, y todos estos directorios estar&aacute;n 
+bajo la carpeta <span class="codefrag">resources</span>. Por ejemplo, si un <em>widget</em>
+se llama <span class="codefrag">google.map</span>, estar&aacute; en un directorio <span class="codefrag">/resources/google/map</span>,
+dentro de nuestra carpeta web.</p>
+<a name="N102D7"></a><a name="Tipos+de+widgets"></a>
+<h4>Tipos de widgets</h4>
+<p>Dentro de jMaki podemos encontrar diversos tipos de <em>widgets</em>. 
+Podemos encontrar diferentes <em>widgets</em> de un mismo tipo,
+muchas veces proporcionados por diferentes proveedores. 
+A continuaci&oacute;n mostramos una tabla con los modelos generales de <em>widgets</em> 
+existentes y una serie de <em>widgets</em> concretos de cada tipo.</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+
+<th colspan="1" rowspan="1">Tipo</th>
+<th colspan="1" rowspan="1">Widgets</th>
+<th colspan="1" rowspan="1"></th>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Men&uacute;</td>
+<td colspan="2" rowspan="1">Yahoo Menu, jMaki Menu, jMaki Tab Menu, jMaki Accordion Menu</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Tabla</td>
+<td colspan="2" rowspan="1">Yahoo Datatable, Dojo Table</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">&Aacute;rbol</td>
+<td colspan="2" rowspan="1">Yahoo Tree, Dojo Tree</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Desplegable</td>
+<td colspan="2" rowspan="1">Dojo Combobox</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Pesta&ntilde;as</td>
+<td colspan="2" rowspan="1">jMaki Dynamic Container, Dojo Accordion, Dojo Tabbedview, Yahoo Tabbedview, Spry Accordion</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Fisheye</td>
+<td colspan="2" rowspan="1">Dojo Fisheye</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Caj&oacute;n</td>
+<td colspan="2" rowspan="1">Dojo Drawer</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Mapas</td>
+<td colspan="2" rowspan="1">Yahoo Map, Google Map</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Validaci&oacute;n</td>
+<td colspan="2" rowspan="1">Spry validation</td>
+
+</tr>
+
+</table>
+<p>Todos los <em>widgets</em> de jMaki utilizan para su configuraci&oacute;n
+una serie de atributos comunes. Estos atributos son:</p>
+<ul>
+
+<li>
+<span class="codefrag">id</span>: Identificador de un elemento, que podremos
+utilizar para referenciarlo posteriormente.</li>
+
+<li>
+<span class="codefrag">label</span>: Etiqueta que se mostrar&aacute; en el <em>widget</em>, 
+como por ejemplo el t&iacute;tulo que figurar&aacute; en las pesta&ntilde;as, elementos de 
+men&uacute;s, nodos de &aacute;rbol o columnas de una tabla.</li>
+
+<li>
+<span class="codefrag">href</span>: Sirve para indicar una URL que haga de enlace,
+y que al pulsar sobre ella se acceda a la direcci&oacute;n a la que apunta.</li>
+
+<li>
+<span class="codefrag">include</span>: Con este atributo especificaremos tambi&eacute;n
+una URL, pero en lugar de poner el enlace lo que se har&aacute; ser&aacute; incluir
+el contenido de dicha URL en el contenedor correspondiente.</li>
+
+<li>
+<span class="codefrag">action</span>: Nos permite establecer una comunicaci&oacute;n entre
+elementos de diferentes <em>widgets</em> (por ejemplo podr&iacute;amos
+a&ntilde;adir una acci&oacute;n en un bot&oacute;n para que se inserten filas en una tabla,
+o hacer que al pulsar sobre un icono se abra una determinada pesta&ntilde;a).</li>
+
+<li>
+<span class="codefrag">service</span>: Indica la URL a la que se conectar&aacute; el
+<em>widget</em> mediante AJAX para obtener o enviar la informaci&oacute;n 
+necesaria.</li>
+
+</ul>
+<p>Hemos mostrado los atributos generales, pero cada tipo de 
+<em>widget</em> tiene adem&aacute;s su propio modelo de datos. A continuaci&oacute;n
+pasaremos a ver algunos ejemplos concretos. Para obtener m&aacute;s informaci&oacute;n
+sobre el modelo de datos concreto de cada tipo de <em>widget</em> y 
+sobre como establecer una comunicaci&oacute;n entre ellos, podemos consultar
+la documentaci&oacute;n en:</p>
+<pre class="code">https://ajax.dev.java.net/</pre>
+<a name="N103B3"></a><a name="Ejemplo%3A+M%C3%BAltiples+pesta%C3%B1as"></a>
+<h4>Ejemplo: M&uacute;ltiples pesta&ntilde;as</h4>
+<p>Vamos a ver en primer lugar un ejemplo de como crear una p&aacute;gina
+con varias pesta&ntilde;as, cada una de ellas con un contenido diferente.
+Utilizaremos para ello el <em>widget</em> Tabbedview de Yahoo.
+Arrastraremos este widget sobre nuestro JSP y modificaremos el texto
+generado de la siguiente forma:</p>
+<pre class="code">&lt;a:widget name="yahoo.tabbedview"
+   value="{items:[
+           {label : 'A', content : 'Contenido de la pesta&ntilde;a A'},
+           {id : 'tabB', label : 'B', include : 'pagB.jsp ', lazyLoad : true },
+           {label : 'C', include : 'pagC.jsp',  selected : true, iframe: true}
+          ]
+         }" /&gt;</pre>
+<p>Deberemos crear dos nuevos JSPs: <span class="codefrag">pagB.jsp</span> y <span class="codefrag">pagC.jsp</span>, 
+con el contenido que tendr&aacute;n las pesta&ntilde;as B y C respectivamente. Hemos
+de hacer notar el uso de los atributos <span class="codefrag">label</span> e <span class="codefrag">include</span>.
+Con el primero de ellos indicamos el t&iacute;tulo de cada pesta&ntilde;a. El segundo
+nos permite indicar el contenido que tendr&aacute;, cogiendo este contenido
+de otro JSP.</p>
+<a name="N103D3"></a><a name="Ejemplo%3A+Google+Maps"></a>
+<h4>Ejemplo: Google Maps</h4>
+<p>Vamos a ver ahora como podemos incluir mapas din&aacute;micos en nuestra
+aplicaci&oacute;n (Google Maps o Yahoo Maps). Para ello arrastraremos el
+<em>widget</em> Maps de Google sobre nuestro JSP. Veremos un c&oacute;digo
+como el siguiente:</p>
+<pre class="code">&lt;a:widget  name="google.map"
+         args="{ centerLat : 37.4041960114344, 
+                 centerLon : -122.008194923401 }" /&gt;</pre>
+<p>Podemos ver que con esto podemos incluir de forma sencilla un mapa
+que indique una determinada direcci&oacute;n, especificando las coordenadas
+de dicha direcci&oacute;n como par&aacute;metro. Pero tambi&eacute;n podemos utilizar
+el mapa junto a otro <em>widget</em> que nos permita obtener las
+coordenadas a partir de la direcci&oacute;n del lugar. Para hacer esto arrastraremos
+sobre el JSP el <em>widget</em> Geocoder de Yahoo:</p>
+<pre class="code">&lt;a:widget name="yahoo.geocoder" service="/xhp" /&gt;</pre>
+<p>En este caso podemos ver que este <em>widget</em> necesita un par&aacute;metro
+<span class="codefrag">service</span> en el que se indica el servicio al que deber&aacute;
+conectar el <em>widget</em> mediante AJAX para obtener las coordenadas
+a partir del texto de la direcci&oacute;n. Esta conexi&oacute;n debe hacerse a trav&eacute;s
+de un proxy incluido en jMaki, que deberemos mapear como servlet en 
+nuestra aplicaci&oacute;n.</p>
+<p>Este servlet est&aacute; ya implementado en la clase <span class="codefrag">XmlHttpProxyServlet</span>,
+por lo que en Eclipse deberemos indicar que cree un nuevo servlet, pero
+utilizando una clase ya existente (esto lo haremos en el mismo asistente
+de crear nuevo servlet). Mapearemos este servlet a la direcci&oacute;n
+que hemos especificado en el <em>widget</em>: <span class="codefrag">/xhp</span>. En el
+<span class="codefrag">web.xml</span> quedar&aacute; de la siguiente forma:</p>
+<pre class="code">  &lt;servlet&gt;
+    &lt;description&gt;&lt;/description&gt;
+    &lt;display-name&gt;XmlHttpProxyServlet&lt;/display-name&gt;
+    &lt;servlet-name&gt;XmlHttpProxyServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;com.sun.jmaki.services.XmlHttpProxyServlet&lt;/servlet-class&gt;
+  &lt;/servlet&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;XmlHttpProxyServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/xhp&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;</pre>
+<p>Si ahora probamos la p&aacute;gina, veremos que al introducir una direcci&oacute;n
+en el campo de texto del Geocoder, se nos muestra esta direcci&oacute;n en el
+mapa.</p>
+<a name="N10413"></a><a name="Ejemplo%3A+Autocompletar+texto"></a>
+<h4>Ejemplo: Autocompletar texto</h4>
+<p>Para terminar, vamos a ver un ejemplo de como autocompletar texto
+con AJAX utilizando jMaki. Tendremos un campo de texto, en el que
+conforme escribamos nos mostrar&aacute; las posibles coincidencias con las
+que podr&iacute;amos autocompletar. Vamos a utilizar el <em>widget</em> Autocompleter
+de Scriptaculous. Arrastramos el widget sobre nuestro JSP y lo modificamos
+como se muestra a continuaci&oacute;n:</p>
+<pre class="code">&lt;a:widget name="scriptaculous.autocompleter" service="lista.jsp" /&gt;</pre>
+<p>En este caso, en <span class="codefrag">service</span> especificamos la p&aacute;gina de la que
+sacar&aacute; las opciones con las que autocompletar. Estas opciones se definir&aacute;n como
+una lista HTML. Por ejemplo, podr&iacute;amos definir <span class="codefrag">lista.jsp</span> como
+se muestra a continuaci&oacute;n:</p>
+<pre class="code">&lt;ul&gt;
+&lt;li&gt;Seleccionar &lt;span class="selectme"&gt;A&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;Seleccionar &lt;span class="selectme"&gt;B&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;</pre>
+<p>Es posible que esto no nos funcione debido a un <em>bug</em> en algunas 
+versiones de jMaki. Para corregirlo deberemos abrir el fichero 
+<span class="codefrag">component.js</span> correspondiente a este <em>widget</em> (estar&aacute;
+en el directorio <span class="codefrag">/resources/scriptaculous/autocompleter</span>). En la
+l&iacute;nea 12 debe declarar una variable <span class="codefrag">service</span>, pero por error
+podr&iacute;a aparecer <span class="codefrag">servicei</span>. Si es as&iacute; deberemos corregirlo
+y dejarlo como se muestra a continuaci&oacute;n:</p>
+<pre class="code">var service = wargs.service;</pre>
+<p>De especial inter&eacute;s es tambi&eacute;n el fichero <span class="codefrag">component.htm</span>. Aqu&iacute;
+se especifica la plantilla utilizada para mostrar este componente
+en el HTML. Podemos ver que tiene un campo de texto, donde introduciremos
+el contenido a autocompletar. Este <em>widget</em> env&iacute;a al servicio
+un par&aacute;metro con el texto introducido hasta el momento, para que &eacute;ste
+pueda devolvernos las coincidencias con ese texto. Este par&aacute;metro recibe
+como nombre el nombre que le hayamos dado al campo de texto. Sin embargo,
+podemos ver que el campo de texto no tiene asignado ning&uacute;n nombre
+(falta el atributo <span class="codefrag">name</span>), por lo que ser&aacute; buena idea 
+a&ntilde;adirlo:</p>
+<pre class="code">&lt;input id="${uuid}" name="texto" type="text"/&gt;</pre>
+<p>Con esto, nuestra p&aacute;gina <span class="codefrag">lista.jsp</span> recibir&aacute; un par&aacute;metro 
+<span class="codefrag">texto</span> con el texto introducido hasta el momento. Entonces
+tendr&aacute; que buscar las coincidencias con ese texto (por ejemplo elementos
+en nuestra base de datos que comiencen de esa manera), y devolverlas
+formateadas como una lista HTML.</p>
+</div>
+
+
+
+<p class="pageBreakAfter"></p>
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2008-2009 Depto. CCIA</div>
+</div>
+</body>
+</html>

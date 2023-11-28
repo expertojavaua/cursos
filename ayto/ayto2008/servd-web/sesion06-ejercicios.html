@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Ejercicios de seguridad en JBoss y LDAP</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servidores Web" src="images/baner_j2ee_der.gif" title="Servidores Web"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li>
+<a class="base-not-selected" href="index.html">Servidores web</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_1.1', 'skin/')" id="menu_1.1Title" class="menutitle">Servidores Web</div>
+<div id="menu_1.1" class="menuitemgroup">
+<div class="menuitem">
+<a href="index.html" title="Servidores Web">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.2', 'skin/')" id="menu_1.1.2Title" class="menutitle">Teor&iacute;a</div>
+<div id="menu_1.1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html">Roadmap</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion06-ejercicios.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Ejercicios de seguridad en JBoss y LDAP</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Autentificaci%C3%B3n+en+JBoss">Autentificaci&oacute;n en JBoss</a>
+</li>
+<li>
+<a href="#LDAP">LDAP</a>
+</li>
+</ul>
+</div>
+
+<a name="N1000C"></a><a name="Autentificaci%C3%B3n+en+JBoss"></a>
+<h2 class="underlined_10">Autentificaci&oacute;n en JBoss</h2>
+<div class="section">
+<p>Vamos a configurar ahora JBoss para que use autentificaci&oacute;n basada en BD para la aplicaci&oacute;n de comentarios. La configuraci&oacute;n
+de la aplicaci&oacute;n propiamente dicha en el web.xml no es necesario cambiarla, ya que es portable, pero s&iacute; tendremos
+que crear un m&oacute;dulo de login para que use la BD comentarios.</p>
+<p>Lo primero es crear la fuente de datos en JBoss para poder conectar con la BD:</p>
+<ol>
+
+<li>Copiar el .jar con el driver de MySQL, incluido en las plantillas de la sesi&oacute;n, al directorio <span class="codefrag">default/lib</span>
+de JBoss. El driver es exactamente el mismo que us&aacute;bamos con Tomcat</li>
+
+<li>Crear el DataSource propiamente dicho. Simplemente tendr&eacute;is que
+copiar el fichero <span class="codefrag">mysql-comentarios-ds</span> incluido en las plantillas de la sesi&oacute;n al directorio <span class="codefrag">deploy</span>
+de JBoss. Comprobar en la consola (solapa "Console") que JBoss la detecta (mensaje <em>Bound ConnectionManager 'jboss.jca:service=DataSourceBinding,name=comentariosDS'...</em>) </li>
+
+<li>El nombre JNDI en JBoss es ligeramente distinto al que se usaba en Tomcat. Por ello, en el c&oacute;digo de <span class="codefrag">FuenteDatos.java</span>
+que es el que obtiene el Datasource con JNDI hay que cambiar el nombre actual por <span class="codefrag">java:/comentariosDS</span>
+</li>
+
+<li>Ejecutar la aplicaci&oacute;n en JBoss y comprobar que funciona con la BD </li>
+
+</ol>
+<p>Ahora vamos a a&ntilde;adirle la autentificaci&oacute;n:</p>
+<ol>
+
+<li>Parar JBoss, ya que vamos a cambiar la configuraci&oacute;n.</li>
+
+<li>Insertar un nuevo <span class="codefrag">application-policy</span> en el <span class="codefrag">login-config.xml</span> de la carpeta
+<span class="codefrag">conf</span> con el siguiente m&oacute;dulo de login. 
+<pre class="code">
+&lt;application-policy name="comentarios"&gt;
+  &lt;authentication&gt;
+     &lt;login-module
+          code="org.jboss.security.auth.spi.DatabaseServerLoginModule"
+          flag="required"&gt;
+       &lt;module-option name="dsJndiName"&gt;java:/comentariosDS&lt;/module-option&gt;
+       &lt;module-option name="principalsQuery"&gt;
+          select password from usuarios where login=?
+       &lt;/module-option&gt;
+       &lt;module-option name="rolesQuery"&gt;
+          select rol, 'Roles' from roles where login=?
+       &lt;/module-option&gt;
+     &lt;/login-module&gt;
+  &lt;/authentication&gt;
+&lt;/application-policy&gt;
+</pre>
+
+<p>Cuando se rearranque el servidor, comprobar en la consola que no se genera ninguna excepci&oacute;n, por si hemos introducido
+mal el nuevo m&oacute;dulo de login.</p>
+
+</li>
+
+<li>En el proyecto de Eclipse crear un nuevo fichero descriptor de despliegue: <span class="codefrag">jboss-web.xml</span>, dentro 
+de <span class="codefrag">WEB-INF</span> con el siguiente contenido:
+<pre class="code">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE jboss-web PUBLIC
+          "-//JBoss//DTD Web Application 2.4//EN"
+          "http://www.jboss.org/j2ee/dtd/jboss-web_4_0.dtd"&gt;
+&lt;jboss-web&gt;
+    &lt;security-domain&gt;java:/jaas/comentarios&lt;/security-domain&gt;
+&lt;/jboss-web&gt;
+
+</pre>
+
+</li>
+
+
+<li>
+
+<p>Ejecutar la aplicaci&oacute;n de nuevo en JBoss y comprobar que la seguridad funciona exactamente igual a como lo hac&iacute;a
+con Tomcat (para insertar comentarios hay que tener rol "registrado").</p>
+
+
+</li>
+
+
+</ol>
+</div>
+
+<a name="N10068"></a><a name="LDAP"></a>
+<h2 class="underlined_10">LDAP</h2>
+<div class="section">
+<p>En las plantillas de la sesi&oacute;n se incluye un servidor LDAP (ApacheLDAP) y JXExplorer, un programa para explorar el &aacute;rbol LDAP.</p>
+<p>Para instalar ApacheLDAP basta con descomprimirlo en cualquier carpeta. Para ponerlo en marcha, ejecutar
+el archivo <span class="codefrag">apacheds.bat</span> contenido en el directorio <span class="codefrag">bin</span>.</p>
+<p>Lo mismo ocurre con JXExplorer, simplemente descompr&iacute;melo en cualquier directorio. Para arrancarlo, ejecutar el archivo .bat. Tenemos que configurar la
+conexi&oacute;n con el servidor LDAP e insertar datos.</p>
+<ol>
+
+<li>Elegimos la opci&oacute;n <span class="codefrag">File &gt; Connect</span>
+</li>
+
+<li>En el cuadro de di&aacute;logo "Open LDAP/DSML connection" el host debe ser <strong>localhost</strong>, el puerto
+el <strong>10389</strong>, el Base DN vac&iacute;o, el User+DN <strong>uid=admin,ou=system</strong>y el password <strong>secret</strong>.</li>
+
+<li>Para insertar nuestros datos en LDAP elegimos la opci&oacute;n <span class="codefrag">LDIF &gt; Import File</span> e importamos el archivo
+<span class="codefrag">ayuntamientoEjemplo.ldif</span> de las plantillas de la sesi&oacute;n.</li>
+
+</ol>
+<p>Una vez insertados los datos, podemos verlos a trav&eacute;s de la solapa "Explore" del programa.</p>
+<p>Usando el <em>login module</em> visto en la sesi&oacute;n, configurar JBoss para que la autentificaci&oacute;n se lleve a cabo
+contra el servidor LDAP en lugar de contra la BD.<strong>Dejad comentado el m&oacute;dulo de login que se usaba en el ejercicio
+anterior e insertad uno nuevo. Valdr&aacute; el c&oacute;digo de los apuntes, cambiando el nombre por "comentarios" en vez de "seguridadLDAP".</strong> Comprobar que la
+autentificaci&oacute;n LDAP funciona, entrando por ejemplo como "acuenca" con password "cuencaa".</p>
+</div>
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007 Depto. CCIA</div>
+</div>
+</body>
+</html>

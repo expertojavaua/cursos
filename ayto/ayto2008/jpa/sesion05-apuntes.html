@@ -1,0 +1,663 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Entity Manager</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="JPA con Hibernate" src="images/baner_j2ee_der.gif" title="JPA con Hibernate"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Persistencia</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">JPA</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="JPA">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 5</div>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="roadmap.html">Roadmap JPA</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-ejercicios.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-ejercicios.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-ejercicios.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-ejercicios.html">Sesion 8</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion05-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Entity Manager</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Entity+managers+y+contexto+de+persistencia">Entity managers y contexto de persistencia</a>
+<ul class="minitoc">
+<li>
+<a href="#Creaci%C3%B3n+de+entity+managers">Creaci&oacute;n de entity managers</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Contextos+de+persistencia">Contextos de persistencia</a>
+</li>
+<li>
+<a href="#Operaciones+y+contexto+de+persistencia">Operaciones y contexto de persistencia</a>
+<ul class="minitoc">
+<li>
+<a href="#Persist">Persist</a>
+</li>
+<li>
+<a href="#Find+y+GetReference">Find y GetReference</a>
+</li>
+<li>
+<a href="#Merge">Merge</a>
+</li>
+<li>
+<a href="#Remove">Remove</a>
+</li>
+<li>
+<a href="#Clear">Clear</a>
+</li>
+<li>
+<a href="#Modificaci%C3%B3n+de+atributos+de+la+instancia">Modificaci&oacute;n de atributos de la instancia</a>
+</li>
+<li>
+<a href="#Operaciones+en+cascada">Operaciones en cascada</a>
+<ul class="minitoc">
+<li>
+<a href="#Persist+en+cascada">Persist en cascada</a>
+</li>
+<li>
+<a href="#Borrado+en+cascada">Borrado en cascada</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Contextos+de+persistencia-N102BB">Contextos de persistencia</a>
+<ul class="minitoc">
+<li>
+<a href="#Sincronizaci%C3%B3n+con+la+base+de+datos">Sincronizaci&oacute;n con la base de datos</a>
+</li>
+<li>
+<a href="#Desconexi%C3%B3n+de+entidades">Desconexi&oacute;n de entidades</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Contextos+de+persistencia+y+aplicaciones+web">Contextos de persistencia y aplicaciones web</a>
+<ul class="minitoc">
+<li>
+<a href="#Entidades+desconectadas">Entidades desconectadas</a>
+</li>
+<li>
+<a href="#Entidades+gestionadas">Entidades gestionadas</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+			
+
+<a name="N1000C"></a><a name="Entity+managers+y+contexto+de+persistencia"></a>
+<h2 class="underlined_10">Entity managers y contexto de persistencia</h2>
+<div class="section">
+<p>Vamos a comentar algunas consideraciones generales sobre el uso de entity managers y repasar algunos conceptos sobre el contexto de persistencia asociado.</p>
+<a name="N10015"></a><a name="Creaci%C3%B3n+de+entity+managers"></a>
+<h3 class="underlined_5">Creaci&oacute;n de entity managers</h3>
+<p>La forma que tiene una aplicaci&oacute;n de crear un entity manager es mediante una llamada al m&eacute;todo <span class="codefrag">createEntityManager()</span> de una instancia de <span class="codefrag">EntityManagerFactory</span>. A partir de ese momento la aplicaci&oacute;n debe gestionar el ciclo de vida del entity manager, comenzando y cerrando transacciones y cerrando el entity manager con una llamada a <span class="codefrag">close()</span> cuando ya no necesitemos utilizar el contexto de persistencia.</p>
+<p>Repetimos a continuaci&oacute;n un ejemplo t&iacute;pico de uso que ya hemos visto previamente:</p>
+<pre class="code">public class AutorTest {
+   public static void main(String[] args) {
+      EntityManagerFactory emf = 
+         Persistence.createEntityManagerFactory("SimpleJPA");
+      EntityManager em = emf.createEntityManager();
+      EntityTransaction tx = em.getTransaction();
+      tx.begin();
+      Autor autor = em.find(Autor.class, "ritchie");
+      Mensaje mensaje = new Mensaje("Hola mundo", autor);
+      em.persist(mensaje);
+      tx.commit();
+      em.close();
+   }
+}</pre>
+<p>La creaci&oacute;n de entity managers es una operaci&oacute;n no demasiado costosa, ya que Hibernate define un pool de entity managers asociado a la factoria. El m&eacute;todo <span class="codefrag">createEntityManager</span> no realiza ninguna reserva de memoria ni de otros recursos sino que simplemente devuelve alguno de los entity managers disponibles.</p>
+<p>Cuando estamos definiendo las capas de una aplicaci&oacute;n es importante decidir qui&eacute;n va a tener la responsabilidad de crear y cerrar los entity managers. En una arquitectura por capas en la que definimos una clase DAO (o <em>Manager</em>, en la terminolog&iacute;a de Spring) asociada a cada entidad surge la duda de d&oacute;nde crear y d&oacute;nde cerrar el entity manager. Recordemos que hablamos de dos enfoques: el enfoque DAO y el enfoque EAO.</p>
+<p>En el patr&oacute;n DAO, todas las operaciones relacionados con el entity manager y el contexto de persistencia se encapsulan en los m&eacute;todos del DAO, utilizando la estrategia denominada <em>un entity manager por m&eacute;todo</em>. Los objetos que se devuelven como resultado de las operaciones del DAO son <em>entidades desconectadas</em> resultantes de haber cerrado el entity manager al finalizar el m&eacute;todo del DAO. Ya vimos que este enfoque tiene algunas desventajas, ya que impide que fuera del DAO se trate con objetos gestionados, se recorran las entidades o se realicen varias operaciones dentro de una misma transacci&oacute;n.</p>
+<p>La alternativa es el patr&oacute;n EAO, en el que los m&eacute;todos que trabajan con las entidades asumen un contexto de persistencia ya creado y que la entidad est&aacute; gestionada. El contexto de persistencia hay que obtenerlo fuera de los m&eacute;todos y pas&aacute;rselo al EAO en su constructor. Recordemos el c&oacute;digo:</p>
+<pre class="code">import javax.persistence.*;
+import java.util.List;
+
+public class EmpleadoEAO {
+   protected EntityManager em;
+
+   public EmpleadoEAO(EntityManager em) {
+      this.em = em;
+   }
+
+   public Empleado createEmpleado(int id, String nombre, long sueldo) {
+      Empleado emp = new Empleado(id);
+      emp.setNombre(nombre);
+      emp.setSueldo(sueldo);
+      em.persist(emp);
+      return emp;
+   }
+   
+   public void removeEmpleado(Empleado emp) {
+      em.remove(emp);
+   }
+
+   public void subeSueldoEmpleado(Empleado emp, long aumento) {
+      emp.setSueldo(emp.getSueldo() + aumento);
+   }
+
+   public void cambiaNombreEmpleado(Empleado emp, String nuevoNombre) {
+      emp.setNombre(nuevoNombre);
+   }
+
+   public Empleado findEmpleado(int id) {
+      return em.find(Empleado.class, id);
+   }
+
+   public List&lt;Empleado&gt; findEmpleadosSueldo(long sueldo) {
+      Query query = em.createQuery("SELECT e FROM Empleado e "
+            + "WHERE e.sueldo &gt; :sueldo");
+      query.setParameter("sueldo", 20000);
+      return (List&lt;Empleado&gt;) query.getResultList();
+   }
+}</pre>
+<p>Un ejemplo de c&oacute;mo usar el enfoque es el siguiente c&oacute;digo:</p>
+<pre class="code">EntityManagerFactory emf = Persistence.createEntityManagerFactory("SimpleJPA");
+EntityManager em = emf.createEntityManager();
+EmpleadoDAO empDAO = new EmpleadoDAO(em);
+
+em.getTransaction().begin();
+Empleado emp = empDAO.findEmpleado(122);
+emp = empDAO.subeSueldoEmpleado(2000);
+em.getTransaction().commit();
+em.close();
+
+System.out.println("El nuevo sueldo de " + emp.getNombre() + " es " + emp.getSueldo());</pre>
+<p>Por &uacute;ltimo, es muy importante considerar que los objetos <span class="codefrag">EntityManager</span> no son <em>thread-safe</em>. Cuando los utilicemos en servlets, por ejemplo, deberemos crearlos en cada petici&oacute;n HTTP. Esto tambi&eacute;n es correcto, adem&aacute;s, para evitar que distintas sesiones accedan al mismo contexto de persistencia.</p>
+<p>Si queremos que una sesi&oacute;n HTTP utilice un &uacute;nico entity manager, podr&iacute;amos guardarlo en el objeto <span class="codefrag">HtttpSession</span> y acceder a &eacute;l al comienzo de cada petici&oacute;n.</p>
+<p>El objeto <span class="codefrag">EntityManagerFactory</span> a partir del que obtenemos los entity managers s&iacute; que es <em>thread-safe</em>. Podemos implementar un <em>Singleton</em> al que acceden todos los threads para obtener entity managers.</p>
+</div>
+
+
+
+<a name="N1006E"></a><a name="Contextos+de+persistencia"></a>
+<h2 class="underlined_10">Contextos de persistencia</h2>
+<div class="section">
+<p>La clave para entender el entity manager es entender el contexto de persistencia. La inclusi&oacute;n o no de una entidad en el contexto de persistencia determinar&aacute; el resultado de cualquier operaci&oacute;n de persistencia. Si el contexto de persistencia participa en una transacci&oacute;n, entonces el estado en memoria de las entidades gestionadas se sincronizar&aacute; con la base de datos. Sin embargo, a pesar del importante papel que juega, el contexto de persistencia nunca es realmente visible a la aplicaci&oacute;n. Siempre se accede a &eacute;l indirectamente a trav&eacute;s del entity manager y asumimos que est&aacute; ah&iacute; cuando lo necesitamos.</p>
+<p>Es tambi&eacute;n fundamental entender que el contexto de persistencia hace el papel de <em>cach&eacute;</em> de las entidades que est&aacute;n realmente en la base de datos. Cuando actualizamos una instancia en el contexto de persistencia estamos actualizando una cach&eacute;, una copia que s&oacute;lo se hace persistente en la base de datos cuando el entity manager realiza un <em>flush</em> de las instancias en la base de datos. Simplificando bastante, podemos pensar que el entity manager realiza el siguiente proceso para todas las entidades:</p>
+<ol>
+			
+<li>Si la aplicaci&oacute;n solicita una entidad (mediante un <span class="codefrag">find</span>, o accediendo a un atributo de otra entidad en una relaci&oacute;n), se comprueba si ya se encuentra en el contexto de persistencia. Si no se ha recuperado previamente, se obtiene la instancia de la entidad de la base de datos.</li>
+			
+<li>La aplicaci&oacute;n utiliza las instancias del contexto de persistencia, accediendo a sus atributos y (posiblemente) modific&aacute;ndolos. Todas las modificaciones se realizan en la memoria, en el contexto de persistencia.</li>
+			
+<li>En un momento dado (cuando termina la transacci&oacute;n, se ejecuta una query o se hace una llamada al m&eacute;todo <span class="codefrag">flush</span>) el entity manager comprueba qu&eacute; entidades han sido modificadas y vuelca los cambios a la base de datos.</li>
+		
+</ol>
+<p>Es muy importante darse cuenta de la diferencia entre el contexto de persistencia y la base de datos propiamente dicha. No se encuentran sincronizados hasta que el entity manager vuelca los cambios a la base de datos. La aplicaci&oacute;n debe ser consciente de esto y utilizar razonablemente los contextos de persistencia.</p>
+<p>Veamos un ejemplo sencillo que puede ilustrar esto. Supongamos que tenemos una relaci&oacute;n uno-a-muchos entre <span class="codefrag">Autor</span> y <span class="codefrag">Mensaje</span>, que la entidad <span class="codefrag">Mensaje</span> es la propietaria de la relaci&oacute;n (contiene la clave ajena hacia <span class="codefrag">Autor</span>) y que la aplicaci&oacute;n ejecuta el siguiente c&oacute;digo para a&ntilde;adir un mensaje a un autor:</p>
+<pre class="code">em.getTransaction().begin();
+	Autor autor = em.find(Autor.class, "kirai");
+	System.out.println(autor.getNombre() + " ha escrito " + 
+	                   autor.getMensajes().size() + 
+	                   " mensajes");
+	Mensaje mens = new Mensaje("Nuevo mensaje", autor);
+	em.persist(mens);
+	em.getTransaction().commit();
+
+	System.out.println(autor.getNombre() + " ha escrito " + 
+	                   autor.getMensajes().size() + 
+	                   " mensajes");</pre>
+<p>Si comprobamos qu&eacute; sucede veremos que no aparecer&aacute; ning&uacute;n cambio entre el primer mensaje y el segundo, ambos mostrar&aacute;n el mismo n&uacute;mero de mensajes. &iquest;Por qu&eacute;? &iquest;Es que no se ha actualizado el nuevo mensaje de Kirai en la base de datos?. Si miramos en la base de datos, comprobamos que la transacci&oacute;n s&iacute; que se ha completado correctamente. Sin embargo, no se ha mostrado bien el segundo mensaje, ya que cuando llamamos al m&eacute;todo <span class="codefrag">getMensajes()</span> en la colecci&oacute;n resultante no aparece el nuevo mensaje que acabamos de a&ntilde;adir.</p>
+<p>Este es un ejemplo del tipo de errores que podemos cometer por trabajar con contextos de persistencia pensando que estamos conectados directamente con la BD. El problema se encuentra en que la primera llamada a <span class="codefrag">getMensajes()</span> (antes de crear el nuevo mensaje) ha generado la consulta a la base de datos y ha cargado el resultado en memoria. Cuando hacemos una segunda llamada, el proveedor detecta que esa informaci&oacute;n ya la tiene en la cach&eacute; y no la vuelve a consultar.</p>
+<p>Una posible soluci&oacute;n es hacer que la aplicaci&oacute;n modifique el contexto de persistencia para que est&eacute; sincronizado con la base de datos. Lo har&iacute;amos con el siguiente c&oacute;digo:</p>
+<pre class="code">em.getTransaction().begin();
+	Autor autor = em.find(Autor.class, "kirai");
+	System.out.println(autor.getNombre() + " ha escrito " + 
+	                   autor.getMensajes().size() + 
+	                   " mensajes");
+	Mensaje mens = new Mensaje("Nuevo mensaje", autor);
+	em.persist(mens);
+	em.getTransaction().commit();
+<strong>	autor.getMensajes().add(Mensaje);</strong>
+	System.out.println(autor.getNombre() + " ha escrito " + 
+	                   autor.getMensajes().size() + 
+	                   " mensajes");</pre>
+<p>La llamada a <span class="codefrag">add()</span> a&ntilde;ade un mensaje nuevo a la colecci&oacute;n de mensajes del autor existente en el contexto de persistencia. De esta forma estamos reflejando en memoria lo que hemos realizado en la base de datos.</p>
+<p>Otra posible soluci&oacute;n es obligar al entity manager a que sincronice la entidad y la base de datos. Una posible forma de hacerlo es llamando al m&eacute;todo <span class="codefrag">refresh()</span> del entity manager:</p>
+<pre class="code">em.getTransaction().begin();
+	// ... a&ntilde;ado un mensaje al autor
+	em.getTransaction().commit();
+
+	em.refresh(autor);
+	System.out.println(autor.getNombre() + " ha escrito " + 
+	                   autor.getMensajes().size() + 
+	                   " mensajes");</pre>
+<p>Estos ejemplos ponen en evidencia que para trabajar bien  con JPA es fundamental entender que el contexto de persistencia es una cach&eacute; de la base de datos propiamente dicha.</p>
+</div>
+
+
+
+<a name="N100D2"></a><a name="Operaciones+y+contexto+de+persistencia"></a>
+<h2 class="underlined_10">Operaciones y contexto de persistencia</h2>
+<div class="section">
+<p>Una vez vistos los conceptos de entity manager y contexto de persistencia, vamos a repasar las distintas operaciones que podemos realizar con las entidades y los entity managers, desde el punto de vista de qu&eacute; sucede en el contexto de persistencia y c&oacute;mo se realiza la sincronizaci&oacute;n con la BD. Introduciremos tambi&eacute;n algunas operaciones no vistas hasta ahora como <span class="codefrag">getReference()</span> y <span class="codefrag">merge()</span>.</p>
+<a name="N100E1"></a><a name="Persist"></a>
+<h3 class="underlined_5">Persist</h3>
+<p>El m&eacute;todo <span class="codefrag">persist()</span> del <span class="codefrag">EntityManager</span> acepta una nueva instancia de entidad y la convierte en gestionada. Si al entidad que se va a hacer persistir ya est&aacute; gestionada en el contexto de persistencia, la llamada se ignora. La operaci&oacute;n <span class="codefrag">contains()</span> puede usarse para comprobar si una entidad est&aacute; gestionada, pero es muy raro el tener que llamar a esta operaci&oacute;n. La aplicaci&oacute;n deber&iacute;a saber qu&eacute; entidades est&aacute;n gestionadas y cu&aacute;les no. El dise&ntilde;o de la aplicaci&oacute;n define cu&aacute;ndo las entidades pasan a ser gestionadas o desconectadas.</p>
+<p>El hecho de convertir una entidad en gestionada no la hace persistir inmediatamente en la base de datos. La verdadera llamada a SQL para crear los datos relacionales no se generar&aacute; hasta que el contexto de persistencia se sincronice con la base de datos. Lo m&aacute;s normal es que esto suceda cuando se realiza un commit de la transacci&oacute;n. En el momento en que la entidad se convierte en gestionada, los cambios que se realizan sobre ella afectan al contexto de persistencia. Y en el momento en que la transacci&oacute;n termina, el estado en el que se encuentra la entidad es volcado en la base de datos.</p>
+<p>Si se llama a <span class="codefrag">persist()</span> fuera de una transacci&oacute;n la entidad se incluir&aacute; en el contexto de persistencia, pero no se realizar&aacute; ninguna acci&oacute;n hasta que la transacci&oacute;n comience y el contexto de persistencia se sincronice con la base de datos.</p>
+<p>La operaci&oacute;n <span class="codefrag">persist()</span> se utiliza con entidades nuevas que no existen en la base de datos. Si se le pasa una instancia con un identificador que ya existen en la base de datos el proveedor de persistencia puede detectarlo y lanzar una excepci&oacute;n <span class="codefrag">EntityExistsException</span>. Si no lo hace, entonces se lanzar&aacute; la excepci&oacute;n cuando se sincronice el conexto de persistencia con la base de datos, al encontrar una clave primaria duplicada.</p>
+<p>Un ejemplo completo de utilizaci&oacute;n de <span class="codefrag">persist()</span> es el siguiente:</p>
+<pre class="code">Departamento dept = em.find(Departamento.class, 30);
+Empleado emp = new Empleado();
+emp.setId(53);
+emp.setNombre("Pedro");
+emp.setDepartamento(dept);
+dept.getEmpleados().add(emp);
+em.persist(emp);</pre>
+<p>En el ejemplo comenzamos obteniendo una instancia que ya existe en la base de datos de la entidad <span class="codefrag">Departamento</span>. Se crea una nueva instancia de <span class="codefrag">Empleado</span>, proporcionando la clave primaria y alg&uacute;n atributo. Despu&eacute;s asignamos el empleado al departamento, llamando al m&eacute;todo <span class="codefrag">setDepartamento()</span> del empleado y pas&aacute;ndole la instancia de <span class="codefrag">Departamento</span> que hab&iacute;amos recuperado. Actualizamos el otro lado de la relaci&oacute;n llamando al m&eacute;todo <span class="codefrag">add()</span> de la colecci&oacute;n para que el contexto de persistencia mantenga correctamente la relaci&oacute;n bidireccional. Y por &uacute;ltimo realizamos la llamada al m&eacute;todo <span class="codefrag">persist()</span> que convierte la entidad en gestionada. Cuando el contexto de persistencia se sincroniza con la base de datos, se a&ntilde;ade la nueva entidad en la tabla y se actualiza al mismo tiempo la relaci&oacute;n. Hay que hacer notar que s&oacute;lo se actualiza la tabla de <span class="codefrag">Empleado</span>, que es la propietaria de la relaci&oacute;n y la que contiene la clave ajena a <span class="codefrag">Departamento</span>.</p>
+<a name="N1012B"></a><a name="Find+y+GetReference"></a>
+<h3 class="underlined_5">Find y GetReference</h3>
+<p>El m&eacute;todo <span class="codefrag">find()</span> se utiliza para localizar una entidad por su clave primaria. La llamada devuelve una entidad gestionada asociada al contexto de persistencia del entity manager.</p>
+<p>Existe una versi&oacute;n especial de <span class="codefrag">find()</span> que se puede usar cuando se quiere a&ntilde;adir un objeto con una clave primaria conocida a una relaci&oacute;n. Para ello se puede usar el m&eacute;todo <span class="codefrag">getReference()</span> del entity manager. Ya que &uacute;nicamente estamos creando una relaci&oacute;n, no es necesario cargar todo el objeto de la base de datos. S&oacute;lo se necesita su clave primaria. Veamos la nueva versi&oacute;n del ejemplo anterior:</p>
+<pre class="code">Departamento dept = em.getReference(Departamento.class, 30);
+Empleado emp = new Empleado();
+emp.setId(53);
+emp.setNombre("Pedro");
+emp.setDepartamento(dept);
+dept.getEmpleados().add(emp);
+em.persist(emp);</pre>
+<p>Esta versi&oacute;n es m&aacute;s eficiente que la anterior porque no se realiza ning&uacute;n <span class="codefrag">SELECT</span> en la base de datos para buscar la instancia del <span class="codefrag">Departamento</span>. Cuando se llama a <span class="codefrag">getReference()</span>, el proveedor devolver&aacute; un <em>proxy</em> al <span class="codefrag">Departamento</span> sin recuperarlo realmente de la base de datos. En tanto que s&oacute;lo se acceda a la clave primaria, no se recuperar&aacute; ning&uacute;n dato. Y cuando se haga persistente el <span class="codefrag">Empleado</span>, se guardar&aacute; en la clave ajena correspondiente el valor de la clave primaria del <span class="codefrag">Departamento</span>.</p>
+<p>Un posible problema de este m&eacute;todo es que, a diferencia de <span class="codefrag">find()</span> no devuelve <span class="codefrag">null</span> si la instancia no existe, ya que realmente no realiza la b&uacute;squeda en la base de datos. &Uacute;nicamente se debe utilizar el m&eacute;todo cuando estamos seguros de que la instancia existe en la base de datos. En caso contrario estaremos guardando en la variable <span class="codefrag">dept</span> una referencia (clave primaria) de una entidad que no existe, y cuando se haga persistente el empleado se generar&aacute; una excepci&oacute;n porque el <span class="codefrag">Empleado</span> estar&aacute; haciendo referencia a una entidad no existente.</p>
+<p>En general, la mayor&iacute;a de las veces llamaremos al m&eacute;todo <span class="codefrag">find()</span> directamente. Las implementaciones de JPA hacen un buen trabajo con las cach&eacute;s y si ya tenemos la entidad en el contexto de persistencia no se realiza la consulta a la base de datos.</p>
+<a name="N10172"></a><a name="Merge"></a>
+<h3 class="underlined_5">Merge</h3>
+<p>El m&eacute;todo merge() permite volver a incorporar en el contexto de persistencia del entity manager una entidad que hab&iacute;a sido desconectada. Debemos pasar como par&aacute;metro la entidad que queremos incluir. Hay que tener cuidado con su utilizaci&oacute;n, porque el objeto que se pasa como par&aacute;metro no pasa a ser gestionado. Hay que usar el objeto que devuelve el m&eacute;todo. Un ejemplo:</p>
+<pre class="code">public void subeSueldo(Empleado emp, long inc)
+   Empleado empGestionado = em.merge(emp);
+   empGestionado.setSueldo(empGestionado.getSueldo()+inc);
+}</pre>
+<p>Si una entidad con el mismo identificador que <span class="codefrag">emp</span> existe en el contexto de persistencia, se devuelve como resultado. Si el objeto que se le pasa a <span class="codefrag">merge()</span> es un objeto nuevo, se comporta igual que <span class="codefrag">persist()</span>, con la &uacute;nica diferencia de que la entidad gestionada es la devuelta como resultado de la llamada.</p>
+<a name="N1018C"></a><a name="Remove"></a>
+<h3 class="underlined_5">Remove</h3>
+<p>Borrar una entidad no es una tarea compleja, pero puede requerir algunos pasos, dependiendo del n&uacute;mero de relaciones en la entidad que vamos a borrar. En su forma m&aacute;s simple, el borrado de una entidad se realiza pasando la entidad como par&aacute;metro del m&eacute;todo <span class="codefrag">remove()</span> del entity manager que la gestiona. En el momento en que el contexto de persistencia se sincroniza con una transacci&oacute;n y se realiza un commit, la entidad se borra. Hay que tener cuidado, sin embargo, con las relaciones en las que participa la entidad para no comprometer la integridad de la base de datos.</p>
+<p>Veamos un sencillo ejemplo. Consideremos la relaci&oacute;n unidireccional uno-a-uno que vimos en el tema anterior entre <span class="codefrag">Empleado</span> y <span class="codefrag">Despacho</span>. Supongamos el siguiente c&oacute;digo dentro de una transacci&oacute;n, en el que <span class="codefrag">empId</span> corresponde a una clave primaria de un <span class="codefrag">Empleado</span>:</p>
+<pre class="code">Empleado emp = em.find(Empleado.class, empId);
+em.remove(emp.getDespacho());</pre>
+<p>Cuando se realice un commit de la transacci&oacute;n veremos una sentencia <span class="codefrag">DELETE</span> en la tabla <span class="codefrag">DESPACHO</span>, pero en ese momento obtendremos una excepci&oacute;n con un error de la base de datos referido a que hemos violado una restricci&oacute;n de la clave ajena. Esto se debe a que existe una restricci&oacute;n de integridad referencial entre la tabla <span class="codefrag">EMPLEADO</span> y la tabla <span class="codefrag">DESPACHO</span>. Se ha borrado una fila de la tabla <span class="codefrag">DESPACHO</span> pero la clave ajena correspondiente en la tabla <span class="codefrag">EMPLEADO</span> no se ha puesto a <span class="codefrag">NULL</span>. Para corregir el problema, debemos poner expl&iacute;citamente a <span class="codefrag">null</span> el atributo <span class="codefrag">despacho</span> de la entidad <span class="codefrag">Empleado</span> antes de que la transacci&oacute;n finalice:</p>
+<pre class="code">Empleado emp = em.find(Empleado.class, empId);
+Despacho desp = emp.getDespacho();
+emp.setDespacho(null);
+em.remove(desp);</pre>
+<p>El mantenimiento de las relaciones es una responsabilidad de la aplicaci&oacute;n. Casi todos los problemas que suceden en los borrados de entidades tienen relaci&oacute;n con este aspecto. Si la entidad que se va a borrar es el objetivo de una clave ajena en otras tablas, entonces debemos limpiar esas claves ajenas antes de borrar la entidad.</p>
+<a name="N101D4"></a><a name="Clear"></a>
+<h3 class="underlined_5">Clear</h3>
+<p>En ocasiones puede ser necesario limpiar (<span class="codefrag">clear</span>) contexto de persistencia y vaciar las entidades gestiondas. Esto puede suceder, por ejemplo, en conextos extendidos gestionados por la aplicaci&oacute;n que han crecido demasiado. Por ejemplo, consideremos el caso de un entity manager gestionado por la aplicaci&oacute;n que lanza una consulta que devuelve varios cientos de instancias entidad. Una vez que ya hemos realizado los cambios a unas cuantas de esas instancias y la transacci&oacute;n se termina, se quedan en memoria cientos de objetos que no tenemos intenci&oacute;n de cambiar m&aacute;s. Si no queremos cerrar el contexto de persistencia en ese momento, entonces tendremos que limpiar de alguna forma las instancias gestionadas, o el contexto de persistencia ir&aacute; creciendo cada vez m&aacute;s.</p>
+<p>El m&eacute;todo <span class="codefrag">clear()</span> del interfaz <span class="codefrag">EntityManager</span> se utiliza para limpiar el contexto de persistencia. En muchos sentidos su funcionamiento es similar a un rollback de una transacci&oacute;n. Todas las instancias gestionadas por el contexto e persistencia se desconectan del contexto y quedan con el estado previo a la llamada a <span class="codefrag">clear()</span>. La operaci&oacute;n <span class="codefrag">clear()</span> es del tipo todo o nada. No es posible cancelar selectivamente la gesti&oacute;n de una instancia particular cuando el contexto de persistencia est&aacute; abierto.</p>
+<a name="N101F0"></a><a name="Modificaci%C3%B3n+de+atributos+de+la+instancia"></a>
+<h3 class="underlined_5">Modificaci&oacute;n de atributos de la instancia</h3>
+<p>La &uacute;ltima forma con la que podemos modificar relacionados con una entidad en la base de datos es modificando los atributos de una instancia gestionada. En el momento en que se haga un commit de la transacci&oacute;n los cambios se actualizar&aacute;n en la base de datos mediante una sentencia <span class="codefrag">UPDATE</span>.</p>
+<p>Es muy importante notar que no est&aacute; permitido modificar la clave primaria de una entidad gestionada. Si intentamos hacerlo, en el momento de hacer un commit la transacci&oacute;n lanzar&aacute; una excepci&oacute;n <span class="codefrag">RollbackException</span>. Para reforzar esta idea, es conveniente definir las entidades sin un m&eacute;todo <span class="codefrag">set</span> de la clave primaria. En el caso de aquellas entidades con una generaci&oacute;n autom&aacute;tica de la clave primaria, &eacute;sta se generar&aacute; en tiempo de creaci&oacute;n de la entidad. Y en el caso en que la aplicaci&oacute;n tenga que proporcionar la clave primaria, lo puede hacer en el constructor.</p>
+<a name="N10206"></a><a name="Operaciones+en+cascada"></a>
+<h3 class="underlined_5">Operaciones en cascada</h3>
+<p>Por defecto, las operaciones del entity manager se aplican &uacute;nicamente a las entidades proporcionadas como argumento. La operaci&oacute;n no se propagar&aacute; a otras entidades que tienen relaci&oacute;n con la entidad que se est&aacute; modificando. Lo hemos visto antes con la llamada a <span class="codefrag">remove()</span>. Pero no sucede lo mismo con operaciones como <span class="codefrag">persist()</span>. Es bastante probable que si tenemos una entidad nueva y tiene una relaci&oacute;n con otra entidad, las dos deben persistir juntas.</p>
+<p>Consideremos la secuencia de operaciones del siguiente c&oacute;dgo que muestran c&oacute;mo se crea un nuevo <span class="codefrag">Empleado</span> con una entidad <span class="codefrag">Direccion</span> asociada y c&oacute;mo se hacen los dos persistentes. La segunda llamada a <span class="codefrag">persist()</span> sobre la <span class="codefrag">Direccion</span> es algo redundante. Una entidad <span class="codefrag">Direccion</span> se acopla a la entidad <span class="codefrag">Empleado</span> que la almacena y tiene sentido que siempre que se cree un nuevo <span class="codefrag">Empleado</span>, se propague en cascada la llamada a <span class="codefrag">persist()</span> para la <span class="codefrag">Direccion</span>. </p>
+<pre class="code">Empleado emp = new Empleado(12, "Rob");
+	Direccion dir = new Direccion("Alicante");
+	emp.setDireccion(dir);
+	em.persist(emp);
+	em.persist(dir);</pre>
+<p>El API JPA proporciona un mecanismo para definir cu&aacute;ndo operaciones como <span class="codefrag">persist()</span> deben propagarse en cascada. Para ello se define el elemento <span class="codefrag">cascade</span> en todas las anotaciones de relaciones (<span class="codefrag">@OneToOne</span>, <span class="codefrag">@OneToMany</span>, <span class="codefrag">@ManyToOne</span> y <span class="codefrag">@ManyToMany</span>).</p>
+<p>Las operaciones a las que hay que aplicar la propagaci&oacute;n se identifican utilizando el tipo enumerado <span class="codefrag">CasacadeType</span>, que puede tener como valor <span class="codefrag">PERSIST</span>, <span class="codefrag">REFRESH</span>, <span class="codefrag">REMOVE</span>, <span class="codefrag">MERGE</span> y <span class="codefrag">ALL</span>. </p>
+<a name="N10261"></a><a name="Persist+en+cascada"></a>
+<h4>Persist en cascada</h4>
+<p>Para activar la propagaci&oacute;n de la persistencia en cascada debemos a&ntilde;adir el elemento <span class="codefrag">cascade=CascadeType.PERSIST</span> en la declaraci&oacute;n de la relaci&oacute;n. Por ejemplo, en el caso anterior, si hemos definido una relaci&oacute;n muchos-a-uno entre <span class="codefrag">Empleado</span> y <span class="codefrag">Direccion</span>, podemos escribir el siguiente c&oacute;digo:</p>
+<pre class="code">@Entity
+	public class Empleado {
+	   // ...
+	   @ManyToOne(cascadeCascdeType.PERSIST)
+	   Direccion direccion;
+	   // ...
+	}</pre>
+<p>Para invocar la persistencia en cascada s&oacute;lo nos tenemos que asegurar de que la nueva entidad <span class="codefrag">Direccion</span> se ha puesto en el atributo <span class="codefrag">direccion</span> del <span class="codefrag">Empleado</span> antes de llamar a <span class="codefrag">persist()</span> con &eacute;l. La definici&oacute;n de la operaci&oacute;n en cascada es unidireccional, y tenemos que tener en cuenta qui&eacute;n es el propietario de la relaci&oacute;n y d&oacute;nde se va a actualizar la misma antes de tomar la decisi&oacute;n de poner el elemento en ambos lados. Por ejemplo, en el caso anterior cuando definamos un nuevo empleado y una nueva direcci&oacute;n pondremos la direcci&oacute;n en el empleado, por lo que el elemento <span class="codefrag">cascade</span> tendremos que definirlo &uacute;nicamente en la relaci&oacute;n anterior.</p>
+<a name="N1028A"></a><a name="Borrado+en+cascada"></a>
+<h4>Borrado en cascada</h4>
+<p>A primera vista, la utilizaci&oacute;n de un borrado en cascada puede parecer atractiva. Dependiendo de la cardinalidad de la relaci&oacute;n podr&iacute;a eliminar la necesidad de eliminar m&uacute;ltiples instancias de entidad. Sin embargo, aunque es un elemento muy interesante, debe utilizarse con cierto cuidado. Hay s&oacute;lo dos situaciones en las que un <span class="codefrag">remove()</span> en cascada se puede usar sin problemas: relaciones uno-a-uno y uno-a-muchos en donde hay una clara relaci&oacute;n de propiedad y la eliminaci&oacute;n de la instancia propietaria debe causar la eliminaci&oacute;n de sus instancias dependientes. No puede aplicarse ciegamente a todas las relaciones uno-a-uno o uno-a-muchos porque las entidades dependientes podr&iacute;an tambi&eacute;n estar participando en otras relaciones o podr&iacute;an tener que continuar en la base de datos como entidades aisladas.</p>
+<p>Habiendo realizado el aviso, veamos qu&eacute; sucede cuando se realiza una operaci&oacute;n de <span class="codefrag">remove()</span> en cascada. Si una entidad <span class="codefrag">Empleado</span> se elimina, no tiene sentido eliminar el despacho (seguir&aacute; existiendo) pero s&iacute; sus cuentas de correo (suponiendo que le corresponde m&aacute;s de una). El siguiente c&oacute;digo muestra c&oacute;mo definimos este comportamiento:</p>
+<pre class="code">@Entity 
+	public class Empleado { 
+	   // ... 
+	   @OneToOne(cascade={CascadeType.PERSIST}) 
+	   Despacho despacho; 
+	   @OneToMany(mappedBy="empleado", 
+	              cascade={CascadeType.PERSIST, CascadeType.REMOVE}) 
+	   Collection&lt;CuentaCorreo&gt; cuentasCorreo; 
+	   // ... 
+	}</pre>
+<p>Cuando se llama al m&eacute;todo <span class="codefrag">remove()</span> el entity manager navegar&aacute; por las relaciones entre el empleado y sus cuentas de correo e ir&aacute; eliminando todas las instancias asociadas al empleado.</p>
+<p>Hay que hacer notar que este borrado en cascada afecta s&oacute;lo a la base de datos y que no tiene ning&uacute;n efecto en las relaciones en memoria entre las instancias en el contexto de persistencia. Cuando la instancia de <span class="codefrag">Empleado</span> se desconecte de la base de datos, su colecci&oacute;n de cuentas de correo contendr&aacute; las mismas instancias de <span class="codefrag">CuentaCorreo</span> que ten&iacute;a antes de llamar a la operaci&oacute;n <span class="codefrag">remove()</span>. Incluso la misma instancia de <span class="codefrag">Empleado</span> seguir&aacute; existiendo, pero desconectada del contexto de persistencia.</p>
+</div>
+
+
+
+
+
+
+<a name="N102BB"></a><a name="Contextos+de+persistencia-N102BB"></a>
+<h2 class="underlined_10">Contextos de persistencia</h2>
+<div class="section">
+<a name="N102C1"></a><a name="Sincronizaci%C3%B3n+con+la+base+de+datos"></a>
+<h3 class="underlined_5">Sincronizaci&oacute;n con la base de datos</h3>
+<p>Cada vez que el proveedor de persistencia genera sentencias SQL y las escribe en la base de datos a trav&eacute;s de una conexi&oacute;n JDBC, decimos que se ha volcado (<em>flush</em>) el contexto de persistencia. Todos los cambios pendientes que requieren que se ejecute una sentencia SQL en la transacci&oacute;n se escriben en la base de datos cuando &eacute;sta realiza un commit. Esto significa que cualquier operaci&oacute;n SQL que tenga lugar despu&eacute;s de haberse realizado el volcado ya incorporar&aacute; estos cambios. Esto es particularmente importante para consultas SQL que se ejecutan en una transacci&oacute;n que tambi&eacute;n est&aacute; realizando cambios en los datos de la entidad.</p>
+<p>&iquest;Qu&eacute; sucede exactamente cuando se realiza un volcado del contexto de persistencia? Un volcado consiste b&aacute;sicamente en tres componentes: entidades nuevas que necesitan hacerse persistentes, entidades modificadas que necesitan ser actualizadas y entidades borradas que deben ser eliminadas de la base de datos. Toda esta informaci&oacute;n es gestionada por el contexto de persistencia.</p>
+<p>Cuando ocurre un volcado, el entity manager itera primero sobre las entidades gestionadas y busca nuevas entidades que se han a&ntilde;adido a las relaciones y que tienen activada la opci&oacute;n de persistencia en cascada. Esto es equivalente l&oacute;gicamente a invocar a <span class="codefrag">persist()</span> con cada una de las entidades gestionadas antes de que se realice el volcado. El entity manager tambi&eacute;n comprueba la integridad de todas las relaciones. Si una entidad apunta a otra que no est&aacute; gestionada o que ha sido eliminada, entonces se puede lanzar una excepci&oacute;n.</p>
+<p>Las reglas que determinan si un volcado falla o no en presencia de entidades no gestionadas pueden ser complicadas. Veamos un ejemplo que demuestra los asuntos m&aacute;s comunes. La siguiente figura muestra un diagrama de objetos para una instancia de <span class="codefrag">Empleado</span> y algunos objetos con los que est&aacute; relacionado.</p>
+<p>
+<img alt="" content-width="7cm" src="imagenes/contexto-persistencia.png" width="334"></p>
+<p>Las instancias <span class="codefrag">emp</span> y <span class="codefrag">desp</span> est&aacute;n gestionadas en el contexto de persistencia. El objeto <span class="codefrag">dir</span> es una entidad desconectada de una transacci&oacute;n previa y los objetos <span class="codefrag">CuentaCorreo</span> son objetos nuevos que no han formado parte de ninguna relaci&oacute;n hasta el momento. Supongamos que se va a volcar la instancia <span class="codefrag">emp</span>. Para determinar el resultado de este volcado, debemos mirar primero las caracter&iacute;sticas de la opci&oacute;n <span class="codefrag">cascade</span> en la definici&oacute;n de la relaci&oacute;n. Supongamos que la entidad <span class="codefrag">Empleado</span> se define de la siguiente forma: </p>
+<pre class="code">@Entity 
+	public class Empleado { 
+	   // ... 
+	   @OneToOne 
+	   Despacho despacho; 
+	   @OneToMany(mappedBy="empleado", cascade=CascadeType.PERSIST) 
+	   Collection&lt;CuentaCorreo&gt; cuentasCorreo; 
+	   @ManyToOne 
+	   Direccion direccion; 
+	   // ... 
+	}</pre>
+<p>Vemos que s&oacute;lo la relaci&oacute;n <span class="codefrag">cuentasCorreo</span> tiene una opci&oacute;n de persistencia en cascada. El resto de relaciones tienen la opci&oacute;n de cascada por defecto, por lo que no la tienen activada.</p>
+<p>Comenzando por el objeto <span class="codefrag">emp</span> vamos a recorrer el proceso de volcado como si fu&eacute;ramos el proveedor de persistencia. El objeto <span class="codefrag">emp</span> est&aacute; gestionado y est&aacute; enlazado con otros cuatro objetos. El primer paso en el proceso es recorrer las relaciones desde esta entidad como si fu&eacute;ramos a invocar a <span class="codefrag">persist()</span> con ella. El primer objeto que encontramos en este proceso es el objeto <span class="codefrag">desp</span> en la relaci&oacute;n una-a-una <span class="codefrag">despacho</span>. Al ser una instancia gestionada, no tenemos que hacer nada m&aacute;s. Despu&eacute;s vamos a la relaci&oacute;n <span class="codefrag">cuentasCorreo</span> con dos objetos <span class="codefrag">CuentaCorreo</span>. Estos objetos son nuevos y esto causar&iacute;a normalmente una excepci&oacute;n, pero debido a que se ha definido <span class="codefrag">PERSIST</span> como opci&oacute;n de cascada, hacemos lo equivalente a invocar a <span class="codefrag">persist()</span> en cada objeto <span class="codefrag">CuentaCorreo</span>. Esto hace que los objetos sean gestionados, haci&eacute;ndolos formar parte del contexto de persistencia. Los objetos <span class="codefrag">CuentaCorreo</span> no tienen ninguna otra relaci&oacute;n que hacer persistente en cascada, por lo que hemos terminado por este lado. Despu&eacute;s alcanzamos el objeto <span class="codefrag">dir</span> a trav&eacute;s de la relaci&oacute;n <span class="codefrag">direccion</span>. Ya que este objeto est&aacute; desconectado, lanzar&iacute;amos normalmente una excepci&oacute;n, pero esta relaci&oacute;n es un caso especial el algoritmo de volcado. Si el objeto desconectado es el destino de una relaci&oacute;n uno-a-uno o muchos-a-uno no se lanzar&aacute; una excepci&oacute;n y se proceder&aacute; al volcado. Esto es debido a que el acto de hacer persistente la entidad propietaria de la relaci&oacute;n no depende del objetivo. La entidad propietaria contiene una clave ajena y s&oacute;lo necesita almacenar el valor de la clave primaria de la entidad con la que est&aacute; relacionada. No hay que modificar nada en la entidad destino. Con esto hemos terminado de volcar el objeto <span class="codefrag">emp</span>. Ahora debemos ir al objeto <span class="codefrag">desp</span> y comenzar de nuevo. Terminaremos cuando no queden nuevos objetos que hacer persistentes.</p>
+<p>Si en el proceso de volcado alguno de los objetos a los que apunta la instancia que estamos haciendo persistente no est&aacute; gestionado, no tiene el atributo de persistencia en cascada y no est&aacute; incluido en una relaci&oacute;n uno-a-uno o muchos-a-uno entonces se lanzar&aacute; una excepci&oacute;n <span class="codefrag">IllegalStateException</span>.</p>
+<a name="N1033C"></a><a name="Desconexi%C3%B3n+de+entidades"></a>
+<h3 class="underlined_5">Desconexi&oacute;n de entidades</h3>
+<p>Como resultado de una consulta o de una relaci&oacute;n, obtendremos una colecci&oacute;n de entidades que deberemos tratar, pasar a otras capas de la aplicaci&oacute;n y, en una aplicaci&oacute;n web, mostrar en una p&aacute;gina JSP o JSF. En este apartado vamos a ver c&oacute;mo trabajar con las entidades obtenidas y vamos a reflexionar sobre su desconexi&oacute;n del contexto de persistencia.</p>
+<p>Una entidad desconectada (<em>detached entity</em> en ingl&eacute;s) es una entidad que ya no est&aacute; asociada a un contexto de persistencia. En alg&uacute;n momento estuvo gestionada, pero el contexto de persistencia puede haber terminado, o la entidad puede haberse transformado de forma que ha perdido su asociaci&oacute;n con el contexto de persistencia que la gestionaba. Cualquier cambio que se realice en el estado de la entidad no se har&aacute; persistente en la base de datos, pero todo el estado que estaba en la entidad antes de desconectarse sigue estando ah&iacute; para ser usado por la aplicaci&oacute;n.</p>
+<p>Hay dos formas de ver la desconexi&oacute;n de entidades. Por una parte, es una herramienta poderosa que puede utilizarse por las aplicaciones para trabajar con aplicaciones remotas o para soportar el acceso a los datos de la entidad mucho despu&eacute;s de que la transacci&oacute;n ha concluido. Otra posible interpretaci&oacute;n es que puede ser una fuente de problemas frustrantes cuando las entidades contienen una gran cantidad de atributos que se cargan de forma perezosa y los clientes que usan estas entidades desconectadas necesitan acceder a esta informaci&oacute;n.</p>
+<p>Existen muchas condiciones en las que una entidad se convierte en desconectada. Cada una de las situaciones siguientes generar&aacute;n entidades desconectadas:</p>
+<ul>
+				
+<li>Cuando el contexto de persistencia se cierra con una llamada a <span class="codefrag">close()</span> del entity manager</li>
+				
+<li>Cuando se llama al m&eacute;todo <span class="codefrag">clear()</span> del entity manager</li>
+				
+<li>Cuando se produce un rollback de la transacci&oacute;n</li>
+				
+<li>Cuando una entidad se serializa</li>
+			
+</ul>
+<p>Todos los casos se refieren a contextos de persistencias gestionados por la aplicaci&oacute;n (Java SE y aplicaciones web sin contenedor de EJB).</p>
+<p>En temas anteriores hemos introducido el tipo de recuperaci&oacute;n <span class="codefrag">LAZY</span> que puede aplicarse a los mapeos b&aacute;sicos o las relaciones. Este elemento tiene como efecto indicar al proveedor que la carga de los atributos de la entidad no debe hacerse hasta que se acceden por primera vez. Aunque no se suele utilizar para los atributos b&aacute;sicos, s&iacute; que es muy importante utilizar con cuidado esta caracter&iacute;stica en las relaciones para mejorar el rendimiento de la aplicaci&oacute;n.</p>
+<p>Tenemos que considerar por tanto, el impacto de la desconexi&oacute;n en la carga perezosa. Veamos un ejemplo. Supongamos que tenemos la siguiente definici&oacute;n de <span class="codefrag">Empleado</span>:</p>
+<pre class="code">@Entity 
+	public class Empleado { 
+	   // ... 
+	   @ManyToOne 
+	   private Direccion direccion; 
+	   @OneToOne(fetch=FetchType.LAZY) 
+	   private Departamento departamento; 
+	   @OneToMany(mappedBy="employee") 
+	   private Collection&lt;CuentaCorreo&gt; cuentasCorreo; 
+	   // ... 
+	}</pre>
+<p>La relaci&oacute;n <span class="codefrag">direcci&oacute;n</span> se cargar&aacute; de forma &aacute;vida (<em>eager</em>, en ingl&eacute;s) debido a que no hemos especificado ninguna caracter&iacute;stica de carga y esa es la opci&oacute;n por defecto en las relaciones muchos-a-uno. En el caso de la relaci&oacute;n <span class="codefrag">departamento</span>, que se cargar&iacute;a tambi&eacute;n de forma &aacute;vida, hemos especificado una opci&oacute;n <span class="codefrag">LAZY</span>, por lo que la referencia se cargar&aacute; de forma perezosa. Las cuentas de correo, por ser una relaci&oacute;n uno-a-muchos se cargar&aacute; tambi&eacute;n de forma perezosa por defecto.</p>
+<p>En tanto en que la entidad <span class="codefrag">Empleado</span> est&eacute; gestionada todo funciona como es de esperar. Cuando la entidad se recupera de la base de datos, s&oacute;lo la instancia <span class="codefrag">Direccion</span> se cargar&aacute; en ella. El proveedor obtendr&aacute; las entidades necesarias cuando la aplicaci&oacute;n acceda a las relaciones <span class="codefrag">cuentasCorreo</span> o <span class="codefrag">departamento</span>.</p>
+<p>Si la entidad se desconecta, el resultado de acceder a las relaciones anteriores es ya algo m&aacute;s complidado. Si se accedi&oacute; a las relaciones cuando la entidad estaba gestionada, entonces las entidades pueden tambi&eacute;n ser recuperadas de forma segura aunque la entidad <span class="codefrag">Empleado</span> est&eacute; desconectada. Si, sin embargo, no se accedi&oacute; a las relaciones, entonces tenemos un problema.</p>
+<p>El comportamento del acceso a atributos no cargados cuando la entidad est&aacute; desconectada no est&aacute; definido en la especificaci&oacute;n. Algunas implemenentaciones pueden intentar resolver la relaci&oacute;n, mientras que otros simplemente lanzan una excepci&oacute;n y dejan el atributo sin inicializar. En el caso de Hibernate, se lanza una excepci&oacute;n de tipo <span class="codefrag">org.hibernate.LazyInitializationException</span>. Si la entidad ha sido desconectada debido a una serializaci&oacute;n entonces no hay virtualmente ninguna esperanza de resolver la relaci&oacute;n. La &uacute;nica forma portable de gestionar estos casos es no utilizando estos atributos.</p>
+<p>En el caso en el que las entidades no tengan atributos de carga perezosa, no debe haber demasiados problemas con la desconexi&oacute;n. Todo el estado de la entidad estar&aacute; todav&iacute;a disponible para su uso en la entidad. Vamos a ver a continuaci&oacute;n las dos posibles estrategias para trabajar con entidades desconectadas: preparar las entidades para la desconexi&oacute;n y no desconectar en absoluto. Vamos a centrarnos en c&oacute;mo aplicar estas estrategias a aplicaciones web que usan servlets, p&aacute;ginas JSP y peticiones HTTP.</p>
+</div>
+
+
+	
+<a name="N103A8"></a><a name="Contextos+de+persistencia+y+aplicaciones+web"></a>
+<h2 class="underlined_10">Contextos de persistencia y aplicaciones web</h2>
+<div class="section">
+<p>Una de las caracter&iacute;sticas fundamentales de las aplicaciones web es que est&aacute;n basadas en peticiones y que no tienen estado. Es cierto que es posible definir una sesi&oacute;n en la aplicaci&oacute;n y que los servlets proporcionan soporte para ello. Pero muchas veces esta sesi&oacute;n &uacute;nicamente se utiliza a efectos de autentificaci&oacute;n del usuario. Casi toda la l&oacute;gica de negocio de la aplicaci&oacute;n es <em>no conversacional</em>: el usuario hace una petici&oacute;n y, el servidor la contesta y el navegador la muestra. Vamos a considerar este escenario.</p>
+<p>Por ser m&aacute;s espec&iacute;ficos, supongamos que un servlet realiza llamada a un m&eacute;todo de negocio que implementa una query JPA y que recibe una colecci&oacute;n de entidades como resultado. El servlet coloca entonces estas entidades en el <span class="codefrag">request</span> y lo env&iacute;a a un JSP para presentaci&oacute;n. Este patr&oacute;n se denomina el Page Controller. En el contexto de la arquitectura MVC, el m&eacute;todo de consulta proporciona el modelo, la p&aacute;gina JSP es la vista y el servlet el controlador.</p>
+<p>Veamos la clase que contiene el m&eacute;todo de negocio que obtiene los resultados que ser&aacute;n mostrados por la p&aacute;gina JSP:</p>
+<pre class="code">public class EmpleadoService { 
+   private EntityManagerFactory emf;
+
+   public EmpleadoService(EntityManagerFactory emf) {
+      this.emf = emf;
+   }
+
+   public List&lt;Empleado&gt; findAll() {
+      EntityManager em = emf.createEntityManager();
+      List&lt;Empleado&gt; listaEmp = em.createQuery("SELECT e FROM Employee e").getResultList();
+	  em.close();
+      return listaEmp;
+   } 
+
+   // ... 
+} </pre>
+<p>Hemos intentado simplificar al m&aacute;ximo la clase y adaptarla a la soluci&oacute;n que estamos planteando en este momento. M&aacute;s adelante la modificaremos para incluir otras funcionalidades.</p>
+<p>Vemos que definimos un constructor al que pasamos un <span class="codefrag">EntityManagerFactory</span> que utilizaremos en el m&eacute;todo de negocio para obtener el entity manager con el que se realizar&aacute; la consulta. En el m&eacute;todo de negocio obtenemos el entity manager, realizamos la consulta y cerramos el entity manager. Terminamos devolviendo una lista de entidades.</p>
+<p>Este es un enfoque inicial, en el que devolvemos una lista de entidades desconectadas. Otro posible enfoque consiste en que la clase de negocio utilice un entity manager previamente creado y que devuelva entidades gestionadas. Lo veremos m&aacute;s adelante.</p>
+<p>Antes de comentar en profundidad ambas opciones veamos c&oacute;mo ser&iacute;a el servlet que realiza la llamada a una instancia de la clase <span class="codefrag">EmpleadoService</span>, obtendr&iacute;a los resultados y se los pasar&iacute;a a la p&aacute;gina JSP que pintar&iacute;a los resultados:</p>
+<pre class="code">public class EmployeeServlet extends HttpServlet { 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException { 
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("SimpleJPA");    
+        EmpleadoService empService = new EmpleadoService(emf);
+
+        List emps = empService.findAll(); 
+        request.setAttribute("empleados", emps); 
+        getServletContext().getRequestDispatcher("/listaEmpleados.jsp") 
+                           .forward(request, response); 
+
+    } 
+}</pre>
+<p>Por &uacute;ltimo, veamos la p&aacute;gina JSP. Usa JSTL para iterar sobre la colecci&oacute;n de instancias de <span class="codefrag">Empleado</span> y para mostrar el nombre del empleado y el nombre del departamento al que est&aacute; asignado. La variable <span class="codefrag">empleados</span> a la que se accede con la etiqueta <span class="codefrag">&lt;c:forEach/&gt;</span> es la lista de instancias de <span class="codefrag">Empleado</span> que el servlet ha colocado en el request.</p>
+<pre class="code">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt; 
+&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%&gt; 
+&lt;html&gt; 
+  &lt;head&gt; 
+    &lt;title&gt;Lista empleados&lt;/title&gt; 
+  &lt;/head&gt; 
+	  &lt;body&gt; 
+    &lt;table&gt; 
+      &lt;thead&gt; 
+        &lt;tr&gt; 
+          &lt;th&gt;Nombre&lt;/th&gt; 
+          &lt;th&gt;Departamento&lt;/th&gt; 
+        &lt;/tr&gt; 
+     &lt;/thead&gt; 
+      &lt;tbody&gt; 
+        &lt;c:forEach items="${empleados}" var="emp"&gt; 
+          &lt;tr&gt; 
+            &lt;td&gt;&lt;c:out value="${emp.nombre}"/&gt;&lt;/td&gt; 
+            &lt;td&gt;&lt;c:out value="${emp.departmento.nombre}"/&gt;&lt;/td&gt; 
+          &lt;/tr&gt; 
+        &lt;/c:forEach&gt; 
+      &lt;/tbody&gt; 
+    &lt;/table&gt; 
+  &lt;/body&gt; 
+&lt;/html&gt;</pre>
+<p>Veamos a continuaci&oacute;n las dos posibles escenarios en los que podemos usar este c&oacute;digo y c&oacute;mo trabajar correctamente en ambos. En el primer escenario dejaremos que sea el <span class="codefrag">EmpleadoService</span> el que abra y cierre el entity manager, con lo que se devolver&aacute;n entidades desconectadas. En el segundo escenario, utilizaremos un entity manager ya creado y las entidades devueltas estar&aacute;n gestionadas en su contexto de persistencia.</p>
+<a name="N103F0"></a><a name="Entidades+desconectadas"></a>
+<h3 class="underlined_5">Entidades desconectadas</h3>
+<p>En este escenario, la llamada al m&eacute;todo <span class="codefrag">findAll()</span> devuelve un conjunto de entidades desconectadas de la base de datos. El c&oacute;digo espec&iacute;fico del servlet es el que hemos visto.</p>
+<p>Si nos fijamos en el c&oacute;digo del servlet y de la clase <span class="codefrag">EmpleadoService</span> vemos que en el m&eacute;todo <span class="codefrag">findAll()</span> se crear&aacute; un nuevo entity manager a partir del <span class="codefrag">EntityManagerFactory</span> que le pasamos como par&aacute;metro. Utilizando ese entity manager se realizar&aacute; la pregunta y, por &uacute;ltimo, se cerrar&aacute; el entity manager y se devolver&aacute;n las entidades desconectadas, una lista de instancias <span class="codefrag">Empleado</span>. Esa lista de empleados se guarda en el atributo <span class="codefrag">empleados</span> del <span class="codefrag">request</span> y se llama a la p&aacute;gina JSP <span class="codefrag">listaEmpleados</span> que la recoge y la recorre, escribiendo los nombres de los empleados y los nombres de su departemnto.</p>
+<p>&iquest;Cu&aacute;l es el principal problema de este enfoque y c&oacute;mo lo podemos solucionar? El problema tiene que ver con la carga perezosa de las entidades y su desconexi&oacute;n. La relaci&oacute;n <span class="codefrag">departamento</span> est&aacute; configurada para utilizar carga perezosa. Cuando se el m&eacute;todo <span class="codefrag">findAll()</span> devuelve las entidades desconectadas, sus atributos <span class="codefrag">departamento</span> est&aacute;n vac&iacute;os. Cuando la p&aacute;gina JSP recorra estas instancias e intente acceder a esos atributos se producir&aacute; un error. Veamos c&oacute;mo podemos solucionar esto. Tenemos que asegurar que la relaci&oacute;n <span class="codefrag">departamento</span> de la entidad <span class="codefrag">Empleado</span> se ha resuelto antes de que las entidades se desconecten.</p>
+<p>La primera estrategia para resolver el problema es sencillamente activar la carga de los atributos accediendo a ellos. El c&oacute;digo parece un poco raro, porque se descartan los valores devueltos por los m&eacute;todos por el m&eacute;todo <span class="codefrag">get()</span>, pero el resultado es correcto:</p>
+<pre class="code">   public List&lt;Empleado&gt; findAll() {
+      EntityManager em = emf.createEntityManager();
+      List&lt;Empleado&gt; listaEmp = em.createQuery("SELECT e FROM Employee e").getResultList();
+      for (Employee emp : emps) { 
+          Departmento dept = emp.getDepartmento(); 
+          if (dept != null) { 
+              dept.getNombre(); 
+          } 
+      }
+      em.close();
+      return listaEmp;
+  }</pre>
+<p>Hay que hacer notar que no s&oacute;lo se invoca el m&eacute;todo <span class="codefrag">getDepartamento()</span> en la instancia de <span class="codefrag">Empleado</span>, sino que se invoca tambi&eacute;n el m&eacute;todo <span class="codefrag">getName()</span> en la propia instancia <span class="codefrag">Departamento</span>. Esto es necesario porque las entidades devueltas en una relaci&oacute;n con carga perezosa pueden ser proxies y necesitamos acceder a alguno de sus atributos para que sean cargadas totalmente.</p>
+<p>La otra soluci&oacute;n posible es configurar una carga &aacute;vida (<em>eager loading</em>) en la relaci&oacute;n. Cuando una estamos continuamente utilizando accediendo a los atributos de una relaci&oacute;n para asegurarnos de que est&aacute;n cargados, hay que plantearse si no ser&iacute;a m&aacute;s conveniente cambiar el tipo de relaci&oacute;n. Hay que tener cuidado, sin embargo, con generalizar la carga &aacute;vida. Si la utilizamos en exceso puede penalizar el rendimiento de la aplicaci&oacute;n, al estar realizando accesos a la base de datos para obtener datos que no vamos a utilizar. </p>
+<a name="N10446"></a><a name="Entidades+gestionadas"></a>
+<h3 class="underlined_5">Entidades gestionadas</h3>
+<p>La otra soluci&oacute;n al escenario planteado es no desconectar las entidades. De esta forma no deberemos preocuparnos de si los datos est&aacute;n cargados o no, ya que ser&aacute; la p&aacute;gina JSP la que acceda a la base de datos a trav&eacute;s de las entidades gestionadas.</p>
+<p>Para ello debemos buscar una forma de mantener el contexto de persistencia abierto durante la llamada al m&eacute;todo de negocio y a la p&aacute;gina JSP. La forma de hacerlo depender&aacute; mucho de la arquitectura de la aplicaci&oacute;n y de si estamos utilizando alg&uacute;n framework, tipo Struts o Spring. En general, debemos encontrar una forma de: (1) abrir un entity manager antes de la llamada al m&eacute;todo de negocio, (2) pasarle el mismo entity manager (y su contexto de persistencia) al m&eacute;todo de negocio y a la p&aacute;gina JSP y (3) cerrar el entity manager una vez terminado el proceso.</p>
+<p>En el ejemplo planteado no es demasiado complicado. La clase <span class="codefrag">EmpleadoService</span> la implementar&iacute;amos de la siguiente forma:</p>
+<pre class="code">public class EmpleadoService { 
+   private EntityManager em;
+
+   public EmpleadoService(EntityManager em) {
+      this.em = em;
+   }
+
+   public List&lt;Empleado&gt; findAll() {
+      List&lt;Empleado&gt; listaEmp = em.createQuery("SELECT e FROM Employee e").getResultList();
+      return listaEmp;
+   } 
+
+   // ... 
+}</pre>
+<p>Y el servlet queda as&iacute; de sencillo:</p>
+<pre class="code">public class EmployeeServlet extends HttpServlet { 
+   protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException { 
+
+      EntityManagerFactory emf = Persistence.createEntityManagerFactory("SimpleJPA"); 
+      EntityManager em = emf.createEntityManager();
+
+      EmpleadoService empService = new EmpleadoService(em);
+	  
+      List emps = empleadoService.findAll(); 
+      request.setAttribute("empleados", emps); 
+      getServletContext().getRequestDispatcher("/listaEmpleados.jsp") 
+                          .forward(request, response);
+
+      em.close(); 
+    } 
+}</pre>
+<p>Creamos al comienzo de la petici&oacute;n <span class="codefrag">EntityManager</span> y se lo pasamos al constructor de la clase de negocio <span class="codefrag">EmpleadoService</span>. De esta forma, el m&eacute;todo <span class="codefrag">findAll()</span> utilizar&aacute; el entity manager que hemos creado en la petici&oacute;n y no lo cerrar&aacute; al terminar. As&iacute; las instancias que se devuelvan estar&aacute;n gestionadas y lo seguir&aacute;n estando cuando se pase la llamada a la p&aacute;gina JSP. Al final es muy importante cerrar el entity manager.</p>
+<p>La soluci&oacute;n anterior se denomina a veces <em>entity manager por petici&oacute;n</em>, ya que asociamos la vida del entity manager a la duraci&oacute;n de la petici&oacute;n HTTP. Es una soluci&oacute;n bastante com&uacute;n y es la que es usada por defecto por frameworks como Spring.</p>
+<p>Es dif&iacute;cil utilizar un entity manager que se extienda m&aacute;s all&aacute; de una petici&oacute;n, implementando lo que se denominan <em>conversaciones</em>. Podr&iacute;amos guardarlo en un objeto HTTPSession para utilizarlo en m&aacute;s de una p&aacute;gina de la misma sesi&oacute;n (supongamos un carrito de la compra, por ejemplo), pero se hace complicado manejar diversos aspectos como la transaccionalidad o la concurrencia. Lo habitual es desconectar las entidades en cada petici&oacute;n y que la sesi&oacute;n trabaje con datos desconectados que volvemos a conectar (con merge()) en un nuevo entity manager cuando sea necesario.</p>
+<p>La arquitectura EJB proporciona componentes denominados <em>EJB con estado</em> que est&aacute;n pensados precisamente para guardar el estado conversacional en una sesi&oacute;n. Si nuestra aplicaci&oacute;n lo requiere, debemos considerar su utilizaci&oacute;n, en lugar de usar la sesi&oacute;n HTTP.</p>
+</div>
+
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007-2008 Depto. CCIA</div>
+</div>
+</body>
+</html>

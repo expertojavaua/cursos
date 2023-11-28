@@ -1,0 +1,87 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 6: Ejemplo pr&aacute;ctico de Java EE</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css"></head>
+<body>
+
+<h1>6. Ejemplo práctico de Java EE </h1>
+             
+<p>&nbsp; </p>
+<p>En esta sesi&oacute;n veremos un ejemplo algo m&aacute;s completo de integraci&oacute;n de diferentes componentes que forman parte de las aplicaciones Java EE. Como caso concreto vamos a poner el de una<strong> biblioteca</strong>, donde tendremos diferentes usuarios registrados, diferentes libros en el cat&aacute;logo, y permitiremos a los usuarios, seg&uacute;n sus permisos, realizar diferentes operaciones con los libros (por ejemplo, si es un administrador, dar de alta un libro en el cat&aacute;logo; si es un usuario normal, pedir la reserva de un libro).</p>
+<p>Veremos la estructura de clases y la del proyecto Eclipse que generamos para gestionar la aplicaci&oacute;n, modificando e instalando las opciones adicionales necesarias para hacerlo funcionar.</p>
+<h2>6.1. Ingenier&iacute;a de Requisitos</h2>
+<div>
+  <p>El Instituto de Educaci&oacute;n Secundaria "jUA" nos ha encargado que  desarrollemos una aplicaci&oacute;n para la gesti&oacute;n de los pr&eacute;stamos  realizados en la biblioteca del centro, lo que implica una gesti&oacute;n de  los libros y de los alumnos y profesores que realizan estos prestamos.</p>
+  <p>Tras una serie de entrevistas y reuniones con diferente personal del centro, hemos llegado a recopilar esta informaci&oacute;n:</p>
+  <ul>
+    <li>Respecto a un <strong>usuario</strong>, nos interesa almacenar:
+      <ul>
+          <li>Nombre y apellidos</li>
+        <li>Login y password</li>
+        <li>Tipo de usuario. Posibles tipos:
+          <ul>
+              <li>Administrador: encargado de configurar la aplicaci&oacute;n y gestionar los usuarios.</li>
+            <li>Bibliotecario: encargado de la gesti&oacute;n de prestamos y libros.</li>
+            <li>Profesor</li>
+            <li>Socio: ya sea un alumno o un familiar suyo</li>
+          </ul>
+          <p>Tanto los profesores como los socios van a poder realizar pr&eacute;stamos  sobre los libros, pero con diferentes permisos, tanto en n&uacute;mero de  libros como en duraci&oacute;n del pr&eacute;stamo.</p>
+        </li>
+        <li>
+            <p>Estado de un usuario: baja, activo, reserva, pr&eacute;stamo y moroso</p>
+          <p> Los usuarios, al crearlos tendr&aacute; un estado activo, e ir&aacute;n pasando  de estado conforme realicen operaciones. En el caso de que un usuario  tenga un pr&eacute;stamo y una reserva, se almacenar&aacute; el estado m&aacute;s  importante, en este caso, el de reserva.</p>
+        </li>
+      </ul>
+    </li>
+    <li>Respecto a un <strong>libro</strong>, nos interesa almacenar:
+      <ul>
+          <li>Titulo y autor</li>
+        <li>ISBN</li>
+        <li>N&uacute;mero de p&aacute;ginas</li>
+      </ul>
+    </li>
+    <li>Respecto a los <strong>prestamos</strong>, tras muchas entrevistas  deducimos que tanto las reservas, como los prestamos y las multas  tienen caracter&iacute;sticas comunes, como son:
+      <ul>
+          <li>Fecha de inicio y finalizaci&oacute;n</li>
+        <li>Usuario de la operaci&oacute;n</li>
+        <li>Libro de la operaci&oacute;n</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<h3>6.1.1. Modelo de objetos</h3>
+<img src="imagenes/j2ee/ModeloDeObjetos.gif" />
+<p>Las clases <em>Libro</em>, <em>Usuario</em> y <em>Operacion</em> se denominan <em>transfer objetcs </em>en el proyecto, debido a que son objetos que se ir&aacute;n intercambiando entre los diferentes componentes de la aplicaci&oacute;n para realizar operaciones sobre ellos (insertar un libro dados sus datos en un objeto <em>Libro</em>, eliminar a un usuario dado su objeto <em>Usuario</em>, etc). Todas estas clases est&aacute;n dentro del paquete <strong>es.ua.jtech.proyint.to</strong>.</p>
+<ul>
+  <li><strong>TransferObject</strong> es una clase general, abstracta, para definir los elementos comunes de los transfer objects que haya (<em>Usuario, Libro y Operacion</em>). </li>
+  <li><strong>UsuarioTO</strong> hereda de <em>TransferObject</em> para definir los elementos de un usuario </li>
+  <li><strong>LibroTO</strong> hereda de <em>TransferObject</em> para definir los elementos de un libro </li>
+  <li><strong>OperacionTO</strong> hereda de <em>TransferObject</em> para definir los elementos de una operaci&oacute;n</li>
+  <li>Aparte, tenemos unas clases auxiliares, <strong>EstadoUsuario</strong>, <strong>TipoOperacion</strong> y <strong>TipoUsuario</strong> para definir algunos de los campos del usuario (estado y tipo) y de las operaciones (tipo de operaci&oacute;n). </li>
+</ul>
+<h2>6.2. La base de datos </h2>
+  <p>En la carpeta <strong>db</strong> del proyecto tenemos unos scripts SQL y un fichero Ant que se encarga de crear una base de datos en MySQL con tres tablas (usuario, libro y operacion, cada una con los campos necesarios para almacenar los datos de cada uno de los tres objetos respectivos), y rellenar las tablas con algunos datos de prueba. </p>
+  <p>Para comunicar la aplicaci&oacute;n web con esta base de datos, vamos a utilizar patrones DAO (<em>Data Access Object</em>). Estos patrones son una forma de definir una estructura de acceso a los datos.</p>
+  <p>Definiremos 3 DAOs, uno para cada tabla. En el paquete <strong>es.ua.jtech.proyint.dao</strong> se tiene una clase gen&eacute;rica <em>FactoriaDAOs </em>que nos devolver&aacute; un objeto DAO del tipo correspondiente (usuario, libro u operaci&oacute;n) seg&uacute;n la tabla a la que queramos acceder. La clase <em>FactoriaFuenteDatos</em> se encarga de conectar con la base de datos para tener preparada la conexi&oacute;n antes de servir el DAO para comunicar con la tabla.</p>
+  <p>Despu&eacute;s, en 3 subpaquetes  <strong>es.ua.jtech.proyint.dao</strong><strong>.libro</strong>, <strong>es.ua.jtech.proyint.dao</strong><strong>.usuario</strong> y <strong>es.ua.jtech.proyint.dao</strong><strong>.operacion </strong>tenemos definidos cada uno de los 3 DAOs concretos para cada tabla. </p>
+  <p>Por ejemplo, en el caso del libro, tenemos una interfaz <strong>ILibroDAO</strong> que define las operaciones que debe implementar un DAO para comunicarse con la tabla de libros. Tenemos la clase concreta <strong>LibroJDBCDAO</strong> que es una implementaci&oacute;n de esa interfaz para comunicar con la base de datos por JDBC. La misma filosof&iacute;a se aplica para los DAOs de usuario y operaci&oacute;n. </p>
+  <h2>6.3. Los servlets </h2>
+  <p>En el paquete  <strong>es.ua.jtech.proyint.servlet.accion</strong> tenemos tres servlets, <strong>LibroServlet, UsuarioServlet</strong> y <strong>OperacionServlet</strong>, cada uno para gestionar las diferentes peticiones que le lleguen al servidor sobre los 3 objetos definidos (libro, usuario y operaci&oacute;n, respectivamente).</p>
+  <p>Cada uno de estos servlets, lo que hace es distinguir la operaci&oacute;n que le llega del cliente, y utilizar el DAO correspondiente con esa operaci&oacute;n.</p>
+  <p>Tambi&eacute;n se tienen otros dos servlets <strong>LoginServlet</strong> y <strong>LogoutServlet</strong>, utilizados para cuando un usuario entra y sale del sistema, respectivamente (para guardar sus datos en la sesi&oacute;n y borrarlos, respectivamente). </p>
+  <h2>6.4. Las p&aacute;ginas JSP </h2>
+  <p>En la carpeta <strong>WebContent/jsp</strong> tenemos las p&aacute;ginas JSP que se muestran al cliente. Tenemos una p&aacute;gina principal <strong>menu.jsp</strong> (a la que redirige el servlet de login una vez validado el usuario), que muestra el men&uacute; de operaciones seg&uacute;n el permiso del usuario entrante (operaciones con usuarios, libros u operaciones entre ellos). Despu&eacute;s hay algunas p&aacute;ginas de ejemplo:</p>
+  <ul>
+    <li><strong>datosLibro.jsp</strong>: muestra una ficha con los datos del libro que se le pasa</li>
+    <li><strong>error.jsp</strong>: p&aacute;gina de error gen&eacute;rica para mostrar errores en la aplicaci&oacute;n</li>
+    <li><strong>listadoLibros.jsp</strong>: muestra un listado con los libros que se le pasan </li>
+    <li><strong>listadoUsuarios.jsp</strong>: muestra un listado con los usuarios que se le pasan </li>
+  </ul>
+  <p>Es <strong>importante</strong> tener en cuenta que estas p&aacute;ginas no se invocan directamente, sino que, una vez entremos en la aplicaci&oacute;n, los formularios que rellenemos se enviar&aacute;n a los servlets correspondientes, y en funci&oacute;n de la informaci&oacute;n proporcionada, &eacute;stos mostrar&aacute;n una u otra p&aacute;gina JSP. </p>
+<p>&nbsp;</p>
+</body>
+</html>

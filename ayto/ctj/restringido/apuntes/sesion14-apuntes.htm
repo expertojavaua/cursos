@@ -1,0 +1,579 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 14: Conexiones avanzadas</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+<h1>14. Conexiones avanzadas </h1>
+<h2>14.1. Servicios Web</h2>
+<p>Los servicios web son una tecnolog&iacute;a interesante para las aplicaciones 
+  MIDP, ya que nos permiten acceder a informaci&oacute;n de nuestras aplicaciones 
+  corporativas de forma est&aacute;ndar sobre protocolo HTTP. </p>
+<p>En una aplicaci&oacute;n MIDP no nos servir&aacute; de nada obtener un documento 
+  HTML, ya que no es adecuado para presentarlo en la interfaz del m&oacute;vil, 
+  y ser&aacute; muy complicado extraer de &eacute;l informaci&oacute;n porque 
+  normalmente estar&aacute; escrito en lenguaje natural y con un formato adecuado 
+  para su presentaci&oacute;n, pero no para ser entendido por una m&aacute;quina.</p>
+<p>Los servicios web nos permiten obtener &uacute;nicamente la informaci&oacute;n 
+  que necesitamos, pero no la presentaci&oacute;n. Esta informaci&oacute;n vendr&aacute; 
+  codificada en XML de forma est&aacute;ndar. Podemos ver los servicios web como 
+  una web para aplicaciones, frente a los documentos HTML que ser&iacute;an una 
+  web para humanos.</p>
+<p>El problema que encontramos con los servicios web es que el procesamiento de 
+  XML es bastante costoso en t&eacute;rminos de procesamiento y memoria, lo cual 
+  lo hace poco adecuado para dispositivos muy limitados. Adem&aacute;s la informaci&oacute;n 
+  codificada en XML ocupa mucho m&aacute;s espacio que utilizando la codificaci&oacute;n 
+  binaria, por lo que tendremos que transferir una mayor cantidad de informaci&oacute;n 
+  a trav&eacute;s de la red. Cuando la red es lenta y cara, esto es un gran inconveniente, 
+  que hace que los servicios web por el momento no se puedan utilizar en la pr&aacute;ctica 
+  para este tipo de dispositivos.</p>
+<p>Sin embargo, ya existen APIs que nos permiten utilizar esta tecnolog&iacute;a 
+  desde m&oacute;viles. Web Services API (WSA) nos permite crear clientes de servicios 
+  web SOAP desde dispositivos m&oacute;viles. Podremos acceder a servicios existentes 
+  proporcionados por terceros, o crear nuestros propios servicios para acceder 
+  a nuestra aplicaci&oacute;n. </p>
+<p>Si queremos acceder a servicios proporcionados por terceros deberemos tener 
+  en cuenta que WSA s&oacute;lo soporta servicios de tipo <code>document/literal</code>. 
+  Si el servicio al que queremos acceder no es de este tipo (podemos consultar 
+  esta informaci&oacute;n en su documento WSDL) como soluci&oacute;n podremos 
+  crearnos un servicio propio compatible con WSA que encapsule una llamada al 
+  servicio proporcionado por terceros.</p>
+<h3><strong>14.1.1. Creaci&oacute;n del servicio</strong></h3>
+<p>Vamos a ver como crear un servicio compatible con WSA. Para esto deberemos 
+  especificar que debe ser de tipo <code>document/literal</code>. Consideraremos 
+  el caso de la creaci&oacute;n del servicio con JWSDP 1.3.</p>
+<p>Lo primero que deberemos hacer es implementar el servicio, creando una interfaz 
+  remota con los m&eacute;todos que nos ofrece el servicio y una clase Java que 
+  implemente esta interfaz donde se definir&aacute; la funcionalidad del servicio. 
+</p>
+<p>Por ejemplo, podemos crear un servicio con la siguiente interfaz:</p>
+<pre class="codigo">package es.ua.jtech.sw.hola;<br><br>import java.rmi.Remote;
+import java.rmi.RemoteException;<br><br>public interface <strong>HolaMundoIF</strong> extends Remote {
+  public String <strong>saluda</strong>(String nombre) throws RemoteException;
+}</pre>
+<p>Y con la siguiente implementaci&oacute;n de la anterior interfaz:</p>
+<pre class="codigo">package es.ua.jtech.sw.hola;<br><br>import java.rmi.RemoteException;<br><br>public class <strong>HolaMundoImpl</strong> implements <strong>HolaMundoIF</strong> {<br>  public String <strong>saluda</strong>(String nombre) throws RemoteException {
+    return &quot;Hola &quot; + nombre;
+  }<br>}
+</pre>
+<p>Para que el servicio creado sea del tipo <code>document/literal</code> antes 
+  de generar el servicio, deberemos generar un modelo donde se especifique el 
+  tipo de servicio. Podemos generar el modelo con la herramienta <code>wscompile</code>. 
+  Para utilizar esta herramienta necesitamos crear un fichero de configuraci&oacute;n 
+  de nuestro servicio (<code>config.xml</code>) como el siguiente:</p>
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;configuration 
+  xmlns=&quot;http://java.sun.com/xml/ns/jax-rpc/ri/config&quot;&gt;
+&lt;service 
+  name=&quot;HolaMundoMovil&quot; 
+  targetNamespace=&quot;http://jtech.ua.es/sw&quot; 
+  typeNamespace=&quot;http://jtech.ua.es/sw&quot; 
+  packageName=&quot;es.ua.jtech.sw.hola&quot;&gt;
+  &lt;interface name=&quot;es.ua.jtech.sw.hola.HolaMundoIF&quot;/&gt;
+&lt;/service&gt;
+&lt;/configuration&gt; </pre>
+<p>Podemos ejecutar la herramienta <code>wscompile</code> desde l&iacute;nea de 
+  comando o desde ant. Para utilizarla desde ant deberemos declarar en el fichero 
+  <code>build.xml</code> esta tarea y el <em>classpath</em> necesario para ejecutarla:</p>
+<pre class="codigo">&lt;!-- Propiedades --&gt;<br><br>&lt;property name=&quot;jwsdp.home&quot; value=&quot;c:\\jwsdp-1.3&quot;/&gt;
+   
+&lt;!-- Classpath --&gt;<br><br>&lt;path id=&quot;<strong>compile.classpath</strong>&quot;&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/jwsdp-shared/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/jaxp/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/jaxp/lib/endorsed&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/jaxrpc/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/saaj/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;fileset dir=&quot;${jwsdp.home}/apache-ant/lib&quot;&gt;
+    &lt;include name=&quot;*.jar&quot;/&gt;
+  &lt;/fileset&gt;
+&lt;/path&gt;<br><br>&lt;!-- Definicion de tareas --&gt;<br><br>&lt;taskdef name=&quot;<strong>wscompile</strong>&quot; 
+   classname=&quot;com.sun.xml.rpc.tools.ant.Wscompile&quot;&gt;
+  &lt;classpath refid=&quot;compile.classpath&quot;/&gt;
+&lt;/taskdef&gt;
+&lt;taskdef name=&quot;<strong>wsdeploy</strong>&quot; 
+   classname=&quot;com.sun.xml.rpc.tools.ant.Wsdeploy&quot;&gt;
+  &lt;classpath refid=&quot;compile.classpath&quot;/&gt;
+&lt;/taskdef&gt;</pre>
+<p>En la llamada a la tarea <code>wscompile</code> deberemos especificar como 
+  par&aacute;metro que el tipo de servicio es <code>documentliteral</code> y el 
+  fichero donde queremos que se genere el modelo:</p>
+<pre class="codigo">&lt;target name=&quot;generate&quot;&gt;
+  &lt;<strong>wscompile</strong> 
+     keep=&quot;true&quot;
+     define=&quot;true&quot;
+     <strong>features=&quot;documentliteral&quot;</strong>
+     base=&quot;.&quot;
+     xPrintStackTrace=&quot;true&quot;
+     verbose=&quot;true&quot;
+     <strong>model=&quot;model.gz&quot;</strong>
+     config=&quot;config.xml&quot;&gt;
+     &lt;classpath&gt;
+       &lt;path refid=&quot;compile.classpath&quot;/&gt;
+     &lt;/classpath&gt;
+  &lt;/wscompile&gt;
+&lt;/target&gt;</pre>
+<p>Una vez tenemos el modelo generado, podemos crear un fichero descriptor de 
+  servicios web (<code>jaxrpc-ri.xml</code>) que utilice este modelo:</p>
+<pre class="codigo">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;webServices
+   xmlns=&quot;http://java.sun.com/xml/ns/jax-rpc/ri/dd&quot;
+   version=&quot;1.0&quot;
+   targetNamespaceBase=&quot;http://jtech.ua.es/wsdl&quot;
+   typeNamespaceBase=&quot;http://jtech.ua.es/types&quot;
+   urlPatternBase=&quot;/ws&quot;&gt;<br>  &lt;endpoint
+     name=&quot;HolaMundo&quot;
+     displayName=&quot;Servicio HolaMundo&quot;
+     description=&quot;Servicio Web Hola Mundo&quot; 
+     interface=&quot;es.ua.jtech.sw.hola.HolaMundoIF&quot; 
+     <strong>model=&quot;/WEB-INF/model.gz&quot;</strong>
+     implementation=&quot;es.ua.jtech.sw.hola.HolaMundoImpl&quot;/&gt; <br>  &lt;endpointMapping
+     endpointName=&quot;HolaMundo&quot;
+     urlPattern=&quot;/hola&quot;/&gt;<br>&lt;/webServices&gt;</pre>
+<p>Una vez tenemos implementado el servicio, creado el modelo y el fichero descriptor 
+  de servicios web, organizaremos estos ficheros utilizando la estructura de directorios 
+  que deben seguir los servicios web de JWSDP:</p>
+<pre class="codigo">/WEB-INF/web.xml
+/WEB-INF/jaxrpc-ri.xml
+/WEB-INF/<strong>model.gz</strong>
+/WEB-INF/classes/es/ua/jtech/sw/hola/HolaMundoIF.class
+/WEB-INF/classes/es/ua/jtech/sw/hola/HolaMundoImpl.class</pre>
+<p>Empaquetaremos toda esta estructura en un fichero WAR, y entonces podremos 
+  utilizar la tarea <code>wsdeploy</code> para generar el servicio a partir de 
+  dicho fichero, de la misma forma que se hace con cualquier otro servicio web 
+  en JWSDP. La &uacute;nica novedad en este caso ha sido que hemos incluido en 
+  el servicio un fichero <code>model.gz</code> donde se especifica el tipo de 
+  servicio que queremos generar.</p>
+<p>Si observamos el fichero WSDL generado para el servicio, podremos comprobar 
+  que en el apartado <code>binding</code> se especifica que es de tipo <code>document</code> 
+  y <code>literal</code>:</p>
+<pre class="codigo">&lt;binding name=&quot;HolaMundoIFBinding&quot; type=&quot;tns:HolaMundoIF&quot;&gt;
+  &lt;operation name=&quot;saluda&quot;&gt;
+    &lt;input&gt;
+      &lt;soap:body <strong>use=&quot;literal&quot;</strong>/&gt;
+    &lt;/input&gt;
+    &lt;output&gt;
+      &lt;soap:body <strong>use=&quot;literal&quot;</strong>/&gt;
+    &lt;/output&gt;
+    &lt;soap:operation soapAction=&quot;&quot;/&gt;<br>  &lt;/operation&gt;
+  &lt;soap:binding transport=&quot;http://schemas.xmlsoap.org/soap/http&quot;    <br>                <strong>style=&quot;document&quot;</strong>/&gt;<br>&lt;/binding&gt;</pre>
+<p>Cualquier servicio que sea de este tipo se podr&aacute; ejecutar desde clientes 
+  J2ME. De esta forma, para comprobar si un servicio es compatible con la implementaci&oacute;n 
+  de J2ME, podremos consultar su fichero WSDL y ver el tipo especificado en el 
+  apartado <code>binding</code>.</p>
+<h3><strong>14.1.2. Creaci&oacute;n del stub</strong></h3>
+<p>Para acceder al servicio desde nuestra aplicaci&oacute;n deberemos crear una 
+  capa <em>stub</em>. Esta capa ser&aacute; la encargada de acceder al servicio, 
+  de forma que el desarrollador no tenga que preocuparse de implementar este acceso. 
+  Simplemente accederemos al stub para invocar los m&eacute;todos del servicio 
+  como si se tratase de un objeto local, sin tenernos que preocupar del mecanismo 
+  de invocaci&oacute;n subyacente.</p>
+<p>WTK, a partir de su versión 2.1, incluye herramientas para la generaci&oacute;n autom&aacute;tica de 
+  este <em>stub</em>. Podremos generar un <em>stub</em> en nuestro proyecto utilizando 
+  la opci&oacute;n <strong>Project &gt; Stub Generator ...</strong> :</p>
+<div align="center"><img src="imagenes/red/sw_1.gif" width="498" height="272"> 
+</div>
+<p>Cuando pulsemos sobre dicha opci&oacute;n, se abrir&aacute; una ventana donde 
+  deberemos introducir los datos del servicio para el cual queremos generar el 
+  <em>stub</em>:</p>
+<div align="center"><img src="imagenes/red/sw_2.gif" width="302" height="303"> 
+</div>
+<p>En esta ventana indicaremos la direcci&oacute;n donde se encuentra el documento 
+  WSDL del servicio al que vamos a acceder, y el paquete donde generaremos las 
+  clases del <em>stub</em>. Una vez hayamos introducido los datos pulsaremos OK 
+  y el <em>stub</em> se generar&aacute; autom&aacute;ticamente.</p>
+<h3><strong>14.1.3. Invocaci&oacute;n del servicio</strong></h3>
+<p>Una vez tenemos generado el <em>stub</em> para acceder al servicio, podemos 
+  utilizar este <em>stub</em> desde nuestra aplicaci&oacute;n MIDP. El <em>stub</em> 
+  generado ser&aacute; una clase con el nombre de la interfaz de nuestro servicio 
+  a&ntilde;adiendo el sufijo <code>_Stub</code>. </p>
+<p>Esta clase implementar&aacute; la misma interfaz que nuestro servicio, de forma 
+  que podremos instanciarla e invocar los m&eacute;todos de este objeto para acceder 
+  a las operaciones del servicio como si se tratase de un acceso a un objeto local.</p>
+<p>Por ejemplo, en el caso de nuestro servicio web <em>&quot;Hola Mundo&quot;</em>, 
+  podemos acceder a &eacute;l desde nuestra aplicaci&oacute;n cliente de la siguiente 
+  forma: </p>
+<pre class="codigo"><strong>HolaMundoIF</strong> hola = new <strong>HolaMundoIF_Stub</strong>();
+try {
+  String saludo = hola.<strong>saluda</strong>(&quot;Miguel&quot;);
+} catch(RemoteException re) {
+  // Error
+}
+</pre>
+<h2>14.2. Conexiones bluetooth</h2>
+<p>Bluetooth es una tecnolog&iacute;a que nos permite conectar dispositivos pr&oacute;ximos 
+  por radio, sustituyendo de esta forma a las conexiones por cable o infrarrojos. 
+  Adem&aacute;s <em>bluetooth</em> nos ofrece distintos servicios como voz, fax, 
+  modem, conexi&oacute;n por puerto serie para transmisi&oacute;n de datos, etc.</p>
+<p>No se debe ver bluetooth como un competidor de las redes inal&aacute;mbricas 
+  802.11b, ya que cada tecnolog&iacute;a tiene un fin distinto. Bluetooth se utilizar&aacute; 
+  para conectar peque&ntilde;os dispositivos en un radio peque&ntilde;o (unos 
+  10 metros), mientras que las redes 802.11b se utilizar&aacute;n para conectar 
+  dispositivos m&aacute;s potentes como ordenadores de sobremesa y port&aacute;tiles 
+  en un &aacute;rea m&aacute;s grande. Nos podemos referir a las redes 802.11b 
+  como redes de &aacute;rea local (LAN), y a las redes bluetooth como redes de 
+  &aacute;rea personal (PAN). </p>
+<p>Aunque el alcance normal de bluetooth son 10 metros, aumentando la potencia 
+  del punto de acceso bluetooth podemos aumentar su radio de alcance hasta 100 
+  metros.</p>
+<p>La tecnolog&iacute;a bluetooth se puede utilizar para conectar dispositivos, 
+  como por ejemplo kits de manos libres, para intercambiar datos con otros dispositivos, 
+  para acceder a funcionalidades u obtener informaci&oacute;n de dispositivos 
+  de nuestro entorno, etc. Podemos crear una red de dispositivos que se conecten 
+  entre si utilizando esta tecnolog&iacute;a.</p>
+<h3><strong>14.2.1. Topolog&iacute;a de las redes bluetooth</strong></h3>
+<p>Las redes que se crean utilizando bluetooth son redes &quot;<em>ad hoc</em>&quot;, 
+  es decir, se crean din&aacute;micamente. La comunicaci&oacute;n entre distintos 
+  dispositivos hace que se cree un red de forma espont&aacute;nea. </p>
+<p>Los dispositivos bluetooth tienen la capacidad de &quot;descubrir&quot; otros 
+  dispotivos bluetooth de su entorno. De esta forma, los dispositivos pueden localizarse 
+  entre ellos y conectarse formando una red de forma din&aacute;mica, sin tener 
+  que haber creado previamente ninguna infraestructura para dicha red. Cada dispositivo 
+  tendr&aacute; un identificador bluetooth &uacute;nico con el que se identificar&aacute;.</p>
+<p>Las redes bluetooth se forman en grupos llamados <em>piconets</em>. Cada <em>piconet</em> 
+  es un grupo que puede contener hasta 8 dispositivos como m&aacute;ximo, en el 
+  que uno de ellos ser&aacute; el maestro, y los dem&aacute;s ser&aacute;n esclavos 
+  que estar&aacute;n conectados a este maestro. </p>
+<div align="center"> <img src="imagenes/red/bt_piconet.gif" width="294" height="297"> 
+  <p class="caption">Figura 3. Topolog&iacute;a de una red bluetooth</p>
+</div>
+<p>Un mismo dispositivo puede pertenecer a dos <em>piconets</em> distintas. Es 
+  m&aacute;s, puede que el dispositivo tenga una funci&oacute;n distinta en cada 
+  <em>piconet</em>, por ejemplo puede actuar como maestro en uno de ellos, y como 
+  esclavo en el otro.</p>
+<p>Cuando un dispositivo pertenece a varias <em>piconets</em>, estas piconets 
+  estar&aacute;n conectadas entre ellas. Cuanto tenemos varias <em>piconets</em> 
+  conectadas de esta forma, todas ellas formar&aacute;n lo que se conoce como 
+  una <em>scatternet</em>. En el caso de las <em>scatternet</em>, dado que existen 
+  dispositivos que est&aacute;n conectados al mismo tiempo a dos <em>piconets</em>, 
+  el ancho de banda de la red ser&aacute; menor. Adem&aacute;s, hay muchos dispositivos 
+  que no soportan este tipo de redes.</p>
+<h3><strong>14.2.2. Capas de protocolos</strong></h3>
+<p>Vamos a ver los protocolos que se utilizan en la comunicaci&oacute;n mediante 
+  bluetooth.</p>
+<div align="center"><img src="imagenes/red/bt_capas.gif" width="303" height="315"> 
+</div>
+<p class="caption">Figura 4. Capas de bluetooth</p>
+<p>Encontramos las siguientes capas:</p>
+<ul>
+  <li><strong>Radio</strong>: Nivel f&iacute;sico, en el que se establecen las 
+    comunicaciones mediante ondas de radio.</li>
+  <li><strong>Banda base</strong>: Se encarga de enviar y recibir paquetes de 
+    datos utilizando la capa f&iacute;sica subyacente. Proporciona canales para 
+    voz y datos</li>
+  <li><strong>LMP</strong> (<em>Link Manager Protocol</em>): Utiliza los enlaces 
+    de la banda base para establecer conexiones y gestionar las piconets. </li>
+  <li><strong>HCI</strong> (<em>Host Controller Interface</em>): Es la l&iacute;nea 
+    divisoria entre software y hardware. Las capas por encima de esta est&aacute;n 
+    implementadas en software, y las capas por debajo en hardware. Es la interfaz 
+    del bus f&iacute;sico que conecta estos componentes. </li>
+  <li><strong>L2CAP</strong> (<em>Logical Link Control and Adaptation Protocol</em>): 
+    Esta capa es el protocolo de comunicaciones m&aacute;s bajo nivel que pueden 
+    utilizar las aplicaciones para comunicarse mediante bluetooth. Esta capa ya 
+    es directamente accesible desde las aplicaciones, que podr&aacute;n utilizarla 
+    para enviar y recibir paquetes de datos.</li>
+</ul>
+<p>Para las comunicaciones bluetooth utiliza multiplexado en el tiempo, para poder 
+  utilizar una comunicaci&oacute;n <em>full-duplex</em>. Los datos se env&iacute;an 
+  en ranuras de tiempo de 625ms cada una, el maestro utilizar&aacute; las ranuras 
+  impares y los esclavos utilizar&aacute;n las pares. Un paquete podr&aacute; 
+  enviarse en un m&aacute;ximo de 5 ranuras de tiempo (2745 bits de longitud). 
+</p>
+<p>Las capas por encima de L2CAP ser&aacute;n los distintos protocolos de comunicaciones 
+  que podremos utilizar en las aplicaciones que establezcan conexiones bluetooth. 
+  Los protocolos que podremos utilizar para comunicarnos mediante bluetooth son:</p>
+<ul>
+  <li><strong>L2CAP</strong>: Es el protocolo a m&aacute;s bajo nivel sobre el 
+    que se construir&aacute;n el resto de protocolos. Est&aacute; basado en la 
+    transmisi&oacute;n de paquetes, que tendr&aacute;n un tama&ntilde;o limitado. 
+    Este protocolo no realiza control del flujo, por lo que es posible que se 
+    pierdan paquetes en las comunicaciones. </li>
+  <li><strong>RFCOMM</strong>: Emula un puerto serie sobre bluetooth. Es un tipo 
+    de conexi&oacute;n basada en flujo de datos, en la que el protocolo utilizado 
+    realiza el control necesario para evitar la p&eacute;rdida de datos en las 
+    comunicaciones. </li>
+  <li><strong>SDP</strong> (<em>Service Discovery Protocol</em>): Se utiliza para 
+    poder &quot;descubrir&quot; de forma din&aacute;mica qu&eacute; servicios 
+    est&aacute;n disponibles en un determinados dispositivo.</li>
+  <li><strong>TCS</strong> (<em>Telephony Control Protocol</em>): Protocolo para 
+    aplicaciones de telefon&iacute;a.</li>
+  <li><strong>OBEX</strong> (<em>OBject EXchange</em>): OBEX se podr&iacute;a 
+    describir como un protocolo HTTP binario, que se utiliza para transmitir todo 
+    tipo de objetos como ficheros, im&aacute;genes, etc. Est&aacute; pensado para 
+    redes inal&aacute;mbricas &quot;<em>ad hoc</em>&quot;.</li>
+</ul>
+<p>Cuando dos dispositivos se conectan por primera vez, por motivos de seguridad 
+  deben establecer un secreto compartido. Esto es lo que se conoce como <em>pairing</em>. 
+  Es decir, los usuarios de los distintos dispositivos que vayan a conectarse 
+  deben ponerse de acuerdo e introducir en ellos el mismo c&oacute;digo, para 
+  de esta forma evitar que se realicen conexiones no deseadas a nuestro dispositivo. 
+  Una vez se ha realizado el pairing, este c&oacute;digo se guarda en el dispositivo 
+  y ya no har&aacute; falta introducirlo para las sucesivas conexiones.</p>
+<p>Una vez realizado el <em>pairing</em> de los dispositivos, estos pueden conectarse 
+  para formar una red bluetooth. Esta red se formar&aacute; de la siguiente forma:</p>
+<ul>
+  <li>Los dispositivos esclavos publican sus servicios. Estos servicios se identificar&aacute;n 
+    mediante un UUID, que es una clave &uacute;nica en el espacio y en el tiempo. 
+  </li>
+  <li>El dispositivo maestro busca los dispositivos bluetooth de su entorno.</li>
+  <li>Para cada dispositivo encontrado, descubre los servicios que ofrece. </li>
+  <li>Si tuviese el servicio que vamos a utilizar para comunicarnos, nos conectaremos 
+    a dicho dispositivo usando este servicio.</li>
+  <li>Enviaremos y recibiremos informaci&oacute;n a trav&eacute;s de las conexiones 
+    establecidas.</li>
+</ul>
+<p>En las redes bluetooth el dispositivo maestro es el que establece los tiempos 
+  y el acceso en la piconet. Adem&aacute;s hemos visto que tiene la responsabilidad 
+  de a&ntilde;adir a los esclavos a la piconet.</p>
+<p>Podemos ver el maestro como el servidor de la red, que gestiona las conexiones 
+  con varios clientes que en este caso ser&iacute;an los esclavos. En las conexiones 
+  cliente/servidor normalmente el servidor permanece a la escucha esperando peticiones 
+  de conexi&oacute;n de los clientes. Sin embargo, en el caso de bluetooth ocurre 
+  al contrario, es el servidor (maestro) el que se encarga de solicitar a los 
+  clientes (esclavos) que se a&ntilde;adan a la piconet. Para ello estos esclavos 
+  deben haber ofrecido (publicado) el servicio necesario, para que el maestro 
+  pueda descubrirlo y conectarse a &eacute;l.</p>
+<p>En el caso de conexiones punto-a-punto, es indiferente quien se conecte como 
+  esclavo y quien como maestro. Esta decisi&oacute;n tendr&aacute; mayor relevancia 
+  en el caso de conexiones punto-a-multipunto, en las que todos los esclavos estar&aacute;n 
+  conectados a un mismo maestro.</p>
+<p>Vamos a ver ahora c&oacute;mo establecer estas conexiones bluetooth utilizando 
+  las APIs de Java para Bluetooth (JSR-82). Esta API es el primer est&aacute;ndar 
+  no propietario que ha aparecido para desarrollar aplicaciones bluetooth utilizando 
+  este lenguaje. Podemos distinguir dos APIs independientes:</p>
+<pre class="codigo">javax.bluetooth
+javax.obex</pre>
+<p>Esto es as&iacute; porque OBEX puede funcionar sobre distintos tipos de conexiones 
+  como cable o infrarrojos. De esta forma la API OBEX no estar&aacute; ligada 
+  a la de bluetooth, sino que ser&aacute; independiente, pudiendo as&iacute; ser 
+  utilizada para trabajar con estro protocolo sobre los dem&aacute;s tipos de 
+  conexiones. </p>
+<p>La API de bluetooth soporta los protocolos L2CAP, SDP y RFCOMM, pero no soporta 
+  comunicaciones de voz. Con la API OBEX tambi&eacute;n podremos utilizar este 
+  protocolo. </p>
+<p>A partir de WTK 2.2 se incluye soporte para bluetooth en este kit de desarrollo. 
+  Para poder probar las aplicaciones bluetooth podemos usar esta versi&oacute;n 
+  que, adem&aacute;s de incorporar la API JSR-82, incluye emuladores que simulan 
+  este tipo de conexiones. Podremos ejecutar varias instancias del emulador y 
+  simular conexiones bluetooth entre ellos, sin necesitar disponer de dispositivos 
+  bluetooth reales.</p>
+<h3><strong>14.2.3. Registrar servicios</strong></h3>
+  <p>Lo primero que deberemos hacer para crear una red bluetooth es registrar los 
+  servicios de los esclavos, para que el maestro sea capaz de localizarlos y establecer 
+  una comunicaci&oacute;n con ellos. </p>
+<p>Deberemos asignar un UUID al servicio que vayamos a crear. Deberemos asegurarnos 
+  de que el UUID que generemos sea un identificador &uacute;nico que identifique 
+  el tipo de servicio que estamos implementando. </p>
+<p>Un UUID es un n&uacute;mero de 128 bits que tiene la siguiente forma (en hexadecimal):</p>
+<pre class="codigo">UUID = 00000000-0000-1000-8000-0014e3a325f9
+       32       16   16   16   48 <br>       bits     bits bits bits bits</pre>
+<p>Podemos distinguir varios bloques dentro de este n&uacute;mero con distinto 
+  n&uacute;mero de bits cada uno de ellos.</p>
+<p>Para generar este UUID podemos utilizar herramientas como <code>uuidgen</code>, 
+  que suelen generar este n&uacute;mero bas&aacute;ndose en el instante de tiempo 
+  actual o en generaci&oacute;n de n&uacute;meros aleatorios. </p>
+<p>Tambi&eacute;n podemos generar este n&uacute;mero manualmente. Para garantizar 
+  que sea &uacute;nico, podemos poner como el &uacute;ltimo bloque de 48 bits 
+  el identificador de nuestro dispositivo bluetooth, y en el resto de bloques 
+  podremos poner lo que queramos, siempre que para dos servicios que hagamos no 
+  utilicemos el mismo UUID.</p>
+<p>Una vez hayamos generado un UUID para nuestro servicio, podemos introducirlo 
+  como constante en el c&oacute;digo de nuestra aplicaci&oacute;n para tener acceso 
+  a &eacute;l cuando sea necesario, tanto desde el cliente como desde el servidor.</p>
+<pre class="codigo">public final static String <strong>UUID</strong> = &quot;000000000000010008000123456789ab&quot;;</pre>
+<p>Para poder registrar nuestro servicio, lo primero que debemos hacer es establecer 
+  nuestro dispositivo como descubrible. Para ello accederemos a nuestro dispositivo 
+  local a trav&eacute;s de un objeto <code>LocalDevice</code> que obtenemos de 
+  la siguiente forma:</p>
+<pre class="codigo"><strong>LocalDevice</strong> ld = <strong>LocalDevice</strong>.<strong>getLocalDevice</strong>();</pre>
+<p>Con este objeto <code>LocalDevice</code> podremos obtener datos de nuestro 
+  dispositivo local como su direcci&oacute;n bluetooth o su nombre.</p>
+<pre class="codigo">String bt_addr = ld.<strong>getBluetoothAddress</strong>();
+String bt_name = ld.<strong>getFriendlyName</strong>();</pre>
+<p>Una vez tenemos acceso a este objeto, podremos cambiar el modo de ser descubierto 
+  del mismo utilizando el m&eacute;todo <code>setDiscoverable</code>. Hay tres 
+  modos de ser descubiertos:</p>
+<ul>
+  <li><code><strong>DiscoveryAgent.GIAC</strong></code>: Es el modo general que 
+    se utiliza para que los dispositivos bluetooth sean descubiertos (GIAC). <br>
+  </li>
+  <li><code><strong>DiscoveryAgent.LIAC</strong></code>: Se trata de un modo limitado 
+    para acotar la b&uacute;squeda (LIAC, o tambi&eacute;n conocido como DIAC). 
+    Ser&aacute; de utilidad cuando estemos en un entorno con muchos dispositivos 
+    bluetooth y estemos buscando uno de ellos en concreto. Haciendo una analog&iacute;a, 
+    ser&iacute;a como cuando estamos buscando a un conocido entre una multitud, 
+    y nuestro conocido levanta la mano para que le podamos encontrar r&aacute;pidamente.<br>
+  </li>
+  <li><code><strong>DiscoveryAgent.NOT_DISCOVERABLE</strong></code>: No descubrible. 
+    Nuestro dispositivo no podr&aacute; ser localizado por ning&uacute;n otro 
+    dispositivo de nuestro entorno.</li>
+</ul>
+<p>Si no consigui&eacute;semos hacer nuestro dispositivo localizable, lanzaremos 
+  una excepci&oacute;n para interrumpir el flujo del programa, ya que no podremos 
+  publicar servicios si nadie va a poder descubrirlos.</p>
+<pre class="codigo">if (!ld.<strong>setDiscoverable</strong>(<strong>DiscoveryAgent.GIAC</strong>)) {
+  // Lanzar excepcion, no se puede descubrir
+}</pre>
+<p>Una vez establecido el dispositivo local como descubrible, pasaremos a crear 
+  y registrar el servicio. Deberemos definir una URL para nuestro servicio a partir 
+  de su UUID. En la URL especificaremos el protocolo de comunicaciones que vamos 
+  a utilizar. Para utilizar RFCOMM utilizaremos el protocolo <code>btspp</code> 
+  (Bluetooth Serial Port Protocol), mientras que para L2CAP utilizaremos <code>btl2cap</code>:</p>
+<pre class="codigo">String url = &quot;btspp://localhost:&quot; + UUID;</pre>
+<p>Utilizando esta URL crearemos una conexi&oacute;n que ser&aacute; la encargada 
+  de atender para prestar dicho servicio:</p>
+<pre class="codigo"><strong>StreamConnectionNotifier</strong> scn = <br>   (<strong>StreamConnectionNotifier</strong>)Connector.open(url);</pre>
+<p>Con esto tendremos ya nuestro servicio registrado en el dispositivo. Podemos 
+  obtener un registro del servicio que ser&aacute; accesible tanto desde el lado 
+  del cliente como desde el servidor. En este objeto podremos a&ntilde;adir atributos 
+  que el cliente del servicio podr&aacute; leer.</p>
+<pre class="codigo"><strong>ServiceRecord</strong> sr = ld.<strong>getRecord</strong>(scn);
+</pre>
+<p>Ahora que tenemos el servicio creado y registrado, deberemos atender las conexiones 
+  que se produzcan a dicho servicio. Con <code>acceptAndOpen</code> nos quedaremos 
+  bloqueados esperando que se conecte alg&uacute;n cliente a nuestro servicio. 
+  Una vez conectado obtendremos una conexi&oacute;n de tipo <code>StreamConnection</code>, 
+  a partir de la cual podremos abrir flujos de entrada y salida para comunicarnos 
+  con el dispositivo remoto seg&uacute;n el protocolo que hayamos establecido.</p>
+<pre class="codigo">while(true) {
+  <strong>StreamConnection</strong> sc = (<strong>StreamConnection</strong>)scn.<strong>acceptAndOpen</strong>();<br><br>  // Se ha conectado un maestro
+   
+  InputStream is = sc.<strong>openInputStream</strong>();
+  OutputStream os = sc.<strong>openOutputStream</strong>();
+   
+  // Enviar y recibir datos seg&uacute;n el protocolo que establezcamos
+   
+  os.<strong>flush</strong>();
+  is.<strong>close</strong>();
+  os.<strong>close</strong>();
+  sc.<strong>close</strong>();
+}</pre>
+<h3><strong>14.2.4. Descubrimiento de dispositivos</strong></h3>
+<p>Para establecer una conexi&oacute;n con otro dispositivo, lo primero que necesitaremos 
+  es localizar (descubrir) dicho dispositivo.</p>
+<p>Para localizar los dispositivos necesitaremos utilizar un objeto <code>DiscoveryAgent</code> 
+  que obtendremos a partir del objeto <code>LocalDevice</code>:</p>
+<pre class="codigo"><strong>LocalDevice</strong> ld = <strong>LocalDevice</strong>.<strong>getLocalDevice</strong>();
+<strong>DiscoveryAgent</strong> da = ld.<strong>getDiscoveryAgent</strong>();</pre>
+<p>La b&uacute;squeda se podr&aacute; hacer de tres formas diferentes:</p>
+<ul>
+  <li>Buscar todos los dispositivos del entorno: Con el m&eacute;todo <code>startInquiry</code> 
+    se realiza una b&uacute;squeda de todos los dispositivos que haya actualmente 
+    en nuestro entorno. Deberemos proporcionar un <em>listener</em>, que ser&aacute; 
+    llamado cada vez que se encuentre un nuevo dispositivo.<br>
+  </li>
+  <li>Obtener dispositivos en cach&eacute;: Obtiene la lista de dispositivos que 
+    se hayan almacenado en cach&eacute; despu&eacute;s de b&uacute;squedas anteriores. 
+    Obtendremos la lista de dispositivos remotos con:</li>
+</ul>
+<pre class="codigo"><strong>RemoteDevice</strong>[] dispositivos = <br>    da.<strong>retrieveDevices</strong>(<strong>DiscoveryAgent.CACHED</strong>);</pre>
+<ul>
+  <li>Obtener dispositivos preconocidos: Obtiene la lista de dispositivos preconocidos 
+    que tengamos configurada en nuestro dispositivo. Podemos a&ntilde;adir dispositivos 
+    a esta lista en el centro de control de bluetooth de nuestro m&oacute;vil. 
+    Obtendremos esta lista de dispositivos con:</li>
+</ul>
+<pre class="codigo"><strong>RemoteDevice</strong>[] dispositivos = <br>    da.<strong>retrieveDevices</strong>(<strong>DiscoveryAgent.PREKNOWN</strong>);</pre>
+<p></p>
+<p>Vamos a ver c&oacute;mo descubrir los dispositivos que hay actualmente en nuestro 
+  entorno con <code>startInquiry</code>. Necesitaremos definir un listener que 
+  herede de <code>DiscoveryListener</code> e implemente los siguientes m&eacute;todos:</p>
+<pre class="codigo">public void <strong>deviceDiscovered</strong>(RemoteDevice rd, DeviceClass dc);
+public void <strong>inquiryCompleted</strong>(int tipo);
+public void <strong>servicesDiscovered</strong>(int transID, ServiceRecord[] servicios);
+public void <strong>serviceSearchCompleted</strong>(int transID, int estado);</pre>
+<p>Los dos primeros m&eacute;todos se utilizar&aacute;n durante el descubrimiento 
+  de dispositivos, mientras que los dos &uacute;ltimos se utilizar&aacute;n para 
+  el descubrimiento de servicios de un dispositivo, como veremos m&aacute;s adelante.</p>
+<p>El m&eacute;todo <code>deviceDiscovered</code> se invocar&aacute; cada vez 
+  que un dispositivo remoto sea descubierto. El c&oacute;digo que introduciremos 
+  en &eacute;l normalmente ser&aacute; para a&ntilde;adir dicho dispositivo a 
+  una lista de dispositivos descubiertos:</p>
+<pre class="codigo">public void <strong>deviceDiscovered</strong>(RemoteDevice rd, DeviceClass dc) {
+  remoteDevices.addElement(rd);
+}
+</pre>
+<p>A partir del objeto <code>RemoteDevice</code> obtenido podremos obtener informaci&oacute;n 
+  sobre el dispositivo remoto, como su nombre o su direcci&oacute;n bluetooth, 
+  al igual que con <code>LocalDevice</code> obten&iacute;amos informaci&oacute;n 
+  sobre el dispositivo local. </p>
+<p>Una vez haya terminado la b&uacute;squeda de dispositivos se invocar&aacute; 
+  el m&eacute;todo <code>inquiryCompleted</code>. En este m&eacute;todo podremos 
+  introducir c&oacute;digo para que, en el caso de haberse completado la b&uacute;squeda 
+  con &eacute;xito, nuestra aplicaci&oacute;n pase a realizar la siguiente tarea 
+  pendiente, que normalmente ser&aacute; la b&uacute;squeda de servicios que nos 
+  ofrecen los dispositivos descubiertos.</p>
+<p>Cuando hayamos creado el listener, podremos comenzar la b&uacute;squeda con 
+  <code>startInquiry</code> especificando el modo de b&uacute;squeda (GIAC o LIAC) 
+  y el listener al que se notificar&aacute;n los dispositivos encontrados:</p>
+<pre class="codigo">da.<strong>startInquiry</strong>(DiscoveryAgent.GIAC, miListener);
+</pre>
+<p>Una vez terminada la b&uacute;squeda de dispositivos, necesitaremos buscar 
+  los servicios que nos ofrecen, para comprobar si est&aacute; disponible el servicio 
+  que buscamos (el que tiene nuestro UUID). </p>
+<p>Para cada dispositivo, podremos buscar los servicios identificados mediante 
+  una determinada UUID de la siguiente forma:</p>
+<pre class="codigo">da.<strong>searchServices</strong>(null, new UUID[]{new UUID(UUID,false)},<br>                 (RemoteDevice)remoteDevices.elementAt(i),miListener);
+ </pre>
+<p>Con esto comenzar&aacute; la b&uacute;squeda de servicios del dispositivo especificado. 
+  Cada vez que se encuentre uno o varios servicios nuevos, ser&aacute; invocado 
+  el m&eacute;todo <code>servicesDiscovered</code> con una lista de servicios 
+  descubiertos. Para cada servicio remoto encontrado tendremos un objeto <code>ServiceRecord</code>. 
+  Podemos a&ntilde;adir los servicios encontrados en una lista, igual que en el 
+  caso de los dispositivos:</p>
+<pre class="codigo">public void <strong>servicesDiscovered</strong>(int transID, ServiceRecord[] servicios) {
+  for(int i=0;i&lt;servicios.length;i++) {
+    remoteServices.addElement(servicios[i]);
+  }
+}</pre>
+<p>Cuando haya finalizado la b&uacute;squeda de servicios, se invocar&aacute; 
+  el m&eacute;todo <code>serviceSearchComplete</code>.</p>
+<h3><strong>14.2.5. Establecer conexiones</strong></h3>
+<p>Como &uacute;ltimo paso, tendremos que establecer una conexi&oacute;n con alguno 
+  de los servicios que hayamos localizado. Para ello utilizaremos el objeto <code>ServiceRecord</code> 
+  obtenido correspondiente a dicho servicio.</p>
+<pre class="codigo"> <strong>ServiceRecord</strong> rs = (<strong>ServiceRecord</strong>)remoteServices.elementAt(0);
+</pre>
+<p>A partir de este objeto podremos obtener la URL necesaria para conectarnos 
+  al servicio:</p>
+<pre class="codigo">String url = rs.<strong>getConnectionURL</strong>(<br>    ServiceRecord.NOAUTHENTICATE_NOENCRYPT, true);</pre>
+<p>Con esta URL podremos crear una conexi&oacute;n de tipo flujo y abrir los correspondiente 
+  flujos de entrada salida para intercambiar datos con el servidor:</p>
+<pre class="codigo"><strong>StreamConnection</strong> sc = (<strong>StreamConnection</strong>)Connector.open(url);<br><br>InputStream is = sc.<strong>openInputStream</strong>();
+OutputStream os = sc.<strong>openOutputStream</strong>();
+<br>// Enviar y recibir datos seg&uacute;n el protocolo que establezcamos
+   
+os.<strong>flush</strong>();<br>os.<strong>close</strong>();<br>is.<strong>close</strong>();
+sc.<strong>close</strong>();</pre>
+<h3><strong>14.2.6. Protocolo L2CAP</strong></h3>
+<p>En el caso de utilizar directamente el protocolo de bajo nivel L2CAP, utilizaremos 
+  una URL como la siguiente para crear la conexi&oacute;n:</p>
+<pre class="codigo">String url = &quot;btl2cap://localhost:&quot; + UUID;</pre>
+<p>Cuando abramos la conexi&oacute;n con <code>Connector.open</code> obtendremos 
+  un objeto de tipo <code>L2CAPConnectionNotifier</code>, y mediante el m&eacute;todo 
+  <code>acceptAndOpen</code> de este objeto podremos aceptar conexiones L2CAP 
+  de clientes. Cuando aceptemos una conexi&oacute;n de un cliente obtendremos 
+  un objeto <code>L2CAPConnection</code> con el que podremos realizar la comunicaci&oacute;n.</p>
+<p>Este objeto <code>L2CAPConnection</code> tiene dos m&eacute;todos <code>send</code> 
+  y <code>receive</code> con los que podremos enviar y recibir respectivamente 
+  paquetes de datos L2CAP. </p>
+<p>Como este protocolo no proporciona control de flujo, este control lo deberemos 
+  hacer nosotros si queremos asegurarnos de que los paquetes enviados no se han 
+  perdido. </p>
+<p>Utilizaremos este protocolo cuando necesitemos una comunicaci&oacute;n r&aacute;pida 
+  o cuando la p&eacute;rdida de paquetes no sea cr&iacute;tica para nuestra aplicaci&oacute;n.</p>
+</body>
+</html>

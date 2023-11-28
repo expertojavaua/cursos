@@ -1,0 +1,621 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Configuraci&oacute;n de Tomcat. Configuraci&oacute;n de Aplicaciones Web. </title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servidores Web" src="images/baner_j2ee_der.gif" title="Servidores Web"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Servidores web</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Servidores Web</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Servidores Web">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 3</div>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html">Roadmap</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion03-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Configuraci&oacute;n de Tomcat. Configuraci&oacute;n de Aplicaciones Web. </h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Configuraci%C3%B3n+de+Tomcat">Configuraci&oacute;n de Tomcat</a>
+<ul class="minitoc">
+<li>
+<a href="#Estructura+f%C3%ADsica+y+l%C3%B3gica+de+Tomcat">Estructura f&iacute;sica y l&oacute;gica de Tomcat</a>
+</li>
+<li>
+<a href="#Formas+de+cambiar+la+configuraci%C3%B3n">Formas de cambiar la configuraci&oacute;n</a>
+</li>
+<li>
+<a href="#Configurar+el+host">Configurar el host</a>
+</li>
+<li>
+<a href="#Configuraci%C3%B3n+en+Eclipse+WebTools">Configuraci&oacute;n en Eclipse WebTools</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Configuraci%C3%B3n+de+aplicaciones+web+en+Tomcat">Configuraci&oacute;n de aplicaciones web en Tomcat</a>
+<ul class="minitoc">
+<li>
+<a href="#El+descriptor+de+despliegue">El descriptor de despliegue</a>
+</li>
+<li>
+<a href="#El+contexto+de+la+aplicaci%C3%B3n+en+Tomcat">El contexto de la aplicaci&oacute;n en Tomcat</a>
+<ul class="minitoc">
+<li>
+<a href="#Un+ejemplo">Un ejemplo</a>
+</li>
+<li>
+<a href="#Filtrando+peticiones%3A">Filtrando peticiones: valves</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<p>En esta sesi&oacute;n veremos primero c&oacute;mo configurar Apache Tomcat. Una vez configuradas las caracter&iacute;sticas comunes
+a todas las aplicaciones veremos c&oacute;mo configurar los aspectos propios de cada aplicaci&oacute;n. De &eacute;stos hay algunos que son est&aacute;ndares e independientes
+del servidor, pero hay otros particulares a Tomcat. </p>
+
+
+<a name="N1000F"></a><a name="Configuraci%C3%B3n+de+Tomcat"></a>
+<h2 class="underlined_10">Configuraci&oacute;n de Tomcat</h2>
+<div class="section">
+<p>Para comprender mejor la configuraci&oacute;n de Tomcat antes hay que ver cu&aacute;l es su arquitectura, tanto desde
+	el punto de vista l&oacute;gico como f&iacute;sico.</p>
+<a name="N10018"></a><a name="Estructura+f%C3%ADsica+y+l%C3%B3gica+de+Tomcat"></a>
+<h3 class="underlined_5">Estructura f&iacute;sica y l&oacute;gica de Tomcat</h3>
+<p>
+<strong>Estructura f&iacute;sica</strong>
+</p>
+<p>La distribuci&oacute;n de Tomcat est&aacute; dividida en los siguientes directorios:</p>
+<ul>
+			
+<li>
+<span class="codefrag">bin</span>: ejecutables y scripts para arrancar y parar Tomcat.</li>
+			
+<li>
+<span class="codefrag">common</span>: clases y librer&iacute;as compartidas entre Tomcat y las aplicaciones web. Las clases se deben colocar en <span class="codefrag">common/classes</span>, mientras que las librer&iacute;as en formato JAR se deben poner en <span class="codefrag">common/lib</span>.</li>
+			
+<li>
+<span class="codefrag">conf</span>: ficheros de configuraci&oacute;n.</li>
+			
+<li>
+<span class="codefrag">logs</span>: directorio donde se guardan por defecto los logs.</li>
+			
+<li>
+<span class="codefrag">server</span>: las clases que componen Tomcat.</li>
+			
+<li>
+<span class="codefrag">shared</span>: clases compartidas por todas las aplicaciones web.</li>
+			
+<li>
+<span class="codefrag">webapps</span>: directorio usado por defecto como ra&iacute;z donde se colocan todas las aplicaciones web.</li>
+			
+<li>
+<span class="codefrag">work</span> y <span class="codefrag">temp</span>: directorios para almacenar informaci&oacute;n temporal</li>
+		
+</ul>
+<p>
+<strong><em>Los logs del servidor</em></strong>
+</p>
+<p>Adem&aacute;s del <em>log</em> de accesos, en Tomcat podemos tener otros ficheros de <em>log</em> cuya finalidad primordial es registrar eventos del servidor y de las aplicaciones para poder realizar una depuraci&oacute;n en caso de que se produzca alg&uacute;n error. </p>
+<p>Estos ficheros se encuentran dentro de la carpeta <span class="codefrag">logs</span>. Algunos ya vienen por defecto. Dependiendo de la versi&oacute;n de Tomcat, podemos encontrarnos uno o varios de los siguientes:</p>
+<ul>
+			
+<li>
+<span class="codefrag">catalina.aaaa-mm-dd.log</span>: <em>logger</em> global definido al nivel del <span class="codefrag">engine</span>.</li>
+			
+<li>
+<span class="codefrag">localhost.aaaa-mm-dd.log</span>: <em>logger</em> global a todas las aplicaciones del host <span class="codefrag">localhost</span>.</li>
+			
+<li>
+<span class="codefrag">manager.aaaa-mm-dd.log</span>: <em>logger</em> que utiliza el manager de Tomcat.</li>
+			
+<li>
+<span class="codefrag">admin.aaaa-mm-dd.log</span>: <em>logger</em> que utiliza la aplicaci&oacute;n de administraci&oacute;n.</li>
+		
+</ul>
+<p>En estos ficheros podremos encontrar mensajes sobre el funcionamiento general y errores generales del servidor Tomcat.</p>
+<p>
+<strong>Estructura l&oacute;gica: m&oacute;dulos</strong>
+</p>
+<p>Tomcat est&aacute; compuesto por una serie de m&oacute;dulos cuyo comportamiento es altamente configurable. Incluso se pueden cambiar las clases que utiliza Tomcat por clases propias modificando el fichero <span class="codefrag">server.xml</span>. La estructura general de dichos m&oacute;dulos se muestra en la siguiente figura.</p>
+<p>
+<img alt="" content-width="9cm" height="445" src="imagenes/diagrama.gif" width="433"></p>
+<p>Cada m&oacute;dulo viene representado por su correspondiente etiqueta en el fichero <span class="codefrag">server.xml</span>. </p>
+<ul>
+			
+<li>
+<strong>Server</strong>: es el propio Tomcat. Solo existe una instancia de este componente, que a su vez contiene a todos los dem&aacute;s elementos y subelementos.</li>
+			
+<li>
+<strong>Listener</strong>: monitoriza la creaci&oacute;n y eliminaci&oacute;n de contenedores web</li>
+			
+<li>
+<strong>GlobalNamingResources: </strong>sirve para definir mapeados de JNDI globales a todas las aplicaciones. Por ejemplo, para definir m&eacute;todos de conexi&oacute;n a bases de datos.</li>
+			
+<li>
+<strong>Service</strong>: un objeto de este tipo representa el sistema formado por un conjunto de conectores (<span class="codefrag">connector</span>) que reciben las peticiones de los clientes y las pasan a un <span class="codefrag">engine</span>, que las procesa. Por defecto viene definido el servicio llamado <span class="codefrag">Tomcat-Standalone</span>.</li>
+			
+<li>
+<strong>Connector</strong>: acepta ciertos tipos de peticiones para pasarlas al <span class="codefrag">engine</span>. Por defecto, Tomcat incorpora un conector HTTP/1.1 (sin SSL) por el puerto 8080, y otro para comunicaci&oacute;n con otros servidores (como Apache). Para cambiar el puerto por el que Tomcat acepta las peticiones HTTP basta con cambiar el atributo <span class="codefrag">port</span> de dicho <span class="codefrag">connector</span>.</li>
+			
+<li>
+<strong>Engine</strong>: representa al contenedor web.</li> 
+			
+<li>
+<strong>Host</strong>: representa un host (o un host virtual). Mediante <span class="codefrag">appBase</span> se especifica el directorio de donde "colgar&aacute;n" las aplicaciones web (por defecto <span class="codefrag">webapps</span>) </li>
+			
+<li>
+<strong>Context:</strong> representa una aplicaci&oacute;n web. Veremos de manera m&aacute;s detallada su configuraci&oacute;n.</li>
+			
+<li>
+<strong>DefaultContext</strong>: se aplica por defecto a aquellas aplicaciones que no tienen <span class="codefrag">context</span> propio. </li>
+		
+</ul>
+<p>Hay una serie de elementos que se pueden definir a varios niveles, de modo que por ejemplo pueden afectar a todo el servidor o solo a una aplicaci&oacute;n web:</p>
+<ul>
+			
+<li>
+<strong>Valve</strong>: es un componente que puede "filtrar" las peticiones.</li>
+			
+<li>
+<strong>Logger</strong>: define el funcionamiento de los <em>logs</em> para depuraci&oacute;n de errores (no los <em>logs</em> de acceso, que se definen mediante un <span class="codefrag">valve</span>).</li>
+			
+<li>
+<strong>Realm</strong>: define un conjunto de usuarios con permisos de acceso a un determinado contexto. </li>
+			
+<li>
+<strong>Manager</strong>: implementa el manejo de sesiones HTTP. Se puede configurar para que las sesiones se almacenen de manera permanente cuando se apaga el servidor.</li>
+			
+<li>
+<strong>Loader</strong>: cargador de clases para una aplicaci&oacute;n web. Es raro usar uno distinto al que viene por defecto.</li>
+		
+</ul>
+<a name="N10125"></a><a name="Formas+de+cambiar+la+configuraci%C3%B3n"></a>
+<h3 class="underlined_5">Formas de cambiar la configuraci&oacute;n</h3>
+<p>La configuraci&oacute;n de Tomcat est&aacute; almacenada en cuatro ficheros que se encuentran en el directorio <strong><span class="codefrag">conf</span></strong>. Tres de ellos est&aacute;n en formato XML y el cuarto es un fichero de pol&iacute;ticas de seguridad en el formato est&aacute;ndar de Java:</p>
+<ul>
+			
+<li>
+<span class="codefrag">server.xml</span>: el fichero principal de configuraci&oacute;n.</li>
+			
+<li>
+<span class="codefrag">web.xml</span>: es un fichero en el formato est&aacute;ndar para aplicaciones web con servlets, que contiene la configuraci&oacute;n global a todas las aplicaciones.</li>
+			
+<li>
+<span class="codefrag">tomcat-users.xml</span>: lista de usuarios y contrase&ntilde;as para autentificaci&oacute;n.</li>
+			
+<li>
+<span class="codefrag">catalina.policy</span>: pol&iacute;ticas de seguridad para la ejecuci&oacute;n del servidor.</li>
+		
+</ul>
+<p>Adem&aacute;s se puede cambiar gran parte de la configuraci&oacute;n a trav&eacute;s de la aplicaci&oacute;n de administraci&oacute;n.</p>
+<a name="N1014D"></a><a name="Configurar+el+host"></a>
+<h3 class="underlined_5">Configurar el host</h3>
+<p>Mediante el elemento <span class="codefrag">Host</span> se define la configuraci&oacute;n para un host o host virtual</p>
+<pre class="code">&lt;Host name="localhost" debug="0" appBase="webapps" u
+      npackWARs="true" autoDeploy="true"&gt;...</pre>
+<p>Algunos de los principales atributos de este elemento son los siguientes:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+			
+<tr>
+	      		
+<th colspan="1" rowspan="1"><strong>Atributo</strong></th>
+	      		<th colspan="1" rowspan="1"><strong>Significado</strong></th>
+	      		<th colspan="1" rowspan="1"><strong>Valor por defecto</strong></th>
+	    	
+</tr>
+	    	
+<tr>
+	      		
+<td colspan="1" rowspan="1"><span class="codefrag">name</span></td>
+	      		<td colspan="1" rowspan="1">nombre del host o host virtual</td>
+	      		<td colspan="1" rowspan="1">ninguno</td>
+	    	
+</tr>
+	    	
+<tr>
+	      		
+<td colspan="1" rowspan="1"><span class="codefrag">debug</span></td>
+	      		<td colspan="1" rowspan="1">nivel de mensajes de depuraci&oacute;n</td>
+	      		<td colspan="1" rowspan="1">0</td>
+	    	
+</tr>
+	    	
+<tr>
+	      		
+<td colspan="1" rowspan="1"><span class="codefrag">appBase</span></td>
+	      		<td colspan="1" rowspan="1">directorio donde se instalar&aacute;n las aplicaciones de este host (si es relativa, la ruta se supone con respecto al directorio de Tomcat)</td>
+	      		<td colspan="1" rowspan="1">ninguno</td>
+	    	
+</tr>
+	    	
+<tr>
+	      		
+<td colspan="1" rowspan="1"><span class="codefrag">unpackWARs</span></td>
+	      		<td colspan="1" rowspan="1">si es <span class="codefrag">true</span>, las aplicaciones empaquetadas en WAR se desempaquetan antes de ejecutarse</td>
+	      		<td colspan="1" rowspan="1"><span class="codefrag">true</span></td>
+	    	
+</tr>
+	    	
+<tr>
+	      		
+<td colspan="1" rowspan="1"><span class="codefrag">autoDeploy</span></td>
+	      		<td colspan="1" rowspan="1">si es <span class="codefrag">true</span>, se utiliza el despliegue autom&aacute;tico de aplicaciones</td>
+	      		<td colspan="1" rowspan="1"><span class="codefrag">true</span></td>
+	    	
+</tr>
+	    	
+<tr>
+	      		
+<td colspan="1" rowspan="1"><span class="codefrag">liveDeploy</span></td>
+	      		<td colspan="1" rowspan="1">si es <span class="codefrag">true</span>, se utiliza despliegue autom&aacute;tico sin necesidad de rearrancar Tomcat </td>
+	      		<td colspan="1" rowspan="1"><span class="codefrag">true</span></td>
+	    	
+</tr>
+		
+</table>
+<p>El despliegue autom&aacute;tico de aplicaciones es una interesante caracter&iacute;stica que permite instalarlas sin m&aacute;s que dejar el WAR o la estructura de directorios de la aplicaci&oacute;n dentro del directorio <span class="codefrag">appBase</span>. Esta caracter&iacute;stica se puede desactivar poniendo <span class="codefrag">autoDeploy</span> y <span class="codefrag">liveDeploy</span> a <span class="codefrag">false</span>. Veremos m&aacute;s sobre ello en el punto siguiente.</p>
+<a name="N10206"></a><a name="Configuraci%C3%B3n+en+Eclipse+WebTools"></a>
+<h3 class="underlined_5">Configuraci&oacute;n en Eclipse WebTools</h3>
+<p>Al ejecutar aplicaciones mediante WebTools, Eclipse est&aacute; empleando una copia de los ficheros de configuraci&oacute;n
+		de Tomcat, de modo que puedan cambiarse sin afectar a la instalaci&oacute;n del servidor. Dicha configuraci&oacute;n
+		es accesible a trav&eacute;s de la carpeta <span class="codefrag">Servers</span> que aparece en Eclipse como si fuera un proyecto m&aacute;s. Por cada
+		<em>runtime</em> de servidor web configurado en Eclipse tendremos una subcarpeta dentro de <span class="codefrag">Servers</span>, en la
+		que aparecer&aacute;n los ficheros de configuraci&oacute;n del servidor que ya hemos visto: <span class="codefrag">server.xml</span>,
+		<span class="codefrag">tomcat-users.xml</span>,.... Aunque no es necesario, ni recomendable salvo que sepamos
+		con seguridad lo que estamos haciendo, podemos modificar manualmente estos archivos si necesitamos una
+		configuraci&oacute;n m&aacute;s flexible que la que ofrecen las opciones de WebTools.</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/serverEclipse.gif"></p>
+</div>
+
+
+
+
+<a name="N10226"></a><a name="Configuraci%C3%B3n+de+aplicaciones+web+en+Tomcat"></a>
+<h2 class="underlined_10">Configuraci&oacute;n de aplicaciones web en Tomcat</h2>
+<div class="section">
+<p>Una vez visto c&oacute;mo cambiar aspectos comunes a todas las aplicaciones, veamos c&oacute;mo configurar cada aplicaci&oacute;n
+	de modo individual. El mecanismo est&aacute;ndar en aplicaciones web JavaEE es el descriptor de despliegue, aunque Tomcat aporta
+	algo de funcionalidad extra a trav&eacute;s del <em>contexto</em>.</p>
+<a name="N10232"></a><a name="El+descriptor+de+despliegue"></a>
+<h3 class="underlined_5">El descriptor de despliegue</h3>
+<p>Como hemos dicho anteriormente, el directorio <span class="codefrag">WEB-INF</span> de una aplicaci&oacute;n web con servlets y/o p&aacute;ginas JSP, debe haber un fichero descriptor de despliegue (llamado <strong><span class="codefrag">web.xml</span></strong>) que contenga la informaci&oacute;n relativa a la aplicaci&oacute;n.</p>
+<p>El <span class="codefrag">web.xml</span> es est&aacute;ndar en JavaEE y por tanto todo lo visto en esta secci&oacute;n es igualmente aplicable a cualquier servidor
+		compatible JavaEE, aunque no sea Tomcat. </p>
+<p>Es un fichero XML, que comienza con una cabecera XML que indica la versi&oacute;n y la codificaci&oacute;n de caracteres, y un <span class="codefrag">DOCTYPE</span> que indica el tipo de documento, y la especificaci&oacute;n de servlets que se sigue. La etiqueta ra&iacute;z del documento XML es <strong><span class="codefrag">web-app</span></strong>. As&iacute;, un ejemplo de fichero podr&iacute;a ser:</p>
+<pre class="code">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns="http://java.sun.com/xml/ns/javaee" 
+  xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+                      http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+  id="WebApp_ID" version="2.5"&gt;
+	&lt;<strong>display-name</strong>&gt;
+		Mi Aplicacion Web
+	&lt;/<strong>display-name</strong>&gt;
+	&lt;<strong>description</strong>&gt;
+		Esta es una aplicacion web sencilla a modo de ejemplo
+	&lt;/<strong>description</strong>&gt;
+&lt;/<strong>web-app</strong>&gt;</pre>
+<p>En este caso se est&aacute; utilizando la especificaci&oacute;n 2.5 de servlets. Algunos servidores permiten omitir la cabecera <span class="codefrag">xml</span> y el <span class="codefrag">DOCTYPE</span>, pero s&iacute; es una buena costumbre el ponerlas. </p>
+<p>Dentro de la etiqueta ra&iacute;z <span class="codefrag">&lt;web-app&gt;</span> podemos colocar otros elementos que ayuden a
+		 establecer la configuraci&oacute;n de nuestra aplicaci&oacute;n web. Veremos a continuaci&oacute;n algunos de ellos. En algunos elementos profundizaremos un poco m&aacute;s, por tratarse de elementos gen&eacute;ricos de una aplicaci&oacute;n web (variables globales, etc). En otros (servlets, filtros, etc), simplemente se indicar&aacute; qu&eacute; elementos se tratan, pero su configuraci&oacute;n se explicar&aacute; en temas m&aacute;s espec&iacute;ficos. </p>
+<p>A partir de la versi&oacute;n 2.4 de la especificaci&oacute;n (Tomcat 5.5), el orden de las etiquetas dentro del archivo es libre. No obstante,
+las discutiremos en el orden que hab&iacute;a que seguir hasta esta versi&oacute;n.</p>
+<p>
+<strong>1. Informaci&oacute;n general de la aplicaci&oacute;n</strong>
+</p>
+<p>Primero tenemos etiquetas con informaci&oacute;n general: </p>
+<ul>
+			
+<li>
+<strong><span class="codefrag">&lt;display-name&gt;</span></strong>: nombre con que deben utilizar las aplicaciones gr&aacute;ficas para referenciar a la aplicaci&oacute;n</li>
+			
+<li>
+<strong><span class="codefrag">&lt;description&gt;</span></strong>: texto descriptivo de la aplicaci&oacute;n</li>
+		
+</ul>
+<p>
+<em><strong>Variables globales</strong></em>
+</p>
+<p>Podemos tener varias etiquetas: </p>
+<ul>
+			
+<li>
+				
+<p>
+<strong><span class="codefrag">&lt;context-param&gt;</span></strong>: para declarar las variables globales a toda la aplicaci&oacute;n web, y sus valores. Dentro tiene dos subetiquetas:</p>
+				
+<ul>
+					
+<li>
+<strong><span class="codefrag">&lt;param-name&gt;</span></strong>: nombre de la variable o par&aacute;metro</li>
+					
+<li>
+<strong><span class="codefrag">&lt;param-value&gt;</span></strong>: valor de la variable o par&aacute;metro</li>
+				
+</ul>
+			
+</li>
+		
+</ul>
+<p>Un ejemplo:</p>
+<pre class="code">&lt;context-param&gt;	
+	&lt;param-name&gt;param1&lt;/param-name&gt;	
+	&lt;param-value&gt;valor1&lt;/param-value&gt;
+&lt;/context-param&gt;</pre>
+<p>Estos par&aacute;metros pueden leerse desde servlets con el m&eacute;todo <strong><span class="codefrag">getInitParameter</span></strong> del objeto <span class="codefrag">ServletContext</span>.</p>
+<p>
+<strong>2. Filtros</strong>
+</p>
+<p>Para el tratamiento de filtros se tienen las etiquetas: </p>
+<ul>
+			
+<li>
+<strong><span class="codefrag">&lt;filter&gt;</span></strong>: para asociar un nombre identificativo con la clase que implementa el filtro</li>
+			
+<li>
+<strong><span class="codefrag">&lt;filter-mapping&gt;</span></strong>: para asociar un nombre identificativo de filtro con una URL o patr&oacute;n de URL</li>
+		
+</ul>
+<p>Se pueden tener varias de estas etiquetas, cada una para un filtro.</p>
+<p>
+<strong>3. Oyentes</strong>
+</p>
+<p>Se tiene la etiqueta: </p>
+<ul>
+			
+<li>
+<strong><span class="codefrag">&lt;listener&gt;</span></strong>: para definir una clase oyente que responde ante eventos en sesiones y contextos (al iniciar, al cerrar, al modificar).</li>
+		
+</ul>
+<p>
+<strong>4. Servlets</strong>
+</p>
+<p>Para definir los servlets en nuestro fichero de configuraci&oacute;n, se tienen las etiquetas:</p>
+<ul>
+			
+<li>
+<strong><span class="codefrag">&lt;servlet&gt;</span></strong>: asocia un nombre identificativo con una clase Java que implementa un servlet</li>
+			
+<li>
+<strong><span class="codefrag">&lt;servlet-mapping&gt;</span></strong>: asocia un nombre identificativo de servlet con una URL o patr&oacute;n de URL.</li>
+		
+</ul>
+<p>Se pueden tener varias de estas etiquetas, cada una para un servlet.</p>
+<p>
+<strong>5. Configuraci&oacute;n de sesi&oacute;n</strong>
+</p>
+<p>Se tiene la etiqueta: </p>
+<ul>
+			
+<li>
+<strong><span class="codefrag">&lt;session-config&gt;</span></strong>: para indicar par&aacute;metros de configuraci&oacute;n de las sesiones.</li>
+		
+</ul>
+<p>Por ejemplo, podemos indicar el tiempo (en minutos) que le damos a una sesi&oacute;n de usuario antes de que el servidor la finalice:</p>
+<pre class="code">&lt;session-config&gt;	
+	&lt;session-timeout&gt;30&lt;/session-timeout&gt;
+&lt;/session-config&gt;</pre>
+<p>
+<strong>6. P&aacute;ginas de inicio</strong>
+</p>
+<p>Se tiene la etiqueta: </p>
+<ul>
+			
+<li>
+				
+<p>
+<strong><span class="codefrag">&lt;welcome-file-list&gt;</span></strong>: para indicar qu&eacute; p&aacute;ginas debe buscar Tomcat como p&aacute;ginas de inicio en el caso de que en la URL se indique el directorio, pero no la p&aacute;gina, como por ejemplo:</p>
+				
+<pre class="code">http://localhost:8080/unadireccion/dir/</pre>
+				
+<p>Para ello, esta etiqueta tiene una o varias subetiquetas <strong><span class="codefrag">&lt;welcome-file&gt;</span> </strong>para indicar cada una de las posibles p&aacute;ginas</p>
+			
+</li>
+		
+</ul>
+<p>Por ejemplo, podemos indicar que las p&aacute;ginas por defecto sean <span class="codefrag">index.html </span> o <span class="codefrag">index.jsp </span>con:</p>
+<pre class="code">&lt;welcome-file-list&gt;	
+	&lt;welcome-file&gt;index.html&lt;/welcome-file&gt;	
+	&lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;
+&lt;/welcome-file-list&gt;</pre>
+<p>Las p&aacute;ginas se buscan en el orden en que se especifican en esta etiqueta.</p>
+<p>
+<strong>7. Librer&iacute;as de tags</strong>
+</p>
+<p>Se tiene la etiqueta: </p>
+<ul>
+			
+<li>
+<strong><span class="codefrag">taglib</span></strong>: para cargar una librer&iacute;a de tags para utilizar en p&aacute;ginas JSP. Podemos tener una o varias de estas etiquetas.</li>
+		
+</ul>
+<p>
+<strong>8. Seguridad</strong>
+</p>
+<p>Para gestionar la seguridad en las aplicaciones Web se tienen las etiquetas: </p>
+<ul>
+			
+<li>
+<strong><span class="codefrag">security-constraint</span></strong>: permite especificar qu&eacute; URLs de la aplicaci&oacute;n deben protegerse</li>
+			
+<li>
+<strong><span class="codefrag">login-config</span></strong>: indica c&oacute;mo debe autorizar el servidor a los usuarios que quieran acceder a las URLs protegidas (indicadas con <span class="codefrag">security-constraint</span>)</li>
+			
+<li>
+<strong><span class="codefrag">security-role</span></strong>: da una lista de roles en los que se encuadrar&aacute;n los usuarios que intenten acceder a recursos protegidos. </li>
+		
+</ul>
+<p>Existen otras etiquetas internas, relacionadas con la seguridad, que no se encuentran detalladas aqu&iacute;, ya que las veremos
+		cuando hablemos de la seguridad en el servidor.</p>
+<a name="N1037C"></a><a name="El+contexto+de+la+aplicaci%C3%B3n+en+Tomcat"></a>
+<h3 class="underlined_5">El contexto de la aplicaci&oacute;n en Tomcat</h3>
+<p>Aunque el comportamiento interno de cada aplicaci&oacute;n se define desde su propio fichero <span class="codefrag">web.xml</span>, se pueden especificar tambi&eacute;n sus caracter&iacute;sticas a nivel global.
+		Esto se denomina en Tomcat el <em>contexto</em> de la aplicaci&oacute;n. Se puede definir un contexto por defecto con propiedades comunes a todas las aplicaciones
+		y adem&aacute;s un contexto para cada aplicaci&oacute;n de modo individual.</p>
+<a name="N1038B"></a><a name="Un+ejemplo"></a>
+<h4>Un ejemplo</h4>
+<p>Lo recomendado es definir el contexto en formato XML en un fichero denominado precisamente <span class="codefrag">context.xml</span>. Este fichero
+		se colocar&iacute;a en un directorio <span class="codefrag">META-INF</span> dentro del .war. Por ejemplo:</p>
+<pre class="code">
+&lt;Context reloadable="true"&gt;
+ &lt;WatchedResource&gt;META-INF/miConfig.xml&lt;/WatchedResource&gt;
+&lt;/Context&gt;
+</pre>
+<p>La configuraci&oacute;n se hace a trav&eacute;s de atributos del elemento <span class="codefrag">Context</span> o bien subelementos
+dentro de este. En el ejemplo anterior, el atributo <span class="codefrag">reloadable</span> indica que Tomcat debe recargar la
+aplicaci&oacute;n cuando se modifique algo de su c&oacute;digo Java. La etiqueta <span class="codefrag">WatchedResource</span> hace algo parecido
+pero sirve para cualquier tipo de fichero. As&iacute;, cuando modific&aacute;ramos el archivo <span class="codefrag">miConfig.xml</span>, Tomcat
+recargar&iacute;a la aplicaci&oacute;n permitiendo que esta tenga en cuenta los cambios.</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Tomcat es extremadamente flexible en cuanto a d&oacute;nde resida f&iacute;sicamente la definici&oacute;n del contexto. Adem&aacute;s de lo que hemos visto, se puede
+colocar en el propio <span class="codefrag">server.xml</span>, en un archivo XML dentro de <span class="codefrag">$TOMCAT_HOME/conf/</span>, etc. Esto hace 
+la configuraci&oacute;n a veces un poco confusa. Se recomienda consultar la documentaci&oacute;n de Tomcat para ver todas
+las posibilidades.</div>
+</div>
+<p>En la documentaci&oacute;n distribu&iacute;da con Tomcat se incluye una referencia de la configuraci&oacute;n del contexto. Se recomienda
+consultarla para tener una informaci&oacute;n m&aacute;s detallada.</p>
+<a name="N103BA"></a><a name="Filtrando+peticiones%3A"></a>
+<h4>Filtrando peticiones: valves</h4>
+<p>Un <strong>valve</strong> es un componente que se inserta en el ciclo de procesamiento de la petici&oacute;n. As&iacute;, se pueden filtrar peticiones "sospechosas" de ser ataques, no aceptar peticiones salvo que sean de determinados <em>hosts</em>, etc. Esto se puede hacer a nivel global (dentro del <span class="codefrag">engine</span>), para un host en concreto (dentro de <span class="codefrag">host</span>) o para una &uacute;nica aplicaci&oacute;n (dentro de <span class="codefrag">context</span>). Tomcat viene con varios <em>valves</em> predefinidos (que no son m&aacute;s que clases Java) , aunque el usuario puede escribir los suyos propios.</p>
+<p>
+<strong>Registro de accesos (<em>access log valve</em>)</strong>
+</p>
+<p>Crea un registro o <em>log</em> de accesos en el formato "est&aacute;ndar" para servidores web. Este <em>log</em> puede ser luego analizado con alguna herramienta para chequear el n&uacute;mero de accesos, el tiempo que permanece cada usuario en el sitio, etc. Para crear un registro de accesos, introducir en el <span class="codefrag">server.xml</span> un elemento similar al siguiente:</p>
+<pre class="code">&lt;Valve className="org.apache.catalina.valves.AccessLogValve"
+       directory="logs" prefix="localhost_access_log." suffix=".txt"
+       pattern="common" resolveHosts="false"/&gt;</pre>
+<p>Seg&uacute;n el nivel en el que se introduzca, se pueden registrar los accesos en todo el <span class="codefrag">host</span> o bien solo dentro de una aplicaci&oacute;n (<span class="codefrag">context</span>). El nombre del fichero de <em>log</em> se compone con el prefijo asignado a trav&eacute;s del atributo <span class="codefrag">prefix</span>, la fecha del sistema en el formato <span class="codefrag">aaaa-mm-dd </span>y el sufijo elegido con el atributo <span class="codefrag">suffix</span>. Cuando cambia la fecha autom&aacute;ticamente se crea un nuevo fichero de <em>log</em>.</p>
+<p>La informaci&oacute;n que aparece en el <em>log</em> es configurable. Si en el atributo <span class="codefrag">pattern</span> se especifica el valor <span class="codefrag">common</span>, se utiliza el formato est&aacute;ndar, t&iacute;pico de otros servidores web como Apache. Al especificar el valor <span class="codefrag">combined</span>, a la informaci&oacute;n anterior se a&ntilde;ade el valor de los campos <span class="codefrag">User-agent </span>y <span class="codefrag">Referer</span> de la petici&oacute;n HTTP. Si estos formatos no cubren nuestras necesidades, se puede hacer uno "a medida" empleando los c&oacute;digos de formato que aparecen en la documentaci&oacute;n de Tomcat.</p>
+<p>
+<strong>Filtro de hosts y de peticiones(<em>remote host filter</em> y <em>remote address filter valve</em>)</strong>
+</p>
+<p>Sirven para permitir o bloquear el acceso desde determinados host o desde determinadas direcciones IP. El nombre de los hosts o rango de direcciones se puede especificar mediante expresiones regulares. Por ejemplo, para permitir el acceso a la aplicaci&oacute;n de administraci&oacute;n &uacute;nicamente desde el host local se introducir&iacute;a en el <span class="codefrag">server.xml </span>algo como</p>
+<pre class="code">&lt;Context path="/admin" docBase="admin"&gt;
+	...
+	<strong>&lt;Valve className="org.apache.catalina.valves.RemoteAddrValve"
+	       allow="127.0.0.1" /&gt;</strong>
+	...
+&lt;/Context&gt;</pre>
+<p>El atributo <span class="codefrag">allow</span> sirve para especificar hosts o IPs permitidas y <span class="codefrag">deny</span> para especificar las prohibidas. En caso de no especificar valor para <span class="codefrag">allow</span>, se utilizar&aacute; el de <span class="codefrag">deny</span> para denegar peticiones y se aceptar&aacute; el resto. De manera similar, si no se especifica valor para deny, se permitir&aacute;n peticiones seg&uacute;n el valor de <span class="codefrag">allow</span> y se rechazar&aacute; el resto.</p>
+<p>
+<strong>Volcado de la petici&oacute;n (<em>request dumper valve</em>)</strong>
+</p>
+<p>Este valve se puede utilizar para depurar aplicaciones, ya que guarda toda la informaci&oacute;n de la petici&oacute;n HTTP del cliente. No utiliza m&aacute;s atributo que <span class="codefrag">className</span> para indicar el nombre de la clase que implementa este <em>valve</em>:</p>
+<pre class="code">&lt;Valve className="org.apache.catalina.valves.RequestDumperValve" /&gt; </pre>
+<p>
+<strong><em>Autentificaci&oacute;n &uacute;nica (<em>single sign-on valve</em>)</em></strong>
+</p>
+<p>Se puede utilizar un Valve para que el usuario se identifique en una &uacute;nica aplicaci&oacute;n y autom&aacute;ticamente conserve la misma identidad en todas las aplicaciones del mismo host, sin necesidad de identificarse de nuevo (<em>single sign-on valve</em>). Basta con a&ntilde;adir a nivel de Host un Valve como:</p>
+<pre class="code">&lt;Valve className="org.apache.catalina.authenticator.SingleSignOn" /&gt;</pre>
+</div>
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007 Depto. CCIA</div>
+</div>
+</body>
+</html>

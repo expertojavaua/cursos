@@ -1,0 +1,793 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Rampart y Axis2</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/cursos/sws"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servicios Web seguros" src="images/baner_j2ee_der.gif" title="Servicios Web seguros"></a>
+</div>
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Apuntes</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Servicios Web seguros</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Servicios Web seguros">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesi&oacute;n 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesi&oacute;n 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesi&oacute;n 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesi&oacute;n 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesi&oacute;n 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesi&oacute;n 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesi&oacute;n 7</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesi&oacute;n 8</div>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesi&oacute;n 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesi&oacute;n 10</a>
+</div>
+<div class="menuitem">
+<a href="sesion11-apuntes.html">Sesi&oacute;n 11</a>
+</div>
+<div class="menuitem">
+<a href="sesion12-apuntes.html">Sesi&oacute;n 12</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html" title="Roadmap">Roadmap</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion08-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Rampart y Axis2</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Cliente+seguro">Cliente seguro</a>
+</li>
+<li>
+<a href="#Servidor+seguro">Servidor seguro</a>
+</li>
+<li>
+<a href="#Ejercicios">Ejercicios</a>
+<ul class="minitoc">
+<li>
+<a href="#Calculadora+con+firma+digital+en+Axis2">Calculadora con firma digital en Axis2</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+
+<p>Axis2, en su distribuci&oacute;n b&aacute;sica, no ofrece la posibilidad de 
+utilizar seguridad en los servicios web. Para tal fin hay que descargar el 
+m&oacute;dulo de Rampart para Axis2. Descargamos la versi&oacute;n 1.5 de la web oficial 
+del proyecto, <a href="http://ws.apache.org/rampart/">http://ws.apache.org/rampart/</a>. 
+Descomprimimos en alguna ruta y copiamos los m&oacute;dulos y las librer&iacute;as 
+(bibliotecas) en sus carpetas correspondientes de Axis2:</p>
+
+
+<pre class="code">
+servicios@servicios:~$ cp rampart-1.5/modules/* ~/axis2-1.5.1/repository/modules/
+servicios@servicios:~$ cp rampart-1.5/lib/* ~/axis2-1.5.1/lib/
+</pre>
+
+
+<p>(Re)iniciamos Axis2. Para terminar una ejecuci&oacute;n del servidor hay que 
+pulsar Ctrl-C.</p>
+
+
+<pre class="code">axis2-1.5.1/bin$ ./axis2server.sh</pre>
+
+
+<a name="N10020"></a><a name="Cliente+seguro"></a>
+<h2 class="underlined_10">Cliente seguro</h2>
+<div class="section">
+<p>Podemos, o bien crear un nuevo proyecto y a&ntilde;adirle la gesti&oacute;n de 
+dependencias de Maven, creando antes las carpetas correspondientes, o 
+bien copiar un proyecto existente. Vamos a copiar el proyecto 
+<span class="codefrag">SWSeguroCliente</span>, y pegarlo como <span class="codefrag">Axis2SWSeguroCliente</span>. 
+Aprovecharemos el mismo documento WSDL. Sin embargo, vamos a eliminar el 
+archvio <span class="codefrag">Seguro_SeguroSOAP_Client.java</span> del paquete custom, 
+y tambi&eacute;n vamos a eliminar todo el paquete <span class="codefrag">es.ua.jtech.seguro</span>, 
+para volver a generarlo. La instrucci&oacute;n de generaci&oacute;n tambi&eacute;n cambiar&aacute;, 
+porque es diferente en Axis2. Editamos <span class="codefrag">GeneraCodigo.java</span>, 
+que tiene que quedar as&iacute;:
+</p>
+<pre class="code"> 
+package es.ua.jtech.servcweb.hola.generador;
+
+import org.apache.axis2.wsdl.WSDL2Code;
+
+public class GeneraCodigo {
+	public static void main(String[] args) throws Exception{
+		WSDL2Code.main(new String[]{"-uw",
+				"-S", "src/main/java",
+				"-uri", "src/main/resources/Seguro.wsdl"});
+		
+		System.out.println("Generado, no olvide hacer Refresh.");
+	}
+
+}
+
+</pre>
+<p>Este c&oacute;digo dar&aacute; un error de compilaci&oacute;n (no encontrar&aacute; el import indicado) 
+si no a&ntilde;adimos a las dependencias del proyecto la generaci&oacute;n de c&oacute;digo para 
+Axis2. Editamos el <span class="codefrag">pom.xml</span> y a&ntilde;adimos las siguientes dependencias:</p>
+<ul>
+ 
+<li>axis2-codegen</li>
+ 
+<li>axis2-adb-codegen</li>
+ 
+<li>axis2-transport-http</li>
+ 
+<li>axis2-transport-local</li>
+
+</ul>
+<p>Todas ellas deben pertenecer al grupo <span class="codefrag">org.apache.axis2</span>, 
+y estar en su versi&oacute;n 1.5.1 (o posterior). Antes de guardarlo, 
+aprovechamos para eliminar la dependencia de CXF, y tambi&eacute;n podemos 
+eliminar el repositorio <span class="codefrag">apache-incubating</span>. 
+Finalmente el <span class="codefrag">pom.xml</span> queda as&iacute;:</p>
+<pre class="code"> 
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+               http://maven.apache.org/maven-v4_0_0.xsd"&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+  &lt;groupId&gt;SWSeguroClient&lt;/groupId&gt;
+  &lt;artifactId&gt;SWSeguroClient&lt;/artifactId&gt;
+  &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+  &lt;dependencies&gt;
+	&lt;dependency&gt;
+		&lt;groupId&gt;xerces&lt;/groupId&gt;
+		&lt;artifactId&gt;xercesImpl&lt;/artifactId&gt;
+		&lt;version&gt;2.9.1&lt;/version&gt;
+	&lt;/dependency&gt;
+	&lt;dependency&gt;
+		&lt;groupId&gt;org.apache.rampart&lt;/groupId&gt;
+		&lt;artifactId&gt;rampart-core&lt;/artifactId&gt;
+		&lt;version&gt;1.5&lt;/version&gt;
+	&lt;/dependency&gt;
+	&lt;dependency&gt;
+		&lt;groupId&gt;org.apache.rampart&lt;/groupId&gt;
+		&lt;artifactId&gt;rampart-policy&lt;/artifactId&gt;
+		&lt;version&gt;1.5&lt;/version&gt;
+	&lt;/dependency&gt;
+	&lt;dependency&gt;
+		&lt;groupId&gt;org.apache.axis2&lt;/groupId&gt;
+		&lt;artifactId&gt;axis2-codegen&lt;/artifactId&gt;
+		&lt;version&gt;1.5.1&lt;/version&gt;
+	&lt;/dependency&gt;
+	&lt;dependency&gt;
+		&lt;groupId&gt;org.apache.axis2&lt;/groupId&gt;
+		&lt;artifactId&gt;axis2-adb-codegen&lt;/artifactId&gt;
+		&lt;version&gt;1.5.1&lt;/version&gt;
+	&lt;/dependency&gt;
+	&lt;dependency&gt;
+		&lt;groupId&gt;org.apache.axis2&lt;/groupId&gt;
+		&lt;artifactId&gt;axis2-transport-http&lt;/artifactId&gt;
+		&lt;version&gt;1.5.1&lt;/version&gt;
+	&lt;/dependency&gt;
+	&lt;dependency&gt;
+		&lt;groupId&gt;org.apache.axis2&lt;/groupId&gt;
+		&lt;artifactId&gt;axis2-transport-local&lt;/artifactId&gt;
+		&lt;version&gt;1.5.1&lt;/version&gt;
+	&lt;/dependency&gt;
+  &lt;/dependencies&gt;
+  &lt;build&gt;
+  	&lt;plugins&gt;
+  		&lt;plugin&gt;
+  			&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+  			&lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+  			&lt;configuration&gt;
+  				&lt;source&gt;1.6&lt;/source&gt;
+  				&lt;target&gt;1.6&lt;/target&gt;
+  			&lt;/configuration&gt;
+  		&lt;/plugin&gt;
+  	&lt;/plugins&gt;
+  &lt;/build&gt;
+&lt;/project&gt;
+
+</pre>
+<p>Lo guardamos y esperamos a que se descarguen las dependencias y se 
+construya el espacio de trabajo. Si todo ha ido bien, el error de 
+<span class="codefrag">GeneraCodigo.java</span> habr&aacute; desaparecido. Antes de ejecutarlo 
+para generar el c&oacute;digo, vamos a modificar el WSDL para pasar a una versi&oacute;n 
+anterior de las pol&iacute;tica, y de la pol&iacute;tica de seguridad.</p>
+<p>Editamos <span class="codefrag">src/main/resources/Seguro.wsdl</span>. En la etiqueta 
+<span class="codefrag">wsdl:definitions</span> cambiamos los espacios de nombres 
+<span class="codefrag">xmlns:sp</span> y <span class="codefrag">xmlns:wsp</span> a:</p>
+<pre class="code">
+xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy" 
+xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+</pre>
+<p>Tambi&eacute;n modificamos los <span class="codefrag">sp:IncludeToken</span>. Todos ellos 
+(tres ocurrencias, en nuestro documento WSDL) hacen referencia al est&aacute;ndar </p>
+<pre class="code">
+http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/*
+</pre>
+<p>donde (*) es <span class="codefrag">AlwaysToRecipient</span>, o <span class="codefrag">Never</span>. 
+Debemos cambiarlas al est&aacute;ndar </p>
+<pre class="code">
+http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/*
+</pre>
+<p>Lo guardamos y ya podemos generar el c&oacute;digo y refrescar. 
+Ahora tenemos que crear una clase con un m&eacute;todo main. 
+En el paquete <span class="codefrag">es.ua.jtech.seguro.custom</span> a&ntilde;adimos una 
+nueva clase llamada <span class="codefrag">Cliente</span> y marcamos la casilla del 
+m&eacute;todo main en el asistente. Introducimos el siguiente c&oacute;digo:</p>
+<pre class="code"> 
+package es.ua.jtech.seguro.custom; 
+
+import java.io.FileNotFoundException; 
+import java.rmi.RemoteException; 
+
+import javax.xml.stream.XMLStreamException; 
+
+import org.apache.axiom.om.impl.builder.StAXOMBuilder; 
+import org.apache.axis2.context.ConfigurationContext; 
+import org.apache.axis2.context.ConfigurationContextFactory; 
+import org.apache.neethi.Policy; 
+import org.apache.neethi.PolicyEngine; 
+
+import es.ua.jtech.seguro.SeguroStub; 
+
+public class Cliente { 
+
+	public static void main(String[] args) 
+	  throws RemoteException, FileNotFoundException, XMLStreamException { 
+		ConfigurationContext context = ConfigurationContextFactory.
+          reateConfigurationContextFromFileSystem("repository"); 
+		SeguroStub servicio = new SeguroStub(context, 
+		"http://localhost:1234/axis2/services/Seguro"); 
+		servicio._getServiceClient().engageModule("rampart"); 
+		StAXOMBuilder builder = 
+		  new StAXOMBuilder("src/main/resources/rampartConfig.xml"); 
+		Policy rampartPolicy = 
+		  PolicyEngine.getPolicy(builder.getDocumentElement()); 
+		servicio._getServiceClient().getAxisService().getPolicySubject().
+		  attachPolicy(rampartPolicy); 
+		System.out.println(servicio.saluda("Boyan", "Bonev")); 
+	} 
+
+} 
+
+</pre>
+<p>En el main se crea el contexto de configuraci&oacute;n a partir de un "repository" 
+que debemos a&ntilde;adir a nuestro proyecto cliente. Creamos en la base del 
+proyecto la carpeta <span class="codefrag">repository/modules</span>. 
+Copiamos dentro de modules los archivos </p>
+<pre class="code">
+rampart-1.5/modules/rahas-1.5.mar
+rampart-1.5/modules/rampart-1.5.mar
+</pre>
+<p>Despu&eacute;s de activar el uso del m&oacute;dulo rampart, el cliente crea 
+la configuraci&oacute;n de rampart a partir del archivo</p>
+<pre class="code">src/main/resources/rampartConfig.xml</pre>
+<p>Vamos a crearlo e introducir en &eacute;l la informaci&oacute;n del nombre de usuario, 
+el alias para el certificado de firma y de encriptaci&oacute;n, y la configuraci&oacute;n
+de criptograf&iacute;a de la firma y de la encriptaci&oacute;n, que va a contener la misma 
+informaci&oacute;n:</p>
+<pre class="code"> 
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+	xmlns="http://ws.apache.org/rampart/policy"&gt;
+	&lt;RampartConfig&gt;
+		&lt;user&gt;boyan&lt;/user&gt;
+		&lt;userCertAlias&gt;cliente1&lt;/userCertAlias&gt;
+		&lt;encryptionUser&gt;servidor1&lt;/encryptionUser&gt;
+		&lt;passwordCallbackClass&gt;
+			es.ua.jtech.seguro.custom.PasswordCallbackHandler
+		&lt;/passwordCallbackClass&gt;
+		&lt;signatureCrypto&gt;
+			&lt;crypto provider="org.apache.ws.security.components.crypto.Merlin"&gt;
+				&lt;property name="org.apache.ws.security.crypto.merlin.keystore.
+				                                                         type"&gt;
+					JKS
+				&lt;/property&gt;
+				&lt;property name="org.apache.ws.security.crypto.merlin.file"&gt;
+					/home/servicios/claves/cliente.ks
+				&lt;/property&gt;
+				&lt;property name="org.apache.ws.security.crypto.merlin.keystore.
+				                                                     password"&gt;
+					cliente1-kspass
+				&lt;/property&gt;
+			&lt;/crypto&gt;
+		&lt;/signatureCrypto&gt;
+		&lt;encriptionCrypto&gt;
+			&lt;crypto provider="org.apache.ws.security.components.crypto.Merlin"&gt;
+				&lt;property name="org.apache.ws.security.crypto.merlin.keystore.
+				                                                         type"&gt;
+					JKS
+				&lt;/property&gt;
+				&lt;property name="org.apache.ws.security.crypto.merlin.file"&gt;
+					/home/servicios/claves/cliente.ks
+				&lt;/property&gt;
+				&lt;property name="org.apache.ws.security.crypto.merlin.keystore.
+				                                                     password"&gt;
+					cliente1-kspass
+				&lt;/property&gt;
+			&lt;/crypto&gt;
+		&lt;/encriptionCrypto&gt;
+	&lt;/RampartConfig&gt;	
+&lt;/wsp:Policy&gt;
+
+</pre>
+<p>Una vez creado este fichero, ya no necesitamos la informaci&oacute;n 
+contenida en <span class="codefrag">crypto.properties</span>, y eliminamos este archivo.</p>
+<p>N&oacute;tese que la contrase&ntilde;a del usuario <span class="codefrag">&lt;user&gt;</span> 
+no se ha introducido en el fichero de configuraci&oacute;n. &Eacute;sta va a ser 
+introducida por el manejador de passwords, que, como indica la configuraci&oacute;n 
+que hemos introducido, debe encontrarse en: </p>
+<pre class="code">es.ua.jtech.seguro.custom.PasswordCallbackHandler</pre>
+<p>Creamos esa clase con el asistente, pulsando sobre el paquete 
+custom, New / Java Class, con el nombre <span class="codefrag">PasswordCallbackHandler</span>, 
+y le a&ntilde;adimos la interfaz <span class="codefrag">CallbackHandler</span>, dejando marcada 
+la casilla "Inherited abstract methods", que por defecto est&aacute; marcada. 
+Se generar&aacute; la clase con la funci&oacute;n handle, dentro de la cu&aacute;l insertamos 
+el siguiente c&oacute;digo:</p>
+<pre class="code"> 
+		for(Callback cb : callbacks){ 
+			WSPasswordCallback pcb = (WSPasswordCallback)cb; 
+			switch(pcb.getUsage()){ 
+			case WSPasswordCallback.SIGNATURE: 
+			case WSPasswordCallback.DECRYPT: 
+				if(pcb.getIdentifier().equals("cliente1")){ 
+					pcb.setPassword("cliente1-pass"); 
+				} 
+				break; 
+			case WSPasswordCallback.USERNAME_TOKEN: 
+				if(pcb.getIdentifier().equals("boyan")){ 
+					pcb.setPassword("boyan-pass"); 
+				} 
+			} 
+		} 
+
+</pre>
+<p>A&ntilde;adimos los imports que falten y guardamos. Si ejecutamos 
+<span class="codefrag">es.ua.jtech.seguro.custom.Cliente</span>, con el TCP Monitor 
+escuchando al puerto 1234 y reenviando al 8080, donde debe estar 
+escuchando el servidor de Axis2, debemos capturar en el TCP Monitor 
+el mensaje encriptado y firmado por el cliente. La respuesta por parte 
+del servidor ser&iacute;a una excepci&oacute;n de que no encuentra el servicio en el 
+endpoint. Vamos a implementarlo a continuaci&oacute;n. </p>
+</div> 
+
+<a name="N100DC"></a><a name="Servidor+seguro"></a>
+<h2 class="underlined_10">Servidor seguro</h2>
+<div class="section">
+<p>Copiamos el proyecto cliente, <span class="codefrag">Axis2SWSeguroCliente</span>, y lo pegamos 
+con el nombre <span class="codefrag">Axis2SWSeguroServidor</span>. El archivo <span class="codefrag">pom.xml</span> 
+se puede quedar igual, aunque podemos cambiar el Group Id y el Artifact Id a 
+<span class="codefrag">SWSeguroServidor</span>. Eliminamos la carpeta <span class="codefrag">repository</span>, 
+que no va a hacer falta, ya que este proyecto se empaquetar&aacute; y se 
+desplegar&aacute; en el servidor de Axis2, que ya cuenta con su propia carpeta 
+<span class="codefrag">repository</span>, en la cual, adem&aacute;s, ya hab&iacute;amos copiado los 
+m&oacute;dulos de rampart. Eliminamos tambi&eacute;n el paquete 
+<span class="codefrag">es.ua.jtech.seguro</span>, y dentro del paquete 
+<span class="codefrag">es.ua.jtech.seguro.custom</span> eliminamos <span class="codefrag">Cliente.java</span>, 
+pero dejamos el <span class="codefrag">PasswordCallbackHandler</span>, ya que Rampart 
+lo utilizar&aacute;. Editamos <span class="codefrag">GeneraCodigo.java</span> para 
+introducir los par&aacute;metros de generaci&oacute;n del c&oacute;digo de servidor, 
+e indicar la ruta <span class="codefrag">META-INF</span> que se crear&aacute; en la carpeta de recursos. 
+Ah&iacute; se copiar&aacute; el WSDL y se generar&aacute; un archvio <span class="codefrag">services.xml</span>, 
+que despu&eacute;s editaremos para incluir la configuraci&oacute;n de Rampart. 
+En <span class="codefrag">GeneraCodigo.java</span> cambiamos los par&aacute;metros a:</p>
+<pre class="code">
+		WSDL2Code.main(new String[]{"-ss", 
+				"-sd", "-uw", 
+				"-S", "src/main/java", 
+				"-R", "src/main/resources/META-INF", 
+				"-uri", "src/main/resources/Seguro.wsdl"}); 
+</pre>
+<p>Lo ejecutamos y pulsamos Refresh sobre el proyecto. Aparte de las 
+clases del paquete <span class="codefrag">es.ua.jtech.seguro</span>, tambi&eacute;n nos encontramos con 
+la nueva carpeta <span class="codefrag">src/main/resources/META-INF</span>. Vamos a editar el archivo 
+<span class="codefrag">services.xml</span> para indicarle que use rampart. Dentro de la secci&oacute;n 
+<span class="codefrag">&lt;service&gt;</span> introducimos:</p>
+<pre class="code"> 
+		&lt;module ref="rampart" /&gt; 
+		&lt;wsp:Policy 
+		    xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy" 
+			xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+			xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/
+			                   oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+			wsu:Id="p1"&gt; 
+
+			&lt;RampartConfig xmlns="http://ws.apache.org/rampart/policy"&gt; 
+				&lt;!-- Pegar aqu&iacute; el contenido de la RampartConfig de 
+				                                      rampartConfig.xml --&gt; 
+				&lt;!-- Cambiar el keystore a servidor.ks y la password 
+				                                     a servidor1-kspass --&gt; 
+
+				&lt;!-- Eliminar &lt;user&gt; y cambiar los siguientes alias     --&gt; 
+				&lt;userCertAlias&gt;servidor1&lt;/userCertAlias&gt; 
+				&lt;encryptionUser&gt;useReqSigCert&lt;/encryptionUser&gt; 
+
+
+			&lt;/RampartConfig&gt;	 
+
+			&lt;!-- Pegar aqu&iacute; el contenido de la Policy de Seguro.wsdl, inclu&iacute;do 
+			el AsymmetricBinding, Wss10, SignedParts, EncryptedParts, 
+			                                     SignedSupportingTokens --&gt; 
+			 
+		&lt;/wsp:Policy&gt; 
+
+</pre>
+<p>Como est&aacute; indicado en los comentarios, podemos copiar y pegar la 
+configuraci&oacute;n que tenemos en <span class="codefrag">rampartConfig.xml</span>, y a continuaci&oacute;n 
+podemos eliminar este archivo porque no nos va a hacer falta en el proyecto 
+del servidor. No debemos olvidar cambiar los nombres de los keystore, al 
+del keystore del servidor, y la contrase&ntilde;a correspondiente. Asimismo vamos 
+a cambiar el alias del certificado usado para firmar, ya que va a ser el 
+servidor quien firme con su clave p&uacute;blica (recordemos que en el keystore 
+del servidor no est&aacute; el certificado del cliente). En cuanto a la encriptaci&oacute;n, 
+el servidor encriptar&aacute; con el certificado cliente, que el cliente incluye 
+en sus mensajes, y eso se le indica a rampart con el nombre <span class="codefrag">useReqSigCert</span>. 
+Eliminamos el nombre de usuario, ya que el servidor no env&iacute;a informaci&oacute;n 
+de login al cliente, en este caso.</p>
+<p>Una vez hechos todos estos cambios en la configuraci&oacute;n de rampart, 
+hay que actualizar el manejador de contrase&ntilde;as del servidor, 
+que hab&iacute;amos reutilizado del cliente. Hay que cambiar el caso 
+<span class="codefrag">SIGNATURE | DECRYPT</span> para que asigne la contrase&ntilde;a 
+"<span class="codefrag">servidor1-pass</span>" cuando el identificador sea "<span class="codefrag">servidor1</span>". 
+El caso de <span class="codefrag">USERNAME_TOKEN</span> lo podemos eliminar, ya que el 
+servidor no se autenticar&aacute; a nivel de login de usuario contra 
+el cliente. Tras los cambios, la 
+<span class="codefrag">es.ua.jtech.seguro.custom.PasswordCallbackHandler</span> queda as&iacute;:</p>
+<pre class="code"> 
+package es.ua.jtech.seguro.custom;
+
+import java.io.IOException;
+
+import javax.security.auth.callback.Callback;
+import javax.security.auth.callback.CallbackHandler;
+import javax.security.auth.callback.UnsupportedCallbackException;
+
+import org.apache.ws.security.WSPasswordCallback;
+
+public class PasswordCallbackHandler implements CallbackHandler {
+
+	@Override
+	public void handle(Callback[] callbacks) throws IOException,
+			UnsupportedCallbackException {
+		for(Callback cb : callbacks){
+			WSPasswordCallback pcb = (WSPasswordCallback)cb;
+			switch(pcb.getUsage()){
+			case WSPasswordCallback.SIGNATURE:
+			case WSPasswordCallback.DECRYPT:
+				if(pcb.getIdentifier().equals("servidor1")){
+					pcb.setPassword("servidor1-pass");
+				}
+				break;
+			}
+		}
+	}
+
+}
+
+</pre>
+<p>Con esto ya tenemos configurada la seguridad. S&oacute;lo falta implementar 
+la operaci&oacute;n del servicio, en el Skeleton correspondiente. Ya que 
+vamos a editarlo, lo movemos al paquete <span class="codefrag">custom</span>. Pulsamos con el 
+bot&oacute;n derecho sobre <span class="codefrag">SeguroSkeleton.java</span> del paquete 
+<span class="codefrag">es.ua.jtech.seguro</span> y con la opci&oacute;n Refactor / Move... lo cambiamos al 
+paquete <span class="codefrag">es.ua.jtech.seguro.custom</span>. Antes de que se nos olvide, 
+vamos a editar de nuevo el archivo <span class="codefrag">services.xml</span>, donde la l&iacute;nea 
+</p>
+<pre class="code"> 
+&lt;parameter name="ServiceClass"&gt;es.ua.jtech.seguro.SeguroSkeleton&lt;/parameter&gt;
+
+</pre>
+<p>indica el paquete antiguo del <span class="codefrag">SeguroSkeleton</span>. La cambiamos a:</p>
+<pre class="code"> 
+&lt;parameter name="ServiceClass"&gt;es.ua.jtech.seguro.custom.SeguroSkeleton
+&lt;/parameter&gt;
+
+</pre>
+<p>Ahora podemos seguir editando <span class="codefrag">SeguroSkeleton.java</span>. 
+Copiamos el contenido de la funci&oacute;n saluda de la clase 
+<span class="codefrag">es.ua.jtech.seguro.custom.SegurImpl.java</span> que ten&iacute;amos en el 
+proyecto de CXF llamado <span class="codefrag">SWSeguroServicio</span>. Tambi&eacute;n copiamos la funci&oacute;n 
+<span class="codefrag">loggedIn( )</span> a la que se realiza una llamada. Dar&aacute; un error porque 
+ya no tenemos la variable <span class="codefrag">wsContext</span>, cuyo valor obten&iacute;amos antes 
+por inyecci&oacute;n, gracias a una anotaci&oacute;n de Java. As&iacute; que vamos a 
+modificar la primera l&iacute;nea de la funci&oacute;n <span class="codefrag">loggedIn( )</span>, para obtener 
+el contexto del mensaje con el m&eacute;todo est&aacute;tico 
+<span class="codefrag">getCurrentMessageContext</span> de la clase 
+<span class="codefrag">org.apache.axis2.context.MessageContext</span> de las librer&iacute;as de Axis2:
+</p>
+<pre class="code"> 
+	Vector&lt;WSHandlerResult&gt; handlerResults = 
+	  (Vector&lt;WSHandlerResult&gt;)org.apache.axis2.context.MessageContext.
+      getCurrentMessageContext().getProperty(WSHandlerConstants.RECV_RESULTS);
+
+</pre>
+<p>Podemos ignorar la advertencia de Type Safety, o bien a&ntilde;adir la etiqueta 
+<span class="codefrag">@SupressWarnings</span> al principio de la funci&oacute;n. Ahora la 
+clase no deber&iacute;a tener ning&uacute;n error. El c&oacute;digo final es:
+</p>
+<pre class="code"> 
+package es.ua.jtech.seguro.custom;
+
+import java.util.Vector;
+
+import org.apache.ws.security.WSConstants;
+import org.apache.ws.security.WSSecurityEngineResult;
+import org.apache.ws.security.WSUsernameTokenPrincipal;
+import org.apache.ws.security.handler.WSHandlerConstants;
+import org.apache.ws.security.handler.WSHandlerResult;
+
+/**
+ * SeguroSkeleton java skeleton for the axisService
+ */
+public class SeguroSkeleton {
+
+	public String saluda(String nombre, String apellido) {
+		if (loggedIn()) {
+			return "&iexcl;Hola, " + nombre.substring(0, 1) + ". " + apellido + "!";
+		} else {
+			return "Login incorrecto, le retiro el saludo.";
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private boolean loggedIn() {
+		Vector&lt;WSHandlerResult&gt; handlerResults = 
+		      (Vector&lt;WSHandlerResult&gt;) org.apache.axis2.context.MessageContext
+			  .getCurrentMessageContext().getProperty(
+						WSHandlerConstants.RECV_RESULTS);
+		for (WSHandlerResult handlerResult : handlerResults) {
+			for (WSSecurityEngineResult handler : 
+			     (Vector&lt;WSSecurityEngineResult&gt;) handlerResult.getResults()) {
+				int action = ((Integer) handler
+						.get(WSSecurityEngineResult.TAG_ACTION)).intValue();
+				if (action == WSConstants.UT) {
+					WSUsernameTokenPrincipal utp = 
+					        (WSUsernameTokenPrincipal) handler
+							.get(WSSecurityEngineResult.TAG_PRINCIPAL);
+					if (utp != null) {
+						if (utp.getName().equals("boyan")
+								&amp;&amp; utp.getPassword().equals("boyan-pass")) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+}
+
+</pre>
+<p>Tambi&eacute;n, despu&eacute;s de todas las modificaciones,  el XML final del 
+archivo <span class="codefrag">services.xml</span> ser&iacute;a el siguiente:
+</p>
+<pre class="code"> 
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+	&lt;!-- This file was auto-generated from WSDL --&gt;
+	&lt;!--
+		by the Apache Axis2 version: 1.5.1 Built on : Oct 19, 2009 (10:59:00
+		EDT)
+	--&gt;
+&lt;serviceGroup&gt;
+	&lt;service name="Seguro"&gt;
+		&lt;messageReceivers&gt;
+			&lt;messageReceiver mep="http://www.w3.org/ns/wsdl/in-out"
+				class="es.ua.jtech.seguro.SeguroMessageReceiverInOut" /&gt;
+		&lt;/messageReceivers&gt;
+		&lt;parameter name="ServiceClass"&gt;es.ua.jtech.seguro.custom.SeguroSkeleton
+		&lt;/parameter&gt;
+		&lt;parameter name="useOriginalwsdl"&gt;true&lt;/parameter&gt;
+		&lt;parameter name="modifyUserWSDLPortAddress"&gt;true&lt;/parameter&gt;
+		&lt;operation name="saluda" mep="http://www.w3.org/ns/wsdl/in-out"
+			namespace="http://jtech.ua.es/Seguro/"&gt;
+			&lt;actionMapping&gt;http://jtech.ua.es/Seguro/saluda&lt;/actionMapping&gt;
+			&lt;outputActionMapping&gt;http://jtech.ua.es/Seguro/Seguro/saludaResponse
+			&lt;/outputActionMapping&gt;
+		&lt;/operation&gt;
+		&lt;module ref="rampart" /&gt;
+		&lt;wsp:Policy 
+		    xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy"
+			xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+			xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/
+			                        oasis-200401-wss-wssecurity-utility-1.0.xsd"
+			wsu:Id="p1"&gt;
+
+			&lt;RampartConfig xmlns="http://ws.apache.org/rampart/policy"&gt;
+				&lt;userCertAlias&gt;servidor1&lt;/userCertAlias&gt;
+				&lt;encryptionUser&gt;useReqSigCert&lt;/encryptionUser&gt;
+				&lt;passwordCallbackClass&gt;
+					es.ua.jtech.seguro.custom.PasswordCallbackHandler
+				&lt;/passwordCallbackClass&gt;
+				&lt;signatureCrypto&gt;
+					&lt;crypto 
+					 provider="org.apache.ws.security.components.crypto.Merlin"&gt;
+						&lt;property name="org.apache.ws.security.crypto.merlin.
+						                           keystore.type"&gt;JKS&lt;/property&gt;
+						&lt;property name="org.apache.ws.security.crypto.merlin.
+						     file"&gt;/home/servicios/claves/servidor.ks&lt;/property&gt;
+						&lt;property name="org.apache.ws.security.crypto.merlin.
+						          keystore.password"&gt;servidor1-kspass&lt;/property&gt;
+					&lt;/crypto&gt;
+				&lt;/signatureCrypto&gt;
+				&lt;encriptionCrypto&gt;
+					&lt;crypto 
+					 provider="org.apache.ws.security.components.crypto.Merlin"&gt;
+						&lt;property name="org.apache.ws.security.crypto.merlin.
+						                           keystore.type"&gt;JKS&lt;/property&gt;
+						&lt;property name="org.apache.ws.security.crypto.merlin.
+						     file"&gt;/home/servicios/claves/servidor.ks&lt;/property&gt;
+						&lt;property name="org.apache.ws.security.crypto.merlin.
+						          keystore.password"&gt;servidor1-kspass&lt;/property&gt;
+					&lt;/crypto&gt;
+				&lt;/encriptionCrypto&gt;
+
+			&lt;/RampartConfig&gt;
+
+			&lt;sp:AsymmetricBinding&gt;
+				&lt;wsp:Policy&gt;
+					&lt;sp:InitiatorToken&gt;
+						&lt;wsp:Policy&gt;
+							&lt;sp:X509Token
+								sp:IncludeToken="http://schemas.xmlsoap.org/ws/
+								 2005/07/securitypolicy/IncludeToken/
+								 AlwaysToRecipient"&gt;
+								&lt;wsp:Policy&gt;
+									&lt;sp:WssX509V3Token10 /&gt;
+								&lt;/wsp:Policy&gt;
+							&lt;/sp:X509Token&gt;
+						&lt;/wsp:Policy&gt;
+					&lt;/sp:InitiatorToken&gt;
+					&lt;sp:RecipientToken&gt;
+						&lt;wsp:Policy&gt;
+							&lt;sp:X509Token
+								sp:IncludeToken="http://schemas.xmlsoap.org/ws/
+								 2005/07/securitypolicy/IncludeToken/Never"&gt;
+								&lt;wsp:Policy&gt;
+									&lt;sp:WssX509V3Token10 /&gt;
+								&lt;/wsp:Policy&gt;
+							&lt;/sp:X509Token&gt;
+						&lt;/wsp:Policy&gt;
+					&lt;/sp:RecipientToken&gt;
+					&lt;sp:AlgorithmSuite&gt;
+						&lt;wsp:Policy&gt;
+							&lt;sp:TripleDesRsa15 /&gt;
+						&lt;/wsp:Policy&gt;
+					&lt;/sp:AlgorithmSuite&gt;
+					&lt;sp:EncryptBeforeSigning /&gt;
+				&lt;/wsp:Policy&gt;
+			&lt;/sp:AsymmetricBinding&gt;
+			&lt;sp:Wss10&gt;
+				&lt;wsp:Policy&gt;
+					&lt;sp:MustSupportRefEmbeddedToken /&gt;
+					&lt;sp:MustSupportRefIssuerSerial /&gt;
+				&lt;/wsp:Policy&gt;
+			&lt;/sp:Wss10&gt;
+			&lt;sp:SignedParts&gt;
+				&lt;sp:Body /&gt;
+			&lt;/sp:SignedParts&gt;
+			&lt;sp:EncryptedParts&gt;
+				&lt;sp:Body /&gt;
+			&lt;/sp:EncryptedParts&gt;
+			&lt;sp:SignedSupportingTokens&gt;
+				&lt;wsp:Policy&gt;
+					&lt;sp:UsernameToken
+						sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/
+						 securitypolicy/IncludeToken/AlwaysToRecipient" /&gt;
+				&lt;/wsp:Policy&gt;
+			&lt;/sp:SignedSupportingTokens&gt;
+		&lt;/wsp:Policy&gt;
+	&lt;/service&gt;
+&lt;/serviceGroup&gt;
+
+</pre>
+</div> 
+
+<p class="pageBreakAfter"></p>
+
+<a name="N1019E"></a><a name="Ejercicios"></a>
+<h2 class="underlined_10">Ejercicios</h2>
+<div class="section">
+<a name="N101A3"></a><a name="Calculadora+con+firma+digital+en+Axis2"></a>
+<h3 class="underlined_5">Calculadora con firma digital en Axis2</h3>
+<p>El enunciado del ejercicio "Calculadora con firma digital" es:</p>
+<ul>
+<li>Implem&eacute;ntese un servicio de calculadora que realice la operaci&oacute;n
+suma de dos n&uacute;meros y la operaci&oacute;n resta de dos n&uacute;meros, devolviendo
+un &uacute;nico resultado de tipo double en cada una de ellas. El servicio
+deber&aacute; soportar firma digital, y el cliente deber&aacute; firmar los mensajes
+SOAP.</li>
+</ul>
+<p>En este ejercicio debemos adaptar la calculadora con firma digital
+a Axis2, desplegar el servicio seguro en Axis2, y probar con el cliente
+que funciona correctamente.</p>
+<p>Util&iacute;cese el TCP Monitor para observar el contenido de los mensajes 
+y la firma que debe acompa&ntilde;arlos.</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010 Depto. CCIA</div>
+</div>
+</body>
+</html>

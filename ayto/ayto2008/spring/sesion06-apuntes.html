@@ -1,0 +1,542 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Seguridad</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Spring" src="images/baner_j2ee_der.gif" title="Spring"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-web.html'">Aplicaciones Web</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-ent.html'">Aplicaciones Enterprise</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../charlas.html'">Charlas</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto</a>
+</li>
+<li>
+<a class="base-not-selected" href="index.html">Spring</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion06-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Seguridad</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Conceptos+b%C3%A1sicos">Conceptos b&aacute;sicos</a>
+</li>
+<li>
+<a href="#Una+configuraci%C3%B3n+m%C3%ADnima+para+una+aplicaci%C3%B3n+web">Una configuraci&oacute;n m&iacute;nima para una aplicaci&oacute;n web</a>
+</li>
+<li>
+<a href="#Proveedores+de+autentificaci%C3%B3n%3A+el+DAO+provider">Proveedores de autentificaci&oacute;n: el DAO provider</a>
+</li>
+<li>
+<a href="#Seguridad+web">Seguridad web</a>
+<ul class="minitoc">
+<li>
+<a href="#Autentificaci%C3%B3n+con+formulario">Autentificaci&oacute;n con formulario</a>
+</li>
+<li>
+<a href="#Autentificaci%C3%B3n+BASIC">Autentificaci&oacute;n BASIC</a>
+</li>
+<li>
+<a href="#Recordar+los+datos+del+usuario">Recordar los datos del usuario</a>
+</li>
+<li>
+<a href="#Logout">Logout</a>
+</li>
+<li>
+<a href="#Internacionalizaci%C3%B3n">Internacionalizaci&oacute;n</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Seguridad+en+ejecuci%C3%B3n+de+c%C3%B3digo">Seguridad en ejecuci&oacute;n de c&oacute;digo</a>
+<ul class="minitoc">
+<li>
+<a href="#Seguridad+con+AOP">Seguridad con AOP</a>
+</li>
+<li>
+<a href="#Seguridad+con+anotaciones">Seguridad con anotaciones</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<p>En este tema vamos a introducir <em>Spring Security</em>, un proyecto "hijo" de Spring que permite 
+controlar de forma declarativa y totalmente configurable la seguridad de nuestra aplicaci&oacute;n. Adem&aacute;s, nuestro
+proyecto ser&aacute; totalmente portable entre servidores, a diferencia de la
+seguridad declarativa est&aacute;ndar de JavaEE, que no lo es en varios aspectos, por ejemplo, la definici&oacute;n
+de usuarios y roles. </p>
+
+<p>En el momento de escribir estas l&iacute;neas acaba de aparecer la versi&oacute;n 2 de Spring Security. Esta versi&oacute;n, adem&aacute;s
+de incorporar numerosas mejoras, sobre todo simplifica bastante el proceso de configuraci&oacute;n. En versiones
+anteriores, el proyecto no estaba totalmente integrado debajo del "paraguas" de Spring y se 
+denominaba "Acegi". Por este nombre se puede encontrar en numerosos tutoriales y en varios libros. Si se consulta
+alguno de ellos, hay que tener en cuenta que se ha cambiado el "packaging" de todo el c&oacute;digo
+para que est&eacute; dentro de "org.springframework.security" en lugar de "org.acegisecurity" como anteriormente. Adem&aacute;s, como ya hemos dicho,
+muchas tareas se pueden realizar de forma m&aacute;s directa y sencilla en esta &uacute;ltima versi&oacute;n.</p>
+
+<a name="N10015"></a><a name="Conceptos+b%C3%A1sicos"></a>
+<h2 class="underlined_10">Conceptos b&aacute;sicos</h2>
+<div class="section">
+<p>Lo primero que encuentra un usuario que intenta acceder a una aplicaci&oacute;n segura es
+el mecanismo de <strong>autentificaci&oacute;n</strong>. Para autentificarse, el usuario
+necesita un <em>principal</em>, que t&iacute;picamente es un login y unas <em>credenciales</em>, normalmente
+un password. No siempre se usa login y password. El <em>principal</em> y las credenciales pueden
+proceder por ejemplo de un certificado digital o de otros mecanismos.</p>
+<p>En Spring Security, el encargado de gestionar la autentificaci&oacute;n es el <em>Authentication manager</em>. En versiones
+anteriores del <em>framework</em> era necesario definirlo expl&iacute;citamente, pero ahora solo lo es
+si tenemos necesidades especiales de configuraci&oacute;n. El <em>Authentication manager</em> depende de uno o varios 
+<em>authentication providers</em>, que son los que efectivamente obtienen el <em>principal</em>
+y credenciales del usuario. Spring security tiene implementados un gran n&uacute;mero de proveedores de autentificaci&oacute;n:
+login con formulario web, login con HTTP BASIC (el navegador muestra una ventana propia para introducir login y password), servidor LDAP, certificados digitales, etc.</p>
+<p>La autentificaci&oacute;n demuestra que el usuario es quien dice ser, pero queda por ver si tiene permiso
+de acceso al recurso que ha solicitado. Esto se denomina <strong>control de acceso</strong>. Aqu&iacute; entra en juego el <em>Access manager</em>, que en funci&oacute;n
+de las credenciales, toma la decisi&oacute;n de permitir o no el acceso. Normalmente cada usuario tiene asociado
+una serie de roles o, como se dice en Spring, de <em>authorities</em>, que se asocian a los recursos para permitir o no el acceso.</p>
+<p>En una aplicaci&oacute;n normalmente solo hay un <em>access manager</em>,
+aunque Spring permite el uso simult&aacute;neo de varios, que "por consenso" o "por votaci&oacute;n" decidir&aacute;n
+si conceden el acceso al recurso</p>
+<p>En aplicaciones web sencillas el control de accesos declarativo suele ser una cuesti&oacute;n de "todo o nada" para un determinado rol. Una forma m&aacute;s avanzada de control de accesos es algo muy com&uacute;n en sistemas operativos: las <em>Access Control
+Lists</em> (ACL) que especifican qu&eacute; operaciones (acceso/modificaci&oacute;n/borrado) puede realizar cada usuario sobre cada recurso. Las aplicaciones
+con requerimientos de seguridad avanzados pueden asignar a cada recurso un ACL que controlar&aacute;
+Spring Security, lo que proporciona una enorme flexibilidad de configuraci&oacute;n.
+</p>
+<p>Hay otros tipos de gestores de seguridad en Spring Security, como los <em>run-as managers</em>, que permiten
+ejecutar ciertas tareas cambiando temporalmente el rol del usuario (al estilo de <span class="codefrag">su</span> en UNIX) o los
+<em>after invocation managers</em>, que controlan que todo es correcto <em>despu&eacute;s</em> de acceder al recurso. No
+obstante, quedan fuera del &aacute;mbito de estos apuntes. Aunque la documentaci&oacute;n de Spring Security no
+es tan exhaustiva como la del propio Spring, es bastante aceptable y pueden consultarse en ella
+todos estos conceptos.</p>
+</div>
+
+<a name="N10064"></a><a name="Una+configuraci%C3%B3n+m%C3%ADnima+para+una+aplicaci%C3%B3n+web"></a>
+<h2 class="underlined_10">Una configuraci&oacute;n m&iacute;nima para una aplicaci&oacute;n web</h2>
+<div class="section">
+<p>La configuraci&oacute;n de la versi&oacute;n 1 de Spring Security se realizaba definiendo diversos <em>beans</em>
+en el XML de Spring. Recordemos que para definir un bean en XML necesitamos
+la clase que lo implementa y pasarle los valores de las propiedades. La versi&oacute;n 2 incorpora
+una serie de etiquetas XML propias que definen estos beans de manera impl&iacute;cita y permiten realizar
+una configuraci&oacute;n mucho m&aacute;s concisa. Las aplicaciones con requerimientos de seguridad menos
+convencionales tendr&aacute;n que recurrir a la definici&oacute;n directa de los beans.</p>
+<p>Veamos una configuraci&oacute;n de seguridad m&iacute;nima para una aplicaci&oacute;n web. Spring Security
+usa filtros de servlets de manera extensiva, por ello lo primero es declararlos en el fichero
+<span class="codefrag">web.xml</span>. Lo m&aacute;s sencillo es usar un filtro de la clase <span class="codefrag">DelegatingFilterProxy</span>,
+que har&aacute; de interfaz entre el mecanismo est&aacute;ndar de filtros y los beans de Spring</p>
+<pre class="code">
+
+<em>(fragmento del web.xml...)</em>
+
+&lt;filter&gt;
+    &lt;filter-name&gt;springSecurityFilterChain&lt;/filter-name&gt;
+    &lt;filter-class&gt;
+       org.springframework.web.filter.DelegatingFilterProxy
+    &lt;/filter-class&gt;
+&lt;/filter&gt;
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;springSecurityFilterChain&lt;/filter-name&gt;
+    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+</pre>
+<div class="frame warning">
+<div class="label">Aviso</div>
+<div class="content">
+<strong>El nombre del filtro debe ser <span class="codefrag">springSecurityFilterChain</span></strong>, ya que
+es lo que espera la configuraci&oacute;n est&aacute;ndar, aunque por supuesto esto es modificable con algo de configuraci&oacute;n adicional.</div>
+</div>
+<p>La configuraci&oacute;n de la seguridad se hace en el fichero de definici&oacute;n de beans de Spring (<span class="codefrag">applicationContext.xml</span>
+o similar)</p>
+<pre class="code">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/security 
+        http://www.springframework.org/schema/security/spring-security-2.0.xsd"&gt;
+          
+    
+    &lt;security:http auto-config="true"&gt;
+        &lt;security:intercept-url pattern="/admin/**" access="ROLE_ADMIN"/&gt;
+        &lt;security:intercept-url pattern="/**" access="ROLE_REGISTRADO, ROLE_ADMIN"/&gt;
+    &lt;/security:http&gt;
+
+    &lt;security:authentication-provider &gt;    
+        &lt;security:user-service&gt;
+            &lt;security:user name="spring" password="spring" 
+                authorities="ROLE_REGISTRADO" /&gt;
+        &lt;/security:user-service&gt;
+    &lt;/security:authentication-provider&gt;
+&lt;/beans&gt;    
+</pre>
+<p>Aqu&iacute; hemos usado el prefijo <span class="codefrag">security</span> para destacar que son etiquetas
+de Spring Security, aunque por supuesto esto es arbitrario y configurable a trav&eacute;s del 
+<span class="codefrag">xmlns</span> de la etiqueta ra&iacute;z del XML.</p>
+<p>
+<strong>La etiqueta <span class="codefrag">http</span></strong> establece cu&aacute;les son las URLs protegidas. Cada <span class="codefrag">intercept-url</span>
+especifica un patr&oacute;n de URLs, con la sintaxis que usa ant para los paths, y los roles que pueden acceder al recurso. En este
+caso, para acceder a cualquier URL ("/**") hay que tener rol <span class="codefrag">ROLE_REGISTRADO</span>
+o <span class="codefrag">ROLE_ADMIN</span>. Cuando hay varios patrones de URL se debe poner siempre primero el m&aacute;s espec&iacute;fico, ya
+que ante una solicitud HTTP Spring aplicar&aacute; la protecci&oacute;n del primer <span class="codefrag">intercept-url</span>
+que encaje. As&iacute;, en el ejemplo anterior, dentro del directorio "admin" solo se podr&iacute;a
+acceder siendo <span class="codefrag">ROLE_ADMIN</span>.
+</p>
+<div class="frame warning">
+<div class="label">Aviso</div>
+<div class="content">Por defecto, <strong>los nombres de los roles deben comenzar por "<span class="codefrag">ROLE_</span>"</strong>, otros nombres
+no ser&aacute;n considerados como v&aacute;lidos. Consultar la documentaci&oacute;n para ver c&oacute;mo cambiar dicho prefijo.</div>
+</div>
+<p>El atributo <span class="codefrag">auto-config="true"</span> activa por defecto los servicios de
+autentificaci&oacute;n BASIC, autentificaci&oacute;n a trav&eacute;s de formulario generado por Spring,
+gesti&oacute;n de logout y uso de cookies para "recordar" la autentificaci&oacute;n. Iremos viendo dichos
+servicios con m&aacute;s detalle en los siguientes apartados.</p>
+<p>Por otro lado, hay que especificar qu&eacute; proveedor de autentificaci&oacute;n usaremos. Esto se hace mediante
+la etiqueta <span class="codefrag">authentication-provider</span>. El proveedor de autentificaci&oacute;n es el responsable
+de almacenar y comprobar <em>principal</em>, credenciales y roles de cada usuario. Para hacer
+pruebas, lo m&aacute;s r&aacute;pido es colocar esta informaci&oacute;n directamente en el XML, como hemos hecho en el ejemplo. Cada
+usuario viene identificado por un <span class="codefrag">user</span>, con su login, password y lista de roles separados por comas.</p>
+<p>Si desplegamos una aplicaci&oacute;n web basada en la configuraci&oacute;n anterior e intentamos acceder a cualquier URL, el 
+resultado ser&aacute; un formulario de login autom&aacute;ticamente generado por Spring:</p>
+<div style="text-align: center;">
+<img class="figure" alt="login form" src="imagenes/ses05loginform.jpg" width="10cm"></div>
+<p>Podemos hacer pruebas con este formulario, aunque lo habitual ser&aacute; definir el nuestro propio. 
+Obs&eacute;rvese que autom&aacute;ticamente se ofrece la posibilidad de "recordar" el login, usando cookies.</p>
+</div>
+
+<a name="N100D7"></a><a name="Proveedores+de+autentificaci%C3%B3n%3A+el+DAO+provider"></a>
+<h2 class="underlined_10">Proveedores de autentificaci&oacute;n: el DAO provider</h2>
+<div class="section">
+<p>Spring ofrece una variedad bastante amplia de proveedores de autentificaci&oacute;n, que obtendr&aacute;n
+el principal y credenciales de distintas fuentes. Lo m&aacute;s habitual en aplicaciones web es almacenar
+logins y passwords en la base de datos, lo que permite modificarlos de manera sencilla. En Spring se
+usa un <em>DAO authentication provider</em> para esta tarea. Hay diversas clases que nos van a simplificar
+la tarea de implementar este DAO, de las que la m&aacute;s sencilla de usar es <span class="codefrag">JdbcDaoImpl</span> gracias
+a la que no tenemos que implementar c&oacute;digo, tan solo configurar ciertas propiedades. En nuestro XML
+cambiar&iacute;amos el anterior <span class="codefrag">authentication-provider</span> por uno nuevo:</p>
+<pre class="code">
+&lt;security:authentication-provider user-service-ref="miJDBCUserDetails"/&gt; 
+    
+&lt;bean id="miJDBCUserDetails" 
+      class="org.springframework.security.userdetails.jdbc.JdbcDaoImpl"&gt;
+   &lt;property name="dataSource" ref="miDataSource"/&gt;
+    
+    <em>&lt;!-- &iexcl;&iexcl;&iexcl;todav&iacute;a nos faltan algunas propiedades!!! --&gt;</em>
+    ...
+&lt;/bean&gt;        
+</pre>
+<p>Donde definimos un bean de la clase <span class="codefrag">JdbcDaoImpl</span>, le damos un
+nombre arbitrario y usamos ese nombre en el atributo <span class="codefrag">user-service-ref</span>
+de la etiqueta que define el proveedor de autentificaci&oacute;n. La propiedad 
+<span class="codefrag">dataSource</span> se usa para conectar con la base de datos donde se
+almacenan los datos de los usuarios.</p>
+<p>No obstante, todav&iacute;a queda una cuesti&oacute;n importante por configurar. Por defecto, <span class="codefrag">JdbcDaoImpl</span>
+supone que los login, password y roles est&aacute;n almacenados siguiendo un cierto esquema de 
+base de datos. Lo m&aacute;s habitual es que no coincida con el de nuestra base de datos.
+En la siguiente figura se muestra a la izquierda el esquema de base de datos que presupone <span class="codefrag">JdbcDaoImpl</span>
+y a la derecha el hipot&eacute;tico esquema de nuestra aplicaci&oacute;n.</p>
+<div style="text-align: center;">
+<img class="figure" alt="esquemas de BD" src="imagenes/jdbctemplate.gif"></div>
+<p>
+<span class="codefrag">JdbcDaoImpl</span> usa una consulta SQL predefinida para obtener login y password de un usuario
+y otra para obtener los roles asociados. Las dos consultas por supuesto presuponen el esquema anterior. Lo
+que tendremos que hacer es suministrar consultas propias que devuelvan los resultados con los mismos
+nombres.</p>
+<p>En primer lugar, para comprobar
+el password se hace:</p>
+<pre class="code">
+SELECT username, password, enabled
+  FROM users
+  WHERE username = ?    
+</pre>
+<p>Donde el campo <span class="codefrag">enabled</span>, del que carece nuestra base de datos, indica si el usuario est&aacute;
+o no activado. Con nuestro esquema, para devolver los mismos resultados que la consulta
+anterior, har&iacute;amos:</p>
+<pre class="code">
+SELECT login as username, password, true as enabled 
+  FROM usuarios
+  WHERE login=?    
+</pre>
+<p>Por otro lado, para obtener los roles (authorities) de un usuario, se hace:</p>
+<pre class="code">
+SELECT username, authority
+  FROM authorities
+  WHERE username = ?    
+</pre>
+<p>Con nuestro esquema de base de datos, har&iacute;amos:</p>
+<pre class="code">
+SELECT login as username, rol as authority 
+   FROM roles
+   WHERE login=?    
+</pre>
+<p>Estas consultas se modifican a trav&eacute;s de las propiedades <span class="codefrag">usersByUsernameQuery</span>
+y <span class="codefrag">authoritiesByUsernameQuery</span> de <span class="codefrag">JdbcDaoImpl</span>. As&iacute;, nuestro XML
+quedar&iacute;a:</p>
+<pre class="code">
+&lt;security:authentication-provider user-service-ref="miJDBCUserDetails"/&gt; 
+    
+&lt;bean id="miJDBCUserDetails" 
+      class="org.springframework.security.userdetails.jdbc.JdbcDaoImpl"&gt;
+      &lt;property name="dataSource" ref="miDataSource"/&gt;
+        <strong>&lt;property name="usersByUsernameQuery" 
+                value="SELECT login as username, password, true as enabled
+                       FROM usuarios WHERE login=?"/&gt;
+      &lt;property name="authoritiesByUsernameQuery" 
+                value="SELECT login as username, rol as authority 
+                       FROM roles WHERE login=?"/&gt;</strong>  
+&lt;/bean&gt;      
+</pre>
+<p>Donde se destaca en negrita la nueva configuraci&oacute;n introducida.</p>
+<p>Como ya se ha comentado, Spring Security incorpora diversos proveedores de autentificaci&oacute;n 
+"listos para usar", basados en tecnolog&iacute;as tan diversas como LDAP, JAAS, sistemas single sign-on como
+CAS o OpenId,... No obstante, su uso y configuraci&oacute;n queda
+fuera del &aacute;mbito de estos apuntes.</p>
+</div>
+
+<a name="N10148"></a><a name="Seguridad+web"></a>
+<h2 class="underlined_10">Seguridad web</h2>
+<div class="section">
+<p>Hemos visto que la etiqueta <span class="codefrag">http</span> con el atributo <span class="codefrag">auto-config="true"</span>
+configura autom&aacute;ticamente una serie de servicios de seguridad para aplicaciones web. Vamos a ver c&oacute;mo 
+afinar la configuraci&oacute;n manualmente.</p>
+<a name="N10157"></a><a name="Autentificaci%C3%B3n+con+formulario"></a>
+<h3 class="underlined_5">Autentificaci&oacute;n con formulario</h3>
+<p>La
+mayor&iacute;a de aplicaciones web usan un formulario HTML para que el usuario introduzca su login y password.
+Hemos visto que por defecto Spring crea autom&aacute;ticamente este formulario, pero lo habitual ser&aacute; que lo hagamos
+nosotros para poder darle el "look and feel" de la aplicaci&oacute;n. Esto se consigue con la etiqueta
+<span class="codefrag">form-login</span>:</p>
+<pre class="code">
+&lt;security:http auto-config="true"&gt;
+     <strong>&lt;security:intercept-url pattern="/index.jsp" filters="none"/&gt;</strong>
+    &lt;security:intercept-url pattern="/**" 
+                            access="ROLE_REGISTRADO, ROLE_ADMIN"/&gt;    
+     <strong>&lt;security:form-login login-page="/index.jsp" 
+                         default-target-url="/principal.jsp" /&gt;</strong>
+&lt;/security:http&gt;
+</pre>
+<p>Con el atributo <span class="codefrag">login-page</span> se especifica la p&aacute;gina que contiene el formulario
+de login y con <span class="codefrag">default-target-url</span> la direcci&oacute;n a la que se saltar&aacute; por defecto.
+En este punto, la autentificaci&oacute;n con formulario de Spring se diferencia ligeramente de 
+la seguridad declarativa est&aacute;ndar de JavaEE. En el est&aacute;ndar no se suele saltar directamente
+a la p&aacute;gina de login, sino que esta se muestra autom&aacute;ticamente cuando el usuario intenta 
+acceder a un recurso protegido. En Spring nada nos impide acceder directamente a la p&aacute;gina
+de login, ya que se nos redirigir&aacute; una vez hecho login a la p&aacute;gina indicada por 
+<span class="codefrag">default-target-url</span>. Independientemente de ello, por supuesto, cuando en Spring
+se intenta acceder a un recurso protegido tambi&eacute;n "salta" la p&aacute;gina de login.</p>
+<p>N&oacute;tese que la existencia de la p&aacute;gina de login nos obliga a desprotegerla para que los
+usuarios puedan acceder a ella. Esto se hace con el atributo <span class="codefrag">filters="none"</span>
+en el <span class="codefrag">intercept-url</span>.</p>
+<p>La p&aacute;gina de login contendr&aacute; un formulario HTML cuyos campos deben tener un nombre est&aacute;ndar, al
+estilo de los que se usan en seguridad declarativa JavaEE:</p>
+<pre class="code">
+&lt;form action="<strong>j_spring_security_check</strong>"&gt;
+    login: &lt;input type="text" name="<strong>j_username</strong>"/&gt; &lt;br/&gt;
+    password: &lt;input type="text" name="<strong>j_password</strong>"/&gt; &lt;br/&gt;    
+    &lt;input type="submit" value="Entrar"/&gt;
+&lt;/form&gt;        
+</pre>
+<a name="N10193"></a><a name="Autentificaci%C3%B3n+BASIC"></a>
+<h3 class="underlined_5">Autentificaci&oacute;n BASIC</h3>
+<p>En la autentificaci&oacute;n BASIC, el navegador muestra una ventana de tipo "popup" en la que
+introducir login y password. En realidad, la mayor utilidad de este mecanismo es para el acceso con un cliente de escritorio, ya que la forma de env&iacute;o de login y password al
+servidor es sencilla de implementar y no requiere el mantenimiento de sesiones, a diferencia
+del login con formulario.</p>
+<p>Para usar autentificaci&oacute;n BASIC, simplemente colocar&iacute;amos la etiqueta <span class="codefrag">http-basic</span>
+en el XML:</p>
+<pre class="code">
+&lt;security:http auto-config="true"&gt;
+    &lt;security:intercept-url pattern="/**" access="ROLE_REGISTRADO" /&gt;
+    &lt;security:http-basic/&gt;
+&lt;/security:http&gt;    
+</pre>
+<a name="N101A7"></a><a name="Recordar+los+datos+del+usuario"></a>
+<h3 class="underlined_5">Recordar los datos del usuario</h3>
+<p>La mayor&iacute;a de aplicaciones web ofrecen la posibilidad de "ahorrarnos" el login
+en sucesivas visitas si accedemos desde la misma m&aacute;quina. Esto se hace guardando en
+una cookie un <em>token</em> de autentificaci&oacute;n, que asegura que en alg&uacute;n momento
+nos hemos autentificado. Spring llama a esta caracter&iacute;stica "remember-me" y se
+configura con la etiqueta del mismo nombre. Normalmente no es necesario ponerla
+porque el atributo <span class="codefrag">auto-config="true"</span> la incluye por defecto. No obstante, si queremos
+configurar los detalles del servicio debemos ponerla expl&iacute;citamente.</p>
+<p>Por defecto, el campo de formulario que se asocia a esta caracter&iacute;stica debe llamarse
+<span class="codefrag">_spring_security_remember_me</span>. De este modo, nuestro formulario de login quedar&iacute;a:</p>
+<pre class="code">
+&lt;form action="j_spring_security_check"&gt;
+    login: &lt;input type="text" name="j_username"/&gt; &lt;br/&gt;
+    password: &lt;input type="text" name="j_password"/&gt; &lt;br/&gt;    
+    <strong>&lt;input type="checkbox" name="_spring_security_remember_me"/&gt; 
+                  Recordar mi usuario y password &lt;br/&gt;</strong>
+    &lt;input type="submit" value="Entrar"/&gt;
+&lt;/form&gt;    
+</pre>
+<a name="N101C4"></a><a name="Logout"></a>
+<h3 class="underlined_5">Logout</h3>
+<p>Spring nos ofrece un servicio de logout que se encarga de invalidar autom&aacute;ticamente
+la sesi&oacute;n HTTP y, si lo deseamos, redirigir al usuario a una p&aacute;gina de "salida". Este servicio
+se configura con la etiqueta <span class="codefrag">logout</span>:</p>
+<pre class="code">
+&lt;security:http auto-config="true"&gt;
+   ...
+   &lt;security:logout logout-url="/logout.jsp" logout-success-url="/adios.jsp"/&gt;
+&lt;/security:http&gt;   
+</pre>
+<p>El atributo <span class="codefrag">logout-url</span> indica qu&eacute; URL "disparar&aacute;" el proceso. Por tanto, para que el usuario
+pueda hacer
+logout bastar&aacute; con un enlace a esta URL en cualquier p&aacute;gina. Por defecto la URL de logout
+es <span class="codefrag">/j_spring_security_logout</span>. Con <span class="codefrag">logout-success-url</span>
+indicamos a qu&eacute; p&aacute;gina se saltar&aacute; tras invalidar la sesi&oacute;n. Por defecto es "/".</p>
+<a name="N101E1"></a><a name="Internacionalizaci%C3%B3n"></a>
+<h3 class="underlined_5">Internacionalizaci&oacute;n</h3>
+<p>Todas las excepciones que saltan cuando se produce alg&uacute;n problema de autorizaci&oacute;n tienen
+los mensajes externalizados en ficheros <span class="codefrag">.properties</span>. Podemos traducirlos tomando como base
+el fichero <span class="codefrag">messages.properties</span> que viene incluido en el paquete <span class="codefrag">org.springframework.security</span>
+del JAR de Spring Security. Basta con crear un fichero propio en el que se traduzcan los mensajes de error (hay del orden de 50)
+y decirle a Spring Security que lo cargue, usando la siguiente configuraci&oacute;n:</p>
+<pre class="code">
+...    
+&lt;bean id="messageSource" 
+      class="org.springframework.security.SpringSecurityMessageSource"&gt;
+        &lt;property name="basename" value="es/ua/jtech/spring/securityMessages"/&gt;
+&lt;/bean&gt;
+...    
+</pre>
+<p>Donde estamos suponiendo que el fichero <span class="codefrag">securityMessages</span> est&aacute; en el mismo
+directorio que los fuentes java que est&aacute;n en el paquete <span class="codefrag">es.ua.jtech.spring</span>. Recordar
+que el nombre real del fichero se obtiene concatenando a este nombre el <em>locale</em> y la
+extensi&oacute;n. Es decir, para espa&ntilde;ol el fichero se llamar&aacute; <span class="codefrag">securityMessages_es.properties</span>
+</p>
+<p>De este modo, podemos personalizar el mensaje que Spring nos devuelve cuando el login o el password
+son incorrectos. Primero debemos traducir el mensaje que est&aacute; bajo la clave <span class="codefrag">AbstractUserDetailsAuthenticationProvider.badCredentials</span>
+y ya lo podemos mostrar teniendo en cuenta que Spring guarda la excepci&oacute;n con el error como
+un atributo de sesi&oacute;n bajo la clave  definida a trav&eacute;s de la constante <span class="codefrag">AbstractProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY</span>.
+El siguiente <em>scriptlet</em> har&iacute;a este trabajo:</p>
+<pre class="code">
+&lt;div style="color:red"&gt;
+ &lt;%
+  Exception e = (Exception) session.getAttribute( 
+                     AbstractProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY); 
+  if (e!=null) out.print(e.getMessage()); 
+ %&gt;
+&lt;/div&gt;
+    
+</pre>
+</div>
+
+<a name="N10219"></a><a name="Seguridad+en+ejecuci%C3%B3n+de+c%C3%B3digo"></a>
+<h2 class="underlined_10">Seguridad en ejecuci&oacute;n de c&oacute;digo</h2>
+<div class="section">
+<p>Para mayor seguridad podemos controlar los permisos al ejecutar cualquier m&eacute;todo. Los m&eacute;todos
+restringidos se pueden especificar de dos formas: con anotaciones en el c&oacute;digo fuente o con AOP.
+En ambos casos, la configuraci&oacute;n se hace a trav&eacute;s de la etiqueta <span class="codefrag">global-method-security</span>
+</p>
+<p>En una aplicaci&oacute;n web, el intento de ejecutar c&oacute;digo sin permiso acabar&aacute; generando
+una respuesta HTTP con c&oacute;digo 403 (acceso denegado), gracias a los filtros de Spring. Esto nos permite tratar de manera uniforme
+las denegaciones de acceso sean por URL o por c&oacute;digo.</p>
+<a name="N10227"></a><a name="Seguridad+con+AOP"></a>
+<h3 class="underlined_5">Seguridad con AOP</h3>
+<p>La principal ventaja de esta forma de trabajar es que podemos cambiar la seguridad sin necesidad
+    de tocar una sola l&iacute;nea de c&oacute;digo. En el XML, con la etiqueta <span class="codefrag">protect-pointcut</span> podemos especificar un pointcut con sintaxis AspectJ
+    e indicar a qu&eacute; roles les ser&aacute; permitido el acceso.</p>
+<pre class="code">
+...
+&lt;security:global-method-security&gt;
+    &lt;security:protect-pointcut 
+                    expression="execution(* eliminarUsuario(..))" 
+                    access="ROLE_ADMIN"/&gt;
+&lt;/security:global-method-security&gt;            
+...
+</pre>
+<p>As&iacute;, para ejecutar cualquier m&eacute;todo llamado "eliminarUsuario" de cualquier clase, habr&aacute; que tener rol
+<span class="codefrag">ROLE_ADMIN</span>. </p>
+<a name="N1023E"></a><a name="Seguridad+con+anotaciones"></a>
+<h3 class="underlined_5">Seguridad con anotaciones</h3>
+<p>En algunos casos puede ser preferible incluir las restricciones de seguridad en el propio
+c&oacute;digo fuente. Spring tiene una anotaci&oacute;n propia para ello, <span class="codefrag">@Secured</span>, aunque tambi&eacute;n
+soporta las anotaciones t&iacute;picas de EJB (<span class="codefrag">@RolesAllowed</span>, ...). Concretamente Spring
+soporta las anotaciones especificadas en el JSR-250 (de ah&iacute; que en temas anteriores vi&eacute;ramos
+tambi&eacute;n el uso de <span class="codefrag">@Resource</span>). Evidentemente, usar las anotaciones est&aacute;ndar aumentar&aacute; la portabilidad
+de nuestro c&oacute;digo, por lo que es el estilo recomendado.</p>
+<p>En este caso, el XML de configuraci&oacute;n quedar&iacute;a:</p>
+<pre class="code">
+...
+&lt;security:global-method-security jsr250-annotations="enabled"/&gt;    
+...
+</pre>
+<p>Si quisi&eacute;ramos usar la anotaci&oacute;n <span class="codefrag">@Secured</span> deber&iacute;amos incluir el atributo
+<span class="codefrag">secured-annotations="enabled"</span>. Ambos tipos de anotaciones pueden usarse simult&aacute;neamente.</p>
+<p>En el c&oacute;digo a proteger, escribir&iacute;amos:</p>
+<pre class="code">
+
+<strong>@RolesAllowed("ROLE_ADMIN")</strong>
+public void eliminarUsuario {
+      ...
+}    
+</pre>
+<p>Al igual que en EJBs, si colocamos la anotaci&oacute;n delante de la clase, estamos protegiendo
+todos sus m&eacute;todos.</p>
+</div>
+
+<p class="pageBreakAfter"> 
+</p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2006-2007 Depto. CCIA</div>
+</div>
+</body>
+</html>

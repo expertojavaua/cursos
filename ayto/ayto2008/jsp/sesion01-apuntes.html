@@ -1,0 +1,874 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Introducci&oacute;n a los servlets</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Componentes Web" src="images/baner_j2ee_der.gif" title="Componentes Web"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Componentes Web</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Componentes Web</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Componentes Web">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menupage">
+<div class="menupagetitle">Sesion 1</div>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesion 10</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html">Roadmap</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-ejercicios.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-ejercicios.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-ejercicios.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-ejercicios.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-ejercicios.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-ejercicios.html">Sesion 10</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion01-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Introducci&oacute;n a los servlets</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Conceptos+b%C3%A1sicos+de+servlets">Conceptos b&aacute;sicos de servlets</a>
+<ul class="minitoc">
+<li>
+<a href="#Concepto+de+servlet">Concepto de servlet</a>
+</li>
+<li>
+<a href="#Recursos+de+servlets+y+JSP">Recursos de servlets y JSP</a>
+</li>
+<li>
+<a href="#Arquitectura+del+paquete+servlet">Arquitectura del paquete servlet</a>
+</li>
+<li>
+<a href="#Ciclo+de+vida+de+un+servlet">Ciclo de vida de un servlet</a>
+</li>
+<li>
+<a href="#Estructura+b%C3%A1sica+de+un+servlet">Estructura b&aacute;sica de un servlet</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Configuraci%C3%B3n+de+servlets+en+aplicaciones+web">Configuraci&oacute;n de servlets en aplicaciones web</a>
+<ul class="minitoc">
+<li>
+<a href="#Mapeo+de+servlets+en+el+fichero+descriptor">Mapeo de servlets en el fichero descriptor</a>
+</li>
+<li>
+<a href="#Servlet+invoker">Servlet invoker</a>
+</li>
+<li>
+<a href="#Asignar+par%C3%A1metros+de+inicio+a+un+servlet+o+p%C3%A1gina+JSP">Asignar par&aacute;metros de inicio a un servlet o p&aacute;gina JSP</a>
+</li>
+<li>
+<a href="#Cargar+servlets+al+inicio">Cargar servlets al inicio</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Ejemplos+b%C3%A1sicos+de+servlets">Ejemplos b&aacute;sicos de servlets</a>
+<ul class="minitoc">
+<li>
+<a href="#Servlet+que+genera+texto+plano">Servlet que genera texto plano</a>
+</li>
+<li>
+<a href="#Servlet+que+genera+una+p%C3%A1gina+HTML">Servlet que genera una p&aacute;gina HTML</a>
+</li>
+<li>
+<a href="#Servlet+que+utiliza+par%C3%A1metros+de+inicializaci%C3%B3n">Servlet que utiliza par&aacute;metros de inicializaci&oacute;n</a>
+</li>
+<li>
+<a href="#Prueba+de+los+ejemplos">Prueba de los ejemplos</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Logging+en+aplicaciones+Java+EE+con+servlets">Logging en aplicaciones Java EE con servlets</a>
+</li>
+</ul>
+</div>
+
+<a name="N1000C"></a><a name="Conceptos+b%C3%A1sicos+de+servlets"></a>
+<h2 class="underlined_10">Conceptos b&aacute;sicos de servlets</h2>
+<div class="section">
+<a name="N10012"></a><a name="Concepto+de+servlet"></a>
+<h3 class="underlined_5">Concepto de servlet</h3>
+<p>Un <strong>servlet</strong> es un programa Java que se ejecuta en un servidor Web y construye o sirve p&aacute;ginas web. De esta forma se pueden construir p&aacute;ginas din&aacute;micas, basadas en diferentes fuentes variables: datos proporcionados por el usuario, fuentes de informaci&oacute;n variable (p&aacute;ginas de noticias, por ejemplo), o programas que extraigan informaci&oacute;n de bases de datos.</p>
+<p>Comparado con un CGI, un servlet es m&aacute;s sencillo de utilizar, m&aacute;s eficiente (se arranca un hilo por cada petici&oacute;n y no un proceso entero), m&aacute;s potente y portable. Con los servlets podremos, entre otras cosas, procesar, sincronizar y coordinar m&uacute;ltiples peticiones de clientes, reenviar peticiones a otros servlets o a otros servidores, etc.</p>
+<a name="N10022"></a><a name="Recursos+de+servlets+y+JSP"></a>
+<h3 class="underlined_5">Recursos de servlets y JSP</h3>
+<p>Normalmente al hablar de servlets se habla de JSP y viceversa, puesto que ambos conceptos est&aacute;n muy interrelacionados. Para trabajar con ellos se necesitan tener presentes algunos recursos: </p>
+<ul>
+			
+<li>Un <strong>servidor web</strong> que d&eacute; soporte a servlets / JSP (contenedor de servlets y p&aacute;ginas JSP). Ejemplos de estos servidores son Apache Tomcat, Resin, JRun, Java Web Server, BEA WebLogic, etc.</li>
+			
+<li>Las <strong> librer&iacute;as</strong> (clases) necesarias para trabajar con servlets / JSP. Normalmente vienen en ficheros JAR en un directorio <span class="codefrag">lib</span> del servidor (<span class="codefrag">common/lib</span> en Tomcat): <span class="codefrag">servlet-api.jar</span> (con la API de servlets), y <span class="codefrag">jsp-api.jar</span>, para JSP. Al desarrollar nuestra aplicaci&oacute;n, deberemos incluir las librer&iacute;as necesarias en el classpath para que compilen los ficheros (s&oacute;lo necesitaremos compilar los servlets, no los JSP). Tambi&eacute;n se puede utilizar el fichero JAR <span class="codefrag">j2ee.jar</span> que viene con Java Enterprise Edition, pero no es recomendable si se puede disponer de las librer&iacute;as espec&iacute;ficas del servidor.</li>
+			
+<li>La <strong> documentaci&oacute;n</strong> sobre la API de servlets / JSP (no necesaria, pero s&iacute; recomendable)</li>
+		
+</ul>
+<p>Para encontrar informaci&oacute;n sobre servlets y JSP, son de utilidad las siguientes direcciones:</p>
+<ul>
+			
+<li>
+<a href="http://java.sun.com/j2ee/">http://java.sun.com/j2ee/</a>: referencia de todos los elementos que componen J2EE</li>
+			
+<li>
+<a href="http://java.sun.com/products/jsp">http://java.sun.com/products/jsp</a>: referencia para las &uacute;ltimas actualizaciones en JSP</li>
+			
+<li>
+<a href="http://java.sun.com/products/servlets">http://java.sun.com/products/servlets</a>: referencia para las &uacute;ltimas actualizaciones en servlets</li>
+		
+</ul>
+<a name="N10068"></a><a name="Arquitectura+del+paquete+servlet"></a>
+<h3 class="underlined_5">Arquitectura del paquete servlet</h3>
+<p>Dentro del paquete <strong><span class="codefrag">javax.servlet</span></strong> tenemos toda la infraestructura para poder trabajar con servlets. El elemento central es la interfaz <strong><span class="codefrag">Servlet</span></strong>, que define los m&eacute;todos para cualquier servlet. La clase <strong><span class="codefrag">GenericServlet</span></strong> es una clase abstracta que implementa dicha interfaz para un servlet gen&eacute;rico, independiente del protocolo. Para definir un servlet que se utilice v&iacute;a web, se tiene la clase <strong><span class="codefrag">HttpServlet</span></strong> dentro del subpaquete <strong><span class="codefrag">javax.servlet.http</span></strong>. Esta clase hereda de <span class="codefrag">GenericServlet</span>, y tambi&eacute;n es una clase abstracta, de la que heredaremos para construir los servlets para nuestras aplicaciones web. </p>
+<p>Cuando un servlet acepta una petici&oacute;n de un cliente, se reciben dos objetos: </p>
+<ul>
+			
+<li>Un objeto de tipo <strong><span class="codefrag">ServletRequest</span></strong> que contiene los datos de la petici&oacute;n del usuario (toda la informaci&oacute;n entrante). Con esto se accede a los par&aacute;metros pasados por el cliente, el protocolo empleado, etc. Se puede obtener tambi&eacute;n un objeto <strong><span class="codefrag">ServletInputStream</span></strong> para obtener datos del cliente que realiza la petici&oacute;n. La subclase <strong><span class="codefrag">HttpServletRequest</span></strong> procesa peticiones de tipo HTTP.</li>
+			
+<li>Un objeto de tipo <strong><span class="codefrag">ServletResponse</span></strong> que contiene (o contendr&aacute;) la respuesta del servlet ante la petici&oacute;n (toda la informaci&oacute;n saliente). Se puede obtener un objeto <strong><span class="codefrag">ServletOutputStream</span></strong>, y un <span class="codefrag">Writer</span>, para poder escribir la respuesta. La clase <strong>HttpServletResponse</strong> se emplea para respuestas a peticiones HTTP.</li>
+		
+</ul>
+<a name="N100AF"></a><a name="Ciclo+de+vida+de+un+servlet"></a>
+<h3 class="underlined_5">Ciclo de vida de un servlet</h3>
+<p>Todos los servlets tienen el mismo ciclo de vida: </p>
+<ul>
+			
+<li>Un servidor carga e inicializa el servlet</li>
+			
+<li>El servlet procesa cero o m&aacute;s peticiones de clientes (por cada petici&oacute;n se lanza un hilo)</li>
+			
+<li>El servidor destruye el servlet (en un momento dado o cuando se apaga) </li>
+		
+</ul>
+<p>
+<strong>1. Inicializaci&oacute;n</strong> 
+</p>
+<p>En cuanto a la inicializaci&oacute;n de un servlet, se tiene una por defecto en el m&eacute;todo <strong><span class="codefrag">init()</span></strong>.  </p>
+<pre class="code">public void init() throws ServletException
+{
+	...
+}
+
+public void init(ServletConfig conf) throws ServletException
+{
+	super.init(conf);
+	...
+}</pre>
+<p>El primer m&eacute;todo se utiliza si el servlet no necesita par&aacute;metros de configuraci&oacute;n externos. El segundo se emplea para tomar dichos par&aacute;metros del objeto <span class="codefrag">ServletConfig</span> que se le pasa. La llamada a <span class="codefrag">super.init(...)</span> al principio del m&eacute;todo es MUY importante, porque el servlet utiliza esta configuraci&oacute;n en otras zonas.</p>
+<p>Si queremos definir nuestra propia inicializaci&oacute;n, deberemos sobreescribir alguno de estos m&eacute;todos. Si ocurre alg&uacute;n error al inicializar y el servlet no es capaz de atender peticiones, debemos lanzar una excepci&oacute;n de tipo <span class="codefrag">UnavailableException</span>.</p>
+<p>Podemos utilizar la inicializaci&oacute;n para establecer una conexi&oacute;n con una base de datos (si trabajamos con base de datos), abrir ficheros, o cualquier tarea que se necesite hacer una sola vez antes de que el servlet comience a funcionar. </p>
+<p>
+<strong>2. Procesamiento de peticiones</strong> 
+</p>
+<p>Una vez inicializado, cada petici&oacute;n de usuario lanza un hilo que llama al m&eacute;todo <strong><span class="codefrag">service()</span></strong> del servlet.  </p>
+<pre class="code">public void service(HttpServletRequest request,
+                    HttpServletResponse response) 
+throws ServletException, IOException</pre>
+<p>Este m&eacute;todo obtiene el tipo de petici&oacute;n que se ha realizado (GET, POST, PUT, DELETE). Dependiendo del tipo de petici&oacute;n que se tenga, se llama luego a uno de los m&eacute;todos: </p>
+<ul>
+			
+<li>
+				
+<p>
+<strong>doGet()</strong>:</p>
+
+<pre class="code">public void doGet(HttpServletRequest request, 
+                  HttpServletResponse response) 
+throws ServletException, IOException</pre>
+				
+<p>Para peticiones de tipo GET (aquellas realizadas al escribir una direcci&oacute;n en un navegador, pinchar un enlace o rellenar un formulario que no tenga METHOD=POST)</p>
+			
+</li>
+			
+<li>
+				
+<p>
+<strong>doPost()</strong>:</p>
+
+<pre class="code">public void doPost(HttpServletRequest request, 
+                   HttpServletResponse response) 
+throws ServletException, IOException</pre>
+				
+<p>Para peticiones POST (aquellas realizadas al rellenar un formulario que tenga METHOD=POST)</p>
+			
+</li>
+			
+<li>
+<strong>doXXX()</strong>: normalmente s&oacute;lo se emplean los dos m&eacute;todos anteriores, pero se tienen otros m&eacute;todos para peticiones de tipo DELETE (<strong>doDelete()</strong>), PUT (<strong>doPut()</strong>), OPTIONS (<strong>doOptions()</strong>) y TRACE (<strong>doTrace()</strong>).</li>
+		
+</ul>
+<p>
+<strong>3. Destrucci&oacute;n</strong> 
+</p>
+<p>El m&eacute;todo <strong><span class="codefrag">destroy()</span></strong> de los servlets se emplea para eliminar un servlet y sus recursos asociados.</p>
+<pre class="code">public void destroy() throws ServletException</pre>
+<p> Aqu&iacute; debe deshacerse cualquier elemento que se construy&oacute; en la inicializaci&oacute;n (cerrar conexiones con bases de datos, cerrar ficheros, etc). </p>
+<p>El servidor llama a <span class="codefrag">destroy() </span>cuando todas las llamadas de servicios del servlet han concluido, o cuando haya pasado un determinado n&uacute;mero de segundos (lo que ocurra primero). Si esperamos que el servlet haga tareas que requieran mucho tiempo, tenemos que asegurarnos de que dichas tareas se completar&aacute;n. Podemos hacer lo siguiente: </p>
+<ul>
+			
+<li>Definir un contador de tareas activas, que se incremente cada vez que una tarea comienza (entendemos por <em>tarea</em> cada petici&oacute;n que se realice al servlet), y se decremente cada vez que una termina. Podemos utilizar bloques de c&oacute;digo <span class="codefrag">synchronized</span> para evitar problemas de concurrencia.</li>
+			
+<li>Hacer que el m&eacute;todo <span class="codefrag">destroy()</span> no termine hasta que lo hagan todas las tareas pendientes (comprobando el contador de tareas pendientes)</li>
+			
+<li>Hacer que las tareas pendientes terminen su trabajo si se quiere cerrar el servlet (comprobando alg&uacute;n flag que indique si el servlet se va a cerrar o no).</li>
+		
+</ul>
+<a name="N1015A"></a><a name="Estructura+b%C3%A1sica+de+un+servlet"></a>
+<h3 class="underlined_5">Estructura b&aacute;sica de un servlet</h3>
+<p>La plantilla com&uacute;n para implementar un servlet es: </p>
+<pre class="code">import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ClaseServlet extends HttpServlet
+{
+	public void doGet(HttpServletRequest request, 
+	                  HttpServletResponse response) 
+	throws ServletException, IOException
+	{
+	<strong>	// ... codigo para una peticion GET
+</strong>	}
+
+	public void doPost(HttpServletRequest request, 
+	                   HttpServletResponse response) 
+	throws ServletException, IOException
+
+	{
+	<strong>	// ... codigo para una peticion POST
+</strong>	}
+}</pre>
+<p>El servlet hereda de la clase <span class="codefrag">HttpServlet</span>. Normalmente se deben sobreescribir los m&eacute;todos <span class="codefrag">doGet()</span>, <span class="codefrag">doPost()</span> o ambos, colocando el c&oacute;digo que queremos que se ejecute cuando se reciba una petici&oacute;n GET o POST, respectivamente. Conviene definir los dos para distinguir ambas peticiones. En caso de que queramos hacer lo mismo para GET o POST, definimos el c&oacute;digo en uno de ellos, y hacemos que el otro lo llame.</p>
+<p>Aparte de estos m&eacute;todos, podemos utilizar otros de los que hemos visto: <span class="codefrag">init()</span> (para inicializaciones), <span class="codefrag">doXXX()</span> (para tratar otros tipos de peticiones (PUT, DELETE, etc)), <strong>destroy()</strong> (para finalizar el servlet), etc, as&iacute; como nuestros propios m&eacute;todos internos de la clase.</p>
+</div>
+
+<a name="N10187"></a><a name="Configuraci%C3%B3n+de+servlets+en+aplicaciones+web"></a>
+<h2 class="underlined_10">Configuraci&oacute;n de servlets en aplicaciones web</h2>
+<div class="section">
+<p>Para instalar un servlet en una aplicaci&oacute;n web, se coloca la clase compilada del servlet dentro del directorio <span class="codefrag">WEB-INF/classes</span> de la aplicaci&oacute;n (respetando tambi&eacute;n la estructura de paquetes, creando tantos subdirectorios como sea necesario).</p>
+<p>De forma alternativa, tambi&eacute;n podr&iacute;amos empaquetar nuestros servlets en un JAR y poner esta librer&iacute;a de clases dentro del directorio <span class="codefrag">WEB-INF/lib</span>. De cualquiera de las dos formas la clase del servlet estar&aacute; localizable para la aplicaci&oacute;n. Veremos ahora las formas que tenemos de invocar a ese servlet.</p>
+<a name="N10199"></a><a name="Mapeo+de+servlets+en+el+fichero+descriptor"></a>
+<h3 class="underlined_5">Mapeo de servlets en el fichero descriptor</h3>
+<p>Los servlets se invocar&aacute;n cuando desde un cliente hagamos una
+	petici&oacute;n a una URL determinada. Para especificar la URL a la que
+	est&aacute; asociada cada servlet, deberemos configurar dicho servlet
+	en el fichero descriptor de despliegue (<span class="codefrag">web.xml</span>). </p>
+<p>En primer lugar deberemos introducir una marca 
+		<strong><span class="codefrag">&lt;servlet&gt;</span></strong> para declarar
+		cada servlet de la siguiente forma:</p>
+<pre class="code">&lt;servlet&gt;
+	&lt;servlet-name&gt;nombre&lt;/servlet-name&gt;
+	&lt;servlet-class&gt;unpaquete.ClaseServlet&lt;/servlet-class&gt;
+&lt;/servlet&gt;</pre>
+<p>Donde <strong><span class="codefrag">&lt;servlet-name&gt;</span></strong> 
+		es un nombre identificativo y arbitrario del servlet, y 
+		<strong><span class="codefrag">&lt;servlet-class&gt;</span></strong> es la clase 
+		del servlet. </p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Al declarar un servlet, debe indicarse el nombre 
+completo de la clase en la que est&aacute; implementado, incluyendo paquetes 
+y subpaquetes. Esto es as&iacute; porque en el <span class="codefrag">web.xml</span> no tenemos
+ning&uacute;n "import" que nos permita desambiguar entre posibles diferentes 
+clases con el mismo nombre.</div>
+</div>
+<p>Una vez declarado nuestro servlet, deberemos mapearlo a una URL. 
+Esto se consigue mediante las etiquetas 
+<strong>&lt;servlet-mapping&gt;</strong>:</p>
+<pre class="code">&lt;servlet-mapping&gt;
+	&lt;servlet-name&gt;nombre&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;/ejemploservlet&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;</pre>
+<p>En la subetiqueta <strong><span class="codefrag">&lt;servlet-name&gt;</span></strong> 
+		se pone el nombre del servlet al que se quiere asignar la URL 
+		(ser&aacute; uno de los nombres dados en alguna etiqueta 
+		<span class="codefrag">&lt;servlet&gt; </span>previa), y en 
+		<strong><span class="codefrag">&lt;url-pattern&gt;</span></strong> colocamos la URL 
+		que le asignamos al servlet, que debe comenzar con '/'.</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Destacamos que primero se colocan todas las etiquetas 
+<span class="codefrag">&lt;servlet&gt;</span>, y luego las <span class="codefrag">&lt;servlet-mapping&gt;</span> 
+que se requieran. En las actuales versiones de los servidores web el 
+orden es indiferente, pero si queremos garantizar la compatibilidad 
+con versiones anteriores, deberemos respetarlo.</div>
+</div>
+<p>As&iacute;, con lo anterior, podremos llamar al servlet identificado 
+		con <span class="codefrag">nombre</span> accediendo a la URL a la que se encuentra
+		mapeado:</p>
+<pre class="code">http://localhost:8080/&lt;dir&gt;/ejemploservlet</pre>
+<p>siendo <span class="codefrag">&lt;dir&gt;</span> el directorio en el que se
+		encuentra el contexto de nuestra aplicaci&oacute;n Web. </p>
+<p>Tambi&eacute;n podemos asignar en <span class="codefrag">&lt;url-pattern&gt;</span> 
+		expresiones como:</p>
+<pre class="code">&lt;servlet-mapping&gt;
+	&lt;servlet-name&gt;nombre&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;/ejemploservlet/*&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;</pre>
+<p>o como:</p>
+<pre class="code">&lt;servlet-mapping&gt;
+	&lt;servlet-name&gt;nombre&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;/ejemploservlet/*.do&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;</pre>
+<p>Con el primero, cualquier URL del directorio de nuestra 
+		aplicaci&oacute;n Web que comience con <span class="codefrag">/ejemploservlet/</span> 
+		se redirigir&aacute; y llamar&aacute; al servlet identificado con 
+		<span class="codefrag">nombre</span>. Por ejemplo, las direcciones:</p>
+<pre class="code">http://localhost:8080/&lt;dir&gt;/ejemploservlet/unapagina.html
+http://localhost:8080/&lt;dir&gt;/ejemploservlet/login.do</pre>
+<p>acabar&iacute;an llamando al servlet <span class="codefrag">nombre</span>.</p>
+<p>Con el segundo, cualquier llamada a un recurso acabado en 
+		<span class="codefrag">.do</span> del directorio <span class="codefrag">/ejemploservlet/</span> 
+		de nuestra aplicaci&oacute;n se redirigir&iacute;a al servlet 
+		<span class="codefrag">nombre</span>. Podemos hacer que distintas URLs llamen 
+		a un mismo servlet, sin m&aacute;s que a&ntilde;adir varios grupos 
+		<span class="codefrag">&lt;servlet-mapping&gt;</span>, uno por cada patr&oacute;n de 
+		URL diferente, y todos con el mismo <span class="codefrag">&lt;servlet-name&gt;</span>.</p>
+<p>Este mismo procedimiento se puede aplicar tambi&eacute;n si 
+		en lugar de un servlet queremos tratar una p&aacute;gina JSP. Para 
+		declarar una p&aacute;gina <strong>JSP</strong>, sustituiremos la 
+		etiqueta <span class="codefrag">&lt;servlet-class&gt;</span> por la etiqueta 
+		<strong><span class="codefrag">&lt;jsp-file&gt;</span></strong>:</p>
+<pre class="code">&lt;servlet&gt;
+	&lt;servlet-name&gt;nombre2&lt;/servlet-name&gt;
+	&lt;jsp-file&gt;/mipagina.jsp&lt;/jsp-file&gt;
+&lt;/servlet&gt;</pre>
+<p>Esta p&aacute;gina se podr&aacute; mapear a diferentes URLs de la misma
+		forma en la que lo hacemos para un servlet.</p>
+<a name="N1023F"></a><a name="Servlet+invoker"></a>
+<h3 class="underlined_5">Servlet invoker</h3>
+<p>Hemos visto la forma en la que los servlets se mapean a la URL a
+la que deberemos acceder para invocarlos. Sin embargo, en algunos casos
+en los que estemos haciendo pruebas r&aacute;pidas podr&iacute;a venirnos bien poder 
+invocar un servlet sin tener que declararlo en el descriptor de 
+despliegue. Existe en los servidores web un servlet llamado <span class="codefrag">invoker</span>
+que nos permite hacer esto. Este servlet ser&aacute; quien se encargue de
+invocar otros servlets sin tener que ser configurados.</p>
+<p>Para poder utilizar esta caracter&iacute;stica deberemos habilitar este
+servlet <span class="codefrag">invoker</span>. Para ello deberemos editar el fichero
+<span class="codefrag">web.xml</span> general de Tomcat (se encuentra en el directorio
+<span class="codefrag">$TOMCAT_HOME/conf/web.xml</span>), y descomentar en &eacute;l tanto
+la declaraci&oacute;n del servlet <span class="codefrag">invoker</span>, como su mapeo a una
+URL. La declaraci&oacute;n ser&aacute; como se muestra a continuaci&oacute;n:</p>
+<pre class="code">&lt;servlet&gt;
+  &lt;servlet-name&gt;invoker&lt;/servlet-name&gt;
+  &lt;servlet-class&gt;
+    org.apache.catalina.servlets.InvokerServlet        
+  &lt;/servlet-class&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;debug&lt;/param-name&gt;
+    &lt;param-value&gt;0&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;load-on-startup&gt;2&lt;/load-on-startup&gt;
+&lt;/servlet&gt;</pre>
+<p>Por otro lado, el mapeo por defecto se realiza de la siguiente
+forma:</p>
+<pre class="code">&lt;servlet-mapping&gt;
+  &lt;servlet-name&gt;invoker&lt;/servlet-name&gt;
+  &lt;url-pattern&gt;/servlet/*&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;</pre>
+<p>Podemos fijarnos en que este servlet se encuentra mapeado por defecto a la 
+URL <span class="codefrag">/servlet/*</span> (aunque podr&iacute;amos cambiarla). Es decir, este servlet interceptar&aacute;
+todas las peticiones a nuestra aplicaci&oacute;n web que comiencen por
+<span class="codefrag">/servlet</span>. Lo que se indique a continuaci&oacute;n en la URL, 
+ser&aacute; considerado el nombre del servlet que queremos invocar.</p>
+<pre class="code">http://localhost:8080/&lt;dir&gt;/servlet/&lt;nombre-clase-servlet&gt;</pre>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">A partir de Tomcat 6.0 s&oacute;lo se puede utilizar
+el servlet <span class="codefrag">invoker</span> en contextos "privilegiados". Para hacer
+esto deberemos editar tambi&eacute;n el fichero <span class="codefrag">$TOMCAT_HOME/conf/context.xml</span>
+y sustituir la etiqueta <span class="codefrag">&lt;Context&gt;</span> por 
+<span class="codefrag">&lt;Context privileged="true"&gt;</span>
+</div>
+</div>
+<p>Por ejemplo, podr&iacute;amos invocar nuestro servlet con la siguiente URL 
+(recordamos que deberemos siempre proporcionar el nombre completo de la 
+clase, incluyendo el paquete al que pertenezca):</p>
+<pre class="code">http://localhost:8080/&lt;dir&gt;/servlet/unpaquete.ClaseServlet</pre>
+<p>Notar que <span class="codefrag">servlet</span> no corresponde a ning&uacute;n directorio
+en nuestra aplicaci&oacute;n, sino que se trata de la ruta a la que est&aacute;
+mapeado el servlet <span class="codefrag">invoker</span>.</p>
+<p>Si hemos declarado nuestro servlet en el descriptor de despliegue,
+tambi&eacute;n podremos utilizar el servlet <span class="codefrag">invoker</span> para invocar
+nuestro servlet mediante su nombre, en lugar de utilizar el nombre de
+la clase en la que se encuentra implementado:</p>
+<pre class="code">http://localhost:8080/&lt;dir&gt;/servlet/nombre</pre>
+<p>Incluso aunque hayamos mapeado nuestro servlet a una URL determinada,
+si tenemos habilitado el servlet <span class="codefrag">invoker</span> podremos tambi&eacute;n
+utilizarlo de forma alternativa para invocar nuestro servlet, bien
+mediante su nombre, o el nombre de su clase. En este caso podremos
+acceder al servlet de tres formas:</p>
+<pre class="code">http://localhost:8080/&lt;dir&gt;/servlet/nombre
+http://localhost:8080/&lt;dir&gt;/servlet/unpaquete.ClaseServlet
+http://localhost:8080/&lt;dir&gt;/ejemploservlet</pre>
+<div class="frame note">
+<div class="label">Importante</div>
+<div class="content">Utilizar el servlet <span class="codefrag">invoker</span> 
+puede ocasionarnos graves problemas de seguridad, al dejar una
+puerta abierta para ejecutar cualquier servlet de nuestra aplicaci&oacute;n.
+Por lo tanto, se desaprueba totalmente su uso, siendo interesante 
+&uacute;nicamente para hacer pruebas r&aacute;pidas.</div>
+</div>
+<a name="N102AD"></a><a name="Asignar+par%C3%A1metros+de+inicio+a+un+servlet+o+p%C3%A1gina+JSP"></a>
+<h3 class="underlined_5">Asignar par&aacute;metros de inicio a un servlet o p&aacute;gina JSP</h3>
+<p>El hecho de asignar un nombre a un servlet o p&aacute;gina JSP mediante la etiqueta <span class="codefrag">&lt;servlet&gt; </span>y sus subetiquetas nos permite identificarlo con ese nombre, y tambi&eacute;n poderle asignar par&aacute;metros de inicio. Para asignar par&aacute;metros se colocan etiquetas <strong><span class="codefrag">&lt;init-param&gt;</span></strong> dentro de la etiqueta <span class="codefrag">&lt;servlet&gt;</span> del servlet o p&aacute;gina JSP al que le queremos asignar par&aacute;metros. Dichas etiquetas tienen como subetiquetas un <strong><span class="codefrag">&lt;param-name&gt;</span></strong> (con el nombre del par&aacute;metro) y un <strong><span class="codefrag">&lt;param-value&gt;</span></strong> (con el valor del par&aacute;metro). Por ejemplo:</p>
+<pre class="code">&lt;servlet&gt;
+	&lt;servlet-name&gt;nombre&lt;/servlet-name&gt;
+	&lt;servlet-class&gt;ClaseServlet&lt;/servlet-class&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;param1&lt;/param-name&gt;
+		&lt;param-value&gt;valor1&lt;/param-value&gt;
+	&lt;/init-param&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;param2&lt;/param-name&gt;
+		&lt;param-value&gt;valor2&lt;/param-value&gt;
+	&lt;/init-param&gt;
+&lt;/servlet&gt;</pre>
+<p>Para obtener luego los par&aacute;metros desde el servlet se utiliza <strong><span class="codefrag">getServletConfig().getInitParameter(nombre)</span></strong> donde <span class="codefrag">nombre</span> es el valor <span class="codefrag">&lt;param-name&gt;</span> del par&aacute;metro que se busca, y devuelve el valor (elemento <span class="codefrag">&lt;param-value&gt;</span> asociado), que es de tipo <span class="codefrag">String</span> siempre. Para obtener estos valores desde p&aacute;ginas JSP se emplean otros m&eacute;todos.</p>
+<p>Los par&aacute;metros de inicio s&oacute;lo se aplican cuando accedemos al servlet o p&aacute;gina JSP a trav&eacute;s del nombre asignado en <span class="codefrag">&lt;servlet-name&gt;</span>, o a trav&eacute;s de la URL asociada en un <span class="codefrag">&lt;servlet-mapping&gt;</span>.</p>
+<a name="N102E9"></a><a name="Cargar+servlets+al+inicio"></a>
+<h3 class="underlined_5">Cargar servlets al inicio</h3>
+<p>A veces nos puede interesar que un servlet se cargue al arrancar el servidor, y no con la primera petici&oacute;n de un cliente. Para hacer eso, incluimos una etiqueta <strong><span class="codefrag">&lt;load-on-startup&gt;</span></strong> dentro de la etiqueta <span class="codefrag">&lt;servlet&gt;</span>. Dicha etiqueta puede estar vac&iacute;a:</p>
+<pre class="code">&lt;servlet&gt;
+	&lt;servlet-name&gt;nombre&lt;/servlet-name&gt;
+	&lt;servlet-class&gt;ClaseServlet&lt;/servlet-class&gt;
+	&lt;load-on-startup/&gt;
+&lt;/servlet&gt;</pre>
+<p>o contener un n&uacute;mero:</p>
+<pre class="code">&lt;servlet&gt;
+	&lt;servlet-name&gt;nombre&lt;/servlet-name&gt;
+	&lt;servlet-class&gt;ClaseServlet&lt;/servlet-class&gt;
+	&lt;load-on-startup&gt;2&lt;/load-on-startup&gt;
+&lt;/servlet&gt;</pre>
+<p>que indica el orden en que el servidor ir&aacute; cargando los servlets (de menor a mayor valor). </p>
+</div>
+
+<a name="N10309"></a><a name="Ejemplos+b%C3%A1sicos+de+servlets"></a>
+<h2 class="underlined_10">Ejemplos b&aacute;sicos de servlets</h2>
+<div class="section">
+<a name="N1030F"></a><a name="Servlet+que+genera+texto+plano"></a>
+<h3 class="underlined_5">Servlet que genera texto plano</h3>
+<p>El siguiente ejemplo de servlet muestra una p&aacute;gina con un mensaje de saludo: "Este es un servlet de prueba". Lo cargamos mediante petici&oacute;n GET. </p>
+<pre class="code">package ejemplos;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ClaseServlet extends HttpServlet
+{
+	public void doGet(HttpServletRequest request, 
+	                  HttpServletResponse response) 
+	throws ServletException, IOException
+	{
+<strong>		</strong>PrintWriter out = response.getWriter();<strong>
+		</strong>out.println ("Este es un servlet de prueba");<strong>
+</strong>	}
+}</pre>
+<p>Se obtiene un <span class="codefrag">Writer</span> para poder enviar datos al usuario. Simplemente se le env&iacute;a la cadena que se mostrar&aacute; en la p&aacute;gina generada.</p>
+<a name="N1032C"></a><a name="Servlet+que+genera+una+p%C3%A1gina+HTML"></a>
+<h3 class="underlined_5">Servlet que genera una p&aacute;gina HTML</h3>
+<p>Este otro ejemplo escribe c&oacute;digo HTML para mostrar una p&aacute;gina web.</p>
+<pre class="code">package ejemplos;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ClaseServletHTML extends HttpServlet
+{
+	public void doGet(HttpServletRequest request, 
+	                  HttpServletResponse response) 
+	throws ServletException, IOException
+	{
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		out.println ("&lt;!DOCTYPE HTML PUBLIC \""+
+		             "-//W3C//DTD HTML 4.0 " + 
+		             "Transitional//EN\"&gt;");
+		out.println ("&lt;HTML&gt;");
+		out.println ("&lt;BODY&gt;");
+		out.println ("&lt;h1&gt;Titulo&lt;/h1&gt;");
+		out.println ("&lt;br&gt;Servlet que genera HTML");
+		out.println ("&lt;/BODY&gt;");
+		out.println ("&lt;/HTML&gt;");
+<strong>	</strong>}
+}</pre>
+<p>Para generar una p&aacute;gina HTML con un servlet debemos seguir dos pasos:</p>
+<ul>
+			
+<li>
+				
+<p>Indicar que el contenido que se va a enviar es HTML (mediante el m&eacute;todo <span class="codefrag">setContentType() </span>de <span class="codefrag">HttpServletResponse</span>):</p>
+				
+<pre class="code">response.setContentType("text/html");</pre>
+				
+<p>Esta l&iacute;nea es una cabecera de respuesta, que veremos m&aacute;s adelante c&oacute;mo utilizar. Hay que ponerla antes de obtener el <span class="codefrag">Writer</span>.</p>
+			
+</li>
+			
+<li>Escribir en el flujo de salida el texto necesario para generar la p&aacute;gina HTML. La l&iacute;nea que genera el DOCTYPE no es necesaria, aunque s&iacute; muy recomendada para que se sepa qu&eacute; versi&oacute;n de HTML se est&aacute; empleando.</li>
+		
+</ul>
+<a name="N1035C"></a><a name="Servlet+que+utiliza+par%C3%A1metros+de+inicializaci%C3%B3n"></a>
+<h3 class="underlined_5">Servlet que utiliza par&aacute;metros de inicializaci&oacute;n</h3>
+<p>Este otro ejemplo utiliza dos par&aacute;metros de inicializaci&oacute;n externos:</p>
+<pre class="code">package ejemplos;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ClaseServletInit extends HttpServlet
+{
+	<strong>// Mensaje que se va a mostrar en la pagina</strong>
+	String mensaje = "";		<strong>
+	// Numero de veces que se va a repetir el mensaje
+</strong>	int contador = 1;		<strong>
+</strong>
+<strong>	// Metodo de inicializacion
+</strong>	
+	public void init(ServletConfig conf) 
+	throws ServletException
+	{
+		super.init(conf);	<strong>// MUY IMPORTANTE</strong>
+		
+		mensaje = conf.getInitParameter("mensaje");
+		if (mensaje == null)
+			mensaje = "Hola";
+		
+		try
+		{
+			contador = Integer.parseInt(
+			   conf.getInitParameter("contador"));
+		} catch (NumberFormatException e) {
+			contador = 1;
+		}
+	}
+
+<strong>	// Metodo para procesar una peticion GET
+</strong>	
+	public void doGet(HttpServletRequest request, 
+	                  HttpServletResponse response) 
+	throws ServletException, IOException
+	{
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		out.println ("&lt;!DOCTYPE HTML PUBLIC \""+
+		             "-//W3C//DTD HTML 4.0 " + 
+		             "Transitional//EN\"&gt;");
+		out.println ("&lt;HTML&gt;");
+		out.println ("&lt;BODY&gt;");
+		
+		for (int i = 0; i &lt; contador; i++)		
+		{
+			out.println (mensaje);
+			out.println ("&lt;BR&gt;");
+		}
+		
+		out.println ("&lt;/BODY&gt;");
+		out.println ("&lt;/HTML&gt;");
+	}
+}</pre>
+<ul>
+			
+<li>Se utiliza el m&eacute;todo <strong>init()</strong> con un par&aacute;metro <span class="codefrag">ServletConfig</span> para poder tomar los par&aacute;metros externos. Es importante la llamada a <span class="codefrag">super</span> al principio del m&eacute;todo.</li>
+			
+<li>Mediante el m&eacute;todo <strong>getInitParameter()</strong> de <span class="codefrag">ServletConfig </span>obtenemos dos par&aacute;metros: <span class="codefrag">mensaje</span> y <span class="codefrag">contador</span>, que asignamos a las variables del mismo nombre. El primero indica el mensaje que se va a mostrar en la p&aacute;gina, y el segundo el n&uacute;mero de veces que se va a mostrar.</li>
+			
+<li>En <strong>doGet()</strong><span class="codefrag"> </span>hacemos uso de esos par&aacute;metros obtenidos, para mostrar el mensaje las veces indicadas.</li>
+		
+</ul>
+<a name="N103A2"></a><a name="Prueba+de+los+ejemplos"></a>
+<h3 class="underlined_5">Prueba de los ejemplos</h3>
+<p>Para probar el ejemplo, tendr&iacute;amos dos posibilidades </p>
+<ul>
+			
+<li>
+				
+<p>Crear un directorio en <span class="codefrag">webapps</span> para el ejemplo (por ejemplo, <span class="codefrag">webapps/ejemplobasico</span>), y dentro de &eacute;l:</p>
+				
+<ul>
+					
+<li>Definir un directorio <span class="codefrag">WEB-INF</span>
+</li>
+					
+<li>Dentro de <span class="codefrag">WEB-INF</span> colocar un fichero <span class="codefrag">web.xml</span> descriptor de la aplicaci&oacute;n. Podemos mapear los servlets en este fichero descriptor, como veremos a continuaci&oacute;n. </li>
+					
+<li>Colocar los servlets en el directorio <span class="codefrag">WEB-INF/classes</span>.</li>
+				
+</ul>
+			
+</li>
+			
+<li>Crear un fichero WAR con la estructura de ficheros y directorios vista en el punto anterior, y copiar dicho fichero WAR en el directorio <span class="codefrag">webapps</span> de Tomcat</li>
+		
+</ul>
+<p>Un ejemplo de fichero <span class="codefrag">web.xml</span>  podr&iacute;a ser el siguiente:</p>
+<pre class="code">&lt;!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//
+ DTD Web Application 2.2//EN" 
+ "http://java.sun.com/j2ee/dtds/web-app_2_2.dtd"&gt;
+
+&lt;web-app&gt;
+	&lt;servlet&gt;
+		&lt;servlet-name&gt;ejemplo1_1&lt;/servlet-name&gt;
+		&lt;servlet-class&gt;ejemplos.ClaseServlet&lt;/servlet-class&gt;
+	&lt;/servlet&gt;
+	&lt;servlet&gt;
+		&lt;servlet-name&gt;ejemplo1_2&lt;/servlet-name&gt;
+		&lt;servlet-class&gt;ejemplos.ClaseServletHTML&lt;/servlet-class&gt;
+	&lt;/servlet&gt;
+	&lt;servlet&gt;
+		&lt;servlet-name&gt;ejemplo1_3&lt;/servlet-name&gt;
+		&lt;servlet-class&gt;ejemplos.ClaseServletInit&lt;/servlet-class&gt;
+		&lt;init-param&gt;
+			&lt;param-name&gt;
+			mensaje
+			&lt;/param-name&gt;
+			&lt;param-value&gt;
+			Mensaje de prueba
+			&lt;/param-value&gt;
+		&lt;/init-param&gt;
+		&lt;init-param&gt;
+			&lt;param-name&gt;contador&lt;/param-name&gt;
+			&lt;param-value&gt;10&lt;/param-value&gt;
+		&lt;/init-param&gt;
+	&lt;/servlet&gt;
+
+	&lt;servlet-mapping&gt;
+		&lt;servlet-name&gt;ejemplo1_1&lt;/servlet-name&gt;
+		&lt;url-pattern&gt;/ejemploservlet&lt;/url-pattern&gt;
+	&lt;/servlet-mapping&gt;
+	&lt;servlet-mapping&gt;
+		&lt;servlet-name&gt;ejemplo1_2&lt;/servlet-name&gt;
+		&lt;url-pattern&gt;/ejemploservletHTML&lt;/url-pattern&gt;
+	&lt;/servlet-mapping&gt;
+	&lt;servlet-mapping&gt;
+		&lt;servlet-name&gt;ejemplo1_3&lt;/servlet-name&gt;
+		&lt;url-pattern&gt;/ejemploservletInit&lt;/url-pattern&gt;
+	&lt;/servlet-mapping&gt;
+&lt;/web-app&gt;</pre>
+<p>Vemos que se mapean los tres servlets:</p>
+<ul>
+			
+<li>
+<strong>ejemplo1_1</strong> es el nombre para el primer servlet <span class="codefrag">ClaseServlet</span>, que se puede referenciar tambi&eacute;n con <span class="codefrag">/ejemploservlet</span>.</li>
+			
+<li>
+<strong>ejemplo1_2</strong> es el nombre para el segundo servlet <span class="codefrag">ClaseServletHTML</span>, que se puede referenciar tambi&eacute;n con <span class="codefrag">/ejemploservletHTML</span>
+</li>
+			
+<li>
+<strong>ejemplo1_3</strong> es el nombre para el tercer servlet <span class="codefrag">ClaseServletInit</span>, que se puede referenciar tambi&eacute;n con <span class="codefrag">/ejemploservletInit</span>. En &eacute;l se definen los par&aacute;metros de inicio <span class="codefrag">mensaje </span>y <span class="codefrag">contador</span>, utilizados internamente por el servlet (se definen mediante etiquetas <span class="codefrag">&lt;init-param&gt;</span>, indicando el nombre (<span class="codefrag">param-name</span>) y el valor (<span class="codefrag">param-value</span>)).</li>
+		
+</ul>
+<p>Para probar los servlets, instalamos la aplicaci&oacute;n web en Tomcat. Para llamar a los servlets, podemos hacerlo de tres formas:</p>
+<ul>
+			
+<li>
+				
+<p>Escribiendo, respectivamente para cada servlet:</p>
+
+<pre class="code">http://localhost:8080/appserv1/servlet/ejemplos.ClaseServlet
+http://localhost:8080/appserv1/servlet/ejemplos.ClaseServletHTML
+http://localhost:8080/appserv1/servlet/ejemplos.ClaseServletInit</pre>
+			
+</li>
+			
+<li>
+				
+<p>Sustituir la clase del servlet por su nombre asociado en el mapeo:</p>
+
+<pre class="code">http://localhost:8080/appserv1/servlet/ejemplo1_1
+http://localhost:8080/appserv1/servlet/ejemplo1_2
+http://localhost:8080/appserv1/servlet/ejemplo1_3</pre>
+			
+</li>
+			
+<li>
+				
+<p>Utilizar el mapeo en el fichero descriptor y llamar a los servlets con su URL asociada:</p>
+
+<pre class="code">http://localhost:8080/appserv1/ejemploservlet
+http://localhost:8080/appserv1/ejemploservletHTML
+http://localhost:8080/appserv1/ejemploservletInit</pre>
+			
+</li>
+		
+</ul>
+<p>NOTA: el servlet <span class="codefrag">ClaseServletInit</span> no tomar&aacute; los par&aacute;metros si lo llamamos del primer modo, debido a que se asignan esos par&aacute;metros al mapeo.</p>
+</div>
+           
+
+<a name="N10442"></a><a name="Logging+en+aplicaciones+Java+EE+con+servlets"></a>
+<h2 class="underlined_10">Logging en aplicaciones Java EE con servlets</h2>
+<div class="section">
+<p>Utilizaremos Log4J como librer&iacute;a de logging, pero encapsulada dentro de la librer&iacute;a <em>commons-logging</em> de Jakarta. Ya vimos en el m&oacute;dulo de servidores web que, para poder imprimir mensajes de log en una aplicaci&oacute;n que contenga servlets, se deb&iacute;an seguir estos pasos:</p>
+<ul>
+		
+<li>A&ntilde;adir los ficheros JAR de las librer&iacute;as (<span class="codefrag">commons-logging-X.X.jar</span> y <span class="codefrag">log4j-X.X.X.jar</span>) en la carpeta <strong>WEB-INF/lib</strong> de nuestra aplicaci&oacute;n</li>
+		
+<li>Colocar dos ficheros <span class="codefrag">.properties</span> en el CLASSPATH de la aplicaci&oacute;n (carpeta <span class="codefrag">WEB-INF/classes</span>):
+			<ul>
+				
+<li>Un fichero <strong>commons-logging.properties</strong> indicando que vamos a utilizar Log4J como librer&iacute;a subyacente</li>
+				
+<li>Un fichero <strong>log4j.properties</strong> con la configuraci&oacute;n de logging para Log4J.</li>
+			
+</ul>
+			Vimos que estos ficheros los colocar&iacute;amos en una carpeta fuente llamada <span class="codefrag">resources</span>, para luego desde Ant o con WebTools llevarlo a <span class="codefrag">build/WEB-INF/classes</span>.
+		</li>
+		
+<li>Finalmente, s&oacute;lo queda en cada servlet o clase Java colocar los mensajes de log donde queramos. Veremos c&oacute;mo hacerlo en servlets y p&aacute;ginas JSP en el siguiente m&oacute;dulo. Aqu&iacute; vemos un ejemplo de c&oacute;mo ponerlos en cada servlet:
+<pre class="code">...
+
+import org.apache.commons.logging.*;
+
+public class ServletLog4J1 extends HttpServlet
+{
+	<strong>static Log logger = LogFactory.getLog(ServletLog4J1.class);</strong>
+	
+	// Metodo para procesar una peticion GET
+	
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+	throws ServletException, IOException
+	{
+		<strong>logger.info("Atendiendo peticion Servlet Log4J");</strong>
+		PrintWriter out = response.getWriter();
+		out.println ("Servlet sencillo de prueba para logging");
+		<strong>logger.debug("Fin de procesamiento de petici&oacute;n");</strong>
+	}
+}</pre>
+		
+</li>
+	
+</ul>
+</div>             
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2008-2009 Depto. CCIA</div>
+</div>
+</body>
+</html>

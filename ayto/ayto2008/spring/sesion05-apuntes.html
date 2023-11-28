@@ -1,0 +1,619 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Programaci&oacute;n orientada a aspectos (AOP) en Spring</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Spring" src="images/baner_j2ee_der.gif" title="Spring"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-web.html'">Aplicaciones Web</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-ent.html'">Aplicaciones Enterprise</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../charlas.html'">Charlas</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto</a>
+</li>
+<li>
+<a class="base-not-selected" href="index.html">Spring</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion05-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Programaci&oacute;n orientada a aspectos (AOP) en Spring</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Introducci%C3%B3n+a+la+AOP">Introducci&oacute;n a la AOP</a>
+</li>
+<li>
+<a href="#AOP+en+Spring+2">AOP en Spring 2</a>
+<ul class="minitoc">
+<li>
+<a href="#Anotaciones+vs.+XML">Anotaciones vs. XML</a>
+</li>
+<li>
+<a href="#A%C3%B1adir+soporte+para+AOP+a+un+proyecto">A&ntilde;adir soporte para AOP a un proyecto</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Puntos+de+corte+%28pointcuts%29">Puntos de corte (pointcuts)</a>
+<ul class="minitoc">
+<li>
+<a href="#Expresiones+m%C3%A1s+comunes">Expresiones m&aacute;s comunes</a>
+</li>
+<li>
+<a href="#Combinar+pointcuts">Combinar pointcuts</a>
+</li>
+<li>
+<a href="#Pointcuts+con+nombre">Pointcuts con nombre</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Advices">Advices</a>
+<ul class="minitoc">
+<li>
+<a href="#%40Before">@Before</a>
+</li>
+<li>
+<a href="#%40AfterReturning">@AfterReturning</a>
+</li>
+<li>
+<a href="#%40AfterThrowing">@AfterThrowing</a>
+</li>
+<li>
+<a href="#%40After">@After</a>
+</li>
+<li>
+<a href="#%40Around">@Around</a>
+</li>
+<li>
+<a href="#Acceder+a+los+par%C3%A1metros+y+otra+informaci%C3%B3n+del+punto+de+corte">Acceder a los par&aacute;metros y otra informaci&oacute;n del punto de corte</a>
+</li>
+<li>
+<a href="#M%C3%A1s+de+un+advice+para+el+mismo+punto+de+corte">M&aacute;s de un advice para el mismo punto de corte</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<a name="N1000C"></a><a name="Introducci%C3%B3n+a+la+AOP"></a>
+<h2 class="underlined_10">Introducci&oacute;n a la AOP</h2>
+<div class="section">
+<p>La programaci&oacute;n orientada a aspectos (AOP - <em>Aspect Oriented Programming</em>) es un 
+ paradigma de programaci&oacute;n que intenta formalizar y representar de forma concisa los 
+ elementos que son transversales a todo el sistema. En los lenguajes orientados a objetos, la estructura
+ del sistema se basa en la idea de <em>clases</em> y <em>jerarqu&iacute;as de clases</em>. La herencia permite
+ modularizar el sistema, eliminando la necesidad de duplicar c&oacute;digo. No obstante, 
+ siempre hay aspectos que son transversales a esta estructura: el ejemplo m&aacute;s cl&aacute;sico es el de
+ control de permisos de ejecuci&oacute;n de ciertos m&eacute;todos en una clase:</p>
+<pre class="code">
+ public class MiObjetoDeNegocio {
+ 
+    public void metodoDeNegocio1() throws SinPermisoException {
+         <strong>chequeaPermisos();</strong>
+         <em>//resto del c&oacute;digo</em>
+       ...
+    }
+    
+    public void metodoDeNegocio2() throws SinPermisoException {
+         <strong>chequeaPermisos();</strong>
+         <em>//resto del c&oacute;digo</em>
+       ...
+    } 
+    
+    protected void chequeaPermisos() throws SinPermisoException {
+          <em>//chequear permisos de ejecucion</em>
+       ...
+    }
+ }  
+ 
+ </pre>
+<p>Como vemos, estructurando adecuadamente el programa se puede <em>minimizar</em> la repetici&oacute;n de c&oacute;digo, pero es pr&aacute;cticamente
+imposible eliminarla. La situaci&oacute;n se agravar&iacute;a si adem&aacute;s tuvi&eacute;ramos que controlar permisos en objetos de varias
+clases. El problema es que en un lenguaje orientado a objetos los aspectos transversales
+a la jerarqu&iacute;a de clases no son modularizables ni se pueden formular de manera concisa con las construcciones
+del lenguaje. La programaci&oacute;n orientada a aspectos intenta formular conceptos y dise&ntilde;ar construcciones del lenguaje
+que permitan modelar estos aspectos transversales sin duplicaci&oacute;n de c&oacute;digo. En nuestro ejemplo, se necesitar&iacute;a
+poder especificar de alguna manera concisa que <em>antes</em> de ejecutar <em>ciertos m&eacute;todos</em> hay que llamar a 
+<em>cierto c&oacute;digo</em>.</p>
+<p>En AOP, a los elementos que son transversales a la estructura del sistema y se pueden modularizar gracias
+a las construcciones que aporta el paradigma se les denomina <strong>aspectos</strong> (<em>aspects</em>).
+En el ejemplo anterior el control de permisos de ejecuci&oacute;n, modularizado mediante AOP, ser&iacute;a un aspecto.
+</p>
+<p> Un <strong>consejo</strong> (<em>advice</em>) es una acci&oacute;n que hay que ejecutar en determinado/s punto/s de
+un c&oacute;digo, para conseguir implementar un aspecto. En nuestro ejemplo, la acci&oacute;n a ejecutar ser&iacute;a la llamada
+a <span class="codefrag">chequeaPermisos()</span>. El conjunto de puntos del c&oacute;digo donde se debe ejecutar un <em>advice</em>
+ se conoce como <strong>punto de corte</strong> o <em>pointcut</em>. En nuestro caso ser&iacute;an los m&eacute;todos 
+ <span class="codefrag">metodoDeNegocio1()</span> y <span class="codefrag">metodoDeNegocio2()</span>. N&oacute;tese que aunque se hable de "punto de corte"
+ en singular, en general no es un &uacute;nico punto del c&oacute;digo.</p>
+<p>En muchos <em>frameworks</em> de AOP (Spring incluido), el objeto que debe ejecutar esta acci&oacute;n se modela en la
+ mayor&iacute;a de casos como 
+ un <strong>interceptor</strong>: un objeto que recibe una llamada a un m&eacute;todo propio
+ <em>antes</em> de que se ejecute ese punto del c&oacute;digo. Los interceptores se pueden encadenar, si deseamos realizar
+ varias acciones en el mismo punto, como puede observarse en la siguiente figura. </p>
+<p>
+ 
+<img alt="cadena de interceptores" content-width="12cm" src="imagenes/chain.jpg" width="700">
+ </p>
+<p> Cuando alg&uacute;n objeto
+ llama a un m&eacute;todo que forma parte del pointcut, el <em>framework</em> de AOP se las "arregla" para que en realidad
+ se llame a un objeto <em>proxy</em> o intermediario, que tiene un m&eacute;todo con el mismo nombre y signatura pero 
+ cuya ejecuci&oacute;n lo que hace en realidad es redirigir la llamada por una cadena de interceptores hasta el m&eacute;todo
+ que se quer&iacute;a ejecutar.</p>
+<p>En algunas ocasiones nos interesar&aacute; usar un interceptor para interceptar las llamadas a <em>todos</em> los m&eacute;todos
+ de una clase. En otras solo nos interesar&aacute; interceptar <em>algunos</em> m&eacute;todos. En Spring, cuando
+ deseamos interceptar las llamadas solo a algunos m&eacute;todos debemos definir un <strong>advisor</strong>,
+ que ser&aacute; una combinaci&oacute;n de <em>pointcut</em> (d&oacute;nde hay que aplicar AOP) m&aacute;s <em>interceptor</em>
+ (qu&eacute; hay que ejecutar).</p>
+<p>Aunque la terminolog&iacute;a descrita en los p&aacute;rrafos anteriores ser&aacute; nueva para los no iniciados en AOP,
+las ideas resultar&aacute;n bastante familiares a los que hayan trabajado con EJBs. En efecto,
+&eacute;stos funcionan de un modo muy parecido: el contenedor debe <em>interceptar</em> las llamadas a los m&eacute;todos de negocio para 
+poder ofrecer los servicios de seguridad, transaccionalidad y gesti&oacute;n de hilos. Los <em>puntos de corte</em> se 
+especifican mediante los descriptores de despliegue y el <span class="codefrag">EJBObject</span> act&uacute;a de <em>proxy</em>. La
+diferencia b&aacute;sica es que AOP es m&aacute;s gen&eacute;rico que los EJBs, o dicho de otro modo, se podr&iacute;a considerar
+que <em> el mecanismo de provisi&oacute;n de servicios de los EJBs es un subconjunto de AOP</em>, ya que en EJBs:</p>
+<ul>
+  
+<li>Los &uacute;nicos objetos a los que se puede proporcionar servicios son por supuesto EJBs, pero no clases Java
+  cualquiera (POJOs)</li>
+  
+<li>Los puntos de corte que se puede especificar est&aacute;n limitados</li>
+  
+<li>la implementaci&oacute;n de los interceptores ya est&aacute; hecha y no es posible cambiarla</li>
+
+</ul>
+</div>
+
+<a name="N100B3"></a><a name="AOP+en+Spring+2"></a>
+<h2 class="underlined_10">AOP en Spring 2</h2>
+<div class="section">
+<p>Una de las &aacute;reas en las que m&aacute;s ha cambiado Spring 2 desde la versi&oacute;n 1.x es en AOP, no tanto
+ en la implementaci&oacute;n interna, que sigue siendo similar, como en la forma de uso. La configuraci&oacute;n
+ necesaria se ha simplificado muy considerablemente. Adem&aacute;s en lugar de usar una sintaxis propia de Spring
+ se ha pasado a usar la de AspectJ. Siguiendo la filosof&iacute;a de no reinventar la rueda, los desarrolladores de Spring han considerado
+ que no era necesaria una sintaxis propia existiendo la de AspectJ, mucho m&aacute;s potente que la de Spring 1.2 y ampliamente probada en la pr&aacute;ctica.</p>
+<p>Hay que tener presente que <em>no es lo mismo usar la sintaxis de AspectJ que usar AspectJ</em> en s&iacute;. De hecho, lo recomendado
+ en la documentaci&oacute;n de Spring
+ es usar la sintaxis de AspectJ pero con la implementaci&oacute;n de AOP propia de Spring. Para casos en los que se
+ necesite la potencia que puede dar AspectJ al completo, puede usarse su implementaci&oacute;n sustituyendo
+  a la de Spring, aunque c&oacute;mo hacer esto &uacute;ltimo queda fuera del alcance de estas p&aacute;ginas.</p>
+<p>Los apartados siguientes hacen un uso extensivo de la sintaxis de AspectJ, por lo que se recomienda
+  al lector interesado que consulte su documentaci&oacute;n, teniendo siempre en cuenta que Spring no soporta AspectJ
+  al completo, sino solo un subconjunto. </p>
+<a name="N100C5"></a><a name="Anotaciones+vs.+XML"></a>
+<h3 class="underlined_5">Anotaciones vs. XML</h3>
+<p>Hay dos sintaxis alternativas para usar AOP en Spring 2.0. Una es mediante el uso de anotaciones
+  en el propio c&oacute;digo Java. La otra es con etiquetas en un fichero de configuraci&oacute;n. El uso de XML
+  es necesario cuando no podemos usar Java 5 (no tenemos anotaciones), no queremos tocar el c&oacute;digo fuente
+  o vamos a reutilizar la misma AOP en distintas aplicaciones y contextos. Sin embargo, 
+  usando anotaciones podemos encapsular el AOP junto con el c&oacute;digo Java en un &uacute;nico lugar. En teor&iacute;a
+  este es el sitio en que deber&iacute;a estar si el AOP es un requisito de negocio que debe cumplir la clase. </p>
+<p> En los ejemplos que
+  siguen usaremos
+  anotaciones. El lector puede consultar la excelente documentaci&oacute;n de Spring para ver los equivalentes XML.</p>
+<a name="N100D2"></a><a name="A%C3%B1adir+soporte+para+AOP+a+un+proyecto"></a>
+<h3 class="underlined_5">A&ntilde;adir soporte para AOP a un proyecto</h3>
+<p>Para a&ntilde;adir soporte AOP a un proyecto Spring necesitaremos dos librer&iacute;as: <span class="codefrag">aspectjweaver.jar</span>,
+  y <span class="codefrag">aspectjrt.jar</span>, que podemos obtener de la distribuci&oacute;n est&aacute;ndar de AspectJ o bien de la
+  versi&oacute;n de Spring que viene con todas las dependencias incluidas. Adem&aacute;s, si queremos usar AOP con
+  clases que no implementen ning&uacute;n <span class="codefrag">interface</span>, necesitaremos la librer&iacute;a CGLIB. En teor&iacute;a es 
+  una buena pr&aacute;ctica que todas nuestras clases de negocio implementen un interfaz, con lo que este &uacute;ltimo caso
+  no deber&iacute;a darse demasiado.</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Hay que recalcar de nuevo que la implementaci&oacute;n AOP de Spring est&aacute; basada en la idea de <em>proxy</em>. En Java existe un 
+  mecanismo est&aacute;ndar para generar autom&aacute;ticamente un <em>proxy</em> a partir de un interfaz, mecanismo que
+  aprovecha Spring, pero no se puede generar a partir de una clase. Por ello en este caso se hacen necesarias
+  herramientas de terceros como CGLIB.</div>
+</div>
+<p>Adem&aacute;s debemos especificar que vamos a hacer uso de AOP en el XML de configuraci&oacute;n de beans. La configuraci&oacute;n
+  se reduce a una sola etiqueta. En negrita se destaca la etiqueta y la definici&oacute;n del espacio de nombres
+  necesaria para poder usarla.</p>
+<pre class="code">
+  
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         <strong>xmlns:aop="http://www.springframework.org/schema/aop"</strong>
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       			http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       		      		<strong>http://www.springframework.org/schema/aop 
+       			http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"</strong>
+
+  <strong>&lt;aop:aspectj-autoproxy/&gt;</strong>
+
+  
+  &lt;!-- definiciones de beans --&gt;
+  &lt;bean id=".." class=".."&gt;
+  
+  &lt;/bean&gt;
+  ..
+&lt;beans&gt;  
+  </pre>
+</div>
+
+<a name="N100FF"></a><a name="Puntos+de+corte+%28pointcuts%29"></a>
+<h2 class="underlined_10">Puntos de corte (pointcuts)</h2>
+<div class="section">
+<p>Como ya se ha dicho, un punto de corte o <em>pointcut</em> es un punto de inter&eacute;s en el c&oacute;digo antes,
+despu&eacute;s o "alrededor" del cual queremos ejecutar algo (un <em>advice</em>). Un <em>pointcut</em> no puede
+ser cualquier l&iacute;nea arbitraria de c&oacute;digo. La versi&oacute;n actual de <strong>Spring solo soporta puntos de corte en ejecuciones de m&eacute;todos de beans</strong>. La implementaci&oacute;n
+completa de AspectJ permite usar tambi&eacute;n el acceso a campos, la llamada a un constructor, etc, aunque esto
+en AOP de Spring no es posible.</p>
+<p>Es importante destacar que al definir un <em>pointcut</em> realmente no estamos todav&iacute;a diciendo
+que vayamos a ejecutar nada, simplemente <em>marcamos un "punto de inter&eacute;s"</em>. La combinaci&oacute;n de <strong><em>pointcut</em>
++ <em>advice</em></strong> es la que realmente hace algo &uacute;til. Por ello, los ejemplos dados en este apartado por s&iacute;
+solos no tienen demasiado sentido, no hay que intentar probarlos tal cual, aunque aqu&iacute; los explicaremos aislados para poder describir con cierto detalle su sintaxis  
+antes de pasar a la de los <em>advices</em>. </p>
+<p>Lo que sigue es un conjunto de ejemplos que ilustran las opciones m&aacute;s comunes para <em>pointcuts</em>, no una referencia exhaustiva, que no tendr&iacute;a sentido estando ya la documentaci&oacute;n de Spring y la de
+AspectJ para ello.</p>
+<a name="N1012D"></a><a name="Expresiones+m%C3%A1s+comunes"></a>
+<h3 class="underlined_5">Expresiones m&aacute;s comunes</h3>
+<p>La expresi&oacute;n m&aacute;s usada en <em>pointcuts</em> de Spring es <strong><span class="codefrag">execution()</span></strong>, que representa
+la llamada a un m&eacute;todo que encaje con una determinada signatura. Se puede especificar la signatura completa del m&eacute;todo incluyendo tipo de acceso (public, protected,...),
+tipo de retorno, nombre de clase (incluyendo paquetes), nombre de m&eacute;todo y argumentos. Teniendo en cuenta:</p>
+<ul>
+
+<li> El tipo de acceso y el nombre de clase son
+opcionales, pero no as&iacute; el resto de elementos</li>
+
+<li>Podemos usar el comod&iacute;n * para sustituir a cualquiera de ellos, y tambi&eacute;n el comod&iacute;n
+.., que sustituye a varios tokens, por ejemplo varios argumentos de un m&eacute;todo, o varios subpaquetes con
+el mismo prefijo.</li>
+
+<li> En los par&aacute;metros, <span class="codefrag">()</span> indica un m&eacute;todo sin par&aacute;metros, <span class="codefrag">(..)</span>
+indica cualquier n&uacute;mero de par&aacute;metros de cualquier tipo, y podemos tambi&eacute;n especificar los tipos, por
+ejemplo <span class="codefrag">(String, *, int)</span> indicar&iacute;a un m&eacute;todo cuyo primer par&aacute;metro es <span class="codefrag">String</span>, el tercero 
+<span class="codefrag">int</span> y el segundo puede ser cualquiera.</li>
+
+</ul>
+<p>Por ejemplo, para especificar todos los m&eacute;todos con acceso "public" de cualquier clase dentro del paquete <span class="codefrag">es.ua.jtech.aop</span> pondr&iacute;amos:</p>
+<pre class="code">
+execution( public * es.ua.jtech.aop.*.*(..))
+</pre>
+<p>Donde el primer * representa cualquier tipo de retorno, el segundo * cualquier clase y el tercer * cualquier m&eacute;todo. Los .. representan
+cualquier conjunto de par&aacute;metros</p>
+<p>Algunos ejemplos m&aacute;s de <span class="codefrag">execution()</span>
+</p>
+<pre class="code">
+//Ejecuci&oacute;n de cualquier <em>getter</em> (m&eacute;todo p&uacute;blico 
+//cuyo nombre comience por "get" y que no tenga par&aacute;metros).
+<strong>execution(public * get*())</strong>
+//Ejecuci&oacute;n de cualquier m&eacute;todo public de cualquier clase
+//en el paquete es.ua.jtech o subpaquetes (f&iacute;jate en el "..")
+<strong>execution(public * es.ua.jtech..*.*(..))</strong>
+//Ejecuci&oacute;n de cualquier m&eacute;todo de cualquier clase 
+//en el paquete es.ua.jtech que devuelva <span class="codefrag">void</span>
+//y cuyo primer par&aacute;metro sea <span class="codefrag">String</span>
+//Se omite el tipo de acceso
+<strong>execution (void es.ua.jtech.*.*(String,..))</strong>
+
+</pre>
+<p>
+<strong><span class="codefrag">within()</span></strong> permite especificar todos las llamadas a m&eacute;todos dentro de un paquete o subpaquetes
+del mismo (usando el comod&iacute;n .. al igual que en la sintaxis de <span class="codefrag">execution()</span>). </p>
+<pre class="code">
+//Cualquier llamada a m&eacute;todo dentro del paquete es.ua.jtech o subpaquetes
+<strong>within(es.ua.jtech..*)</strong>
+
+</pre>
+<p>
+<strong><span class="codefrag">args()</span></strong> permite especificar el tipo deseado para los argumentos. No se suele usar
+tal cual, sino combinado con <span class="codefrag">execution</span> como un "truco" para darle nombre a los argumentos (ver el
+apartado siguiente). </p>
+<pre class="code">
+//Cualquier m&eacute;todo que tenga un solo par&aacute;metro que implemente Serializable
+<strong>args(java.io.Serializable)</strong>
+
+</pre>
+<a name="N101A1"></a><a name="Combinar+pointcuts"></a>
+<h3 class="underlined_5">Combinar pointcuts</h3>
+<p>Se pueden combinar pointcuts usando los operadores l&oacute;gicos &amp;&amp;, || y !, con el mismo significado que en el lenguaje C. Por ejemplo:</p>
+<pre class="code">
+//todos los getters o setters de cualquier clase
+execution (public * get*()) || execution (public void set*(*))
+</pre>
+<p>El operador &amp;&amp; se suele usar en conjunci&oacute;n con <span class="codefrag">args</span> como una forma de "dar nombre" a los
+par&aacute;metros, por ejemplo:</p>
+<pre class="code">
+execution (public void set*(*)) &amp;&amp; args(nuevoValor)
+</pre>
+<p>Encajar&iacute;a con un <em>setter</em> cualquiera, d&aacute;ndole el nombre
+<em>nuevoValor</em> al par&aacute;metro pasado al mismo. Veremos la utilidad de esto,
+cuando definamos <span class="codefrag">advices</span>, como m&eacute;todo para acceder al valor del par&aacute;metro. </p>
+<a name="N101C5"></a><a name="Pointcuts+con+nombre"></a>
+<h3 class="underlined_5">Pointcuts con nombre</h3>
+<p>Se le puede asignar un nombre arbitrario  a un pointcut (lo que se denomina una 
+<em>signatura</em>). Esto permite
+referenciarlo y reutilizarlo de manera m&aacute;s corta y sencilla que si
+tuvi&eacute;ramos que poner la expresi&oacute;n completa que lo define. 
+La definici&oacute;n completa consta de la anotaci&oacute;n <span class="codefrag">@Pointcut</span>
+seguida de la expresi&oacute;n que lo define y la signatura. Para definir
+ la signatura se usa la misma sintaxis que para definir la de un m&eacute;todo Java
+ en un interfaz. Eso s&iacute;, el valor de retorno debe ser <span class="codefrag">void</span>.
+  Por ejemplo:</p>
+<pre class="code">
+@Pointcut("execution(public * get*())")
+public void unGetterCualquiera() {}
+ </pre>
+<p>Esta signatura se puede usar por ejemplo al combinar pointcuts:</p>
+<pre class="code">
+@Pointcut("execution(public * get*())")
+public void unGetterCualquiera() {}
+    
+@Pointcut("within(es.ua.jtech.ejemplo.negocio.*"))
+public void enNegocio() {}
+   
+@Pointcut("unGetterCualquiera() &amp;&amp; enNegocio()")
+public void getterDeNegocio() {}
+</pre>
+</div>
+
+<a name="N101E4"></a><a name="Advices"></a>
+<h2 class="underlined_10">Advices</h2>
+<div class="section">
+<p>Con los <em>advices</em> ya tenemos la pieza del puzzle que nos faltaba para que todo cobre sentido. Un <em>advice</em>
+es algo que hay que hacer en un cierto punto de corte, ya sea antes, despu&eacute;s, o "alrededor" (antes y despu&eacute;s) del punto.</p>
+<p>Los <em>advices</em> se especifican con una anotaci&oacute;n con el pointcut y la definici&oacute;n
+del m&eacute;todo Java a ejecutar (signatura y c&oacute;digo del mismo). Como en Spring los puntos de corte deben ser ejecuciones de m&eacute;todos los casos posibles son:</p>
+<ul>
+
+<li>Antes de la ejecuci&oacute;n de un m&eacute;todo (anotaci&oacute;n <span class="codefrag">@Before</span>)</li>
+
+<li>Despu&eacute;s de la ejecuci&oacute;n normal, es decir, si no se genera una excepci&oacute;n (anotaci&oacute;n <span class="codefrag">@AfterReturning</span>)</li>
+
+<li>Despu&eacute;s de la ejecuci&oacute;n con excepci&oacute;n/es (anotaci&oacute;n <span class="codefrag">@AfterThrowing</span>)</li>
+
+<li>Despu&eacute;s de la ejecuci&oacute;n, se hayan producido o no excepciones (anotaci&oacute;n <span class="codefrag">@After</span>)</li>
+
+<li>Antes y despu&eacute;s de la ejecuci&oacute;n (anotaci&oacute;n <span class="codefrag">@Around</span>)</li>
+
+</ul>
+<p>Un aspecto (<em>aspect</em>) es un conjunto de <em>advices</em>. Siguiendo la 
+sintaxis de AspectJ, los aspectos se representan como clases Java, marcadas con
+la anotaci&oacute;n <span class="codefrag">@Aspect</span>.</p>
+<pre class="code">
+import org.aspectj.lang.annotation.Aspect;
+
+@Aspect
+public class EjemploDeAspecto {
+
+  <em>//aqu&iacute; vendr&iacute;an los advices...</em>
+}
+</pre>
+<a name="N1022D"></a><a name="%40Before"></a>
+<h3 class="underlined_5">@Before</h3>
+<p>Esta anotaci&oacute;n ejecuta un <em>advice</em> antes de la ejecuci&oacute;n del punto de corte especificado. Por ejemplo:</p>
+<pre class="code">
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+
+@Aspect
+public class EjemploBefore {
+
+  @Before("execution(public * get*())")
+  public void controlaPermisos() {
+    // ...
+  }
+
+}
+</pre>
+<p>Ejecutar&iacute;a <span class="codefrag">controlaPermisos()</span> antes de llamar a cualquier <em>getter</em>.</p>
+<a name="N10247"></a><a name="%40AfterReturning"></a>
+<h3 class="underlined_5">@AfterReturning</h3>
+<p>Esta anotaci&oacute;n ejecuta un <em>advice</em> despu&eacute;s de la ejecuci&oacute;n del
+ punto de corte especificado, siempre que el m&eacute;todo del punto de corte retorne
+ de forma normal (sin generar excepciones). Por ejemplo:</p>
+<pre class="code">
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.AfterReturning;
+
+@Aspect
+public class EjemploAfterReturning {
+
+  @AfterReturning("execution(public * get*())")
+  public void log() {
+    // ...
+  }
+
+}
+</pre>
+<p>Evidentemente para hacer <em>log</em> nos puede interesar saber el valor
+retornado por el m&eacute;todo del punto de corte. Este valor es accesible con la sintaxis
+alternativa:</p>
+<pre class="code">
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.AfterReturning;
+
+@Aspect
+public class EjemploAfterReturning {
+
+  @AfterReturning(
+   pointcut="execution(public * get*())",
+   returning="valor")
+   public void log(Object valor) {
+    // ...
+  }
+}
+</pre>
+<p>Al poner <span class="codefrag">Object</span> como tipo de la variable asociada al valor de retorno,
+estamos indicando que nos da igual el tipo que sea (incluso si es primitivo). Especificando
+un tipo distinto, podemos reducir el &aacute;mbito del <em>advice</em> para que solo se
+aplique a los puntos de corte que devuelvan un valor del tipo deseado.</p>
+<a name="N1026B"></a><a name="%40AfterThrowing"></a>
+<h3 class="underlined_5">@AfterThrowing</h3>
+<p>Esta anotaci&oacute;n ejecuta un <em>advice</em> despu&eacute;s de la ejecuci&oacute;n del
+ punto de corte especificado, si el m&eacute;todo del punto de corte genera una
+ excepci&oacute;n. Podemos tanto acceder a la excepci&oacute;n generada como restringir el tipo
+ de las excepciones que nos interesan, usando una sintaxis como la siguiente:</p>
+<pre class="code">
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.AfterThrowing;
+
+@Aspect
+public class EjemploAfterThrowing {
+
+  @AfterThrowing(
+    pointcut="execution(public * get*())",
+    throwing="daoe")
+  public void logException(DAOException daoe) {
+    // ...
+  }
+}
+</pre>
+<p>El ejemplo anterior indicar&iacute;a que no hay que ejecutar el <em>advice</em> a menos
+que la excepci&oacute;n generada sea del tipo <span class="codefrag">DAOException</span>, y nos permite
+acceder a su valor a trav&eacute;s del par&aacute;metro <span class="codefrag">daoe</span>. </p>
+<a name="N10288"></a><a name="%40After"></a>
+<h3 class="underlined_5">@After</h3>
+<p>Esta anotaci&oacute;n ejecuta un <em>advice</em> despu&eacute;s de la ejecuci&oacute;n del
+ punto de corte especificado, genere o no una excepci&oacute;n, es decir, al estilo
+ del <span class="codefrag">finally</span> de Java. Se usa t&iacute;picamente para liberar recursos
+ y otras tareas habituales para <span class="codefrag">finally</span>.</p>
+<a name="N1029D"></a><a name="%40Around"></a>
+<h3 class="underlined_5">@Around</h3>
+<p>Esta anotaci&oacute;n ejecuta parte del <em>advice</em> antes y parte despu&eacute;s de la ejecuci&oacute;n del
+ punto de corte especificado. La filosof&iacute;a consiste en que el usuario es el que
+ debe especificar en el c&oacute;digo del <em>advice</em> en qu&eacute; momento se debe llamar al punto de corte.
+ Por ello, el <em>advice</em> debe tener como m&iacute;nimo un par&aacute;metro de la clase 
+ <span class="codefrag">ProceedingJoinPoint</span>, que representa el punto de corte. Llamando al m&eacute;todo
+ <span class="codefrag">proceed()</span> de esta clase, ejecutamos el punto de corte. Por ejemplo: </p>
+<pre class="code">
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.ProceedingJoinPoint;
+
+@Aspect
+public class EjemploAround {
+
+  @Around("execution(public * get*())")
+  public Object profile(ProceedingJoinPoint pjp) throws Throwable {
+	long inst1 = System.currentTimeMillis();  
+	Object valorRetorno = pjp.proceed();
+	long inst2 = System.currentTimeMillis();  	 
+	System.out.println(inst2-inst1);
+	return valorRetorno;
+  }
+}
+</pre>
+<p>El ejemplo contar&iacute;a de manera muy b&aacute;sica el tiempo que tarda en ejecutarse
+el punto de corte.Hay que destacar varios puntos del c&oacute;digo anterior. Como ya se ha 
+dicho, cuando queremos llamar al punto de corte invocamos a <span class="codefrag">proceed()</span>. Adem&aacute;s debemos
+devolver como valor de retorno del advice el devuelto por el punto de corte. Finalmente, si el
+m&eacute;todo del punto de corte requiere par&aacute;metros, podemos pasarle un <span class="codefrag">Object[]</span>.
+</p>
+<a name="N102C5"></a><a name="Acceder+a+los+par%C3%A1metros+y+otra+informaci%C3%B3n+del+punto+de+corte"></a>
+<h3 class="underlined_5">Acceder a los par&aacute;metros y otra informaci&oacute;n del punto de corte</h3>
+<p>Spring ofrece al <em>advice</em> acceso tanto a los par&aacute;metros del m&eacute;todo del punto de corte como
+a informaci&oacute;n adicional sobre el mismo. Ya hemos visto c&oacute;mo acceder al valor de retorno, en el ejemplo
+de <span class="codefrag">@AfterReturning</span>, y a la excepci&oacute;n lanzada en el caso del <span class="codefrag">@AfterThrowing</span>.</p>
+<p>Para hacer accesibles al <em>advice</em> los argumentos del punto de corte se puede
+usar <span class="codefrag">args</span>. Por ejemplo:</p>
+<pre class="code">
+//...
+@AfterReturning("execution(public void set*(*)) &amp;&amp; args(nuevoValor)")
+public void log(int nuevoValor) {
+  // ...
+}
+//...
+</pre>
+<p>Con esto enlazamos el valor del argumento del punto de corte con la variable
+<span class="codefrag">nuevoValor</span>, y adem&aacute;s al poner <span class="codefrag">int</span> como tipo de 
+<span class="codefrag">nuevoValor</span> indicamos que solo queremos aplicar el
+<em>advice</em> si el argumento del punto de corte es <span class="codefrag">int</span>.</p>
+<p>Otra forma de hacer lo anterior ser&iacute;a usar un punto de corte "con nombre":</p>
+<pre class="code">
+//..
+@Pointcut("execution(public void set*(*))&amp;&amp; args(nuevoValor)")
+public void unSetter(int nuevoValor) {}
+	
+@AfterReturning("unSetter(nuevoValor)")
+public void log(int nuevoValor) {
+	//...
+}
+//..
+</pre>
+<a name="N10300"></a><a name="M%C3%A1s+de+un+advice+para+el+mismo+punto+de+corte"></a>
+<h3 class="underlined_5">M&aacute;s de un advice para el mismo punto de corte</h3>
+<p>Aunque no se ha dicho expl&iacute;citamente hasta el momento, por supuesto
+se puede definir m&aacute;s de un <em>advice</em> que encaje con el mismo punto de corte.
+La pregunta surge entonces de forma natural: <strong>&iquest;cu&aacute;l es el orden de aplicaci&oacute;n de los
+<em>advices</em>?</strong>.</p>
+<p> 
+<strong>Para los <em>advices</em> especificados dentro del mismo aspecto</strong>, se puede tomar
+como una regla b&aacute;sica que el orden de ejecuci&oacute;n es el mismo que el de declaraci&oacute;n. Es decir, que
+si declaramos varios <em>advices</em> de tipo <em>before</em>, se ejecutar&aacute; primero
+el que primero aparezca declarado, y si declaramos varios de tipo <em>after</em> ocurrir&aacute;
+lo mismo (en realidad en el caso <em>after</em> si se piensa un poco se ver&aacute; que el de
+mayor importancia es el que se ejecuta el &uacute;ltimo).</p>
+<p>El caso en que tenemos <em>advices</em> definidos en aspectos distintos es m&aacute;s complejo, ya que en principio
+no est&aacute; definida la precedencia por defecto y para especificarla hay que escribir algo 
+de c&oacute;digo Java. En concreto el aspecto debe implementar el interface 
+<span class="codefrag">org.springframework.core.Ordered</span>. Remitimos al lector a la documentaci&oacute;n 
+de Spring para m&aacute;s informaci&oacute;n.</p>
+</div>
+
+
+<p class="pageBreakAfter"> 
+</p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2006-2007 Depto. CCIA</div>
+</div>
+</body>
+</html>

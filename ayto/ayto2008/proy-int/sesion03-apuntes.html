@@ -1,0 +1,764 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Persistencia</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Proyecto de Integracion" src="images/baner_j2ee_der.gif" title="Proyecto de Integracion"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="external" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li class="current">
+<a class="external" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Proyecto SIGEM</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Proyecto de Integraci&oacute;n">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion00-apuntes.html" title="Sesi&oacute;n 0: Puesta en marcha del SIGEM">Sesi&oacute;n 0</a>
+</div>
+<div class="menuitem">
+<a href="sesion01-apuntes.html" title="Sesi&oacute;n 1: CVS, base de datos y pruebas">Sesi&oacute;n 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html" title="Sesi&oacute;n 2: Despliegue y componentes web">Sesi&oacute;n 2</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesi&oacute;n 3</div>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion03-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Persistencia</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Hibernate+en+el+SIGEM">Hibernate en el SIGEM</a>
+</li>
+<li>
+<a href="#Probando+las+entidades">Probando las entidades</a>
+</li>
+<li>
+<a href="#Flujo+de+la+aplicaci%C3%B3n">Flujo de la aplicaci&oacute;n</a>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="Hibernate+en+el+SIGEM"></a>
+<h2 class="underlined_10">Hibernate en el SIGEM</h2>
+<div class="section">
+<p>Para analizar el funcionamiento de SIGEM vamos a analizar su flujo de llamadas y los m&eacute;todos declarados en los distintos paquetes y m&oacute;dulos que lo componen. Para ello vamos utilizar las funciones de b&uacute;squeda de Eclipse y comandos de b&uacute;squeda de Linux.</p>
+<p>Comenzamos copiando en la MV linux el c&oacute;digo fuente de SIGEM. Se encuentra en <a href="recursos/SIGEM_Fuentes.tar">este enlace</a>. Guardamos el fichero en la MV y lo descomprimimos:</p>
+<pre class="code">tar xvf SIGEM_Fuentes.tar</pre>
+<p>Aparecer&aacute; la carpeta <span class="codefrag">SIGEM_Fuentes</span> en la que se encuentran todos los ficheros <span class="codefrag">*.java</span>, <span class="codefrag">*.properties</span> y <span class="codefrag">*.xml</span>. Ahora podemos buscar ficheros por su nombre utilizando la instrucci&oacute;n Unix <span class="codefrag">find</span>:</p>
+<pre class="code">&gt; cd SIGEM_Fuentes
+&gt; find . -name &lt;patron&gt;</pre>
+<p>El patr&oacute;n puede ser cualquier expresi&oacute;n regular que contiene caracteres libres como <span class="codefrag">*</span> o <span class="codefrag">?</span>. Hay que tener en cuenta que el texto que escribamos es sensible a may&uacute;sculas y min&uacute;sculas.</p>
+<p>De los distintos m&oacute;dulos que forman parte del SIGEM, s&oacute;lo se utiliza Hibernate en el proyecto <span class="codefrag">SIGEM_RegistroPresencialIEJar</span>. Para comprobarlo, recordemos que el fichero de configuraci&oacute;n de Hibernate siempre tiene que llamarse <span class="codefrag">hibernate.cfg.xml</span>. Lo buscamos en los fuentes:</p>
+<pre class="code">&gt; find . -name hibernate*
+./SIGEM_RegistroPresencialIEJar/src/hibernate.cfg.xml</pre>
+<p>Podemos buscar tambi&eacute;n todos los ficheros de mapeado con la siguiente instrucci&oacute;n (si se ha seguido la convenci&oacute;n de terminar sus nombres con la extensi&oacute;n <span class="codefrag">.hbm.xml</span>):</p>
+<pre class="code">&gt; find . -name *hbm.xml
+./SIGEM_RegistroPresencialIEJar/src/com/ieci/tecdoc/common/invesdoc/Idocxnextid.hbm.xml
+./SIGEM_RegistroPresencialIEJar/src/com/ieci/tecdoc/common/invesdoc/Idoccompusg.hbm.xml
+./SIGEM_RegistroPresencialIEJar/src/com/ieci/tecdoc/common/invesdoc/Ivolvolhdr.hbm.xml
+...
+./SIGEM_RegistroPresencialIEJar/src/com/ieci/tecdoc/common/invesicres/ScrNackrecvreg.hbm.xml
+./SIGEM_RegistroPresencialIEJar/src/com/ieci/tecdoc/common/invesicres/ScrNackrecvmsg.hbm.xml
+./SIGEM_RegistroPresencialIEJar/src/com/ieci/tecdoc/common/invesicres/ScrSendmsg.hbm.xml
+...</pre>
+<p>SIGEM sigue la convenci&oacute;n de colocar los ficheros de mapeado en los mismos directorios en los que se encuentran las entidades Java. Vemos que se encuentran en los paquetes <span class="codefrag">com.ieci.tecdo.common.invesdoc</span> y <span class="codefrag">com.ieci.tecdoc.common.invesicres</span>. Se tratan de dos proyectos desarrollados por Inform&aacute;tica El Corte Ingl&eacute;s, en su divisi&oacute;n Inves. Por los comentarios en distintos ficheros, se puede comprobar que el proyecto SICRES fue desarrollado en 2004. En esa fecha el Ministerio de Administraciones P&uacute;blicas define el <a class="external" href="http://www.csi.map.es/csi/pg5s40.htm">proyecto SICRES</a> para el desarrollo de un sistema inform&aacute;tico para los registros de entrada-salidad (SICREM = Sistema de Informaci&oacute;n Com&uacute;n de Registros de Entrada Salida).</p>
+<p>Lanzamos Eclipse y abrimos alguno de los ficheros de mapeo y de su clase Java correspondiente. Por ejemplo, los ficheros <span class="codefrag">ScrTypedoc.hbm.xml</span> y <span class="codefrag">ScrTypedoc.java</span> en el subpaquete <span class="codefrag">common.invesicres</span>:</p>
+<p>Fichero <strong><span class="codefrag">com/ieci/tecdoc/common/invesicres/ScrTypedoc.hbm.xml</span></strong>:</p>
+<pre class="code">&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" &gt;
+
+&lt;hibernate-mapping&gt;
+   &lt;!-- 
+      Created by the Middlegen Hibernate plugin
+      
+      http://boss.bekk.no/boss/middlegen/
+      http://hibernate.sourceforge.net/
+   --&gt;
+
+   &lt;class name="com.ieci.tecdoc.common.invesicres.ScrTypedoc"
+      table="SCR_TYPEDOC"&gt;
+      &lt;meta attribute="class-description" inherit="false"&gt;
+         @hibernate.class table="SCR_TYPEDOC"
+      &lt;/meta&gt;
+
+      &lt;id name="id" type="java.lang.Integer" column="ID"&gt;
+         &lt;meta attribute="field-description"&gt;
+            @hibernate.id generator-class="assigned"
+            type="java.lang.Integer" column="ID"
+         &lt;/meta&gt;
+         &lt;generator class="assigned" /&gt;
+      &lt;/id&gt;
+
+      &lt;property name="description" type="java.lang.String"
+         column="DESCRIPTION" not-null="true" length="50"&gt;
+         &lt;meta attribute="field-description"&gt;
+            @hibernate.property column="DESCRIPTION" length="50"
+            not-null="true"
+         &lt;/meta&gt;
+      &lt;/property&gt;
+
+      &lt;property name="typePerson" type="int" column="TYPE_PERSON"
+         not-null="true" length="10"&gt;
+         &lt;meta attribute="field-description"&gt;
+            @hibernate.property column="TYPE_PERSON" length="10"
+            not-null="true"
+         &lt;/meta&gt;
+      &lt;/property&gt;
+
+      &lt;property name="code" type="java.lang.String" column="CODE"
+         not-null="true" length="1"&gt;
+         &lt;meta attribute="field-description"&gt;
+            @hibernate.property column="CODE" length="1"
+            not-null="true"
+         &lt;/meta&gt;
+      &lt;/property&gt;
+
+      &lt;!-- associations --&gt;
+      &lt;!-- bi-directional one-to-many association to ScrPjur --&gt;
+      &lt;set name="scrPjurs" lazy="true" inverse="true"&gt;
+         &lt;meta attribute="field-description"&gt;
+            @hibernate.set lazy="true" inverse="true"
+            @hibernate.collection-key column="TYPE_DOC"
+            @hibernate.collection-one-to-many
+            class="com.ieci.tecdoc.common.invesicres.ScrPjur"
+         &lt;/meta&gt;
+         &lt;key&gt;
+            &lt;column name="TYPE_DOC" /&gt;
+         &lt;/key&gt;
+         &lt;one-to-many
+            class="com.ieci.tecdoc.common.invesicres.ScrPjur" /&gt;
+      &lt;/set&gt;
+
+      &lt;!-- bi-directional one-to-many association to ScrPfi --&gt;
+      &lt;set name="scrPfis" lazy="true" inverse="true"&gt;
+         &lt;meta attribute="field-description"&gt;
+            @hibernate.set lazy="true" inverse="true"
+            @hibernate.collection-key column="TYPE_DOC"
+            @hibernate.collection-one-to-many
+            class="com.ieci.tecdoc.common.invesicres.ScrPfi"
+         &lt;/meta&gt;
+         &lt;key&gt;
+            &lt;column name="TYPE_DOC" /&gt;
+         &lt;/key&gt;
+         &lt;one-to-many
+            class="com.ieci.tecdoc.common.invesicres.ScrPfi" /&gt;
+      &lt;/set&gt;
+
+   &lt;/class&gt;
+&lt;/hibernate-mapping&gt;
+
+</pre>
+<p>Clase <strong><span class="codefrag">com.ieci.tecdoc.common.invesicres.ScrTypedoc.java</span></strong>:</p>
+<pre class="code">package com.ieci.tecdoc.common.invesicres;
+
+import java.io.Serializable;
+import java.util.Set;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+/** 
+ *        @hibernate.class
+ *         table="SCR_TYPEDOC"
+ *     
+ */
+public class ScrTypedoc implements Serializable {
+   private Integer id;
+   private String description;
+   private int typePerson;
+   private String code;
+   private Set scrPjurs;
+   private Set scrPfis;
+
+   /** full constructor */
+   public ScrTypedoc(Integer id, String description, int typePerson,
+         String code, Set scrPjurs, Set scrPfis) {
+      this.id = id;
+      this.description = description;
+      this.typePerson = typePerson;
+      this.code = code;
+      this.scrPjurs = scrPjurs;
+      this.scrPfis = scrPfis;
+   }
+
+   /** default constructor */
+   public ScrTypedoc() {
+   }
+
+   /** 
+    *            @hibernate.id
+    *             generator-class="assigned"
+    *             type="java.lang.Integer"
+    *             column="ID"
+    *         
+    */
+   public Integer getId() {
+      return this.id;
+   }
+
+   public void setId(Integer id) {
+      this.id = id;
+   }
+
+   /** 
+    *            @hibernate.property
+    *             column="DESCRIPTION"
+    *             length="50"
+    *             not-null="true"
+    *         
+    */
+   public String getDescription() {
+      return this.description;
+   }
+
+   public void setDescription(String description) {
+      this.description = description;
+   }
+
+   /** 
+    *            @hibernate.property
+    *             column="TYPE_PERSON"
+    *             length="10"
+    *             not-null="true"
+    *         
+    */
+   public int getTypePerson() {
+      return this.typePerson;
+   }
+
+   public void setTypePerson(int typePerson) {
+      this.typePerson = typePerson;
+   }
+
+   /** 
+    *            @hibernate.property
+    *             column="CODE"
+    *             length="1"
+    *             not-null="true"
+    *         
+    */
+   public String getCode() {
+      return this.code;
+   }
+
+   public void setCode(String code) {
+      this.code = code;
+   }
+
+   /** 
+    *            @hibernate.set
+    *             lazy="true"
+    *             inverse="true"
+    * 	       @hibernate.collection-key
+    * 	        column="TYPE_DOC"
+    *            @hibernate.collection-one-to-many
+    *             class="com.ieci.tecdoc.common.invesicres.ScrPjur"
+    *         
+    */
+   public Set getScrPjurs() {
+      return this.scrPjurs;
+   }
+
+   public void setScrPjurs(Set scrPjurs) {
+      this.scrPjurs = scrPjurs;
+   }
+
+   /** 
+    *            @hibernate.set
+    *             lazy="true"
+    *             inverse="true"
+    * 	       @hibernate.collection-key
+    * 	        column="TYPE_DOC"
+    *            @hibernate.collection-one-to-many
+    *             class="com.ieci.tecdoc.common.invesicres.ScrPfi"
+    *         
+    */
+   public Set getScrPfis() {
+      return this.scrPfis;
+   }
+
+   public void setScrPfis(Set scrPfis) {
+      this.scrPfis = scrPfis;
+   }
+
+   public String toString() {
+      return new ToStringBuilder(this).append("id", getId()).toString();
+   }
+
+   public boolean equals(Object other) {
+      if (!(other instanceof ScrTypedoc))
+         return false;
+      ScrTypedoc castOther = (ScrTypedoc) other;
+      return new EqualsBuilder().append(this.getId(), castOther.getId())
+            .isEquals();
+   }
+
+   //************************************
+   // Incluido pos ISicres-Common Oracle 9i
+
+   public String toXML() {
+      String className = getClass().getName();
+      className = className.substring(className.lastIndexOf(".") + 1,
+            className.length()).toUpperCase();
+      StringBuffer buffer = new StringBuffer();
+      buffer.append("&lt;");
+      buffer.append(className);
+      buffer.append("&gt;");
+      try {
+         java.lang.reflect.Field[] fields = getClass().getDeclaredFields();
+         java.lang.reflect.Field field = null;
+         String name = null;
+         int size = fields.length;
+         for (int i = 0; i &lt; size; i++) {
+            field = fields[i];
+            name = field.getName();
+            buffer.append("&lt;");
+            buffer.append(name.toUpperCase());
+            buffer.append("&gt;");
+            if (field.get(this) != null) {
+               buffer.append(field.get(this));
+            }
+            buffer.append("&lt;/");
+            buffer.append(name.toUpperCase());
+            buffer.append("&gt;");
+         }
+      } catch (Exception e) {
+         e.printStackTrace(System.err);
+      }
+      buffer.append("&lt;/");
+      buffer.append(className);
+      buffer.append("&gt;");
+      return buffer.toString();
+   }
+
+   //************************************  
+
+   public int hashCode() {
+      return new HashCodeBuilder().append(getId()).toHashCode();
+   }
+
+}</pre>
+<p>Vemos que la entidad <span class="codefrag">ScrTypedoc</span> define una entidad con 6 atributos:</p>
+<ul>
+	
+<li>
+<strong>Integer id</strong>: identificador &uacute;nico.</li>
+	
+<li>
+<strong>String description</strong>: descripci&oacute;n del tipo de documento.</li>
+	
+<li>
+<strong>int typePerson</strong>: tipo de persona que lleva ese tipo de documento.</li>
+	
+<li>
+<strong>String code</strong>: c&oacute;digo del tipo de documento.</li>
+	
+<li>
+<strong>Set scrPjurs</strong>: conjunto resultante de una relaci&oacute;n uno-a-mucho compuesto por objetos de la clase <span class="codefrag">ScrPjur</span>, personas jur&iacute;dicas.</li>
+	
+<li>
+<strong>Set scrPfils</strong>: conjunto que define una relaci&oacute;n uno-a-muchos entre entidades <span class="codefrag">ScrTypedoc</span> y entidades <span class="codefrag">ScrPfil</span>, personas f&iacute;sicas.</li>
+
+</ul>
+<p>Las entidades <span class="codefrag">ScrPfil</span> (persona f&iacute;sica) y <span class="codefrag">ScrPjur</span> (persona jur&iacute;dica) se definen con las siguientes clases Java:</p>
+<p>Clase <strong><span class="codefrag">com.ieci.tecdoc.common.invesicres.ScrPfi</span></strong>:</p>
+<pre class="code">package com.ieci.tecdoc.common.invesicres;
+
+public class ScrPfi implements Serializable {
+    private Integer id;
+    private String nif;
+    private String firstName;
+    private String secondName;
+    private String surname;
+    private com.ieci.tecdoc.common.invesicres.ScrTypedoc scrTypedoc;
+
+    /** full constructor */
+    public ScrPfi(Integer id, String nif, String firstName, 
+                  String secondName, String surname, 
+                  com.ieci.tecdoc.common.invesicres.ScrTypedoc scrTypedoc) {
+        this.id = id;
+        this.nif = nif;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.surname = surname;
+        this.scrTypedoc = scrTypedoc;
+    }
+
+    public ScrPfi() {
+    }
+
+    public ScrPfi(Integer id, String firstName, 
+                  com.ieci.tecdoc.common.invesicres.ScrTypedoc scrTypedoc) {
+        this.id = id;
+        this.firstName = firstName;
+        this.scrTypedoc = scrTypedoc;
+    }
+
+    public Integer getId() {
+        return this.id;
+    }
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNif() {
+        return this.nif;
+    }
+
+    public void setNif(String nif) {
+        this.nif = nif;
+    }
+    public String getFirstName() {
+        return this.firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getSecondName() {
+        return this.secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
+    public String getSurname() {
+        return this.surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public com.ieci.tecdoc.common.invesicres.ScrTypedoc getScrTypedoc() {
+        return this.scrTypedoc;
+    }
+
+    public void setScrTypedoc(com.ieci.tecdoc.common.invesicres.ScrTypedoc scrTypedoc) {
+        this.scrTypedoc = scrTypedoc;
+    }
+
+    public String toString() {...}
+    public boolean equals(Object other) {...}
+    public String toXML() {...}
+    public int hashCode() {...]
+</pre>
+<p>La clase <strong><span class="codefrag">com.ieci.tecdoc.common.invesicres.ScrPjur</span></strong> es muy similar. La consultamos.</p>
+<p>Vamos a comprobar la definici&oacute;n SQL de estas entidades. En el fichero de mapeo se definen las tablas <span class="codefrag">SCR_TYPEDOC</span>, <span class="codefrag">SCR_PFIS</span> y <span class="codefrag">SCR_PJUR</span>. Analizamos la base de datos definida en el fichero de configuraci&oacute;n de Hibernate:</p>
+<p>Fichero <strong><span class="codefrag">hibernate.cfg.xml</span></strong>:</p>
+<pre class="code">&lt;!-- Fichero de configuracion de hibernate --&gt;
+&lt;hibernate-configuration&gt;
+   &lt;session-factory name="java:/hibernate/HibernateFactory"&gt;
+
+   &lt;!-- Cambiar para poner el nombre de la fuente de datos --&gt;
+   &lt;property name="connection.datasource"&gt;java:comp/env/jdbc/registroDS_&lt;/property&gt;
+   &lt;!-- property name="dialect"&gt;net.sf.hibernate.dialect.OracleDialect&lt;/property&gt; --&gt;
+   &lt;property name="dialect"&gt;net.sf.hibernate.dialect.PostgreSQLDialect&lt;/property&gt;
+   &lt;property name="show_sql"&gt;false&lt;/property&gt;
+   &lt;property name="use_outer_join"&gt;false&lt;/property&gt;
+   &lt;property name="use_query_cache"&gt;true&lt;/property&gt;
+   &lt;property name="cache.provider_class"&gt;net.sf.hibernate.cache.OSCacheProvider&lt;/property&gt;
+   
+   &lt;mapping resource="com/ieci/tecdoc/common/invesdoc/Idocbtblctlg.hbm.xml" /&gt;
+   &lt;mapping resource="com/ieci/tecdoc/common/invesdoc/Iuserldapgrphdr.hbm.xml" /&gt;
+   &lt;mapping resource="com/ieci/tecdoc/common/invesdoc/Idocrpt.hbm.xml" /&gt;
+   &lt;mapping resource="com/ieci/tecdoc/common/invesdoc/Idocglbdoch.hbm.xml" /&gt;
+   ...</pre>
+<p>Vemos que utiliza el <em>datasource</em> definido con el nombre <span class="codefrag">java:comp/env/jdbc/registroDS_</span>. El servidor Tomcat proporciona este recurso.</p>
+<p>Vamos a explorar esta base de datos utilizando el volcado de la base de datos que hicimos en la primera sesi&oacute;n de integraci&oacute;n. Por si no lo tenemos, recordemos que se puede utilizar la herramienta PgAdmin3:</p>
+<p>Ponemos en marcha la base de datos entrando como usuario <span class="codefrag">postgres</span> y ejecutando <span class="codefrag">pg_ctl start</span>:</p>
+<pre class="code">&gt; su postgres
+Contrase&ntilde;a: postgres
+&gt; pg_ctl start -D /usr/local/pgsql/data</pre>
+<p>Volcamos la base de datos <span class="codefrag">registro_000</span> al fichero <span class="codefrag">registro.sql</span>:</p>
+<pre class="code">pg_dump -U postgres -cif registro.sql registro_000</pre>
+<p>Y, por &uacute;ltimo, abrimos el fichero <span class="codefrag">registro.sql</span> con Eclipse y buscamos las tablas <span class="codefrag">SCR_TYPEDOC</span>, <span class="codefrag">SCR_PFIS</span> y <span class="codefrag">SCR_PJUR</span>:</p>
+<pre class="code">CREATE TABLE scr_typedoc (
+    id integer NOT NULL,
+    description character varying(50) NOT NULL,
+    type_person integer NOT NULL,
+    code character varying(1) NOT NULL
+);
+ALTER TABLE ONLY scr_typedoc
+    ADD CONSTRAINT pk_scr_typedoc0 PRIMARY KEY (id);
+
+CREATE TABLE scr_pfis (
+    id integer NOT NULL,
+    type_doc integer,
+    nif character varying(25),
+    first_name character varying(25) NOT NULL,
+    second_name character varying(25),
+    surname character varying(20)
+);
+ALTER TABLE ONLY scr_pfis
+    ADD CONSTRAINT fk_scr_pfis0 FOREIGN KEY (type_doc) REFERENCES scr_typedoc(id);
+
+
+CREATE TABLE scr_pjur (
+    id integer NOT NULL,
+    type_doc integer,
+    cif character varying(17),
+    name character varying(72) NOT NULL
+);
+ALTER TABLE ONLY scr_pjur
+    ADD CONSTRAINT fk_scr_pjur0 FOREIGN KEY (type_doc) REFERENCES scr_typedoc(id);
+
+COPY scr_typedoc (id, description, type_person, code) FROM stdin;
+1	CIF	2	C
+2	NIF	1	N
+3	Pasaporte	1	P
+4	Documento de identificaci&oacute;n de extranjeros	1	E
+5	Otros	0	X
+\.
+</pre>
+</div>
+
+
+<a name="N10121"></a><a name="Probando+las+entidades"></a>
+<h2 class="underlined_10">Probando las entidades</h2>
+<div class="section">
+<p>Vamos a crear un proyecto para probar las entidades Hibernate. Lo llamamos <span class="codefrag">SIGEM_TestsHibernate</span>.</p>
+<p>Enlazamos el proyecto <span class="codefrag">SIGEM_RegistroPresencialIEJar</span> y sus librer&iacute;as. Copiamos el fichero <span class="codefrag">hibernate.cfg.xml</span> en el directorio <span class="codefrag">src</span> para configurar una conexi&oacute;n a la BD que no utilice la fuente de datos:</p>
+<p>Fichero <strong><span class="codefrag">hibernate.cfg.xml</span></strong> en <span class="codefrag">SIGEM_TestsHibernate</span>:</p>
+<pre class="code">&lt;?xml version='1.0' encoding='utf-8'?&gt;
+&lt;!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 2.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-2.0.dtd"&gt;
+&lt;!-- Fichero de configuracion de hibernate --&gt;
+&lt;hibernate-configuration&gt;
+   &lt;session-factory&gt;   
+    &lt;property name="connection.url"&gt;jdbc:postgresql://localhost/registro_000&lt;/property&gt;
+    &lt;property name="connection.username"&gt;postgres&lt;/property&gt;
+    &lt;property name="connection.password"&gt;postgres&lt;/property&gt;
+    &lt;property name="connection.driver_class"&gt;org.postgresql.Driver&lt;/property&gt;
+   &lt;!-- Cambiar para poner el nombre de la fuente de datos --&gt;
+   &lt;!-- &lt;property name="connection.datasource"&gt;java:comp/env/jdbc/regiDS_&lt;/property&gt;--&gt;
+   &lt;!-- property name="dialect"&gt;net.sf.hibernate.dialect.OracleDialect&lt;/property&gt; --&gt;
+   &lt;property name="dialect"&gt;net.sf.hibernate.dialect.PostgreSQLDialect&lt;/property&gt;
+   &lt;property name="show_sql"&gt;true&lt;/property&gt;
+   ...</pre>
+</div>
+
+
+<p>Una vez modificado el fichero de configuraci&oacute;n, creamos el paquete <span class="codefrag">test.entity</span> y en &eacute;l la clase <span class="codefrag">TestScrPfi.java</span> en la que definimos un m&eacute;todo <span class="codefrag">main</span> con una prueba de las entidades de Hibernate. El esqueleto de la clase es el siguiente:</p>
+
+
+<pre class="code">
+public class TestScrPfi {
+	public static void main(String[] args) {
+    	try{
+    		SessionFactory sessionFactory = new Configuration().
+    		                                        configure().buildSessionFactory();
+		    Session session = sessionFactory.openSession();
+		    Transaction tx = session.beginTransaction();
+		
+		    // C&oacute;digo 
+		
+		    tx.commit();
+		    
+			System.out.println("Terminado");
+			}
+    	} catch (HibernateException e) {
+    		System.out.println("Error");
+    		System.exit(1);
+    	}
+	}
+}</pre>
+
+
+<p>Rellenamos un fragmento de c&oacute;digo para buscar el tipo de documento 1, creamos una persona f&iacute;sica, la hacemos persistente y relacionamos el tipo de documento y la persona. Despu&eacute;s imprimimos todas las personas con ese tipo de documento.</p>
+
+
+<p>Podemos buscar consultas de Hibernate en <span class="codefrag">com.ieci.tecdoc.isicres.session.reports</span>.</p>
+
+
+<a name="N10161"></a><a name="Flujo+de+la+aplicaci%C3%B3n"></a>
+<h2 class="underlined_10">Flujo de la aplicaci&oacute;n</h2>
+<div class="section">
+<p>Utilizamos la utilidad de Hibernate de <em>B&uacute;squeda Java</em> para entender c&oacute;mo est&aacute;n relacionadas las distintas capas de SIGEM y c&oacute;mo se llaman unos a otras.</p>
+<p>Vamos a ir hacia atr&aacute;s, a partir de la entidad <span class="codefrag">ScrPfi</span>. Vamos a buscar, por ejemplo, en qu&eacute; m&eacute;todos se obtiene el NIF de una persona. Abrimos la clase, colocamos el cursor en el m&eacute;todo <span class="codefrag">getFirstName()</span> y escogemos la opci&oacute;n <em>Search &gt; Java</em> y buscamos todas las referencias a ese m&eacute;todo.</p>
+<p>Vemos que la clase <span class="codefrag">BookSession</span> en su m&eacute;todo est&aacute;tico <span class="codefrag">addScrPfi</span> utiliza una entidad de tipo <span class="codefrag">ScrPfi</span> y realiza una llamada para obtener el nombre de la persona f&iacute;sica. El m&eacute;todo completo es el siguiente:</p>
+<pre class="code">public static int addScrPfi(String sessionID, ScrPfi pfi, List doms, String entidad) 
+         throws BookException, SessionException, ValidationException {
+     Validator.validate_String_NotNull_LengthMayorZero(sessionID, ValidationException.ATTRIBUTE_SESSION);
+
+     Date currentDate = null;&iexcl;&iexcl;
+     Transaction tran = null;
+     try {
+         Session session = HibernateUtil.currentSession(entidad);
+         tran = session.beginTransaction();
+
+         // Recuperamos la sesi&oacute;n
+         CacheBag cacheBag = CacheFactory.getCacheInterface().getCacheEntry(sessionID);
+         
+         AuthenticationUser user = (AuthenticationUser) cacheBag.get(HIBERNATE_Iuseruserhdr);
+		 ScrOfic scrOfic = (ScrOfic) cacheBag.get(HIBERNATE_ScrOfic);
+		 
+         currentDate = BBDDUtils.getDateFromTimestamp(
+            DBEntityDAOFactory.getCurrentDBEntityDAO().getDBServerDate(entidad));
+
+         int pfisId = DBEntityDAOFactory.getCurrentDBEntityDAO().getContador4PERSONS(user.getId(), entidad);
+
+         if (log.isDebugEnabled()) {
+             log.debug("addScrPfi.pfisId =&gt; " + pfisId);
+         }
+
+         pfi.setId(new Integer(pfisId));
+
+         if (log.isDebugEnabled()) {
+             log.debug("addScrPfi.pfi =&gt;" + pfi.getFirstName() + "," + pfi.getSecondName());
+         }
+
+         ScrTypedoc typeDoc = (ScrTypedoc) session.load(ScrTypedoc.class, pfi.getScrTypedoc().getId());
+
+         if (log.isDebugEnabled()) {
+             log.debug("addScrPfi.typeDoc =&gt;" + typeDoc);
+         }
+
+         pfi.setScrTypedoc(typeDoc);
+
+         session.save(pfi);
+         
+         ScrPinfo scrPinfo = new ScrPinfo();
+         scrPinfo.setId(new Integer(pfisId));
+         scrPinfo.setOptype(0);
+         scrPinfo.setOfficeid(scrOfic.getId().intValue());
+         scrPinfo.setUsername(user.getName());
+         scrPinfo.setOpdate(currentDate);
+         session.save(scrPinfo);
+
+         ScrAddress scrAddress = null;
+         ScrDom scrDom = null;
+         for (Iterator it = doms.iterator(); it.hasNext();) {
+             scrDom = (ScrDom) it.next();
+
+             if (scrDom.getId().intValue() == 0) {
+                 scrAddress = new ScrAddress();
+                 scrAddress.setId(new Integer(DBEntityDAOFactory
+                       .getCurrentDBEntityDAO().getContador4SCRADDRESS(user.getId(), entidad)));
+                 scrAddress.setIdPerson(pfisId);
+                 scrAddress.setType(0);
+                 session.save(scrAddress);
+
+                 scrDom.setId(scrAddress.getId());
+                 session.save(scrDom);
+             }
+         }
+
+         HibernateUtil.commitTransaction(tran);
+
+         return pfisId;
+     } catch (BookException bE) {
+         HibernateUtil.rollbackTransaction(tran);
+         throw bE;
+     } catch (SessionException sE) {
+         HibernateUtil.rollbackTransaction(tran);
+         throw sE;
+     } catch (Exception e) {
+         HibernateUtil.rollbackTransaction(tran);
+         log.error("Impossible to add a ScrPfis for the session [" + sessionID + "]", e);
+         throw new BookException(BookException.ERROR_CANNOT_ADD_PFIS);
+     } finally {
+         HibernateUtil.closeSession(entidad);
+     }
+ }</pre>
+<p>Vemos que se trata de un m&eacute;todo de negocio que abre y cierra una sesi&oacute;n de Hibernate y realiza la acci&oacute;n de a&ntilde;adir una entidad en la base de datos. Podemos comprobar tambi&eacute;n que se utiliza una capa m&aacute;s antigua de acceso a BD no implementada con Hibernate, sino con DAOs.</p>
+<p>Miramos qui&eacute;n utiliza este m&eacute;todo, de la misma forma que antes. Y comprobamos que se trata de la clase <span class="codefrag">com.ieci.tecdoc.isicres.usecase.book.BookUseCase</span>, en su m&eacute;todo est&aacute;tico <span class="codefrag">vldInterSave</span>.</p>
+<p>Si miramos qui&eacute;n usa este m&eacute;todo, veremos que por fin hemos llegado a la capa web. Se trata del m&eacute;todo <span class="codefrag">VldInterSave</span> en el paquete <span class="codefrag">com.ieci.tecdoc.isicres.servlets</span>.</p>
+<p>Si hacemos este seguimiento para distintos m&eacute;todos, vemos que siempre se repite el mismo patr&oacute;n:</p>
+<ul>
+		
+<li>
+<strong>Capa web</strong>: La capa web est&aacute; formada por los servlets que se encuentran en el <span class="codefrag">com.ieci.tecdoc.isicres.servlets</span>. Cada servlet llama a un caso de uso de la aplicaci&oacute;n, definido en la capa intermedia.</li>
+		
+<li>
+<strong>Capa intermedia</strong>: Define los casos de uso de la aplicaci&oacute;n. Clase <span class="codefrag">BookUsecase</span> en el paquete <span class="codefrag">com.ieci.tecdoc.isicres.usecase.book</span>. Llama a la l&oacute;gica de negocio, que es quien utiliza las sesiones de Hibernate, y gestiona las transacciones.</li>
+		
+<li>
+<strong>L&oacute;gica de negocio</strong>: Clases <span class="codefrag">BookSession</span>, <span class="codefrag">ReportSession</span>, etc. en el paquete <span class="codefrag">com.ieci.tecdoc.isicres.session.book</span>. Define un m&eacute;todo est&aacute;tico por cada caso de uso. Los m&eacute;todos reciben y devuelven entidades desconectadas que hacen de transfer objects.</li>
+		
+<li>
+<strong>Capa de persistencia</strong>: Clases de entidad en el paquete <span class="codefrag">com.ieci.tecdoc.common.invesicres</span>,  clases DAO en el paquete <span class="codefrag">com.ieci.tecdoc.isicres.entity.dao</span> y clases EJB de entidad refactorizadas en el paquete <span class="codefrag">com.ieci.tecdoc.isicres.entity</span>.</li>
+	
+</ul>
+</div>
+	
+
+
+
+<p class="pageBreakAfter"></p>
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007-2008 Depto. CCIA</div>
+</div>
+</body>
+</html>

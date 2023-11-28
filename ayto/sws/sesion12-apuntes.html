@@ -1,0 +1,1782 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Seguridad a nivel de mensaje en Metro</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/cursos/sws"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servicios Web seguros" src="images/baner_j2ee_der.gif" title="Servicios Web seguros"></a>
+</div>
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Apuntes</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Servicios Web seguros</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Servicios Web seguros">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesi&oacute;n 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesi&oacute;n 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesi&oacute;n 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesi&oacute;n 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesi&oacute;n 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesi&oacute;n 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesi&oacute;n 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesi&oacute;n 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesi&oacute;n 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesi&oacute;n 10</a>
+</div>
+<div class="menuitem">
+<a href="sesion11-apuntes.html">Sesi&oacute;n 11</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesi&oacute;n 12</div>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html" title="Roadmap">Roadmap</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion12-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Seguridad a nivel de mensaje en Metro</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Seguridad+a+nivel+de+mensaje+con+clave+asim%C3%A9trica">Seguridad a nivel de mensaje con clave asim&eacute;trica</a>
+</li>
+<li>
+<a href="#Clave+sim%C3%A9trica+y+autentificaci%C3%B3n+mediante+nombre+de+usuario">Clave sim&eacute;trica y autentificaci&oacute;n mediante nombre de usuario</a>
+</li>
+<li>
+<a href="#Clave+sim%C3%A9trica+y+autentificaci%C3%B3n+mediante+certificado+digital">Clave sim&eacute;trica y autentificaci&oacute;n mediante certificado digital</a>
+</li>
+<li>
+<a href="#Entorno+SSO">Entorno SSO</a>
+</li>
+<li>
+<a href="#Ejercicios">Ejercicios</a>
+<ul class="minitoc">
+<li>
+<a href="#Gesti%C3%B3n+de+multas+con+seguridad+a+nivel+de+mensaje">Gesti&oacute;n de multas con seguridad a nivel de mensaje</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+<p>En la secci&oacute;n anterior vimos los diferentes mecanismos de seguridad a nivel de transporte que podemos configurar
+con Netbeans. Vamos a pasar ahora a ver los mecanismos de seguridad a nivel de mensaje. Cuando seleccionemos uno
+de estos &uacute;ltimos podremos configurar qu&eacute; partes concretas del mensaje queremos que sean cifradas y firmadas.
+Esto lo haremos en la parte inferior de la ventana de edici&oacute;n de los atributos del servicio, en la que podemos 
+especificar la configuraci&oacute;n para cada mensaje concreto utilizado en el servicio: </p>
+
+
+<p>
+<img alt="Seguridad en las operaciones." content-width="12cm" height="287" src="imagenes/sesion3/nb_qos_secure_ops.gif" width="597"></p>
+
+
+<p>Pulsando sobre el bot&oacute;n <em>Message Parts ...</em> podremos configurar qu&eacute; partes del mensaje queremos cifrar
+y cuales queremos firmar. Aquellas que s&oacute;lo est&eacute;n firmadas podr&aacute;n ser vistas por cualquiera, pero no alteradas
+(se protege su integridad), mientras que las que est&eacute;n cifradas tampoco podr&aacute;n ser le&iacute;das sin permiso (se
+protege su confidencialidad). Como es evidente, est&aacute; opci&oacute;n no est&aacute; disponible cuando se utiliza seguridad
+a nivel de transporte.</p>
+
+
+<p>
+<img alt="Partes del mensaje." content-width="10cm" height="253" src="imagenes/sesion3/nb_qos_secure_parts.gif" width="512"></p>
+
+
+<p>A continuaci&oacute;n veremos con mayor detalle c&oacute;mo utilizar cada uno de los principales mecanismos de seguridad
+a nivel de mensajes.</p>
+
+
+<a name="N10028"></a><a name="Seguridad+a+nivel+de+mensaje+con+clave+asim%C3%A9trica"></a>
+<h2 class="underlined_10">Seguridad a nivel de mensaje con clave asim&eacute;trica</h2>
+<div class="section">
+<p>El primer mecanismo que veremos es el que nos proporciona confidencialidad e integridad mediante clave
+asim&eacute;trica.</p>
+<p>Vamos a crear un nuevo servicio de nombre <span class="codefrag">ServicioMutual</span> en un nuevo proyecto web. Como mecanismo
+de seguridad seleccionamos <em>Mutual Certificates Security</em> y dejamos los valores por defecto.</p>
+<pre class="code">public class ServicioMensajeMutual {
+    @Resource
+    private WebServiceContext context;
+
+    @WebMethod(operationName = "consulta")
+    public String consulta() {
+      return "Accediendo con clave asimetrica " + 
+               context.getUserPrincipal().getName();
+    }
+}</pre>
+<p>Como vemos en el c&oacute;digo, podemos obtener los datos del certificado utilizado por el cliente mediante el m&eacute;todo
+<span class="codefrag">getUserPrincipal()</span>, con lo cual dicho certificado, adem&aacute;s de proteger el mensaje de petici&oacute;n, nos 
+puede servir para autentificar al cliente.</p>
+<p>En este caso deberemos configurar <em>Keystore</em> y <em>Truststore</em> tanto en el cliente como en el servicio.
+Ambos deben confiar en el certificado utilizado por el otro extremo.</p>
+<p>El WSDL obtenido ser&aacute; como el siguiente:</p>
+<pre class="code">&lt;definitions xmlns="http://..."&gt;
+  &lt;message name="consulta"/&gt;
+  &lt;message name="consultaResponse"/&gt;
+  &lt;portType name="ServicioMutual"&gt;
+    &lt;operation name="consulta"&gt;
+      &lt;input message="tns:consulta"/&gt;
+      &lt;output message="tns:consultaResponse"/&gt;
+    &lt;/operation&gt;
+  &lt;/portType&gt;
+  &lt;binding name="ServicioMutualPortBinding" 
+              type="tns:ServicioMutual"&gt;
+    &lt;wsp:PolicyReference URI="<strong>#ServicioMutualPortBindingPolicy</strong>"/&gt;
+    &lt;operation name="consulta"&gt;
+      &lt;input&gt;
+        &lt;wsp:PolicyReference URI=
+                "<strong>#ServicioMutualPortBinding_consulta_Input_Policy</strong>"/&gt;
+      &lt;/input&gt;
+      &lt;output&gt;
+        &lt;wsp:PolicyReference URI=
+                "<strong>#ServicioMutualPortBinding_consulta_Output_Policy</strong>"/&gt;
+      &lt;/output&gt;
+    &lt;/operation&gt;
+  &lt;/binding&gt;
+  &lt;service name="ServicioMutualService"&gt;
+    &lt;port name="ServicioMutualPort" 
+                binding="tns:ServicioMutualPortBinding"/&gt;
+  &lt;/service&gt;
+  &lt;wsp:Policy wsu:Id="<strong>ServicioMutualPortBindingPolicy</strong>"&gt;
+    &lt;wsp:ExactlyOne&gt;
+      &lt;wsp:All&gt;
+        &lt;wsam:Addressing wsp:Optional="false"/&gt;
+        &lt;<strong>sp:AsymmetricBinding</strong>&gt;
+          &lt;wsp:Policy&gt;
+            &lt;<strong>sp:InitiatorToken</strong>&gt;
+              &lt;wsp:Policy&gt;
+                &lt;<strong>sp:X509Token</strong> sp:IncludeToken=
+                       ".../IncludeToken/<strong>AlwaysToRecipient</strong>"&gt;
+                  &lt;wsp:Policy&gt;
+                    &lt;sp:WssX509V3Token10/&gt;
+                  &lt;/wsp:Policy&gt;
+                &lt;/<strong>sp:X509Token</strong>&gt;
+              &lt;/wsp:Policy&gt;
+            &lt;/<strong>sp:InitiatorToken</strong>&gt;
+            &lt;<strong>sp:RecipientToken</strong>&gt;
+              &lt;wsp:Policy&gt;
+                &lt;<strong>sp:X509Token</strong> sp:IncludeToken=
+                       ".../IncludeToken/<strong>Never</strong>"&gt;
+                  &lt;wsp:Policy&gt;
+                    &lt;sp:WssX509V3Token10/&gt;
+                    &lt;sp:RequireIssuerSerialReference/&gt;
+                  &lt;/wsp:Policy&gt;
+                &lt;/<strong>sp:X509Token</strong>&gt;
+              &lt;/wsp:Policy&gt;
+            &lt;/<strong>sp:RecipientToken</strong>&gt;
+            &lt;sp:Layout&gt;
+              &lt;wsp:Policy&gt;
+                &lt;sp:Strict/&gt;
+              &lt;/wsp:Policy&gt;
+            &lt;/sp:Layout&gt;
+            &lt;sp:IncludeTimestamp/&gt;
+            &lt;sp:OnlySignEntireHeadersAndBody/&gt;
+            &lt;sp:AlgorithmSuite&gt;
+              &lt;wsp:Policy&gt;
+                &lt;sp:Basic128/&gt;
+              &lt;/wsp:Policy&gt;
+            &lt;/sp:AlgorithmSuite&gt;
+          &lt;/wsp:Policy&gt;
+        &lt;/sp:AsymmetricBinding&gt;
+        &lt;sp:Wss10&gt;
+          &lt;wsp:Policy&gt;
+            &lt;sp:MustSupportRefIssuerSerial/&gt;
+          &lt;/wsp:Policy&gt;
+        &lt;/sp:Wss10&gt;
+        &lt;sc:KeyStore wspp:visibility="private" 
+                     location=".../keystore.jks" 
+                     type="JKS" storepass="changeit" 
+                     alias="xws-security-server"/&gt;
+      &lt;/wsp:All&gt;
+    &lt;/wsp:ExactlyOne&gt;
+  &lt;/wsp:Policy&gt;
+  &lt;wsp:Policy wsu:Id=
+          "<strong>ServicioMutualPortBinding_consulta_Input_Policy</strong>"&gt;
+    &lt;wsp:ExactlyOne&gt;
+      &lt;wsp:All&gt;
+        &lt;<strong>sp:EncryptedParts</strong>&gt;
+          &lt;sp:Body/&gt;
+        &lt;/<strong>sp:EncryptedParts</strong>&gt;
+        &lt;<strong>sp:SignedParts</strong>&gt;
+          &lt;sp:Body/&gt;
+          &lt;sp:Header Name="To" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="From" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="FaultTo" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="ReplyTo" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="MessageID" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="RelatesTo" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="Action" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="AckRequested" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="SequenceAcknowledgement" 
+                     Namespace="http://..."/&gt;
+          &lt;sp:Header Name="Sequence" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="CreateSequence" Namespace="http://..."/&gt;
+        &lt;/<strong>sp:SignedParts</strong>&gt;
+      &lt;/wsp:All&gt;
+    &lt;/wsp:ExactlyOne&gt;
+  &lt;/wsp:Policy&gt;
+  &lt;wsp:Policy wsu:Id="<strong>ServicioMutualPortBinding_consulta_Output_Policy</strong>"&gt;
+    &lt;wsp:ExactlyOne&gt;
+      &lt;wsp:All&gt;
+        &lt;<strong>sp:EncryptedParts</strong>&gt;
+          &lt;sp:Body/&gt;
+        &lt;<strong>/sp:EncryptedParts</strong>&gt;
+        &lt;<strong>sp:SignedParts</strong>&gt;
+          &lt;sp:Body/&gt;
+          &lt;sp:Header Name="To" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="From" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="FaultTo" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="ReplyTo" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="MessageID" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="RelatesTo" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="Action" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="AckRequested" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="SequenceAcknowledgement" 
+                     Namespace="http://..."/&gt;
+          &lt;sp:Header Name="Sequence" Namespace="http://..."/&gt;
+          &lt;sp:Header Name="CreateSequence" Namespace="http://..."/&gt;
+        &lt;/<strong>sp:SignedParts</strong>&gt;
+      &lt;/wsp:All&gt;
+    &lt;/wsp:ExactlyOne&gt;
+  &lt;/wsp:Policy&gt;
+&lt;/definitions&gt;</pre>
+<p>Podemos observar que para la protecci&oacute;n de los mensajes se utilizan dos certificados, uno del cliente al 
+servidor (<span class="codefrag">InitiatorToken</span>), que se incluye en los mensajes de petici&oacute;n, y otro del servidor al cliente
+(<span class="codefrag">RecipientToken</span>), que no se incluye en el mensaje de respuesta, s&oacute;lo se utiliza para cifrarlo
+y firmarlo. Debemos destacar tambi&eacute;n la configuraci&oacute;n de las partes del mensaje que deben ser cifradas y firmadas.</p>
+<p>Respecto al cliente, en este caso no especificaremos la direcci&oacute;n segura, ya que la seguridad no va a nivel de 
+transporte, sino dentro del mensaje XML. Crearemos la referencia al servicio, y una vez hecho esto activaremos la casilla
+<em>Use development defaults</em> en su configuraci&oacute;n para utilizar los certificados por defecto.</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Podemos crear el cliente tanto en un proyecto web como en un proyecto Java, pero si lo hacemos
+en uno del segundo tipo deberemos especificar manualmente la ruta del <em>Keystore</em> y el <em>Truststore</em>
+en la ventana de edici&oacute;n de atributos del servicio, ya que si marcamos <em>Use development defaults</em> no
+funcionar&aacute; correctamente.</div>
+</div>
+<p>Al invocar el servicio podemos observar los mensajes SOAP utilizados:</p>
+<pre class="code">&lt;S:Envelope xmlns:S="http://..."&gt;
+&lt;S:Header&gt;
+  &lt;To xmlns="http://..." wsu:Id="<strong>_5005</strong>"&gt;
+    http://localhost:8080/ServicioMensaje/ServicioMutualService
+  &lt;/To&gt;
+  &lt;Action xmlns="http://..." wsu:Id="<strong>_5004</strong>"&gt;
+    http://.../ServicioMutual/consultaRequest
+  &lt;/Action&gt;
+  &lt;ReplyTo xmlns="http://..." wsu:Id="<strong>_5003</strong>"&gt;
+    &lt;Address&gt;
+      http://www.w3.org/2005/08/addressing/anonymous
+    &lt;/Address&gt;
+  &lt;/ReplyTo&gt;
+  &lt;MessageID xmlns="http://..." wsu:Id="<strong>_5002</strong>"&gt;
+    uuid:354aef29-6462-7a39-85ce-45ae6f7ee65a0&lt;
+  /MessageID&gt;
+  &lt;wsse:Security S:mustUnderstand="1"&gt;
+    &lt;wsu:Timestamp xmlns:ns18="http://..." wsu:Id="<strong>_3</strong>"&gt;
+      &lt;wsu:Created&gt;2010-05-23T18:00:08Z&lt;/wsu:Created&gt;
+      &lt;wsu:Expires&gt;2010-05-23T18:05:08Z&lt;/wsu:Expires&gt;
+    &lt;/wsu:Timestamp&gt;
+    &lt;<strong>wsse:BinarySecurityToken</strong> xmlns:ns18="http://..." 
+      ValueType="http://...#X509v3" 
+      EncodingType="http://...#Base64Binary" 
+      wsu:Id="<strong>uuid_b677ed4f-9c99-44f6-bbad-0978edb92b40</strong>"&gt;
+        MIIDDzCCAnigAwIBAgIBAzANBgkqhkiG9w0BAQQFADBOMQswC
+        QYDVQQGEwJBVTETMBEGA1UECBMKU29tZS1TdGF0ZTEMMAoGA1
+        UEChMDU1VOMQwwCgYDVQQLEwNKV1MxDjAMBgNVBAMTBVNVTkN
+        BMB4XDTA3MDMxMjEwMjQ0MFoXDTE3MDMwOTEwMjQ0MFowbzEL
+        MAkGA1UEBhMCQVUxEzARBgNVBAgTClNvbWUtU3RhdGUxITAfB
+        gNVBAoTGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDEMMAoGA1
+        UECxMDU1VOMRowGAYDVQQDExF4d3NzZWN1cml0eWNsaWVudDC
+        BnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAvYxVZKIzVdGM
+        SBkW4bYnV80MV/RgQKV1bf/DoMTX8laMO45P6rlEarxQiOYrg
+        zuYp+snzz2XM0S6o3JGQtXQuzDwcwPkH55bHFwHgtOMzxG4SQ
+        653a5Dzh04nsmJvxvbncNH/XNaWfHaC0JHBEfNCMwRebYocxY
+        M92pq/G5OGyECAwEAAaOB2zCB2DAJBgNVHRMEAjAAMCwGCWCG
+        SAGG+EIBDQQfFh1PcGVuU1NMIEdlbmVyYXRlZCBDZXJ0aWZpY
+        2F0ZTAdBgNVHQ4EFgQU/mItfvuFdS7A0GCysE71TFRxP2cwfg
+        YDVR0jBHcwdYAUZ7plxs6VyOOOTSFyojDV0/YYjJWhUqRQME4
+        xCzAJBgNVBAYTAkFVMRMwEQYDVQQIEwpTb21lLVN0YXRlMQww
+        CgYDVQQKEwNTVU4xDDAKBgNVBAsTA0pXUzEOMAwGA1UEAxMFU
+        1VOQ0GCCQDbHkJaq6KijjANBgkqhkiG9w0BAQQFAAOBgQBEnR
+        dcQeMyCYqOHw2jbPOPUlvu07bZe7sI3ly/Qz+4mkrFctqMSup
+        ghQtLv9dZcqDOUFLCGMse7+l5MG00VawzsoVe242iXzJB111e
+        PzhhppIPOHXXtflj/JD2U4Qz75C/dfdd5AAZbqGSFtZh7pyE8
+        Ot1vOq7R48/bHuvTsEVUQ==
+    &lt;/<strong>wsse:BinarySecurityToken</strong>&gt;
+    &lt;<strong>xenc:EncryptedKey</strong> xmlns:ns18="http://..." Id="<strong>_5007</strong>"&gt;
+      &lt;xenc:EncryptionMethod Algorithm="...#rsa-oaep-mgf1p" /&gt;
+      &lt;ds:KeyInfo xmlns:xsi="http://..." xsi:type="KeyInfoType"&gt;
+        &lt;wsse:SecurityTokenReference&gt;
+          &lt;ds:X509Data&gt;
+            &lt;ds:X509IssuerSerial&gt;
+              &lt;ds:X509IssuerName&gt;
+                <strong>CN=SUNCA, OU=JWS, O=SUN, ST=Some-State, C=AU</strong>
+              &lt;/ds:X509IssuerName&gt;
+              &lt;ds:X509SerialNumber&gt;<strong>2</strong>&lt;/ds:X509SerialNumber&gt;
+            &lt;/ds:X509IssuerSerial&gt;
+          &lt;/ds:X509Data&gt;
+        &lt;/wsse:SecurityTokenReference&gt;
+      &lt;/ds:KeyInfo&gt;
+      &lt;xenc:CipherData&gt;
+        &lt;xenc:CipherValue&gt;
+          qLpnzKy7zN+BvmXKzjf3a9yEtSjCaVokncdMEgdDucSlN74c2
+          zgAtwmM2ogLnawQeb8ivAdJUcJ7Tg2ycw9WpRLdWLgM+H5AMe
+          Ov+uP5eOmbqyg7efU3dbceeRHryu7FlTzlcTjB7DKse+Br/WK
+          4XB8/hpZqwWzU7NGhwXuKJAA=
+        &lt;/xenc:CipherValue&gt;
+      &lt;/xenc:CipherData&gt;
+      &lt;xenc:ReferenceList&gt;
+        &lt;xenc:DataReference URI="<strong>#_5008</strong>" /&gt;
+      &lt;/xenc:ReferenceList&gt;
+    &lt;<strong>/xenc:EncryptedKey</strong>&gt;
+    &lt;<strong>ds:Signature</strong> xmlns:ns18="http://..." Id="<strong>_1</strong>"&gt;
+      &lt;ds:SignedInfo&gt;
+        &lt;ds:CanonicalizationMethod Algorithm="http://..."&gt;
+          &lt;exc14n:InclusiveNamespaces PrefixList="wsse S" /&gt;
+        &lt;/ds:CanonicalizationMethod&gt;
+        &lt;ds:SignatureMethod Algorithm="http://...#rsa-sha1" /&gt;
+        &lt;ds:Reference URI="<strong>#_5002</strong>"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            VJ7xOBhR0+zNqQZ5nifkt256OEo=&lt;
+          /ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="<strong>#_5003</strong>"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            bfaj3tu9jIeOXTrb3JWtYD+ZKaI=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="<strong>#_5004</strong>"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            uttcPe+iu2U8bUrV5nJXV7TkzdM=&lt;
+          /ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="<strong>#_5005</strong>"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            J1Y7KigJGj9VauXK+72979jeKm0=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="<strong>#_5006</strong>"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            43t9/SfIxwT3HdGSmGsj5KD1HPI=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="<strong>#_3</strong>"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces 
+                      PrefixList="wsu wsse S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            Hjt5KqWuPkRvjG8lDvK39UUqNyE=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+      &lt;/ds:SignedInfo&gt;
+      &lt;ds:SignatureValue&gt;
+        kjGN6PdD9WJ5FN9EkHCOPW8m2cU96I+UsH8vHsjGZt+eOXWAR
+        INwiCVhKIxpBIORpQF2qbEuxyNEe9I2Md/KFBepytlSuHEqgm
+        0IOHtzq9NyBvLoZi9bCGpqITH3VMcOYotNOyGLaBP8ZxJpFyo
+        HW5TXaa8JhsUN8/yHhoLKu/8=
+      &lt;/ds:SignatureValue&gt;
+      &lt;ds:KeyInfo&gt;
+        &lt;wsse:SecurityTokenReference&gt;
+          &lt;wsse:Reference 
+                 URI="<strong>#uuid_b677ed4f-9c99-44f6-bbad-0978edb92b40</strong>" 
+                 ValueType="http://...#X509v3" /&gt;
+        &lt;/wsse:SecurityTokenReference&gt;
+      &lt;/ds:KeyInfo&gt;
+    &lt;/<strong>ds:Signature</strong>&gt;
+  &lt;/wsse:Security&gt;
+&lt;/S:Header&gt;
+&lt;S:Body wsu:Id="<strong>_5006</strong>"&gt;
+  &lt;<strong>xenc:EncryptedData</strong> xmlns:ns18="http://..." Id="<strong>_5008</strong>" 
+        Type="http://...#Content"&gt;
+    &lt;xenc:EncryptionMethod Algorithm="http://...#aes128-cbc" /&gt;
+    &lt;xenc:CipherData&gt;
+      &lt;xenc:CipherValue&gt;
+        r6LQcfvjYdOzCrgVgFar7poLAuC7PrS3L3bCIW3kJT6V8ench
+        grxRyBbAW3/SPRz7fHl+F4ztuYVQJNCMEJEXc+7kbN+Alsx33
+        E7g3tYHXJnIij1dg4JFiN5Hd0HEGZVkJbSfNAMboSECeRocug
+        +rw==
+      &lt;/xenc:CipherValue&gt;
+    &lt;/xenc:CipherData&gt;
+  &lt;<strong>/xenc:EncryptedData</strong>&gt;
+&lt;/S:Body&gt;
+&lt;/S:Envelope&gt;</pre>
+<p>Para poder entender mejor el contenido del mensaje, a continuaci&oacute;n mostramos una 
+tabla con los n&uacute;meros de referencia a las diferentes partes del mensaje:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+<th colspan="1" rowspan="1">Identificador</th><th colspan="1" rowspan="1">Parte</th>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_1</span></td><td colspan="1" rowspan="1">Firma</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_3</span></td><td colspan="1" rowspan="1">Timestamp</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5002</span></td><td colspan="1" rowspan="1">MessageID</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5003</span></td><td colspan="1" rowspan="1">ReplyTo</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5004</span></td><td colspan="1" rowspan="1">Action</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5005</span></td><td colspan="1" rowspan="1">To</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5006</span></td><td colspan="1" rowspan="1">Body</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5007</span></td><td colspan="1" rowspan="1">Clave de cifrado</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5008</span></td><td colspan="1" rowspan="1">Contenido de body</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">uuid_b677ed4f-9c99-44f6-bbad-0978edb92b40</span></td><td colspan="1" rowspan="1">Certificado cliente adjunto</td>
+</tr>
+
+</table>
+<p>Podemos observar que el certificado digital del cliente se adjunta al mensaje como un 
+<em>token</em> binario sin cifrar (s&oacute;lo va codificado en base64). Todas las partes 
+que hab&iacute;amos indicado que deb&iacute;an ser firmadas (Body, To, Action, ReplyTo, MessageID), adem&aacute;s
+del <em>timestamp</em>, tienen una referencia dentro del bloque <span class="codefrag">Signature</span> y son
+firmadas utilizando el certificado adjunto. </p>
+<p>La clave de cifrado hace referencia al certificado <span class="codefrag">xws-security-server</span> (con serial 2), no 
+incluido en el mensaje. En las referencias a los elementos cifrados con dicha clave, encontramos
+&uacute;nicamente el contenido del <em>body</em>.</p>
+<pre class="code">&lt;S:Envelope xmlns:S="http://..."&gt;
+&lt;S:Header&gt;
+  ...
+  &lt;wsse:Security S:mustUnderstand="1"&gt;
+    &lt;wsu:Timestamp xmlns:ns18="http://..." wsu:Id="<strong>_3</strong>"&gt;
+      &lt;wsu:Created&gt;2010-05-23T18:00:08Z&lt;/wsu:Created&gt;
+      &lt;wsu:Expires&gt;2010-05-23T18:05:08Z&lt;/wsu:Expires&gt;
+    &lt;/wsu:Timestamp&gt;
+    &lt;<strong>xenc:EncryptedKey</strong> xmlns:ns18="http://..." Id="<strong>_5007</strong>"&gt;
+      &lt;xenc:EncryptionMethod Algorithm="...#rsa-oaep-mgf1p" /&gt;
+      &lt;ds:KeyInfo xmlns:xsi="http://..." xsi:type="KeyInfoType"&gt;
+        &lt;wsse:SecurityTokenReference&gt;
+          &lt;ds:X509Data&gt;
+            &lt;ds:X509IssuerSerial&gt;
+              &lt;ds:X509IssuerName&gt;
+                <strong>CN=SUNCA, OU=JWS, O=SUN, ST=Some-State, C=AU</strong>
+              &lt;/ds:X509IssuerName&gt;
+              &lt;ds:X509SerialNumber&gt;<strong>3</strong>&lt;/ds:X509SerialNumber&gt;
+            &lt;/ds:X509IssuerSerial&gt;
+          &lt;/ds:X509Data&gt;
+        &lt;/wsse:SecurityTokenReference&gt;
+      &lt;/ds:KeyInfo&gt;
+      &lt;xenc:CipherData&gt;
+        &lt;xenc:CipherValue&gt;
+          DnxD0Fu2xNcNk8au998ylCRAkOPY+KFudhsSs+QNF5dWbFD4S
+          fvjCzHB3iJeQX3tkurJL2bPGq281Hls6FbditXDXBIk/4o5dQ
+          41meZyG+lYFXxCW+Cuh8tuGWeplYXvMOkx0T1hATB9HZGJ5pY
+          +Fg4H4DK5zlaG6B3qQdfcxmQ=
+        &lt;/xenc:CipherValue&gt;
+      &lt;/xenc:CipherData&gt;
+      &lt;xenc:ReferenceList&gt;
+        &lt;xenc:DataReference URI="<strong>#_5008</strong>" /&gt;
+      &lt;/xenc:ReferenceList&gt;
+    &lt;/<strong>xenc:EncryptedKey</strong>&gt;
+    &lt;<strong>ds:Signature</strong> xmlns:ns18="http://..." Id="<strong>_1</strong>"&gt;
+      &lt;ds:SignedInfo&gt;
+        &lt;ds:CanonicalizationMethod Algorithm="http://..."&gt;
+          &lt;exc14n:InclusiveNamespaces PrefixList="wsse S" /&gt;
+        &lt;/ds:CanonicalizationMethod&gt;
+        &lt;ds:SignatureMethod Algorithm="http://...#rsa-sha1" /&gt;
+        &lt;ds:Reference URI="<strong>#_5002</strong>"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            2rnnF8g6/xFtlou99Yw7Mshc+VM=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="<strong>#_5003</strong>"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            58qBSPkSlKEHfItEQno4nB2eQ7E=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="<strong>#_5004</strong>"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            1dDaYsdB4xzlVr/IbynlFIwf5Vw=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="<strong>#_5005</strong>"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            Nd/8wVmBdLowQKMblBRYK+6xcjA=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="<strong>#_5006</strong>"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            HF0FrQEUpM98NXkdncg+e6HJm7c=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="<strong>#_3</strong>"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces 
+                       PrefixList="wsu wsse S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            Hjt5KqWuPkRvjG8lDvK39UUqNyE=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+      &lt;/ds:SignedInfo&gt;
+      &lt;ds:SignatureValue&gt;
+        LZ7ti/S7lj5Sgej8Mfy0JTWkf9idLYmt0K8y8//RdZTSyexii
+        fKo4HVC2HeW3GVFOGlXX/aJkYhH1LGEfWUUB+LOa04OfyP4HB
+        iuebmxzlK4d3vN6gUFUCEJeKMLpgaygGs67qu36aMygE96q36
+        1ncdh8mY3YACNLpISz+GfRII=
+      &lt;/ds:SignatureValue&gt;
+      &lt;ds:KeyInfo&gt;
+        &lt;wsse:SecurityTokenReference&gt;
+          &lt;ds:X509Data&gt;
+            &lt;ds:X509IssuerSerial&gt;
+              &lt;ds:X509IssuerName&gt;
+                <strong>CN=SUNCA, OU=JWS, O=SUN, ST=Some-State, C=AU</strong>
+              &lt;/ds:X509IssuerName&gt;
+              &lt;ds:X509SerialNumber&gt;<strong>2</strong>&lt;/ds:X509SerialNumber&gt;
+            &lt;/ds:X509IssuerSerial&gt;
+          &lt;/ds:X509Data&gt;
+        &lt;/wsse:SecurityTokenReference&gt;
+      &lt;/ds:KeyInfo&gt;
+    &lt;/<strong>ds:Signature</strong>&gt;
+  &lt;/wsse:Security&gt;
+&lt;/S:Header&gt;
+&lt;S:Body wsu:Id="<strong>_5006</strong>"&gt;
+  &lt;<strong>xenc:EncryptedData</strong> xmlns:ns18="..." Id="<strong>_5008</strong>" 
+                      Type="...#Content"&gt;
+    &lt;xenc:EncryptionMethod Algorithm="http://...#aes128-cbc" /&gt;
+    &lt;xenc:CipherData&gt;
+      &lt;xenc:CipherValue&gt;
+        9ipfQQOlCZAs13DuGqBIWrbczNZZdubh4Uy3lz3ccEiGm6mj8
+        kTbi6echVZCKDH7SGK+XwBb8ocICTrrdOPFZ3VEInHgtfAAKA
+        t9+Km4Y1eBPz9jiWZrpyjh+qphkm86CL/VDVeSiE+RKU+QFQe
+        JQEe7G75yTKeXRUM5tqbvZD5zpRye4q/kOX1R6QTGiJnxD2+M
+        ThielTK78FUzCfjKAdkF3rDxNuD1IZhZdKtYtm7JuYxpLwcg7
+        TjCPpBOVKqZC96NXr7k8OfBT8BOmkzVf4Sqqc1sijnACAou47
+        I6jikUAiT74P3FHz2Y+c1gBwQcXQQwP87C0t64WbLePJTPVQ=
+        =
+      &lt;/xenc:CipherValue&gt;
+    &lt;/xenc:CipherData&gt;
+  &lt;/<strong>xenc:EncryptedData</strong>&gt;
+&lt;/S:Body&gt;
+&lt;/S:Envelope&gt;</pre>
+<p>El mensaje de respuesta es similar al de petici&oacute;n, pero en este caso no se incluye ning&uacute;n certificado 
+con el mensaje. Ambos certificados son &uacute;nicamente referenciados. La firma se realiza utilizando el certificado
+del servidor (<span class="codefrag">xws-security-server</span>, con serial 2), mientras que la clave de cifrado para el <em>body</em>
+proviene del certificado del cliente (<span class="codefrag">xws-security-client</span>, con serial 3).</p>
+</div>
+
+
+
+<a name="N101FC"></a><a name="Clave+sim%C3%A9trica+y+autentificaci%C3%B3n+mediante+nombre+de+usuario"></a>
+<h2 class="underlined_10">Clave sim&eacute;trica y autentificaci&oacute;n mediante nombre de usuario</h2>
+<div class="section">
+<p>Podemos tambi&eacute;n utilizar autentificaci&oacute;n mediante nombre de usuario y password con seguridad
+a nivel de mensaje. Para utilizar este tipo de seguridad deberemos seleccionar la opci&oacute;n
+<em>Username Authentication with Symmetric Key</em>. Vamos a crear un servicio de nombre 
+<span class="codefrag">ServicioMensajeUsername</span> con dicho tipo de seguridad.</p>
+<p>El cliente, al igual que en los casos anteriores, se puede crear tanto en un proyecto web como
+en un proyecto Java independiente. La protecci&oacute;n del mensaje se realizar&aacute; mediante clave 
+sim&eacute;trica, utilizando el certificado del servidor. Por lo tanto, deberemos especificar el
+<em>Keystore</em> en el servidor y el <em>Truststore</em> en el cliente.</p>
+<p>La configuraci&oacute;n de los usuarios se realiza tal como vimos en la secci&oacute;n anterior, en el caso
+de seguridad a nivel de transporte con autentificaci&oacute;n mediante nombre de usuario. Podremos 
+utilizar el <em>realm</em> por defecto de Glassfish o de la aplicaci&oacute;n <em>enterprise</em>, o bien
+definir nuestro propio mecanismo de validaci&oacute;n mediante <em>handlers</em> o <em>validators</em>.
+De la misma forma, en el cliente podremos realizar la autentificaci&oacute;n de forma est&aacute;tica o
+din&aacute;mica (s&oacute;lo en aplicaciones Java independientes).</p>
+<p>En este caso el WSDL ser&aacute; el siguiente:</p>
+<pre class="code">&lt;definitions  xmlns="http://..."&gt;
+  ...
+  &lt;wsp:Policy wsu:Id="ServicioMensajeUsernamePortBindingPolicy"&gt;
+    &lt;wsp:ExactlyOne&gt;
+      &lt;wsp:All&gt;
+        &lt;wsam:Addressing wsp:Optional="false"/&gt;
+        &lt;<strong>sp:SymmetricBinding</strong>&gt;
+          &lt;wsp:Policy&gt;
+            &lt;<strong>sp:ProtectionToken</strong>&gt;
+              &lt;wsp:Policy&gt;
+                &lt;<strong>sp:X509Token</strong> sp:IncludeToken=
+                              ".../IncludeToken/<strong>Never</strong>"&gt;
+                  &lt;wsp:Policy&gt;
+                    &lt;sp:WssX509V3Token10/&gt;
+                    &lt;sp:RequireIssuerSerialReference/&gt;
+                  &lt;/wsp:Policy&gt;
+                &lt;/<strong>sp:X509Token</strong>&gt;
+              &lt;/wsp:Policy&gt;
+            &lt;/<strong>sp:ProtectionToken</strong>&gt;
+            &lt;sp:Layout&gt;
+              &lt;wsp:Policy&gt;
+                &lt;sp:Strict/&gt;
+              &lt;/wsp:Policy&gt;
+            &lt;/sp:Layout&gt;
+            &lt;sp:IncludeTimestamp/&gt;
+            &lt;sp:OnlySignEntireHeadersAndBody/&gt;
+            &lt;sp:AlgorithmSuite&gt;
+              &lt;wsp:Policy&gt;
+                &lt;sp:Basic128/&gt;
+              &lt;/wsp:Policy&gt;
+            &lt;/sp:AlgorithmSuite&gt;
+          &lt;/wsp:Policy&gt;
+        &lt;/<strong>sp:SymmetricBinding</strong>&gt;
+        &lt;sp:Wss11&gt;
+          &lt;wsp:Policy&gt;
+            &lt;sp:MustSupportRefIssuerSerial/&gt;
+            &lt;sp:MustSupportRefThumbprint/&gt;
+            &lt;sp:MustSupportRefEncryptedKey/&gt;
+          &lt;/wsp:Policy&gt;
+        &lt;/sp:Wss11&gt;
+        &lt;<strong>sp:SignedEncryptedSupportingTokens</strong>&gt;
+          &lt;wsp:Policy&gt;
+            &lt;<strong>sp:UsernameToken</strong> sp:IncludeToken=
+                              ".../IncludeToken/<strong>AlwaysToRecipient</strong>"&gt;
+              &lt;wsp:Policy&gt;
+                &lt;sp:WssUsernameToken10/&gt;
+              &lt;/wsp:Policy&gt;
+            &lt;/<strong>sp:UsernameToken</strong>&gt;
+          &lt;/wsp:Policy&gt;
+        &lt;/<strong>sp:SignedEncryptedSupportingTokens</strong>&gt;
+        &lt;sc:KeyStore wspp:visibility="private" 
+                     location=".../keystore.jks"
+                     type="JKS" storepass="changeit" 
+                     alias="xws-security-server"/&gt;
+      &lt;/wsp:All&gt;
+    &lt;/wsp:ExactlyOne&gt;
+  &lt;/wsp:Policy&gt;
+  &lt;wsp:Policy wsu:Id=
+      "ServicioMensajeUsernamePortBinding_consulta_Input_Policy"&gt;
+    ... (partes del mensaje de entrada) ...
+  &lt;/wsp:Policy&gt;
+  &lt;wsp:Policy wsu:Id=
+      "ServicioMensajeUsernamePortBinding_consulta_Output_Policy"&gt;
+    ... (partes del mensaje de salida) ...
+  &lt;/wsp:Policy&gt;
+&lt;/definitions&gt;</pre>
+<p>Observamos que en este caso se utiliza una clave sim&eacute;trica generada a partir del 
+certificado del servidor. En este caso s&oacute;lo es necesario especificar un <em>token</em>
+para la protecci&oacute;n de los mensajes, aunque podr&iacute;amos haber especificado por separado
+un <em>token</em> para firmar y otro para cifrar.</p>
+<p>Adem&aacute;s del <em>token</em> de protecci&oacute;n, se especifica un <em>token</em> adicional
+de soporte, en este caso de tipo <em>username</em>, que estar&aacute; firmado y cifrado, y 
+se incluir&aacute; siempre en los mensajes del cliente al servicio (<span class="codefrag">AlwaysToRecipent</span>). </p>
+<p>A continuaci&oacute;n mostramos los mensajes SOAP utilizados en la invocaci&oacute;n de este servicio. 
+El mensaje de la petici&oacute;n SOAP es:</p>
+<pre class="code">&lt;S:Envelope xmlns:S="http://..."&gt;
+&lt;S:Header&gt;
+...
+&lt;wsse:Security S:mustUnderstand="1"&gt;
+  &lt;wsu:Timestamp xmlns:ns19="http://..." wsu:Id="_3"&gt;
+    &lt;wsu:Created&gt;2010-05-23T19:20:04Z&lt;/wsu:Created&gt;
+    &lt;wsu:Expires&gt;2010-05-23T19:25:04Z&lt;/wsu:Expires&gt;
+  &lt;/wsu:Timestamp&gt;
+  &lt;<strong>xenc:EncryptedKey</strong> xmlns:ns19="http://..." Id="<strong>_5002</strong>"&gt;
+    &lt;xenc:EncryptionMethod Algorithm="...#rsa-oaep-mgf1p" /&gt;
+    &lt;ds:KeyInfo xmlns:xsi="http://..." xsi:type="KeyInfoType"&gt;
+      &lt;wsse:SecurityTokenReference&gt;
+        &lt;ds:X509Data&gt;
+          &lt;ds:X509IssuerSerial&gt;
+            &lt;ds:X509IssuerName&gt;
+              <strong>CN=SUNCA, OU=JWS, O=SUN, ST=Some-State, C=AU</strong>
+            &lt;/ds:X509IssuerName&gt;
+            &lt;ds:X509SerialNumber&gt;<strong>2</strong>&lt;/ds:X509SerialNumber&gt;
+          &lt;/ds:X509IssuerSerial&gt;
+        &lt;/ds:X509Data&gt;
+      &lt;/wsse:SecurityTokenReference&gt;
+    &lt;/ds:KeyInfo&gt;
+    &lt;xenc:CipherData&gt;
+      &lt;xenc:CipherValue&gt;
+        cJ9Y9zo7YnQZZWxJn7CVv4w+w83EqqhPhgO4lUDTF/VDh92GyhyC
+        UcCzWPGxyQT8533unHVZAyCFDAr7EB+1pqxibVbOWXwBrSh6VfQB
+        hbe2L3E6VKF8u3ttHoe5ZW31CZTIbl316nQgjOjkVrToPFM90Jez
+        vavRLvYqZxJfHag=
+      &lt;/xenc:CipherValue&gt;
+    &lt;/xenc:CipherData&gt;
+  &lt;/<strong>xenc:EncryptedKey</strong>&gt;
+  &lt;xenc:ReferenceList xmlns:ns19="http://..."&gt;
+    &lt;xenc:DataReference URI="<strong>#_5008</strong>" /&gt;
+    &lt;xenc:DataReference URI="<strong>#_5009</strong>" /&gt;
+  &lt;/xenc:ReferenceList&gt;
+  &lt;<strong>xenc:EncryptedData</strong> xmlns:ns19="http://..." Id="<strong>_5009</strong>" 
+                      Type="...#Element"&gt;
+    &lt;xenc:EncryptionMethod Algorithm="...#aes128-cbc" /&gt;
+    &lt;ds:KeyInfo xmlns:xsi="http://..." xsi:type="KeyInfoType"&gt;
+      &lt;wsse:SecurityTokenReference&gt;
+        &lt;wsse:Reference URI="<strong>#_5002</strong>" 
+                        ValueType="http://...#EncryptedKey" /&gt;
+      &lt;/wsse:SecurityTokenReference&gt;
+    &lt;/ds:KeyInfo&gt;
+    &lt;xenc:CipherData&gt;
+      &lt;xenc:CipherValue&gt;
+        R4YsNK1vHBPM42ETnn222yExp6Nr1qu/WFGNEl8tLnNbBb4rtVrh
+        Uek5neUsUR/WcvaP8JQWSu4f6IZH8IUnoonJeSWGgNeEy9053EM1
+        aZB8CJd7DvLy8GgdxmaEilP3no6i3jTwqYFoPtJRA//CxkxOiVug
+        oCdBhKa5OvXs89QtqhBzMiF8tqpX476kf9EKU3t9uLUHETBr80kP
+        qa1FzVUz3+w4LZvy8HUw5kb3lAMaDu+m6yUv0H1r9WJJbJRSZf74
+        xspWE1gZE15OoXk82Ns4gScJtJwNa3YKfYbTrUNP/4nLlN8+Ihi6
+        phitoXP/uZ34zOogz14lKvXbR1mxd40UOiCoFMCE4hRAJsUloNmm
+        Eiot++ydIAfb1qw+MDB2zHhCQxoMSFgbHdf7Rjgr+PJ81WCm7Hn4
+        2HuJT0DEyFK4Y/mfq9Ex4y0ple7n/nAHQIm/aZIDwScvE07m5BJJ
+        Bo0edABoMX6S51tU+f8A+E5tQSLN9QZXqxYL3izy18pGpRUKraow
+        5ml14GNW7lBwmp3WpneNZznDChLNzQ6hJdIt2HaBx9Vs23JwLTrP
+        0i/6xJcEJ8zmF/2rP9sq0w8pepVh1NJfx/z25uMVapzciAQz3Yvp
+        kY5oZckPOJlJi6n5
+      &lt;/xenc:CipherValue&gt;
+    &lt;/xenc:CipherData&gt;
+  &lt;/<strong>xenc:EncryptedData</strong>&gt;
+  &lt;<strong>ds:Signature</strong> xmlns:ns19="http://..." Id="_1"&gt;
+    &lt;ds:SignedInfo&gt;
+      &lt;ds:CanonicalizationMethod Algorithm="http://..."&gt;
+        &lt;exc14n:InclusiveNamespaces PrefixList="wsse S" /&gt;
+      &lt;/ds:CanonicalizationMethod&gt;
+      &lt;ds:SignatureMethod Algorithm="...#hmac-sha1" /&gt;
+      &lt;ds:Reference URI="#_5003"&gt;
+        &lt;ds:Transforms&gt;
+          &lt;ds:Transform Algorithm="http://..."&gt;
+            &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+          &lt;/ds:Transform&gt;
+        &lt;/ds:Transforms&gt;
+        &lt;ds:DigestMethod Algorithm="...#sha1" /&gt;
+        &lt;ds:DigestValue&gt;
+          pE4UXA2w8RSM1d1XmS+Ek5xinHQ=
+        &lt;/ds:DigestValue&gt;
+      &lt;/ds:Reference&gt;
+      &lt;ds:Reference URI="#_5004"&gt;
+        &lt;ds:Transforms&gt;
+          &lt;ds:Transform Algorithm="http://..."&gt;
+            &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+          &lt;/ds:Transform&gt;
+        &lt;/ds:Transforms&gt;
+        &lt;ds:DigestMethod Algorithm="...#sha1" /&gt;
+        &lt;ds:DigestValue&gt;
+          5Ab1ebo4/FraGgck/A8iDx1J9+I=
+        &lt;/ds:DigestValue&gt;
+      &lt;/ds:Reference&gt;
+      &lt;ds:Reference URI="#_5005"&gt;
+        &lt;ds:Transforms&gt;
+          &lt;ds:Transform Algorithm="http://..."&gt;
+            &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+          &lt;/ds:Transform&gt;
+        &lt;/ds:Transforms&gt;
+        &lt;ds:DigestMethod Algorithm="...#sha1" /&gt;
+        &lt;ds:DigestValue&gt;
+          VfeAGSW+zTgOT5D/JmzLBWmVPlM=
+        &lt;/ds:DigestValue&gt;
+      &lt;/ds:Reference&gt;
+      &lt;ds:Reference URI="#_5006"&gt;
+        &lt;ds:Transforms&gt;
+          &lt;ds:Transform Algorithm="http:/..."&gt;
+            &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+          &lt;/ds:Transform&gt;
+        &lt;/ds:Transforms&gt;
+        &lt;ds:DigestMethod Algorithm="...#sha1" /&gt;
+        &lt;ds:DigestValue&gt;
+          ss8hoyoJzzXVHnrHV6xLXhFGydA=
+        &lt;/ds:DigestValue&gt;
+      &lt;/ds:Reference&gt;
+      &lt;ds:Reference URI="#_5007"&gt;
+        &lt;ds:Transforms&gt;
+          &lt;ds:Transform Algorithm="http://..."&gt;
+            &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+          &lt;/ds:Transform&gt;
+        &lt;/ds:Transforms&gt;
+        &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+        &lt;ds:DigestValue&gt;
+          99CKXPmV+EAk0iuMs/zYlfgLhVE=
+        &lt;/ds:DigestValue&gt;
+      &lt;/ds:Reference&gt;
+      &lt;ds:Reference URI="#_3"&gt;
+        &lt;ds:Transforms&gt;
+          &lt;ds:Transform Algorithm="http://..."&gt;
+            &lt;exc14n:InclusiveNamespaces PrefixList="wsu wsse S" /&gt;
+          &lt;/ds:Transform&gt;
+        &lt;/ds:Transforms&gt;
+        &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+        &lt;ds:DigestValue&gt;
+          U+ucDGRQ8NA16rxMWqeuF+gVj8g=
+        &lt;/ds:DigestValue&gt;
+      &lt;/ds:Reference&gt;
+      &lt;ds:Reference URI=
+                     "#uuid_f8b964eb-a74e-453d-9141-b9b082a8e8ca"&gt;
+        &lt;ds:Transforms&gt;
+          &lt;ds:Transform Algorithm="http://..."&gt;
+            &lt;exc14n:InclusiveNamespaces PrefixList="wsu wsse S" /&gt;
+          &lt;/ds:Transform&gt;
+        &lt;/ds:Transforms&gt;
+        &lt;ds:DigestMethod Algorithm="...#sha1" /&gt;
+        &lt;ds:DigestValue&gt;
+          a26JKFN1L1RZgyqVT/o5rWdHd3I=
+        &lt;/ds:DigestValue&gt;
+      &lt;/ds:Reference&gt;
+    &lt;/ds:SignedInfo&gt;
+    &lt;ds:SignatureValue&gt;
+      +bBujAT6fa61vvvztbmpcdKVsP4=
+    &lt;/ds:SignatureValue&gt;
+    &lt;ds:KeyInfo&gt;
+      &lt;wsse:SecurityTokenReference wsu:Id=
+                 "uuid_f1e1388d-533b-46b6-a108-8071c9ef71e7"&gt;
+        &lt;wsse:Reference URI="<strong>#_5002</strong>" ValueType="...#EncryptedKey"/&gt;
+      &lt;/wsse:SecurityTokenReference&gt;
+    &lt;/ds:KeyInfo&gt;
+  &lt;/<strong>ds:Signature</strong>&gt;
+&lt;/wsse:Security&gt;
+&lt;/S:Header&gt;
+&lt;S:Body wsu:Id="_5007"&gt;
+  &lt;<strong>xenc:EncryptedData</strong> xmlns:ns19="http://s..." Id="<strong>_5008</strong>" 
+                      Type="...#Content"&gt;
+    &lt;xenc:EncryptionMethod Algorithm="...#aes128-cbc" /&gt;
+    &lt;ds:KeyInfo xmlns:xsi="http://..." xsi:type="KeyInfoType"&gt;
+      &lt;wsse:SecurityTokenReference&gt;
+        &lt;wsse:Reference URI="#_5002" ValueType="...#EncryptedKey"/&gt;
+      &lt;/wsse:SecurityTokenReference&gt;
+    &lt;/ds:KeyInfo&gt;
+    &lt;xenc:CipherData&gt;
+      &lt;xenc:CipherValue&gt;
+        gf727dxKqy9VMKI1KqGvI9KXQ034/JKu7dkoVdXGprMnCLCjn0
+        sdH98+2WuNC20A68CRWpNbpxuLPhFaGmp9HgGsCQ0aUBOzAtem
+        v11z1aC2bVzYks6djxuH6mN9kWM+DOxaJ3uFjfBT0qFO18pv3A
+        ==
+      &lt;/xenc:CipherValue&gt;
+    &lt;/xenc:CipherData&gt;
+  &lt;/<strong>xenc:EncryptedData</strong>&gt;
+&lt;/S:Body&gt;
+&lt;/S:Envelope&gt;</pre>
+<p>Al igual que en el caso anterior, para facilitar el an&aacute;lisis del mensaje mostramos una tabla con los
+identificadores de cada parte del mensaje:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+<th colspan="1" rowspan="1">Identificador</th><th colspan="1" rowspan="1">Parte</th>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_1</span></td><td colspan="1" rowspan="1">Firma</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_3</span></td><td colspan="1" rowspan="1">Timestamp</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5002</span></td><td colspan="1" rowspan="1">Clave de cifrado</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5003</span></td><td colspan="1" rowspan="1">MessageID</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5004</span></td><td colspan="1" rowspan="1">ReplyTo</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5005</span></td><td colspan="1" rowspan="1">Action</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5006</span></td><td colspan="1" rowspan="1">To</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5007</span></td><td colspan="1" rowspan="1">Body</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5008</span></td><td colspan="1" rowspan="1">Contenido de body</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5009</span></td><td colspan="1" rowspan="1">Username token</td>
+</tr>
+
+</table>
+<p>En este caso la clave de cifrado utilizada es sim&eacute;trica, obtenida a partir del certificado
+del servidor. Adem&aacute;s, en las referencias de dicha clave podemos ver que no se utiliza &uacute;nicamente
+para cifrar el <em>body</em>, sino que tambi&eacute;n ciframos el nombre de usuario y <em>password</em>
+con ella. El mismo certificado del servidor es el que se utiliza para firmar el mensaje.</p>
+<p>La respuesta SOAP ser&aacute;:</p>
+<pre class="code">&lt;S:Envelope xmlns:S="http://..."&gt;
+&lt;S:Header&gt;
+...
+&lt;wsse:Security S:mustUnderstand="1"&gt;
+  &lt;wsu:Timestamp xmlns:ns19="http://..." wsu:Id="_3"&gt;
+    &lt;wsu:Created&gt;2010-05-23T19:20:05Z&lt;/wsu:Created&gt;
+    &lt;wsu:Expires&gt;2010-05-23T19:25:05Z&lt;/wsu:Expires&gt;
+  &lt;/wsu:Timestamp&gt;
+  &lt;xenc:ReferenceList xmlns:ns19="http://..." &gt;
+    &lt;xenc:DataReference URI="<strong>#_5007</strong>" /&gt;
+  &lt;/xenc:ReferenceList&gt;
+  &lt;<strong>ds:Signature</strong> xmlns:ns19="http://..." Id="_1"&gt;
+    &lt;ds:SignedInfo&gt;
+      &lt;ds:CanonicalizationMethod Algorithm="http://..."&gt;
+        &lt;exc14n:InclusiveNamespaces PrefixList="wsse S" /&gt;
+      &lt;/ds:CanonicalizationMethod&gt;
+      &lt;ds:SignatureMethod Algorithm="...#hmac-sha1" /&gt;
+      &lt;ds:Reference URI="#_5002"&gt;
+        &lt;ds:Transforms&gt;
+          &lt;ds:Transform Algorithm="http://..."&gt;
+            &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+          &lt;/ds:Transform&gt;
+        &lt;/ds:Transforms&gt;
+        &lt;ds:DigestMethod Algorithm="...#sha1" /&gt;
+        &lt;ds:DigestValue&gt;
+          o6eUIKrRYD2O32Q3yWJ3g42fPV8=
+        &lt;/ds:DigestValue&gt;
+      &lt;/ds:Reference&gt;
+      &lt;ds:Reference URI="#_5003"&gt;
+        &lt;ds:Transforms&gt;
+          &lt;ds:Transform Algorithm="http://..."&gt;
+            &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+          &lt;/ds:Transform&gt;
+        &lt;/ds:Transforms&gt;
+        &lt;ds:DigestMethod Algorithm="...#sha1" /&gt;
+        &lt;ds:DigestValue&gt;
+          ADxMEggWbANO309HVnpH081Q+Hg=
+        &lt;/ds:DigestValue&gt;
+      &lt;/ds:Reference&gt;
+      &lt;ds:Reference URI="#_5004"&gt;
+        &lt;ds:Transforms&gt;
+          &lt;ds:Transform Algorithm="http://..."&gt;
+            &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+          &lt;/ds:Transform&gt;
+        &lt;/ds:Transforms&gt;
+        &lt;ds:DigestMethod Algorithm="...#sha1" /&gt;
+        &lt;ds:DigestValue&gt;
+          qAOp4yOgxgo6yh+MYDMtxAGv1DY=
+        &lt;/ds:DigestValue&gt;
+      &lt;/ds:Reference&gt;
+      &lt;ds:Reference URI="#_5005"&gt;
+        &lt;ds:Transforms&gt;
+          &lt;ds:Transform Algorithm="http://..."&gt;
+            &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+          &lt;/ds:Transform&gt;
+        &lt;/ds:Transforms&gt;
+        &lt;ds:DigestMethod Algorithm="...#sha1" /&gt;
+        &lt;ds:DigestValue&gt;
+          Nd/8wVmBdLowQKMblBRYK+6xcjA=
+        &lt;/ds:DigestValue&gt;
+      &lt;/ds:Reference&gt;
+      &lt;ds:Reference URI="#_5006"&gt;
+        &lt;ds:Transforms&gt;
+          &lt;ds:Transform Algorithm="http://..."&gt;
+            &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+          &lt;/ds:Transform&gt;
+        &lt;/ds:Transforms&gt;
+        &lt;ds:DigestMethod Algorithm="...#sha1" /&gt;
+        &lt;ds:DigestValue&gt;
+          2Pl8qsA04TDbGSzjFf4UbnhgUno=
+        &lt;/ds:DigestValue&gt;
+      &lt;/ds:Reference&gt;
+      &lt;ds:Reference URI="#_3"&gt;
+        &lt;ds:Transforms&gt;
+          &lt;ds:Transform Algorithm="http://..."&gt;
+            &lt;exc14n:InclusiveNamespaces PrefixList="wsu wsse S" /&gt;
+          &lt;/ds:Transform&gt;
+        &lt;/ds:Transforms&gt;
+        &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+        &lt;ds:DigestValue&gt;
+          UK949xG3qaQb5tqhUFSHfAZwbWo=
+        &lt;/ds:DigestValue&gt;
+      &lt;/ds:Reference&gt;
+    &lt;/ds:SignedInfo&gt;
+    &lt;ds:SignatureValue&gt;
+      cmEXxN18qmrn81H2RmxEyRwHfqA=
+    &lt;/ds:SignatureValue&gt;
+    &lt;ds:KeyInfo&gt;
+      &lt;wsse:SecurityTokenReference&gt;
+        &lt;wsse:KeyIdentifier ValueType="...#EncryptedKeySHA1" 
+                            EncodingType="...#Base64Binary"&gt;
+          <strong>d7BpVKn2Tm6oly/Yx8SUmOfl6FA=</strong>
+        &lt;/wsse:KeyIdentifier&gt;
+      &lt;/wsse:SecurityTokenReference&gt;
+    &lt;/ds:KeyInfo&gt;
+  &lt;/<strong>ds:Signature</strong>&gt;
+&lt;/wsse:Security&gt;
+&lt;/S:Header&gt;
+&lt;S:Body wsu:Id="_5006"&gt;
+&lt;<strong>xenc:EncryptedData</strong> xmlns:ns19="http://..." Id="<strong>_5007</strong>" 
+                    Type="http://...#Content"&gt;
+  &lt;xenc:EncryptionMethod Algorithm="http://...#aes128-cbc" /&gt;
+  &lt;ds:KeyInfo xmlns:xsi="http://..." xsi:type="KeyInfoType"&gt;
+    &lt;wsse:SecurityTokenReference&gt;
+      &lt;wsse:KeyIdentifier ValueType="http://...#EncryptedKeySHA1" 
+                          EncodingType="...#Base64Binary"&gt;
+        <strong>d7BpVKn2Tm6oly/Yx8SUmOfl6FA=</strong>
+      &lt;/wsse:KeyIdentifier&gt;
+    &lt;/wsse:SecurityTokenReference&gt;
+  &lt;/ds:KeyInfo&gt;
+  &lt;xenc:CipherData&gt;
+    &lt;xenc:CipherValue&gt;
+      RffDq+mrIkGgrZzjctW6sVvsGTVPEwTMzkvlt5Dx/qBrcpRbT+V
+      op+BJfvm3skdhl6zcGCLiD+G6Z2K/CCvaxBHT7d+pZ8yq10Nye7
+      dqxurQVdji4k7jrVCyboRDYzUSl3EejzRpYN0FoyrzsLGYf2H+X
+      OfpmmzDimvnXUBxQmzYIlDTlXW4Vu3PklB4MrCs4xzBtz4tSoCQ
+      2UKQ+3oBz1cwqLsmqsQLYg+V/1ZJGQQ=
+    &lt;/xenc:CipherValue&gt;
+  &lt;/xenc:CipherData&gt;
+&lt;/<strong>xenc:EncryptedData</strong>&gt;
+&lt;/S:Body&gt;
+&lt;/S:Envelope&gt;</pre>
+<p>En el mensaje de respuesta, dentro del <em>body</em>, podemos ver como en este caso
+se especifica una referencia a la clave sim&eacute;trica generada anteriormente por el certificado
+del servidor. Esta misma clave se utiliza tambi&eacute;n para la firma del mensaje.</p>
+</div>
+
+
+
+<a name="N1034D"></a><a name="Clave+sim%C3%A9trica+y+autentificaci%C3%B3n+mediante+certificado+digital"></a>
+<h2 class="underlined_10">Clave sim&eacute;trica y autentificaci&oacute;n mediante certificado digital</h2>
+<div class="section">
+<p>Vamos a ver ahora c&oacute;mo utilizar seguridad a nivel de mensaje con clave sim&eacute;trica, 
+utilizando el certificado del servidor, y autentificaci&oacute;n mediante el certificado del
+cliente.</p>
+<p>Crearemos un nuevo servicio de nombre <span class="codefrag">ServicioMensajeCert</span> con el tipo
+de seguridad <em>Endorsing Certificate</em>. Deberemos configurar <em>Keystore</em> y 
+<em>Truststore</em> tanto en el cliente como en el servidor. El certificado configurado
+en el servidor se utilizar&aacute; para la protecci&oacute;n de los mensajes, y el del cliente
+para autentificaci&oacute;n. Cada extremo debe confiar en el certificados del otro.</p>
+<p>En este caso el WSDL ser&aacute; el siguiente:</p>
+<pre class="code">&lt;definitions xmlns="http://..."&gt;
+  ...
+  &lt;wsp:Policy wsu:Id="ServicioMensajeCertPortBindingPolicy"&gt;
+    &lt;wsp:ExactlyOne&gt;
+      &lt;wsp:All&gt;
+        &lt;wsam:Addressing wsp:Optional="false"/&gt;
+        &lt;<strong>sp:SymmetricBinding</strong>&gt;
+          &lt;wsp:Policy&gt;
+            &lt;<strong>sp:ProtectionToken</strong>&gt;
+              &lt;wsp:Policy&gt;
+                &lt;sp:<strong>X509Token</strong> sp:IncludeToken=
+                              ".../IncludeToken/<strong>Never</strong>"&gt;
+                  &lt;wsp:Policy&gt;
+                    &lt;sp:WssX509V3Token10/&gt;
+                    &lt;sp:RequireIssuerSerialReference/&gt;
+                  &lt;/wsp:Policy&gt;
+                &lt;/<strong>sp:X509Token</strong>&gt;
+              &lt;/wsp:Policy&gt;
+            &lt;/<strong>sp:ProtectionToken</strong>&gt;
+            &lt;sp:Layout&gt;
+              &lt;wsp:Policy&gt;
+                &lt;sp:Lax/&gt;
+              &lt;/wsp:Policy&gt;
+            &lt;/sp:Layout&gt;
+            &lt;sp:IncludeTimestamp/&gt;
+            &lt;sp:OnlySignEntireHeadersAndBody/&gt;
+            &lt;sp:AlgorithmSuite&gt;
+              &lt;wsp:Policy&gt;
+                &lt;sp:Basic128/&gt;
+              &lt;/wsp:Policy&gt;
+            &lt;/sp:AlgorithmSuite&gt;
+          &lt;/wsp:Policy&gt;
+        &lt;/<strong>sp:SymmetricBinding</strong>&gt;
+        &lt;sp:Wss11&gt;
+          &lt;wsp:Policy&gt;
+            &lt;sp:MustSupportRefIssuerSerial/&gt;
+            &lt;sp:MustSupportRefThumbprint/&gt;
+            &lt;sp:MustSupportRefEncryptedKey/&gt;
+          &lt;/wsp:Policy&gt;
+        &lt;/sp:Wss11&gt;
+        &lt;<strong>sp:EndorsingSupportingTokens</strong>&gt;
+          &lt;wsp:Policy&gt;
+            &lt;sp:<strong>X509Token</strong> sp:IncludeToken=
+                          ".../IncludeToken/<strong>AlwaysToRecipient</strong>"&gt;
+              &lt;wsp:Policy&gt;
+                &lt;sp:WssX509V3Token10/&gt;
+              &lt;/wsp:Policy&gt;
+            &lt;/<strong>sp:X509Token</strong>&gt;
+          &lt;/wsp:Policy&gt;
+        &lt;/<strong>sp:EndorsingSupportingTokens</strong>&gt;
+        &lt;sc:KeyStore wspp:visibility="private" 
+                     location=".../keystore.jks" 
+                     type="JKS" storepass="changeit" 
+                     alias="xws-security-server"/&gt;
+      &lt;/wsp:All&gt;
+    &lt;/wsp:ExactlyOne&gt;
+  &lt;/wsp:Policy&gt;
+  &lt;wsp:Policy wsu:Id=
+        "ServicioMensajeCertPortBinding_consulta_Input_Policy"&gt;
+    ... (partes del mensaje de entrada) ...
+  &lt;/wsp:Policy&gt;
+  &lt;wsp:Policy wsu:Id=
+        "ServicioMensajeCertPortBinding_consulta_Output_Policy"&gt;
+    ... (partes del mensaje de salida) ...
+  &lt;/wsp:Policy&gt;
+&lt;/definitions&gt;</pre>
+<p>En este caso el WSDL es similar al anterior, con la diferencia de que el <em>token</em>
+de soporte es de tipo X509, en lugar de <em>username</em>. Adem&aacute;s, en lugar de incluirse
+firmado y cifrado (<span class="codefrag">SignedEncrypted</span>), se incluye como <em>token</em> de 
+respaldo (<span class="codefrag">Endorsing</span>). En este caso lo que se har&aacute; es utilizar este <em>token</em>
+de soporte para firmar la firma que se hab&iacute;a obtenido mediante el <em>token</em> de
+protecci&oacute;n.</p>
+<p>Para ver esto de forma m&aacute;s clara, mostramos los mensajes SOAP utilizados a continuaci&oacute;n. 
+Comenzamos viendo la petici&oacute;n SOAP:</p>
+<pre class="code">&lt;S:Envelope xmlns:S="http://..."&gt;
+&lt;S:Header&gt;
+  &lt;To xmlns="http://..." wsu:Id="_5006"&gt;
+    http://.../ServicioMensaje/ServicioMensajeCertService
+  &lt;/To&gt;
+  &lt;Action xmlns="http://..." wsu:Id="_5005"&gt;
+    http://...jtech.ua.es/ServicioMensajeCert/consultaRequest
+  &lt;/Action&gt;
+  &lt;ReplyTo xmlns="http://..." wsu:Id="_5004"&gt;
+    &lt;Address&gt;http://...&lt;/Address&gt;
+  &lt;/ReplyTo&gt;
+  &lt;MessageID xmlns="http://..." wsu:Id="_5003"&gt;
+    uuid:21a5babb-9795-43d5-8cd6-32559a586fdb
+  &lt;/MessageID&gt;
+  &lt;wsse:Security S:mustUnderstand="1"&gt;
+    &lt;wsu:Timestamp xmlns:ns19="http://..." wsu:Id="_3"&gt;
+      &lt;wsu:Created&gt;2010-05-23T19:24:21Z&lt;/wsu:Created&gt;
+      &lt;wsu:Expires&gt;2010-05-23T19:29:21Z&lt;/wsu:Expires&gt;
+    &lt;/wsu:Timestamp&gt;
+    &lt;<strong>wsse:BinarySecurityToken</strong> xmlns:ns19="http://..." 
+          ValueType="http://..#X509v3" 
+          EncodingType="http://...#Base64Binary" 
+          wsu:Id="<strong>uuid_fa1f8f1a-6f4e-44d3-a037-7ec26f79adce</strong>"&gt;
+      MIIDDzCCAnigAwIBAgIBAzANBgkqhkiG9w0BAQQFADBOM
+      QswCQYDVQQGEwJBVTETMBEGA1UECBMKU29tZS1TdGF0ZT
+      EMMAoGA1UEChMDU1VOMQwwCgYDVQQLEwNKV1MxDjAMBgN
+      VBAMTBVNVTkNBMB4XDTA3MDMxMjEwMjQ0MFoXDTE3MDMw
+      OTEwMjQ0MFowbzELMAkGA1UEBhMCQVUxEzARBgNVBAgTC
+      lNvbWUtU3RhdGUxITAfBgNVBAoTGEludGVybmV0IFdpZG
+      dpdHMgUHR5IEx0ZDEMMAoGA1UECxMDU1VOMRowGAYDVQQ
+      DExF4d3NzZWN1cml0eWNsaWVudDCBnzANBgkqhkiG9w0B
+      AQEFAAOBjQAwgYkCgYEAvYxVZKIzVdGMSBkW4bYnV80MV
+      /RgQKV1bf/DoMTX8laMO45P6rlEarxQiOYrgzuYp+snzz
+      2XM0S6o3JGQtXQuzDwcwPkH55bHFwHgtOMzxG4SQ653a5
+      Dzh04nsmJvxvbncNH/XNaWfHaC0JHBEfNCMwRebYocxYM
+      92pq/G5OGyECAwEAAaOB2zCB2DAJBgNVHRMEAjAAMCwGC
+      WCGSAGG+EIBDQQfFh1PcGVuU1NMIEdlbmVyYXRlZCBDZX
+      J0aWZpY2F0ZTAdBgNVHQ4EFgQU/mItfvuFdS7A0GCysE7
+      1TFRxP2cwfgYDVR0jBHcwdYAUZ7plxs6VyOOOTSFyojDV
+      0/YYjJWhUqRQME4xCzAJBgNVBAYTAkFVMRMwEQYDVQQIE
+      wpTb21lLVN0YXRlMQwwCgYDVQQKEwNTVU4xDDAKBgNVBA
+      sTA0pXUzEOMAwGA1UEAxMFU1VOQ0GCCQDbHkJaq6KijjA
+      NBgkqhkiG9w0BAQQFAAOBgQBEnRdcQeMyCYqOHw2jbPOP
+      Ulvu07bZe7sI3ly/Qz+4mkrFctqMSupghQtLv9dZcqDOU
+      FLCGMse7+l5MG00VawzsoVe242iXzJB111ePzhhppIPOH
+      XXtflj/JD2U4Qz75C/dfdd5AAZbqGSFtZh7pyE8Ot1vOq
+      7R48/bHuvTsEVUQ==
+    &lt;/<strong>wsse:BinarySecurityToken</strong>&gt;
+    &lt;<strong>xenc:EncryptedKey</strong> xmlns:ns19="http://..." Id="<strong>_5002</strong>"&gt;
+      &lt;xenc:EncryptionMethod Algorithm="...#rsa-oaep-mgf1p"/&gt;
+        &lt;ds:KeyInfo xmlns:xsi="http://..." 
+                    xsi:type="KeyInfoType"&gt;
+          &lt;wsse:SecurityTokenReference&gt;
+            &lt;ds:X509Data&gt;
+              &lt;ds:X509IssuerSerial&gt;
+                &lt;ds:X509IssuerName&gt;
+                  <strong>CN=SUNCA, OU=JWS, O=SUN, ST=Some-State, C=AU</strong>
+                &lt;/ds:X509IssuerName&gt;
+                &lt;ds:X509SerialNumber&gt;
+                  <strong>2</strong>
+                &lt;/ds:X509SerialNumber&gt;
+              &lt;/ds:X509IssuerSerial&gt;
+            &lt;/ds:X509Data&gt;
+          &lt;/wsse:SecurityTokenReference&gt;
+        &lt;/ds:KeyInfo&gt;
+      &lt;xenc:CipherData&gt;
+        &lt;xenc:CipherValue&gt;
+          ZIbU04pW+0mzdrLeGC78ad+DzKGjofbIhukr924Jt
+          NYzPg7gxLupVKPEYB0DGiedp+J5hDB6Q0yRbWKket
+          kjZ3XoMJWuDvnk/JMUtlWLwibqA6tq4gfub2jmQKf
+          sTY48jTLJLziNXc5UIjBj5QPlC4VWz2ZSc1Uf5bSl
+          axFPjCQ=
+        &lt;/xenc:CipherValue&gt;
+      &lt;/xenc:CipherData&gt;
+    &lt;/<strong>xenc:EncryptedKey</strong>&gt;
+    &lt;xenc:ReferenceList xmlns:ns19="http://..."&gt;
+      &lt;xenc:DataReference URI="<strong>#_5008</strong>" /&gt;
+    &lt;/xenc:ReferenceList&gt;
+    &lt;<strong>ds:Signature</strong> xmlns:ns19="http://..." Id="<strong>_1</strong>"&gt;
+      &lt;ds:SignedInfo&gt;
+        &lt;ds:CanonicalizationMethod Algorithm="http://..."&gt;
+          &lt;exc14n:InclusiveNamespaces PrefixList="wsse S" /&gt;
+        &lt;/ds:CanonicalizationMethod&gt;
+        &lt;ds:SignatureMethod Algorithm="...#hmac-sha1" /&gt;
+        &lt;ds:Reference URI="#_5003"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            T0rfUv5gcSx9eZMTXxDa2xv+rMM=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="#_5004"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            5Ab1ebo4/FraGgck/A8iDx1J9+I=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="#_5005"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            jPtewJP1NvFyk7uaIJOi0hdDouQ=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="#_5006"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            nWiBqPMwYLCiyR4jQEnbXa44/MM=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="#_5007"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            dcuZ/1UF8eGNr9xozOlvJOhAHjg=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="#_3"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="wsu wsse S"/&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            Grqal7NeOXnoSwl5karT8OxVVPU=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+      &lt;/ds:SignedInfo&gt;
+    &lt;ds:SignatureValue&gt;
+      oZWc+in3Z+fJT6Tfk1xEgA2tHcw=
+    &lt;/ds:SignatureValue&gt;
+    &lt;ds:KeyInfo&gt;
+      &lt;wsse:SecurityTokenReference 
+             wsu:Id="uuid_6d8b66f5-41bc-4864-b1b3-82748ba54942"&gt;
+        &lt;wsse:Reference URI="<strong>#_5002</strong>" 
+                        ValueType="http://...#EncryptedKey" /&gt;
+      &lt;/wsse:SecurityTokenReference&gt;
+    &lt;/ds:KeyInfo&gt;
+  &lt;/<strong>ds:Signature</strong>&gt;
+  &lt;<strong>ds:Signature</strong> xmlns:ns19="http://..." Id="<strong>_4</strong>"&gt;
+    &lt;ds:SignedInfo&gt;
+      &lt;ds:CanonicalizationMethod Algorithm="http://..."&gt;
+        &lt;exc14n:InclusiveNamespaces PrefixList="wsse S" /&gt;
+      &lt;/ds:CanonicalizationMethod&gt;
+      &lt;ds:SignatureMethod Algorithm="http://...#rsa-sha1" /&gt;
+      &lt;ds:Reference URI="<strong>#_1</strong>"&gt;
+        &lt;ds:Transforms&gt;
+          &lt;ds:Transform Algorithm="http://..."&gt;
+            &lt;exc14n:InclusiveNamespaces PrefixList="wsu wsse S" /&gt;
+          &lt;/ds:Transform&gt;
+        &lt;/ds:Transforms&gt;
+        &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+        &lt;ds:DigestValue&gt;
+          MKpa+9VKUBcNYQg0DJnaGDTb2aA=
+        &lt;/ds:DigestValue&gt;
+      &lt;/ds:Reference&gt;
+    &lt;/ds:SignedInfo&gt;
+    &lt;ds:SignatureValue&gt;
+      udNJppNXruii7yt1wWmWG6+fjpxr9/h99qeX1eQdRFniP
+      +c3bw0QJFNDpcyY9l9oGzdLNQWwu7T4HVs3ij7hMfoN0a
+      M9nm0YtIzxwzIGjebUrII1Bc/8ZWipm9kt+AfesWeDjgn
+      By+7yj6My9FHKJLJeAeIl06xGzMNJ4ZMBaD4=
+    &lt;/ds:SignatureValue&gt;
+    &lt;ds:KeyInfo&gt;
+      &lt;wsse:SecurityTokenReference&gt;
+        &lt;wsse:Reference 
+                  URI="<strong>#uuid_fa1f8f1a-6f4e-44d3-a037-7ec26f79adce</strong>" 
+                  ValueType="http://#X509v3" /&gt;
+      &lt;/wsse:SecurityTokenReference&gt;
+    &lt;/ds:KeyInfo&gt;
+  &lt;/<strong>ds:Signature</strong>&gt;
+&lt;/wsse:Security&gt;
+&lt;/S:Header&gt;
+&lt;S:Body wsu:Id="_5007"&gt;
+  &lt;<strong>xenc:EncryptedData</strong> xmlns:ns19="http://..." Id="<strong>_5008</strong>" 
+                      Type="...#Content"&gt;
+    &lt;xenc:EncryptionMethod Algorithm="...#aes128-cbc" /&gt;
+    &lt;ds:KeyInfo xmlns:xsi="http://..." xsi:type="KeyInfoType"&gt;
+      &lt;wsse:SecurityTokenReference&gt;
+        &lt;wsse:Reference URI="<strong>#_5002</strong>" ValueType="...#EncryptedKey"/&gt;
+      &lt;/wsse:SecurityTokenReference&gt;
+    &lt;/ds:KeyInfo&gt;
+    &lt;xenc:CipherData&gt;
+      &lt;xenc:CipherValue&gt;
+        /XXPmN5H81ZbFg/5RZqRI3euKkKsqGJ+Chqob+wkYEV
+        9WOz94vDU+2KEvCSymTM8NSMB7BoXiBUtP6E7cveScp
+        NS475iL7OAhx6nKjiERXDW/Dk+I0s7JtYhyPMM7+T9
+      &lt;/xenc:CipherValue&gt;
+    &lt;/xenc:CipherData&gt;
+  &lt;/<strong>xenc:EncryptedData</strong>&gt;
+&lt;/S:Body&gt;
+&lt;/S:Envelope&gt;</pre>
+<p>En este caso las partes del mensaje tienen las siguientes referencias:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+<th colspan="1" rowspan="1">Identificador</th><th colspan="1" rowspan="1">Parte</th>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_1</span></td><td colspan="1" rowspan="1">Firma</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_3</span></td><td colspan="1" rowspan="1">Timestamp</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_4</span></td><td colspan="1" rowspan="1">Firma de respaldo</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5002</span></td><td colspan="1" rowspan="1">Clave de cifrado</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5003</span></td><td colspan="1" rowspan="1">MessageID</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5004</span></td><td colspan="1" rowspan="1">ReplyTo</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5005</span></td><td colspan="1" rowspan="1">Action</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5006</span></td><td colspan="1" rowspan="1">To</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5007</span></td><td colspan="1" rowspan="1">Body</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">_5008</span></td><td colspan="1" rowspan="1">Contenido de body</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">uuid_fa1f8f1a-6f4e-44d3-a037-7ec26f79adce</span></td><td colspan="1" rowspan="1">Certificado cliente adjunto</td>
+</tr>
+
+</table>
+<p>Podemos ver que el certificado del servidor (<span class="codefrag">xws-security-server</span>, con serial 2) se utiliza tanto
+para firmar como para cifrar el mensaje, al igual que ocurr&iacute;a en el caso anterior. Sin embargo, vemos
+que hay una segunda firma, con identificador <span class="codefrag">_4</span>, que se encarga de firmar la primera
+(con identificador <span class="codefrag">_1</span>) utilizando para ello el certificado del cliente adjunto.</p>
+<p>A continuaci&oacute;n se muestra el mensaje de respuesta SOAP:</p>
+<pre class="code">&lt;S:Envelope xmlns:S="http://..."&gt;
+&lt;S:Header&gt;
+  &lt;To xmlns="http://..." wsu:Id="_5005"&gt;
+    http://www.w3.org/2005/08/addressing/anonymous
+  &lt;/To&gt;
+  &lt;Action xmlns="http://..." wsu:Id="_5003"&gt;
+    http://...jtech.ua.es/ServicioMensajeCert/consultaResponse
+  &lt;/Action&gt;
+  &lt;MessageID xmlns="http://..." wsu:Id="_5002"&gt;
+    uuid:135963b0-5c3f-450c-a901-103c4d813858
+  &lt;/MessageID&gt;
+  &lt;RelatesTo xmlns="http://..." wsu:Id="_5004"&gt;
+    uuid:21a5babb-9795-43d5-8cd6-32559a586fdb
+  &lt;/RelatesTo&gt;
+  &lt;wsse:Security S:mustUnderstand="1"&gt;
+    &lt;wsu:Timestamp xmlns:ns19="http://..." wsu:Id="_3"&gt;
+      &lt;wsu:Created&gt;2010-05-23T19:24:22Z&lt;/wsu:Created&gt;
+      &lt;wsu:Expires&gt;2010-05-23T19:29:22Z&lt;/wsu:Expires&gt;
+    &lt;/wsu:Timestamp&gt;
+    &lt;xenc:ReferenceList xmlns:ns19="http://..."&gt;
+      &lt;xenc:DataReference URI="<strong>#_5007</strong>" /&gt;
+    &lt;/xenc:ReferenceList&gt;
+    &lt;<strong>ds:Signature</strong> xmlns:ns19="http://..." Id="_1"&gt;
+      &lt;ds:SignedInfo&gt;
+        &lt;ds:CanonicalizationMethod Algorithm="http://..."&gt;
+          &lt;exc14n:InclusiveNamespaces PrefixList="wsse S" /&gt;
+        &lt;/ds:CanonicalizationMethod&gt;
+        &lt;ds:SignatureMethod Algorithm="...#hmac-sha1" /&gt;
+        &lt;ds:Reference URI="#_5002"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            /ZVkkcTGg7NugoBLeAPgBdhf1ZU=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="#_5003"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            U1KPNX4K1YP3P8FH5dNqvvCe53M=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="#_5004"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            ZsT4RMdzHP8yj+dDHwNZC8Ra9mQ=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="#_5005"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            Nd/8wVmBdLowQKMblBRYK+6xcjA=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="#_5006"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            qlHYcDqttN+uqylqJJmb9f0q16k=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+        &lt;ds:Reference URI="#_3"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm="http://w..."&gt;
+              &lt;exc14n:InclusiveNamespaces PrefixList="wsu wsse S"/&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm="http://...#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+            rNDSWvzABVW5gTOJm8agaIsuP9c=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+      &lt;/ds:SignedInfo&gt;
+    &lt;ds:SignatureValue&gt;
+      M6u55+sCKK22D53VxAZr+HUD9z4=
+    &lt;/ds:SignatureValue&gt;
+    &lt;ds:KeyInfo&gt;
+      &lt;wsse:SecurityTokenReference&gt;
+        &lt;wsse:KeyIdentifier ValueType="...#EncryptedKeySHA1" 
+                            EncodingType="...#Base64Binary"&gt;
+          <strong>rp71Yj5lyUkHB0jvGPL4YA/2amc=</strong>
+        &lt;/wsse:KeyIdentifier&gt;
+      &lt;/wsse:SecurityTokenReference&gt;
+    &lt;/ds:KeyInfo&gt;
+  &lt;/<strong>ds:Signature</strong>&gt;
+&lt;/wsse:Security&gt;
+&lt;/S:Header&gt;
+&lt;S:Body wsu:Id="_5006"&gt;
+  &lt;<strong>xenc:EncryptedData</strong> xmlns:ns19="http://..." Id="<strong>_5007</strong>" 
+                      Type="...#Content"&gt;
+    &lt;xenc:EncryptionMethod Algorithm="...#aes128-cbc" /&gt;
+    &lt;ds:KeyInfo xmlns:xsi="http://.." xsi:type="KeyInfoType"&gt;
+      &lt;wsse:SecurityTokenReference&gt;
+        &lt;wsse:KeyIdentifier ValueType="...#EncryptedKeySHA1" 
+                            EncodingType="...#Base64Binary"&gt;
+          <strong>rp71Yj5lyUkHB0jvGPL4YA/2amc=</strong>
+        &lt;/wsse:KeyIdentifier&gt;
+      &lt;/wsse:SecurityTokenReference&gt;
+    &lt;/ds:KeyInfo&gt;
+    &lt;xenc:CipherData&gt;
+      &lt;xenc:CipherValue&gt;
+        j+I8vMacRSrdKZ5Frzj8yjw2vHjh7UQ97GcQ9LfUclfv/U2
+        MoDXTNhDgu4+7JZh9NC10cWapoW86b/Zq9yZLYsXJwmmaAh
+        SU1sHkp+YZKSjbUNNRBbRrW15+ST72u/UdbteGgz+gY0ODC
+        rvXUF6VumGw8XlTqy1JM6aUjPkKMyhgORwwSBE6Y+sOe7Dn
+        9++o22SKlvqce+RRZEN7GvnN5DOMnjKWE+V/lQFofIqYVrV
+        aBgGcWgscdT5m19mqURnFNRYZLwjPLY7cjTW+HzqYb9B42l
+        RVtKUAlIZcgsz68By8OInISsrUwfUBEGITODVe
+      &lt;/xenc:CipherValue&gt;
+    &lt;/xenc:CipherData&gt;
+  &lt;/<strong>xenc:EncryptedData</strong>&gt;
+&lt;/S:Body&gt;
+&lt;/S:Envelope&gt;</pre>
+<p>El mensaje de respuesta en este caso es igual que en el anterior, ya que utilizamos cifrado
+mediante clave sim&eacute;trica utilizando el certificado del servidor, y en este mensaje no se adjunta
+ning&uacute;n token de autentificaci&oacute;n.</p>
+</div>
+
+
+<a name="N104A9"></a><a name="Entorno+SSO"></a>
+<h2 class="underlined_10">Entorno SSO</h2>
+<div class="section">
+<p>Para finalizar, vamos a ver un ejemplo de c&oacute;mo podr&iacute;amos crear un entorno que implemente 
+<em>Single Sign-On (SSO)</em> mediante el uso de servicios STS y <em>tokens</em> SAML.</p>
+<p>En primer lugar deberemos crear un servicio STS que nos proporcione <em>tokens</em> de
+seguridad. Crearemos este servicio mediante la opci&oacute;n <em>File &gt; New &gt; Web Services &gt;
+Secure Token Service (STS)</em>. Vamos a llamar a este servicio <span class="codefrag">ProveedorSTS</span>.</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Al crear el servicio STS veremos que tiene errores de compilaci&oacute;n. Esto se debe
+a un <em>bug</em> de NetBeans 6.8. Para solucionarlo deberemos a&ntilde;adir la librer&iacute;a Metro 2.0 al 
+proyecto (como hicimos al crear un servicio con <em>tokens</em> SAML SV sobre SSL en la sesi&oacute;n 
+anterior), sin que dicha librer&iacute;a se empaquete con nuestra aplicaci&oacute;n al desplegarla. Esto debe
+producir que los errores de compilaci&oacute;n desaparezcan.</div>
+</div>
+<p>Ahora tendremos que indicar el mecanismo de seguridad utilizado para acceder a este
+proveedor de identidades. Podemos utilizar <em>Username Authentication with Symmetric Key</em>
+(es la forma en la que el cliente acceder&aacute; al proveedor para obtener su <em>token</em> de acceso
+a otros servicios). Este mecanismo seguramente estar&aacute; seleccionado ya por defecto. A continuaci&oacute;n 
+pulsaremos sobre el bot&oacute;n <em>Configure...</em> junto al mecanismo de seguridad seleccionado, 
+y nos fijaremos en el <em>Algorithm Suite</em> utilizado, ya que deber&aacute; coincidir con el que se utilice
+posteriormente en el servicio (por defecto tendr&aacute; seleccionado <em>Basic 128 bit</em>).</p>
+<p>En la misma pantalla de edici&oacute;n de atributos del servicio, nos aseguraremos
+de que est&aacute; marcada la casilla <em>Act as Secure Token Service (STS)</em>. Pulsando el bot&oacute;n
+<em>Configure...</em> junto a dicha casilla podremos configurar las propiedades del servicio STS,
+como el nombre que queremos dar al emisor de <em>tokens</em>. En <em>Keystore...</em> seleccionaremos
+el par de claves con alias <span class="codefrag">wssip</span>.</p>
+<p>Lamentablemente, en la versi&oacute;n 6.8 de NetBeans la creaci&oacute;n de este tipo de servicios est&aacute; plagada
+de <em>bugs</em>, como el que hemos corregido anteriormente a&ntilde;adiendo las librer&iacute;as de Metro 2.0. A 
+continuaci&oacute;n mostramos otras correcciones que deberemos hacer para tener nuestro servicio funcionando:</p>
+<ul>
+
+<li>Si estamos en una aplicaci&oacute;n Java EE 6 Web, veremos que en el c&oacute;digo del servicio se ha a&ntilde;adido una 
+anotaci&oacute;n <span class="codefrag">@Stateless</span> que es innecesaria. Deberemos eliminarla.</li>
+
+<li>En el fichero WSDL del servicio (<span class="codefrag">ProvedorSTSService.wsdl</span> en nuestro caso), en la secci&oacute;n
+<span class="codefrag">tc:STSConfiguration</span> de la pol&iacute;tica de seguridad, hay un campo <span class="codefrag">tc:Contract</span> cuyo
+valor contiene una errata, ya que aparece como <span class="codefrag">WSTRustContractImpl</span> cuando deber&iacute;a ser 
+<span class="codefrag">WSTrustContractImpl</span> (la <span class="codefrag">r</span> debe ser min&uacute;scula). Realizaremos esta modificaci&oacute;n
+y grabaremos el fichero.</li>
+
+<li>Por &uacute;ltimo, NetBeans no despliega correctamente estos servicios en GlassFish. Deberemos desplegarlo
+manualmente. Para ello nos aseguramos de que se recompilen y empaqueten los &uacute;ltimos cambios realizados, 
+pulsando sobre <em>Clean and Build</em> y copiaremos el fichero WAR de la carpeta <span class="codefrag">dist</span> del
+proyecto en el directorio <span class="codefrag">autodeploy</span> de nuestro dominio de GlassFish.</li>
+
+</ul>
+<p>Con esto el servicio STS debe haber quedado correctamente desplegado, y deberemos poder ser capaces de
+consultar su documento WSDL en la siguiente direcci&oacute;n:</p>
+<pre class="code">http://localhost:8080/ProveedorSTS/ProveedorSTSService?wsdl</pre>
+<p>A continuaci&oacute;n vamos a crear el servicio al que accederemos medianto los <em>tokens</em> proporcionados
+por el STS. Para ello creamos un nuevos servicio igual que hemos hecho anteriormente, al que llamaremos
+<span class="codefrag">ServicioSTS</span>, y como mecanismo de seguridad seleccionamos <em>STS Issued Token</em>. Entramos en
+<em>Configure...</em> y seleccionamos el mismo <em>Algorithm Suite</em> que utilizamos en el proveedor STS
+(<em>Basic 128 bit</em>), y longitud de clave (<em>Key Size</em>) de 128 bits. Dejaremos marcada la
+casilla <em>Use development defaults</em>. </p>
+<p>Ahora, para finalizar, deberemos crear el cliente. Vamos a crearlo en una aplicaci&oacute;n web a la que llamaremos
+<em>ClienteSTS</em>. En primer lugar crearemos una referencia al servicio <span class="codefrag">ServicioSTS</span>, que es
+el servicio al que queremos acceder, al igual que lo hemos hecho en casos anteriores. Entraremos en la ventana
+de edici&oacute;n de atributos del cliente que acabamos de crear, e indicaremos en <em>Keystore...</em> que el alias
+del certificado del cliente ser&aacute; <span class="codefrag">xws-security-client</span>, y en <em>Truststore...</em> indicaremos
+que el del servicio es <span class="codefrag">xws-security-server</span>. Veremos adem&aacute;s abajo una secci&oacute;n <em>Secure
+Token Service</em>, en la que deberemos configurar la forma en la que se obtendr&aacute;n los <em>tokens</em> de
+seguridad para acceder a dicho servicio. El &uacute;nico campo que deberemos completar aqu&iacute; es <em>Endpoint</em>,
+en el que introduciremos la URL del servicio STS:</p>
+<pre class="code">http://localhost:8080/ProveedorSTS/ProveedorSTSService</pre>
+<p>Para que el cliente sea capaz de obtener los <em>tokens</em> de seguridad a partir de dicho servicio, deberemos
+a&ntilde;adir una referencia a &eacute;l. Crearemos un nuevo cliente para <span class="codefrag">ProveedorSTS</span> dentro del mismo
+proyecto. Una vez hecho esto, deberemos entrar en la ventana de edici&oacute;n de atributos para dicho cliente, y en
+<em>Truststore...</em> especificamos el alias <span class="codefrag">wssip</span> (recordemos que es el certificado que
+seleccionamos al crear el proveedor STS). Introducimos tambi&eacute;n el nombre y password con el que acceder al servicio
+(por defecto un usuario del <em>realm</em> <span class="codefrag">file</span>).</p>
+<p>Con esto podemos probar ya nuestro servicio. Si observamos los mensajes que se intercambian, veremos que 
+primero accedemos al servicio STS (<span class="codefrag">ProveedorSTS</span>) para obtener un <em>token</em> de seguridad, y tras 
+esto nos conectaremos al servicio (<span class="codefrag">ServicioSTS</span>) para invocar una de sus operaciones.</p>
+</div>
+
+
+
+<p class="pageBreakAfter"></p>
+
+
+
+<a name="N1058B"></a><a name="Ejercicios"></a>
+<h2 class="underlined_10">Ejercicios</h2>
+<div class="section">
+<a name="N10591"></a><a name="Gesti%C3%B3n+de+multas+con+seguridad+a+nivel+de+mensaje"></a>
+<h3 class="underlined_5">Gesti&oacute;n de multas con seguridad a nivel de mensaje</h3>
+<p>Como ejercicio proponemos la implementaci&oacute;n del servicio para la consulta de multas especificado en
+la sesi&oacute;n anterior, esta vez utilizando seguridad a nivel de mensaje. &iquest;Qu&eacute; tipo de mecanismo de
+seguridad deberemos utilizar en este caso?</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010 Depto. CCIA</div>
+</div>
+</body>
+</html>

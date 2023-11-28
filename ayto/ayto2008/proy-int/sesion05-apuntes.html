@@ -1,0 +1,527 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Servicios web</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Proyecto de Integracion" src="images/baner_j2ee_der.gif" title="Proyecto de Integracion"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="external" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="external" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_1.1', 'skin/')" id="menu_1.1Title" class="menutitle">Proyecto SIGEM</div>
+<div id="menu_1.1" class="menuitemgroup">
+<div class="menuitem">
+<a href="index.html" title="Proyecto de Integraci&oacute;n">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.2', 'skin/')" id="menu_1.1.2Title" class="menutitle">Teor&iacute;a</div>
+<div id="menu_1.1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion00-apuntes.html" title="Sesi&oacute;n 0: Puesta en marcha del SIGEM">Sesi&oacute;n 0</a>
+</div>
+<div class="menuitem">
+<a href="sesion01-apuntes.html" title="Sesi&oacute;n 1: CVS, base de datos y pruebas">Sesi&oacute;n 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html" title="Sesi&oacute;n 2: Despliegue y componentes web">Sesi&oacute;n 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html" title="Sesi&oacute;n 3: Persistencia Java">Sesi&oacute;n 3</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion05-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Servicios web</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Introducci%C3%B3n">Introducci&oacute;n</a>
+</li>
+<li>
+<a href="#Servicios+web+de+SIGEM">Servicios web de SIGEM</a>
+</li>
+<li>
+<a href="#Clientes+para+los+servicios">Clientes para los servicios</a>
+<ul class="minitoc">
+<li>
+<a href="#Pasos+previos">Pasos previos</a>
+</li>
+<li>
+<a href="#Prueba+de+un+cliente">Prueba de un cliente</a>
+</li>
+<li>
+<a href="#Crear+un+nuevo+cliente">Crear un nuevo cliente</a>
+</li>
+<li>
+<a href="#Cliente+con+autentificaci%C3%B3n">Cliente con autentificaci&oacute;n</a>
+</li>
+<li>
+<a href="#Prueba+de+cliente+y+servicio+desde+Eclipse">Prueba de cliente y servicio desde Eclipse</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Crear+nuevos+servicios">Crear nuevos servicios</a>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="Introducci%C3%B3n"></a>
+<h2 class="underlined_10">Introducci&oacute;n</h2>
+<div class="section">
+<p>En esta sesi&oacute;n vamos a estudiar los servicios web del sistema SIGEM.
+Comenzaremos diseccionando los servicios y clientes de servicios ya
+presentes en el sistema. Tras esto, crearemos nuestros propios clientes
+que accedan a servicios web de SIGEM, y por &uacute;ltimo a&ntilde;adiremos nuevos
+servicios al sistema.</p>
+</div>
+
+
+<a name="N10016"></a><a name="Servicios+web+de+SIGEM"></a>
+<h2 class="underlined_10">Servicios web de SIGEM</h2>
+<div class="section">
+<p>Vamos a comenzar estudiando los servicios web que tenemos disponibles
+en el sistema SIGEM, y el uso que se hace de los mismos.</p>
+<p>Como comentamos previamente, SIGEM est&aacute; basado en una arquitectura 
+orientada a servicios. En el sistema tenemos una serie de servicios, 
+implementados en diferentes m&oacute;dulos (proyectos de Eclipse), cada uno de ellos 
+accesible mediante una interfaz (fachada) concreta.</p>
+<p>Estos servicios pueden ser accedidos de forma local (la interfaz da 
+acceso directamente a su implementaci&oacute;n), pero muchos de ellos 
+tambi&eacute;n permiten ser utilizados de forma remota. Para ello se utilizan
+servicios web.</p>
+<p>Para que un determinado servicio de SIGEM pueda ser accedido de 
+forma remota se necesitar&aacute; un m&oacute;dulo adicional que cree una capa de
+servicio web sobre &eacute;l. Este m&oacute;dulo de servicio web:</p>
+<ul>
+
+<li>Recibir&aacute; el mismo nombre del m&oacute;dulo en el que est&aacute; implementado 
+el servicio, pero terminado en <span class="codefrag">WS</span>.</li>
+
+<li>Depender&aacute; en Eclipse del proyecto correspondiente al m&oacute;dulo local 
+en el que se implementa el servicio.</li>
+
+</ul>
+<p>Este servicio web ofrecer&aacute; de forma remota las operaciones del 
+servicio al que da acceso. Para acceder a estas operaciones mediante
+el servicio web, tendremos en SIGEM tambi&eacute;n un m&oacute;dulo cliente para
+dicho servicio web.</p>
+<p>El m&oacute;dulo con el cliente para acceder al servicio web:</p>
+<ul>
+
+<li>Tendr&aacute; el mismo nombre que el m&oacute;dulo en el que est&aacute; implementado
+el servicio al que accede, pero esta vez acabado en <span class="codefrag">WSClient</span>.</li>
+
+<li>Ofrecer&aacute; una fachada que nos dar&aacute; acceso a todas las operaciones
+del servicio web, accediendo a &eacute;l de forma remota. Esta fachada
+implementar&aacute; la interfaz que tenemos en SIGEM para el servicio
+concreto al que accede. De esta forma tanto el cliente para el servicio web
+como la implementaci&oacute;n local implementar&aacute;n la misma interfaz, y por
+lo tanto podremos acceder de forma local o remota sin afectar al c&oacute;digo
+de la aplicaci&oacute;n.</li>
+
+</ul>
+<p>Vamos a estudiar como ejemplo un m&oacute;dulo concreto. Nos centraremos
+en el m&oacute;dulo <span class="codefrag">Entidades</span>, que nos dar&aacute; acceso a la informaci&oacute;n
+de las diferentes entidades gestionadas por el sistema SIGEM. Las
+funcionalidades de este m&oacute;dulo se encuentran implementadas en el
+m&oacute;dulo de nombre <span class="codefrag">SIGEM_Entidades</span>. En este m&oacute;dulo tenemos una 
+fachada <span class="codefrag">ServicioEntidadesAdapter</span> que implementa la interfaz
+<span class="codefrag">ServicioEntidades</span>. Existe adem&aacute;s un proyecto
+<span class="codefrag">SIGEM_EntidadesWS</span> que contiene un servicio web que ofrece todas las 
+operaciones de dicha interfaz. Este m&oacute;dulo <span class="codefrag">SIGEM_EntidadesWS</span>
+depende de <span class="codefrag">SIGEM_Entidades</span>, ya que las operaciones del
+servicio web internamente invocar&aacute;n sus correspondientes operaciones
+en <span class="codefrag">ServicioEntidadesAdapter</span> (dentro de las librer&iacute;as del
+m&oacute;dulo de servicio web estar&aacute;n incluidas las clases locales que implementan
+el servicio <span class="codefrag">Entidades</span>).</p>
+<p>Por otro lado tendremos un cliente para este servicio web en el 
+m&oacute;dulo <span class="codefrag">SIGEM_EntidadesWSClient</span>. Este m&oacute;dulo no tiene
+ninguna dependencia con los anteriores, ya que su funci&oacute;n es dar
+acceso a los mismos desde una m&aacute;quina remota (no tendremos en local
+la implementaci&oacute;n del servicio <span class="codefrag">Entidades</span>). En &eacute;l
+encontramos una clase <span class="codefrag">EntidadesWSRemoteClient</span>, que
+tambi&eacute;n implementa la interfaz <span class="codefrag">ServicioEntidades</span>, pero
+en este caso en la implementaci&oacute;n de cada operaci&oacute;n lo que se hace
+es invocar al servicio web mediante el cliente Axis generado. De
+esta forma, desde otros m&oacute;dulos de SIGEM siempre accederemos al 
+servicio mediante la interfaz <span class="codefrag">ServicioEntidades</span>, 
+independientemente de la implementaci&oacute;n concreta que utilicemos del
+mismo. Como hemos visto, esta implementaci&oacute;n puede ser:</p>
+<ul>
+
+<li>
+<span class="codefrag">ServicioEntidadesAdapter</span>: Implementaci&oacute;n local del
+servicio.</li>
+
+<li>
+<span class="codefrag">EntidadesWSRemoteClient</span>: Cliente para acceder de
+forma remota al servicio, invoc&aacute;ndolo como servicio web.</li>
+
+</ul>
+<p>Ser&aacute; responsabilidad de la clase <span class="codefrag">LocalizadorServicios</span> 
+(perteneciente al proyecto <span class="codefrag">SIGEM_Core</span>) instanciar una de
+estas dos clases. La informaci&oacute;n sobre las clases concretas que
+instanciar&aacute; se encuentra en el fichero de configuraci&oacute;n de Spring
+<span class="codefrag">SIGEM_spring.xml</span>.</p>
+<p>
+<img alt="Arquitectura orientada a servicios de SIGEM" content-width="12cm" height="496" src="imagenes/s5/sigem_soa.gif" width="600"></p>
+<p>Vamos a estudiar con m&aacute;s detalle la clase <span class="codefrag">EntidadesWSRemoteClient</span>
+que da acceso al cliente del servicio de entidades. Podemos ver que 
+contiene un campo <span class="codefrag">service</span> con una referencia al <em>stub</em>
+para acceder al correspondiente servicio web. Sin embargo, este <em>stub</em>
+no se obtiene en ninguna parte del c&oacute;digo de la clase, simplemente se
+define un <em>getter</em> y un <em>setter</em> para acceder a dicho campo.
+Entonces, &iquest;d&oacute;nde se instancia el <em>stub</em>?. La respuesta a esta 
+pregunta est&aacute; en el fichero de configuraci&oacute;n de Spring (<span class="codefrag">SIGEM_spring.xml</span>).
+En este fichero se especifica que al instanciar la clase 
+<span class="codefrag">EntidadesWSRemoteClient</span> se le debe inyectar una instancia
+del <em>stub</em> como propiedad.</p>
+<p>Examinaremos ahora como se define esta configuraci&oacute;n en el fichero
+de Spring. En primer lugar el bean que nos da acceso al servicio de
+entidades mediante servicios web se define como:</p>
+<pre class="code">&lt;bean id="&amp;ENTIDADES;.&amp;SIGEM;.&amp;WS;"  class=
+    "ieci.tecdoc.sgm.entidades.ws.client.EntidadesWSRemoteClient" 
+    parent="&amp;ENTIDADES;" lazy-init="true"&gt;
+  &lt;property name="service" 
+      ref="&amp;ENTIDADES;.&amp;SIGEM;.&amp;WS;.&amp;SERVICE_FACTORY;"/&gt;
+&lt;/bean&gt;</pre>
+<p>Podemos observar que se especifica la clase <span class="codefrag">ieci.tecdoc.sgm.entidades.ws.client.EntidadesWSRemoteClient</span>,
+que es la que el <span class="codefrag">LocalizadorServicios</span> nos devolver&aacute; cuando solicitemos
+acceso al servicio de entidades mediante servicios web. Pero adem&aacute;s
+vemos que se especifica que en su propiedad <span class="codefrag">service</span> se
+inyecte el bean definido en <span class="codefrag">&amp;ENTIDADES;.&amp;SIGEM;.&amp;WS;.&amp;SERVICE_FACTORY;</span>. Esta
+definici&oacute;n se encuentra a continuaci&oacute;n en el fichero de configuraci&oacute;n:</p>
+<pre class="code">&lt;bean id="&amp;ENTIDADES;.&amp;LOCATOR;" 
+    class="ieci.tecdoc.sgm.entidades.ws.client.
+    EntidadesWebServiceServiceLocator" lazy-init="true"&gt;
+  &lt;property name="entidadesWebServiceEndpointAddress" 
+      value="&amp;ENTIDADES_WS_ENDPOINT;"/&gt;
+&lt;/bean&gt;
+
+&lt;bean id="&amp;ENTIDADES;.&amp;SIGEM;.&amp;WS;.&amp;SERVICE_FACTORY;" 
+    factory-bean="&amp;ENTIDADES;.&amp;LOCATOR;" 
+    factory-method="getEntidadesWebService" lazy-init="true"&gt;
+  &lt;property name="header" ref="&amp;SIGEM;.&amp;API;"/&gt;
+&lt;/bean&gt;</pre>
+<p>En este caso este bean se instancia mediante una factor&iacute;a, concretamente
+mediante la clase <em>locator</em> generada por Axis en el <em>stub</em> (<span class="codefrag">EntidadesWebServiceServiceLocator</span>).
+Se especifica tambi&eacute;n el m&eacute;todo de esta factor&iacute;a que se utilizar&aacute; para
+instanciar el bean (<span class="codefrag">getEntidadesWebService</span>). Podemos observar tambi&eacute;n que 
+al <em>locator</em> se le inyecta la direcci&oacute;n del <em>endpoint</em> del
+servicio como propiedad <span class="codefrag">entidadesWebServiceEndpointAddress</span>.</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">El servicio web <span class="codefrag">EntidadesWS</span> utilizado en este documento
+para ilustrar la arquitectura de SIGEM no funciona correctamente en el Tomcat de la m&aacute;quina virtual
+debido a un error en la configuraci&oacute;n de la fuente de datos. Por este motivo se proporciona un
+<em>workspace</em> de Eclipse con todos los proyectos relacionados con este servicio de
+entidades listos para ser ejecutados directamente desde dicho IDE. Podemos utilizar este
+espacio de trabajo para estudiar el c&oacute;digo de estos proyectos, y como punto de partida
+para el resto de pruebas que haremos durante la sesi&oacute;n.</div>
+</div>
+</div>
+
+
+<a name="N100F5"></a><a name="Clientes+para+los+servicios"></a>
+<h2 class="underlined_10">Clientes para los servicios</h2>
+<div class="section">
+<p>Comenzaremos accediendo a algunos de los servicios web disponibles
+en SIGEM. Como hemos visto, tenemos varios proyectos en SIGEM que hacen de cliente para
+los servicios web de este sistema, pero tambi&eacute;n podremos crear nuevas aplicaciones
+cliente a partir de los documentos WSDL de los diferentes servicios web disponibles.
+Vamos a comenzar probando alguno de los clientes ya existentes.</p>
+<a name="N100FE"></a><a name="Pasos+previos"></a>
+<h3 class="underlined_5">Pasos previos</h3>
+<p>Para hacer estas pruebas, necesitamos tener el sistema SIGEM en marcha, ya que vamos a
+acceder a los servicios web que &eacute;ste nos ofrece. Por lo tanto iniciaremos el servidor
+Postgres de BD y el servidor web Tomcat de la misma forma que en proyectos anteriores:</p>
+<pre class="code">&gt; su postgres
+&gt; pg_ctl start -D /usr/local/pgsql/data
+&gt; exit
+&gt; cd /home/sigem/SIGEM/jakarta-tomcat-5.0.28/bin
+&gt; ./startup.sh</pre>
+<p>En esta sesi&oacute;n importaremos en Eclipse algunos proyectos de servicio web de SIGEM, que 
+en realidad son simplemente proyectos web de Eclipse que contienen las librer&iacute;as de Axis
+y la configuraci&oacute;n para que los servlets de dicho framework nos ofrezcan una serie de
+servicios web.</p>
+<p>Para que Eclipse reconozca un proyecto importado como proyecto web, este proyecto deber&aacute;
+contener un directorio oculto de nombre <span class="codefrag">.settings</span>. Sin embargo, estos directorios
+y ficheros ocultos se perdieron en la versi&oacute;n que estamos utilizando del c&oacute;digo fuente de SIGEM.
+Para recuperarlos podremos utilizar un nuevo parche disponible en la secci&oacute;n de software del curso
+(<em>Parche para el c&oacute;digo fuente de los proyectos web SIGEM</em>). Descomprimiremos este parche 
+en el mismo directorio en el que hab&iacute;amos descomprimido los fuentes, de forma que a&ntilde;ada estos 
+directorios perdidos.</p>
+<a name="N10118"></a><a name="Prueba+de+un+cliente"></a>
+<h3 class="underlined_5">Prueba de un cliente</h3>
+<p>Vamos a probar el servicio <span class="codefrag">CatalogoTramitesWS</span>. Podemos consultar el documento
+WSDL que define este servicio en la siguiente direcci&oacute;n (dentro de <span class="codefrag">http://localhost:8080</span>):</p>
+<pre class="code">/SIGEM_CatalogoTramitesWS/wsdl/CatalogoTramitesWebService.wsdl</pre>
+<p>Vamos a probar este servicio mediante <em>Web Services Explorer</em>. Por ejemplo podr&iacute;amos 
+probar a ejecutar la operaci&oacute;n <span class="codefrag">getDocuments</span>. Podemos solicitar los tipos de documentos
+definidos en la entidad con identificador <span class="codefrag">000</span> (que es la &uacute;nica definida por defecto).</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Para ver todos los detalles de los datos devueltos por la operaci&oacute;n deberemos
+ver los fuentes de los mensajes SOAP utilizados.</div>
+</div>
+<p>Una vez hemos comprobado que el servicio funciona correctamente, vamos a probar el cliente que tenemos
+en SIGEM para dicho servicio. Este cliente se encuentra en el proyecto <span class="codefrag">SIGEM_CatalogoTramitesWSClient</span>.
+Al abrir el proyecto veremos que contiene el <em>stub</em> generado por Axis para acceder al servicio y 
+la clase <span class="codefrag">CatalogoTramitesWSRemoteClient</span> que se encarga de adaptar este <em>stub</em> a la
+interfaz <span class="codefrag">ServicioCatalogoTramites</span> utilizada en SIGEM.</p>
+<p>Podemos encontrar tambi&eacute;n en este proyecto un <em>test case</em> de JUnit en el directorio <span class="codefrag">test</span>,
+pero no funciona correctamente. Por este motivo, vamos a crear nuestro propio <em>driver</em> para
+probar el cliente. Crearemos en el mismo directorio de fuentes <span class="codefrag">test</span> una clase <span class="codefrag">PruebaCatalogoTramites</span>
+con un m&eacute;todo <span class="codefrag">main</span> para probar el m&eacute;todo <span class="codefrag">getDocuments</span> del servicio. Podemos
+utilizar un c&oacute;digo como el siguiente para hacerlo:</p>
+<pre class="code">CatalogoTramitesWebServiceServiceLocator locator = 
+    new CatalogoTramitesWebServiceServiceLocator();
+CatalogoTramitesWebService servicio = 
+    locator.getCatalogoTramitesWebService();
+
+Entidad entidad = new Entidad();
+entidad.setIdentificador("000");
+Documentos documentos = servicio.getDocuments(entidad);
+DocumentoExtendido [] listaDocs = documentos.getDocumentos();
+for(int i=0;i&lt;listaDocs.length;i++) {
+  System.out.println("[" + listaDocs[i].getExtension() + "] " + 
+                     listaDocs[i].getDescription());
+}</pre>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">El directorio <span class="codefrag">test</span> del proyecto no est&aacute; creado como directorio de fuentes.
+Para poder crear de forma correcta las clases Java en este directorio deberemos volverlo a crear como
+directorio de fuentes.</div>
+</div>
+<p>De esta forma probamos directamente el <em>stub</em> que nos da acceso al servicio. Sin embargo, podr&iacute;a
+interesarnos probar la clase que realmente nos va a dar acceso a este servicio cuando utilicemos el
+<span class="codefrag">LocalizadorServicios</span> desde cualquier otro m&oacute;dulo de SIGEM. Para ello crearemos un nuevo 
+programa de prueba al que llamaremos <span class="codefrag">PruebaLocalizadorCatalogoTramites</span> que tendr&aacute; un m&eacute;todo 
+<span class="codefrag">main</span> con el siguiente c&oacute;digo:</p>
+<pre class="code">ServicioCatalogoTramites servicio = LocalizadorServicios
+    .getServicioCatalogoTramites(
+    "SIGEM_ServicioCatalogoTramites.SIGEM.WEBSERVICE");
+
+Entidad entidad = new Entidad();
+entidad.setIdentificador("000");
+Documentos documentos = servicio.getDocuments(entidad);
+for(int i=0;i&lt;documentos.count();i++) {
+  System.out.println("[" + documentos.get(i).getExtension() + "] " 
+                     + documentos.get(i).getDescription());
+}</pre>
+<div class="frame note">
+<div class="label">Importante</div>
+<div class="content">Deberemos llevar especial cuidado al a&ntilde;adir los <span class="codefrag">import</span>s en cada uno de estos
+dos programas de prueba. Destacamos que las clases importadas cambiar&aacute;n seg&uacute;n si utilizamos directamente el <em>stub</em>,
+o si accedemos a trav&eacute;s del localizador. En el primer caso podemos ver que se utilizan los tipos de datos generados
+por Axis en el cliente, mientras que en el segundo se utilizan los tipos de datos generales de SIGEM definidos
+en el proyecto <span class="codefrag">SIGEM_Core</span>.</div>
+</div>
+<a name="N10191"></a><a name="Crear+un+nuevo+cliente"></a>
+<h3 class="underlined_5">Crear un nuevo cliente</h3>
+<p>Una vez hemos probado uno de los clientes ya disponibles en SIGEM, podemos plantearnos crear una nueva
+aplicaci&oacute;n cliente que acceda a los servicios de este sistema. Vamos a crearnos un nuevo proyecto Java en Eclipse
+que haga de cliente de <span class="codefrag">SIGEM_CatalogoServiciosWS</span>, que tendr&aacute; como nombre <span class="codefrag">ClienteCatalogoTramites</span>. </p>
+<p>Dentro de este cliente generaremos el <em>stub</em> mediante Eclipse a partir del documento WSDL que define el 
+servicio. Una vez se haya generado este <em>stub</em>, podremos a&ntilde;adir un programa de prueba
+similar al definido en el punto anterior para comprobar que nuestro cliente funciona correctamente</p>
+<a name="N101AA"></a><a name="Cliente+con+autentificaci%C3%B3n"></a>
+<h3 class="underlined_5">Cliente con autentificaci&oacute;n</h3>
+<p>Algunos servicios de SIGEM se encuentran protegidos mediante seguridad declarativa del servidor. Este es el
+caso del servicio <span class="codefrag">SIGEM_AutenticacionUsuariosWS</span>. Si observamos el fichero <span class="codefrag">web.xml</span>
+de este proyecto, veremos que para acceder tendremos que entrar con un usuario con rol <span class="codefrag">SigemWSClient</span>.
+Sin embargo, si observamos el fichero <span class="codefrag">tomcat-users.xml</span> del directorio de configuraci&oacute;n de Tomcat
+veremos que no tenemos ning&uacute;n usuario con dicho rol. Por este motivo, tendremos que a&ntilde;adir dicho usuario y 
+reiniciar el servidor para que cargue esta configuraci&oacute;n:</p>
+<pre class="code">&lt;role rolename="SigemWSClient"/&gt;
+&lt;user username="sigem" password="sigem" roles="SigemWSClient"/&gt;</pre>
+<p>Una vez hecho esto podremos crear un cliente para acceder a este servicio. Para ello crearemos un nuevo
+proyecto Java en Eclipse con el nombre <span class="codefrag">ClienteAutenticacion</span>. Dentro de este proyecto crearemos
+el <em>stub</em> para acceder al servicio a partir de su documento WSDL.</p>
+<p>En este caso, al utilizar el <em>stub</em> deberemos especificar el usuario y contrase&ntilde;a con el que queremos
+acceder al servicio. Crearemos una clase de prueba <span class="codefrag">ClienteAutenticacion</span>, con un m&eacute;todo <span class="codefrag">main</span>
+con un c&oacute;digo como el siguiente:</p>
+<pre class="code">AdministracionUsuariosPortalWebServiceServiceLocator locator = 
+    new AdministracionUsuariosPortalWebServiceServiceLocator();
+AdministracionUsuariosPortalWebService servicio = 
+    locator.getAdministracionUsuariosPortalWebService();
+		
+((AdministracionUsuariosPortalWebServiceSoapBindingStub)servicio)
+    .setUsername("sigem");
+((AdministracionUsuariosPortalWebServiceSoapBindingStub)servicio)
+    .setPassword("sigem");
+		
+Entidad entidad = new Entidad();
+entidad.setIdentificador("000");
+CriterioBusquedaUsuario cbu = new CriterioBusquedaUsuario();
+
+ListaUsuarios listaUsuarios = servicio.buscarUsuarios(cbu, entidad);
+Usuario [] usuarios = listaUsuarios.getUsers();
+for(Usuario u: usuarios) {
+  System.out.println(u.getId() + ", " + u.getPassword() + ", " + 
+                     u.getEmail() + ", " + u.getName() + ", " + 
+                     u.getLastname());
+}</pre>
+<p>Podemos comprobar como si intentamos acceder sin especificar correctamente el usuario se nos deniega el acceso.</p>
+<a name="N101E0"></a><a name="Prueba+de+cliente+y+servicio+desde+Eclipse"></a>
+<h3 class="underlined_5">Prueba de cliente y servicio desde Eclipse</h3>
+<p>Hasta ahora hemos probado servicios web de SIGEM ya instalados en el servidor Tomcat
+de la m&aacute;quina virtual. Sin embargo, si queremos modificar o desarrollar nuevos servicios
+resultar&aacute; m&aacute;s c&oacute;modo ejecutar el servicio directamente desde Eclipse. Vamos a hacer esto
+para probar el servicio <span class="codefrag">SIGEM_EntidadesWS</span> que se encuentra en el 
+<em>workspace</em> proporcionado en esta sesi&oacute;n.</p>
+<p>Lo primero que deberemos hacer es parar el servidor Tomcat de la m&aacute;quina virtual, 
+para evitar que haya conflicto de puertos con el que ejecutaremos a continuaci&oacute;n en Eclipse.
+Una vez hecho esto, ejecutaremos el proyecto <span class="codefrag">SIGEM_EntidadesWS</span> en el 
+servidor desde Eclipse, inici&aacute;ndose as&iacute; el servidor Tomcat desde dentro de este entorno.</p>
+<p>Una vez se haya iniciado el servidor con la aplicaci&oacute;n <span class="codefrag">SIGEM_EntidadesWS</span> desplegada
+en &eacute;l, podemos comprobar en un navegador que la aplicaci&oacute;n se haya cargado correctamente
+accediendo a su correspondiente URL. Ahora podremos ejecutar el cliente que tenemos en el
+proyecto <span class="codefrag">SIGEM_EntidadesWSClient</span> para acceder al servicio. En este cliente
+tenemos la clase <span class="codefrag">PruebaEntidades</span> en el directorio <span class="codefrag">test</span>. Ejecutaremos
+esta clase que acceder&aacute; al servicio para obtener la lista de entidades, y las imprimir&aacute; en
+la consola.</p>
+</div>
+
+
+<a name="N10206"></a><a name="Crear+nuevos+servicios"></a>
+<h2 class="underlined_10">Crear nuevos servicios</h2>
+<div class="section">
+<p>Algunos servicios de SIGEM por el momento no son accesibles de forma
+remota. Vamos a ver ahora como podr&iacute;amos construir un m&oacute;dulo de servicio 
+web que nos diese acceso a ellos. Por ejemplo, en anteriores sesiones
+estuvimos probando algunas de las funcionalidades del m&oacute;dulo
+<span class="codefrag">SIGEM_RegistroPresencialAdmin</span>. Podemos observar que
+entre los m&oacute;dulos de SIGEM no existe ning&uacute;n m&oacute;dulo 
+<span class="codefrag">SIGEM_RegistroPresencialAdminWS</span>, de forma que no podremos
+acceder a estas funcionalidades de forma remota. Por lo tanto, vamos
+a plantearnos crearlo nosotros.</p>
+<p>Vamos a empezar implementando un servicio web para este m&oacute;dulo que
+s&oacute;lo exponga una de sus operaciones: <span class="codefrag">getOficinas</span>.</p>
+<div class="frame note">
+<div class="label">Ayuda</div>
+<div class="content">Para implementar el servicio que nos d&eacute;
+acceso al m&oacute;dulo <span class="codefrag">SIGEM_RegistroPresencialAdmin</span> podemos
+consultar el resultado de la primera sesi&oacute;n de integraci&oacute;n, en
+la que se acced&iacute;a de forma local a algunos de los m&eacute;todos
+de este m&oacute;dulo.</div>
+</div>
+<p>Seguiremos los siguientes pasos:</p>
+<ol>
+
+<li>Creamos un nuevo proyecto web din&aacute;mico en Eclipse.</li>
+
+<li>Hacemos el proyecto web dependiente del m&oacute;dulo <span class="codefrag">SIGEM_RegistroPresencialAdmin</span>.</li>
+
+<li>Creamos en el nuevo proyecto el fichero JWS de nuestro servicio, con las operaciones que queremos ofrecer.</li>
+
+<li>En la implementaci&oacute;n de estas operaciones, obtendremos acceso a la implementaci&oacute;n local del servicio
+mediante la clase <span class="codefrag">LocalizadorServicios</span>, e invocaremos en ella las operaciones que correspondan.</li>
+
+<li>Creamos un servicio web Axis a partir de la clase JWS definida.
+<div class="frame warning">
+<div class="label">Adventencia</div>
+<div class="content">Si intentamos devolver directamente las clases comunes que tenemos en SIGEM
+para encapsular los datos veremos que nos da un error al intentar generar el servicio, ya que estas clases
+utilizan objetos de tipo <span class="codefrag">List</span> que no est&aacute;n soportados por Axis. Por lo tanto, tendremos que crear nuestras
+propias clases para encapsular estos datos, en las que se usen <em>arrays</em> en lugar de <span class="codefrag">List</span>s. 
+Podemos seguir el ejemplo del servicio <span class="codefrag">SIGEM_EntidadesWS</span> para hacerlo.</div>
+</div>
+
+</li>
+
+<li>Deberemos adem&aacute;s a&ntilde;adir al proyecto las librer&iacute;as <span class="codefrag">spring</span> y <span class="codefrag">log4j</span>. La primera de 
+ellas para poder utilizar el <span class="codefrag">LocalizadorServicios</span>. Las segunda para poder generar <em>logs</em>
+que nos ayuden a su depuraci&oacute;n.</li>
+
+<li>Adem&aacute;s, necesitamos a&ntilde;adir un fichero <span class="codefrag">context.xml</span> con la referencia a la fuente de datos
+JNDI que utilizar&aacute; la aplicaci&oacute;n para acceder a la base de datos del registro. Este fichero deber&aacute; situarse en
+el directorio <span class="codefrag">WebContent/META-INF</span> y su contenido ser&aacute; el siguiente:
+
+<pre class="code">&lt;Context&gt;
+  &lt;ResourceLink global="jdbc/registroDS_000" 
+    name="jdbc/registroDS_000" type="javax.sql.DataSource"/&gt;
+&lt;/Context&gt;</pre>
+
+
+</li>
+
+<li>Desplegamos y probamos el servicio web.</li>
+
+</ol>
+<p>Una vez tengamos este servicio web creado, podr&iacute;amos crear un cliente para acceder a &eacute;l.
+El proyecto en el que lo deber&iacute;amos crear, para mantener la nomenclatura del sistema SIGEM, 
+ser&iacute;a <span class="codefrag">SIGEM_RegistroPresencialAdminWSClient</span>. Podremos probar la operaci&oacute;n
+definida accediendo mediante este cliente.</p>
+<p>Como paso final, podr&iacute;amos hacer que nuestro cliente implemente la interfaz <span class="codefrag">ServicioRPAdmin</span>. 
+Esto nos obligar&aacute; a implementar el resto de m&eacute;todos de este servicio. Por el momento podr&iacute;amos dejar sus
+implementaciones vac&iacute;as, para posteriormente ir a&ntilde;adiendo la implementaci&oacute;n de las operaciones que faltan
+tanto al cliente como al servicio web.</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007-2008 Depto. CCIA</div>
+</div>
+</body>
+</html>

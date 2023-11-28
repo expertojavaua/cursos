@@ -1,0 +1,259 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Ejercicios sesi&oacute;n 5: Entity Manager</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="JPA con Hibernate" src="images/baner_j2ee_der.gif" title="JPA con Hibernate"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Persistencia</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">JPA</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="JPA">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.2', 'skin/')" id="menu_1.1.2Title" class="menutitle">Teor&iacute;a</div>
+<div id="menu_1.1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="roadmap.html">Roadmap JPA</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.3', 'skin/')" id="menu_selected_1.1.3Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Ejercicios</div>
+<div id="menu_selected_1.1.3" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 5</div>
+</div>
+<div class="menuitem">
+<a href="sesion06-ejercicios.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-ejercicios.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-ejercicios.html">Sesion 8</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion05-ejercicios.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Ejercicios sesi&oacute;n 5: Entity Manager</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Contexto+de+persistencia">Contexto de persistencia</a>
+</li>
+<li>
+<a href="#Carga+perezosa">Carga perezosa</a>
+</li>
+</ul>
+</div>
+
+
+<p>En esta sesi&oacute;n de ejercicios vamos a aprender algo m&aacute;s de los <span class="codefrag">EntityManager</span> y de sus contextos de persistencia. Vamos tambi&eacute;n a trabajar con las transacciones.</p>
+
+
+<p>Usaremos de nuevo el ejercicio terminado en la sesi&oacute;n 1, para no tener las entidades y relaciones que hemos introducido en las &uacute;ltimas dos sesiones. De esta forma probaremos los ejercicios con una aplicaci&oacute;n sencilla.</p>
+
+
+<a name="N10015"></a><a name="Contexto+de+persistencia"></a>
+<h2 class="underlined_10">Contexto de persistencia</h2>
+<div class="section">
+<p>En este ejercicio vamos a probar la diferencia entre el contexto de persistencia y la base de datos y a reforzar la caracter&iacute;stica principal del contexto de persistencia: es una cach&eacute; de la base de datos. Lo vamos a hacer estudiando la relaci&oacute;n uno-a-muchos entre autor y mensajes. Recordemos que la relaci&oacute;n es propiedad de la entidad <span class="codefrag">Mensaje</span> y que all&iacute; es donde se guarda la clave ajena a la entidad <span class="codefrag">Autor</span> (ver figura). </p>
+<p>
+<img alt="" content-width="9cm" src="imagenes/mensaje-autor.png" width="478"></p>
+<p>Debido a que la entidad propietaria es el <span class="codefrag">Mensaje</span> si no actualizamos esa clave ajena (con el m&eacute;todo <span class="codefrag">setAutor()</span>) no se guardar&aacute; la relaci&oacute;n en la base de datos. Tambi&eacute;n debemos recordar que en la entidad <span class="codefrag">Autor</span> se guarda una colecci&oacute;n de mensajes. Esta colecci&oacute;n reside en el contexto de persistencia. El responsable de recuperar la colecci&oacute;n de mensajes de la base de datos es el <span class="codefrag">EntityManager</span>, que intercepta la llamada al m&eacute;todo <span class="codefrag">getMensajes()</span> y realiza una consulta SQL si lo considera necesario.</p>
+<p>1. Copia el proyecto <span class="codefrag">jpa-sesion1-web</span> con el nombre <span class="codefrag">jpa-sesion5-web</span>. Vamos a trabajar en este nuevo proyecto. Vamos a trabajar con el m&eacute;todo <span class="codefrag">doAdd</span> del servlet <span class="codefrag">doAction</span>. Si recuerdas, era algo parecido a esto (hemos introducido alguna modificaci&oacute;n, actualiza tu c&oacute;digo para que sea igual que este):</p>
+<pre class="code">EntityManager em = emf.createEntityManager();
+em.getTransaction().begin();
+Autor autor = em.find(Autor.class, autorStr);
+if (autor == null) {
+   autor = new Autor(autorStr, autorStr + "@ua.es");
+   em.persist(autor);
+}
+Mensaje mensaje = new Mensaje(mensStr);
+em.persist(mensaje);
+
+// actualizamos la relaci&oacute;n entre autor y mensaje
+<strong>mensaje.setAutor(autor);
+autor.getMensajes().add(mensaje);</strong>
+
+Collection&lt;Mensaje&gt; mensajes = autor.getMensajes();
+em.getTransaction().commit();
+
+request.setAttribute("autor", autor);
+request.setAttribute("mensajes", mensajes);
+
+getServletContext().getRequestDispatcher("/listaMensajes.jsp")
+                   .forward(request, response);
+em.close();      
+emf.close();
+</pre>
+<p>Hemos marcado en negrita la pareja de instrucciones que actualizan la relaci&oacute;n entre el mensaje y el autor. Modifica ahora el c&oacute;digo y comenta la instrucci&oacute;n:</p>
+<pre class="code">mensaje.setAutor(autor);</pre>
+<p> De esta forma se llama &uacute;nicamente al m&eacute;todo que actualiza la colecci&oacute;n de mensajes en el autor. </p>
+<p>3. Prueba ahora a ejecutar el servlet, a&ntilde;adiendo un nuevo mensaje a un autor. &iquest;Se lista el nuevo mensaje en el autor? &iquest;Se guarda en la base de datos la relaci&oacute;n? &iquest;Qu&eacute; est&aacute; pasando? (contesta en <span class="codefrag">respuestas.txt</span>).</p>
+<p>4. Vuelve a cambiar la forma de actualizar la relaci&oacute;n para que ahora se a&ntilde;ada &uacute;nicamente el <span class="codefrag">Autor</span> al <span class="codefrag">Mensaje</span>. Quita la actualizaci&oacute;n de la colecci&oacute;n de mensajes del autor. En teor&iacute;a, cuando llamemos al m&eacute;todo <span class="codefrag">getMensajes()</span> del <span class="codefrag">Autor</span>, el <span class="codefrag">EntityManager</span> deber&aacute; generar la consulta SQL necesaria para actualizar la colecci&oacute;n de mensajes. &iquest;Lo hace bien?</p>
+<p>5. Prueba a escribir el siguiente c&oacute;digo en el servlet: </p>
+<pre class="code">EntityManager em = emf.createEntityManager();
+em.getTransaction().begin();
+Autor autor = em.find(Autor.class, autorStr);
+if (autor == null) {
+   autor = new Autor(autorStr, autorStr + "@ua.es");
+   em.persist(autor);
+}
+Mensaje mensaje = new Mensaje(mensStr);
+em.persist(mensaje);
+
+<strong>int mens = autor.getMensajes().size();
+System.out.println(mens);</strong>
+
+// actualizamos la relaci&oacute;n entre autor y mensaje
+mensaje.setAutor(autor);
+//autor.getMensajes().add(mensaje);
+Collection&lt;Mensaje&gt; mensajes = autor.getMensajes();
+em.getTransaction().commit();
+
+request.setAttribute("autor", autor);
+request.setAttribute("mensajes", mensajes);
+getServletContext().getRequestDispatcher("/listaMensajes.jsp")
+                   .forward(request, response);
+em.close();      
+emf.close();
+</pre>
+<p>Prueba la funci&oacute;n introduciendo un mensaje y un autor nuevo. &iquest;Se muestra correctamente la lista de mensajes? &iquest;Se ha hecho realmente la modificaci&oacute;n en la base de datos? &iquest;Qu&eacute; est&aacute; pasando? </p>
+<p>6. Por &uacute;ltimo, a&ntilde;ade la siguiente instrucci&oacute;n justo antes de obtener la colecci&oacute;n de mensajes antes de cerrar la transacci&oacute;n.</p>
+<pre class="code">em.refresh(mensajes);</pre>
+<p>&iquest;Funciona ahora correctamente el listado? &iquest;Por qu&eacute;?</p>
+<p>7. D&eacute;jalo todo como estaba al principio, llamando al DAO para actualizar las propiedades de ambas entidades y quitando las dos l&iacute;neas que imprimen el n&uacute;mero de mensajes de la colecci&oacute;n.</p>
+</div>
+
+
+<a name="N10090"></a><a name="Carga+perezosa"></a>
+<h2 class="underlined_10">Carga perezosa</h2>
+<div class="section">
+<p>Vamos ahora a probar algunas caracter&iacute;sticas de la carga perezosa (<em>lazy loading</em>) que realiza JPA.</p>
+<p>1. Comencemos por repetir lo que hicimos en uno de los primeros ejercicios. Seguimos con el mismo servlet. Cambia el c&oacute;digo para que se cierren el entity manager y la factor&iacute;a <strong>antes</strong> de hacer la redirecci&oacute;n a la p&aacute;gina JSP. De esta forma, la entidad <span class="codefrag">autor</span> se desconectar&aacute; del contexto de persistencia. &iquest;Qu&eacute; sucede con la colecci&oacute;n <span class="codefrag">mensajes</span> que se pasa a la p&aacute;gina JSP? &iquest;Qu&eacute; error aparece? &iquest;Qu&eacute; es lo que lo causa?</p>
+<p>2. Vamos a arreglar el error accediendo a la colecci&oacute;n justo antes de cerrar el entity manager. De esta forma la colecci&oacute;n se carga en memoria y no es una referencia. Escribe la siguiente sentencia justo antes de cerrar el entity manager:</p>
+<pre class="code">Collection&lt;Mensaje&gt; mensajes = autor.getMensajes();
+em.getTransaction().commit();
+<strong>autor.getMensajes();</strong>
+em.close();</pre>
+<p>&iquest;Funciona? Prueba ahora con el siguiente c&oacute;digo:</p>
+<pre class="code">Collection&lt;Mensaje&gt; mensajes = autor.getMensajes();
+em.getTransaction().commit();
+<strong>autor.getMensajes().size();</strong>
+em.close();</pre>
+<p>&iquest;Funciona ahora? &iquest;Por qu&eacute;?</p>
+<p>3. Por &uacute;ltimo, cambia la p&aacute;gina JSP que muestra la lista de mensajes para que el bucle que recorre la colecci&oacute;n quede de esta forma:</p>
+<pre class="code">&lt;c:forEach items="${mensajes}" var="mens"&gt; 
+  &lt;tr&gt; 
+    &lt;td&gt;&lt;c:out value="${mens.autor.nombre}"/&gt;&lt;/td&gt; 
+    &lt;td&gt;&lt;c:out value="${mens.texto}"/&gt;&lt;/td&gt; 
+  &lt;/tr&gt; 
+&lt;/c:forEach&gt;</pre>
+<p>Ahora el nombre del autor se obtiene a partir del mensaje. &iquest;Funciona ahora la p&aacute;gina JSP? &iquest;Por qu&eacute;? Deja as&iacute; la p&aacute;gina JSP y modifica el servlet para que el listado vuelva a funcionar.</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007-2008 Depto. CCIA</div>
+</div>
+</body>
+</html>

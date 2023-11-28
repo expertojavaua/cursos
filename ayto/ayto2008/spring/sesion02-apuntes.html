@@ -1,0 +1,906 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Acceso a datos</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Spring" src="images/baner_j2ee_der.gif" title="Spring"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-web.html'">Aplicaciones Web</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-ent.html'">Aplicaciones Enterprise</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../charlas.html'">Charlas</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto</a>
+</li>
+<li>
+<a class="base-not-selected" href="index.html">Spring</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion02-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Acceso a datos</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#La+filosof%C3%ADa+del+acceso+a+datos+en+Spring">La filosof&iacute;a del acceso a datos en Spring</a>
+</li>
+<li>
+<a href="#Uso+de+JDBC">Uso de JDBC</a>
+<ul class="minitoc">
+<li>
+<a href="#SimpleJDBCTemplate">SimpleJDBCTemplate</a>
+</li>
+<li>
+<a href="#Consultas+de+selecci%C3%B3n">Consultas de selecci&oacute;n</a>
+</li>
+<li>
+<a href="#Consultas+de+actualizaci%C3%B3n">Consultas de actualizaci&oacute;n</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Uso+de+JPA">Uso de JPA</a>
+<ul class="minitoc">
+<li>
+<a href="#Configurar+la+factor%C3%ADa+de+Entity+Managers">Configurar la factor&iacute;a de Entity Managers</a>
+</li>
+<li>
+<a href="#JpaTemplate">JpaTemplate</a>
+</li>
+<li>
+<a href="#Uso+directo+del+API+JPA">Uso directo del API JPA</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Transaccionalidad+declarativa">Transaccionalidad declarativa</a>
+<ul class="minitoc">
+<li>
+<a href="#El+%22Transaction+Manager%22">El "Transaction Manager"</a>
+</li>
+<li>
+<a href="#La+anotaci%C3%B3n+%40Transactional">La anotaci&oacute;n @Transactional</a>
+</li>
+<li>
+<a href="#Transaccionalidad+y+uso+directo+de+JDBC">Transaccionalidad y uso directo de JDBC</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<p>En este tema veremos las facilidades que proporciona Spring para implementar nuestros DAOs. Veremos que nos permite
+simplificar el c&oacute;digo, reduciendo el c&oacute;digo repetitivo, y uniformizar el tratamiento independientemente de la
+implementaci&oacute;n subyacente (JPA, JDBC, ...). Finalmente trataremos un aspecto &iacute;ntimamente ligado con el acceso a datos, aunque
+su control no suele estar en los DAOs sino en la capa de negocio: la transaccionalidad.
+ </p>
+
+<a name="N1000F"></a><a name="La+filosof%C3%ADa+del+acceso+a+datos+en+Spring"></a>
+<h2 class="underlined_10">La filosof&iacute;a del acceso a datos en Spring</h2>
+<div class="section">
+<p>Spring proporciona b&aacute;sicamente dos ventajas a la hora de dar soporte a nuestros DAOs: </p>
+<ul>
+        
+<li>Simplifica las operaciones de acceso a datos en APIs tediosos de utilizar como JDBC, proporcionando
+    una capa de abstracci&oacute;n que reduce la necesidad de c&oacute;digo repetitivo. Para ello se usan los denominados <em>templates</em>,
+que son clases que implementan este c&oacute;digo, permitiendo que nos concentremos en la parte "interesante".</li>
+        
+<li>Define una rica jerarqu&iacute;a de excepciones que modelan todos los problemas que nos podemos encontrar
+    al operar con la base de datos, y que son independientes del API empleado.</li>
+    
+</ul>
+<p>Un <strong>template</strong> de acceso a datos en Spring es una clase que encapsula los detalles m&aacute;s tediosos
+   (como por ejemplo la necesidad de abrir y cerrar la conexi&oacute;n con la base de datos en JDBC), permitiendo
+que nos ocupemos &uacute;nicamente de la parte de c&oacute;digo que hace realmente la tarea (inserci&oacute;n, consulta, ...)</p>
+<p>Spring ofrece diversas <em>templates</em> entre las que elegir, dependiendo del API de persistencia a emplear.
+Dada la heterogeneidad de los distintos APIs La implementaci&oacute;n del DAO variar&aacute; seg&uacute;n usemos un API u otro 
+, aunque en todos ellos Spring reduce enormemente la cantidad de c&oacute;digo que debemos escribir, haci&eacute;ndolo m&aacute;s mantenible.</p>
+<p>Por otro lado, en APIs de acceso a datos como JDBC hay dos problemas b&aacute;sicos con respecto a la <strong>gesti&oacute;n de excepciones</strong>:</p>
+<ul>
+            
+<li>Hay muy pocas excepciones distintas definidas para acceso a datos. Como consecuencia, la m&aacute;s importante,
+            <span class="codefrag">SQLException</span>, es una especie de "chica para todo". La misma excepci&oacute;n se usa
+            para prop&oacute;sitos tan distintos como: "no hay conexi&oacute;n con la base de datos", "el SQL de la consulta
+        est&aacute; mal formado" o "se ha producido una violaci&oacute;n de la integridad de los datos". Esto hace que
+    para el desarrollador sea tedioso escribir c&oacute;digo que detecte adecuadamente el problema. Herramientas
+como Hibernate tienen una jerarqu&iacute;a de excepciones mucho m&aacute;s completa, pero son excepciones propias del API, y
+referenciarlas directamente va a introducir dependencias no deseadas en nuestro c&oacute;digo.</li>
+        
+<li>Las excepciones definidas en Java para acceso a datos son <em>comprobadas</em>. Esto implica que debemos
+    poner <span class="codefrag">try/catch</span> o <span class="codefrag">throws</span> para gestionarlas, lo que inevitablemente llena
+<em>todos</em> los m&eacute;todos de acceso a datos de bloques de gesti&oacute;n de excepciones. Est&aacute; bien obligar 
+al desarrollador a responsabilizarse de los errores, pero  en acceso a datos esta gesti&oacute;n
+se vuelve repetitiva y propensa a fallos, descuidos o a caer en "malas tentaciones" (&iquest;qui&eacute;n no ha escrito <em>nunca</em> un bloque <span class="codefrag">catch</span> vac&iacute;o?). 
+Adem&aacute;s, muchos m&eacute;todos de los DAO
+generalmente poco pueden hacer para recuperarse de la mayor&iacute;a de excepciones (por ejemplo, "violaci&oacute;n de la
+integridad"), lo que lleva al desarrollador a poner tambi&eacute;n <span class="codefrag">throws</span> de manera repetitiva y tediosa.</li>
+        
+</ul>
+<p>La soluci&oacute;n de Spring al primer problema es la definici&oacute;n de una completa jerarqu&iacute;a de excepciones de
+acceso a datos. Cada problema tiene su excepci&oacute;n correspondiente, por ejemplo <span class="codefrag">DataAccessResourceFailureException</span>
+ cuando no podemos conectar con la BD, <span class="codefrag">DataIntegrityViolationException</span> cuando se produce una violaci&oacute;n
+de integridad en los datos, y as&iacute; con otras muchas. Un aspecto fundamental es que estas excepciones <em>son independientes
+del API usado para acceder a los datos</em>, es decir, se generar&aacute; el mismo <span class="codefrag">DataIntegrityViolationException</span>
+cuando queramos insertar un registro con clave primaria duplicada en JDBC que cuando queramos persistir un objeto 
+con clave duplicada en JPA. La ra&iacute;z de esta jerarqu&iacute;a de excepciones es <span class="codefrag">DataAccessException</span>.</p>
+<p>En cuanto a la necesidad de gestionar las excepciones, Spring opta por eliminarla haciendo que todas
+las excepciones de acceso a datos sean <em>no comprobadas</em>. Esto libera al desarrollador de la carga de los <span class="codefrag">try-catch/throws</span>
+repetitivos, aunque evidentemente no lo libera de su responsabilidad, ya que las excepciones tendr&aacute;n que gestionarse en alg&uacute;n nivel
+superior.</p>
+</div>
+
+<a name="N10073"></a><a name="Uso+de+JDBC"></a>
+<h2 class="underlined_10">Uso de JDBC</h2>
+<div class="section">
+<p>JDBC sigue siendo un API muy usado para el acceso a datos, aunque es tedioso y repetitivo. Vamos a ver c&oacute;mo
+soluciona Spring algunos problemas de JDBC, manteniendo las ventajas de poder trabajar "a bajo nivel" si as&iacute; lo
+deseamos. Probablemente las ventajas quedar&aacute;n m&aacute;s claras si primero vemos un ejemplo con JDBC "a secas" y luego vemos el mismo
+c&oacute;digo usando las facilidades que nos da Spring. Por ejemplo, supongamos un m&eacute;todo que comprueba que
+el login y el password de un usuario son correctos, busc&aacute;ndolo en la base de datos con JDBC:</p>
+<pre class="code">
+
+<strong>private String SQL ="select * from usuarios where login=? and password=?";</strong>
+    
+public UsuarioTO login(String login, String password) throws DAOException {
+    Connection con=null;
+    try {
+        con = ds.getConnection();
+           <strong>PreparedStatement ps = con.prepareStatement(SQL);
+        ps.setString(1, login);
+        ps.setString(2, password);
+        ResultSet rs = ps.executeQuery();</strong>
+        if (rs.next()) {
+            <strong>UsuarioTO uto = new UsuarioTO();
+            uto.setLogin(rs.getString("login"));
+            uto.setPassword(rs.getString("password"));
+            uto.setFechaNac(rs.getDate("fechaNac"));
+            return uto;</strong>
+        }
+        else
+            <strong>return null;</strong>
+    } catch(SQLException sqle) {
+        throw new DAOException(sqle);
+    }
+    finally {
+        if (con!=null) {
+            try {
+                con.close();
+            }
+            catch(SQLException sqle2) {
+                throw new DAOException(sqle2);                    
+            }
+        }
+    }
+}        
+</pre>
+<p>En negrita se muestran las l&iacute;neas de c&oacute;digo que hacen realmente el trabajo de buscar el registro y devolver
+la informaci&oacute;n. El resto es simplemente la infraestructura necesaria para poder hacer el trabajo y gestionar
+los errores, y que, curiosamente <em>ocupa m&aacute;s l&iacute;neas que el c&oacute;digo "importante"</em>. Evidentemente la gesti&oacute;n de
+errores se habr&iacute;a podido "simplificar" poniendo en la cabecera del m&eacute;todo un <span class="codefrag">throws SQLException</span>,
+pero entonces ya estar&iacute;amos introduciendo dependencias del API JDBC en la capa de negocio.</p>
+<p>Veamos c&oacute;mo nos puede ayudar Spring a simplificar nuestro c&oacute;digo, manteniendo la flexibilidad que nos da SQL. El
+primer paso ser&aacute; elegir el <em>template</em> apropiado.</p>
+<a name="N1009B"></a><a name="SimpleJDBCTemplate"></a>
+<h3 class="underlined_5">SimpleJDBCTemplate</h3>
+<p>Como ya hemos dicho, los <em>templates</em> son clases que encapsulan el c&oacute;digo de gesti&oacute;n de
+    los detalles "tediosos" del API de acceso a datos. En Spring, para JDBC tenemos varios templates disponibles, seg&uacute;n queramos
+hacer consultas simples, con par&aacute;metros con nombre,... Vamos a usar aqu&iacute; <span class="codefrag">SimpleJdbcTemplate</span>,
+que aprovecha las ventajas de Java 5 (autoboxing, gen&eacute;ricos, ...) para simplificar las operaciones. El equivalente
+si no tenemos Java 5 ser&iacute;a <span class="codefrag">JdbcTemplate</span>, que tiene una sintaxis mucho m&aacute;s complicada.</p>
+<p>Lo primero que necesitamos es instanciar el <em>template</em>. El constructor de <span class="codefrag">SimpleJdbcTemplate</span>
+necesita un <span class="codefrag">DataSource</span> como par&aacute;metro. Como se vio en el tema anterior, los <span class="codefrag">DataSource</span>
+se pueden definir en el fichero XML de los beans, gracias al espacio de nombres <span class="codefrag">jee</span>:</p>
+<pre class="code">
+&lt;jee:jndi-lookup id="ds" jndi-name="jdbc/MiDataSource" resource-ref="true"/&gt;
+</pre>
+<p>Con lo que el <span class="codefrag">DataSource</span> se convierte en un bean de Spring llamado <span class="codefrag">ds</span>. La pr&aacute;ctica
+habitual es inyectarlo en nuestro DAO y con &eacute;l inicializar el <em>template</em>, que guardaremos en el DAO:</p>
+<pre class="code">
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.stereotype.Repository;
+//Resto de imports...
+...
+
+@Repository("JDBC")
+public class UsuariosDAOJDBC implements IUsuariosDAO {
+    <strong>private SimpleJdbcTemplate jdbcTemplate;</strong>
+    
+    @Autowired
+    public void setDataSource(DataSource ds) {
+        <strong>this.jdbcTemplate = new SimpleJdbcTemplate(ds);</strong>
+    }
+
+    ...
+}    
+</pre>
+<p>Recordemos que la anotaci&oacute;n <span class="codefrag">@Repository</span> se usa para definir un DAO. Recordemos tambi&eacute;n que
+<span class="codefrag">@Autowired</span> inyecta la dependencia busc&aacute;ndola por tipo. En este caso no hay ambig&uuml;edad, ya que
+solo hemos definido un <span class="codefrag">DataSource</span>.</p>
+<a name="N100E6"></a><a name="Consultas+de+selecci%C3%B3n"></a>
+<h3 class="underlined_5">Consultas de selecci&oacute;n</h3>
+<p>Normalmente en un SELECT se van recorriendo registros y nuestro DAO los va transformando en objetos Java
+que devolver&aacute; a la capa de negocio. En Spring, el trabajo de tomar los datos de un registro y empaquetarlos
+en un objeto lo hace <span class="codefrag">ParameterizedRowMapper</span> (o <span class="codefrag">RowMapper</span> si no estamos usando Java 5). Estos son interfaces, por
+lo que nuestro trabajo consistir&aacute; en escribir una clase que los implemente. Realmente el &uacute;nico m&eacute;todo
+estrictamente necesario es <span class="codefrag">mapRow</span>, que a partir de un registro debe devolver un objeto. En nuestro
+caso podr&iacute;a ser algo como:</p>
+<pre class="code">
+ //esto podr&iacute;a tambi&eacute;n ser private y estar dentro del DAO
+ protected class UsuarioTOMapper implements ParameterizedRowMapper&lt;UsuarioTO&gt; {
+
+        public UsuarioTO mapRow(ResultSet rs, int numRow) throws SQLException {
+                UsuarioTO uto = new UsuarioTO();
+                uto.setLogin(rs.getString("login"));
+                uto.setPassword(rs.getString("password"));
+                uto.setFechaNac(rs.getDate("fechaNac"));
+                return uto;
+        }
+}
+</pre>
+<p>Ahora solo nos queda escribir en el DAO el c&oacute;digo que hace el SELECT:</p>
+<pre class="code">
+private static final String LOGIN_SQL = "select * from usuarios where login=? and password=?";
+
+public UsuarioTO login(String login, String password) {
+    UsuarioTOMapper miMapper = new UsuarioTOMapper();
+       
+    return this.jdbcTemplate.queryForObject(LOGIN_SQL, miMapper, login, password);
+}
+</pre>
+<p>Como se ve, no hay que gestionar la conexi&oacute;n con la base de datos, preocuparse del <span class="codefrag">Statement</span>
+ni nada parecido. El <em>template</em> se ocupa de estos detalles. El m&eacute;todo <span class="codefrag">queryForObject</span> hace el SELECT y
+devuelve un <span class="codefrag">UsuarioTO</span> ayudado del <em>mapper</em>
+que hemos definido antes. Simplemente hay que pasarle el SQL a ejecutar y los valores de los par&aacute;metros.</p>
+<p>Tampoco hay gesti&oacute;n de excepciones, porque Spring captura todas las <span class="codefrag">SQLException</span> de JDBC
+y las transforma en excepciones no comprobadas. Por supuesto, eso no quiere decir que no podamos capturarlas en el DAO si as&iacute;
+lo deseamos. De hecho, en el c&oacute;digo anterior hemos cometido en realidad un "descuido", ya que podr&iacute;a no haber ning&uacute;n
+registro como resultado del SELECT. Para Spring esto es una excepci&oacute;n del tipo <span class="codefrag">EmptyResultDataAccessException</span>. Si queremos seguir la misma l&oacute;gica que en el ejemplo con JDBC, deber&iacute;amos devolver <span class="codefrag">null</span>
+en este caso.</p>
+<pre class="code">
+private static final String LOGIN_SQL = "select * from usuarios where login=? and password=?";
+
+public UsuarioTO login(String login, String password) {
+   UsuarioTOMapper miMapper = new UsuarioTOMapper();
+       
+   try {
+       return this.jdbcTemplate.queryForObject(LOGIN_SQL, miMapper, login, password);
+   }
+   catch(EmptyResultDataAccessException erdae) {
+       return null;
+   }
+}   
+</pre>
+<p>La amplia variedad de excepciones de acceso a datos convierte a Spring en un <em>framework</em> un poco "quisquilloso" en ciertos aspectos.
+En un <span class="codefrag">queryForObject</span> Spring espera obtener <em>un registro y s&oacute;lo un registro</em>, de modo
+que se lanza una excepci&oacute;n si no hay resultados, como hemos visto, pero tambi&eacute;n si hay m&aacute;s de uno: <span class="codefrag">IncorrectResultSizeDataAccessException</span>. Esto tiene su l&oacute;gica, ya que
+<span class="codefrag">queryForObject</span> solo se debe usar cuando esperamos como m&aacute;ximo un registro. Si el SELECT pudiera devolver m&aacute;s de un resultado, en lugar de llamar a <span class="codefrag">queryForObject</span>,
+emplear&iacute;amos <strong><span class="codefrag">query</span></strong>, que usa los mismos par&aacute;metros, pero devuelve una lista de objetos.</p>
+<a name="N1013F"></a><a name="Consultas+de+actualizaci%C3%B3n"></a>
+<h3 class="underlined_5">Consultas de actualizaci&oacute;n</h3>
+<p>Las actualizaciones se hacen con el m&eacute;todo <span class="codefrag">update</span> del <em>template</em>. Por ejemplo, aqu&iacute; tenemos
+el c&oacute;digo que da de alta a un nuevo usuario:</p>
+<pre class="code">
+private static final String REGISTRAR_SQL = "insert into usuarios(login, password, fechaNac) values (?,?,?)";
+
+public void registrar(UsuarioTO uto) {      
+   this.jdbcTemplate.update(REGISTRAR_SQL, uto.getLogin(), uto.getPassword(), uto.getFechaNac());
+}
+    
+</pre>
+<p>
+<span class="codefrag">SimpleJdbcTemplate</span> carece de m&eacute;todos m&aacute;s "avanzados" que impliquen por ejemplo el uso de procedimientos 
+almacenados, de par&aacute;metros con nombres, etc. No obstante, "esconde" la referencia a otros templates que tienen todas
+estas posibilidades, y que pueden obtenerse llamando a los m&eacute;todos <span class="codefrag">getJdbcOperations()</span>
+y <span class="codefrag">getNamedParameterJdbcOperations()</span>. Se recomienda consultar la documentaci&oacute;n del API de Spring
+para m&aacute;s informaci&oacute;n sobre estas opciones "avanzadas".</p>
+</div>
+
+<a name="N1015F"></a><a name="Uso+de+JPA"></a>
+<h2 class="underlined_10">Uso de JPA</h2>
+<div class="section">
+<p>Veamos qu&eacute; soporte ofrece Spring al otro API de persistencia que hemos visto durante el curso: JPA. El caso
+de JPA es muy distinto al de JDBC, ya que es de mucho m&aacute;s alto nivel y m&aacute;s conciso que este &uacute;ltimo. Por eso, aunque
+Spring implementa un <em>template</em> para JPA, tambi&eacute;n se puede usar directamente el API sin escribir
+mucho m&aacute;s c&oacute;digo. Vamos a ver las posibilidades que ofrecen ambas opciones.</p>
+<a name="N1016B"></a><a name="Configurar+la+factor%C3%ADa+de+Entity+Managers"></a>
+<h3 class="underlined_5">Configurar la factor&iacute;a de Entity Managers</h3>
+<p>Independientemente de si vamos a usar <em>templates</em> o directamente el API JPA, lo primero
+es configurar la factor&iacute;a de Entity Managers. Como ya sabemos, dicha factor&iacute;a la gestiona la
+propia aplicaci&oacute;n en el caso de aplicaciones "de escritorio", y el servidor de aplicaciones
+en el caso de aplicaciones <em>enterprise</em>. Si no tenemos o queremos usar servidor
+de aplicaciones, podemos usar JPA en un contenedor web como Tomcat gracias a la infraestructura
+proporcionada por Spring. Aqu&iacute; tenemos los pasos necesarios para configurar el soporte JPA en versiones de Tomcat 
+superiores a la 5.5.20:</p>
+<ol>
+    
+<li>Por supuesto, lo primero es asegurarnos de que en el proyecto web hemos incluido las librer&iacute;as
+JPA necesarias, por ejemplo la implementaci&oacute;n JPA de Hibernate.</li>
+
+<li>Supondremos que tenemos solo una unidad de persistencia (en la documentaci&oacute;n de Spring se
+explica c&oacute;mo hacer la configuraci&oacute;n si hay varias). Necesitaremos el <span class="codefrag">persistence.xml</span>
+con la configuraci&oacute;n, en nuestro caso:
+<pre class="code">
+
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;persistence version="1.0" 
+   xmlns="http://java.sun.com/xml/ns/persistence"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+   xsi:schemaLocation="http://java.sun.com/xml/ns/persistence 
+                       http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"&gt;
+  &lt;persistence-unit name="TestSpring25" transaction-type="RESOURCE_LOCAL"&gt;
+    &lt;provider&gt;org.hibernate.ejb.HibernatePersistence&lt;/provider&gt;
+    &lt;non-jta-data-source/&gt;
+    &lt;class&gt;es.ua.jtech.spring.dominio.UsuarioTO&lt;/class&gt;
+    &lt;exclude-unlisted-classes&gt;true&lt;/exclude-unlisted-classes&gt;
+    &lt;properties/&gt;
+  &lt;/persistence-unit&gt;
+&lt;/persistence&gt;
+
+</pre>
+Como vemos en el listado anterior, usamos Hibernate como implementaci&oacute;n JPA y no usamos
+JTA para la transaccionalidad, ya que Tomcat actualmente no tiene soporte JTA.
+</li>
+
+<li>En JPA las clases est&aacute;n instrumentadas en tiempo de ejecuci&oacute;n (lo que en ingl&eacute;s se denomina
+<em>class weaving</em>). Tomcat no ofrece soporte directo para ello, por lo que debemos hacer dos cosas:</li>
+    
+<li>Cambiar el <em>classloader</em> usado por Tomcat. Lo habitual es definirlo en el fichero <span class="codefrag">context.xml</span>
+    propio de la aplicaci&oacute;n.
+(o en el <span class="codefrag">server.xml</span>, global). Si no tienes muy claro qu&eacute; son estos ficheros, mejor echarle un
+vistazo a la documentaci&oacute;n de Tomcat.
+<pre class="code">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Context path="/test"&gt;
+    <strong>&lt;Loader loaderClass="org.springframework.instrument.classloading.tomcat.TomcatInstrumentableClassLoader"
+            useSystemClassLoaderAsParent="false"/&gt;</strong>
+    &lt;!-- aqu&iacute; vendr&iacute;an m&aacute;s cosas, por ejemplo podr&iacute;a venir el DataSource
+         que usar&aacute; JPA --&gt;
+    ...     
+&lt;/Context&gt;
+    </pre>
+
+</li>
+    
+<li>Copiar en el directorio <span class="codefrag">lib</span> de Tomcat la librer&iacute;a <span class="codefrag">spring-tomcat-weaver.jar</span>, 
+incluida en la distribuci&oacute;n de Spring.</li>
+
+<li>Y por fin, ya podemos configurar la factor&iacute;a en el fichero XML de definici&oacute;n de beans. Para
+ello hay que definir un <em>bean</em> de la clase <span class="codefrag">LocalContainerEntityManagerFactoryBean</span>: 
+<pre class="code">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/jee
+        http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd"&gt;
+          
+
+            
+    &lt;!-- Aqu&iacute; definimos el DataSource, usando JNDI --&gt;
+    &lt;jee:jndi-lookup id="miDataSource" jndi-name="DStestSpring" resource-ref="true" /&gt;
+    
+    &lt;!-- Le decimos a Spring que autodetecte el servidor
+         e inicialice adecuadamente el "weaving" --&gt;
+    &lt;context:load-time-weaver/&gt;
+
+    &lt;!-- &iexcl;Por fin! esta es la dichosa factor&iacute;a. Necesita una referencia al Datasource --&gt;
+    &lt;bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"&gt;
+        &lt;property name="dataSource" ref="miDataSource"/&gt;
+    &lt;/bean&gt;
+    
+ &lt;/beans&gt;    
+</pre>
+
+</li>
+
+
+</ol>
+<p>Los pasos son distintos (y m&aacute;s sencillos) si usamos un servidor de aplicaciones. Consultar la
+documentaci&oacute;n de Spring para la configuraci&oacute;n en este caso.</p>
+<div class="frame warning">
+<div class="label">Aviso</div>
+<div class="content">
+ Hay ciertas cuestiones dependientes de la implementaci&oacute;n JPA. Por ejemplo, en caso de usar Hibernate
+ necesitaremos copiar al <span class="codefrag">lib</span> de Tomcat la librer&iacute;a <span class="codefrag">jboss-archive-browsing.jar</span>, incluida en la carpeta
+ <span class="codefrag">hibernate</span> de la distribuci&oacute;n de Spring. En caso de usar Toplink, habr&aacute; que hacer lo propio
+ con la librer&iacute;a <span class="codefrag">toplink-essentials.jar</span>.
+</div>
+</div>
+<a name="N101CC"></a><a name="JpaTemplate"></a>
+<h3 class="underlined_5">JpaTemplate</h3>
+<p>Esta clase facilita el trabajo con JPA, haci&eacute;ndolo m&aacute;s sencillo. No obstante, al ser JPA
+un API relativamente conciso, no es de esperar que ahorremos mucho c&oacute;digo. Vamos a verlo siguiendo
+con el ejemplo anterior. Aqu&iacute; tenemos el esqueleto de una nueva implementaci&oacute;n de <span class="codefrag">IUsuariosDAO</span> usando
+ahora <span class="codefrag">JpaTemplate</span> en lugar de <span class="codefrag">SimpleJdbcTemplate</span>:</p>
+<pre class="code">
+package es.ua.jtech.spring.datos;
+
+import es.ua.jtech.spring.dominio.UsuarioTO;
+import javax.persistence.EntityManagerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaTemplate;
+import org.springframework.stereotype.Repository;
+
+@Repository("JPATemplate")
+public class UsuariosDAOJPATemplate implements IUsuariosDAO {
+    <strong>private JpaTemplate template;</strong>
+    
+    <strong>@Autowired
+    public void setEntityManagerFactory(EntityManagerFactory emf) {
+        this.template = new JpaTemplate(emf);
+    }</strong>
+
+    //Falta la implementaci&oacute;n de este m&eacute;todo
+    public UsuarioTO login(String login, String password) {
+        ...
+    }
+
+    //Falta la implementaci&oacute;n de este m&eacute;todo
+    public void registrar(UsuarioTO uto) {
+        ...
+    }
+    
+    
+</pre>
+<p>Como se ve, para instanciar un <span class="codefrag">JpaTemplate</span> necesitamos un <span class="codefrag">EntityManagerFactory</span> (de
+ah&iacute; el trabajo que nos hab&iacute;amos tomado en la secci&oacute;n anterior).
+Como siempre, usamos la anotaci&oacute;n <span class="codefrag">@Autowired</span> para que Spring resuelva autom&aacute;ticamente
+la dependencia y la inyecte en este caso a trav&eacute;s del <em>setter</em>. Una vez creado el Template, se
+puede reutilizar en todos los m&eacute;todos ya que es <em>thread-safe</em>, al igual que en JDBC.</p>
+<p>Ahora veamos c&oacute;mo implementar los m&eacute;todos del DAO. En lugar de ver sistem&aacute;ticamente el API de
+<span class="codefrag">JpaTemplate</span>, nos limitaremos a mostrar un par de ejemplos. Primero, una consulta de selecci&oacute;n:</p>
+<pre class="code">
+private static String LOGIN_JPAQL = "SELECT u FROM UsuarioTO u WHERE u.login=?1 AND u.password=?2";
+
+public UsuarioTO login(String login, String password) {
+   List&lt;UsuarioTO&gt; lista;   
+   lista = this.template.find(LOGIN_JPAQL, login, password);
+   return (UsuarioTO) lista.get(0);
+}    
+</pre>
+<p>Obs&eacute;rvese que en el ejemplo anterior <strong>no es necesario instanciar ni cerrar ning&uacute;n Entity Manager</strong>,
+ya que la gesti&oacute;n la lleva a cabo el <em>template</em>. En cuanto al API de acceso a datos, como se ve, el m&eacute;todo <span class="codefrag">find</span> nos devuelve una lista de resultados y nos permite
+pasar par&aacute;metros a JPAQL gracias a los <em>varargs</em> de Java 5. En el ejemplo anterior
+hemos "forzado un poco" el API de <span class="codefrag">JpaTemplate</span> ya que <span class="codefrag">find</span>
+devuelve siempre una lista y en nuestro caso est&aacute; claro que no va a haber m&aacute;s de un 
+objeto como resultado. Se ha hecho as&iacute; para mantener el paralelismo con el ejemplo JDBC, aunque 
+aqu&iacute; quiz&aacute; lo m&aacute;s natural ser&iacute;a buscar por clave primaria. Tampoco se han tratado adecuadamente
+los errores, como que no haya ning&uacute;n resultado en la lista.</p>
+<p>Otros m&eacute;todos de <span class="codefrag">JpaTemplate</span> nos permiten trabajar con par&aacute;metros con nombre
+y con <em>named queries</em>.</p>
+<p>Las actualizaciones de datos no ofrecen gran ventaja con respecto al API directo de JPA, salvo la gesti&oacute;n
+autom&aacute;tica del Entity Manager, por ejemplo:</p>
+<pre class="code">
+public void registrar(UsuarioTO uto) {
+   this.template.persist(uto);
+}
+</pre>
+<div class="frame warning">
+<div class="label">Aviso</div>
+<div class="content">Spring gestiona autom&aacute;ticamente los Entity Manager en funci&oacute;n de la transaccionalidad de los m&eacute;todos.
+Si no declaramos ning&uacute;n tipo de transaccionalidad, como en el ejemplo anterior, podemos encontrarnos
+con que al hacer un <span class="codefrag">persist</span> no se hace el <span class="codefrag">commit</span> y el cambio no tiene efecto.
+En el &uacute;ltimo apartado del tema veremos c&oacute;mo especificar la transaccionalidad, pero repetimos que es importante
+darse cuenta de que <em>si no especificamos transaccionalidad, la gesti&oacute;n autom&aacute;tica
+de los entity manager no funcionar&aacute; adecuadamente</em>.</div>
+</div>
+<a name="N10236"></a><a name="Uso+directo+del+API+JPA"></a>
+<h3 class="underlined_5">Uso directo del API JPA</h3>
+<p>Usando directamente el API JPA tenemos la ventaja de que nuestro c&oacute;digo no depender&aacute;
+en absoluto de los APIs de Spring, haci&eacute;ndolo mucho m&aacute;s portable. De hecho, los propios
+desarrolladores de Spring valoran m&aacute;s esta portabilidad que la capa de abstracci&oacute;n que ofrece 
+<span class="codefrag">JpaTemplate</span> y recomiendan usar directamente el API JPA.
+</p>
+<p>De cualquier modo, las llamadas al API JPA siguen necesitando de un Entity Manager. &iquest;C&oacute;mo lo obtenemos
+en Spring?. Afortunadamente Spring soporta las anotaciones est&aacute;ndar <span class="codefrag">@PersistenceUnit</span>
+y <span class="codefrag">@PersistenceContext</span>, que como hemos visto en el m&oacute;dulo de EJB inyectan
+en nuestro c&oacute;digo un <span class="codefrag">EntityManagerFactory</span> y un <span class="codefrag">EntityManager</span>, respectivamente.
+La elecci&oacute;n de uno u otro depender&aacute; de si queremos gestionar manualmente los Entity Manager
+o vamos a usar la transaccionalidad declarativa de Spring y por tanto los puede gestionar este de manera
+autom&aacute;tica. Como por el momento no hemos tratado la transaccionalidad declarativa, veamos
+c&oacute;mo inyectar&iacute;amos la factor&iacute;a de Entity Managers y gestionar&iacute;amos estos manualmente:</p>
+<pre class="code">
+package es.ua.jtech.spring.datos;
+
+import es.ua.jtech.spring.dominio.UsuarioTO;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+
+@Repository("JPA")
+public class UsuariosDAOJPA  implements IUsuariosDAO  {
+    <strong>@PersistenceUnit
+    private EntityManagerFactory factoria;</strong>
+        
+   
+    public UsuarioTO login(String login, String password) {
+        EntityManager em = null;
+        try {
+            <strong>em = factoria.createEntityManager();
+            Query q = em.createQuery("SELECT u FROM UsuarioTO u WHERE" + 
+                                     "u.login=:login AND u.password=:password");
+            q.setParameter("login", login);
+            q.setParameter("password", password);
+            return (UsuarioTO) q.getSingleResult();</strong>
+        }
+        finally {
+            if (em!=null)
+                <strong>em.close();</strong>
+        }
+    }
+
+
+    public void registrar(UsuarioTO uto) {
+        EntityManager em=null;
+        
+        try {
+            <strong>em = factoria.createEntityManager();
+            em.getTransaction().begin();
+            em.persist(uto);
+            em.getTransaction().commit();</strong>
+        }
+        finally {
+            if (em!=null)
+                <strong>em.close();</strong>
+        }
+    }
+
+}
+</pre>
+<p>Hay que tener en cuenta que al no usar <em>templates</em> perdemos la jerarqu&iacute;a de
+excepciones de Spring, y nos llegar&aacute;n las propias de la implementaci&oacute;n JPA que estemos
+usando. Si queremos que Spring capture dichas excepciones y las transforme en excepciones
+de Spring, debemos definir un bean de la clase <span class="codefrag">PersistenceExceptionTranslationPostProcessor</span>
+en el XML de definici&oacute;n de beans:</p>
+<pre class="code">
+&lt;bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/&gt;        
+</pre>
+<p>Como se ve, lo m&aacute;s complicado de la definici&oacute;n anterior &iexcl;es el nombre de la clase!</p>
+</div>
+
+<a name="N10276"></a><a name="Transaccionalidad+declarativa"></a>
+<h2 class="underlined_10">Transaccionalidad declarativa</h2>
+<div class="section">
+<p>Abordamos aqu&iacute; la transaccionalidad porque es un aspecto &iacute;ntimamente ligado al acceso a datos, aunque se suele
+gestionar desde la capa de negocio en lugar de directamente en los DAOs. Vamos a ver qu&eacute; facilidades
+nos da Spring para controlar la transaccionalidad de forma declarativa.</p>
+<a name="N1027F"></a><a name="El+%22Transaction+Manager%22"></a>
+<h3 class="underlined_5">El "Transaction Manager"</h3>
+<p>Lo primero es escoger la estrategia de gesti&oacute;n de transacciones: si estamos en un servidor
+de aplicaciones podemos usar JTA, pero si no, tendremos que recurrir a la implementaci&oacute;n
+nativa del API de acceso a datos que estemos usando. Spring implementa clases propias para trabajar 
+con JTA o bien con transacciones JDBC o JPA. Continuaremos aqu&iacute; con la &uacute;ltima versi&oacute;n del ejemplo e intentaremos
+usar JPA dentro de Tomcat. La configuraci&oacute;n del XML con los beans ser&iacute;a algo como:</p>
+<pre class="code">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/jee
+        http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd
+        <strong>http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"&gt;</strong>
+          
+    
+    &lt;jee:jndi-lookup id="miDataSource" jndi-name="DStestSpring" resource-ref="true" /&gt;
+    
+    &lt;context:load-time-weaver/&gt;
+
+    &lt;bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"&gt;
+        &lt;property name="dataSource" ref="miDataSource"/&gt;
+    &lt;/bean&gt;
+    
+    &lt;!-- Elegimos el tipo apropiado de "Transaction Manager" (en nuestro caso, JPA) --&gt;
+    <strong>&lt;bean id="miTxManager" class="org.springframework.orm.jpa.JpaTransactionManager"&gt;
+        &lt;property name="entityManagerFactory" ref="emf"/&gt;
+    &lt;/bean&gt;</strong>
+    
+    &lt;!-- Decimos que para este Transaction Manager vamos a usar anotaciones --&gt;
+    <strong>&lt;tx:annotation-driven transaction-manager="miTxManager"/&gt;</strong>
+ &lt;/beans&gt;    
+</pre>
+<p>Donde como siempre, en negrita se destaca lo nuevo introducido en el fichero. En Spring, el 
+que gestiona las transacciones es el "Transaction Manager", del que hay varias implementaciones.
+Nosotros hemos escogido la JPA. En el caso particular de JPA el Transaction Manager debe recibir
+una referencia al Entity Manager Factory. Con la &uacute;ltima l&iacute;nea
+de XML decimos que vamos a usar anotaciones para definir transaccionalidad en lugar de XML.</p>
+<p>En el caso de estar usando JDBC, necesitar&iacute;amos una implementaci&oacute;n distinta de Transaction Manager
+que no referencia un Entity Manager Factory sino un DataSource.</p>
+<pre class="code">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/jee
+        http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd
+        <strong>http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"&gt;</strong>
+          
+    
+    <strong>&lt;!-- no necesitamos weaving ni Entity Manager Factory
+           para JDBC, pero s&iacute; DataSource --&gt;</strong>
+    &lt;jee:jndi-lookup id="miDataSource" jndi-name="DStestSpring" resource-ref="true" /&gt;
+    
+    <strong>&lt;!-- Elegimos el tipo apropiado de "Transaction Manager" (ahora JDBC) --&gt;
+    &lt;bean id="miTxManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"&gt;
+        &lt;property name="dataSource" ref="miDataSource"/&gt;
+    &lt;/bean&gt;</strong>
+    
+    &lt;!-- Decimos que para este Transaction Manager vamos a usar anotaciones --&gt;
+    <strong>&lt;tx:annotation-driven transaction-manager="miTxManager"/&gt;</strong>
+ &lt;/beans&gt;    
+</pre>
+<a name="N102AC"></a><a name="La+anotaci%C3%B3n+%40Transactional"></a>
+<h3 class="underlined_5">La anotaci&oacute;n @Transactional</h3>
+<p>Para entender mejor el uso de esta anotaci&oacute;n, vamos a plantear un ejemplo. Supongamos que al registrar un nuevo usuario lo debemos dar de alta en una tabla aparte para enviarle publicidad, pero si no es posible
+este alta de publicidad por lo que sea (direcci&oacute;n de email no v&aacute;lida, digamos) hay que anular toda la operaci&oacute;n.
+Supongamos que al detectar el error nuestro DAO lanzar&iacute;a un <span class="codefrag">DataAccessException</span>
+que, recordemos, es la ra&iacute;z de la jerarqu&iacute;a de excepciones de acceso a datos en Spring.</p>
+<p>Colocaremos <span class="codefrag">@Transactional</span> delante de los m&eacute;todos que queramos hacer transaccionales. Si
+la colocamos delante de una clase, estamos diciendo que <strong>todos</strong> sus m&eacute;todos
+deben ser transaccionales. En nuestro caso:</p>
+<pre class="code">
+//Faltan los imports, etc.
+...
+@Service
+public class GestorUsuarios {
+  @Autowired
+  @Qualifier("JPA")
+  private IUsuariosDAO udao;
+   
+  public void setUdao(IUsuariosDAO udao) {
+      this.udao = udao;
+  }
+  
+  <strong>@Transactional
+  public void registrar(UsuarioTO uto) {
+      udao.registrar(uto);
+      udao.altaPublicidad(uto);
+  }</strong>
+}
+</pre>
+<p>El comportamiento por defecto de <span class="codefrag">@Transactional</span> es <strong>realizar un <em>rollback</em>
+si se ha lanzado alguna excepci&oacute;n no comprobada</strong>. Recordemos que, precisamente, 
+<span class="codefrag">DataAccessException</span> era de ese tipo. Por tanto, se har&aacute; autom&aacute;ticamente un <em>rollback</em>
+en caso de error.
+</p>
+<div class="frame warning">
+<div class="label">Aviso</div>
+<div class="content">Todos los m&eacute;todos que deseamos hacer transaccionales deben ser p&uacute;blicos, no es
+posible usar <span class="codefrag">@Transactional</span> en m&eacute;todos <span class="codefrag">protected</span>
+o <span class="codefrag">private</span>. La raz&oacute;n es que cuando hacemos un m&eacute;todo transaccional y lo llamamos
+desde cualquier otra clase quien est&aacute; recibiendo la llamada en realidad es el gestor de transacciones.
+El gestor comienza y acaba las transacciones y "entre medias" llama a nuestro m&eacute;todo de acceso a datos, pero eso no lo podr&aacute; hacer si este no es <span class="codefrag">public</span>.
+Por la misma raz&oacute;n, la anotaci&oacute;n no funcionar&aacute; si el m&eacute;todo transaccional es llamado desde la misma clase que lo define, aunque
+esto &uacute;ltimo se puede solucionar haciendo la configuraci&oacute;n adecuada.</div>
+</div>
+<p>
+<span class="codefrag">@Transactional</span> tiene varias implicaciones por defecto (aunque son totalmente
+configurables, como ahora veremos):</p>
+<ul>
+
+<li>La propagaci&oacute;n de la transacci&oacute;n es REQUIRED. Esto tiene el mismo significado que en EJBs.</li>
+
+<li>Cualquier excepci&oacute;n no comprobada dispara el <em>rollback</em> y cualquiera comprobada, no.</li>
+
+<li>La transacci&oacute;n es de lectura/escritura (en algunos APIs de acceso a datos, por ejemplo, Hibernate, las
+transacciones de "solo lectura" son mucho m&aacute;s eficientes).</li>
+
+<li>El <em>timeout</em> para efectuar la operaci&oacute;n antes de que se haga <em>rollback</em>
+es el que tenga por defecto el API usado (no todos soportan <em>timeout</em>).</li>
+
+</ul>
+<p>Todo este comportamiento se puede configurar a trav&eacute;s de los atributos de la anotaci&oacute;n, como se
+muestra en la siguiente tabla:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+
+<th colspan="1" rowspan="1">Propiedad</th> <th colspan="1" rowspan="1">Tipo</th> <th colspan="1" rowspan="1">Significado</th>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">propagation</td><td colspan="1" rowspan="1">enum: Propagation</td><td colspan="1" rowspan="1">nivel de propagaci&oacute;n (opcional)</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">isolation</td><td colspan="1" rowspan="1">enum: Isolation</td><td colspan="1" rowspan="1">nivel de aislamiento (opcional)</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">readOnly</td><td colspan="1" rowspan="1">boolean</td><td colspan="1" rowspan="1">solo de lectura vs. de lectura/escritura</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">timeOut</td><td colspan="1" rowspan="1">int (segundos)</td><td colspan="1" rowspan="1"></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">rollbackFor</td><td colspan="1" rowspan="1">array de objetos Throwable</td><td colspan="1" rowspan="1">clases de excepci&oacute;n que deben causar rollback</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">rollbackForClassName</td><td colspan="1" rowspan="1">array con nombres de objetos Throwable</td><td colspan="1" rowspan="1">nombres de clases de excepci&oacute;n que deben causar rollback </td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">noRollbackFor</td><td colspan="1" rowspan="1">array de objetos Throwable</td><td colspan="1" rowspan="1">clases de excepci&oacute;n que no deben causar rollback</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">noRollbackForClassName</td><td colspan="1" rowspan="1">array con nombres de objetos Throwable</td><td colspan="1" rowspan="1">nombres de clases de excepci&oacute;n que no deben causar rollback</td>
+
+</tr>
+
+</table>
+<p>Por ejemplo supongamos que al producirse un error en la llamada a <span class="codefrag">altaPublicidad()</span>
+lo que se genera es una excepci&oacute;n propia de tipo <span class="codefrag">AltaPublicidadException</span>, que es comprobada
+pero queremos que cause un <em>rollback</em>:</p>
+<pre class="code">
+@Transactional(<strong>rollbackFor=AltaPublicidadException.class</strong>)
+public void registrar(UsuarioTO uto) {
+      udao.registrar(uto);
+      udao.altaPublicidad(uto);
+}
+</pre>
+<p>Finalmente, destacar que podemos poner transaccionalidad "global" a una clase
+y en cada uno de los m&eacute;todos especificar atributos distintos:</p>
+<pre class="code">
+//Faltan los imports, etc.
+...
+@Service
+//Vale, el REQUIRED no har&iacute;a falta ponerlo porque es la opci&oacute;n
+//por defecto, pero esto es solo un humilde ejemplo!
+<strong>@Transactional(propagation=Propagation.REQUIRED)</strong>
+public class GestorUsuarios {
+  @Autowired
+  @Qualifier("JPA")
+  private IUsuariosDAO udao;
+   
+  public void setUdao(IUsuariosDAO udao) {
+      this.udao = udao;
+  }
+  
+  <strong>@Transactional(readOnly=true)</strong>
+  public UsuarioTO login(String login, String password) {
+      return udao.login(login, password);
+  }
+  
+  <strong>@Transactional(rollbackFor=AltaPublicidadException.class)</strong>
+  public void registrar(UsuarioTO uto) {
+      udao.registrar(uto);
+      udao.altaPublicidad(uto);
+  }
+  
+  public void eliminarUsuario(UsuarioTO uto) {
+       udao.eliminar(uto);
+  }
+}
+    
+</pre>
+<p>N&oacute;tese que <span class="codefrag">eliminarUsuario</span> es tambi&eacute;n transaccional, heredando las propiedades
+transaccionales de la clase.</p>
+<a name="N103CA"></a><a name="Transaccionalidad+y+uso+directo+de+JDBC"></a>
+<h3 class="underlined_5">Transaccionalidad y uso directo de JDBC</h3>
+<p>Si usamos el API JDBC directamente, sin ninguna de las facilidades que nos da Spring, se nos
+va a plantear un problema con la transaccionalidad declarativa: si cada m&eacute;todo del DAO abre y cierra
+una conexi&oacute;n con la BD (lo m&aacute;s habitual), va a ser imposible hacer un rollback de las operaciones que hagan distintos
+m&eacute;todos, ya que la conexi&oacute;n ya se habr&aacute; cerrado. Para evitar este problema, Spring nos proporciona
+la clase <span class="codefrag">DataSourceUtils</span>, que nos permite "liberar" la conexi&oacute;n desde nuestro punto de vista, 
+pero mantenerla abierta autom&aacute;ticamente gracias a Spring, hasta que se cierre la transacci&oacute;n y no sea necesaria m&aacute;s.
+Su uso es muy sencillo. Cada vez que queremos obtener una conexi&oacute;n hacemos:</p>
+<pre class="code">
+//El DataSource se habr&iacute;a resuelto por inyecci&oacute;n de dependencias
+@Autowired
+private DataSource ds;
+    
+...
+<strong>Connection con = DataSourceUtils.getConnection(ds);</strong>
+
+</pre>
+<p>Y cada vez que queremos liberarla:</p>
+<pre class="code">
+DataSourceUtils.releaseConnection(con, ds);    
+</pre>
+<p>N&oacute;tese que al liberar la conexi&oacute;n no se puede generar una SQLException, al contrario de lo que pasa cuando
+cerramos con el <span class="codefrag">close</span> de JDBC, lo que al menos nos ahorra un <span class="codefrag">catch</span>.</p>
+</div>
+
+<p class="pageBreakAfter"> 
+</p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2006-2007 Depto. CCIA</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,692 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Struts</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Proyecto de Integracion" src="images/baner_j2ee_der.gif" title="Proyecto de Integracion"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="external" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="external" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_1.1', 'skin/')" id="menu_1.1Title" class="menutitle">Proyecto SIGEM</div>
+<div id="menu_1.1" class="menuitemgroup">
+<div class="menuitem">
+<a href="index.html" title="Proyecto de Integraci&oacute;n">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.2', 'skin/')" id="menu_1.1.2Title" class="menutitle">Teor&iacute;a</div>
+<div id="menu_1.1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion00-apuntes.html" title="Sesi&oacute;n 0: Puesta en marcha del SIGEM">Sesi&oacute;n 0</a>
+</div>
+<div class="menuitem">
+<a href="sesion01-apuntes.html" title="Sesi&oacute;n 1: CVS, base de datos y pruebas">Sesi&oacute;n 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html" title="Sesi&oacute;n 2: Despliegue y componentes web">Sesi&oacute;n 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html" title="Sesi&oacute;n 3: Persistencia Java">Sesi&oacute;n 3</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion04-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Struts</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Herramientas+para+el+trabajo+con+Struts%3A+JBoss+Tools">Herramientas para el trabajo con Struts: JBoss Tools</a>
+</li>
+<li>
+<a href="#Struts+en+SIGEM.+El+m%C3%B3dulo+de+administraci%C3%B3n+del+registro">Struts en SIGEM. El m&oacute;dulo de administraci&oacute;n del registro</a>
+<ul class="minitoc">
+<li>
+<a href="#Importaci%C3%B3n+y+configuraci%C3%B3n+del+workspace">Importaci&oacute;n y configuraci&oacute;n del workspace</a>
+</li>
+<li>
+<a href="#Configuraci%C3%B3n+de+JBoss+Tools">Configuraci&oacute;n de JBoss Tools</a>
+</li>
+<li>
+<a href="#Organizaci%C3%B3n+del+c%C3%B3digo+de+Struts">Organizaci&oacute;n del c&oacute;digo de Struts</a>
+</li>
+<li>
+<a href="#Uso+de+taglibs">Uso de taglibs</a>
+</li>
+<li>
+<a href="#Uso+de+ActionForms">Uso de ActionForms</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Ejercicio+propuesto%3A+validaci%C3%B3n+de+datos">Ejercicio propuesto: validaci&oacute;n de datos</a>
+</li>
+<li>
+<a href="#Ejercicio+propuesto%3A+extractos">Ejercicio propuesto: extractos</a>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="Herramientas+para+el+trabajo+con+Struts%3A+JBoss+Tools"></a>
+<h2 class="underlined_10">Herramientas para el trabajo con Struts: JBoss Tools</h2>
+<div class="section">
+<p>Como hemos visto en las anteriores sesiones dedicadas a Struts, el <em>framework</em>
+presenta una serie de problemas, debido sobre todo a su antig&uuml;edad. Aunque la filosof&iacute;a b&aacute;sica
+de MVC es tan v&aacute;lida y sigue tan vigente en aplicaciones web como cuando Struts apareci&oacute;, la implementaci&oacute;n
+que hace Struts de &eacute;sta es poco flexible y sobre todo farragosa.</p>
+<p>En este contexto es &uacute;til disponer de herramientas integradas en el IDE que nos ayuden
+a editar y verificar de manera m&aacute;s c&oacute;moda los m&uacute;ltiples ficheros de configuraci&oacute;n de Struts. Una vez
+asimilado el procedimiento de trabajo con Struts, podemos pasar a usar herramientas que nos permitan
+aumentar la productividad. Evidentemente estas herramientas no solucionan los problemas de Struts, pero
+al menos ocultan la complejidad y validan autom&aacute;ticamente ciertos aspectos tediosos de comprobar a mano.</p>
+<p>De entre los <em>plugins</em> de Struts 1.x disponibles para Eclipse, probablemente el m&aacute;s completo sea
+<a class="external" href="http://www.jboss.org/tools/">JBoss Tools</a>, un conjunto de plugins que aunque desarrollados bajo el "paraguas" de JBoss
+no sirven &uacute;nicamente para este servidor. En realidad proporcionan  un completo entorno de desarrollo web
+para editar visualmente ficheros de configuraci&oacute;n, JSPs, HTML y trabajar con Struts, JSF y otras
+tecnolog&iacute;as "est&aacute;ndares" en JavaEE, adem&aacute;s de algunas propias de JBoss.</p>
+<p>Para instalar los plugins, ir a la opci&oacute;n <span class="codefrag">Help &gt; Software updates...</span> del men&uacute; de Eclipse. En el cuadro de di&aacute;logo pulsar
+sobre el bot&oacute;n <span class="codefrag">Add site...</span>. Hay que a&ntilde;adir el sitio <span class="codefrag">http://download.jboss.org/jbosstools/updates/development</span>.
+En el momento de imprimir estos apuntes, la versi&oacute;n de desarrollo (en beta) es la necesaria para el Eclipse 3.4.
+Ser&aacute; necesario instalar como m&iacute;nimo los plugins:</p>
+<ul>
+
+<li>JBossAs Tools</li>
+
+<li>RichFaces VPE Feature</li>
+
+<li>Struts tools</li>
+
+</ul>
+</div>
+
+<p>Una vez terminada la descarga de los plugins, Eclipse nos pedir&aacute; confirmaci&oacute;n para rearrancar. En el siguiente apartado
+veremos el uso de dichos plugins.</p>
+
+<a name="N10041"></a><a name="Struts+en+SIGEM.+El+m%C3%B3dulo+de+administraci%C3%B3n+del+registro"></a>
+<h2 class="underlined_10">Struts en SIGEM. El m&oacute;dulo de administraci&oacute;n del registro</h2>
+<div class="section">
+<p>Struts se usa en m&uacute;ltiples proyectos de SIGEM. Probablemente la manera m&aacute;s sencilla
+de localizarlos sea a trav&eacute;s del fichero de configuraci&oacute;n <span class="codefrag">struts-config.xml</span>,
+que normalmente reside en <span class="codefrag">WEB-INF</span>. En realidad, como ya vimos, el nombre y 
+localizaci&oacute;n de este fichero es totalmente configurable, pero habitualmente no se suele
+ cambiar. Un simple <span class="codefrag">find -name struts-config.xml</span> nos da una lista con 
+ los proyectos que usan Struts.</p>
+<pre class="code">
+./SIGEM_AdministracionWeb/WEB-INF/struts-config.xml
+./SIGEM_TramitacionWeb/WEB-INF/struts-config.xml
+./SIGEM_ArchivoWeb/WEB-INF/struts-config.xml
+./SIGEM_RepositoriosDocumentalesWeb/WEB-INF/struts-config.xml
+./SIGEM_RegistroTelematicoWeb/WEB-INF/struts-config.xml
+./SIGEM_PagoElectronicoWeb/WEB-INF/struts-config.xml
+./SIGEM_ConsultaWeb/WEB-INF/struts-config.xml
+./SIGEM_RegistroPresencialAdminWeb/WEB-INF/struts-config.xml
+./SIGEM_GeoLocalizacionWeb/WEB-INF/struts-config.xml
+./SIGEM_EstructuraWeb/WEB-INF/struts-config.xml
+./SIGEM_CatalogoTramitesWeb/WEB-INF/struts-config.xml
+./SIGEM_AutenticacionAdministracionWeb/WEB-INF/struts-config.xml
+./SIGEM_CatalogoProcedimientosWeb/WEB-INF/struts-config.xml
+./SIGEM_AutenticacionWeb/WEB-INF/struts-config.xml
+./SIGEM_CertificacionWeb/WEB-INF/struts-config.xml
+./SIGEM_AutenticacionBackOfficeWeb/WEB-INF/struts-config.xml
+./SIGEM_AdministracionUsuariosWeb/WEB-INF/struts-config.xml
+./SIGEM_NotificacionWeb/WEB-INF/struts-config.xml 
+ </pre>
+<p> En todos los casos, la versi&oacute;n usada parece ser la 1.1, probablemente
+ por el tiempo que ha llevado desarroll&aacute;ndose SIGEM.</p>
+<a name="N1005A"></a><a name="Importaci%C3%B3n+y+configuraci%C3%B3n+del+workspace"></a>
+<h3 class="underlined_5">Importaci&oacute;n y configuraci&oacute;n del workspace</h3>
+<p>De entre los m&oacute;dulos que usan Struts, a priori el m&aacute;s relacionado con lo que hemos visto de SIGEM
+ hasta el momento es el de administraci&oacute;n del registro.</p>
+<p>El workspace incluido en los enlaces de la sesi&oacute;n contiene los proyectos necesarios para ejecutar dicho m&oacute;dulo. Al igual
+ que en otras sesiones, ha sido necesario corregir deficiencias en la configuraci&oacute;n original de los proyectos
+ y a&ntilde;adir dependencias que no estaban especificadas. </p>
+<div class="frame warning">
+<div class="label">Aviso</div>
+<div class="content">
+ En el workspace que se os deja disponible, se ha desactivado la comprobaci&oacute;n de sintaxis en los JSPs. Al tenerla
+ activada se generaban muchos errores, siendo bastantes "ficticios". El problema se debe en parte a un <em>bug</em> de la versi&oacute;n actual
+ de Eclipse Ganymede y en parte a ciertos usos "no del todo apropiados" de c&oacute;digo Java en los JSP del m&oacute;dulo. Para
+ activar la validaci&oacute;n, ir a las propiedades del proyecto (bot&oacute;n derecho sobre la carpeta del proyecto,
+  opci&oacute;n <span class="codefrag">Properties</span>) y luego al apartado <span class="codefrag">Validation</span>. En el momento de escribir estas l&iacute;neas, al parecer se espera una SR2 de Eclipse Ganymede
+  que solucione estos problemas. 
+ </div>
+</div>
+<p>Como es habitual, para probar el proyecto, hay que arrancar primero el servidor de base de datos</p>
+<pre class="code">
+&gt; su postgres
+&gt; pg_ctl start -D /usr/local/pgsql/data
+ </pre>
+<p>Una vez hecho esto, ponemos en marcha Tomcat desde Eclipse y desde un navegador (vale tambi&eacute;n Firefox) accedemos
+ a la URL:</p>
+<pre class="code">
+ http://localhost:8080/SIGEM_RegistroPresencialAdminWeb
+ </pre>
+<p>Aparecer&aacute; la habitual pantalla de login en la que hay que entrar como <span class="codefrag">administrador</span> con
+ contrase&ntilde;a <span class="codefrag">administrador</span>. Si todo va bien, pasados unos momentos (y tras aceptar una serie de avisos
+ relacionados con la validez de los certificados) accederemos al m&oacute;dulo. Debe aparecer una pantalla con un listado
+ de las oficinas de registro existentes.</p>
+<p>El m&oacute;dulo permite el alta, baja y modificaci&oacute;n de usuarios de registro, libros (entrada y salida), oficinas y unidades
+ administrativas.</p>
+<a name="N1008D"></a><a name="Configuraci%C3%B3n+de+JBoss+Tools"></a>
+<h3 class="underlined_5">Configuraci&oacute;n de JBoss Tools</h3>
+<p>Para trabajar m&aacute;s c&oacute;modamente con Struts se recomienda instalar JBoss Tools siguiendo el procedimiento
+ descrito anteriormente.</p>
+<p>Una vez hecha la instalaci&oacute;n, es necesario configurar el proyecto para que use los plugins, para lo que hay que:</p>
+<ol>
+ 
+<li>Pulsar con el bot&oacute;n derecho sobre el proyecto y seleccionar la opci&oacute;n <span class="codefrag">JBoss Tools &gt; Add Struts Capabilities</span>
+</li>
+ 
+<li>Aparecer&aacute; un asistente para confirmar la localizaci&oacute;n de los ficheros de configuraci&oacute;n de Struts. Como en SIGEM
+ tanto los nombres como la localizaci&oacute;n son los habituales, podemos aceptar las opciones que nos dar&aacute; por defecto, excepto
+ en la &uacute;ltima pantalla</li>
+ 
+<li>En esta &uacute;ltima pantalla aparecer&aacute; un error indicando que el proyecto ya est&aacute; desplegado en Tomcat. Hay que desmarcar la casilla "Tomcat 5.0 server at localhost" que aparece en la parte inferior.</li>
+ 
+<li>Se nos pedir&aacute; permiso para mostrar una nueva perspectiva llamada "Web development", propia
+ de JBoss Tools y en realidad muy parecida a la Java EE. </li>
+ 
+</ol>
+<p>Observar&eacute;is que al hacer esto <strong>han aparecido 5 nuevos errores en el proyecto</strong>. Son errores que
+ ya estaban en el <span class="codefrag">struts-config.xml</span> pero que no aparec&iacute;an porque no hab&iacute;a ning&uacute;n validador que los detectara. Por ahora
+ podemos ignorarlos, ya que no son cr&iacute;ticos (de hecho son atributos que "sobran" en ciertas etiquetas y que Struts est&aacute; ignorando
+ durante la ejecuci&oacute;n de la aplicaci&oacute;n).
+ </p>
+<a name="N100B4"></a><a name="Organizaci%C3%B3n+del+c%C3%B3digo+de+Struts"></a>
+<h3 class="underlined_5">Organizaci&oacute;n del c&oacute;digo de Struts</h3>
+<p>Como ya hemos comentado, la organizaci&oacute;n de los ficheros de configuraci&oacute;n, librer&iacute;as, etc.  de Struts  en SIGEM
+ es la habitual en dicho framework. Vamos a ver la estructura del c&oacute;digo propiamente dicha</p>
+<p>Para comprobar c&oacute;mo funciona la parte de Struts del m&oacute;dulo es recomendable hacer una peque&ntilde;a traza de la ejecuci&oacute;n. Los editores
+ de JBoss Tools nos ayudar&aacute;n en la tarea, mostr&aacute;ndonos los ficheros de configuraci&oacute;n de forma gr&aacute;fica y m&aacute;s intuitiva
+ que en modo texto.</p>
+<ol>
+ 
+<li>En el apartado <span class="codefrag">welcome-files</span> del <span class="codefrag">web.xml</span> podemos observar que la p&aacute;gina principal
+ es <span class="codefrag">jsp/index.jsp</span>. Esta p&aacute;gina act&uacute;a simplemente de redirector a <span class="codefrag">inicio.do</span> (tambi&eacute;n coloca el identificador
+ de la entidad actual como un par&aacute;metro m&aacute;s de la petici&oacute;n a inicio.do)</li>
+ 
+<li>Como era de esperar, las URL del tipo <span class="codefrag">.do</span> son acciones de Struts (se puede comprobar
+ el mapeo en el <span class="codefrag">web.xml</span>). Por tanto, debemos buscar la acci&oacute;n con path <span class="codefrag">/inicio</span>
+ en el <span class="codefrag">struts-config.xml</span>.
+ <p>Al hacer doble clic en el <span class="codefrag">struts-config.xml</span> se abrir&aacute; el editor de JBoss Tools en lugar del habitual
+ editor XML de Eclipse. Este editor tiene tres modos en el que podemos ver la configuraci&oacute;n. El modo por defecto es el 
+ gr&aacute;fico o <span class="codefrag">diagram</span>. Con las solapas de la parte inferior del editor podemos cambiar el modo de visualizaci&oacute;n:</p>
+ 
+<ul>
+ 
+<li>
+<span class="codefrag">Diagram</span>: muestra el flujo de navegaci&oacute;n entre acciones y JSPs de forma gr&aacute;fica. Para buscar d&oacute;nde est&aacute; la acci&oacute;n <span class="codefrag">/inicio</span>
+ hacemos clic sobre el editor con el bot&oacute;n derecho del rat&oacute;n y en el men&uacute; contextual seleccionamos <span class="codefrag">select element</span>. Buscaremos
+ la acci&oacute;n deseada en la lista que aparece y el diagrama se mover&aacute; para mostrarla:
+ <p>
+<img alt="vista diagrama" src="imagenes/diagram.png" width="600"></p>
+ 
+<p>Podemos observar que la acci&oacute;n tiene un forward llamado <span class="codefrag">success</span> que lleva a la acci&oacute;n <span class="codefrag">/listadoOficinas</span>. Podemos
+ ver el c&oacute;digo java de la acci&oacute;n haciendo doble clic sobre su representaci&oacute;n en el diagrama</p>
+ 
+</li>
+ 
+<li>El modo <span class="codefrag">tree</span> nos permite ver una "ficha" por cada acci&oacute;n en la que aparece su configuraci&oacute;n. Es simplemente
+ una forma m&aacute;s sencilla de editar la acci&oacute;n que a trav&eacute;s del XML.</li>
+ 
+<li>Finalmente, el modo <span class="codefrag">Source</span> nos muestra directamente el XML.</li>
+ 
+</ul>
+ 
+</li>
+ 
+<li>Obs&eacute;rvese que la clase <span class="codefrag">InicioAction</span> es una subclase de otra de SIGEM (<span class="codefrag">RPAdminWebAction</span>) que a su vez
+ hereda del <span class="codefrag">Action</span> de Struts. <span class="codefrag">RPAdminWebAction</span> se encarga de comprobar los permisos de acceso y por eso 
+ todas las acciones del m&oacute;dulo heredan de ella. <span class="codefrag">InicioAction</span> no hace nada y se limita a devolver <span class="codefrag">success</span>.</li>
+ 
+<li>Dicho resultado lleva a <span class="codefrag">ListadoOficinasAction</span> que localiza un objeto de la capa de negocio encargado
+ de las operaciones de administraci&oacute;n. Dicho objeto implementa el interfaz <span class="codefrag">ServicioRPAdmin</span> y en este caso
+ lo necesitamos para listar las oficinas de registro.</li>
+ 
+<li>El listado de oficinas se modela en SIGEM como un objeto de la clase <span class="codefrag">Oficinas</span>. Dicho objeto simplemente encapsula
+ una lista de objetos de la clase <span class="codefrag">Oficina</span>. El objeto se coloca como un atributo de <span class="codefrag">request</span> llamado <span class="codefrag">oficinas</span>. Finalmente se
+ devuelve el forward <span class="codefrag">success</span>
+</li>
+ 
+<li>Como se puede ver en el diagrama del <span class="codefrag">struts-config.xml</span> dicho forward nos lleva a <span class="codefrag">/jsp/listadoOficinas.jsp</span>.</li>
+ 
+<li>En este JSP (y en otros del m&oacute;dulo) se hace un uso extensivo de las taglibs de Struts y de alguna taglib adicional. Vamos a verlo con un poco m&aacute;s de detalle.</li>
+ 
+</ol>
+<a name="N1014F"></a><a name="Uso+de+taglibs"></a>
+<h3 class="underlined_5">Uso de taglibs</h3>
+<p>Como se ha comentado, SIGEM hace un uso extensivo de varias taglibs de Struts. Quiz&aacute; demasiado extensivo, probablemente debido a la antig&uuml;edad
+ del software, ya que como vimos, algunas taglibs dejaron de estar recomendadas por los propios desarrolladores de Struts
+ tras la aparici&oacute;n de JSTL.</p>
+<p>Como ya hemos visto, un uso t&iacute;pico de las taglibs de Struts es en la <strong>internacionalizaci&oacute;n</strong>.
+ En la p&aacute;gina <span class="codefrag">/jsp/listadoOficinas.jsp</span> se hace uso en varios lugares de <span class="codefrag">bean:message</span>
+ para mostrar mensajes internacionalizados. Buscando en el <span class="codefrag">struts-config.xml</span> podemos ver d&oacute;nde est&aacute;n 
+ almacenados los ficheros con los mensajes. <strong>Como ejercicio</strong> se recomienda hacer esta b&uacute;squeda teniendo en cuenta que el nombre
+ f&iacute;sico de los ficheros ser&aacute; el mostrado aqu&iacute; con el a&ntilde;adido del c&oacute;digo del locale y la extensi&oacute;n <span class="codefrag">.properties</span>, y que 
+ dichos ficheros deben residir en el <em>classpath</em> (es decir, que se colocan en las carpetas de c&oacute;digo fuente).
+ </p>
+<p>La p&aacute;gina usa otra taglib no propia de Struts pero muy conocida en aplicaciones web Java: <a class="external" href="http://displaytag.sf.net">displaytag</a>. Esta
+ librer&iacute;a se usa para mostrar tablas de datos. Veamos de la l&iacute;nea 56 en adelante de <span class="codefrag">/jsp/listadoOficinas.jsp</span>.</p>
+<pre class="code">
+ 
+ &lt;display:table name="oficinas.lista" uid="fila" class="table-display-tag"
+	requestURI="/listadoOficinas.do" class="tablaListado" sort="page" 
+	style="width:100%"&gt;
+	&lt;display:column property="codigo" 
+                    titleKey="ieci.tecdoc.sgm.rpadmin.oficinas.codigo"
+                    sortable="false" style="width: 15%;"/&gt;
+...	    			
+
+ </pre>
+<p>En displaytag, cada fila de la tabla se saca de un objeto de una colecci&oacute;n. En nuestro caso, <span class="codefrag">oficinas.lista</span>
+ es una expresi&oacute;n en EL que se refiere al m&eacute;todo <span class="codefrag">getLista()</span> del atributo <span class="codefrag">oficina</span>
+ que la acci&oacute;n coloc&oacute; en el &aacute;mbito de request. Dicho m&eacute;todo devuelve un <span class="codefrag">List</span> de <span class="codefrag">Oficina</span>
+</p>
+<p>displaytag prev&eacute; la posibilidad de ordenar las filas clicando en el encabezado de cada columna. Por desgracia, esta
+ ordenaci&oacute;n se supone implementada en el servidor. El m&eacute;todo que la realiza es el llamado a trav&eacute;s de la URL
+ <span class="codefrag">requestURI</span>.</p>
+<p>Como es de esperar, cada columna se saca de un getter de la clase <span class="codefrag">Oficina</span>. Aqu&iacute; solo mostramos
+ el primero. El atributo <span class="codefrag">property</span> indica la propiedad a mostrar (a trav&eacute;s del getter). 
+ La propiedad <span class="codefrag">titleKey</span> representa la clave en el fichero de mensajes de Struts. Displaytags accede
+ autom&aacute;ticamente al fichero apropiado trabajando en combinaci&oacute;n con Struts. Finalmente, el atributo <span class="codefrag">sortable</span>
+ indica que no podemos clicar en la cabecera de la columna para solicitar al servidor la reordenaci&oacute;n (ya que la acci&oacute;n 
+ de listar oficinas no la implementa).</p>
+<a name="N101A5"></a><a name="Uso+de+ActionForms"></a>
+<h3 class="underlined_5">Uso de ActionForms</h3>
+<p>Como es habitual en Struts, las operaciones que implican edici&oacute;n de datos usan ActionForms. Como ejemplo,
+ vamos a ver la edici&oacute;n de los datos de una oficina de registro.</p>
+<p> La edici&oacute;n de oficinas de registro la implementa la acci&oacute;n
+ en el path <span class="codefrag">/editarOficina</span>. Podemos observar en el <span class="codefrag">struts-config.xml</span>
+ que dicha acci&oacute;n aparece asociada al ActionForm de nombre simb&oacute;lico <span class="codefrag">oficinaForm</span>. </p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">En los editores visuales de JBoss Tools, podemos acceder directamente al c&oacute;digo Java del actionform
+  pulsando con el bot&oacute;n derecho sobre la acci&oacute;n y seleccionando la opci&oacute;n <span class="codefrag">Open form-bean source</span>
+</div>
+</div>
+<p>Podemos ver que la clase que implementa el actionform es <span class="codefrag">OficinaForm</span> y que hereda
+  de <span class="codefrag">ValidatorActionForm</span>, lo que indica que se est&aacute; usando el plugin validator para la validaci&oacute;n 
+  de los campos. Obs&eacute;rvese tambi&eacute;n que debido a las limitaciones ya discutidas de los actionforms, todas las propiedades
+  son de tipo String.</p>
+<p> La acci&oacute;n de editar oficina se implementa en la clase java <span class="codefrag">EditarOficinaAction</span>
+</p>
+<ul>
+  
+<li>Se obtienen
+  los valores para los cuadros desplegables del formulario de edici&oacute;n, que se colocan en request</li>
+  
+<li>Con el "id" de la oficina se obtiene un objeto de negocio <span class="codefrag">OficinaBean</span> a trav&eacute;s
+  del <span class="codefrag">ServicioRPAdmin</span>. Como ya hemos visto durante las sesiones de Struts, los actionforms y los
+  objetos de negocio son distintos, b&aacute;sicamente por la limitaci&oacute;n en los tipos de datos del actionform, pero tambi&eacute;n
+  porque un actionform representa el interfaz y no el negocio. Sea como sea, esto nos obliga a copiar los datos
+  desde el objeto de negocio (<span class="codefrag">OficinaBean</span>) al actionform (<span class="codefrag">OficinaForm</span>). En SIGEM se usa para
+  esta tarea la librer&iacute;a <span class="codefrag">BeanUtils</span>, el mismo m&eacute;todo que hemos visto en el m&oacute;dulo de Struts y que de hecho es el 
+  m&aacute;s habitual en aplicaciones que usan Struts 1.x.</li>
+  
+</ul>
+<p>La p&aacute;gina de edici&oacute;n de oficina usa, como era de esperar, las etiquetas de la taglib HTML de struts para
+  rellenar los valores de los campos del formulario.</p>
+<p>La validaci&oacute;n se hace a trav&eacute;s del plugin validator, lo que quiere decir que est&aacute; definida en <span class="codefrag">validation.xml</span>.
+  Podemos observar en dicho archivo los campos que se est&aacute;n validando. En este caso el <span class="codefrag">name</span> del form
+  se refiere al path de la acci&oacute;n en lugar de al actionform (ambas formas son igualmente v&aacute;lidas en Struts, aunque nosotros
+  hasta ahora solo hab&iacute;amos usado la segunda).</p>
+<p>Finalmente, la clase <span class="codefrag">GuardarOficinaAction</span> es la que se encarga de recibir el actionform con
+  los datos del formulario y guardar el objeto de negocio. La llamada a dicha acci&oacute;n se realiza a trav&eacute;s de javascript, por
+  lo que no aparece correctamente reflejada en el editor visual de JBoss Tools. En la acci&oacute;n se realiza el paso inverso
+  a la edici&oacute;n, es decir, la copia desde el actionform al objeto de negocio mediante <span class="codefrag">BeanUtils</span>.</p>
+<div class="frame warning">
+<div class="label">Aviso</div>
+<div class="content">Quiz&aacute; el momento m&aacute;s apropiado para corregir los errores del struts-config sea ahora que hablamos de los actionforms,
+  ya que est&aacute;n relacionados con ellos. En concreto hay varias acciones que tienen especificado un <span class="codefrag">scope</span>
+  para el ActionForm sin tener en realidad un ActionForm asociado (!?).</div>
+</div>
+</div>
+
+
+<a name="N10202"></a><a name="Ejercicio+propuesto%3A+validaci%C3%B3n+de+datos"></a>
+<h2 class="underlined_10">Ejercicio propuesto: validaci&oacute;n de datos</h2>
+<div class="section">
+<p>Si se revisa la validaci&oacute;n de datos de la edici&oacute;n de oficinas, puede verse que ninguno de los campos de la solapa "direcci&oacute;n" del formulario
+se valida. Se propone como ejercicio:</p>
+<ul>
+
+<li>Modificar el <span class="codefrag">validation.xml</span> para incluir al menos los campos domicilio, ciudad, c&oacute;digo postal
+y provincia como requeridos. Adem&aacute;s el c&oacute;digo postal debe ser un n&uacute;mero de 5 d&iacute;gitos (usar para esto el
+validador de "mask").</li>
+
+<li>Modificar la acci&oacute;n de editar oficina para que genere tambi&eacute;n los valores para el cuadro desplegable con las provincias (como
+es simplemente un ejercicio, no es necesario introducirlas todas, con unas cuantas bastar&aacute;).</li>
+
+<li>Modificar los ficheros .properties para a&ntilde;adir el mensaje de error asociado al c&oacute;digo postal.</li>
+
+</ul>
+</div>
+
+<a name="N1021B"></a><a name="Ejercicio+propuesto%3A+extractos"></a>
+<h2 class="underlined_10">Ejercicio propuesto: extractos</h2>
+<div class="section">
+<p>Este ejercicio intenta obtener un mejor conocimiento de las diferentes capas de SIGEM
+introduciendo como excusa la idea de "extractos": razones comunes para dar de alta un registro
+en un libro de entrada o de salida. Estos extractos deben aparecer asociados a un libro y supuestamente
+en el registro deben poder elegirse como "plantillas" para un registro dado.</p>
+<p>Hay que tener presente que el objetivo, como ya se ha dicho, es hacer un ejercicio, no
+implementar una caracter&iacute;stica "realista". Esta implementaci&oacute;n no es m&aacute;s que un punto de partida para tareas "m&aacute;s serias".</p>
+<p>Los pasos se describen a continuaci&oacute;n. Pod&eacute;is copiar y pegar el c&oacute;digo de la p&aacute;gina
+o bien bajaros directamente <a href="recursos/04/extractos.zip">todos los archivos</a>.</p>
+<ol>
+
+<li>Lo primero es crear una nueva tabla de extractos en la BD. Desde el administrador de Postgres
+ejecutaremos el siguiente SQL:
+<pre class="code">
+CREATE TABLE extractos
+(
+  texto character varying(80),
+  entidad character varying(10),
+  id serial NOT NULL,
+  abr character varying(4),
+  idlibro integer,
+  CONSTRAINT pk PRIMARY KEY (id)
+)
+WITH (OIDS=FALSE);
+ALTER TABLE extractos OWNER TO postgres;
+</pre>
+Un extracto es un texto, una abreviatura (que escribir&aacute; la persona que d&eacute; de alta el registro) y un id. Contiene
+campos que lo relacionan con un libro de registro y una entidad (que evidentemente deber&iacute;an ser
+claves ajenas en una implementaci&oacute;n "seria").
+</li>
+
+<li>
+<strong>Transfer Object</strong>: necesitamos una clase para "empaquetar" los datos
+de un extracto. La crearemos en el proyecto "SIGEM_Core". Como vemos, no es m&aacute;s que un javabean
+convencional.
+<pre class="code">
+package ieci.tecdoc.sgm.core.services.rpadmin;
+
+public class ExtractoBean {
+	private int cod;
+	private String abreviatura;
+	private String texto;
+	private int idLibro;
+	
+	public int getCod() {
+		return cod;
+	}
+	public void setCod(int cod) {
+		this.cod = cod;
+	}
+	public String getTexto() {
+		return texto;
+	}
+	public void setTexto(String texto) {
+		this.texto = texto;
+	}
+	public int getIdLibro() {
+		return idLibro;
+	}
+	public void setIdLibro(int idLibro) {
+		this.idLibro = idLibro;
+	}
+	public String getAbreviatura() {
+		return abreviatura;
+	}
+	public void setAbreviatura(String abreviatura) {
+		this.abreviatura = abreviatura;
+	}	
+}
+
+
+</pre>
+
+
+
+
+</li>
+
+<li>
+<strong>Capa DAO</strong>: crearemos la siguiente clase en el proyecto "SIGEM_RegistroPresencialAdmin",
+ que se ocupar&aacute; del acceso a datos
+<pre class="code">
+package ieci.tecdoc.sgm.rpadmin.database;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+import ieci.tecdoc.sgm.core.services.rpadmin.ExtractoBean;
+
+public class ExtractoDAO {
+	private DataSource ds;
+	private String SQL_INSERT="insert into extractos(abr,texto,idLibro,entidad) values(?,?,?,?)";
+	private String SQL_SELECT="select * from extractos where idLibro=? and entidad=? order by texto";
+	
+	public ExtractoDAO() {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/registroDS_000");	
+		}
+		catch(NamingException ne) {
+			System.out.println("ERROR" +  ne);			
+		}
+		
+	}
+	public void guardarExtracto(ExtractoBean extracto, String entidad) {
+		try {
+			Connection con = ds.getConnection();
+			PreparedStatement ps = con.prepareStatement(SQL_INSERT);
+			ps.setString(1, extracto.getAbreviatura());
+			ps.setString(2, extracto.getTexto());
+			ps.setInt(3, extracto.getIdLibro());
+			ps.setString(4, entidad);
+			ps.executeUpdate();
+			con.close();
+		}
+		catch(Exception e) {
+			System.out.println("ERROR" +  e);			
+		}
+	}
+	
+	public List listarExtractos(int idLibro, String entidad) {
+		try {
+			Connection con = ds.getConnection();
+			PreparedStatement sentencia = con.prepareStatement(SQL_SELECT);
+			sentencia.setInt(1, idLibro);
+			sentencia.setString(2, entidad);
+			ResultSet rs = sentencia.executeQuery();
+			List res = new ArrayList();
+			while(rs.next()) {
+				ExtractoBean extracto = new ExtractoBean();
+				extracto.setAbreviatura(rs.getString("abr"));
+				extracto.setTexto(rs.getString("texto"));
+				extracto.setCod(rs.getInt("id"));
+				extracto.setIdLibro(rs.getInt("idlibro"));
+				res.add(extracto);
+			}
+			con.close();
+			return res;
+		}
+		catch(Exception e) {
+			System.out.println("ERROR" +  e);
+			return null;
+		}		
+		
+	}
+}
+
+</pre>
+
+
+</li>
+
+<li>
+<strong>Capa de negocio:</strong> en el proyecto "SIGEM_RegistroPresencialAdmin"
+a&ntilde;adiremos al final del c&oacute;digo del "ServicioRPAdminAdapter" los siguientes m&eacute;todos
+<pre class="code">
+public void guardarExtracto(ExtractoBean extracto, Entidad entidad) throws RPAdminException {
+	ExtractoDAO edao = new ExtractoDAO();
+	edao.guardarExtracto(extracto, entidad.getIdentificador());
+}
+
+public List listarExtractos(int idLibro, Entidad entidad) throws RPAdminException {
+	try {
+		ExtractoDAO edao = new ExtractoDAO();
+		return edao.listarExtractos(idLibro, entidad.getIdentificador());
+	}
+	catch(Exception e) {
+		logger.error("error en listar extractos",e);
+		throw new RPAdminException("error en listar extractos", e);
+	}
+}
+</pre>
+Estos m&eacute;todos no hacen m&aacute;s que "pasar la pelota" a la capa DAO haciendo adem&aacute;s gesti&oacute;n
+de excepciones. La clase ServicioRPAdminAdapter es la encargada de implementar todos los m&eacute;todos
+de negocio para la administraci&oacute;n de registro, de ah&iacute; que metamos el c&oacute;digo en ella.
+</li>
+
+<li>
+<strong>Capa web, acci&oacute;n de mostrar los extractos</strong>: modificar la acci&oacute;n de editar libro para que aparezcan
+los extractos. El archivo quedar&aacute;:
+<pre class="code">
+54  request.setAttribute("nombre", nombre);
+55	request.getSession(false).setAttribute("idLibro", String.valueOf(libroForm.getId()));
+56	
+<strong>57	int idLibro = Integer.parseInt(libroForm.getId());
+58	ServicioRPAdminAdapter serv = (ServicioRPAdminAdapter) oServicio;
+59	request.setAttribute("extractos", serv.listarExtractos(idLibro, 
+60			SesionHelper.obtenerEntidad(request)));</strong>
+61}
+
+return mapping.findForward("success");
+
+
+</pre>
+
+
+
+</li>
+
+<li>
+<strong>Capa web, visualizar extractos en el JSP:</strong> Usar el siguiente <a href="recursos/04/editarLibro.txt">editarLibro.jsp</a>,
+en el que se introducen campos para introducir extractos y visualizar los existentes.</li>
+
+<li>
+<strong>Capa web, acci&oacute;n de guardar extractos</strong>. Esta acci&oacute;n es nueva, y habr&aacute; que
+mapearla en el struts-config.xml con la URL "guardarExtracto.do", que es llamada en el JSP
+al guardar un extracto
+<pre class="code">
+package ieci.tecdoc.sgm.rpadmin.struts.acciones.extractos;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
+import ieci.tecdoc.sgm.core.services.LocalizadorServicios;
+import ieci.tecdoc.sgm.core.services.rpadmin.ExtractoBean;
+import ieci.tecdoc.sgm.core.services.rpadmin.OptionsBean;
+import ieci.tecdoc.sgm.core.services.rpadmin.ServicioRPAdmin;
+import ieci.tecdoc.sgm.rpadmin.ServicioRPAdminAdapter;
+import ieci.tecdoc.sgm.rpadmin.struts.acciones.RPAdminWebAction;
+import ieci.tecdoc.sgm.rpadmin.struts.util.SesionHelper;
+
+public class GuardarExtractoAction extends RPAdminWebAction {
+
+	public ActionForward executeAction(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		//copiar datos de la petici&oacute;n en el TO	
+		ExtractoBean extracto = new ExtractoBean();
+		extracto.setTexto(request.getParameter("textoExtracto"));
+		extracto.setAbreviatura(request.getParameter("abrExtracto"));
+		extracto.setIdLibro(Integer.parseInt(request.getParameter("id")));
+		//Llamar a negocio para que guarde el TO
+		ServicioRPAdminAdapter oServicio = (ServicioRPAdminAdapter) 
+		   LocalizadorServicios.getServicioRPAdmin();
+		oServicio.guardarExtracto(extracto, SesionHelper.obtenerEntidad(request));
+		return mapping.findForward("success");
+	}
+}
+</pre>
+
+
+
+</li>
+
+</ol>
+</div>
+
+
+
+
+<p class="pageBreakAfter"></p>
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007-2008 Depto. CCIA</div>
+</div>
+</body>
+</html>

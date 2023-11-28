@@ -1,0 +1,476 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Seguridad en JBoss. LDAP</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servidores Web" src="images/baner_j2ee_der.gif" title="Servidores Web"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li>
+<a class="base-not-selected" href="index.html">Servidores web</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_1.1', 'skin/')" id="menu_1.1Title" class="menutitle">Servidores Web</div>
+<div id="menu_1.1" class="menuitemgroup">
+<div class="menuitem">
+<a href="index.html" title="Servidores Web">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.2', 'skin/')" id="menu_1.1.2Title" class="menutitle">Teor&iacute;a</div>
+<div id="menu_1.1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html">Roadmap</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion06-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Seguridad en JBoss. LDAP</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Autentificaci%C3%B3n+en+JBoss">Autentificaci&oacute;n en JBoss</a>
+<ul class="minitoc">
+<li>
+<a href="#Crear+el+dominio">Crear el dominio</a>
+</li>
+<li>
+<a href="#Autentificar+contra+una+BD">Autentificar contra una BD</a>
+</li>
+<li>
+<a href="#Especificar+el+dominio+que+usar%C3%A1+una+aplicaci%C3%B3n">Especificar el dominio que usar&aacute; una aplicaci&oacute;n</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#LDAP">LDAP</a>
+<ul class="minitoc">
+<li>
+<a href="#Combinar+LDAP+con+otros+m%C3%B3dulos">Combinar LDAP con otros m&oacute;dulos</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Seguridad+del+servidor">Seguridad del servidor</a>
+</li>
+</ul>
+</div>
+
+<a name="N1000C"></a><a name="Autentificaci%C3%B3n+en+JBoss"></a>
+<h2 class="underlined_10">Autentificaci&oacute;n en JBoss</h2>
+<div class="section">
+<p>En JBoss, los usuarios, passwords y roles se obtienen de un <em>security domain</em>, que es el equivalente al <span class="codefrag">realm</span> de Tomcat.
+Al igual que en Tomcat, los datos se pueden tomar de un fichero XML o de una base de datos, de hecho JBoss es mucho m&aacute;s flexible que Tomcat en este aspecto. 
+Vamos a ver c&oacute;mo crear y configurar un <em>security domain</em> en JBoss.</p>
+<a name="N1001E"></a><a name="Crear+el+dominio"></a>
+<h3 class="underlined_5">Crear el dominio</h3>
+<p>Los dominios de seguridad se crean por defecto en el fichero de configuraci&oacute;n <span class="codefrag">login-config.xml</span>, en el
+directorio <span class="codefrag">conf</span>.</p>
+<p>El MBean <span class="codefrag">XMLConfig</span> controla esta configuraci&oacute;n. De este modo, a trav&eacute;s de la
+consola JMX podemos ver informaci&oacute;n
+sobre la seguridad de las aplicaciones y por ejemplo cambiar el nombre o localizaci&oacute;n f&iacute;sica de <span class="codefrag">login-config.xml</span>. Nosotros, no obstante, usaremos
+la configuraci&oacute;n por defecto.</p>
+<p>Si abrimos el fichero, observaremos que en &eacute;l se define un conjunto de <span class="codefrag">&lt;application-policy&gt;</span> que son
+precisamente los dominios de seguridad. Cada dominio tiene un nombre asociado, y un conjunto de <span class="codefrag">&lt;login-module&gt;</span>,
+es decir, de sitios de donde se puede obtener la informaci&oacute;n de usuarios, passwords y roles. Por ejemplo, al final del fichero
+de configuraci&oacute;n original de JBoss podemos ver este dominio:</p>
+<pre class="code">
+&lt;application-policy name = "other"&gt;
+   &lt;authentication&gt;
+      &lt;login-module code = "org.jboss.security.auth.spi.UsersRolesLoginModule"
+             flag = "required" /&gt;
+   &lt;/authentication&gt;
+&lt;/application-policy&gt;
+</pre>
+<p>Cada aplicaci&oacute;n que use seguridad JavaEE debe configurarse a trav&eacute;s de un fichero adicional XML para usar
+uno de los dominios definidos aqu&iacute;. En este caso, el nombre <span class="codefrag">other</span> est&aacute; definido en JBoss como el <em>dominio por defecto</em>, que se
+emplea cuando una aplicaci&oacute;n requiere seguridad JavaEE pero no tiene un dominio asociado. </p>
+<p>JBoss implementa lo que denomina una <em>pila de autentificaci&oacute;n</em> ("authentification stack"). La idea
+consiste en que podemos usar varios m&oacute;dulos de login de modo, por ejemplo, que si el usuario
+no se puede autentificar a trav&eacute;s de uno de ellos se intente con otro. En el ejemplo el atributo obligatorio <span class="codefrag">flag</span> tiene valor <span class="codefrag">required</span>, 
+indicando que si falla la autentificaci&oacute;n con este m&oacute;dulo, el proceso de autentificaci&oacute;n debe fallar. En este caso solo hay un m&oacute;dulo
+configurado, pero podr&iacute;amos tener varios y por ejemplo marcarlos como <span class="codefrag">flag="sufficient"</span>. En este caso, con que
+la autentificaci&oacute;n tenga &eacute;xito en uno de ellos bastar&iacute;a. Veremos un ejemplo de esto posteriormente, aunque hay m&aacute;s modos
+de funcionamiento aparte de "required" y "sufficient". Se recomienda consultar la gu&iacute;a de configuraci&oacute;n de JBoss para 
+una informaci&oacute;n m&aacute;s detallada.
+</p>
+<p>El dominio por defecto usa como m&oacute;dulo de login el <span class="codefrag">UsersRolesLoginModule</span>, una implementaci&oacute;n
+ muy sencilla que toma los usuarios de un par de ficheros <span class="codefrag">.properties</span>, uno definiendo usuarios y passwords
+ (<span class="codefrag">users.properties</span>) y otro
+ usuarios y roles (<span class="codefrag">roles.properties</span>). Estos ficheros se pueden colocar en cualquier lugar del CLASSPATH de la aplicaci&oacute;n, y permiten
+ probar la autentificaci&oacute;n de manera sencilla.</p>
+<p>JBoss proporciona varias implementaciones alternativas de <em>login module</em>. A continuaci&oacute;n vamos
+ a ver con m&aacute;s detalle la que permite autentificar contra una base de datos.</p>
+<a name="N10071"></a><a name="Autentificar+contra+una+BD"></a>
+<h3 class="underlined_5">Autentificar contra una BD</h3>
+<p>La implementaci&oacute;n que usa JBoss para esta tarea es <span class="codefrag">DatabaseServerLoginModule</span>. La informaci&oacute;n de usuarios, passwords
+y roles puede estar en la base de datos de la forma que queramos, siempre que podamos extraerla mediante SQL en el
+formato que espera JBoss.</p>
+<p>JBoss usa dos consultas SQL para extraer la informaci&oacute;n:</p>
+<ul>
+
+<li> La que obtiene el password (<span class="codefrag">PrincipalsQuery</span>)
+ nos debe devolver un registro con un &uacute;nico campo que ser&aacute; el password. </li>
+ 
+<li>La consulta de los roles (<span class="codefrag">RolesQuery</span>)
+ debe devolver un conjunto de registros cada uno con dos campos. El primero debe ser el rol del usuario. Para
+ permisos de usuario convencionales, el segundo campo debe ser el valor literal <span class="codefrag">Roles</span>. Este &uacute;ltimo
+ valor  en realidad
+ depende de la configuraci&oacute;n de JAAS, aunque habitualmente no es necesario cambiarla.</li>
+ 
+</ul>
+<p>Adem&aacute;s de las consultas, para completar la configuraci&oacute;n debemos referenciar la fuente de datos para
+conectar con la base de datos con la informaci&oacute;n de autentificaci&oacute;n.</p>
+<pre class="code">
+&lt;application-policy name="seguridadBD"&gt;
+  &lt;authentication&gt;
+     &lt;login-module
+          code="org.jboss.security.auth.spi.DatabaseServerLoginModule"
+          flag="required"&gt;
+       &lt;module-option name="dsJndiName"&gt;java:/DefaultDS&lt;/module-option&gt;
+       &lt;module-option name="principalsQuery"&gt;
+          select password from USUARIOS where login=?
+       &lt;/module-option&gt;
+       &lt;module-option name="rolesQuery"&gt;
+          select rol, 'Roles' from USU_ROLES where login=?
+       &lt;/module-option&gt;
+     &lt;/login-module&gt;
+  &lt;/authentication&gt;
+&lt;/application-policy&gt;
+</pre>
+<p>En el ejemplo anterior, usamos como fuente de datos una de nombre <span class="codefrag">DefaultDS</span>. Estamos suponiendo
+que la tabla USUARIOS contiene un registro por usuario, incluyendo <span class="codefrag">login</span> y <span class="codefrag">password</span>
+y que la tabla USU_ROLES relaciona <span class="codefrag">login</span> con <span class="codefrag">rol</span>.</p>
+<a name="N100AC"></a><a name="Especificar+el+dominio+que+usar%C3%A1+una+aplicaci%C3%B3n"></a>
+<h3 class="underlined_5">Especificar el dominio que usar&aacute; una aplicaci&oacute;n</h3>
+<p>La seguridad JavaEE se configura en cada aplicaci&oacute;n del mismo modo que lo hac&iacute;amos en Tomcat, recordemos que
+ese aspecto s&iacute; est&aacute; estandarizado. Lo que no est&aacute; estandarizado es c&oacute;mo se enlaza la aplicaci&oacute;n con el dominio
+de seguridad. En JBoss se usa un descriptor de despliegue adicional al <span class="codefrag">web.xml</span>,
+llamado <span class="codefrag">jboss-web.xml</span>, que debe colocarse tambi&eacute;n en el <span class="codefrag">WEB-INF</span> de la aplicaci&oacute;n. En este
+archivo se especifica el nombre JNDI del dominio de seguridad. Los nombres JNDI asociados a la seguridad en JBoss
+llevan el "prefijo" <span class="codefrag">java:/jaas</span>, por lo que habr&aacute; que usarlo delante del nombre del dominio definido en
+<span class="codefrag">login-config.xml</span>. </p>
+<pre class="code">
+&lt;!DOCTYPE jboss-web PUBLIC
+          "-//JBoss//DTD Web Application 2.4//EN"
+          "http://www.jboss.org/j2ee/dtd/jboss-web_4_0.dtd"&gt;
+&lt;jboss-web&gt;
+    &lt;security-domain&gt;java:/jaas/seguridadBD&lt;/security-domain&gt;
+&lt;/jboss-web&gt;
+</pre>
+</div>
+
+
+<a name="N100CA"></a><a name="LDAP"></a>
+<h2 class="underlined_10">LDAP</h2>
+<div class="section">
+<p>Muchas organizaciones mantienen los datos de sus usuarios en un directorio LDAP. JBoss nos da la posibilidad
+de autentificar los usuarios de nuestras aplicaciones contra este servidor a trav&eacute;s de un m&oacute;dulo de login predefinido.</p>
+<p>Supongamos que tenemos la estructura LDAP mostrada en la figura. El nodo <span class="codefrag">Personal</span>, de tipo 
+<span class="codefrag">OrganizationalUnit</span> contiene
+todos los empleados de la organizaci&oacute;n. Cada empleado est&aacute; en un nodo de tipo <span class="codefrag">Person</span> y <span class="codefrag">uidObject</span> que contiene
+todos sus datos: nombre, apellidos, etc, incluyendo login (atributo <span class="codefrag">uid</span>) y password (<span class="codefrag">userpassword</span>).
+Los roles est&aacute;n almacenados en un nodo aparte. Cada rol es un objeto <span class="codefrag">groupOfNames</span> conteniendo una referencia
+a los usuarios que tienen ese rol (contiene su identificador &uacute;nico, o DN).</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+
+<td colspan="1" rowspan="1">
+  
+<p>
+<strong>&aacute;rbol de LDAP ejemplo </strong>
+</p>
+  
+<p>
+<img alt="&aacute;rbol LDAP" content-width="15cm" src="imagenes/LDAP.jpg" width="350"></p>
+</td>
+<td colspan="1" rowspan="1">
+
+<p>
+<strong>Formato LDIF</strong>
+</p>
+
+<pre class="code">
+dn: dc=example,dc=com
+objectClass: domain
+objectClass: extensibleObject
+objectClass: top
+dc: example
+
+dn: uid=pperez,ou=Personal,dc=example,dc=com
+objectClass: person
+objectClass: uidObject
+objectClass: top
+cn: Pedro
+sn:: UMOpcmV6IE1hcnTDrW4=
+uid: pperez
+userpassword:: cGVyZXpw
+
+dn: uid=acuenca,ou=Personal,dc=example,dc=com
+objectClass: person
+objectClass: uidObject
+objectClass: top
+cn: Alfonso
+sn: Cuenca Richardson
+uid: acuenca
+userpassword:: Y3VlbmNhYQ==
+
+dn: uid=elopez,ou=Personal,dc=example,dc=com
+objectClass: person
+objectClass: uidObject
+objectClass: top
+cn: Eduardo
+sn:: TMOzcGV6IEZpZ3VlcmVz
+uid: elopez
+userpassword:: bG9wZXpl
+
+dn: ou=roles,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: roles
+
+dn: cn=admin,ou=roles,dc=example,dc=com
+objectClass: groupOfNames
+objectClass: top
+cn: admin
+member: uid=acuenca,ou=Personal,dc=example,dc=com
+member: uid=elopez,ou=Personal,dc=example,dc=com
+
+dn: cn=usuario,ou=roles,dc=example,dc=com
+objectClass: groupOfNames
+objectClass: top
+cn: usuario
+member: uid=acuenca,ou=Personal,dc=example,dc=com
+member: uid=elopez,ou=Personal,dc=example,dc=com
+member: uid=pperez,ou=Personal,dc=example,dc=com
+
+dn: ou=Personal,dc=example,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: Personal
+</pre>
+
+</td>
+
+</tr>
+
+</table>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">En el ejemplo se usa terminolog&iacute;a est&aacute;ndar de LDAP. Una explicaci&oacute;n m&aacute;s detallada de LDAP est&aacute; fuera
+del alcance de este tema. No obstante, no es estrictamente necesaria para entender el funcionamiento del m&oacute;dulo LDAP
+de JBoss.</div>
+</div>
+<p>En la configuraci&oacute;n del m&oacute;dulo de login LDAP debemos especificar c&oacute;mo podemos obtener el identificador completo
+del usuario (en argot LDAP el DN o <em>distinguished name</em>, que se forma concatenando los identificadores de todos los
+nodos desde la ra&iacute;z hasta el objeto). En nuestro caso, cada usuario tiene un identificador del tipo <strong>uid=<em>su_login</em>,ou=Personal,dc=example,dc=com</strong>.
+En JBoss este identificador se divide en tres partes: el  (propiedad de configuraci&oacute;n <span class="codefrag">principalDNPrefix</span>), el login del usuario (que deber&aacute; introducir para autentificarse)
+y el sufijo (propiedad <span class="codefrag">principalDNSuffix</span>). En nuestro caso est&aacute; claro que el prefijo ser&aacute; "uid=" y el sufijo ",ou=Personal,dc=example,dc=com".</p>
+<p>Por otro lado, hay que obtener los roles del usuario. Podemos buscar los roles especificando parte de su identificador
+(o DN). En este caso, todos los roles se agrupan bajo <strong>ou=roles,dc=example,dc=com</strong>. El nombre
+del rol lo define en nuestro caso el atributo <strong>cn</strong> (en JBoss <span class="codefrag">roleAttributeID</span>). Y finalmente,
+cada usuario dentro del rol se especifica con el atributo <strong>member</strong> (en JBoss <span class="codefrag">uidAttributeID</span>). N&oacute;tese que
+incluimos el nombre completo de cada usuario (o sea, su DN), por lo que la propiedad <span class="codefrag">matchOnUserDN</span> ser&aacute;
+<span class="codefrag">true</span>. La configuraci&oacute;n
+de la b&uacute;squeda de roles LDAP puede ser compleja y recomendamos consultar la documentaci&oacute;n de JBoss.</p>
+<p>La configuraci&oacute;n en <span class="codefrag">login-config.xml</span> quedar&iacute;a as&iacute;:</p>
+<pre class="code">
+...
+&lt;application-policy name="seguridadLDAP"&gt;
+    &lt;authentication&gt;
+        &lt;login-module code="org.jboss.security.auth.spi.LdapLoginModule"
+                      flag="required"&gt;
+            &lt;module-option name="java.naming.factory.initial"&gt;
+                com.sun.jndi.ldap.LdapCtxFactory
+            &lt;/module-option&gt;
+            
+            &lt;!-- URL del servidor. Ponemos el puerto que usa ApacheDS --&gt;
+            &lt;module-option name="java.naming.provider.url"&gt;
+                ldap://localhost:10389/
+            &lt;/module-option&gt;
+            &lt;module-option name="java.naming.security.authentication"&gt;
+                simple
+            &lt;/module-option&gt;
+            
+            &lt;!--C&oacute;mo se forma el identificador completo (DN) del usuario --&gt;
+            &lt;module-option name="principalDNPrefix"&gt;
+               uid=
+            &lt;/module-option&gt;
+            &lt;module-option name="principalDNSuffix"&gt;
+                ,ou=Personal,dc=example,dc=com
+            &lt;/module-option&gt;
+            
+            &lt;!-- D&oacute;nde est&aacute;n los roles --&gt;
+            &lt;module-option name="rolesCtxDN"&gt;
+                ou=roles,dc=example,dc=com
+            &lt;/module-option&gt;
+            
+            &lt;!-- c&oacute;mo se identifica un usuario concreto en un rol --&gt;
+            &lt;module-option name="uidAttributeID"&gt;member&lt;/module-option&gt;
+            &lt;module-option name="matchOnUserDN"&gt;true&lt;/module-option&gt;
+            
+            &lt;!-- d&oacute;nde se define el nombre del rol --&gt;
+            &lt;module-option name="roleAttributeID"&gt;cn&lt;/module-option&gt;
+            &lt;module-option name="roleAttributeIsDN"&gt;false&lt;/module-option&gt;
+        &lt;/login-module&gt;
+    &lt;/authentication&gt;
+&lt;/application-policy&gt;
+...
+</pre>
+<p>En este ejemplo, la estructura LDAP es muy sencilla. Si la informaci&oacute;n contenida en el &aacute;rbol LDAP de nuestra organizaci&oacute;n no se puede adaptar f&aacute;cilmente
+a la forma de trabajar de este m&oacute;dulo de login, tendremos que escribir un m&oacute;dulo propio usando el API de 
+JBoss.</p>
+<a name="N10147"></a><a name="Combinar+LDAP+con+otros+m%C3%B3dulos"></a>
+<h3 class="underlined_5">Combinar LDAP con otros m&oacute;dulos</h3>
+<p>Como el LDAP es algo externo a las aplicaciones web, es normal que los administradores de LDAP se muestren reticentes
+a introducir en el directorio la informaci&oacute;n de roles. JBoss puede solucionar el problema combinando la autentificaci&oacute;n
+en LDAP con la autorizaci&oacute;n (verificaci&oacute;n de roles) basada en otro mecanismo, por ejemplo en base de datos. Esto se denomina
+<em>password stacking</em> y es realmente sencillo de configurar en los casos b&aacute;sicos. Basta con incluir dentro de la pol&iacute;tica
+de autentificaci&oacute;n asociada a nuestra aplicaci&oacute;n m&aacute;s de un m&oacute;dulo de login, especificando que queremos usar <em>password stacking</em>.
+JBoss intentar&aacute; usar el primer m&oacute;dulo para autentificar (en nuestro caso LDAP) y si no consigue los roles pasar&aacute; a usar el/los siguiente/s
+m&oacute;dulo/s.</p>
+<pre class="code">
+&lt;application-policy name="LDAPconBD"&gt;
+  &lt;authentication&gt;
+      &lt;login-module code="org.jboss.security.auth.spi.LdapLoginModule"
+                      flag="required"&gt;
+         &lt;module-option name="java.naming.factory.initial"&gt;
+             com.sun.jndi.ldap.LdapCtxFactory
+         &lt;/module-option&gt;
+         &lt;module-option name="java.naming.provider.url"&gt;
+             ldap://localhost:10389/
+         &lt;/module-option&gt;
+         &lt;module-option name="java.naming.security.authentication"&gt;
+             simple
+         &lt;/module-option&gt;
+         &lt;module-option name="principalDNPrefix"&gt;uid=&lt;/module-option&gt;
+         &lt;module-option name="principalDNSuffix"&gt;
+             ,ou=Personal,dc=example,dc=com
+         &lt;/module-option&gt;
+         <strong>&lt;module-option name="password-stacking"&gt;
+             useFirstPass&lt;/module-option&gt;</strong>                
+      &lt;/login-module&gt;
+      &lt;login-module 
+           code="org.jboss.security.auth.spi.DatabaseServerLoginModule"
+           flag="required"&gt;
+	    &lt;module-option name="dsJndiName"&gt;java:/PruebaDS&lt;/module-option&gt;
+	    &lt;module-option name="principalsQuery"&gt;
+		  select password from usuarios where login=?
+	    &lt;/module-option&gt;
+	    &lt;module-option name="rolesQuery"&gt;
+		  select rol, 'Roles' from usu_roles where login=?
+	    &lt;/module-option&gt;
+	    <strong>&lt;module-option name="password-stacking"&gt;
+	            useFirstPass&lt;/module-option&gt;</strong>
+      &lt;/login-module&gt;                        
+  &lt;/authentication&gt;
+&lt;/application-policy&gt;
+</pre>
+</div>
+
+
+<a name="N10162"></a><a name="Seguridad+del+servidor"></a>
+<h2 class="underlined_10">Seguridad del servidor</h2>
+<div class="section">
+<p>Las aplicaciones de administraci&oacute;n de JBoss (la consola JMX y la consola web) vienen por defecto sin seguridad 
+activada. Al tratarse de aplicaciones cr&iacute;ticas es necesario por tanto configurar su seguridad si se est&aacute; usando
+en producci&oacute;n. En el fichero <span class="codefrag">login-config.xml</span> ya vienen definidos dominios de seguridad para estas aplicaciones,
+pero no est&aacute;n activos porque la limitaci&oacute;n de acceso definida en el <span class="codefrag">web.xml</span> est&aacute; comentada.</p>
+<p>En cuanto a los privilegios de las aplicaciones web que se ejecutan en el servidor, por defecto JBoss no impone
+ninguna restricci&oacute;n sobre ellos, ya que se ejecuta sin <em>security manager</em> de java activo. Para activarlo,
+hay que configurar las opciones de la m&aacute;quina virtual en el archivo <span class="codefrag">run.bat</span> (o <span class="codefrag">run.sh</span>).En este
+archivo se define una variable de entorno <span class="codefrag">JAVA_OPTS</span> en la que hay que definir el <em>security manager</em>
+a emplear y la URL del fichero de pol&iacute;ticas de seguridad. Consultar la documentaci&oacute;n de JBoss para m&aacute;s informaci&oacute;n.</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007 Depto. CCIA</div>
+</div>
+</body>
+</html>

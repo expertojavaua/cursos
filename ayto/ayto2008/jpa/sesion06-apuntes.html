@@ -1,0 +1,356 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Transacciones</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="JPA con Hibernate" src="images/baner_j2ee_der.gif" title="JPA con Hibernate"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Persistencia</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">JPA</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="JPA">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 6</div>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="roadmap.html">Roadmap JPA</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-ejercicios.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-ejercicios.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-ejercicios.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-ejercicios.html">Sesion 8</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion06-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Transacciones</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Transacciones">Transacciones</a>
+<ul class="minitoc">
+<li>
+<a href="#Atomicidad">Atomicidad</a>
+</li>
+<li>
+<a href="#Concurrencia+y+niveles+de+aislamiento">Concurrencia y niveles de aislamiento</a>
+</li>
+<li>
+<a href="#Gesti%C3%B3n+concurrencia+con+JPA">Gesti&oacute;n concurrencia con JPA</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Transacciones+y+EAO">Transacciones y EAO</a>
+</li>
+</ul>
+</div>
+
+			
+
+			
+<a name="N1000C"></a><a name="Transacciones"></a>
+<h2 class="underlined_10">Transacciones</h2>
+<div class="section">
+<p>La gesti&oacute;n de transacciones es fundamental en cualquier aplicaci&oacute;n que trabaja con de datos. Idealmente, una transacci&oacute;n define una <em>unidad de trabajo</em> que debe cumplir los criterios ACID: Atomicidad, Consistencia, Aislamiento (la "I" viene del ingl&eacute;s <em>Isolation</em>) y Durabilidad. La consistencia la debe proporcionar el programador, realizando operaciones que lleven los datos de un estado consistente a otro. La durabilidad la proporciona el hecho de que usemos un sistema de bases de datos. Las dos caracter&iacute;sticas restantes, la <em>atomicidad</em> y el <em>aislamiento</em> son las m&aacute;s interesantes, y las que vienen determinadas por el sistema de gesti&oacute;n de persistencia que usemos. Ve&aacute;moslas con m&aacute;s detalle.</p>
+<p>Una transacci&oacute;n debe ser at&oacute;mica. Esto es, todas las operaciones de una transacci&oacute;n deben terminar con exito o la transacci&oacute;n debe abortar completamente, dejando el sistema en el mismo estado que antes de comenzar la transacci&oacute;n. En el primer caso se dice que la transacci&oacute;n ha realizado un commit y en el segundo que ha efectuado un rollback. Por esta propiedad, una transacci&oacute;n se debe tratar como una unidad de computaci&oacute;n.</p>
+<p>Para garantizar la atomicidad en JDBC se llama al m&eacute;todo <span class="codefrag">setAutoCommit(false)</span> de la conexi&oacute;n para demarcar el comienzo de la transacci&oacute;n y a <span class="codefrag">commit()</span> o <span class="codefrag">rollback()</span> al final de la transacci&oacute;n para confirmar los cambios o deshacerlos. Veremos que JPA que utiliza una demarcaci&oacute;n expl&iacute;cita de las transacciones, marcando su comienzo con una llamada a un m&eacute;todo <span class="codefrag">begin()</span> y su final tambi&eacute;n con llamadas a <span class="codefrag">commit()</span> o <span class="codefrag">rollback()</span>. Siempre debemos tener muy presente que JPA (cuando no utilizamos un servidor de aplicaciones) se basar&aacute; completamente en la implementaci&oacute;n de JDBC para tratar con la base de datos.</p>
+<p>Un transacci&oacute;n tambi&eacute;n debe ejecutarse de forma aislada. Esto es, no se deben exponer a otras transacciones concurrentes datos que todav&iacute;a no se han consolidado con un commit. La concurrencia de acceso a los recursos afectados en una transacci&oacute;n hace muy complicado mantener esta propiedad. Veremos que JPA proporciona un enfoque moderno basado en <em>bloqueos optimistas</em> (<em>optimistic locking</em>) para tratar la concurrencia entre transacciones.</p>
+<a name="N10042"></a><a name="Atomicidad"></a>
+<h3 class="underlined_5">Atomicidad</h3>
+<p>JPA define la interfaz <span class="codefrag">EntityTransaction</span> para gestionar las transacciones. Esta interfaz intenta imitar el API de Java para gesti&oacute;n de transacciones distribuidas: JTA. Pero tengamos siempre en cuenta que para su implementaci&oacute;n se utiliza el propio sistema de transacciones de la base de datos sobre la que trabaja JPA, utilizando los m&eacute;todos de transacciones de la interfaz <span class="codefrag">Connection</span> de JDBC. Estas transacciones son locales (no distribuidas) y no se pueden anidar ni extender.</p>
+<p>Para definir una transacci&oacute;n hay que obtener un <span class="codefrag">EntityTransaction</span> a partir del entity manager. El m&eacute;todo del entity manager que se utiliza para ello es <span class="codefrag">getTransaction()</span>. Una vez obtenida la transacci&oacute;n, podemos utilizar uno de los m&eacute;todos de su interfaz:</p>
+<pre class="code">public interface EntityTransaction {
+   public void begin();
+   public void commit();
+   public void rollback();
+   public void setRollbackOnly();
+   public boolean getRollbackOnly();
+   public boolean isActive();}</pre>
+<p>S&oacute;lo hay seis m&eacute;todos en la interfaz <span class="codefrag">EntityTransaction</span>. El m&eacute;todo <span class="codefrag">begin()</span> comienza una nueva transacci&oacute;n en el recurso. Si la transacci&oacute;n est&aacute; activa, <span class="codefrag">isActive()</span> devolver&aacute; <span class="codefrag">true</span>. Si se intenta comenzar una nueva transacci&oacute;n cuando ya hay una activa se genera una excepci&oacute;n <span class="codefrag">IllegalStateException</span>. Una vez activa, la transacci&oacute;n puede finalizarse invocando a <span class="codefrag">commit()</span> o deshacerse invocando a <span class="codefrag">rollback()</span>. Ambas operaciones fallan con una <span class="codefrag">IllegalStateException</span> si no hay ninguna transacci&oacute;n activa. El m&eacute;todo <span class="codefrag">setRollbackOnly()</span> marca una transacci&oacute;n para que su &uacute;nico final posible sea un <span class="codefrag">rollback()</span>.</p>
+<p>Se lanzar&aacute; una <span class="codefrag">PersistenceException</span> si ocurre un error durante el rollback y se lanzar&aacute; una <span class="codefrag">RollbackException</span> (un subtipo de <span class="codefrag">PersistenceException</span>) si falla el commit. Tanto <span class="codefrag">PersistenceException</span> como <span class="codefrag">IllegalException</span> son excepciones de tipo <span class="codefrag">RuntimeException</span>.</p>
+<p>El m&eacute;todo <span class="codefrag">setRollbackOnly()</span> se utiliza para marcar la transacci&oacute;n actual como inv&aacute;lida y obligar a realizar un rollback cuando se ejecuta JPA con transacciones gestionadas por el contenedor de EJB (CMT: <em>Containter Managed Transactions</em>). En ese caso la aplicaci&oacute;n no define expl&iacute;citamente las transacciones, sino que es el propio componente EJB el que abre y cierra una transacci&oacute;n en cada m&eacute;todo.</p>
+<p>Hemos comentado que en JPA todas las excepciones son de tipo <span class="codefrag">RunTimeException</span>. Esto es debido a que son fatales y casi nunca se puede hacer nada para recuperarlas. En muchas ocasiones ni siquiera se capturan en el fragmento de c&oacute;digo en el que se originan, sino en el &uacute;nico lugar de la aplicaci&oacute;n en el que se capturan las excepciones de este tipo.</p>
+<p>La forma habitual de definir las transacciones en JPA es la definida en el siguiente c&oacute;digo:</p>
+<pre class="code">EntityManager em = emf.createEntityManager();
+EntityTransaction tx = em.getTransaction();
+   try {
+      tx.begin();
+      // Operacion sobre entidad 1
+      // Operacion sobre entidad 2
+      tx.commit();
+   } catch (RunTimeException ex) {
+      tx.rollback();
+   } finally {
+      em.close();
+}</pre>
+<p>Primero se obtiene la transacci&oacute;n y se llama al m&eacute;todo <span class="codefrag">begin()</span>. Despu&eacute;s se realizan todas las operaciones dentro de la transacci&oacute;n y se realiza un <span class="codefrag">commit()</span>. Todo ello se engloba en un bloque de <span class="codefrag">try/catch</span>. Si alguna operaci&oacute;n falla lanza una excepci&oacute;n que se captura y se ejecuta el <span class="codefrag">rollback()</span>. En cualquier caso se cierra el entity manager.</p>
+<p>Cuando se deshace una transacci&oacute;n en la base de datos todos los cambios realizados durante la transacci&oacute;n se deshacen tambi&eacute;n. La base de datos vuelve al estado previo al comienzo de la transacci&oacute;n. Sin embargo, el modelo de memoria de Java no es transaccional. No hay forma de obtener una instant&aacute;nea de un objeto y revertir su estado a ese momento si algo va mal. Una de las cuestiones m&aacute;s complicadas de un mapeo entidad-relaci&oacute;n es que mientras que podemos utilizar una sem&aacute;ntica transaccional para decidir qu&eacute; cambios se realizan en la base de datos, no podemos aplicar las mismas t&eacute;cnicas en el contexto de persistencia en el que viven las instancias de entidades.</p>
+<p>Siempre que tenemos cambios que deben sincronizarse en una base de datos, estamos trabajado con un contexto de persistencia sincronizado con una transacci&oacute;n. En un momento dado durante la vida de la transacci&oacute;n, normalmente justo antes de que se realice un commit, esos cambios se traducir&aacute;n en sentencias SQL y se enviar&aacute;n a la base de datos.</p>
+<p>Si la transacci&oacute;n hace un rollback pasar&aacute;n entonces dos cosas. Lo primero es que la transacci&oacute;n en la base de datos ser&aacute; deshecha. Lo siguiente que suceder&aacute; ser&aacute; que el contexto de persistencia se limpiar&aacute; (<em>clear</em>), desconectando todas las entidades que se gestionaban. Tendremos entonces un mont&oacute;n de entidades desconectadas de la base de datos con un estado no sincronizado con la base de datos. </p>
+<a name="N100C6"></a><a name="Concurrencia+y+niveles+de+aislamiento"></a>
+<h3 class="underlined_5">Concurrencia y niveles de aislamiento</h3>
+<p>La gesti&oacute;n de la concurrencia en transacciones es un problema complejo. Por ejemplo, supongamos un sistema de reservas de vuelos. Ser&iacute;a fatal que se vendiera el mismo asiento de un vuelo a dos personas distintas por el hecho de que se han realizado dos accesos concurrentes al siguiente m&eacute;todo:</p>
+<pre class="code">public void reservaAsiento(Pasajero pasajero, int numAsiento, long numVuelo) {
+   EntityManager em = emf.createEntityManager();
+   AsientoKey key = new AsientoKey(numAsiento, numVuelo);
+   em.getTransaction().begin();
+   Asiento asiento = em.find(Asiento.class, key);
+   if (! asiento.getOcupado()) {
+      asiento.setOcupado(true);
+      asiento.setPasajero(pasajero);
+      pasajero.setAsiento(asiento);
+   }
+   em.getTransaction().commit();
+   em.close();
+}</pre>
+<p>Si no se controlara el acceso concurrente de las transacciones a la tabla de asientos, podr&iacute;a suceder que dos transacciones concurrentes accedieran al estado del asiento a la misma vez (antes de haberse realizado el UPDATE de su atributo <span class="codefrag">ocupado</span>), lo vieran libre y se lo asignaran a un pasajero y despu&eacute;s a otro. Uno de los pasajeros se quedar&iacute;a sin billete.</p>
+<p>Se han propuesto m&uacute;ltiples soluciones para resolver el acceso concurrente a los datos. El est&aacute;ndar SQL define los llamados <em>niveles de aislamiento</em> (isolation levels) que tratan este problema. Los niveles m&aacute;s bajos solucionan los problemas m&aacute;s comunes y permiten al mismo tiempo que la aplicaci&oacute;n responda sin generar bloqueos. El nivel m&aacute;s alto alto garantiza que todas las transacciones son serilizables, pero obliga a que se definan un n&uacute;mero excesivo de bloqueos.</p>
+<p>El est&aacute;ndar SQL define cuatro posibles problemas que pueden generarse cuando dos transacciones concurrentes realizan SELECTS y UPDATES en la base de datos:</p>
+<ul>
+			
+<li>
+<strong>Actualizaciones perdidas</strong> (<em>lost updates</em>): este problema ocurre cuando dos transacciones hacen un UPDATE sobre el mismo dato y una de ellas aborta, perdi&eacute;ndose los cambios de ambas transacciones. Un ejemplo: (1) un dato tiene un valor V0; (2) la transacci&oacute;n T1 comienza; (3) la transacci&oacute;n T2 comienza y actualiza el dato a V2; (4) la transacci&oacute;n T1 lo actualiza a V1; (5) la transacci&oacute;n T2 hace un commit, guardando V2; (6) por &uacute;ltimo, la transacci&oacute;n T1 se aborta realizando un rollback y devolviendo el dato a su estado inicial de V0.</li>
+			
+<li>
+<strong>Lecturas de datos sucios</strong> (<em>dirty readings</em>): sucede cuando una transacci&oacute;n hace un SELECT y obtiene un dato modificado por un UPDATE de otra transacci&oacute;n que no ha hecho commit. El dato es <em>sucio</em> porque todav&iacute;a no ha sido confirmado y puede cambiar. Por ejemplo: (1) un dato tiene un valor V0; (2) la transacci&oacute;n T1 lo actualiza a V1; (3) la transacci&oacute;n T2 lee el valor V1 del dato; (4) la transacci&oacute;n T1 hace un rollback, volviendo el dato al valor V0, y quedando sucio el dato contenido en la transacci&oacute;n T2.</li>
+			
+<li>
+<strong>Lecturas no repetibles</strong> (<em>urepeatable read</em>): sucede cuando una transacci&oacute;n lee un registro dos veces y obtiene valores distintos por haber sido modificado por otro UPDATE confirmado. Por ejemplo: (1) una transacci&oacute;n T1 lee un dato; (2) comienza otra transacci&oacute;n T2 que lo actualiza; (3) T2 hace un commit; (4) T1 vuelve a leer el dato y obtiene un valor distinto al primero.</li>
+			
+<li>
+<strong>Lecturas fantasmas</strong> (<em>phantom read</em>): una transacci&oacute;n ejecuta dos consultas y en la segunda aparecen resultados que no son compatibles con la primera (registros que se han borrado o que han aparecido). El mismo ejemplo anterior, cambiando la lectura de T1 por una consulta.</li>
+		
+</ul>
+<p>Las bases de datos SQL definen cuatro posibles niveles de aislamiento que corresponden a modos de funcionamiento de la base de datos en el que se garantiza que no sucede alguno de los problemas anteriores. Tradicionalmente se han utilizado bloqueos para asegurar estos niveles. Vamos a describirlos, indicando la estrategia de bloqueo utilizada en cada caso. De menor a mayor nivel de seguridad son los siguientes:</p>
+<ul>
+			
+<li>
+<strong>READ_UNCOMMITTED</strong>: garantiza que no ocurren actualizaciones perdidas. Si la base de datos utiliza bloqueos, un UPDATE de un dato lo bloqueara para escritura. De esta forma, otras transacciones podr&aacute;n leerlo (y se podr&aacute;n producir cualquiera de los otros problemas) pero no escribirlo. Cuando se realiza un commit se libera el bloqueo.</li>
+			
+<li>
+<strong>READ_COMMITTED</strong>: garantiza que no existen las lecturas sucias. Utilizando bloqueos, se podr&iacute;a resolver haciendo que un UPDATE de un dato lo bloqueara para lectura y escritura. Cualquier otra transacci&oacute;n que intente leer el dato quedar&aacute; en espera hasta que se confirme la transacci&oacute;n.</li>
+			
+<li>
+<strong>REPEATABLE_READ</strong>: garantiza que otra transacci&oacute;n no modifica un dato le&iacute;do. Para asegurar este nivel utilizando bloqueos, un SELECT sobre un dato lo bloquea frente a otras actualizaciones.</li>
+			
+<li>
+<strong>SERIALIZABLE</strong>: garantiza que no se producen lecturas fantasmas. Es el nivel m&aacute;ximo de seguridad y para garantizarlo utilizando bloqueos se deben bloquear tablas enteras, no solo registros.</li>
+		
+</ul>
+<p>Como hemos dicho, los niveles de aislamiento se han garantizado tradicionalmente utilizando distintos tipos de bloqueos en los accesos a los datos. Recientemente, sin embargo, bases de datos como Oracle, Postgress o MySQL con InnoDB proporcionan alternativas distintas a los bloqueos para garantizar estos niveles. En concreto, permiten usar el llamado <em>Multiversion Concurrency Control</em> (MVCC) en el que se utilizan versiones de los datos para garantizar las condiciones de aislamiento. Con esta estrategia, en el nivel READ_COMMITTED cuando una transacci&oacute;n lee de un dato que no ha sido confirmado se lee la versi&oacute;n anterior del dato (la &uacute;ltima que ha sido confirmada). Incluso en el modo REPEATABLE_READ el primer SELECT y el segundo obtendr&iacute;an el mismo valor anterior a la modificaci&oacute;n a la modificaci&oacute;n de la transacci&oacute;n 2. En general, con MVCC las operaciones de lectura no bloquean, sino que obtienen la &uacute;ltima versi&oacute;n confirmada del dato.</p>
+<p>&iquest;Cu&aacute;l es el nivel de aislamiento recomendable para una aplicaci&oacute;n? El nivel READ_UNCOMMITTED es demasiado permisivo, ya que permite que una transacci&oacute;n lea datos que no han sido confirmados por otra transacci&oacute;n. El SERIALIZABLE es demasiado restrictivo y hace que la aplicaci&oacute;n no escale correctamente. Se producir&iacute;an demasiados bloqueos para resolver un problema que no sucede demasiado a menudo (lecturas fantasmas). Esto nos deja con los niveles READ_COMMITTED y REPEATABLE_READ. La mayor&iacute;a de aplicaciones en producci&oacute;n usan alguno de estos niveles.</p>
+<p>Una soluci&oacute;n muy frecuente es utilizar el nivel READ_COMMITTED como nivel por defecto y realizar bloqueos puntuales en aquellas ocasiones peligrosas en las que puede suceder un problema como el de la butaca de cine. En SQL se puede utilizar la instrucci&oacute;n</p>
+<pre class="code">SELECT ... FOR UPDATE</pre>
+<p>para bloquear un determinado registro expl&iacute;citamente para lectura y escritura hasta realizar un commit.</p>
+<a name="N10136"></a><a name="Gesti%C3%B3n+concurrencia+con+JPA"></a>
+<h3 class="underlined_5">Gesti&oacute;n concurrencia con JPA</h3>
+<p>Los niveles de aislamiento vistos en el apartado anterior se gestionan por la propia base de datos y afectan a JPA en el momento en que el entity manager hace un flush y se generan las sentencias SELECT y UPDATE. En ese momento el sistema de base de datos toma el control de la concurrencia utilizando el nivel de seguridad definido por defecto.</p>
+<p>En la versi&oacute;n est&aacute;ndar de JPA no es posible definir el nivel de aislamiento de la base de datos subyacente. Esta opci&oacute;n es dependiente de la implementaci&oacute;n de JPA. En la versi&oacute;n de Hibernate, se puede definir en el fichero <span class="codefrag">peristence.xml</span>, con la propiedad <span class="codefrag">hibernate.connection.isolation</span>. Los posibles valores son:</p>
+<ul>
+	
+<li>1: READ_UNCOMMITTED</li>
+	
+<li>2: READ_COMMITTED</li>
+	
+<li>4: REPEATABLE_READ</li>
+	
+<li>8: SERIALIZABLE</li>
+
+</ul>
+<p>JPA utiliza por defecto un sistema optimista de gesti&oacute;n de la concurrencia. Para que funcione correctamente necesita que el nivel de aislamiento de la base de datos sea READ_COMMITTED. Recordemos que este nivel no protege del problema de las lecturas no repetidas (una transacci&oacute;n lee un dato y otra transacci&oacute;n lo modifica antes de que la primera haga un commit).</p>
+<p>El control optimista de la concurrencia asume que no suceden conflictos y no se realizan bloqueos sobre los datos. Sin embargo, si al final de la transacci&oacute;n se ha producido un error se lanza una excepci&oacute;n.</p>
+<p>En un control optimista de concurrencia todos los objetos tienen un atributo adicional que guarda su n&uacute;mero de versi&oacute;n (una columna adicional en la tabla). Las lecturas leen el n&uacute;mero de versi&oacute;n y las escrituras lo incrementan. Cuando una transacci&oacute;n intenta escribir en una versi&oacute;n de un objeto que no corresponde con la que hab&iacute;a le&iacute;do previamente se aborta la actualizaci&oacute;n y se genera una excepci&oacute;n.</p>
+<p>Por ejemplo, supongamos que una transacci&oacute;n T1 realiza una lectura sobre un objeto. Se obtiene autom&aacute;ticamente su n&uacute;mero de versi&oacute;n. Supongamos que otra transacci&oacute;n T2 modifica el objeto y realiza un commit. Autom&aacute;ticamente se incrementa su n&uacute;mero de versi&oacute;n. Si ahora la transacci&oacute;n T1 intenta modificar el objeto se comprobar&aacute; que su n&uacute;mero de versi&oacute;n es mayor que el que tiene y se generar&aacute; una excepci&oacute;n.</p>
+<p>En este caso el usuario de la aplicaci&oacute;n que est&eacute; ejecutando la transacci&oacute;n T1 obtendr&aacute; un mensaje de error indicando que alguien ha modificado los datos y que no es posible confirmar la operaci&oacute;n. Lo deber&aacute; intentar de nuevo.</p>
+<p>Para que JPA pueda trabajar con versiones es necesario que los objetos tengan un atributo marcado con la anotaci&oacute;n <span class="codefrag">@Version</span>. Este atributo puede ser del tipo <span class="codefrag">int</span>, <span class="codefrag">Integer</span>, <span class="codefrag">short</span>, <span class="codefrag">Short</span>, <span class="codefrag">long</span>, <span class="codefrag">Long</span> y <span class="codefrag">java.sql.Timestamp</span>.</p>
+<pre class="code">@Entity
+public class Autor {
+   @Id
+   private String nombre;
+<strong>   @Version
+   private int version;</strong>
+   private String correo;
+   ...
+}</pre>
+<p>Aunque el est&aacute;ndar no lo permite, en Hibernate es posible definir un comportamiento optimista en entidades que no definen una columna de versi&oacute;n. Para ello basta con definir la entidad de la siguiente forma: </p>
+<pre class="code">@Entity
+@org.hibernate.annotations.Entity (
+   optimisticLock = OptimisticLockType.ALL,
+   dynamicUpdate = true
+)
+public class Autor {
+   @Id
+   private String nombre;
+   private String correo;
+   ...
+}</pre>
+<p>De forma complementaria al comportamiento optimista, tambi&eacute;n es posible en JPA definir bloqueos expl&iacute;citos sobre objetos. Para ello hay que utilizar el m&eacute;todo <span class="codefrag">lock(objeto,LockModeType)</span> del entity manager. Este m&eacute;todo bloquea un objeto (registro) para lectura y escritura. Hay que pasarle como par&aacute;metro el objeto sobre el que se realiza el bloqueo y el tipo de bloqueo. El tipo de bloqueo puede ser <span class="codefrag">LockModeType.READ</span> y <span class="codefrag">LockModeType.WRITE</span>. La diferencia entre ambos es que el segundo incrementa autom&aacute;ticamente el n&uacute;mero de versi&oacute;n del objeto, independientemente de que se haga despu&eacute;s una actualizaci&oacute;n o no. Cualquier intento de escritura de una versi&oacute;n anterior del objeto generar&aacute; una excepci&oacute;n.</p>
+<p>Por ejemplo, si se quisiera evitar el problema del asiento del vuelo bloqueando expl&iacute;citamente el registro, habr&iacute;a que escribir el siguiente c&oacute;digo:</p>
+<pre class="code">public void reservaAsiento(Pasajero pasajero, int numAsiento, long numVuelo) {
+   EntityManager em = emf.createEntityManager();
+   AsientoKey key = new AsientoKey(numAsiento, numVuelo);
+   em.getTransaction().begin();
+   Asiento asiento = em.find(Asiento.class, key);
+<strong>   em.lock(asiento,LockType.WRITE);</strong>
+   if (! asiento.getOcupado()) {
+      asiento.setOcupado(true);
+      asiento.setPasajero(pasajero);
+      pasajero.setAsiento(asiento);
+   }
+   em.getTransaction().commit();
+   em.close();
+}</pre>
+<p>Una llamada a <span class="codefrag">lock</span> genera inmediatamente una instrucci&oacute;n SQL <span class="codefrag">SELECT ... FOR UPDATE</span>, sin esperar a que se realice un flush del contexto de persistencia. Esta instrucci&oacute;n SQL hace que el gestor de base de datos realice un bloqueo del registro.</p>
+</div>
+
+
+
+				
+<a name="N101B0"></a><a name="Transacciones+y+EAO"></a>
+<h2 class="underlined_10">Transacciones y EAO</h2>
+<div class="section">
+<p>Veamos c&oacute;mo incorporar las transacciones en nuestro dise&ntilde;o de un EAO. Una t&eacute;cnica muy habitual en los entity beans y en los managers de Spring que implementan un <em>session fa&ccedil;ade</em> es declarar las transacciones de las operaciones como <span class="codefrag">REQUIRED_NEW</span>. Esto significa que la operaci&oacute;n comprueba si existe una transacci&oacute;n activa en el momento de ejecutarse. Si es as&iacute; se ejecuta dentro de esa transacci&oacute;n y si no crea una transacci&oacute;n nueva que se cierra al final de la operaci&oacute;n.</p>
+<p>Es posible utilizar el m&eacute;todo <span class="codefrag">isActive()</span> para hacer conseguir este comportamiento. Ve&aacute;moslo en el siguiente c&oacute;digo:</p>
+<pre class="code">public class EmpleadoDAO {
+
+		   // ... 
+		   public Empleado subeSueldoEmpleado(Empleado emp, long aumento) {
+		      boolean transaccionActiva = false;
+
+		      if (!em.getTransaction().isActive()) {
+		         em.getTransaction().begin();
+		         transaccionActiva = true;
+		      }
+
+		      if (aumento &gt; 0)
+		         emp.setSueldo(emp.getSueldo + aumento);
+		      else 
+		         // error
+
+		      if (transaccionActiva) em.getTransaction().commit();
+
+		      return empleado;
+		   }
+		}</pre>
+<p>El m&eacute;todo del DAO <span class="codefrag">subeSueldoEmpleado()</span> comprueba al comienzo si hay una transacci&oacute;n activa y pone a <span class="codefrag">true</span> una variable booleana en ese caso. Al finalizar, comprueba el valor de la variable y cierra la transacci&oacute;n si se ha abierto en el m&eacute;todo. En el caso en que el m&eacute;todo se haya llamado con una transacci&oacute;n ya comenzadas, la variable <span class="codefrag">transaccionActiva</span> seguir&aacute; a <span class="codefrag">false</span> y no se cerrar&aacute; la transacci&oacute;n.</p>
+<p>Habr&iacute;a que hacer esta comprobaci&oacute;n en todos los m&eacute;todos del DAO. En el proyecto de integraci&oacute;n veremos un ejemplo completo.</p>
+</div>
+
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007-2008 Depto. CCIA</div>
+</div>
+</body>
+</html>

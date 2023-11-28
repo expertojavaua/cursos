@@ -1,0 +1,1516 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Servicios Web seguros en Metro. Seguridad a nivel de transporte.</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/cursos/sws"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servicios Web seguros" src="images/baner_j2ee_der.gif" title="Servicios Web seguros"></a>
+</div>
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Apuntes</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Servicios Web seguros</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Servicios Web seguros">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesi&oacute;n 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesi&oacute;n 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesi&oacute;n 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesi&oacute;n 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesi&oacute;n 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesi&oacute;n 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesi&oacute;n 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesi&oacute;n 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesi&oacute;n 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesi&oacute;n 10</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesi&oacute;n 11</div>
+</div>
+<div class="menuitem">
+<a href="sesion12-apuntes.html">Sesi&oacute;n 12</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html" title="Roadmap">Roadmap</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion11-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Servicios Web seguros en Metro. Seguridad a nivel de transporte.</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Configurar+la+seguridad+en+Netbeans">Configurar la seguridad en Netbeans</a>
+</li>
+<li>
+<a href="#Tipos+de+mecanismos+de+seguridad+en+Netbeans">Tipos de mecanismos de seguridad en Netbeans</a>
+</li>
+<li>
+<a href="#Configurar+la+seguridad+en+el+cliente">Configurar la seguridad en el cliente</a>
+</li>
+<li>
+<a href="#Seguridad+a+nivel+de+transporte">Seguridad a nivel de transporte</a>
+<ul class="minitoc">
+<li>
+<a href="#Cliente+gestionado+por+el+servidor+mediante+inyecci%C3%B3n">Cliente gestionado por el servidor mediante inyecci&oacute;n</a>
+</li>
+<li>
+<a href="#Cliente+en+una+aplicaci%C3%B3n+web+sin+inyecci%C3%B3n">Cliente en una aplicaci&oacute;n web sin inyecci&oacute;n</a>
+</li>
+<li>
+<a href="#Cliente+independiente">Cliente independiente</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Autentificaci%C3%B3n+mediante+nombre+de+usuario+y+password+sobre+SSL">Autentificaci&oacute;n mediante nombre de usuario y password sobre SSL</a>
+<ul class="minitoc">
+<li>
+<a href="#Autentificar+con+otro+realm">Autentificar con otro realm</a>
+</li>
+<li>
+<a href="#Autentificaci%C3%B3n+programada+en+el+servidor">Autentificaci&oacute;n programada en el servidor</a>
+</li>
+<li>
+<a href="#Autentificaci%C3%B3n+din%C3%A1mica+en+el+cliente">Autentificaci&oacute;n din&aacute;mica en el cliente</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Autentificaci%C3%B3n+mediante+certificado+digital+sobre+SSL">Autentificaci&oacute;n mediante certificado digital sobre SSL</a>
+</li>
+<li>
+<a href="#Autentificaci%C3%B3n+mediante+SAML+SV+sobre+SSL">Autentificaci&oacute;n mediante SAML SV sobre SSL</a>
+</li>
+<li>
+<a href="#Ejercicios">Ejercicios</a>
+<ul class="minitoc">
+<li>
+<a href="#Servicio+web+de+gesti%C3%B3n+de+multas">Servicio web de gesti&oacute;n de multas</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+<p>Como alternativa a Axis 2 y CXF, encontramos Metro, el <em>framework</em> para servicios web desarrollado por Sun. 
+Este <em>framework</em> comprende los est&aacute;ndares de Sun para servicios web Java:</p>
+
+<ul>
+
+<li>JAX-WS (<em>Java API for XML Web Services</em>): API de Java para servicios web SOAP b&aacute;sicos.</li>
+
+<li>JAXB (<em>Java Architecture for XML Binding</em>): API de Java para vincular datos XML y objetos Java.</li>
+
+<li>WSIT (<em>Web Services Interoperability Technologies</em>): Plataforma Java que da soporte a las extensiones SOAP
+(WS-*), incluyendo tecnolog&iacute;as para servicios web seguros (WS-Security y WS-Trust).</li>
+
+</ul>
+
+
+<p>Metro se ha dise&ntilde;ado entorno a las tecnolog&iacute;as est&aacute;ndar desarrolladas por Sun (JAX-WS, JAXB y WSIT), mientras 
+que Axis2 queda abierto a utilizar diferentes tecnolog&iacute;as. Por ejemplo, en Axis2 para vincular datos Java-XML podemos optar por 
+tecnolog&iacute;as distintas de JAXB. Sin embargo, a pesar de contar con esta flexibilidad, debemos tener en cuenta que si
+utilizamos JAX-WS y JAXB dentro de Axis2 encontraremos bastantes limitaciones, entre ellas el no poder utilizar
+WS-Security.</p>
+ 
+
+<p>En Axis2 necesitamos instalar m&oacute;dulos adicionales para utilizar las tecnolog&iacute;as de segunda generaci&oacute;n (WS-*), mientras que
+el propio motor de Metro ya integra a todas ellas. Esto hace a Metro m&aacute;s f&aacute;cil de configurar, pero menos flexible.</p>
+
+
+<p>En cuanto al despliegue, los servicios web Axis2 se instalan como m&oacute;dulos independientes (AAR) dentro de la aplicaci&oacute;n web
+de Axis2, mientras que en Metro debemos crear nuestro propio m&oacute;dulo web (WAR) que incluya el servicio. Si desplegamos a un 
+servidor distinto a Glassfish deberemos incluir las librer&iacute;as de dicha pila dentro de nuestro WAR o
+en los directorios de librer&iacute;as comunes del servidor, y adem&aacute;s ficheros de configuraci&oacute;n adicionales. </p>
+
+
+<p>Aunque Metro puede ser instalado en cualquier servidor de aplicaciones, es especialmente interesante utilizarlo en un
+entorno Netbeans-Glassfish. Metro forma parte de Glassfish, por lo que no ser&aacute; necesario a&ntilde;adir librer&iacute;as ni configuraci&oacute;n
+adicional a dicho servidor. Adem&aacute;s, si como entorno de desarrollo utilizamos Netbeans tendremos a nuestra disposici&oacute;n 
+una interfaz gr&aacute;fica para configurar los servicios web, con la que de forma sencilla podremos crear servicios web seguros
+sin necesidad de tratar con ficheros de configuraci&oacute;n directamente. Vamos a centrarnos ahora en esta forma de crear
+servicios web seguros.</p>
+
+
+<a name="N10036"></a><a name="Configurar+la+seguridad+en+Netbeans"></a>
+<h2 class="underlined_10">Configurar la seguridad en Netbeans</h2>
+<div class="section">
+<p>En Netbeans, toda la configuraci&oacute;n de seguridad se realizar&aacute; a trav&eacute;s de la secci&oacute;n <em>Quality of Service</em> (QoS)
+de la vista de dise&ntilde;o de nuestros servicios:</p>
+<p>
+<img alt="Opciones de QoS." content-width="8cm" height="157" src="imagenes/sesion3/nb_qos.gif" width="390"></p>
+<p>La forma m&aacute;s inmediata de hacer seguro un servicio es simplemente pulsar sobre la opci&oacute;n
+<em>Secure Service</em>:</p>
+<p>
+<img alt="Activaci&oacute;n de la seguridad." content-width="8cm" height="157" src="imagenes/sesion3/nb_qos_secure.gif" width="419"></p>
+<p>Con esto habremos a&ntilde;adido seguridad a nivel de mensaje mediante el uso de certificados X.509. Pero antes
+de seguir vamos a ver m&aacute;s a fondo las opciones avanzadas que nos ofrece Netbeans para configurar la seguridad
+de nuestros servicios. Para ello entramos en la ventana de opciones avanzadas de QoS, pulsando el bot&oacute;n
+<em>Advanced ...</em> de dicha secci&oacute;n:</p>
+<p>
+<img alt="Opciones avanzadas de seguridad." content-width="13cm" height="260" src="imagenes/metro/nb_qosadvanced.gif" width="641"></p>
+<p>En primer lugar vemos que nos permite elegir el mecanismo de seguridad. Adem&aacute;s, vemos que por defecto 
+tenemos marcada la casilla <em>Use Development Defaults</em>. Durante el desarrollo la podemos 
+dejar marcada para no tener que preocuparnos de configurar los certificados y usuarios. Si la 
+desmarcamos, seg&uacute;n el tipo de servicio, deberemos especificar manualmente la configuraci&oacute;n necesaria.</p>
+<p>Una forma alternativa, y m&aacute;s directa, de llegar a esta pantalla de edici&oacute;n de atributos del servicio avanzados es pulsar
+con el bot&oacute;n derecho sobre el nombre de nuestro servicio, en la ventana del proyecto, y eleccionar la opci&oacute;n
+<em>Edit Web Service Attributes</em>:</p>
+<p>
+<img alt="Acceso a los atributos del servicio." content-width="8cm" height="205" src="imagenes/metro/nb_editwsatt.gif" width="397"></p>
+</div>
+
+
+<a name="N1007B"></a><a name="Tipos+de+mecanismos+de+seguridad+en+Netbeans"></a>
+<h2 class="underlined_10">Tipos de mecanismos de seguridad en Netbeans</h2>
+<div class="section">
+<p>En el apartado anterior hemos visto que Netbeans nos ofrece la posibilidad de seleccionar diferentes tipos 
+de mecanismos de seguridad para los servicios web. Los tipos que encontramos disponibles son los siguientes:</p>
+<ul>
+
+<li>
+<em>Username Authentication with Symmetric Key</em>
+</li>
+
+<li>
+<em>Mutual Certificates Security</em>
+</li>
+
+<li>
+<em>Endorsing Certificate</em>
+</li>
+
+<li>
+<em>Transport Security (SSL)</em>
+</li>
+
+<li>
+<em>Message Authentication over SSL</em>
+</li>
+
+<li>
+<em>SAML Authentication over SSL</em>
+</li>
+
+<li>
+<em>SAML Sender Vouches with Certificates</em>
+</li>
+
+<li>
+<em>SAML Holder of Key</em>
+</li>
+
+<li>
+<em>Symmetric Binding with Kerberos Tokens</em>
+</li>
+
+<li>
+<em>STS Issued Token</em>
+</li>
+
+<li>
+<em>STS Issued Token with Service Certificate</em>
+</li>
+
+<li>
+<em>STS Issued Endorsing Token</em>
+</li>
+
+<li>
+<em>STS Issued Supporting Token</em>
+</li>
+
+</ul>
+<p>Dada la cantidad de tipos disponibles, para poder comprenderlos mejor vamos a clasificarlos seg&uacute;n el tipo de
+seguridad que proporcionan. Una primera clasificaci&oacute;n que podemos realizar de forma sencilla consiste en
+distinguir aquellos que ofrecen seguridad a nivel de transporte y aquellos que implementan seguridad a nivel
+de mensaje:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+
+<th colspan="1" rowspan="1">Seguridad a nivel de mensaje</th><th colspan="1" rowspan="1">Seguridad a nivel de transporte</th>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>Username Authentication with Symmetric Key</em></td>
+<td colspan="1" rowspan="1"><em>Transport Security (SSL)</em></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>Mutual Certificates Security</em></td>
+<td colspan="1" rowspan="1"><em>Message Authentication over SSL</em></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>Endorsing Certificate</em></td>
+<td colspan="1" rowspan="1"><em>SAML Authentication over SSL</em></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>SAML Sender Vouches with Certificates</em></td>
+<td colspan="1" rowspan="1"></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>SAML Holder of Key</em></td>
+<td colspan="1" rowspan="1"></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>Symmetric Binding with Kerberos Tokens</em></td>
+<td colspan="1" rowspan="1"></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>STS Issued Token</em></td>
+<td colspan="1" rowspan="1"></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>STS Issued Token with Service Certificate</em></td>
+<td colspan="1" rowspan="1"></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>STS Issued Endorsing Token</em></td>
+<td colspan="1" rowspan="1"></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>STS Issued Supporting Token</em></td>
+<td colspan="1" rowspan="1"></td>
+
+</tr>
+
+</table>
+<p>Podemos ver adem&aacute;s que existen diferentes formas de autentificaci&oacute;n. En todas ellas tenemos un determinado
+<em>token</em> que nos proporciona informaci&oacute;n sobre la autentificaci&oacute;n (credenciales) y autorizaci&oacute;n del 
+usuario que est&aacute; accediendo al servicio. Encontramos los siguientes tipos de formas de autentificaci&oacute;n:</p>
+<ul>
+
+<li>
+<em>Username token</em>: Consiste en un <em>login</em> y un <em>password</em>.</li>
+
+<li>
+<em>X.509 token</em>: Se autentifica al cliente mediante un certificado digital de su propiedad.</li>
+
+<li>
+<em>SAML token</em>: Un <em>token</em> SAML (<em>Security Assertion Markup Language</em>) est&aacute;
+basado en XML y nos permitir&aacute; intercambiar informaci&oacute;n de autentificaci&oacute;n y autorizaci&oacute;n.</li>
+
+<li>
+<em>Kerberos token</em>: Kerberos es un protocolo de seguridad para autentificaci&oacute;n desarrollado
+por el MIT. Adem&aacute;s del cliente y el servicio, hay un tercer actor llamado Centro de Distibuci&oacute;n de Claves (CDC), 
+a trav&eacute;s del cual el cliente se autentifica con el servidor. Cuando el cliente quiere acceder a un servicio, se
+autentifica en el CDC solicitando acceso a dicho servicio, y el CDC le proporcionar&aacute; un <em>ticket</em> que
+le permitir&aacute; acceder al servicio. Dicho <em>ticket</em> ser&aacute; el <em>token</em> que utilizaremos para
+autentificarnos al acceder al servicio.</li>
+
+<li>
+<em>STS Issued token</em>: Utiliza <em>tokens</em> de seguridad emitidos por un servicio de tipo STS (que podremos 
+crear mediante Netbeans, creando un nuevo proyecto, y como tipo seleccionando <em>Web Services &gt; Secure Token Service</em>).
+Los servicios STS nos podr&aacute;n proporcionar cualquier tipo de <em>token</em> de seguridad, aunque su principal uso
+ser&aacute; el de proporcionar <em>tokens</em> SAML.</li>
+
+</ul>
+<p>Vamos a centrarnos en aquellos m&eacute;todos que utilizan autentificaci&oacute;n mediante <em>login/password</em> o 
+mediante certificado digital X.509, que son los que hemos visto a lo largo del curso. En el caso de utilizar
+seguridad a nivel de transporte tenemos las siguientes opciones:</p>
+<ul>
+
+<li>
+<em>Transport Security (SSL)</em>: Seguridad a nivel de transporte mediante SSL sin autentificaci&oacute;n. Esto
+ser&aacute; equivalente a a&ntilde;adir una restricci&oacute;n de seguridad al descriptor de despliegue (<span class="codefrag">web.xml</span>) en
+la que se proteja la URL asociada al servicio mediante seguridad declarativa (como si se tratase de una aplicaci&oacute;n 
+web ordinaria).</li>
+
+<li>
+<em>Message Authentication over SSL</em>: Seguridad a nivel de mensaje con autentificaci&oacute;n mediante 
+<em>login/password</em> o certificado digital X.509. Para elegir cu&aacute;l de estos <em>tokens</em> utilizaremos
+para autentificar al cliente deberemos pulsar el bot&oacute;n <em>Configure ...</em> junto al desplegable de selecci&oacute;n
+del mecanismo de seguridad.</li>
+
+</ul>
+<p>Respecto a los m&eacute;todos con seguridad a nivel de mensaje, encontrar&iacute;amos:</p>
+<ul>
+
+<li>
+<em>Mutual Certificates Security</em>: Seguridad a nivel de mensaje con clave asim&eacute;trica. En este caso los mensajes
+de petici&oacute;n se protegeran con el certificado del cliente, y los mensajes de respuesta se proteger&aacute;n con el certificado
+del servidor. Tanto cliente como servicio deber&aacute;n tener sus propios certificados.</li>
+
+<li>
+<em>Username Authentication with Symmetric Key</em>: Seguridad a nivel de mensaje con autentificaci&oacute;n mediante
+<em>login/password</em>. El mensaje se protege mediante una clave sim&eacute;trica, generada en tiempo de ejecuci&oacute;n utilizando 
+el certificado del servidor. El cliente se identifica simplemente mediante <em>login</em> y <em>password</em> (por defecto 
+<span class="codefrag">wsit/changeit</span>, si dejamos marcado <em>Use development defaults</em>).</li>
+
+<li>
+<em>Endorsing Certificate</em>: Seguridad a nivel de mensaje con autentificaci&oacute;n mediante certificado digital X.509.
+Al igual que el anterior, el mensaje se protege mediante una clave sim&eacute;trica generada con el certificado del servidor.
+En los mensajes de petici&oacute;n se adjunta adem&aacute;s el certificado del cliente para su autentificaci&oacute;n y como respaldo
+(<span class="codefrag">EndorsingSupportingToken</span>).</li>
+
+</ul>
+<p>Por &uacute;ltimo, tenemos otro grupo de m&eacute;todos que utilizan <em>tokens</em> de seguridad de diferentes tipos
+(SAML, Kerberos, etc) que incluyen informaci&oacute;n sobre la identidad del usuario y su autorizaci&oacute;n. Los diferentes
+mecanismos de seguridad de Netbeans basados en estos <em>tokens</em> son:</p>
+<ul>
+
+<li>
+<em>SAML Sender Vouches (SV) with Certificates</em>: En este tipo de seguridad el acceso al servicio se realiza
+a trav&eacute;s de un intermediario, con el que el servicio tiene una relaci&oacute;n de confianza. Este intermediario, que act&uacute;a
+de cliente, es conocido para el servicio y accede a &eacute;l en nombre de un determindo sujeto proporcionando un <em>token</em> SAML SV, 
+en el que indica la informaci&oacute;n sobre la autentificaci&oacute;n y autorizaci&oacute;n de dicho sujeto.</li>
+
+<li>
+<em>SAML Holder of Key (HoK)</em>: Este tipo de <em>token</em> SAML nos permite acceder directamente al servicio.
+En &eacute;l se incluye una clave que debe habernos proporcionado alguna entidad que nos avale (proveedor de identidades), y estar&aacute;
+firmada por dicha entidad. El servicio deber&aacute; poder verificar que dicha clave ha sido emitida por una entidad de
+confianza.</li>
+
+<li>
+<em>SAML Authentication over SSL</em>: Utiliza un <em>token</em> de tipo SAML SV sobre seguridad de nivel de
+transporte.</li>
+
+<li>
+<em>Symmetric Binding with Kerberos Tokens</em>: Con este mecanismo se utilizan <em>tokens</em> de tipo Kerberos para la autentificaci&oacute;n y se genera una clave
+sim&eacute;trica mediante el protocolo Kerberos V5 para proporcionar confidencialidad e integridad.</li>
+
+<li>
+<em>STS Issued Token</em>:  
+El servicio no conf&iacute;a directamente en el cliente, sin embargo si que conf&iacute;a en los <em>tokens</em> emitidos por el servicio
+STS, con lo cual se establece una cadena de confianza. El cliente se autentificar&aacute; con el servicio STS.</li>
+
+<li>
+<em>STS Issued Token with Service Certificate</em>: En este caso, adem&aacute;s de necesitar un <em>token</em> SAML que
+proteja (cifrar y firmar) los mensajes enviados por el cliente, se utiliza un certificado del servicio para proteger 
+los mensajes del servidor (clave asim&eacute;trica).</li>
+
+<li>
+<em>STS Issued Endorsing Token</em>: La protecci&oacute;n del mensaje se realiza mediante clave sim&eacute;trica con el certificado
+del servidor, y se utiliza el <em>token</em> proporcionado por el STS como respaldo para autentificar al cliente.</li>
+
+<li>
+<em>STS Issued Supporting Token</em>: Similar al caso anterior, pero en lugar de utilizarse el <em>token</em> como
+respaldo (<em>EndorsingSupportingToken</em>), simplemente se adjunta firmado y cifrado (<em>SignedEncryptedSupportingToken</em>).</li>
+
+</ul>
+<p>En los mecanismos de seguridad de la lista anterior basados en <em>tokens</em> SAML no se especifica qui&eacute;n nos
+ha proporcionado el <em>token</em>, simplemente lo utilizamos para autentificarnos. Este <em>token</em> normalmente
+nos lo proporcionar&aacute; un proveedor de identidades como Sun Access Manager o un servicio de tipo STS.</p>
+<p>Este &uacute;ltimo grupo de <em>tokens</em> est&aacute; enfocado a implementar lo que se conoce como <em>Single Sign-On</em> (SSO).
+Esto consiste en introducir un tercer actor que actuar&aacute; como proveedor de identidades. Los clientes podr&aacute;n autentificarse
+en este proveedor, que les proporcionar&aacute; <em>tokens</em> de seguridad que podr&aacute;n ser utilizados para acceder a m&uacute;ltiples 
+servicios. De esta forma, el cliente podr&aacute; acceder mediante una &uacute;nica identidad a todo aquel servicio que conf&iacute;e en los
+<em>tokens</em> emitidos por el proveedor de identidades utilizado. Podr&iacute;amos por ejemplo crear un servicio STS para
+ser utilizado como proveedor de identidades, y proporcionar <em>tokens</em> SAML a los clientes para que puedan
+autentificarse en nuestros servicios.</p>
+</div>
+
+
+<a name="N1024F"></a><a name="Configurar+la+seguridad+en+el+cliente"></a>
+<h2 class="underlined_10">Configurar la seguridad en el cliente</h2>
+<div class="section">
+<p>Los servicios web seguros no podr&aacute;n ser ejecutados por el cliente de prueba de Glassfish, por lo que deberemos desarrollar
+nuestro propio cliente. Para crearlo, al igual que en cualquier otro tipo de servicio web, podemos o bien especificar la 
+direcci&oacute;n de su documento WSDL, o directamente especificar el proyecto en el que se encuentra definido el servicio al que 
+queremos acceder.</p>
+<p>Dado que la especificaci&oacute;n de seguridad del servicio se encuentra en su documento WSDL, al generarse el
+cliente se habr&aacute; configurado de forma autom&aacute;tica para utilizar el mecanismo de seguridad especificado en
+el servicio. De esta forma, podremos acceder a la configuraci&oacute;n de seguridad del cliente pulsando con el bot&oacute;n derecho
+sobre la referencia al servicio y seleccionando la opci&oacute;n <em>Edit Web Service Attributes</em>:</p>
+<p>
+<img alt="Configuraci&oacute;n del cliente." content-width="7cm" height="108" src="imagenes/metro/nb_clienteref.gif" width="369"></p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Debemos destacar de este men&uacute; tambi&eacute;n la opci&oacute;n <em>Refresh Client</em>. Si cambiasemos 
+la especificaci&oacute;n de seguridad en el servidor, deberemos actualizar el cliente con esta opci&oacute;n para as&iacute;
+adaptar el <em>stub</em> generado al nuevo mecanismo de seguridad.</div>
+</div>
+<p>Si en el servidor estamos utilizando los valores de configuraci&oacute;n por defecto para el desarrollo, en el 
+cliente podemos hacer lo mismo, marcando la casilla <em>Use development defaults</em>. Si no fuese as&iacute;, deber&iacute;amos
+especificar la configuraci&oacute;n necesaria (certificado de usuario, certificados de confianza, nombre de usuario 
+y <em>password</em>, etc).</p>
+<p>
+<img alt="Seguridad en el cliente." content-width="12cm" height="442" src="imagenes/metro/nb_clienteatts.gif" width="629"></p>
+<p>Una vez configurada la seguridad, a&ntilde;adiremos el c&oacute;digo del cliente para invocar el servicio a alg&uacute;n 
+componente de la aplicaci&oacute;n (clase Java, JSP, Servlet, EJB, otro servicio web, etc), al igual que har&iacute;amos 
+para invocar cualquier otro servicio.</p>
+<div class="frame warning">
+<div class="label">Advertencia</div>
+<div class="content">En muchos casos la configuraci&oacute;n del cliente se comportar&aacute; de forma distinta seg&uacute;n si
+se ha invocado desde un componente gestionado por el contenedor (en el que el cliente del servicio se inyecte 
+mediante la anotaci&oacute;n <span class="codefrag">@WebServiceRef</span>), o si se invoca desde un objeto Java ordinario sin inyecci&oacute;n.</div>
+</div>
+<p>A continuaci&oacute;n veremos detalladamente c&oacute;mo utilizar diferentes tipos de seguridad en los servicios web
+desarrollados con Netbeans.</p>
+<p>Nos interesar&aacute; ver los mensajes SOAP que se utilizan para invocar el servicio en cada caso. Para hacer esto lo m&aacute;s
+sencillo es activar en Glassfish la propiedad que nos permite volcar los mensajes HTTP en la consola. Para activar
+esta opci&oacute;n debemos entrar en la consola de administraci&oacute;n de Glassfish (<em>Services &gt; Servers &gt; 
+Glassfish v3 Domain &gt; View Admin Console</em>):</p>
+<p>
+<img alt="Acceso a la consola de GlassFish." content-width="7cm" height="297" src="imagenes/metro/nb_gfconsole.gif" width="348"></p>
+<p>Una vez dentro de la consola nos logueamos, vamos a <em>Enterprise Server &gt; Propiedades del sistema</em>,
+y agregamos la propiedad <span class="codefrag">com.sun.xml.ws.transport.http.HttpAdapter.dump</span> con valor <span class="codefrag">true</span>:</p>
+<p>
+<img alt="Volcado de tr&aacute;fico HTTP." content-width="11cm" height="290" src="imagenes/metro/nb_dump.gif" width="534"></p>
+</div>
+
+
+
+<a name="N102B1"></a><a name="Seguridad+a+nivel+de+transporte"></a>
+<h2 class="underlined_10">Seguridad a nivel de transporte</h2>
+<div class="section">
+<p>Comenzaremos viendo c&oacute;mo crear servicios con seguridad a nivel de transporte. El caso m&aacute;s b&aacute;sico es aquel en
+el que utilizamos SSL para la protecci&oacute;n de los mensajes y no incluimos informaci&oacute;n de autentificaci&oacute;n. En primer
+lugar deberemos crear un nuevo proyecto web, y dentro de &eacute;l un servicio al que llamaremos <span class="codefrag">ServicioSSL</span>.
+Vamos a implementar un servicio sencillo que simplemente nos devuelva una cadena de texto fija:</p>
+<pre class="code">@WebService()
+public class ServicioSSL {
+
+    @WebMethod(operationName = "consulta")
+    public String consulta() {
+        return "Accediendo a servicio SSL";
+    }
+
+}</pre>
+<p>Ahora pulsaremos con el bot&oacute;n derecho sobre el nombre del servicio en la ventana del proyecto y seleccionaremos
+<em>Edit Web Service Attributes</em>. En la pantalla que nos aparecer&aacute; activaremos la casilla <em>Secure Service</em>
+y en el cuadro desplegable seleccionaremos como mecanismo de seguridad <em>Transport Security (SSL)</em>.</p>
+<p>
+<img alt="Configuraci&oacute;n de un servicio SSL." content-width="13cm" height="256" src="imagenes/metro/nb_qosssl.gif" width="634"></p>
+<p>Resulta interesante ver el efecto que tiene esta configuraci&oacute;n en el fichero XML de configuraci&oacute;n de los servicios WSIT.
+Este documento podemos encontrarlo en el directorio <span class="codefrag">Web Pages/WEB-INF/</span> del proyecto y se llamar&aacute; 
+<span class="codefrag">wsit-</span><em><span class="codefrag">nombreservicio</span></em><span class="codefrag">.xml</span>. En &eacute;l se muestra el documento
+WSDL que describe nuestro servicio (en ocasiones alg&uacute;n elemento del dicho WSDL ser&aacute; privado, s&oacute;lo para uso del servicio
+como configuraci&oacute;n, y por lo tanto no ser&aacute; visible en el WSDL que se haga p&uacute;blico). El WSDL que se habr&aacute; generado
+de nuestro servicio ser&aacute;:</p>
+<pre class="code">&lt;definitions 
+ xmlns="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+   name="ServicioSSLService" 
+   targetNamespace="http://ssl.sws.jtech.ua.es/" 
+   xmlns:tns="http://ssl.sws.jtech.ua.es/" 
+   xmlns:wsp="http://www.w3.org/ns/ws-policy" 
+   ...&gt;
+  &lt;message name="consulta"/&gt;
+  &lt;message name="consultaResponse"/&gt;
+  &lt;portType name="ServicioSSL"&gt;
+    &lt;operation name="consulta"&gt;
+      &lt;input message="tns:consulta"/&gt;
+      &lt;output message="tns:consultaResponse"/&gt;
+    &lt;/operation&gt;
+  &lt;/portType&gt;
+  &lt;binding name="ServicioSSLPortBinding" type="tns:ServicioSSL"&gt;
+    &lt;wsp:PolicyReference URI="<strong>#ServicioSSLPortBindingPolicy</strong>"/&gt;
+    &lt;operation name="consulta"&gt;
+      &lt;input&gt;&lt;/input&gt;
+      &lt;output&gt;&lt;/output&gt;
+    &lt;/operation&gt;
+  &lt;/binding&gt;
+  &lt;service name="ServicioSSLService"&gt;
+    &lt;port name="ServicioSSLPort" 
+          binding="tns:ServicioSSLPortBinding"/&gt;
+  &lt;/service&gt;
+  &lt;wsp:Policy wsu:Id="<strong>ServicioSSLPortBindingPolicy</strong>"&gt;
+    &lt;wsp:ExactlyOne&gt;
+      &lt;wsp:All&gt;
+        &lt;wsam:Addressing wsp:Optional="false"/&gt;
+          &lt;<strong>sp:TransportBinding</strong>&gt;
+            &lt;wsp:Policy&gt;
+              &lt;<strong>sp:TransportToken</strong>&gt;
+                &lt;wsp:Policy&gt;
+                  &lt;<strong>sp:HttpsToken</strong> 
+                     RequireClientCertificate="false"/&gt;
+                &lt;/wsp:Policy&gt;
+              &lt;/<strong>sp:TransportToken</strong>&gt;
+              &lt;sp:Layout&gt;
+                &lt;wsp:Policy&gt;
+                  &lt;sp:Lax/&gt;
+                &lt;/wsp:Policy&gt;
+              &lt;/sp:Layout&gt;
+              &lt;sp:IncludeTimestamp/&gt;
+              &lt;sp:AlgorithmSuite&gt;
+                &lt;wsp:Policy&gt;
+                  &lt;sp:Basic128/&gt;
+                &lt;/wsp:Policy&gt;
+              &lt;/sp:AlgorithmSuite&gt;
+            &lt;/wsp:Policy&gt;
+          &lt;<strong>/sp:TransportBinding</strong>&gt;
+        &lt;sp:Wss10/&gt;
+      &lt;/wsp:All&gt;
+    &lt;/wsp:ExactlyOne&gt;
+  &lt;/wsp:Policy&gt;
+&lt;/definitions&gt;</pre>
+<p>Mostramos en negrita los elementos destacados que podemos encontrar. Podemos ver que se define una pol&iacute;tica que hace
+referencia a todo el servicio (se referencia directamente dentro del bloque <em>binding</em>). En esta pol&iacute;tica se
+especifica la aserci&oacute;n <span class="codefrag">TransportBinding</span>, con la cual se indica que al servicio se puede acceder mediante
+seguridad a nivel de transporte.</p>
+<p>Como alternativa podr&iacute;amos haber creado un servicio web ordinario y haberlo protegido mediante seguridad declarativa
+en el fichero <span class="codefrag">web.xml</span>, como cualquier aplicaci&oacute;n web, pero de esa forma no habr&iacute;a quedado indicado en el 
+contrato del servicio (documento WSDL) que es necesario acceder a &eacute;l mediante SSL.</p>
+<p>Si entramos de nuevo en la pantalla de edici&oacute;n de los atributos del servicio, podemos ver que junto al desplegable
+con el mecanismo de seguridad seleccionado tenemos un bot&oacute;n <em>Configure ...</em>, con el que podemos configurar 
+diferentes aspectos del mecanismo activo. Si entramos en dicha configuraci&oacute;n, veremos que en este caso la &uacute;nica opci&oacute;n
+que podemos activar es <em>Requite Client Certificate</em>:</p>
+<p>
+<img alt="Configuraci&oacute;n de servicio SSL." content-width="5cm" height="133" src="imagenes/metro/nb_conf_ssl.gif" width="244"></p>
+<p>Si la activamos, lo &uacute;nico que cambiar&aacute; en el WSDL es el siguiente fragmento:</p>
+<pre class="code">...
+&lt;<strong>sp:TransportToken</strong>&gt;
+    &lt;wsp:Policy&gt;
+        &lt;<strong>sp:HttpsToken RequireClientCertificate="true"</strong>/&gt;
+    &lt;/wsp:Policy&gt;
+&lt;<strong>/sp:TransportToken</strong>&gt;
+...
+</pre>
+<p>Esto nos obligar&iacute;a a que el cliente tenga tambi&eacute;n su propio certificado para establecer la conexi&oacute;n segura. Vamos a 
+dejar dicha opci&oacute;n deshabilitada para empezar con el caso m&aacute;s sencillo.</p>
+<p>Una vez hemos terminado de configurar el servicio, vamos a desplegarlo y a crear un cliente para probarlo (recordamos 
+que el cliente de pruebas de Netbeans no funciona para servicios web seguros). </p>
+<a name="N10332"></a><a name="Cliente+gestionado+por+el+servidor+mediante+inyecci%C3%B3n"></a>
+<h3 class="underlined_5">Cliente gestionado por el servidor mediante inyecci&oacute;n</h3>
+<p>Vamos a comenzar creando un cliente dentro de una aplicaci&oacute;n web que se ejecute en un servidor de aplicaciones.
+Para ello creamos un nuevo proyecto de aplicaci&oacute;n web Java <span class="codefrag">ClienteWebSSL</span>, y en ella a&ntilde;adimos la 
+referencia al servicio.</p>
+<p>
+<img alt="Crear referencia al servicio SSL." content-width="12cm" height="384" src="imagenes/metro/nb_clientessl.gif" width="691"></p>
+<p>Cuando utilicemos SSL, al generar el cliente deberemos utilizar como URL del documento WSDL
+la URL segura (<span class="codefrag">https</span>), y adem&aacute;s con el nombre de <em>host</em> real (no <span class="codefrag">localhost</span>). Por
+ejemplo, podr&iacute;a ser algo como <span class="codefrag">https://localhost:8181/ServicioSSL/ServicioSSLService?wsdl</span>. Al introducir esta
+direcci&oacute;n y pulsar <em>Finish</em> nos preguntar&aacute; si aceptamos el certificado del servidor, a lo que deberemos
+responder de forma afirmativa.</p>
+<div class="frame note">
+<div class="label">Ayuda</div>
+<div class="content"> Si no estamos seguros de la direcci&oacute;n del documento WSDL, 
+en el asistente de creaci&oacute;n de la referencia al servicio como truco podemos seleccionar el apartado 
+<em>Project</em> para que nos muestre ah&iacute; dicha direcci&oacute;n, y entonces copiarla al apartado WSDL y 
+modificar la URL para que conecte al puerto seguro (8181) mediante HTTPS.</div>
+</div>
+<p>Crearemos un <em>servlet</em> dentro de nuestro proyecto, en el que a&ntilde;adiremos la llamada a la operaci&oacute;n del 
+servicio. Podemos aprovechar el c&oacute;digo de prueba que Netbeans crea por defecto dentro del <em>servlet</em>, y 
+dentro de este c&oacute;digo a&ntilde;adir la llamada al servicio arrastrando la operaci&oacute;n que queremos invocar desde el
+explorador del proyecto. Tendremos algo como lo siguiente:</p>
+<pre class="code">out.println("&lt;body&gt;");
+out.println("&lt;h1&gt;Servlet ClienteSSLServlet at " + 
+            request.getContextPath () + "&lt;/h1&gt;");
+
+try { // Call Web Service Operation
+    es.ua.jtech.sws.ssl.ServicioSSL port = 
+                          service.getServicioSSLPort();
+    // TODO process result here
+    java.lang.String result = port.consulta();
+    out.println("Result = "+result);
+} catch (Exception ex) {
+    // TODO handle custom exceptions here
+}
+
+out.println("&lt;/body&gt;");
+out.println("&lt;/html&gt;");</pre>
+<p>Si ejecutamos este servlet deberemos ver en &eacute;l un mensaje <em>Result = Accediendo a servicio SSL</em>. Si 
+no vemos nada posiblemente se deba a que ha ocurrido alg&uacute;n error en la invocaci&oacute;n al servicio. Para conocer
+los detalles del error ser&iacute;a recomendable imprimir la traza de la excepci&oacute;n en el <span class="codefrag">catch</span> del
+fragmento de c&oacute;digo anterior.</p>
+<div class="frame note">
+<div class="label">Importante</div>
+<div class="content">Si la primera vez que creamos la referencia al servicio lo hacemos sin utilizar
+la conexi&oacute;n segura <span class="codefrag">https</span> por puerto <span class="codefrag">8181</span>, para solucionar el problema no bastar&aacute; con
+hacer un <em>Refresh</em> del cliente especificando la direcci&oacute;n correcta. Deberemos borrar la referencia y
+volverla a crear.</div>
+</div>
+<a name="N10383"></a><a name="Cliente+en+una+aplicaci%C3%B3n+web+sin+inyecci%C3%B3n"></a>
+<h3 class="underlined_5">Cliente en una aplicaci&oacute;n web sin inyecci&oacute;n</h3>
+<p>En el c&oacute;digo del apartado anterior el objeto <span class="codefrag">service</span> se nos proporciona mediante inyecci&oacute;n. 
+Esto ser&aacute; as&iacute; siempre que creemos el cliente dentro de un componente gestionado por el servidor 
+(servlets, EJBs, servicios web). Sin embargo, si creamos el servicio sobre una clase Java ordinaria, o 
+por ejemplo sobre un JSP, la inyecci&oacute;n no se podr&aacute; realizar, y por lo tanto el cliente se deber&aacute;
+instanciar directamente mediante c&oacute;digo Java. Por ejemplo, si a&ntilde;adimos una llamada al servicio sobre el JSP
+que tenemos por defecto en nuestra aplicaci&oacute;n, veremos algo as&iacute; como:</p>
+<pre class="code">&lt;body&gt;
+&lt;h1&gt;Hello World!&lt;/h1&gt;
+&lt;%-- start web service invocation --%&gt;&lt;hr/&gt;
+&lt;%
+try {
+  es.ua.jtech.sws.ssl.ServicioSSLService service = 
+          new es.ua.jtech.sws.ssl.ServicioSSLService();
+  es.ua.jtech.sws.ssl.ServicioSSL port = 
+          service.getServicioSSLPort();
+  // TODO process result here
+  java.lang.String result = port.consulta();
+  out.println("Result = "+result);
+} catch (Exception ex) {
+  // TODO handle custom exceptions here
+}
+%&gt;
+&lt;%-- end web service invocation --%&gt;&lt;hr/&gt;
+
+&lt;/body&gt;</pre>
+<p>Este c&oacute;digo lo a&ntilde;ade autom&aacute;ticamente Netbeans, sin embargo, si lo probamos veremos que no funciona. Esto
+es debido a que cuando utilizamos una direcci&oacute;n con protocolo <span class="codefrag">https</span> para crear el cliente, el
+<em>stub</em> no se genera correctamente. Para solucionar este problema lo &uacute;nico que deberemos hacer es
+especificar manualmente la direcci&oacute;n del WSDL al instanciar el servicio:</p>
+<pre class="code">es.ua.jtech.sws.ssl.ServicioSSLService service = 
+  new es.ua.jtech.sws.ssl.ServicioSSLService(new java.net.URL(
+    "<strong>https://localhost:8181/ServicioSSL/ServicioSSLService?wsdl</strong>"));</pre>
+<p>Con este cambio el cliente funcionar&aacute; correctamente sin necesitar crearlo mediante inyecci&oacute;n.</p>
+<a name="N103A7"></a><a name="Cliente+independiente"></a>
+<h3 class="underlined_5">Cliente independiente</h3>
+<p>Vamos ahora a crear un servicio en una aplicaci&oacute;n Java independiente, que no estar&aacute; dentro de un servidor de
+aplicaciones. En este caso la principal dificultad radica en que ya no podremos contar con los almacenes de 
+certificados configurados en el servidor, sino que tendremos que configurarlos nosotros manualmente.</p>
+<p>Crearemos una nueva aplicaci&oacute;n Java en Netbeans con el nombre <span class="codefrag">ClienteSSL</span>. Dentro de esta aplicaci&oacute;n
+crearemos el cliente del servicio igual que en los pasos anteriores, especificando la direcci&oacute;n segura, y una 
+vez hecho esto a&ntilde;adiremos la llamada al servicio en la clase <span class="codefrag">Main</span> que se habr&aacute; creado por defecto,
+teniendo en cuenta que al igual que en el caso anterior, debemos especificar expl&iacute;citamente la URL con el documento
+WSDL al instanciar el servicio:</p>
+<pre class="code">public static void main(String[] args) {
+
+ try { // Call Web Service Operation
+  es.ua.jtech.sws.ssl.ServicioSSLService service = 
+   new es.ua.jtech.sws.ssl.ServicioSSLService(new URL(
+    "https://localhost:8181/ServicioSSL/ServicioSSLService?wsdl"));
+  es.ua.jtech.sws.ssl.ServicioSSL port = 
+   service.getServicioSSLPort();
+  // TODO process result here
+  java.lang.String result = port.consulta();
+  System.out.println("Result = "+result);
+ } catch (Exception ex) {
+  // TODO handle custom exceptions here
+ }
+
+}</pre>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Si al escribir o ejecutar el cliente no encuentra las clases del <em>stub</em>, realiza un 
+<em>Clean and Build</em> del proyecto Java para que todas las clases necesarias se compilen correctamente.</div>
+</div>
+<p>Sin embargo, en este caso con esto no es suficiente. Cuando se ejecutaba dentro del servidor web, el propio
+servidor web contaba con sus almacenes de certificados y de certificados ra&iacute;z. Sin embargo, un cliente independiente
+no cuenta con esta informaci&oacute;n, as&iacute; que tendremos que especificar los almacenes de certificados de forma 
+manual. Una forma sencilla de hacer esto es indicarlos directamente en el c&oacute;digo:</p>
+<pre class="code">System.setProperty("javax.net.ssl.keyStore", 
+  "$GF_HOME/glassfish/domains/domain1/config/keystore.jks");
+System.setProperty("javax.net.ssl.keyStorePassword", "changeit");
+
+System.setProperty("javax.net.ssl.trustStore", 
+  "$GF_HOME/glassfish/domains/domain1/config/cacerts.jks");
+System.setProperty("javax.net.ssl.trustStorePassword", "changeit");</pre>
+<p>Para que el cliente funcione todav&iacute;a tendremos que realizar un paso m&aacute;s, ya que de momento nuestro cliente &uacute;nicamente
+tiene la librer&iacute;a JAX-WS incluida en Java SE 6 y posteriores. Para invocar servicios web seguros se deber&aacute;n incluir una serie 
+de cabeceras de <em>WS-Security</em> en los mensajes SOAP, y para que esto ocurra deberemos tener las librer&iacute;as de Metro
+en nuestro cliente. Una forma sencilla de conseguir esto es pulsar con el bot&oacute;n derecho sobre la referencia a nuestro
+servicio, y seleccionar la opci&oacute;n <em>Edit Web Service Attributes</em> (de la misma forma que lo hicimos para el servidor). 
+En este caso realmente no tenemos nada que configurar aqu&iacute;, pero si activamos cualquier casilla de la secci&oacute;n QoS Netbeans
+a&ntilde;adir&aacute; autom&aacute;ticamente las librer&iacute;as de Metro y los ficheros de configuraci&oacute;n necesarios a nuestro proyecto. Despu&eacute;s de esto
+podemos volver a desactivar la casilla para dejar la configuraci&oacute;n como estaba.</p>
+<p>En cualquiera de los tres clientes que hemos visto los mensajes SOAP utilizados ser&aacute;n los mismos. A continuaci&oacute;n
+mostramos la informaci&oacute;n m&aacute;s destacada que figura en ellos, especialmente respecto a las cabeceras de seguridad. El
+mensaje de petici&oacute;n es:</p>
+<pre class="code">&lt;S:Envelope xmlns:S="http:..."&gt;
+&lt;S:Header&gt;
+  ...
+  &lt;<strong>wsse:Security</strong> S:mustUnderstand="1"&gt;
+    &lt;wsu:Timestamp xmlns:ns15="http://..."&gt;
+      &lt;wsu:Created&gt;2010-05-22T07:58:59Z&lt;/wsu:Created&gt;
+      &lt;wsu:Expires&gt;2010-05-22T08:03:59Z&lt;/wsu:Expires&gt;
+    &lt;/wsu:Timestamp&gt;
+  &lt;/<strong>wsse:Security</strong>&gt;
+&lt;/S:Header&gt;
+&lt;S:Body&gt;
+  &lt;ns2:consulta xmlns:ns2="http://ssl.sws.jtech.ua.es/"/&gt;
+&lt;/S:Body&gt;
+&lt;/S:Envelope&gt;</pre>
+<p>Y la respuesta que devuelve es:</p>
+<pre class="code">&lt;S:Envelope xmlns:S="http:..."&gt;
+&lt;S:Header&gt;
+  ...
+  &lt;<strong>wsse:Security</strong> S:mustUnderstand="1"&gt;
+    &lt;wsu:Timestamp xmlns:ns15="http://..."&gt;
+      &lt;wsu:Created&gt;2010-05-22T07:58:59Z&lt;/wsu:Created&gt;
+      &lt;wsu:Expires&gt;2010-05-22T08:03:59Z&lt;/wsu:Expires&gt;
+    &lt;/wsu:Timestamp&gt;
+  &lt;/<strong>wsse:Security</strong>&gt;
+&lt;/S:Header&gt;
+&lt;S:Body&gt;
+  &lt;ns2:consultaResponse xmlns:ns2="http://ssl.sws.jtech.ua.es/"&gt;
+    &lt;return&gt;Accediendo a servicio SSL&lt;/return&gt;
+  &lt;/ns2:consultaResponse&gt;
+&lt;/S:Body&gt;
+&lt;/S:Envelope&gt;</pre>
+<p>En este caso podemos observar que no hay ning&uacute;n elemento cifrado ni firmado en el mensaje, ya que la seguridad se
+realiza a nivel de transporte. Lo que si que se incluye como cabecera de seguridad es un <em>timestamp</em> para
+evitar que un mismo mensaje enviado varias veces produzca la misma firma.</p>
+<p>Si en lugar de haber utilizado seguridad a nivel de transporte con <em>WS-Security</em>, simplemente hubi&eacute;semos 
+configurado la aplicaci&oacute;n web con seguridad declarativa en el <span class="codefrag">web.xml</span> para obligar a que la conexi&oacute;n
+se realice por SSL, estas cabeceras no se habr&iacute;an utilizado, y por lo tanto tampoco hubiese sido necesario utilizar
+Metro para acceder al servicio.</p>
+</div>
+
+
+
+<a name="N10402"></a><a name="Autentificaci%C3%B3n+mediante+nombre+de+usuario+y+password+sobre+SSL"></a>
+<h2 class="underlined_10">Autentificaci&oacute;n mediante nombre de usuario y password sobre SSL</h2>
+<div class="section">
+<p>Vamos a pasar a ver c&oacute;mo crear un servicio que utilice autentificaci&oacute;n mediante nombre de usuario y <em>password</em>
+(<span class="codefrag">UsernameToken</span>) con seguridad a nivel de transporte (SSL), tal como se ha visto en el apartado 
+anterior, para garantizar la confidencialidad e integridad de los datos transmitidos.</p>
+<p>Crearemos un nuevo servicio al que llamaremos <span class="codefrag">ServicioSSLUsername</span>. En &eacute;l devolveremos una cadena de
+texto como en el caso anterior, pero ahora indicando el nombre del usuario con el que nos hemos autentificado 
+(<em>Principal</em>). Para poder obtener este dato desde nuestro servicio deberemos inyectarle una propiedad
+<span class="codefrag">WebServiceContext</span>. El c&oacute;digo quedar&aacute; como se muestra a continuaci&oacute;n:</p>
+<pre class="code">public class ServicioSSLUsername {
+
+  <strong>@Resource
+  private WebServiceContext context;</strong>
+
+  @WebMethod(operationName = "consulta")
+  public String consulta() {
+    return "Accediendo como " + 
+      context.<strong>getUserPrincipal().getName()</strong>;
+  }
+
+}</pre>
+<p>Ahora deberemos configurar el servicio para que solicite autentificaci&oacute;n mediante nombre de usuario sobre SSL. Para
+ello entramos en la ventana de atributos del servicio y seleccionamos <em>Message Authentication over SSL</em>. Dejaremos
+por el momento la casilla <em>Use Development Defaults</em> activada. Esto nos obligar&aacute; a crear un usuario con el
+que acceder al servicio en el <em>realm</em> <span class="codefrag">file</span> de Glassfish, que es el <em>realm</em> que utiliza
+por defecto. Para hacer esto, dentro de la consola de administraci&oacute;n de Glassfish, entramos en <em>Configuraci&oacute;n &gt; 
+Seguridad &gt; Dominios &gt; file</em>, y pulsamos sobre el bot&oacute;n
+<em>Administrar usuarios</em>. Aunque el usuario que Netbeans espera por defecto es <span class="codefrag">wsit/changeit</span>, 
+nosotros crearemos un usuario con login y password <span class="codefrag">ayto/ayto</span>.</p>
+<p>Con esto podemos consultar el WSDL generado para el servicio en el fichero de configuraci&oacute;n de WSIT. Los cambios
+que podemos observar sobre el anterior, en el que no ten&iacute;amos autentificaci&oacute;n, son los siguientes:</p>
+<pre class="code">&lt;wsp:Policy wsu:Id="ServicioSSLUsernamePortBindingPolicy"&gt;
+  &lt;wsp:ExactlyOne&gt;
+    &lt;wsp:All&gt;
+    ...
+      &lt;sp:Wss10/&gt;
+      &lt;<strong>sp:SignedEncryptedSupportingTokens</strong>&gt;
+        &lt;wsp:Policy&gt;
+          &lt;<strong>sp:UsernameToken sp:IncludeToken=
+            "http://.../IncludeToken/AlwaysToRecipient"</strong>&gt;
+            &lt;wsp:Policy&gt;
+              &lt;sp:WssUsernameToken10/&gt;
+            &lt;/wsp:Policy&gt;
+          &lt;<strong>/sp:UsernameToken</strong>&gt;
+        &lt;/wsp:Policy&gt;
+      &lt;<strong>/sp:SignedEncryptedSupportingTokens</strong>&gt;
+    &lt;/wsp:All&gt;
+  &lt;/wsp:ExactlyOne&gt;
+&lt;/wsp:Policy&gt;</pre>
+<p>Podemos ver que se ha a&ntilde;adido un <em>token</em> de tipo <em>UsernameToken</em> cifrado y firmado al mensaje. Este 
+<em>token</em> se incluir&aacute; en todos los mensajes del cliente al servicio (<em>recipent</em>).</p>
+<p>Crearemos ahora un cliente siguiendo el mismo procedimiento que en el caso anterior. En primer lugar lo haremos
+sobre la aplicaci&oacute;n web por inyecci&oacute;n. Una vez creada la referencia al servicio, tendremos que entrar en la ventana
+para editar sus atributos, ya que es imprescindible configurar el nombre de usuario y password con los que vamos a conectar:</p>
+<p>
+<img alt="Configuraci&oacute;n est&aacute;tica de autentificaci&oacute;n." content-width="11cm" height="310" src="imagenes/metro/nb_static.gif" width="553"></p>
+<p>En este caso no podemos marcar <em>Use development default</em>, ya que el nombre que hemos dado de alta en 
+Glassfish no es el que Netbeans considera como valor por defecto. Simplemente introduciremos <span class="codefrag">ayto/ayto</span>
+como nombre de usuario y password, dejando seleccionada en <em>Authentication credentials</em> la opci&oacute;n <em>Static</em>.</p>
+<p>Introducimos la llamada al servicio en el <em>servlet</em>, al igual que hicimos en el caso anterior, y al ejecutarlo
+deberemos obtener el mensaje <em>Result = Accediendo como ayto</em>.</p>
+<p>A continuaci&oacute;n veremos c&oacute;mo podemos personalizar la forma en la que se realiza la autentificaci&oacute;n, tanto en el
+lado del cliente como del servidor.</p>
+<a name="N1048D"></a><a name="Autentificar+con+otro+realm"></a>
+<h3 class="underlined_5">Autentificar con otro realm</h3>
+<p>Hemos visto hasta ahora c&oacute;mo autentificar utilizando el <em>realm</em> <span class="codefrag">file</span>. Sin embargo, es posible
+que nos interese utilizar otro <em>realm</em>, como por ejemplo uno que obtenga los usuarios de una base de datos. El 
+problema que encontramos es que en los servicios web no podemos configurar el <em>realm</em> que utilizan, por lo que
+tendremos que optar por otras alternativas.</p>
+<p>La forma m&aacute;s sencilla de cambiar el <em>realm</em> utilizado por los servicios web es cambiar el <em>realm</em>
+por defecto de Glassfish. Los servicios web siempre acceder&aacute;n al <em>realm</em> que hayamos configurado por defecto en 
+el servidor, as&iacute; que cambiando esta configuraci&oacute;n conseguiremos que los servicios web se autentifiquen con el 
+<em>realm</em> que nos interese.</p>
+<p>Para cambiar el <em>realm</em> por defecto en Glassfish, deberemos entrar en su consola de administraci&oacute;n y en
+el apartado <em>Configuraci&oacute;n &gt; Seguridad</em>. Veremos una opci&oacute;n <em>Dominio predeterminado</em> en la que
+por defecto estar&aacute; seleccionado <span class="codefrag">file</span>. Podemos cambiarlo para que el dominio por defecto sea el que
+a nosotros nos interese.</p>
+<p>Sin embargo encontramos otro problema, y es que es posible que tengamos varias aplicaciones en el servidor, y en cada
+una de ellas queramos utilizar un <em>realm</em> diferente. En este caso ya no nos sirve el poner un <em>realm</em>
+por defecto para todas las aplicaciones. Para solucionar esto deberemos crear nuestro servicio web dentro de una
+aplicaci&oacute;n enterprise, en lugar de hacerlo en una aplicaci&oacute;n web independiente. </p>
+<p>Los pasos a seguir son los siguientes:</p>
+<ul>
+
+<li>Creamos un nuevo proyecto de tipo <em>Enterprise Application</em> en Netbeans (<em>File &gt; New Project ... &gt; Java EE
+&gt; Enterprise Application</em>).</li>
+
+<li>En el asistente podemos desmarcar la opci&oacute;n de crear m&oacute;dulo EJB, ya que s&oacute;lo necesitamos el m&oacute;dulo web donde
+crear el servicio.</li>
+
+<li>En el proyecto <em>enterprise</em> seleccionamos <em>File &gt; New File ... &gt; GlassFish &gt; GlassFish Deployment
+Descriptor</em> (se llamar&aacute; <span class="codefrag">sun-application.xml</span>).</li>
+
+<li>En dicho descriptor configuramos el <em>realm</em> que utilizar&aacute; la aplicaci&oacute;n:</li>
+
+</ul>
+<pre class="code">&lt;sun-application&gt;
+    &lt;realm&gt;usuarios&lt;/realm&gt;
+&lt;/sun-application&gt;</pre>
+<p>Ahora todos los servicios que creemos dentro de m&oacute;dulos de dicha aplicaci&oacute;n EAR utilizar&aacute;n el <em>realm</em> 
+especificado.</p>
+<div class="frame note">
+<div class="label">Cuidado</div>
+<div class="content">Si antes de configurar el <em>realm</em> en nuestro EAR la aplicaci&oacute;n ya se hab&iacute;a desplegado en el servidor,
+para que los cambios que hagamos en <span class="codefrag">sun-application.xml</span> tengan efecto deberemos reiniciar el servidor.</div>
+</div>
+<a name="N10502"></a><a name="Autentificaci%C3%B3n+programada+en+el+servidor"></a>
+<h3 class="underlined_5">Autentificaci&oacute;n programada en el servidor</h3>
+<p>En el punto anterior hemos visto c&oacute;mo utilizar los <em>realms</em> de Glassfish para autentificar a los usuarios,
+sin embargo es posible que nos interese personalizar la forma en la que realizamos la autentificaci&oacute;n. Vamos a ver
+ahora la forma de implementar autentificaci&oacute;n programada en el servicio, que nos permita especificar en el c&oacute;digo
+la forma en la que se validan los credenciales del usuario.</p>
+<p>Si observamos la pantalla con los atributos del servicio, y desmarcamos la casilla <em>Use development defaults</em>,
+podremos ver que tenemos disponible un bot&oacute;n en el que configurar <em>Validators ...</em>. Estos <em>Validators</em> son
+clases Java que nosotros podemos crear, en las que se implementa la forma de validar los credenciales del usuario.</p>
+<p>
+<img alt="Configuracion personalizada de la autentificaci&oacute;n." content-width="13cm" height="225" src="imagenes/metro/nb_qosvalidation.gif" width="660"></p>
+<p>En la pantalla de configuraci&oacute;n de <em>Validators</em> podemos ver que uno de ellos es el de tipo <em>Username</em>, con
+el que podremos verificar el login y password que nos llegue desde el cliente.</p>
+<p>
+<img alt="Configuraci&oacute;n de validators." content-width="12cm" height="262" src="imagenes/metro/nb_validation.gif" width="587"></p>
+<p>Una posible implementaci&oacute;n para este <em>validator</em> es la siguiente:</p>
+<pre class="code">public class LoginValidator implements 
+                     <strong>PasswordValidationCallback.PasswordValidator</strong> {                                             
+
+  public boolean <strong>validate</strong>(
+                   <strong>PasswordValidationCallback.Request</strong> request)
+    throws <strong>PasswordValidationCallback.PasswordValidationException</strong> {
+    <strong>PasswordValidationCallback.PlainTextPasswordRequest</strong> 
+     plainTextRequest =
+     (<strong>PasswordValidationCallback.PlainTextPasswordRequest</strong>) request;
+    if ("pepe".equals(plainTextRequest.getUsername()) &amp;&amp;
+        "pepe".equals(plainTextRequest.getPassword())) {
+      return true;
+    }
+    return false;
+  }
+}</pre>
+<p>Esta es una forma sencilla de implementar la verificaci&oacute;n del login y password. Sin embargo, dado que Glassfish ya
+implementa su propio <em>validator</em> que comprueba los usuarios en el <em>realm</em> definido por defecto, el
+servidor de aplicaciones ignorar&aacute; cualquier <em>validator</em> que especifiquemos. No obstante, en otros servidores
+de aplicaciones si que podr&iacute;amos utilizar este mecanismo.</p>
+<p>Si queremos implementar autentificaci&oacute;n programada en Glassfish, deberemos optar por otra v&iacute;a. El mecanismo que 
+se utilizar&aacute; en este servidor de aplicaciones es el de implementar un <em>callback</em> gen&eacute;rico que realice las
+comprobaciones de seguridad necesarias, como por ejemplo:</p>
+<pre class="code">public class LoginCallback implements <strong>CallbackHandler</strong> {
+
+  public void <strong>handle</strong>(<strong>Callback</strong>[] callbacks) 
+      throws IOException, <strong>UnsupportedCallbackException</strong> {
+    for (<strong>Callback</strong> c : callbacks) {
+      if (c instanceof <strong>NameCallback</strong>) {
+        // Procesar NameCallback
+      } else if (c instanceof <strong>PasswordValidationCallback</strong>) {
+        <strong>PasswordValidationCallback</strong> pvc = 
+                                 (<strong>PasswordValidationCallback</strong>) c;
+        String usuario = pvc.<strong>getUsername</strong>();
+        String password = new String(pvc.<strong>getPassword</strong>());
+        if (usuario.equals("pepe") &amp;&amp; password.equals("pepe")) {
+          pvc.<strong>setResult</strong>(true);
+
+          pvc.<strong>getSubject</strong>().<strong>getPrincipals</strong>().add(new Principal() {
+            public String getName() {
+              return "pepe";
+            }
+          });
+
+        } else {
+          pvc.<strong>setResult</strong>(false);
+        }
+
+      } else if (c instanceof <strong>CallerPrincipalCallback</strong>) {
+        // Procesar CallerPrincipalCallback
+      } else {
+        throw new <strong>UnsupportedCallbackException</strong>(c, 
+                                 "Callback no soportado");
+      } 
+    }
+  }
+}</pre>
+<p>Deberemos reemplazar el <em>callback</em> por defecto de Glassfish por nuestro propio <em>callback</em>. Esto
+lo haremos modificando manualmente el fichero de configuraci&oacute;n del servicio 
+(<span class="codefrag">wsit-</span><em><span class="codefrag">nombreservicio</span></em><span class="codefrag">.xml</span>), y a&ntilde;adiendo:</p>
+<pre class="code">&lt;wsp:All&gt;
+  ...
+  &lt;sc:CallbackHandlerConfiguration xmlns:sc=
+      "http://schemas.sun.com/2006/03/wss/server" &gt;
+    &lt;sc:CallbackHandler  name="jmacCallbackHandler"  
+        classname="es.ua.jtech.sws.callback.LoginCallback" /&gt;
+  &lt;/sc:CallbackHandlerConfiguration&gt;
+&lt;/wsp:All&gt;</pre>
+<p>Con esta configuraci&oacute;n podremos programar la forma exacta en la que se realizar&aacute;n las comprobaciones de
+seguridad necesarias. Ahora pasaremos a ver c&oacute;mo personalizar la forma en la que se realiza la autentificaci&oacute;n
+en el lado del cliente.</p>
+<a name="N105B1"></a><a name="Autentificaci%C3%B3n+din%C3%A1mica+en+el+cliente"></a>
+<h3 class="underlined_5">Autentificaci&oacute;n din&aacute;mica en el cliente</h3>
+<p>Hasta el momento hemos visto c&oacute;mo realizar una autentificaci&oacute;n est&aacute;tica en el cliente. Sin embargo, en muchas ocasiones
+no nos interesa que esto sea as&iacute;, ya que esto nos obliga a incluir el login y password con el que accedemos en un fichero
+de configuraci&oacute;n del cliente, lo cual puede suponer un problema de seguridad. </p>
+<p>Si nos fijamos en el alguno de los clientes con autentificaci&oacute;n est&aacute;tica que hemos creado, veremos que tienen asociado
+un fichero de configuraci&oacute;n dentro del directorio <span class="codefrag">Source Packages/META-INF</span>, con el nombre 
+<em><span class="codefrag">nombreservicio</span></em><span class="codefrag">.xml</span>. En este fichero podemos encontrar un fragmento de c&oacute;digo
+como el siguiente:</p>
+<pre class="code">&lt;sc:CallbackHandlerConfiguration wspp:visibility="private"&gt;
+  &lt;sc:CallbackHandler default="ayto" name="usernameHandler"/&gt;
+  &lt;sc:CallbackHandler default="ayto" name="passwordHandler"/&gt;
+&lt;/sc:CallbackHandlerConfiguration&gt;</pre>
+<p>Como podemos ver, los logins y passwords especificados de forma est&aacute;tica quedan perfectamente visibles en este 
+fichero de configuraci&oacute;n. En una aplicaci&oacute;n web instalada en nuestro propio servidor esto no resulta demasiado 
+problem&aacute;tico, pero si vamos a distribuir una aplicaci&oacute;n Java independiente deber&iacute;amos evitar que en uno de los ficheros
+que incluya se puedan ver estos datos.</p>
+<p>Para solucionar este problema podemos optar por realizar una autentificaci&oacute;n din&aacute;mica, en la que en lugar de
+proporcionar directamente los valores de login y password, especificaremos un <span class="codefrag">CallbackHandler</span> que
+nos los proporcione. Este <span class="codefrag">CallbackHandler</span> sigue la misma estructura que el visto anteriormente para
+el servidor:</p>
+<pre class="code">public class LoginCallback implements <strong>CallbackHandler</strong> {
+
+  public void <strong>handle</strong>(<strong>Callback</strong>[] callbacks) throws IOException, 
+                                 <strong>UnsupportedCallbackException</strong> {
+    for(<strong>Callback</strong> c: callbacks) {
+      if(c instanceof <strong>NameCallback</strong>) {
+        <strong>NameCallback</strong> uc = (<strong>NameCallback</strong>)c;
+        uc.<strong>setName</strong>("pepe");
+      } else if(c instanceof <strong>PasswordCallback</strong>) {
+        <strong>PasswordCallback</strong> pc = (<strong>PasswordCallback</strong>)c;
+        pc.<strong>setPassword</strong>("pepe".toCharArray());
+      }
+    }
+  }
+}</pre>
+<p>Introduciremos la clase anterior en el cliente Java independiente (no en la aplicaci&oacute;n web), y una vez hecho esto
+entraremos en la pantalla de configuraci&oacute;n de los atributos del cliente del servicio, seleccionaremos el m&eacute;todo <em>Dynamic</em>
+para obtener los credenciales de autentificaci&oacute;n, y especificaremos la clase anterior como <em>callback</em> tanto
+para el nombre de usuario como para el password.</p>
+<p>
+<img alt="Autentificaci&oacute;n din&aacute;mica." content-width="10cm" height="207" src="imagenes/metro/nb_dynamic.gif" width="517"></p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Para que los cambios en la configuraci&oacute;n tengan efecto es posible que necesitemos hacer un 
+<em>Clean and Build del proyecto</em>.</div>
+</div>
+<p>Podr&iacute;amos hacer que el <em>callback</em> obtenga los datos de una base de datos, o se los solicite al usuario en
+la consola.</p>
+<div class="frame note">
+<div class="label">Importante</div>
+<div class="content">La autentificaci&oacute;n din&aacute;mica es ignorada cuando el cliente se crea dentro de una aplicaci&oacute;n web
+de Glassfish. En ese caso siempre deber&eacute;mos utilizar siempre el m&eacute;todo est&aacute;tico.</div>
+</div>
+<p>Finalmente, vamos a analizar los mensajes SOAP que se han utilizado para invocar los servicio anteriores. En el caso
+de la petici&oacute;n tenemos:</p>
+<pre class="code">&lt;S:Envelope xmlns:S="http://..."&gt;
+&lt;S:Header&gt;
+  ...
+  &lt;wsse:Security S:mustUnderstand="1"&gt;
+    &lt;wsu:Timestamp xmlns:ns15="http://..."&gt;
+      &lt;wsu:Created&gt;2010-05-22T10:07:32Z&lt;/wsu:Created&gt;
+      &lt;wsu:Expires&gt;2010-05-22T10:12:32Z&lt;/wsu:Expires&gt;
+    &lt;/wsu:Timestamp&gt;
+    &lt;<strong>wsse:UsernameToken</strong> xmlns:ns15="http://..."&gt;
+      &lt;wsse:Username&gt;ayto&lt;/wsse:Username&gt;
+      &lt;wsse:Password Type="http://...#PasswordText"&gt;
+        ayto
+      &lt;/wsse:Password&gt;
+    &lt;/<strong>wsse:UsernameToken</strong>&gt;
+  &lt;/wsse:Security&gt;
+&lt;/S:Header&gt;
+&lt;S:Body&gt;
+  &lt;ns2:consulta xmlns:ns2="http://username.ssl.sws.jtech.ua.es/"/&gt;
+&lt;/S:Body&gt;
+&lt;/S:Envelope&gt;</pre>
+<p>Podemos ver que en este caso se ha a&ntilde;adido a la cabecera de seguridad el elemento <span class="codefrag">UsernameToken</span>
+con los credenciales del usuario. En el WSDL vimos que se especificaba que este <em>token</em> deb&iacute;a ser firmado
+y cifrado, pero esto se realizar&aacute; a nivel de transporte, por lo que al recibir el mensaje en nuestro nodo podemos
+ver todos los datos sin cifrar.</p>
+<p>En cuando a la respuesta, tendremos algo como lo siguiente:</p>
+<pre class="code">&lt;S:Envelope xmlns:S="http://..."&gt;
+&lt;S:Header&gt;
+  ...
+  &lt;wsse:Security S:mustUnderstand="1"&gt;
+    &lt;wsu:Timestamp xmlns:ns15="http://..."&gt;
+      &lt;wsu:Created&gt;2010-05-22T10:07:32Z&lt;/wsu:Created&gt;
+      &lt;wsu:Expires&gt;2010-05-22T10:12:32Z&lt;/wsu:Expires&gt;
+    &lt;/wsu:Timestamp&gt;
+  &lt;/wsse:Security&gt;
+&lt;/S:Header&gt;
+&lt;S:Body&gt;
+  &lt;ns2:consultaResponse xmlns:ns2="http://.../"&gt;
+    &lt;return&gt;Accediendo como ayto&lt;/return&gt;
+  &lt;/ns2:consultaResponse&gt;
+&lt;/S:Body&gt;
+&lt;/S:Envelope&gt;</pre>
+<p>En este caso se mantiene igual que en el caso anterior.</p>
+</div>
+
+
+<a name="N10645"></a><a name="Autentificaci%C3%B3n+mediante+certificado+digital+sobre+SSL"></a>
+<h2 class="underlined_10">Autentificaci&oacute;n mediante certificado digital sobre SSL</h2>
+<div class="section">
+<p>En el punto anterior hemos visto c&oacute;mo utilizar un nombre de usuario y password para autentifica al cliente. 
+Vamos a ver ahora c&oacute;mo realizar esta autentificaci&oacute;n mediante un certificado digital X.509 propiedad
+del cliente, manteniendo seguridad a nivel de transporte para garantizar la confidencialidad e integridad.</p>
+<p>Podremos hacer esto manteniendo el mismo tipo de seguridad que en el caso anterior 
+(<em>Message Authentication over SSL</em>). Crearemos un nuevo servicio al que llamaremos <span class="codefrag">ServicioSSLCert</span>
+igual que en el caso anterior, especificando dicho mecanismo de seguridad. Pero en este caso, una vez seleccionado
+el tipo de seguridad en la pantalla de edici&oacute;n de atributos del servicio, pulsaremos sobre el bot&oacute;n <em>Configure ...</em>
+</p>
+<p>
+<img alt="Autentificaci&oacute;n mediante certificado." content-width="8cm" height="298" src="imagenes/metro/nb_certssl.gif" width="406"></p>
+<p>En la pantalla de configuraci&oacute;n cambiaremos el <em>Authentication Token</em> a X509. Con esto ahora el servicio 
+esperar&aacute; recibir de la petici&oacute;n del cliente un certificado con el que autentificarlo. En el WSDL esto habr&aacute; quedado
+especificado de la siguiente forma:</p>
+<pre class="code">&lt;wsp:Policy wsu:Id="ServicioSSLCertPortBindingPolicy"&gt;
+  &lt;wsp:ExactlyOne&gt;
+    &lt;wsp:All&gt;
+      ...
+      &lt;sp:Wss10/&gt;
+      &lt;<strong>sp:EndorsingSupportingTokens</strong>&gt;
+        &lt;wsp:Policy&gt;
+          &lt;<strong>sp:X509Token</strong> sp:IncludeToken=
+            "http://.../IncludeToken/<strong>AlwaysToRecipient</strong>"&gt;
+            &lt;wsp:Policy&gt;
+              &lt;sp:WssX509V3Token10/&gt;
+            &lt;/wsp:Policy&gt;
+          &lt;/<strong>sp:X509Token</strong>&gt;
+        &lt;/wsp:Policy&gt;
+      &lt;/<strong>sp:EndorsingSupportingTokens</strong>&gt;
+    &lt;/wsp:All&gt;
+  &lt;/wsp:ExactlyOne&gt;
+&lt;/wsp:Policy&gt;</pre>
+<p>En este caso el <em>token</em> de autentificaci&oacute;n se incluye como <span class="codefrag">EndorsingSupportingTokens</span>. Es decir, se 
+utilizar&aacute; para firmar parte del mensaje de petici&oacute;n, a parte de la firma realizada a nivel de transporte. Podemos ver tambi&eacute;n
+que el <em>token</em> se incluir&aacute; en todos los mensajes del cliente al servidor (<em>recipent</em>).</p>
+<p>Dentro de nuestro servicio podemos obtener los datos del certificado con el mismo m&eacute;todo <span class="codefrag">getUserPrincipal()</span>:</p>
+<pre class="code">public class ServicioSSLCert {
+    @Resource
+    private WebServiceContext context;
+
+    @WebMethod(operationName = "consulta")
+    public String consulta() {
+      return "Accediendo con certificado " + 
+                 context.<strong>getUserPrincipal</strong>().getName();
+    }
+}</pre>
+<p>Podemos crear un cliente de la misma forma que en el caso anterior. Vamos a crear un cliente en la aplicaci&oacute;n web y por 
+el momento dejaremos marcado tanto en cliente como en servidor la casilla <em>Use development defaults</em>. Al ejecutar
+el cliente veremos un mensaje como <em>Result = Accediendo con certificado CN=xwssecurityserver,OU=SUN,O=Internet Widgits 
+Pty Ltd,ST=Some-State,C=AU</em>.</p>
+<pre class="code">&lt;S:Envelope xmlns:S="http://..."&gt;
+&lt;S:Header&gt;
+  ...
+  &lt;wsse:Security S:mustUnderstand="1"&gt;
+    &lt;wsu:Timestamp xmlns:ns17="http://..." wsu:Id="<strong>_1</strong>"&gt;
+      &lt;wsu:Created&gt;2010-05-23T09:29:57Z&lt;/wsu:Created&gt;
+      &lt;wsu:Expires&gt;2010-05-23T09:34:57Z&lt;/wsu:Expires&gt;
+    &lt;/wsu:Timestamp&gt;
+    &lt;<strong>wsse:BinarySecurityToken</strong> xmlns:ns17="http://..." 
+        ValueType="...#X509v3" EncodingType="...#Base64Binary" 
+        wsu:Id="<strong>uuid_a7d12e65-13dd-44d0-9ba9-43bd3039c472</strong>"&gt;
+        MIIDDzCCAnigAwIBAgIBAjANBgkqhkiG9w0BAQQFADBOMQ
+        swCQYDVQQGEwJBVTETMBEGA1UECBMKU29tZS1TdGF0ZTEM
+        MAoGA1UEChMDU1VOMQwwCgYDVQQLEwNKV1MxDjAMBgNVBA
+        MTBVNVTkNBMB4XDTA3MDMxMjEwMTgwNVoXDTE3MDMwOTEw
+        MTgwNVowbzELMAkGA1UEBhMCQVUxEzARBgNVBAgTClNvbW
+        UtU3RhdGUxITAfBgNVBAoTGEludGVybmV0IFdpZGdpdHMg
+        UHR5IEx0ZDEMMAoGA1UECxMDU1VOMRowGAYDVQQDExF4d3
+        NzZWN1cml0eXNlcnZlcjCBnzANBgkqhkiG9w0BAQEFAAOB
+        jQAwgYkCgYEAv11fD4vbn2E+RpKgPkDFYzorrGsGqpdsms
+        Z3wGewLhSdrDI18Lugs6QcUUTq8dQ17xAWPITQWi0EzXpU
+        hdFTQAi4eiLJnV2SVirz4iyCqbZCzn0gCJxFcJ//+BYwIu
+        WdTLrfya14+47gKBhFnNSZxmpjZlahf6105AZMTgt05BMC
+        AwEAAaOB2zCB2DAJBgNVHRMEAjAAMCwGCWCGSAGG+EIBDQ
+        QfFh1PcGVuU1NMIEdlbmVyYXRlZCBDZXJ0aWZpY2F0ZTAd
+        BgNVHQ4EFgQUdVE29ysyFW/iD1la3ddePzM6IWowfgYDVR
+        0jBHcwdYAUZ7plxs6VyOOOTSFyojDV0/YYjJWhUqRQME4x
+        CzAJBgNVBAYTAkFVMRMwEQYDVQQIEwpTb21lLVN0YXRlMQ
+        wwCgYDVQQKEwNTVU4xDDAKBgNVBAsTA0pXUzEOMAwGA1UE
+        AxMFU1VOQ0GCCQDbHkJaq6KijjANBgkqhkiG9w0BAQQFAA
+        OBgQBWpPzVlkGUGarWc0ghob52gvWWjYoQ/2b1zHqUcLGt
+        1fGKcwS0m23PMCWjwcTv4AKz4ZAtymK9xe9UOoMkJt+N9S
+        uOajGzKvpf7eXaC5d+CcGmIhRDL+8Exz9DVqLDi8MVHd8o
+        Mg/WeP2c0q0TCDxXmATn6n9hC0abODh8cLUh7Q==
+    &lt;/<strong>wsse:BinarySecurityToken</strong>&gt;
+    &lt;<strong>ds:Signature</strong> xmlns:ns17="http://..." Id="_2"&gt;
+      &lt;ds:SignedInfo&gt;
+        &lt;ds:CanonicalizationMethod Algorithm=
+            "http://www.w3.org/2001/10/xml-exc-c14n#"&gt;
+          &lt;exc14n:InclusiveNamespaces PrefixList="wsse S" /&gt;
+        &lt;/ds:CanonicalizationMethod&gt;
+        &lt;ds:SignatureMethod Algorithm=
+            "http://www.w3.org/2000/09/xmldsig#rsa-sha1" /&gt;
+        &lt;ds:Reference URI="<strong>#_1</strong>"&gt;
+          &lt;ds:Transforms&gt;
+            &lt;ds:Transform Algorithm=
+                "http://www.w3.org/2001/10/xml-exc-c14n#"&gt;
+              &lt;exc14n:InclusiveNamespaces 
+                PrefixList="wsu wsse S" /&gt;
+            &lt;/ds:Transform&gt;
+          &lt;/ds:Transforms&gt;
+          &lt;ds:DigestMethod Algorithm=
+              "http://www.w3.org/2000/09/xmldsig#sha1" /&gt;
+          &lt;ds:DigestValue&gt;
+              F559PJhB0KvFgyZfwB2OZnkAW7Y=
+          &lt;/ds:DigestValue&gt;
+        &lt;/ds:Reference&gt;
+      &lt;/ds:SignedInfo&gt;
+      &lt;ds:SignatureValue&gt;
+        Ps6f+1ByciO357TAvXZu9hO1KmiNenQTi1K66RZRrL4jBf
+        sOaeYAdZhdK19DS92t4kL3RDgZTXdbrRQxdkqoU4jKWhx6
+        StRCur57Ux4L046U9MgEyla6BTzhe0UcM3FuLynHwWmsnQ
+        WK5sHz3SdiDpvJTilvj31QMLfmu0vZI28=
+      &lt;/ds:SignatureValue&gt;
+      &lt;ds:KeyInfo&gt;
+        &lt;wsse:SecurityTokenReference&gt;
+          &lt;wsse:Reference URI=
+            "<strong>#uuid_a7d12e65-13dd-44d0-9ba9-43bd3039c472</strong>" 
+            ValueType="...#X509v3"/&gt;
+        &lt;/wsse:SecurityTokenReference&gt;
+      &lt;/ds:KeyInfo&gt;
+    &lt;/<strong>ds:Signature</strong>&gt;
+  &lt;/wsse:Security&gt;
+&lt;/S:Header&gt;
+&lt;S:Body&gt;
+  &lt;ns2:consulta xmlns:ns2="http://cert.ssl.sws.jtech.ua.es/"/&gt;
+&lt;/S:Body&gt;
+&lt;/S:Envelope&gt;
+</pre>
+<p>Lo primero que observamos en el mensaje de petici&oacute;n SOAP es que ahora se adjunta el certificado
+digital del cliente como datos binarios codificados en base64. Adem&aacute;s, en el mensaje tenemos una firma
+de respaldo (adem&aacute;s el mensaje completo se cifrar&aacute; y se firmar&aacute; durante el transporte). Si observamos
+el contenido de la firma, vemos que se ha firmado el elemento con identificado <span class="codefrag">_1</span>, que
+corresponde al <em>timestamp</em>, y para firmarlo se ha utilizado el certificado adjunto, con
+identificador <span class="codefrag">uuid_a7d12e65-13dd-44d0-9ba9-43bd3039c472</span>.</p>
+<p>A continuaci&oacute;n mostramos el mensaje de respuesta SOAP, que sigue siendo igual que en los casos
+anteriores:</p>
+<pre class="code">&lt;S:Envelope xmlns:S="http://..."&gt;
+&lt;S:Header&gt;
+  ...
+  &lt;wsse:Security S:mustUnderstand="1"&gt;
+    &lt;wsu:Timestamp xmlns:ns15="http://..." wsu:Id="_1"&gt;
+      &lt;wsu:Created&gt;2010-05-23T09:29:57Z&lt;/wsu:Created&gt;
+      &lt;wsu:Expires&gt;2010-05-23T09:34:57Z&lt;/wsu:Expires&gt;
+    &lt;/wsu:Timestamp&gt;
+  &lt;/wsse:Security&gt;
+&lt;/S:Header&gt;
+&lt;S:Body&gt;
+  &lt;ns2:consultaResponse xmlns:ns2=
+        "http://cert.ssl.sws.jtech.ua.es/"&gt;
+    &lt;return&gt;Accediendo con certificado CN=xwssecurityserver,
+      OU=SUN,O=Internet Widgits Pty Ltd,ST=Some-State,C=AU
+    &lt;/return&gt;
+  &lt;/ns2:consultaResponse&gt;
+&lt;/S:Body&gt;
+&lt;/S:Envelope&gt;</pre>
+<p>Vamos ahora a estudiar c&oacute;mo personalizar el certificado que el cliente utiliza para autentificarse. Este certificado
+deber&aacute; resultar de confianza para el servidor. Para que esto sea as&iacute; deber&iacute;a estar firmado por alguno de los certificados
+ra&iacute;z a los que tiene acceso el servicio.</p>
+<p>En la configuraci&oacute;n de Netbeans distinguiremos dos almacenes de certificados:</p>
+<ul>
+
+<li>
+<em>Keystore</em>: Certificados X.509 propios. De cada uno se almacena el certificado y la clave privada 
+asociada.</li>
+
+<li>
+<em>Truststore</em>: Certificados ra&iacute;z y certificados de entidades con las que nos comunicamos. En este 
+caso s&oacute;lo tenemos la clave p&uacute;blica.</li>
+
+</ul>
+<p>Para el tipo de seguridad que estamos utilizando deberemos configurar el <em>truststore</em> en el lado del servidor, 
+y el <em>keystore</em> en el lado del cliente. Para poder cambiar los almacenes utilizados deberemos desmarcar las
+casillas <em>Use development defaults</em> en la ventana de edici&oacute;n de atributos del servicio, y pulsar sobre los 
+botones <em>Keystore...</em> y <em>Truststore...</em> en cliente y servidor respectivamente.</p>
+<p>El password de los dos almacenes incluidos por defecto en Glassfish es <span class="codefrag">changeit</span>. En el caso del <em>Truststore</em>
+s&oacute;lo deberemos indicar el fichero en el que est&aacute; el almacen y el password (podemos dejar los valores por defecto). 
+Respecto al <em>Keystore</em>, deberemos indicar adem&aacute;s el <em>alias</em> del certificado que queramos utilizar
+para autentificarnos. Si la lista de <em>alias</em> apareciese vac&iacute;a, podemos pulsar el bot&oacute;n <em>Load Aliases</em>
+para que los cargue del servidor.</p>
+<p>
+<img alt="Configuraci&oacute;n del keystore." content-width="11cm" height="297" src="imagenes/metro/nb_keystore.gif" width="530"></p>
+<p>Vamos a cambiar el <em>alias</em> del certificado utilizado por el cliente por <span class="codefrag">xwssecurityclient</span>. Si
+volvemos a ejecutar la aplicaci&oacute;n cliente ahora veremos que se ha autentificado utilizando este certificado.</p>
+</div>
+
+
+<a name="N1071A"></a><a name="Autentificaci%C3%B3n+mediante+SAML+SV+sobre+SSL"></a>
+<h2 class="underlined_10">Autentificaci&oacute;n mediante SAML SV sobre SSL</h2>
+<div class="section">
+<p>Por &uacute;ltimo vamos a ver c&oacute;mo utilizar un mecanismo de autentificaci&oacute;n mediante <em>tokens</em> de tipo SAML 
+<em>Sender-Vouches</em> (SV) sobre SSL. En este caso cliente y servicio deben mantener de antemano una 
+relaci&oacute;n de confianza, y el servidor confiar&aacute; en la informaci&oacute;n que figure en los <em>tokens</em> de seguridad que le enviemos.</p>
+<p>Entonces, si el servidor ya nos conoce y conf&iacute;a en nosotros, &iquest;para qu&eacute; se utilizar&aacute;n los <em>tokens</em>? Para responder
+a esta pregunta es necesario aclarar que en este mecanismo de seguridad estaremos accediendo al servicio en nombre de un
+determinado sujeto. Dicho sujeto deber&aacute; autentificarse con nosotros, y una vez confiemos en &eacute;l, compondremos un <em>token</em>
+SAML SV con su informaci&oacute;n y haremos la llamada al servicio en su lugar, proporcionando al servidor dicho <em>token</em>
+para indicarle en nombre de qui&eacute;n estamos accediendo. Es decir, en este caso el sujeto que quiere invocar el servicio
+lo har&aacute; a trav&eacute;s de un intermediario, que es el cliente que vamos a crear en este apartado.</p>
+<p>En primer lugar crearemos el servicio que utiliza autentificaci&oacute;n mediante SAML SV sobre SSL. Crearemos un nuevo servicio
+<span class="codefrag">ServicioSSLSaml</span>, y especificaremos como mecanismo de seguridad <em>SAML Authorization over SSL</em>. Para 
+poder analizar el contenido del <em>token</em> SAML en el servicio podemos utilizar un c&oacute;digo como el siguiente:</p>
+<pre class="code">import com.sun.xml.wss.SubjectAccessor;
+import com.sun.xml.wss.saml.util.SAMLUtil;
+import java.io.CharArrayWriter;
+import java.util.Set;
+import javax.annotation.Resource;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+import javax.security.auth.Subject;
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.ws.WebServiceContext;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
+@WebService()
+public class ServicioSSLSaml {
+
+  @Resource
+  WebServiceContext context;
+
+  @WebMethod(operationName = "consulta")
+  public String consulta() {
+    Element e = getSAMLAssertion(context);
+    if(e==null) {
+      return "No se encuentra ningun token SAML";
+    } else {
+      return "Acceso mediante SAML con " + volcarNodoDom(e);
+    }
+  }
+
+  private static Element getSAMLAssertion(WebServiceContext 
+                                                      context) {
+    try {
+      Subject s = SubjectAccessor.getRequesterSubject(context);
+      Set&lt;Object&gt; set = s.getPublicCredentials();
+      Element samlAssertion = null;
+      for (Object obj : set) {
+        if (obj instanceof XMLStreamReader) {
+          XMLStreamReader reader = (XMLStreamReader) obj;
+          samlAssertion = SAMLUtil.createSAMLAssertion(reader);
+          return samlAssertion;
+        }
+      }
+    } catch (Exception ex) {
+      return null;
+    }
+    return null;
+  }
+
+  private static String volcarNodoDom(Node node) {
+    try {
+      CharArrayWriter caw = new CharArrayWriter();
+      DOMSource ds = new DOMSource(node);
+      TransformerFactory tf = TransformerFactory.newInstance();
+      Transformer t = null;
+      t = tf.newTransformer();
+      t.transform(ds, new StreamResult(caw));
+      return caw.toString();
+    } catch (TransformerException ex) {
+      return "Error: " + ex.getMessage();
+    }
+  }
+}</pre>
+<p>Si introducimos este c&oacute;digo directamente en nuestro servicio, y a&ntilde;adimos los <em>imports</em> necesarios, veremos que 
+hay algunos elementos que no consigue importar, ya que Netbeans no tiene visibles las librer&iacute;as necesarias (fundamentalmente
+las localizadas en el paquete <span class="codefrag">com.sun.xml.wss</span>). Para solucionar este problema deberemos a&ntilde;adir manualmente las 
+librer&iacute;as de Metro al proyecto, pero dado que Glassfish ya cuenta con ellas, no deberemos hacer que se empaqueten con el proyecto.
+Simplemente las utilizaremos para que el proyecto compile.</p>
+<p>Para introducir dichas librer&iacute;as pulsaremos sobre el proyecto con el bot&oacute;n derecho del rat&oacute;n, y seleccionaremos <em>Properties</em>.
+Iremos a la secci&oacute;n <em>Libraries</em>, y pulsaremos el bot&oacute;n <em>Add Library ...</em>, para a&ntilde;adir la librer&iacute;a METRO 2.0. Una vez 
+a&ntilde;adida dicha librer&iacute;a, desmarcamos la casilla <em>Package</em> para evitar que se empaquete con nuestro proyecto al desplegarlo.
+Deber&aacute; quedar como se muestra a continuaci&oacute;n:</p>
+<p>
+<img alt="A&ntilde;adir librer&iacute;as de Metro." content-width="13cm" height="568" src="imagenes/metro/nb_libmetro.gif" width="678"></p>
+<p>Con esto se podr&aacute; compilar y desplegar el proyecto sin problemas. Ahora pasaremos a ver la implementaci&oacute;n del cliente. Vamos
+a crear la referencia al servicio dentro de una aplicaci&oacute;n Java independiente, de la misma forma que en casos anteriores. Una vez
+creado, si entramos en la ventana de edici&oacute;n de atributos del cliente del servicio, y marcamos <em>Use development defaults</em>, 
+veremos que nos crea de forma autom&aacute;tica un <em>callback</em> SAML que se encarga de componer los <em>tokens</em> necesarios
+para acceder al servicio.</p>
+<p>Este <em>callback</em> funcionar&iacute;a correctamente en un cliente web dentro de Glassfish, pero al estar en un cliente independiente
+tendremos que hacer una peque&ntilde;a modificaci&oacute;n. Deberemos localizar la siguiente l&iacute;nea:</p>
+<pre class="code">String glassfish_home=System.getProperty("com.sun.aas.installRoot")</pre>
+<p>Y sustituirla por la ruta donde Glassfiss est&aacute; instalado, para que as&iacute; sea capaz de localizar los almacenes de certificados
+necesarios:</p>
+<pre class="code">String glassfish_home="/RutaCompleta/NetBeans/sges-v3/glassfish"</pre>
+<p>Si no tuvi&eacute;semos Glassfish en la m&aacute;quina cliente, siempre podr&iacute;amos especificar directamente en el c&oacute;digo la localizaci&oacute;n
+de los almacenes.</p>
+<p>Ahora al invocar el servicio nos volcar&aacute; el <em>token</em> SAML recibido</p>
+<pre class="code">&lt;saml:Assertion xmlns:saml="..." 
+    AssertionID="1275299425926" 
+    IssueInstant="2010-05-31T11:50:25.926+02:00" 
+    Issuer="CN=Assertion Issuer,OU=AI,O=Assertion Issuer,L=Waltham,
+    ST=MA,C=US" MajorVersion="1" MinorVersion="1"&gt;
+  &lt;saml:Conditions NotBefore="2010-05-31T10:50:25.926+02:00" 
+                   NotOnOrAfter="2010-05-31T12:50:25.926+02:00"/&gt;
+  &lt;saml:AttributeStatement&gt;
+    &lt;saml:Subject&gt;
+      &lt;saml:NameIdentifier Format="...:X509SubjectName"&gt;
+        <strong>CN=SAML User,OU=SU,O=SAML User,L=Los Angeles,ST=CA,C=US</strong>
+      &lt;/saml:NameIdentifier&gt;
+      &lt;saml:SubjectConfirmation&gt;
+        &lt;saml:ConfirmationMethod&gt;
+          <strong>urn:oasis:names:tc:SAML:1.0:cm:sender-vouches</strong>
+        &lt;/saml:ConfirmationMethod&gt;
+      &lt;/saml:SubjectConfirmation&gt;
+    &lt;/saml:Subject&gt;
+    &lt;saml:Attribute AttributeName="attribute1" 
+           AttributeNamespace="urn:com:sun:xml:wss:attribute"&gt;
+      &lt;saml:AttributeValue xmlns:ns5="..." ns5:type="ns6:string"&gt;
+        <strong>ATTRIBUTE1</strong>
+      &lt;/saml:AttributeValue&gt;
+    &lt;/saml:Attribute&gt;
+  &lt;/saml:AttributeStatement&gt;
+&lt;/saml:Assertion&gt;</pre>
+<p>Si observamos el c&oacute;digo del <em>callback</em> podremos identificar de forma sencilla d&oacute;nde se ha especificado
+cada uno de los datos que figura en este <em>token</em>. Podremos modificar manualmente dicho <em>callback</em>
+para introducir la informaci&oacute;n necesaria que queramos transmitir al servidor sobre la autentificaci&oacute;n y 
+autorizaci&oacute;n del sujeto en nombre de quien estamos accediendo.</p>
+</div>
+
+
+
+<p class="pageBreakAfter"></p>
+
+
+
+<a name="N107AB"></a><a name="Ejercicios"></a>
+<h2 class="underlined_10">Ejercicios</h2>
+<div class="section">
+<a name="N107B1"></a><a name="Servicio+web+de+gesti%C3%B3n+de+multas"></a>
+<h3 class="underlined_5">Servicio web de gesti&oacute;n de multas</h3>
+<p>Vamos a desarrollar un servicio web con el que los ciudadanos puedan consultar sus multas pendientes. Vamos
+a utilizar seguridad a nivel de transporte, y autentificaci&oacute;n mediante certificados digitales. En los certificados
+digitales de los ciudadanos, figurar&aacute; su NIF como CN.</p>
+<p>Lo primero que debemos hacer es crear nuevos certificados para dos ciudadanos distintos, con NIF <span class="codefrag">00000000T</span>
+y <span class="codefrag">11111111H</span>. Deberemos crear tambi&eacute;n una autoridad certificadora con la que firmarlos. Seguiremos el
+mismo procedimiento que se vi&oacute; en sesiones anteriores, pero en este caso los introduciremos en los almacenes de
+certificados de GlassFish (<span class="codefrag">keystore.jks</span> y <span class="codefrag">cacerts.jks</span>).</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Cuando tengamos una aplicaci&oacute;n desplegada en GlassFish, los almacenes de certificados que utilizar&aacute;
+siempre ser&aacute;n los de dicho servidor de aplicaciones. Si cambiamos la ruta de los almacenes en la ventana de edici&oacute;n de atributos
+del servicio, GlassFish seguir&aacute; utilizando los que ten&iacute;a por defecto, ignorando el cambio. Sin embargo, en una aplicaci&oacute;n
+que se ejecute fuera de NetBeans este cambio si que tendr&aacute; efecto. Por este motivo en el ejercicio vamos a introducir 
+los nuevos certificados directamente en los almacenes de GlassFish.</div>
+</div>
+<p>Crearemos las claves para cada ciudadano en <span class="codefrag">keystore.jks</span>, e importaremos los certificados de los ciudadanos
+y de la autoridad certificadora tanto en <span class="codefrag">keystore.jks</span> como en <span class="codefrag">cacerts.jks</span>.</p>
+<p>El servicio deber&aacute; leer el NIF del cliente de su certificado, y buscar&aacute; en su base de datos la lista de multas asociada
+a dicho NIF. Para simplificar la implementaci&oacute;n se proporcionan las <a href="ejercicios/multas.zip">clases necesarias</a> 
+para acceder a la informaci&oacute;n de las multas en el servicio. Tambi&eacute;n se incluyen en el mismo fichero los certificados ya 
+creados como ayuda.</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010 Depto. CCIA</div>
+</div>
+</body>
+</html>

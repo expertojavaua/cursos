@@ -1,0 +1,714 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Sesi&oacute;n 8: Integraci&oacute;n con XHTML y servlets</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/banner-aplicaciones-ria.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/baner_j2ee_der.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Apuntes</a>
+</li>
+<li>
+<a class="base-not-selected" href="software.html">Software</a>
+</li>
+<li>
+<a class="base-not-selected" href="doc.html">Documentaci&oacute;n</a>
+</li>
+<li>
+<a class="base-not-selected" href="enlaces.html">Enlaces</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Apuntes</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 8</div>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesion 10</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion08-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Sesi&oacute;n 8: Integraci&oacute;n con XHTML y servlets</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#ZUML+y+XHTML">ZUML y XHTML</a>
+<ul class="minitoc">
+<li>
+<a href="#El+componente+html">El componente html</a>
+</li>
+<li>
+<a href="#El+espacio+de+nombres+Native">El espacio de nombres Native</a>
+</li>
+<li>
+<a href="#El+espacio+de+nombres+XHTML">El espacio de nombres XHTML</a>
+</li>
+<li>
+<a href="#El+componente+include">El componente include</a>
+</li>
+<li>
+<a href="#C%C3%B3mo+trabajar+con+formularios+HTML+y+con+servlets">C&oacute;mo trabajar con formularios HTML y con servlets</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Objetos+impl%C3%ADcitos">Objetos impl&iacute;citos</a>
+<ul class="minitoc">
+<li>
+<a href="#Duraci%C3%B3n+de+la+vida+de+distintos+elementos">Duraci&oacute;n de la vida de distintos elementos</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#La+interfaz+Execution">La interfaz Execution</a>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="ZUML+y+XHTML"></a>
+<h2 class="underlined_10">ZUML y XHTML</h2>
+<div class="section">
+<p>Es posible incluir etiquetas HTML dentro de una p&aacute;gina ZUML. Hay que tener siempre presente que la p&aacute;gina ZUML es procesada en el servidor para construir una p&aacute;gina HTML que se env&iacute;a de vuelta al cliente. Veremos en este apartado c&oacute;mo definir etiquetas HTML que sean colocadas tal cual en la p&aacute;gina resultante.</p>
+<p>Hay distintas formas de utilizar etiquetas HTML junto con los componentes ZUL en la misma p&aacute;gina ZUML.</p>
+<p>La primera forma es utilizar el componente <span class="codefrag">html</span> para embeber en &eacute;l etiquetas HTML. Con este enfoque, las etiquetas HTML son sencillamente el contenido del componente <span class="codefrag">html</span>. Son enviadas directamente al cliente y no tienen ning&uacute;n sentido espec&iacute;fico para ZK.</p>
+<p>En segundo lugar, se puede usar el espacio de nombres XHTML (http://www.w3.org/1999/xhtml/) para especificar un componente del conjunto XHTML. De esta forma, pueden convivir en una misma p&aacute;gina del espacio de nombres ZUL (http://www.zkoss.org/2005/zul) y componentes XHTML. ZK procesa ambos tipos de componentes en un mismo &aacute;rbol XML.</p>
+<p>Por &uacute;ltimo, es posible utilizar el espacio de nombres Native (http://www.zkoss.org/2005/zk/native) para hacer que ZK env&iacute;e el componente tal cual de vuelta al cliente, en lugar de procesarlo como un componente ZK.</p>
+<a name="N10027"></a><a name="El+componente+html"></a>
+<h3 class="underlined_5">El componente html</h3>
+<p>La manera m&aacute;s sencilla es usar un component ZUL llamado <span class="codefrag">html</span> en el que podemos incluir etiquetas XHTML que queremos enviar directamente al navegador. Es conveniente utilizar la sentencia <span class="codefrag">&lt;[CDATA[</span> para hacer el texto compatible con XML (si no lo hici&eacute;ramos asi, el parser de ZK interpretar&iacute;a las etiquetas HTML como etiquetas del documento, en lugar de verlas como texto a procesar). Dentro del contenido se permite utilizar expresiones EL.</p>
+<pre class="code">&lt;window border="normal" title="Html Demo"&gt;
+   &lt;html&gt;
+   &lt;![CDATA[
+      &lt;h4&gt;Hola, ${parent.title}&lt;/h4&gt;
+      &lt;p&gt;Este es el contenido del componente html.&lt;/p&gt; 
+   ]]&gt;
+   &lt;/html&gt;
+&lt;/window&gt;</pre>
+<p>En el ejemplo el texto <span class="codefrag">&lt;h4&gt; ... &lt;/p&gt;</span> es el contenido del elemento <span class="codefrag">html</span> (es posible obtener este contenido desde Java utilizando el m&eacute;todo <span class="codefrag">getContent</span> de la clase <span class="codefrag">org.zkoss.zul.Html</span>).</p>
+<p>Tambi&eacute;n es posible utilizar el elemento <span class="codefrag">attribute</span> de ZK para especificar el fragmento XHTML en lugar de con <span class="codefrag">CDATA</span>:</p>
+<pre class="code">&lt;window border="normal" title="Html Demo"&gt; 
+   &lt;html&gt;
+      &lt;attribute name="content"&gt; 
+         &lt;h4&gt;Hola, ${parent.title}&lt;/h4&gt;
+         &lt;p&gt;Este es el contenido del componente html.&lt;/p&gt; 
+      &lt;/attribute&gt;
+   &lt;/html&gt;
+&lt;/window&gt;</pre>
+<p>El componente <span class="codefrag">html</span> genera la etiqueta HTML <span class="codefrag">span</span> para englobar el contenido. En el ejemplo, genera las siguientes etiquetas HTML que env&iacute;a al navegador:</p>
+<pre class="code">&lt;span id="z_4a_3"&gt;
+   &lt;h4&gt;Hola, Html Demo&lt;/h4&gt;
+   &lt;p&gt;Este es el contenido del componente html.&lt;/p&gt;
+&lt;/span&gt;</pre>
+<p>El componente <span class="codefrag">html</span> no es distinto de cualquier otro componente ZUL. Por ejemplo, es posible especificar el estilo CSS, as&iacute; como cambiar el contenido din&aacute;micamente:</p>
+<pre class="code">&lt;zk&gt;
+   &lt;html id="h" style="border: 1px solid blue;background: yellow"&gt;
+   &lt;![CDATA[
+      &lt;ul&gt;
+         &lt;li&gt;Contenido nativo del browser&lt;/li&gt; &lt;/ul&gt;
+   ]]&gt;
+   &lt;/html&gt; 
+   &lt;button label="change" onClick="h.setContent(&amp;quot;Hola, actualizamos&amp;quot;)" /&gt;
+&lt;/zk&gt;</pre>
+<p>Hay que notar que debido a que se utiliza <span class="codefrag">span</span> para embeber las etiquetas HTML el siguiente fragmento de c&oacute;digo es incorrecto:</p>
+<pre class="code">&lt;zk&gt;
+   &lt;html&gt;
+   &amp;lt;![CDATA[&lt;![CDATA[
+      &lt;ul&gt;
+         &lt;li&gt;
+   ]]&gt;
+   &lt;/html&gt; 
+   &lt;textbox /&gt;
+   &lt;html&gt;
+   &amp;lt;![CDATA[&lt;![CDATA[
+      &lt;/li&gt;
+   &lt;/ul&gt;
+   ]]&gt;
+   &lt;/html&gt;
+&lt;/zk&gt;</pre>
+<p>Si necesitamos generar las etiquetas HTML directamente, sin la etiqueta <span class="codefrag">span</span> podemos utilizar el espacio de nombres Native que explicamos m&aacute;s adelante.</p>
+<a name="N1007E"></a><a name="El+espacio+de+nombres+Native"></a>
+<h3 class="underlined_5">El espacio de nombres Native</h3>
+<p>El espacio de nombres <em>Native</em> para denominar elementos XML de la p&aacute;gina ZUML que el cargador de ZK manda al navegador directamente sin convertirlos en un componente ZK. Por ejemplo, </p>
+<pre class="code">&lt;n:ul xmlns:n="http://www.zkoss.org/2005/zk/native"&gt; 
+   &lt;n:li&gt;
+   &lt;textbox/&gt; 
+   &lt;/n:li&gt; 
+   &lt;n:li&gt; 
+   &lt;textbox/&gt; 
+   &lt;/n:li&gt;
+&lt;/n:ul&gt;</pre>
+<p>generar&aacute; las siguientes etiquetas HTML para el navegador</p>
+<pre class="code">&lt;ul&gt;
+   &lt;li&gt;
+   &lt;input id="z_a3_2"/&gt;
+   &lt;/li&gt;
+   &lt;li&gt;
+   &lt;input id="z_a3_5"/&gt;
+   &lt;/li&gt;
+&lt;/ul&gt;</pre>
+<p>Las etiquetas <span class="codefrag">&lt;input&gt;</span> se generan por el componente <span class="codefrag">textbox</span>. A diferencia del textbox en el ejemplo de arriba, el cargador de ZK no crea un componente por cada <span class="codefrag">ul</span> y <span class="codefrag">li</span>. En vez de eso, esas etiquetas se env&iacute;an al cliente directamente donde se reconocen como etiquetas HTML.</p>
+<p>Los elementos generados con el espacio de nombres Native son enviados directamente al cliente, no son componentes ZK y, por tanto, no son considerados tampoco como elementos ZK en el cliente. La ventaja es que se mejora el rendimiento en t&eacute;rminos de memoria y de tiempo de procesamiento. Por otro lado, la desventaja es que no podemos acceder a ellos ni cambiarlos din&aacute;micamente. Por ejemplo, el siguiente trozo de c&oacute;digo es incorrecto, ya que no hay ning&uacute;n componente llamado <span class="codefrag">x</span>.</p>
+<pre class="code">&lt;n:ul id="x" xmlns:n="http://www.zkoss.org/2005/zk/native"/&gt;
+&lt;button label="add" onClick="new Li().setParent(x)"/&gt;</pre>
+<p>Si queremos cambiar din&aacute;micamente los elementos HTML es necesario utilizar el espacio de nombres XHTML tal y como se describe en el siguiente apartado.</p>
+<a name="N100B2"></a><a name="El+espacio+de+nombres+XHTML"></a>
+<h3 class="underlined_5">El espacio de nombres XHTML</h3>
+<p>El espacio de nombres XHTML (http://www.w3.org/1999/xhtml/) representa el conjunto de componentes XHTML, de la misma forma que el espacio de nombres ZUL (http://www.zkoss.org/2005/zul)  representa el conjunto de componentes ZUL. De esta forma, un elemento XML especificado con el espacio de nombres XHTML simplemente denota un componente XHTML que ser&aacute; creado por el cargador de ZK. Por ejemplo, la siguiente sentencia especifica un componente <span class="codefrag">ul</span> del espacio de nombres http://www.w3.org/1999/xhtml/. El cargador de ZK reconoce ese componente como un elemento XHTML y genera su c&oacute;digo correspondiente.</p>
+<pre class="code">&lt;h:ul xmlns:h="[http://www.w3.org/1999/xhtml http://www.w3.org/1999/xhtml]"&gt;</pre>
+<p>Veamos un ejemplo.</p>
+<pre class="code">&lt;?page title="A&ntilde;adir HTML" contentType="text/html;charset=UTF-8"?&gt;
+&lt;zk&gt;
+&lt;window id="A" title="A&ntilde;adir HTML demo" border="normal" xmlns:h="http://www.w3.org/1999/xhtml"&gt;
+    &lt;h:table border="1"&gt;
+        &lt;h:tr id="row1"&gt;
+            &lt;h:td&gt;column 1&lt;/h:td&gt;
+            &lt;h:td&gt;
+                &lt;listbox id="list" mold="select"&gt;
+                     &lt;listitem label="AA"/&gt;
+                     &lt;listitem label="BB"/&gt;
+                 &lt;/listbox&gt;
+             &lt;/h:td&gt;
+         &lt;/h:tr&gt;
+     &lt;/h:table&gt;
+     &lt;button label="add" onClick="row1.appendChild(new org.zkoss.zhtml.Td())"/&gt;
+ &lt;/window&gt;
+&lt;/zk&gt;</pre>
+<p>
+<img alt="" content-width="4cm" src="imagenes/add-html-simple.png" width="234"></p>
+<p>A diferencia del componente <span class="codefrag">html</span>, donde las etiquetas HTML se almacenaban como contenido de la etiqueta, el cargador de ZK crea un componente por cada etiqueta HTML. En el caso del ejemplo, se crean los componentes <span class="codefrag">table</span>, <span class="codefrag">tr</span> y <span class="codefrag">td</span> dentro del &aacute;rbol de componentes definido por el fichero ZUML. La ventaja principal es que podemos manipular cada etiqueta HTML din&aacute;micamente de la misma forma que hacemos con las etiquetas ZUL. En el ejemplo, la acci&oacute;n del bot&oacute;n modifica la estructura del &aacute;rbol de componentes y a&ntilde;ade otro componente <span class="codefrag">td</span> como hijo del componente <span class="codefrag">tr</span>. La desventaja de este enfoque es que el HTML ocupa espacio y tiempo de procesamiento al cargar la p&aacute;gina inicial, ya que es tratado como un componente ZK m&aacute;s.</p>
+<p>Una versi&oacute;n algo m&aacute;s complicada, en la que se utiliza c&oacute;digo <span class="codefrag">zscript</span> para obtener el valor seleccionado de la lista y a&ntilde;adirlo dentro de la nueva celda.</p>
+<pre class="code">&lt;?page title="A&ntilde;adir HTML" contentType="text/html;charset=UTF-8"?&gt;
+&lt;zk&gt;
+&lt;window id="A" title="A&ntilde;adir HTML demo" border="normal" xmlns:h="http://www.w3.org/1999/xhtml"&gt;
+   &lt;zscript&gt;
+      import org.zkoss.zhtml.Text;
+      import org.zkoss.zhtml.Td;      
+      void addTd() {
+        Td td = new Td();
+        Listitem listbox = list.getSelectedItem();
+        if (listbox != null) {
+        	Text text = new Text();
+        	text.setValue(list.getSelectedItem().getLabel());
+        	td.appendChild(text);
+        }   
+        row1.appendChild(td);
+      }
+   &lt;/zscript&gt;
+     &lt;h:table border="1"&gt;
+         &lt;h:tr id="row1"&gt;
+             &lt;h:td&gt;column 1&lt;/h:td&gt;
+             &lt;h:td&gt;
+                 &lt;listbox id="list" mold="select"&gt;
+                     &lt;listitem label="AA"/&gt;
+                     &lt;listitem label="BB"/&gt;
+                 &lt;/listbox&gt;
+             &lt;/h:td&gt;
+         &lt;/h:tr&gt;
+     &lt;/h:table&gt;
+     &lt;button label="add" onClick="addTd()"/&gt;
+ &lt;/window&gt;
+&lt;/zk&gt;</pre>
+<p>
+<img alt="" content-width="10cm" src="imagenes/add-html.png" width="608"></p>
+<a name="N100F7"></a><a name="El+componente+include"></a>
+<h3 class="underlined_5">El componente include</h3>
+<p>El componente <span class="codefrag">include</span> se utiliza para incluir la salida generada por un servlet. El servlet puede ser cualquier cosa, incluyendo JSF, JSP e incluso otra p&aacute;gina ZUML.</p>
+<pre class="code">&lt;window title="include demo" border="normal" width="300px"&gt; 
+   Hola Mundo!
+   &lt;include src="/userguide/misc/includedHello.zul"/&gt;
+   &lt;include src="/html/frag.html"/&gt;
+&lt;/window&gt;</pre>
+<p>Al igual que el resto de propiedades, podr&iacute;amos cambiar din&aacute;micamente el atributo <span class="codefrag">src</span> para incluir la salida de servlets diferentes en tiempo de ejecuci&oacute;n. Si la p&aacute;gina incluida es otra p&aacute;gina ZUML, es posible acceder a los componentes de la p&aacute;gina incluida como si fueren parte de la p&aacute;gina principal.</p>
+<p>Hay dos formas de pasar valores a la p&aacute;gina incluida. Primero, podemos utilizar la URL con el s&iacute;mbolo de interrogaci&oacute;n:</p>
+<pre class="code">&lt;include src="mypage?some=something"/&gt;</pre>
+<p>En la p&aacute;gina incluida podemos acceder a los par&aacute;metros con el m&eacute;todo <span class="codefrag">getParameter</span> de la interfaz <span class="codefrag">Execution</span>. Tambi&eacute;n podemos usar la variable <span class="codefrag">param</span> en expresiones EL.</p>
+<pre class="code">${param.some}</pre>
+<p>De esta forma s&oacute;lo es posible pasar objetos de tipo String a las p&aacute;ginas. Es posible tambi&eacute;n pasar otro tipo de valores utilizando la siguiente expresi&oacute;n: </p>
+<pre class="code">&lt;include src="mypage" some="something" another="${expr}"/&gt;</pre>
+<p>De esta forma, el objeto resultante de la expresi&oacute;n EL se guarda en el atributo <span class="codefrag">another</span>. En la p&aacute;gina incluida se puede acceder a &eacute;l utilizando el m&eacute;todo <span class="codefrag">getAttribute</span> de la interfaz <span class="codefrag">Execution</span> o <span class="codefrag">ServletRequest</span>. En expresiones EL se puede usar la variable <span class="codefrag">requestScope</span> para acceder al valor:</p>
+<pre class="code">${requestScope.some}</pre>
+<a name="N10142"></a><a name="C%C3%B3mo+trabajar+con+formularios+HTML+y+con+servlets"></a>
+<h3 class="underlined_5">C&oacute;mo trabajar con formularios HTML y con servlets</h3>
+<p>El modelo basado en eventos es simple y potente, pero podr&iacute;a no ser pr&aacute;ctico reescribir todos los servlets para reemplazarlos con escuchadores de eventos. Vamos a ver c&oacute;mo trabajar en ZK con aplicaciones web legacy que utilizan formularios HTML que invocan a servlets con una URL y un conjunto de par&aacute;metros. Para trabajar con este tipo de aplicaciones podemos sustituir los componentes HTML por componentes ZK, pero mantenemos la llamada al servlet utilizando la propiedad <span class="codefrag">name</span> en los componentes ZK. Por ejemplo,</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/grid-servlet.png" width="680"></p>
+<pre class="code">&lt;?page title="Grid servlet" contentType="text/html;charset=UTF-8"?&gt;
+&lt;zk&gt;
+&lt;window xmlns:h="http://www.w3.org/1999/xhtml"&gt;
+   &lt;h:form method="post" action="/MiServlet"&gt;
+      &lt;grid width="700"&gt;
+         &lt;rows&gt;
+            &lt;row&gt;
+               Fecha
+               &lt;datebox name="fecha" /&gt;
+               Nombre
+               &lt;textbox name="nombre" /&gt;
+               Departmento
+               &lt;combobox name="departmento"&gt;
+                  &lt;comboitem label="I+D" /&gt;
+                  &lt;comboitem label="Fabricaci&oacute;n" /&gt;
+                  &lt;comboitem label="Log&iacute;stica" /&gt;
+               &lt;/combobox&gt;
+            &lt;/row&gt;
+            &lt;row&gt;
+               &lt;h:input type="submit" value="Enviar" /&gt;
+            &lt;/row&gt;
+         &lt;/rows&gt;
+      &lt;/grid&gt;
+   &lt;/h:form&gt;
+&lt;/window&gt;
+&lt;/zk&gt;</pre>
+<p>Vemos que seguimos utilizando el componente <span class="codefrag">form</span> utilizando el espacio de nombres XHTML. El atributo <span class="codefrag">action</span> indica la URL del servlet. En los componentes ZUL <span class="codefrag">datebox</span>, <span class="codefrag">textbox</span> y <span class="codefrag">combobox</span> utilizamos el atributo <span class="codefrag">name</span>. Una vez que el usuario presiona el bot&oacute;n <span class="codefrag">Enviar</span> se env&iacute;a una petici&oacute;n al servlet con la siguiente cadena de petici&oacute;n:</p>
+<pre class="code">/mi-servlet?fecha=2006%2F03%2F01&amp;nombre=Bill+Gates&amp;departmento=Fabricaci&oacute;n</pre>
+<p>Por tanto, el servlet seguir&aacute; funcionando de la forma habitual sin ninguna modificaci&oacute;n.</p>
+<p>Todos los componentes de tipo entrada soportan la propiedad <span class="codefrag">name</span>. Lo hacen, por ejemplo, <span class="codefrag">textbox</span>, <span class="codefrag">datebox</span>, <span class="codefrag">decimalbox</span>, <span class="codefrag">intbox</span>, <span class="codefrag">combobox</span>, <span class="codefrag">bandbox</span>, <span class="codefrag">slider</span> and <span class="codefrag">calendar</span>. Adem&aacute;s, otro tipo de componentes como cajas de listas (<em>list boxes</em>) y controles de &aacute;rbol (<em>tree controls</em>) tambi&eacute;n soportan la propiedad <span class="codefrag">name</span>. Si la propiedad <span class="codefrag">multiple</span> es true y el usuario selecciona m&uacute;ltiples &iacute;tems, entonces se env&iacute;an m&uacute;liples parejas nombre/valor.</p>
+<pre class="code">&lt;listbox name="who" multiple="true" width="200px"&gt;
+   &lt;listhead&gt;
+      &lt;listheader label="name"/&gt;
+      &lt;listheader label="gender"/&gt;
+   &lt;/listhead&gt;
+      &lt;listitem value="mary&gt;
+         &lt;listcell label="Mary"/&gt;
+         &lt;listcell label="FEMALE"/&gt;
+      &lt;/listitem&gt;
+      &lt;listitem value="john"&gt;
+         &lt;listcell label="John"/&gt;
+         &lt;listcell label="MALE"/&gt;
+      &lt;/listitem&gt;
+      &lt;listitem value="jane"&gt;
+         &lt;listcell label="Jane"/&gt;
+         &lt;listcell label="FEMALE"/&gt;
+      &lt;/listitem&gt;
+      &lt;listitem value="henry"&gt;
+         &lt;listcell label="Henry"/&gt;
+         &lt;listcell label="MALE"/&gt;
+      &lt;/listitem&gt;
+&lt;/listbox&gt;</pre>
+<p>Si tanto John como Henry son seleccionados la cadena de petici&oacute;n ser&aacute; la siguiente:</p>
+<pre class="code">who=john&amp;who=henry</pre>
+<p>Hay que hacer notar que para usar cajas de listas y controles de &aacute;rbol con la propiedad <span class="codefrag">name</span> tenemos que especificar la propiedad <span class="codefrag">value</span> para <span class="codefrag">listitem</span> y <span class="codefrag">treeitem</span> respectivamente. Estos valores son los que se env&iacute;an a los servlets.</p>
+<p>La ventaja de este enfoque es que permite mejorar las interfaces de usuario de las aplicaciones legacy, incluyendo caracter&iacute;sticas de interfaces ricas y despu&eacute;s usando los servlets que hemos heredado. Por ejemplo, podr&iacute;amos a&ntilde;adir din&aacute;mica filas a un <em>grid</em>, incluyendo en cada fila campos de entrada de texto con la propiedad <span class="codefrag">name</span>. El servlet al que se enviar&iacute;a la petici&oacute;n ser&iacute;a el mismo que ya tenemos funcionando.</p>
+</div>
+
+
+
+<a name="N101C7"></a><a name="Objetos+impl%C3%ADcitos"></a>
+<h2 class="underlined_10">Objetos impl&iacute;citos</h2>
+<div class="section">
+<p>Existen un conjunto de objetos impl&iacute;citos que pueden ser utilizados en c&oacute;digo zscript o en expresiones EL. Por ejemplo, el objeto <span class="codefrag">self</span> es una instancia de la clase <span class="codefrag">org.zkoss.zk.ui.Component</span> que contiene el componente que est&aacute; siendo procesado:</p>
+<pre class="code">&lt;button label="Try" onClick="alert(self.label)</pre>
+<p>O, por ejemplo, el objeto <span class="codefrag">event</span> es el evento que est&aacute; siendo procesado. La expresi&oacute;n anterior es equivalente a:</p>
+<pre class="code">&lt;button label="Try" onClick="alert(event.target.label)"/&gt;</pre>
+<p>La siguiente tabla muestra una lista de los objetos impl&iacute;citos en ZK:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><strong>Nombre variable</strong></td>
+<td colspan="1" rowspan="1"><strong>Clase</strong></td>
+<td colspan="1" rowspan="1"><strong>Descripci&oacute;n</strong></td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">self</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">org.zkoss.zk.ui.Component</span></td>
+<td colspan="1" rowspan="1">El componente que se est&aacute; procesando.</td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">spaceOwner</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">org.zkoss.zk.ui.IdSpace</span></td>
+<td colspan="1" rowspan="1">El espacio ID de este componente. Lo mismo que <span class="codefrag">self.spaceOwner</span>.</td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">page</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">org.zkoss.zk.ui.Page</span></td>
+<td colspan="1" rowspan="1">La p&aacute;gina. Lo mismo que <span class="codefrag">self.desktop</span>.</td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">desktop</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">org.zkoss.zk.ui.Desktop</span></td>
+<td colspan="1" rowspan="1">El escritorio. Lo mismo que <span class="codefrag">self.desktop</span>.</td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">execution</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">org.zkoss.zk.ui.Execution</span></td>
+<td colspan="1" rowspan="1">La ejecuci&oacute;n actual.</td>
+
+</tr>
+
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">session</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">org.zkoss.zk.ui.Session</span></td>
+<td colspan="1" rowspan="1">La sesi&oacute;n actual.</td>
+
+</tr>
+
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">application</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">org.zkoss.zk.ui.WebApp</span></td>
+<td colspan="1" rowspan="1">La aplicaci&oacute;n web.</td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">componentScope</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">java.util.Map</span></td>
+<td colspan="1" rowspan="1">Un mapa de atributos definidos en el componente. Es lo mismo que el m&eacute;todo <span class="codefrag">getAttributes</span> en la interfaz <span class="codefrag">org.zkoss.zk.ui.Component interface</span>.</td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">spaceScope</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">java.util.Map</span></td>
+<td colspan="1" rowspan="1">Un mapa de atributos definidos en el espacio de identificadores que contiene este componente.</td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">pageScope</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">java.util.Map</span></td>
+<td colspan="1" rowspan="1">Un mapa de atributos definidos en la p&aacute;gina. Es el mismo que el m&eacute;todo <span class="codefrag">getAttributes</span> en la interfaz <span class="codefrag">org.zkoss.zk.ui.Page</span>.</td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">desktopScope</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">java.util.Map</span></td>
+<td colspan="1" rowspan="1">Un mapa de atributos definidos en el escritorio. Es lo mismo que el m&eacute;todo <span class="codefrag">getAttributes</span> en la interfaz <span class="codefrag">org.zkoss.zk.ui.Desktop</span>.</td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">sessionScope</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">java.util.Map</span></td>
+<td colspan="1" rowspan="1">Un mapa de atributos definidos en la sesi&oacute;n. Es lo mismo que el m&eacute;todo <span class="codefrag">getAttributes</span> en la interfaz <span class="codefrag">org.zkoss.zk.ui.Session</span>.</td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">applicationScope</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">java.util.Map</span></td>
+<td colspan="1" rowspan="1">Un mapa de atributos definidos en la aplicaci&oacute;n web. Es lo mismo que el m&eacute;todo <span class="codefrag">getAttributes</span> en la interfaz <span class="codefrag">org.zkoss.zk.ui.WebApp</span>.</td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">requestScope</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">java.util.Map</span></td>
+<td colspan="1" rowspan="1">Un mapa de atributos definidos en la petici&oacute;n. Es lo mismo que el m&eacute;todo <span class="codefrag">getAttributes</span> en la interfaz <span class="codefrag">org.zkoss.zk.ui.Execution</span>.</td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">param</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">java.util.Map</span></td>
+<td colspan="1" rowspan="1">Un mapa de atributos pasados en la cadena de la petici&oacute;n HTTP.</td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">arg</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">java.util.Map</span></td>
+<td colspan="1" rowspan="1">El argumento <span class="codefrag">arg</span> pasado al m&eacute;todo <span class="codefrag">createComponents</span> en la clase <span class="codefrag">org.zkoss.zk.ui.Executions</span>. Es lo mismo que <span class="codefrag">self.desktop.execution.arg</span>. Notar que <span class="codefrag">arg</span> s&oacute;lo est&aacute; disponible en el momento de creaci&oacute;n de los componentes de la p&aacute;gina incluida (el primer argumento de <span class="codefrag">createComponents</span>). Por otro lado, todos los eventos, incluido <span class="codefrag">onCreate</span>, se procesan despu&eacute;s. As&iacute;, si queremos acceder a <span class="codefrag">arg</span> en el escuchador del evento <span class="codefrag">onCreate</span>, tenemos que usar el m&eacute;todo <span class="codefrag">getArg</span> de la clase <span class="codefrag">org.zkoss.zk.ui.event.CreateEvent</span>.</td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">each</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">java.lang.Object</span></td>
+<td colspan="1" rowspan="1">El item actual de la colecci&oacute;n en el atributo <span class="codefrag">forEach</span>.</td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">forEachStatus</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">org.zkoss.zk.ui.util.ForEachStatus</span></td>
+<td colspan="1" rowspan="1">El status de la iteraci&oacute;n.</td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">event</span></td>
+<td colspan="1" rowspan="1"><span class="codefrag">org.zkoss.zk.ui.event.Event</span></td>
+<td colspan="1" rowspan="1">El evento actual. S&oacute;lo est&aacute; disponible en el escuchador del evento.</td>
+
+</tr>
+
+
+</table>
+<a name="N103CC"></a><a name="Duraci%C3%B3n+de+la+vida+de+distintos+elementos"></a>
+<h3 class="underlined_5">Duraci&oacute;n de la vida de distintos elementos</h3>
+<p>Muchos de los objetos anteriores se refieren al &aacute;mbito en el que se ejecuta la aplicaci&oacute;n en el servidor. No tenemos que olvidar que seguimos estando en una aplicaci&oacute;n web soportada por servlets, con lo que los objetos existentes en ese API siguen estando aqu&iacute;, aunque encapsulados por otras clases. Por ejemplo, el objeto <span class="codefrag">Execution</span> encapsula una petici&oacute;n HTTP (similar al <em>request</em> de JSP).</p>
+<p>La interfaz <span class="codefrag">org.zkoss.zk.ui.Execution</span> proporciona informaci&oacute;n acerca de la petici&oacute;n actual, tales como sus par&aacute;metros. Para obtener la ejecuci&oacute;n actual, podemos llamar al m&eacute;todo est&aacute;tico <span class="codefrag">getCurrent</span> de la clase. El siguiente ejemplo muestra el nombre del servidor:</p>
+<pre class="code">&lt;window&gt;
+   &lt;zscript&gt;
+      String sn = Executions.getCurrent().getServerName();
+   &lt;/zscript&gt;
+   The server is: ${sn}
+&lt;/window&gt;</pre>
+<p>Otro ejemplo, el fichero <span class="codefrag">getparameter.zul</span>:</p>
+<pre class="code">&lt;window&gt;
+   1:${param.nombre}
+   &lt;button id="b1"/&gt;
+   &lt;zscript &gt;
+      b1.label = Executions.getCurrent().getParameter("nombre");
+   &lt;/zscript&gt;
+&lt;/window&gt;</pre>
+<p>Podemos probarlo pasando un par&aacute;metro nombre: </p>
+<pre class="code">http://localhost:8080/getparameter.zul?nombre=pepito</pre>
+<p>Podemos hacer lo mismo utilizando el objeto impl&iacute;cito <span class="codefrag">execution</span>:</p>
+<pre class="code">      b1.label = execution.getParameter("nombre");</pre>
+<p>El &aacute;mbito de los objetos es el siguiente, de m&aacute;s peque&ntilde;o a mayor:</p>
+<ul>
+
+<li>
+<span class="codefrag">page</span>: una p&aacute;gina, el &aacute;mbito m&aacute;s peque&ntilde;o.</li>
+
+<li>
+<span class="codefrag">execution</span>: procesa peticiones del cliente que pueden englobar m&aacute;s de una p&aacute;gina.</li>
+
+<li>
+<span class="codefrag">desktop</span>: todas las p&aacute;ginas de una misma URL que residen en la misma p&aacute;gina del navegador.</li>
+
+<li>
+<span class="codefrag">session</span>: desde que el usuario visita la web hasta que la abandona o se termina el tiempo. Una sesi&oacute;n puede contener distintas p&aacute;ginas y escritorios.</li>
+
+<li>
+<span class="codefrag">application</span>: vive desde que la aplicaci&oacute;n comienza hasta que termina. Global a distintas sesiones y usuarios.</li>
+
+</ul>
+<p>Hay que notar que si pulsamos "F5" para refrescar la p&aacute;gina web, obtenemos un escritorio distinto pero permanecemos en la misma sesi&oacute;n.</p>
+</div>
+
+
+
+<a name="N10427"></a><a name="La+interfaz+Execution"></a>
+<h2 class="underlined_10">La interfaz Execution</h2>
+<div class="section">
+<p>La interfaz <a href="http://www.zkoss.org/javadoc/latest/zk/org/zkoss/zk/ui/Execution.html"><span class="codefrag">org.zkoss.zk.ui.Execution</span></a> proporciona una capa de abstracci&oacute;n alrededor del concepto de petici&oacute;n del cliente (<span class="codefrag">ServletRequest</span> en las aplicaciones web Java). Cuando una petici&oacute;n se env&iacute;a desde un cliente el servidor construye un objeto <span class="codefrag">Execution</span> que mantiene la informaci&oacute;n relevante de la ejecuci&oacute;n de la respuesta y luego sirve la petici&oacute;n. Debido a que la petici&oacute;n puede llegar de HTTP o de cualquier otro protocolo, la interfaz <span class="codefrag">Execution</span> abstrae este concepto.</p>
+<p>Una petici&oacute;n de un cliente, por ejemplo <span class="codefrag">HttpServletRequest</span>, puede consistir en m&uacute;ltiples peticiones de ZK (<span class="codefrag">AuRequest</span>). Sin embargo, estas peticiones deben tener como objeto la misma p&aacute;gina.</p>
+<p>ZK define el objeto impl&iacute;cito <span class="codefrag">execution</span> que contiene la petici&oacute;n actual. Este objeto se puede usar para obtener la sesi&oacute;n actual (<span class="codefrag">getSession()</span>), sus atributos (<span class="codefrag">getAttributes()</span>), datos sobre el navegador que hace la petici&oacute;n (<span class="codefrag">getUserAgent()</span>) o los par&aacute;metros de la petici&oacute;n (<span class="codefrag">getParameterMap()</span>). Por ejemplo:</p>
+<pre class="code">&lt;?page title="Hola navegador" contentType="text/html;charset=UTF-8"?&gt;
+&lt;zk&gt;
+&lt;window title="Hola navegador" border="normal"&gt;
+   ${execution.userAgent}:
+   ${execution.localName}:
+   ${execution.serverPort}:
+   ${execution.parameterMap}:
+   ${param.par1}
+&lt;/window&gt;
+&lt;/zk&gt;</pre>
+<p>Tambi&eacute;n puede ser utilizado para obtener elementos relacionados con ZK, como el escritorio desde el que se lanza la petici&oacute;n (<span class="codefrag">getDesktop()</span>) o la definici&oacute;n de una p&aacute;gina (<span class="codefrag">getPageDefinition()</span>).</p>
+<p>Otra interfaz relacionada es <span class="codefrag">Executions</span>, que proporciona m&eacute;todos relacionados con la ejecuci&oacute;n actual. Por ejemplo, podemos utilizarla para construir nuevos componentes y a&ntilde;adirlos a la p&aacute;gina actual.</p>
+<p>Vamos a crear una ventana que se superpone para modificar datos.</p>
+<p>
+<img alt="" content-width="8cm" src="imagenes/executions.png" width="550"></p>
+<p>Vamos a utilizar dos p&aacute;ginas. En la p&aacute;gina principal <span class="codefrag">index.zul</span> creamos una sencilla ventana en la que se muestran los valores a modificar.</p>
+<p>Los valores que vamos a modificar se definen como atributos de la sesi&oacute;n. De esta forma pueden ser compartidos entre distintas p&aacute;ginas de la aplicaci&oacute;n. En la p&aacute;gina inicial comprobamos si los valores existen en la sesi&oacute;n y si no, los inicializamos.</p>
+<p>Para editar los datos llamamos el m&eacute;todo <span class="codefrag">createComponentes</span> de la interfaz <span class="codefrag">Executions</span>. Este m&eacute;todo realiza una petici&oacute;n y accede a la p&aacute;gina <span class="codefrag">edit.zul</span> en la que se construye la ventana de edici&oacute;n. Despu&eacute;s modifica ciertos atributos de la ventana, haci&eacute;ndola modal para obligar al usuario a rellenar los datos (o cancelar).</p>
+<pre class="code">&lt;?page id="editData" title="Editar datos" cacheable="false" 
+language="xul/html" zscriptLanguage="Java" contentType="text/html;charset=UTF-8"?&gt;
+&lt;zk&gt;
+   &lt;zscript&gt;&lt;![CDATA[
+      nombre = session.getAttribute("nombre");
+      fecha = session.getAttribute("fecha");
+      if (nombre == null) {
+         session.setAttribute("nombre","Pepe");
+         session.setAttribute("fecha", new Date());
+      }         
+   	  public void showEdit() throws Exception {
+   		Window win = (Window) Executions.createComponents("edit.zul", null, null);
+   		win.setTitle("Introduce los datos");
+   		win.setClosable(true);
+   		win.setMaximizable(true);
+   		win.doModal();
+   	}
+   ]]&amp;gt;&lt;/zscript&gt;
+	&lt;window id="win" border="normal" width="810px" minheight="300"&gt;
+          &lt;label value="Nombre: "/&gt;
+          ${sessionScope["nombre"]}
+          &lt;label value="Fecha: "/&gt;
+          ${sessionScope["fecha"]}
+          &lt;button label="Editar" onClick="showEdit()" /&gt;
+    &lt;/window&gt;
+&lt;/zk&gt;</pre>
+<p>En la p&aacute;gina <span class="codefrag">edit.zul</span> se abre una ventana en la que se pueden modificar los datos. Para ello se obtienen los datos de la sesi&oacute;n y se muestran en campos para que el usuario los modifique. Asociamos al bot&oacute;n la funci&oacute;n <span class="codefrag">submit()</span> que guarda los datos en la sesi&oacute;n y vuelve a cargar la p&aacute;gina principal llamando al m&eacute;todo <span class="codefrag">sendRedirect</span> de la ejecuci&oacute;n (petici&oacute;n) actual.</p>
+<pre class="code">&lt;?page title="Edit" contentType="text/html;charset=UTF-8"?&gt;
+&lt;zk&gt;
+&lt;window id="editWin" title="Editar datos" border="normal"&gt;
+&lt;zscript&gt;&amp;lt;![CDATA[&lt;![CDATA[
+    sNombre = session.getAttribute("nombre");
+    sFecha = session.getAttribute("fecha");
+    
+	public void submit() {
+		miNombre = nombre.getValue();
+		miFecha = new java.util.Date(fecha.getValue().getTime());
+		session.setAttribute("nombre", miNombre);
+		session.setAttribute("fecha", miFecha);
+		Executions.getCurrent().sendRedirect("index.zul");
+		editWin.detach();
+	}
+   ]]&amp;gt;&lt;/zscript&gt;
+&lt;grid fixedLayout="true" width="450px"&gt;
+&lt;rows&gt;
+	&lt;row&gt;
+		&lt;label value="Nombre"/&gt;
+		&lt;textbox id="nombre" constraint="no empty" value="${sNombre}"/&gt;
+	&lt;/row&gt;
+	&lt;row&gt;
+		&lt;label value="Fecha"/&gt;
+		&lt;datebox id="fecha" constraint="no empty" value = "${sFecha}"/&gt;
+	&lt;/row&gt;
+	&lt;row&gt;
+		&lt;button label="Save" onClick="submit()"/&gt;
+		&lt;button label="Cancel" onClick="editWin.detach()"/&gt;
+	&lt;/row&gt;
+&lt;/rows&gt;
+&lt;/grid&gt;
+&lt;/window&gt;
+&lt;/zk&gt;</pre>
+</div>
+
+
+
+<p class="pageBreakAfter"></p>
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010 Depto. CCIA</div>
+</div>
+</body>
+</html>

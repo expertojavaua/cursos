@@ -1,0 +1,983 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 10: Gr&aacute;ficos avanzados</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+<h1> 10. Gr&aacute;ficos avanzados</h1>
+<p>Hasta ahora hemos visto la creaci&oacute;n de aplicaciones con una interfaz 
+  gr&aacute;fica creada a partir de una serie de componentes de alto nivel definidos 
+  en la API LCDUI (alertas, campos de texto, listas, formularios).</p>
+<p>En este punto veremos como dibujar nuestros propios gr&aacute;ficos directamente 
+  en pantalla. Para ello Java nos proporciona acceso a bajo nivel al contexto 
+  gr&aacute;fico del &aacute;rea donde vayamos a dibujar, permiti&eacute;ndonos 
+  a trav&eacute;s de &eacute;ste modificar los <em>pixels</em> de este &aacute;rea, 
+  dibujar una serie de figuras geom&eacute;tricas, as&iacute; como volcar im&aacute;genes 
+  en ella.</p>
+<p>Tambi&eacute;n podremos acceder a la entrada del usuario a bajo nivel, conociendo 
+  en todo momento cu&aacute;ndo el usuario pulsa o suelta cualquier tecla del 
+  m&oacute;vil. </p>
+<p>Este acceso a bajo nivel ser&aacute; necesario en aplicaciones como juegos, 
+  donde debemos tener un control absoluto sobre la entrada y sobre lo que dibujamos 
+  en pantalla en cada momento. El tener este mayor control tiene el inconveniente 
+  de que las aplicaciones ser&aacute;n menos portables, ya que dibujaremos los 
+  gr&aacute;ficos pensando en una determinada resoluci&oacute;n de pantalla y 
+  un determinado tipo de teclado, pero cuando la queramos llevar a otro dispositivo 
+  en el que estos componentes sean distintos deberemos hacer cambios en el c&oacute;digo.</p>
+<p>Por esta raz&oacute;n para las aplicaciones que utilizan esta API a bajo nivel, 
+  como los juegos Java para m&oacute;viles, encontramos distintas versiones para 
+  cada modelo de dispositivo. Dada la heterogeneidad de estos dispositivos, resulta 
+  m&aacute;s sencillo rehacer la aplicaci&oacute;n para cada modelo distinto que 
+  realizar una aplicaci&oacute;n adaptable a las caracter&iacute;sticas de cada 
+  modelo.</p>
+<p>Al programar las aplicaciones deberemos facilitar en la medida de lo posible 
+  futuros cambios para adaptarla a otros modelos, permitiendo reutilizar la m&aacute;xima 
+  cantidad de c&oacute;digo posible.</p>
+<h2 class="subsection">10.1. Gr&aacute;ficos en LCDUI</h2>
+<p>La API de gr&aacute;ficos a bajo nivel de LCDUI es muy parecida a la existente 
+  en AWT, por lo que el aprendizaje de esta API para programadores que conozcan 
+  la de AWT va a ser casi inmediato. </p>
+<p>Las clases que implementan la API de bajo nivel en LCDUI son <code>Canvas</code> 
+  y <code>Graphics</code>. Estas clases reciben el mismo nombre que las de AWT, 
+  y se utilizan de una forma muy parecida. Tienen alguna diferencia en cuanto 
+  a su interfaz para adaptarse a las necesidades de los dispositivos m&oacute;viles.</p>
+<p>El <code>Canvas</code> es un tipo de elemento <em>displayable</em> correspondiente 
+  a una pantalla vac&iacute;a en la que nosotros podremos dibujar a bajo nivel 
+  el contenido que queramos. Adem&aacute;s este componente nos permitir&aacute; 
+  leer los eventos de entrada del usuario a bajo nivel.</p>
+<p>Esta pantalla del m&oacute;vil tiene un contexto gr&aacute;fico asociado que 
+  nosotros podremos utilizar para dibujar en ella. Este objeto encapsula el <em>raster</em> 
+  de pantalla (la matriz de <em>pixels</em> de los que se compone la pantalla) 
+  y adem&aacute;s tiene una serie de atributos con los que podremos modificar 
+  la forma en la que se dibuja en este <em>raster</em>. Este contexto gr&aacute;fico 
+  se definir&aacute; en un objeto de la clase <code>Graphics</code>. Este objeto 
+  nos ofrece una serie de m&eacute;todos que nos permiten dibujar distintos elementos 
+  en pantalla. M&aacute;s adelante veremos con detalle los m&eacute;todos m&aacute;s 
+  importantes.</p>
+<p>Este objeto <code>Graphics</code> para dibujar en la pantalla del dispositivo 
+  nos lo deber&aacute; proporcionar el sistema en el momento en que se vaya a 
+  dibujar, no podremos obtenerlo nosotros por nuestra cuenta de ninguna otra forma. 
+  Esto es lo que se conoce como <em>render</em> pasivo, definimos la forma en 
+  la que se dibuja pero es el sistema el que decidir&aacute; cu&aacute;ndo hacerlo.</p>
+<h3><strong>10.1.1. Creaci&oacute;n de un Canvas</strong></h3>
+<p>Para definir la forma en la que se va a dibujar nuestro componente deberemos 
+  extender la clase <code>Canvas</code> redefiniendo su m&eacute;todo <code>paint</code>. 
+  Dentro de este m&eacute;todo es donde definiremos c&oacute;mo se realiza el 
+  dibujado de la pantalla. Esto lo haremos de la siguiente forma:</p>
+<pre class="codigo">public class MiCanvas <strong>extends Canvas</strong> {
+	public void <strong>paint(Graphics g)</strong> {
+		// Dibujamos en la pantalla
+		// usando el objeto g proporcionado
+	}
+}</pre>
+<p>Con esto en la clase <code>MiCanvas</code> hemos creado una pantalla en la 
+  que nosotros controlamos lo que se dibuja. Este m&eacute;todo <code>paint</code> 
+  nunca debemos invocarlo nosotros, ser&aacute; el sistema el que se encargue 
+  de invocarlo cuando necesite dibujar el contenido de la pantalla. En ese momento 
+  se proporcionar&aacute; como par&aacute;metro el objeto correspondiente al contexto 
+  gr&aacute;fico de la pantalla del dispositivo, que podremos utilizar para dibujar 
+  en ella. Dentro de este m&eacute;todo es donde definiremos c&oacute;mo dibujar 
+  en la pantalla, utilizando para ello el objeto de contexto gr&aacute;fico <code>Graphics</code>.</p>
+<p>Siempre deberemos dibujar utilizando el objeto <code>Graphics</code> dentro 
+  del m&eacute;todo <code>paint</code>. Guardarnos este objeto y utilizarlo despu&eacute;s 
+  de haberse terminado de ejecutar <code>paint</code> puede producir un comportamiento 
+  indeterminado, y por lo tanto no debe hacerse nunca.</p>
+<h3><strong>10.1.2. Propiedades del Canvas</strong></h3>
+<p>Las pantallas de los dispositivos pueden tener distintas resoluciones. Adem&aacute;s 
+  normalmente el &aacute;rea donde podemos dibujar no ocupa toda la pantalla, 
+  ya que el m&oacute;vil utiliza una franja superior para mostrar informaci&oacute;n 
+  como la cobertura o el t&iacute;tulo de la aplicaci&oacute;n, y en la franja 
+  inferior para mostrar los comandos disponibles.</p>
+<p>Sin embargo, a partir de MIDP 2.0 aparece la posibilidad de utilizar modo a 
+  pantalla completa, de forma que controlaremos el contenido de toda la pantalla. 
+  Para activar el modo a pantalla completa utilizaremos el siguiente m&eacute;todo:</p>
+<pre class="codigo"><strong>setFullScreenMode</strong>(true); // Solo disponible a partir de MIDP 2.0</pre>
+<p>Es probable que nos interese conocer desde dentro de nuestra aplicaci&oacute;n 
+  el tama&ntilde;o real del &aacute;rea del <code>Canvas</code> en la que podemos 
+  dibujar. Para ello tenemos los m&eacute;todos <code>getWidth</code> y <code>getHeight</code> 
+  de la clase <code>Canvas</code>, que nos devolver&aacute;n el ancho y el alto 
+  del &aacute;rea de dibujo respectivamente.</p>
+<p>Para obtener informaci&oacute;n sobre el n&uacute;mero de colores soportados 
+  deberemos utilizar la clase <code>Display</code> tal como vimos anteriormente, 
+  ya que el n&uacute;mero de colores es propio de todo el visor y no s&oacute;lo 
+  del &aacute;rea de dibujo.</p>
+<h3><strong>10.1.3. Mostrar el Canvas</strong></h3>
+<p>Podemos mostrar este componente en la pantalla del dispositivo igual que mostramos 
+  cualquier otro <em>displayable</em>:</p>
+<pre class="codigo">MiCanvas mc = <strong>new MiCanvas()</strong>;
+mi_display.<strong>setCurrent</strong>(mc);</pre>
+<p> Es posible que queramos hacer que cuando se muestre este <em>canvas</em> se 
+  realice alguna acci&oacute;n, como por ejemplo poner en marcha alguna animaci&oacute;n 
+  que se muestre en la pantalla. De la misma forma, cuando el <em>canvas</em> 
+  se deje de ver deberemos detener la animaci&oacute;n. Para hacer esto deberemos 
+  tener constancia del momento en el que el <em>canvas</em> se muestra y se oculta. 
+</p>
+<p>Podremos saber esto debido a que los m&eacute;todos <code>showNotify</code> 
+  y <code>hideNotify</code> de la clase <code>Canvas</code> ser&aacute;n invocados 
+  son invocados por el sistema cuando dicho componente se muestra o se oculta 
+  respectivamente. Nosotros podremos en nuestra subclase de <code>Canvas</code> 
+  redefinir estos m&eacute;todos, que por defecto est&aacute;n vac&iacute;os, 
+  para definir en ellos el c&oacute;digo que se debe ejecutar al mostrarse u ocultarse 
+  nuestro componente. Por ejemplo, si queremos poner en marcha o detener una animaci&oacute;n, 
+  podemos redefinir los m&eacute;todos como se muestra a continuaci&oacute;n:</p>
+<pre class="codigo">public class MiCanvas <strong>extends Canvas</strong> {
+	public void paint(Graphics g) {
+		// Dibujamos en la pantalla
+		// usando el objeto g proporcionado
+	}<br><br>    public void <strong>showNotify</strong>() {<br>        // El Canvas se muestra<br>        comenzarAnimacion();<br>    }
+<br>    public void <strong>hideNotify</strong>() {<br>        // El Canvas se oculta<br>        detenerAnimacion();<br>    }
+}</pre>
+<p>De esta forma podemos utilizar estos dos m&eacute;todos como respuesta a los 
+  eventos de aparici&oacute;n y ocultaci&oacute;n del <em>canvas</em>.</p>
+<h2>10.2. Contexto gr&aacute;fico</h2>
+<p>El objeto <code>Graphics</code> nos permitir&aacute; acceder al contexto gr&aacute;fico 
+  de un determinado componente, en nuestro caso el <em>canvas</em>, y a trav&eacute;s 
+  de &eacute;l dibujar en el <em>raster</em> de este componente. En el caso del 
+  contexto gr&aacute;fico del <em>canvas</em> de LCDUI este <em>raster</em> corresponder&aacute; 
+  a la pantalla del dispositivo m&oacute;vil. Vamos a ver ahora como dibujar utilizando 
+  dicho objeto <code>Graphics</code>. Este objeto nos permitir&aacute; dibujar 
+  distintas primitivas geom&eacute;tricas, texto e im&aacute;genes.</p>
+<h3 class="subsection"><strong>10.2.1. Atributos</strong></h3>
+<p>El contexto gr&aacute;fico tendr&aacute; asociados una serie de atributos que 
+  indicar&aacute;n c&oacute;mo se va a dibujar en cada momento, como por ejemplo 
+  el color o el tipo del l&aacute;piz que usamos para dibujar. El objeto <code>Graphics</code> 
+  proporciona una serie de m&eacute;todos para consultar o modificar estos atributos. 
+  Podemos encontrar los siguientes atributos en el contexto gr&aacute;fico de 
+  LCDUI:</p>
+<ul>
+  <li><strong>Color del l&aacute;piz</strong>: Indica el color que se utilizar&aacute; 
+    para dibujar la primitivas geom&eacute;tricas y el texto. MIDP trabaja con 
+    color de 24 bits (<em>truecolor</em>), que codificaremos en modelo RGB. Dentro 
+    de estos 24 bits tendremos 8 bits para cada uno de los tres componentes: rojo 
+    (R), verde (G) y azul (B). No tenemos canal <em>alpha</em>, por lo que no 
+    soportar&aacute; transparencia. No podemos contar con que todos los dispositivos 
+    soporten color de 24 bits. Lo que har&aacute; cada implementaci&oacute;n concreta 
+    de MIDP ser&aacute; convertir los colores solicitados en las aplicaciones 
+    al color m&aacute;s cercano soportado por el dispositivo.
+    <p>Podemos trabajar con los colores de dos formas distintas: tratando los 
+      componentes R, G y B por separado, o de forma conjunta. En MIDP desaparece 
+      la clase <code>Color</code> que ten&iacute;amos en AWT, por lo que deberemos 
+      asignar los colores proporcionando directamente los valores num&eacute;ricos 
+      del color.</p>
+    <p>Si preferimos tratar los componentes de forma separada, tenemos los siguientes 
+      m&eacute;todos para obtener o establecer el color actual del l&aacute;piz:</p>
+    <pre class="codigo">g.<strong>setColor</strong>(rojo, verde, azul);<br>int rojo = g.<strong>getRedComponent</strong>();<br>int green = g.<strong>getGreenComponent</strong>();<br>int blue = g.<strong>getBlueComponent</strong>();</pre>
+    <p>Donde <code>g</code> es el objeto <code>Graphics</code> del contexto donde 
+      vamos a dibujar. Estos componentes rojo, verde y azul tomar&aacute;n valores 
+      entre 0 y 255.</p>
+    <p>Podemos tratar estos componentes de forma conjunta empaquet&aacute;ndolos 
+      en un &uacute;nico entero. En hexadecimal se codifica de la siguiente forma:</p>
+    <p><code>0x00RRGGBB</code></p>
+    <p>Podremos leer o establecer el color utilizando este formato empaquetado 
+      con los siguientes m&eacute;todos:</p>
+    <pre class="codigo">g.<strong>setColor</strong>(rgb);<br>int rgb = g.<strong>getColor</strong>();</pre>
+    <p>Tenemos tambi&eacute;n m&eacute;todos para trabajar con valores en escala 
+      de grises. Estos m&eacute;todos nos pueden resultar &uacute;tiles cuando 
+      trabajemos con dispositivos monocromos.</p>
+    <pre class="codigo">int gris = g.<strong>getGrayScale</strong>();<br>g.<strong>setGrayScale</strong>(gris);</pre>
+    <p>Con estos m&eacute;todos podemos establecer como color actual distintos 
+      tonos en la escala de grises. El valor de gris se mover&aacute; en el intervalo 
+      de 0 a 255. Si utilizamos <code>getGrayScale</code> teniendo establecido 
+      un color fuera de la escala de grises, convertir&aacute; este color a escala 
+      de grises obteniendo su brillo.</p>
+  </li>
+  <li><strong>Tipo del l&aacute;piz</strong>: Adem&aacute;s del color del l&aacute;piz, 
+    tambi&eacute;n podemos establecer su tipo. El tipo del l&aacute;piz indicar&aacute; 
+    c&oacute;mo se dibujan las l&iacute;neas de las primitivas geom&eacute;tricas. 
+    Podemos encontrar dos estilos:</li>
+</ul>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="27%"><code>Graphics.SOLID</code></td>
+    <td width="73%">L&iacute;nea s&oacute;lida (se dibujan todos los <em>pixels</em>)</td>
+  </tr>
+  <tr> 
+    <td height="20"><code>Graphics.DOTTED</code></td>
+    <td>L&iacute;nea punteada (se salta algunos <em>pixels</em> sin dibujarlos)</td>
+  </tr>
+</table>
+<blockquote> 
+  <p>Podemos establecer el tipo del l&aacute;piz o consultarlo con los siguientes 
+    m&eacute;todos:</p>
+  <pre class="codigo">int tipo = g.<strong>getStrokeStyle</strong>(); <br>g.<strong>setStrokeStyle</strong>(tipo);</pre>
+</blockquote>
+<ul>
+  <li><strong>Fuente</strong>: Indica la fuente que se utilizar&aacute; para dibujar 
+    texto. Utilizaremos la clase <code>Font</code> para especificar la fuente 
+    de texto que vamos a utilizar, al igual que en AWT. Podemos obtener o establecer 
+    la fuente con los siguientes m&eacute;todos: 
+    <pre class="codigo">Font fuente = g.<strong>getFont</strong>(); <br>g.<strong>setFont</strong>(fuente);</pre>
+  </li>
+</ul>
+<ul>
+  <li><strong>&Aacute;rea de recorte</strong>: Podemos definir un rect&aacute;ngulo 
+    de recorte. Cuando definimos un &aacute;rea de recorte en el contexto gr&aacute;fico, 
+    s&oacute;lo se dibujar&aacute;n en pantalla los <em>pixels</em> que caigan 
+    dentro de este &aacute;rea. Nunca se dibujar&aacute;n los <em>pixels</em> 
+    que escribamos fuera de este espacio. Para establecer el &aacute;rea de recorte 
+    podemos usar el siguiente m&eacute;todo: 
+    <pre class="codigo">g.<strong>setClip</strong>(x, y, ancho, alto); </pre>
+    <p>Tambi&eacute;n tenemos disponible el siguiente m&eacute;todo:</p>
+    <pre class="codigo">g.<strong>clipRect</strong>(x, y, ancho, alto); </pre>
+    <p>Este m&eacute;todo establece un recorte en el &aacute;rea de recorte anterior. 
+      Si ya exist&iacute;a un rect&aacute;ngulo de recorte, el nuevo rect&aacute;ngulo 
+      de recorte ser&aacute; la intersecci&oacute;n de ambos. Si queremos eliminar 
+      el &aacute;rea de recorte anterior deberemos usar el m&eacute;todo <code>setClip</code>.</p>
+  </li>
+  <li><strong>Origen de coordenadas</strong>: Indica el punto que se tomar&aacute; 
+    como origen en el sistema de coordenadas del &aacute;rea de dibujo. Por defecto 
+    este sistema de coordenadas tendr&aacute; la coordenada (0,0) en su esquina 
+    superior izquierda, y las coordenadas ser&aacute;n positivas hacia la derecha 
+    (coordenada x) y hacia abajo (coordenada y), tal como se muestra a continuaci&oacute;n:</li>
+</ul>
+<div align="center"><img src="imagenes/graficos/scoord.gif" width="215" height="159" align="middle"></div>
+<p align="center" class="caption">Figura 1. Sistema de coordenadas del &aacute;rea 
+  de dibujo</p>
+<blockquote>
+  <p>Podemos trasladar el origen de coordenadas utilizando el m&eacute;todo <code>translate</code>. 
+    Tambi&eacute;n tenemos m&eacute;todos para obtener la traslaci&oacute;n del 
+    origen de coordenadas.</p>
+  <pre class="codigo">int x = g.<strong>getTranslateX</strong>();<br>int y = g.<strong>getTranslateY</strong>();<br>g.<strong>translate</strong>(x, y);</pre>
+  <p>Estas coordenadas no corresponden a <em>pixels</em>, sino a los l&iacute;mites 
+    de los <em>pixels</em>. De esta forma, el <em>p&iacute;xel</em> de la esquina 
+    superior izquierda de la imagen se encontrar&aacute; entre las coordenadas 
+    (0,0), (0,1), (1,0) y (1,1).</p>
+  <div align="center"><img src="imagenes/graficos/pixels.gif" width="373" height="406"> 
+  </div>
+  <p class="caption">Figura 2. Coordenadas de los l&iacute;mites de los pixels</p>
+</blockquote>
+<h3><strong>10.2.2. Dibujar primitivas geom&eacute;tricas</strong></h3>
+<p>Una vez establecidos estos atributos en el contexto gr&aacute;fico, podremos 
+  dibujar en &eacute;l una serie de elementos utilizando una serie de m&eacute;todos 
+  de <code>Graphics</code>. Vamos a ver en primer lugar c&oacute;mo dibujar una 
+  serie de primitivas geom&eacute;tricas. Para ello tenemos una serie de m&eacute;todos 
+  que comienzan por <code>draw_</code> para dibujar el contorno de una determinada 
+  figura, o <code>fill_</code> para dibujar dicha figura con relleno.</p>
+<ul>
+  <li><strong>L&iacute;neas</strong>: Dibuja una l&iacute;nea desde un punto <em>(x1,y1)</em> 
+    hasta <em>(x2,y2)</em>. Dibujaremos la l&iacute;nea con: 
+    <pre class="codigo">g.<strong>drawLine</strong>(x1, y1, x2, y2);</pre>
+    <p>En este caso no encontramos ning&uacute;n m&eacute;todo <code>fill</code> 
+      ya que las l&iacute;neas no pueden tener relleno. Al dibujar una l&iacute;nea 
+      se dibujar&aacute;n los <em>p&iacute;xels</em> situados inmediatamente abajo 
+      y a la derecha de las coordenadas indicadas. Por ejemplo, si dibujamos con 
+      <code>drawLine(0, 0, 0, 0)</code> se dibujar&aacute; el <em>pixel</em> de 
+      la esquina superior izquierda.</p>
+  </li>
+  <li><strong>Rect&aacute;ngulos</strong>: Podemos dibujar rect&aacute;ngulos 
+    especificando sus coordenadas y su altura y anchura. Podremos dibujar el rect&aacute;ngulo 
+    relleno o s&oacute;lo el contorno: </li>
+  <pre class="codigo">g.<strong>drawRect</strong>(x, y, ancho, alto);
+g.<strong>fillRect</strong>(x, y, ancho, alto);</pre>
+  <p>En el caso de <code>fillRect</code>, lo que har&aacute; ser&aacute; rellenar 
+    con el color actual los <em>pixels</em> situados entre las coordenadas lim&iacute;trofes. 
+    En el caso de <code>drawRect</code>, la l&iacute;nea inferior y derecha se 
+    dibujar&aacute;n justo debajo y a la derecha respectivamente de las coordenadas 
+    de dichos l&iacute;mites, es decir, se dibuja con un <em>pixel</em> m&aacute;s 
+    de ancho y de alto que en el caso relleno. Esto es poco intuitivo, pero se 
+    hace as&iacute; para mantener la coherencia con el comportamiento de <code>drawLine</code>.</p>
+  <p>Al menos, lo que siempre se nos asegura es que cuando utilizamos las mismas 
+    dimensiones no quede ning&uacute;n hueco entre el dibujo del relleno y el 
+    del contorno. </p>
+  <p>Podemos tambi&eacute;n dibujar rect&aacute;ngulos con las esquinas redondeadas, 
+    utilizando los m&eacute;todos:</p>
+  <pre class="codigo">g.<strong>drawRoundRect</strong>(x, y, ancho, alto, ancho_arco, alto_arco);
+g.<strong>fillRoundRect</strong>(x, y, ancho, alto, ancho_arco, alto_arco)</pre>
+  <li><strong>Arcos: </strong>A diferencia de AWT, no tenemos un m&eacute;todo 
+    para dibujar directamente elipses, sino que tenemos uno m&aacute;s gen&eacute;rico 
+    que nos permite dibujar arcos de cualquier tipo. Nos servir&aacute; tanto 
+    para dibujar elipses y c&iacute;rculos como para cualquier otro tipo de arco.</li>
+</ul>
+<pre class="codigo">g.<strong>drawArc</strong>(x, y, ancho, alto, angulo_inicio, angulo_arco);
+g.<strong>fillArc</strong>(x, y, ancho, alto, angulo_inicio, angulo_arco);</pre>
+<p>Los &aacute;ngulos especificados deben estar en grados. Por ejemplo, si queremos 
+  dibujar un c&iacute;rculo o una elipse en <code>angulo_arco</code> pondremos 
+  un valor de 360 grados para que se cierre el arco. En el caso del c&iacute;rculo 
+  los valores de <code>ancho</code> y <code>alto</code> ser&aacute;n iguales, 
+  y en el caso de la elipse ser&aacute;n diferentes.</p>
+<div align="center"><img src="imagenes/graficos/primitivas.gif" width="431" height="163"> 
+</div>
+<p class="caption">Figura 3. Ejemplos de diferentes primitivas</p>
+<p>Por ejemplo, el siguiente <em>canvas</em> aparecer&aacute; con un dibujo de 
+  un c&iacute;rculo rojo y un cuadrado verde:</p>
+<pre class="codigo">public class MiCanvas extends Canvas {
+	public void paint(Graphics g) {
+		g.<strong>setColor</strong>(0x00FF0000);
+		g.<strong>fillArc</strong>(10,10,50,50,0,360);
+		g.<strong>setColor</strong>(0x0000FF00);
+		g.<strong>fillRect</strong>(60,60,50,50);
+	}
+}</pre>
+<h3><strong>10.2.3. Puntos anchor</strong></h3>
+<p>En MIDP se introduce una caracter&iacute;sticas no existente en AWT que son 
+  los puntos <em>anchor</em>. Estos puntos nos facilitar&aacute;n el posicionamiento 
+  del texto y de las im&aacute;genes en la pantalla. Con los puntos <em>anchor</em>, 
+  adem&aacute;s de dar una coordenada para posicionar estos elementos, diremos 
+  qu&eacute; punto del elemento vamos a posicionar en dicha posici&oacute;n. </p>
+<p>Para el posicionamiento horizontal tenemos las siguientes posibilidades:</p>
+<table width="90%" border="0">
+  <tr> 
+    <td width="27%" valign="top"><code>Graphics.LEFT</code></td>
+    <td width="73%">En las coordenadas especificadas se posiciona la parte izquierda 
+      del texto o de la imagen.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>Graphics.HCENTER</code></td>
+    <td>En las coordenadas especificadas se posiciona el centro del texto o de 
+      la imagen.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>Graphics.RIGHT</code></td>
+    <td>En las coordenadas especificadas se posiciona la parte derecha del texto 
+      o de la imagen.</td>
+  </tr>
+</table>
+<p>Para el posicionamiento vertical tenemos:</p>
+<table width="90%" border="0">
+  <tr> 
+    <td width="27%" valign="top"><code>Graphics.TOP</code></td>
+    <td width="73%">En las coordenadas especificadas se posiciona la parte superior 
+      del texto o de la imagen.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>Graphics.VCENTER</code></td>
+    <td>En las coordenadas especificadas se posiciona el centro de la imagen. 
+      No se aplica a texto.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>Graphics.BASELINE</code></td>
+    <td>En las coordenadas especificadas se posiciona la l&iacute;nea de base 
+      del texto. No se aplica a im&aacute;genes.</td>
+  </tr>
+  <tr> 
+    <td valign="top"><code>Graphics.BOTTOM</code></td>
+    <td>En las coordenadas especificadas se posiciona la parte inferior del texto 
+      o de la imagen.</td>
+  </tr>
+</table>
+<h3><strong>10.2.4. Cadenas de texto</strong></h3>
+<p>Podemos dibujar una cadena de texto utilizando el m&eacute;todo <code>drawString</code>. 
+  Deberemos proporcionar la cadena de texto de dibujar y el punto <em>anchor</em> 
+  donde dibujarla. </p>
+<pre class="codigo">g.<strong>drawString</strong>(cadena, x, y, anchor);</pre>
+<p>Por ejemplo, si dibujamos la cadena con:</p>
+<pre class="codigo">g.<strong>drawString</strong>(&quot;Texto de prueba&quot;, 0, 0, Graphics.LEFT|Graphics.BASELINE);</pre>
+<p>Este punto corresponder&aacute; al inicio de la cadena (lado izquierdo), en 
+  la l&iacute;nea de base del texto como se muestra a continuaci&oacute;n:</p>
+<div align="center"><img src="imagenes/graficos/lbase.gif" width="212" height="58"></div>
+<p align="center" class="caption">Figura 4. L&iacute;nea de base del texto</p>
+<p>Con esto dibujaremos un texto en pantalla, pero es posible que nos interese 
+  conocer las coordenadas que limitan el texto, para saber exactamente el espacio 
+  que ocupa en el &aacute;rea de dibujo. En AWT pod&iacute;amos usar para esto 
+  un objeto <code>FontMetrics</code>, pero este objeto no existe en MIDP. En MIDP 
+  la informaci&oacute;n sobre las m&eacute;tricas de la fuente est&aacute; encapsulada 
+  en la misma clase <code>Font</code> por lo que ser&aacute; m&aacute;s sencillo 
+  acceder a esta informaci&oacute;n. Podemos obtener esta informaci&oacute;n utilizando 
+  los siguientes m&eacute;todos de la clase <code>Font</code>:</p>
+<ul>
+  <li><strong> <code>stringWidth(cadena)</code></strong>: Nos devuelve el ancho 
+    que tendr&aacute; la cadena<i> </i><em>cadena</em> en <em>pixels</em>.</li>
+  <li><strong><code>getHeight()</code></strong>: Nos devuelve la altura de la 
+    fuente, es decir, la distancia entre las l&iacute;neas de base de dos l&iacute;neas 
+    consecutivas de texto. Llamamos ascenso (<em>ascent</em>) a la altura t&iacute;pica 
+    que suelen subir los caracteres desde la l&iacute;nea de base, y descenso 
+    (<em>descent</em>) a lo que suelen bajar desde esta l&iacute;nea. La altura 
+    ser&aacute; la suma del ascenso y el descenso de la fuente, m&aacute;s un 
+    margen para evitar que se junten los caracteres de las dos l&iacute;neas. 
+    Es la distancia existente entre el punto superior (<code>TOP</code>) y el 
+    punto inferior (<code>BOTTOM</code>) de la cadena de texto.</li>
+  <li><strong><code>getBaselinePosition</code></strong><code><strong>()</strong></code>: 
+    Nos devuelve el ascenso de la fuente, es decir, la altura t&iacute;pica desde 
+    la l&iacute;nea de base hasta la parte superior de la fuente.</li>
+</ul>
+<p>Con estas medidas podremos conocer exactamente los l&iacute;mites de una cadena 
+  de texto, tal como se muestra a continuaci&oacute;n:</p>
+<div align="center"><img src="imagenes/graficos/fmetrics.gif" width="272" height="57"></div>
+<p align="center" class="caption">Figura 5. M&eacute;tricas del texto</p>
+<h3><strong>10.2.5. Im&aacute;genes</strong></h3>
+<p>Hemos visto como crear im&aacute;genes y como utilizarlas en componentes de 
+  alto nivel. Estas mismas im&aacute;genes encapsuladas en la clase <code>Image</code>, 
+  podr&aacute;n ser mostradas tambi&eacute;n en cualquier posici&oacute;n de nuestro 
+  &aacute;rea de dibujo. </p>
+<p>Para ello utilizaremos el m&eacute;todo:</p>
+<pre class="codigo">g.<strong>drawImage</strong>(img, x, y, anchor);</pre>
+<p>En este caso podremos dibujar tanto im&aacute;genes mutables como inmutables.</p>
+<p>Vimos que las im&aacute;genes mutables son aquellas cuyo contenido puede ser 
+  modificado. Vamos a ver ahora como hacer esta modificaci&oacute;n. Las im&aacute;genes 
+  mutables, al igual que el <em>canvas</em>, tienen un contexto gr&aacute;fico 
+  asociado. En el caso de las im&aacute;genes, este contexto gr&aacute;fico representa 
+  el contenido de la imagen que es un <em>raster</em> en memoria, pero podremos 
+  dibujar en &eacute;l igual que lo hac&iacute;amos en el <em>canvas</em>. Esto 
+  es as&iacute; debido a que dibujaremos tambi&eacute;n mediante un objeto de 
+  la clase <code>Graphics</code>. Podemos obtener este objeto de contexto gr&aacute;fico 
+  en cualquier momento invocando el m&eacute;todo <code>getGraphics</code> de 
+  la imagen:</p>
+<pre class="codigo">Graphics offg = img.<strong>getGraphics</strong>();</pre>
+<p>Si queremos modificar una imagen que hemos cargado de un fichero o de la red, 
+  y que por lo tanto es inmutable, podemos crear una copia mutable de la imagen 
+  para poder modificarla. Para hacer esto lo primero que deberemos hacer es crear 
+  la imagen mutable con el mismo tama&ntilde;o que la inmutable que queremos copiar. 
+  Una vez creada podremos obtener su contexto gr&aacute;fico, y dibujar en &eacute;l 
+  la imagen inmutable, con lo que habremos hecho la copia de la imagen inmutable 
+  a una imagen mutable, que podr&aacute; ser modificada m&aacute;s adelante.</p>
+<pre class="codigo">Image img_mut = Image.<strong>createImage</strong>(img.getWidth(), img.getHeight());<br>Graphics offg = img_mut.<strong>getGraphics</strong>();<br>offg.<strong>drawImage</strong>(img, 0, 0, Graphics.TOP|Graphics.LEFT);</pre>
+<h2>10.3. Animaci&oacute;n</h2>
+<p>Hasta ahora hemos visto como dibujar gr&aacute;ficos en pantalla, pero lo &uacute;nico 
+  que hacemos es definir un m&eacute;todo que se encargue de dibujar el contenido 
+  del componente, y ese m&eacute;todo ser&aacute; invocado cuando el sistema necesite 
+  dibujar la ventana. </p>
+<p>Sin embargo puede interesarnos cambiar din&aacute;micamente los gr&aacute;ficos 
+  de la pantalla para realizar una animaci&oacute;n. Para ello deberemos indicar 
+  el momento en el que queremos que se redibujen los gr&aacute;ficos.</p>
+<h3><strong> 10.3.1. Redibujado del &aacute;rea</strong></h3>
+<p>Para forzar que se redibuje el &aacute;rea de la pantalla deberemos llamar 
+  al m&eacute;todo <code>repaint</code> del <em>canvas</em>. Con eso estamos solicitando 
+  al sistema que se repinte el contenido, pero no lo repinta en el mismo momento 
+  en el que se llama. El sistema introducir&aacute; esta solicitud en la cola 
+  de eventos pendientes y cuando tenga tiempo repintar&aacute; su contenido.</p>
+<pre class="codigo">MiCanvas mc = new MiCanvas();
+...
+mc.<strong>repaint()</strong>;</pre>
+<p>En MIDP podemos forzar a que se realicen todos los repintados pendientes llamando 
+  al m&eacute;todo <code>serviceRepaints</code>. La llamada a este m&eacute;todo 
+  nos bloquear&aacute; hasta que se hayan realizado todos los repintados pendientes. 
+  Por esta raz&oacute;n deberemos tener cuidado de no causar un interbloqueo invocando 
+  a este m&eacute;todo.</p>
+<pre class="codigo">mc.<strong>serviceRepaints</strong>();</pre>
+<p>Para repintar el contenido de la pantalla el sistema llamar&aacute; al m&eacute;todo 
+  <code>paint</code>, en MIDP no existe el m&eacute;todo <code>update</code> de 
+  AWT. Por lo tanto, deberemos definir dentro de <code>paint</code> qu&eacute; 
+  se va a dibujar en la pantalla en cada instante, de forma que el contenido de 
+  la pantalla var&iacute;e con el tiempo y eso produzca el efecto de la animaci&oacute;n.</p>
+<p>Podemos optimizar el redibujado repintando &uacute;nicamente el &aacute;rea 
+  de la pantalla que haya cambiado. Para ello en MIDP tenemos una variante del 
+  m&eacute;todo <code>repaint</code> que nos permitir&aacute; hacer esto. </p>
+<pre class="codigo"><strong>repaint</strong>(x, y, ancho, alto);</pre>
+<p>Utilizando este m&eacute;todo, la pr&oacute;xima vez que se redibuje se invocar&aacute; 
+  <code>paint</code> pero se proporcionar&aacute; un objeto de contexto gr&aacute;fico 
+  con un &aacute;rea de recorte establecida, correspondiente a la zona de la pantalla 
+  que hemos solicitado que se redibuje.</p>
+<p>Al dibujar cada <em>frame</em> de la animaci&oacute;n deberemos borrar el contenido 
+  del <em>frame</em> anterior para evitar que quede el rastro, o al menos borrar 
+  la zona de la pantalla donde haya cambios.</p>
+<p>Imaginemos que estamos moviendo un rect&aacute;ngulo por pantalla. El rect&aacute;ngulo 
+  ir&aacute; cambiando de posici&oacute;n, y en cada momento lo dibujaremos en 
+  la posici&oacute;n en la que se encuentre. Pero si no borramos el contenido 
+  de la pantalla en el instante anterior, el rect&aacute;ngulo aparecer&aacute; 
+  en todos los lugares donde ha estado en instantes anteriores produciendo este 
+  efecto indeseable de dejar rastro. Por ello ser&aacute; necesario borrar el 
+  contenido anterior de la pantalla.</p>
+<p>Sin embargo, el borrar la pantalla y volver a dibujar en cada <em>frame</em> 
+  muchas veces puede producir un efecto de parpadeo de los gr&aacute;ficos. Si 
+  adem&aacute;s en el proceso de dibujado se deben dibujar varios componentes, 
+  y vamos dibujando uno detr&aacute;s de otro directamente en la pantalla, en 
+  cada <em>frame</em> veremos como se va construyendo poco a poco la escena, cosa 
+  que tambi&eacute;n es un efecto poco deseable. </p>
+<p>Para evitar que esto ocurra y conseguir unas animaciones limpias utilizaremos 
+  la t&eacute;cnica del <em>doble buffer</em>.</p>
+<h3><strong>10.3.2. T&eacute;cnica del doble buffer</strong></h3>
+<p>La t&eacute;cnica del <em>doble buffer</em> consiste en dibujar todos los elementos 
+  que queremos mostrar en una imagen en memoria, que denominaremos <em>backbuffer</em>, 
+  y una vez se ha dibujado todo volcarlo a pantalla como una unidad. De esta forma, 
+  mientras se va dibujando la imagen, como no se hace directamente en pantalla 
+  no veremos efectos de parpadeo al borrar el contenido anterior, ni veremos como 
+  se va creando la imagen, en pantalla se volcar&aacute; la imagen como una unidad 
+  cuando est&eacute; completa.</p>
+<p>Para utilizar esta t&eacute;cnica lo primero que deberemos hacer es crearnos 
+  el <em>backbuffer</em>. Para implementarlo en Java utilizaremos una imagen (objeto 
+  <code>Image</code>) con lo que tendremos un <em>raster</em> en memoria sobre 
+  el que dibujar el contenido que queramos mostrar. Deberemos crear una imagen 
+  del mismo tama&ntilde;o de la pantalla en la que vamos a dibujar. </p>
+<p>Crearemos para ello una imagen mutable en blanco, como hemos visto anteriormente, 
+  con las dimensiones del <em>canvas</em> donde vayamos a volcarla:</p>
+<pre class="codigo">Image backbuffer = Image.<b>createImage</b>(getWidth(), getHeight());</pre>
+<p>Obtenemos su contexto gr&aacute;fico para poder dibujar en su <em>raster</em> 
+  en memoria:</p>
+<pre class="codigo">Graphics offScreen = backbuffer.<strong>getGraphics</strong>();</pre>
+<p>Una vez obtenido este contexto gr&aacute;fico, dibujaremos todo lo que queremos 
+  mostrar en &eacute;l, en lugar de hacerlo en pantalla. Una vez hemos dibujado 
+  todo el contenido en este contexto gr&aacute;fico, deberemos volcar la imagen 
+  a pantalla (al contexto gr&aacute;fico del <em>canvas</em>) para que &eacute;sta 
+  se haga visible:</p>
+<pre class="codigo">g.<strong>drawImage</strong>(backbuffer, 0, 0, Graphics.TOP|Graphics.LEFT);</pre>
+<p>La imagen conviene crearla una &uacute;nica vez, ya que la animaci&oacute;n 
+  puede redibujar frecuentemente, y si cada vez que lo hacemos creamos un nuevo 
+  objeto imagen estaremos malgastando memoria in&uacute;tilmente. Es buena pr&aacute;ctica 
+  de programaci&oacute;n en Java instanciar nuevos objetos las m&iacute;nimas 
+  veces posibles, intentando reutilizar los que ya tenemos. </p>
+<p>Podemos ver como quedar&iacute;a nuestra clase ahora:</p>
+<pre class="codigo">public MiCanvas extends Canvas {
+
+	// Backbuffer
+	Image backbuffer = null;
+
+	// Ancho y alto del backbuffer
+	int width, height;
+
+	// Coordenadas del rectangulo dibujado
+	int x, y;<br>
+	public void paint(Graphics g) {
+		// Solo creamos la imagen la primera vez 
+		// o si el componente ha cambiado de tamaño
+		if( backbuffer == null || 
+			width != getWidth() || 
+			height != getHeight() )
+		{
+			width = getWidth();
+			height = getHeight();
+			backbuffer = Image.<strong>createImage</strong>(width, height);
+		}
+
+		Graphics offScreen = backbuffer.<strong>getGraphics</strong>();
+
+		// Vaciamos el área de dibujo
+
+		offScreen.<strong>clearRect</strong>(0,0,getWidth(), getHeight());
+
+		// Dibujamos el contenido en offScreen
+		offScreen.setColor(0x00FF0000);
+		offScreen.fillRect(x,y,50,50);
+
+		// Volcamos el back buffer a pantalla
+		g.<strong>drawImage</strong>(backbuffer,0,0,Graphics.TOP|Graphics.LEFT);
+	}
+}</pre>
+<p>En ese ejemplo se dibuja un rect&aacute;ngulo rojo en la posici&oacute;n <em>(x,y)</em> 
+  de la pantalla que podr&aacute; ser variable, tal como veremos a continuaci&oacute;n 
+  a&ntilde;adiendo a este ejemplo m&eacute;todos para realizar la animaci&oacute;n.</p>
+<p>Algunas implementaciones de MIDP ya realizan internamente el doble <em>buffer</em>, 
+  por lo que en esos casos no ser&aacute; necesario que lo hagamos nosotros. Es 
+  m&aacute;s, convendr&aacute; que no lo hagamos para no malgastar innecesariamente 
+  el tiempo. Podemos saber si implementa el doble <em>buffer</em> o no llamando 
+  al m&eacute;todo <code>isDoubleBuffered</code> del <code>Canvas</code>.</p>
+<p> Podemos modificar el ejemplo anterior para en caso de realizar el doble <em>buffer</em> 
+  la implementaci&oacute;n de MIDP, no hacerla nosotros:</p>
+<pre class="codigo">public MiCanvas extends Canvas {
+    ...<br> 	public void paint(Graphics gScreen) {
+<br>        boolean doblebuffer = <strong>isDoubleBuffered</strong>();<br><br>		// Solo creamos el backbuffer si no hay doble buffer
+		if( !<strong>doblebuffer</strong> ) {<br>            if ( backbuffer == null || 
+    	        width != getWidth() || 
+	            height != getHeight() )
+            {
+                width = getWidth();
+                height = getHeight();
+                backbuffer = Image.createImage(width, height);
+            }<br>        }
+
+        // g sera la pantalla o nuestro backbuffer segun si<br>        // el doble buffer est&aacute; ya implementado o no<br><br>		Graphics g = null;
+<br>        if(<strong>doblebuffer</strong>) {<br>            g = gScreen;<br>        } else {<br>            g = backbuffer.getGraphics();<br>        }<br><br>		// Vaciamos el área de dibujo
+
+		g.clearRect(0,0,getWidth(), getHeight());
+
+		// Dibujamos el contenido en g
+		g.setColor(0x00FF0000);
+		g.fillRect(x,y,50,50);
+
+		// Volcamos si no hay doble buffer implementado<br>        if(!<strong>doblebuffer</strong>) {<br>            gScreen.drawImage(backbuffer,0,0,<br>                                  Graphics.TOP|Graphics.LEFT);
+        }
+	}
+}</pre>
+<h3><strong>10.3.3. C&oacute;digo para la animaci&oacute;n</strong></h3>
+<p>Si queremos hacer una animaci&oacute;n tendremos que ir cambiando ciertas propiedades 
+  de los objetos de la imagen (por ejemplo su posici&oacute;n) y solicitar que 
+  se redibuje tras cada cambio. Esta tarea deber&aacute; realizarla un hilo que 
+  se ejecute en segundo plano. El bucle para la animaci&oacute;n podr&iacute;a 
+  ser el siguiente:</p>
+<pre class="codigo">public class MiCanvas extends Canvas {
+	...
+	public void run() {
+		// El rectangulo comienza en (10,10)
+		x = 10;
+		y = 10;
+
+		while(x &lt; 100) {
+			x++;
+			<strong>repaint</strong>();
+
+			try {
+				Thread.sleep(100);
+			} catch(InterruptedException e) {}
+		}
+	}
+}</pre>
+<p>Con este c&oacute;digo de ejemplo veremos una animaci&oacute;n en la que el 
+  rect&aacute;ngulo que dibujamos partir&aacute; de la posici&oacute;n (10,10) 
+  y cada 100ms se mover&aacute; un <em>pixel</em> hacia la derecha, hasta llegar 
+  a la coordenada (100,10).</p>
+<p>Si queremos que la animaci&oacute;n se ponga en marcha nada m&aacute;s mostrarse 
+  la pantalla del canvas, podremos hacer que este hilo comience a ejecutarse en 
+  el m&eacute;todo <code>showNotify</code> como hemos visto anteriormente.</p>
+<pre class="codigo">public class MiCanvas extends Canvas implements Runnable {
+	...
+	public void showNotify() {
+        Thread t = new Thread(this);<br>        t.start();<br>	}
+}</pre>
+<p>Para implementar estas animaciones podemos utilizar un hilo que duerma un determinado 
+  per&iacute;odo tras cada iteraci&oacute;n, como en el ejemplo anterior, o bien 
+  utilizar temporizadores que realicen tareas cada cierto periodo de tiempo. Los 
+  temporizadores nos pueden facilitar bastante la tarea de realizar animaciones, 
+  ya que simplemente deberemos crear una tarea que actualice los objetos de la 
+  escena en cada iteraci&oacute;n, y ser&aacute; el temporizador el que se encargue 
+  de ejecutar c&iacute;clicamente dicha tarea.</p>
+<h3><strong>10.3.4. Hilo de eventos</strong></h3>
+<p>Hemos visto que existen una serie de m&eacute;todos que se invocan cuando se 
+  produce alg&uacute;n determinado evento, y nosotros podemos redefinir estos 
+  m&eacute;todos para indicar c&oacute;mo dar respuesta a estos eventos. Estos 
+  m&eacute;todos que definimos para que sean invocados cuando se produce un evento 
+  son denominados <em>callbacks</em>. Tenemos los siguientes <em>callbacks</em>:</p>
+<ul>
+  <li><code><strong>showNotify</strong></code> y <code><strong>hideNotify</strong></code>, 
+    para los eventos de aparici&oacute;n y ocultaci&oacute;n del canvas.<br>
+  </li>
+  <li><code><strong>paint</strong></code> para el evento de dibujado.<br>
+  </li>
+  <li><code><strong>commandAction</strong></code> para el evento de ejecuci&oacute;n 
+    de un comando.<br>
+  </li>
+  <li><code><strong>keyPressed</strong></code>, <code><strong>keyRepeated</strong></code>, 
+    <code><strong>keyReleased</strong></code>, <code><strong>pointerPressed</strong></code>, 
+    <code><strong>pointerDragged</strong></code> y <code><strong>pointerReleased</strong></code> 
+    para los eventos de teclado y de puntero, que veremos m&aacute;s adelante.</li>
+</ul>
+<p>Estos eventos son ejecutados por el sistema de forma secuencial, desde un mismo 
+  hilo de eventos. Por lo tanto, estos <em>callbacks</em> deber&aacute;n devolver 
+  el control cuanto antes, de forma que bloqueen al hilo de eventos el m&iacute;nimo 
+  tiempo posible. </p>
+<p>Si dentro de uno de estos <em>callbacks</em> tenemos que realizar una tarea 
+  que requiera tiempo, deberemos crear un hilo que realice la tarea en segundo 
+  plano, para que el hilo de eventos siga ejecut&aacute;ndose mientras tanto.</p>
+<p>En algunas ocasiones puede interesarnos ejecutar alguna tarea de forma secuencial 
+  dentro de este hilo de eventos. Por ejemplo esto ser&aacute; &uacute;til si 
+  queremos ejecutar el c&oacute;digo de nuestra animaci&oacute;n sin que interfiera 
+  con el m&eacute;todo <code>paint</code>. Podemos hacer esto con el m&eacute;todo 
+  <code>callSerially</code> del objeto <code>Display</code>. Deberemos proporcionar 
+  un objeto <code>Runnable</code> para ejecutar su m&eacute;todo <code>run</code> 
+  en serie dentro del hilo de eventos. La tarea que definamos dentro de este <code>run</code> 
+  deber&aacute; terminar pronto, al igual que ocurre con el c&oacute;digo definido 
+  en los <em>callbacks</em>, para no bloquear el hilo de eventos.</p>
+<p>Podemos utilizar <code>callSerially</code> para ejecutar el c&oacute;digo de 
+  la animaci&oacute;n de la siguiente forma:</p>
+<pre class="codigo">public class MiCanvas extends Canvas implements Runnable {
+    ...<br>    public void anima() {
+        // Inicia la animaci&oacute;n<br>        repaint();
+        mi_display.<strong>callSerially</strong>(this);
+    }
+<br>    public void run() {
+        // Actualiza la animaci&oacute;n<br>        ...<br>        repaint();
+        mi_display.<strong>callSerially</strong>(this);
+    }
+}</pre>
+<p>La llamada a <code>callSerially</code> nos devuelve el control inmediatamente, 
+  no espera a que el m&eacute;todo <code>run</code> sea ejecutado.</p>
+<h3><strong>10.3.5. Optimizaci&oacute;n de im&aacute;genes</strong></h3>
+<p>Si tenemos varias im&aacute;genes correspondientes a varios <em>frames</em> 
+  de una animaci&oacute;n, podemos optimizar nuestra aplicaci&oacute;n guardando 
+  todas estas im&aacute;genes como una &uacute;nica imagen. Las guardaremos en 
+  forma de mosaico dentro de un mismo fichero de tipo imagen, y en cada momento 
+  deberemos mostrar por pantalla s&oacute;lo una de las im&aacute;genes dentro 
+  de este mosaico.</p>
+<div align="center"><img src="imagenes/graficos/frames.gif" width="96" height="24"> 
+</div>
+<p class="caption">Figura 6. Imagen con los frames de una animaci&oacute;n</p>
+<p>De esta forma estamos reduciendo el n&uacute;mero de ficheros que incluimos 
+  en el JAR de la aplicaci&oacute;n, por lo que por una lado reduciremos el espacio 
+  de este fichero, y por otro lado tendremos que abrir s&oacute;lo un fichero, 
+  y no varios.</p>
+<p>Para mostrar s&oacute;lo una de las im&aacute;genes del mosaico, lo que podemos 
+  hacer es establecer un &aacute;rea de recorte del tama&ntilde;o de un elemento 
+  del mosaico (<em>frame</em>) en la posici&oacute;n donde queramos dibujar esta 
+  imagen. Una vez hecho esto, ajustaremos las coordenadas donde dibujar la imagen 
+  de forma que dentro del &aacute;rea de recorte caiga el elemento del mosaico 
+  que queremos mostrar en este momento. De esta forma, s&oacute;lo ser&aacute; 
+  dibujado este elemento, ignor&aacute;ndose el resto.</p>
+<p>Podemos ver esto ilustrado en la Figura 18. En ella podemos ver a la izquierda 
+  c&oacute;mo mostrar el segundo frame del reloj, y a la derecha c&oacute;mo mostrar 
+  el tercer frame. Queremos dibujar el reloj en la posici&oacute;n <code>(x,y)</code> 
+  de la imagen. Cada frame de este reloj tiene un tama&ntilde;o <code>anchoFrame 
+  x altoFrame</code>. Por lo tanto, el &aacute;rea de recorte ser&aacute; un rect&aacute;ngulo 
+  cuya esquina superior izquierda estar&aacute; en las coordenadas <code>(x,y)</code> 
+  y tendra una altura y una anchura de <code>altoFrame</code> y <code>anchoFrame</code> 
+  respectivamente, para de esta manera poder dibujar en esa regi&oacute;n de la 
+  pantalla cada <em>frame</em> de nuestra imagen.</p>
+<p>Para dibujar cada uno de los <em>frames</em> deberemos desplazar la imagen 
+  de forma que el <em>frame</em> que queramos mostrar caiga justo bajo el &aacute;rea 
+  de recorte establecida. De esta forma al dibujar la imagen, se volcar&aacute; 
+  a la pantalla s&oacute;lo el <em>frame</em> deseado, y el resto, al estar fuera 
+  del &aacute;rea de recorte, no se mostrar&aacute;. En la figura podemos ver 
+  los <em>frames</em> que quedan fuera del &aacute;rea de recorte representados 
+  con un color m&aacute;s claro, al volcar la imagen estos <em>frames</em> no 
+  se dibujar&aacute;n.</p>
+<div align="center"><img src="imagenes/graficos/ejemplo_frames_1.gif" width="262" height="167">  &nbsp;
+  <img src="imagenes/graficos/ejemplo_frames_2.gif" width="262" height="167"> 
+</div>
+<p class="caption">Figura 7. Ejemplo de dibujado de diferentes frames de una imagen</p>
+<p>A continuaci&oacute;n se muestra el c&oacute;digo fuente del ejemplo anterior, 
+  con el que podremos dibujar cada <em>frame</em> de la imagen.</p>
+<pre class="codigo">// Guardamos el &aacute;rea de recorte anterior<br>int clipX = g.getClipX();
+int clipY = g.getClipY();
+int clipW = g.getClipWidth();
+int clipH = g.getClipHeight();<br><br>// Establecemos nuevo &aacute;rea de recorte<br>g.clipRect(<strong>x, y, anchoFrame, altoFrame</strong>);
+
+// Dibujamos la imagen con el desplazamiento adecuado   
+g.drawImage(
+   imagen,
+   <strong>x - xFrame[frameActual]</strong>,
+   <strong>y - yFrame[frameActual]</strong>,
+   Graphics.TOP | Graphics.LEFT);<br><br>// Reestablecemos el &aacute;rea de recorte anterior
+g.setClip(clipX, clipY, clipW, clipH);</pre>
+<h2>10.4. Eventos de entrada</h2>
+<p>La clase <code>Canvas</code> nos permite acceder a los eventos de entrada del 
+  usuario a bajo nivel. De esta forma podremos saber cuando el usuario pulsa o 
+  suelta cualquier tecla del dispositivo. Cuando ocurra un evento en el teclado 
+  se invocar&aacute; uno de los siguientes m&eacute;todos de la clase <code>Canvas</code>:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="30%"><code>keyPressed(int cod)</code></td>
+    <td width="70%">Se ha presionado la tecla con c&oacute;digo <code>cod</code></td>
+  </tr>
+  <tr> 
+    <td><code>keyRepeated(int cod)</code></td>
+    <td>Se mantiene presionada la tecla con c&oacute;digo <code>cod</code></td>
+  </tr>
+  <tr> 
+    <td><code>keyReleased(int cod)</code></td>
+    <td>Se ha soltado la tecla con c&oacute;digo <code>cod</code></td>
+  </tr>
+</table>
+<p>Estos dispositivos, adem&aacute;s de generar eventos cuando presionamos o soltamos 
+  una tecla, son capaces de generar eventos de repetici&oacute;n. Estos eventos 
+  se producir&aacute;n cada cierto per&iacute;odo de tiempo mientras mantengamos 
+  pulsada una tecla.</p>
+<p>Al realizar aplicaciones para m&oacute;viles debemos tener en cuenta que en 
+  la mayor&iacute;a de estos dispositivos no se puede presionar m&aacute;s de 
+  una tecla al mismo tiempo. Hasta que no hayamos soltado la tecla que estemos 
+  pulsando, no se podr&aacute;n recibir eventos de pulsaci&oacute;n de ninguna 
+  otra tecla.</p>
+<p>Para dar respuesta a estos eventos del teclado deberemos redefinir estos m&eacute;todos 
+  en nuestra subclase de <code>Canvas</code>:</p>
+<pre class="codigo">public class MiCanvas <strong>extends Canvas</strong> {
+    ...
+	public void <strong>keyPressed(int cod)</strong> {<br>        // Se ha presionado la tecla con c&oacute;digo cod<br>    }<br>
+	public void <strong>keyRepeated(int cod)</strong> {<br>        // Se mantiene pulsada la tecla con c&oacute;digo cod<br>    }<br>
+	public void <strong>keyReleased(int cod)</strong> {<br>        // Se ha soltado la tecla con c&oacute;digo cod<br>    }
+}</pre>
+<h3><strong>10.4.1. C&oacute;digos del teclado</strong></h3>
+<p>Cada tecla del teclado del dispositivo tiene asociado un c&oacute;digo identificativo 
+  que ser&aacute; el par&aacute;metro que se le proporcione a estos m&eacute;todos 
+  al presionarse o soltarse. Tenemos una serie de constantes en la clase <code>Canvas</code> 
+  que representan los c&oacute;digos de las teclas est&aacute;ndar:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="31%"><code>Canvas.KEY_NUM0</code></td>
+    <td width="69%">0</td>
+  </tr>
+  <tr> 
+    <td><code>Canvas.KEY_NUM1</code></td>
+    <td>1</td>
+  </tr>
+  <tr> 
+    <td><code>Canvas.KEY_NUM2</code></td>
+    <td>2</td>
+  </tr>
+  <tr> 
+    <td><code>Canvas.KEY_NUM3</code></td>
+    <td>3</td>
+  </tr>
+  <tr> 
+    <td><code>Canvas.KEY_NUM4</code></td>
+    <td>4</td>
+  </tr>
+  <tr> 
+    <td><code>Canvas.KEY_NUM5</code></td>
+    <td>5</td>
+  </tr>
+  <tr> 
+    <td><code>Canvas.KEY_NUM6</code></td>
+    <td>6</td>
+  </tr>
+  <tr> 
+    <td><code>Canvas.KEY_NUM7</code></td>
+    <td>7</td>
+  </tr>
+  <tr> 
+    <td><code>Canvas.KEY_NUM8</code></td>
+    <td>8</td>
+  </tr>
+  <tr> 
+    <td><code>Canvas.KEY_NUM9</code></td>
+    <td>9</td>
+  </tr>
+  <tr> 
+    <td><code>Canvas.KEY_POUND</code></td>
+    <td>#</td>
+  </tr>
+  <tr> 
+    <td><code>Canvas.KEY_STAR</code></td>
+    <td>*</td>
+  </tr>
+</table>
+<p>Los teclados, adem&aacute;s de estas teclas est&aacute;ndar, normalmente tendr&aacute;n 
+  otras teclas, cada una con su propio c&oacute;digo num&eacute;rico. Es recomendable 
+  utilizar &uacute;nicamente estas teclas definidas como constantes para asegurar 
+  la portabilidad de la aplicaci&oacute;n, ya que si utilizamos cualquier otro 
+  c&oacute;digo de tecla no podremos asegurar que est&eacute; disponible en todos 
+  los modelos de tel&eacute;fonos.</p>
+<p>Los c&oacute;digos de tecla corresponden al c&oacute;digo Unicode del car&aacute;cter 
+  correspondiente a dicha tecla. Si la tecla no corresponde a ning&uacute;n car&aacute;cter 
+  Unicode entonces su c&oacute;digo ser&aacute; negativo. De esta forma podremos 
+  obtener f&aacute;cilmente el car&aacute;cter correspondiente a cada tecla. Sin 
+  embargo, esto no ser&aacute; suficiente para realizar entrada de texto, ya que 
+  hay caracteres que corresponden a m&uacute;ltiples pulsaciones de una misma 
+  tecla, y a bajo nivel s&oacute;lo tenemos constancia de que una misma tecla 
+  se ha pulsado varias veces, pero no sabemos a qu&eacute; car&aacute;cter corresponde 
+  ese n&uacute;mero de pulsaciones. Si necesitamos que el usuario escriba texto, 
+  lo m&aacute;s sencillo ser&aacute; utilizar uno de los componentes de alto nivel.</p>
+<p>Podemos obtener el nombre de la tecla correspondiente a un c&oacute;digo dado 
+  con el m&eacute;todo <code>getKeyName</code> de la clase <code>Canvas</code>.</p>
+<h3><strong>10.4.2. Acciones de juegos</strong></h3>
+<p>Tenemos tambi&eacute;n definidas lo que se conoce como acciones de juegos (<em>game 
+  actions</em>) con las que representaremos las teclas que se utilizan normalmente 
+  para controlar los juegos, a modo de <em>joystick</em>. Las acciones de juegos 
+  principales son:</p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td><code>Canvas.LEFT</code></td>
+    <td>Movimiento a la izquierda</td>
+  </tr>
+  <tr> 
+    <td><code>Canvas.RIGHT</code></td>
+    <td>Movimiento a la derecha</td>
+  </tr>
+  <tr> 
+    <td><code>Canvas.UP</code></td>
+    <td>Movimiento hacia arriba</td>
+  </tr>
+  <tr> 
+    <td><code>Canvas.DOWN</code></td>
+    <td>Movimiento hacia abajo</td>
+  </tr>
+  <tr> 
+    <td><code>Canvas.FIRE</code></td>
+    <td>Fuego</td>
+  </tr>
+</table>
+<p>Una misma acci&oacute;n puede estar asociada a varias teclas del tel&eacute;fono, 
+  de forma que el usuario pueda elegir la que le resulte m&aacute;s c&oacute;moda. 
+  Las teclas asociadas a cada acci&oacute;n de juego ser&aacute;n dependientes 
+  de la implementaci&oacute;n, cada modelo de tel&eacute;fono puede asociar a 
+  las teclas las acciones de juego que considere m&aacute;s apropiadas seg&uacute;n 
+  la distribuci&oacute;n del teclado, para que el manejo sea c&oacute;modo. Por 
+  lo tanto, el utilizar estas acciones har&aacute; la aplicaci&oacute;n m&aacute;s 
+  portable, ya que no tendremos que adaptar los controles del juego para cada 
+  modelo de m&oacute;vil.</p>
+<p>Para conocer la acci&oacute;n de juego asociada a un c&oacute;digo de tecla 
+  dado utilizaremos el siguiente m&eacute;todo:</p>
+<pre class="codigo">int accion = <strong>getGameAction</strong>(keyCode);</pre>
+<p>De esta forma podremos realizar de una forma sencilla y portable aplicaciones 
+  que deban controlarse utilizando este tipo de acciones.</p>
+<p>Podemos hacer la transformaci&oacute;n inversa con:</p>
+<pre class="codigo">int codigo = <strong>getKeyCode</strong>(accion);</pre>
+<p>Hemos de resaltar que una acci&oacute;n de c&oacute;digo puede estar asociada 
+  a m&aacute;s de una tecla, pero con este m&eacute;todo s&oacute;lo podremos 
+  obtener la tecla principal que realiza dicha acci&oacute;n.</p>
+<h3><strong>10.4.3. Punteros</strong></h3>
+<p>Algunos dispositivos tienen punteros como dispositivos de entrada. Esto es 
+  com&uacute;n en los PDAs, pero no en los tel&eacute;fonos m&oacute;viles. Los 
+  <em>callbacks</em> que deberemos redefinir para dar respuesta a los eventos 
+  del puntero son los siguientes:</p>
+<p></p>
+<table width="90%" border="0" align="center">
+  <tr> 
+    <td width="43%"><code>pointerPressed(int x, int y)</code></td>
+    <td width="57%">Se ha pinchado con el puntero en <em>(x,y)</em></td>
+  </tr>
+  <tr> 
+    <td><code>pointerDragged(int x, int y)</code></td>
+    <td>Se ha arrastrado el puntero a <em>(x,y)</em></td>
+  </tr>
+  <tr> 
+    <td><code>pointerReleased(int x, int y)</code></td>
+    <td>Se ha soltado el puntero en <em>(x,y)</em></td>
+  </tr>
+</table>
+<p>En todos estos m&eacute;todos se proporcionar&aacute;n las coordenadas <em>(x,y) 
+  </em>donde se ha producido el evento del puntero.</p>
+<h2 class="subsection">10.5. APIs propietarias</h2>
+<p>Existen APIs propietarias de diferentes vendedores, que a&ntilde;aden funcionalidades 
+  no soportadas por la especificaci&oacute;n de MIDP. Los desarrolladores de estas 
+  APIs propietarias no deben incluir en ellas nada que pueda hacerse con MIDP. 
+  Estas APIs deben ser &uacute;nicamente para permitir acceder a funcionalidades 
+  que MIDP no ofrece.</p>
+<p>Es recomendable no utilizar estas APIs propietarias siempre que sea posible, 
+  para hacer aplicaciones que se ajusten al est&aacute;ndar de MIDP. Lo que podemos 
+  hacer es desarrollar aplicaciones que cumplan con el est&aacute;ndar MIDP, y 
+  en el caso que detecten que hay disponible una determinada API propietaria la 
+  utilicen para obtener alguna mejora. A continuaci&oacute;n veremos como detectar 
+  en tiempo de ejecuci&oacute;n si tenemos disponible una determinada API.</p>
+<p>Vamos a ver la API Nokia UI, disponible en gran parte de los modelos de tel&eacute;fonos 
+  Nokia, que incorpora nuevas funcionalidades para la programaci&oacute;n de la 
+  interfaz de usuario no disponibles en MIDP 1.0. Esta API est&aacute; contenida 
+  en el paquete <code>com.nokia.mid</code>.</p>
+<h3><strong>10.5.1. Gr&aacute;ficos</strong></h3>
+<p>En cuanto a los gr&aacute;ficos, tenemos disponibles una serie de mejoras respecto 
+  a MIDP.</p>
+<p>A&ntilde;ade soporte para crear un <em>canvas</em> a pantalla completa. Para 
+  crear este <em>canvas</em> utilizaremos la clase <code>FullCanvas</code> de 
+  la misma forma que utiliz&aacute;bamos <code>Canvas</code>.</p>
+<p>Define una extensi&oacute;n de la clase <code>Graphics</code>, en la clase 
+  <code>DirectGraphics</code>. Para obtener este contexto gr&aacute;fico extendido 
+  utilizaremos el siguiente m&eacute;todo: </p>
+<pre class="codigo">DirectGraphics dg = DirectUtils.<strong>getDirectGraphics</strong>(g);
+</pre>
+<p>Siendo <code>g </code>el objeto de contexto gr&aacute;fico <code>Graphics</code> 
+  en el que queremos dibujar. Este nuevo contexto gr&aacute;fico a&ntilde;ade:</p>
+<ul>
+  <li>Soporte para nuevos tipos de primitivas geom&eacute;tricas (tri&aacute;ngulos 
+    y pol&iacute;gonos).<br>
+  </li>
+  <li>Soporte para transparencia, incorporando un canal <em>alpha</em> al color. 
+    Ahora tenemos colores de 32 bits, cuya forma empaquetada se codifica como 
+    <code>0xAARRGGBB</code>.<br>
+  </li>
+  <li>Acceso directo a los <em>pixels</em> del <em>raster</em> de pantalla. Podremos 
+    dibujar <em>pixels</em> en pantalla proporcionando directamente el <em>array</em> 
+    de <em>pixels</em> a dibujar, o bien obtener los <em>pixels</em> de la pantalla 
+    en forma de un <em>array</em> de <em>pixels</em>. Cada <em>pixel</em> de este 
+    <em>array</em> ser&aacute; un valor <code>int</code>, <code>short</code> o 
+    <code>byte</code> que codificar&aacute; el color de dicho <em>pixel</em>. 
+    <br>
+  </li>
+  <li>Permite transformar las im&aacute;genes a dibujar. Podremos hacer rotaciones 
+    de 90, 180 o 270 grados y transformaciones de espejo con las im&aacute;genes 
+    al mostrarlas.</li>
+</ul>
+<h3><strong>10.5.2. Sonido</strong></h3>
+<p>Una limitaci&oacute;n de MIDP 1.0 es que no soporta sonido. Por ello para incluir 
+  sonido en las aplicaciones de dispositivos que s&oacute;lo soporten MIDP 1.0 
+  como API est&aacute;ndar deberemos recurrir a APIs propietarias para tener estas 
+  funcionalidades. La API Nokia UI nos permitir&aacute; solucionar esta carencia.</p>
+<p>Nos permitir&aacute; reproducir sonidos como tonos o ficheros de onda (WAV). 
+  Los tipos de formatos soportados ser&aacute;n dependientes de cada dispositivo.</p>
+<h3><strong>10.5.3. Control del dispositivo</strong></h3>
+<p>Adem&aacute;s de las caracter&iacute;sticas anteriores, esta API nos permitir&aacute; 
+  utilizar funciones propias de los dispositivos. En la clase <code>DeviceControl</code> 
+  tendremos m&eacute;todos para controlar la vibraci&oacute;n del m&oacute;vil 
+  y el parpadeo de las luces de la pantalla.</p>
+<h3><strong>10.5.4. Detecci&oacute;n de la API propietaria</strong></h3>
+<p>Si utilizamos una API propietaria reduciremos la portabilidad de la aplicaci&oacute;n. 
+  Por ejemplo, si usamos la API Nokia UI la aplicaci&oacute;n s&oacute;lo funcionar&aacute; 
+  en algunos dispositivos de Nokia. Hay una forma de utilizar estas APIs propietarias 
+  sin afectar a la portabilidad de la aplicaci&oacute;n. Podemos detectar en tiempo 
+  de ejecuci&oacute;n si la API propietaria est&aacute; disponible de la siguiente 
+  forma:</p>
+<pre class="codigo">boolean hayNokiaUI = false;<br><br>try {<br>    Class.forName(&quot;com.nokia.mid.sound.Sound&quot;);<br>    hayNokiaUI = true;<br>} catch(ClassNotFoundException e) {}</pre>
+<p>De esta forma, si la API propietaria est&aacute; disponible podremos utilizarla 
+  para incorporar m&aacute;s funcionalidades a la aplicaci&oacute;n. En caso contrario, 
+  no deberemos ejecutar nunca ninguna instrucci&oacute;n que acceda a esta API 
+  propietaria.</p>
+</body>
+</html>

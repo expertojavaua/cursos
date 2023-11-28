@@ -1,0 +1,907 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Protocolo HTTP. Introducci&oacute;n a las aplicaciones web JavaEE</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servidores Web" src="images/baner_j2ee_der.gif" title="Servidores Web"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Servidores web</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Servidores Web</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Servidores Web">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menupage">
+<div class="menupagetitle">Sesion 1</div>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html">Roadmap</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion01-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Protocolo HTTP. Introducci&oacute;n a las aplicaciones web JavaEE</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Protocolo+HTTP">Protocolo HTTP</a>
+<ul class="minitoc">
+<li>
+<a href="#Peticiones+del+cliente">Peticiones del cliente</a>
+</li>
+<li>
+<a href="#Respuestas+del+servidor">Respuestas del servidor</a>
+</li>
+<li>
+<a href="#Cabeceras">Cabeceras</a>
+</li>
+<li>
+<a href="#C%C3%B3digos+de+estado">C&oacute;digos de estado</a>
+</li>
+<li>
+<a href="#Cookies">Cookies</a>
+</li>
+<li>
+<a href="#Autentificaciones">Autentificaciones</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Introducci%C3%B3n+a+las+aplicaciones+web+en+Java">Introducci&oacute;n a las aplicaciones web en Java</a>
+<ul class="minitoc">
+<li>
+<a href="#Qu%C3%A9+es+una+aplicaci%C3%B3n+web">Qu&eacute; es una aplicaci&oacute;n web</a>
+</li>
+<li>
+<a href="#Estructura+de+una+aplicaci%C3%B3n+web+JavaEE">Estructura de una aplicaci&oacute;n web JavaEE</a>
+</li>
+<li>
+<a href="#Empaquetamiento+de+aplicaciones+web%3A+ficheros+WAR">Empaquetamiento de aplicaciones web: ficheros WAR</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Despliegue+de+archivos+WAR">Despliegue de archivos WAR</a>
+<ul class="minitoc">
+<li>
+<a href="#Copiar+el+.WAR+a+Tomcat">Copiar el .WAR a Tomcat</a>
+</li>
+<li>
+<a href="#La+aplicaci%C3%B3n+%22manager%22+de+Tomcat">La aplicaci&oacute;n "manager" de Tomcat</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<a name="N1000C"></a><a name="Protocolo+HTTP"></a>
+<h2 class="underlined_10">Protocolo HTTP</h2>
+<div class="section">
+<p>El protocolo HTTP especifica el modo de comunicaci&oacute;n entre una m&aacute;quina cliente y una m&aacute;quina servidor, de modo que el cliente solicita un documento del espacio de direcciones del servidor, y &eacute;ste se lo sirve. </p>
+<p>HTTP es un protocolo que no tiene estado: un cliente realiza una petici&oacute;n al servidor, que contesta y la transacci&oacute;n acaba, con lo que en la siguiente petici&oacute;n que pueda realizar el mismo cliente se deben proporcionar de nuevo todos los datos necesarios para que el servidor sirva correctamente la nueva petici&oacute;n, no habiendo ninguna relaci&oacute;n entre las peticiones. </p>
+<a name="N10018"></a><a name="Peticiones+del+cliente"></a>
+<h3 class="underlined_5">Peticiones del cliente</h3>
+<p>En el protocolo HTTP el cliente realiza una <strong>petici&oacute;n</strong> que se descompone en:</p>
+<ul>
+			
+<li>
+				
+<p>Un comando HTTP, seguido de una direcci&oacute;n de documento o URI (<em>Uniform Resource Identifier</em>), y un n&uacute;mero de versi&oacute;n HTTP, de forma que se tiene una l&iacute;nea con el formato:</p>
+				
+<pre class="code">Comando    URI    Protocolo</pre>
+				
+<p>Por ejemplo:</p>
+				
+<pre class="code">GET   /index.html  HTTP/1.1</pre>
+			
+</li>
+			
+<li>
+				
+<p>Tras la petici&oacute;n, el cliente puede enviar informaci&oacute;n adicional de <strong>cabeceras </strong>(<em>headers</em>) con las que se da al servidor m&aacute;s informaci&oacute;n sobre la petici&oacute;n (tipo de software que ejecuta el cliente, tipo de contenido (<span class="codefrag">content-type</span>) que entiende el cliente, etc). Esta informaci&oacute;n puede utilizarla el servidor para generar la respuesta apropiada. Las cabeceras se env&iacute;an una por l&iacute;nea, donde cada una tiene el formato:</p>
+				
+<pre class="code">Clave: Valor</pre>
+				
+<p>Por ejemplo:</p>
+
+<pre class="code">Accept-Encoding: gzip, deflate
+User-Agent: Mozilla/4.0 (compatible;MSIE5.0;Windows 98)</pre>
+				
+<p>Tras las cabeceras, el cliente env&iacute;a una l&iacute;nea en blanco (<span class="codefrag">\r\n\r\n</span>) para indicar el final de la secci&oacute;n de cabeceras.</p>
+			
+</li>
+			
+<li>Finalmente, de forma opcional, se pueden enviar <strong> datos adicionales</strong> si el comando HTTP solicitado lo requiere (por ejemplo, el m&eacute;todo POST que veremos a continuaci&oacute;n).</li>
+		
+</ul>
+<p>
+<strong>METODO GET</strong>
+</p>
+<p>El comando <span class="codefrag">GET</span> permit&iacute;a al principio solicitar al servidor un documento est&aacute;tico, existente en su espacio de direcciones. Luego se vio que esto no era suficiente, y se introdujo la posibilidad de solicitar b&uacute;squedas al servidor, de forma que el documento no tuviera que ser necesariamente est&aacute;tico, sino que la b&uacute;squeda estuviera condicionada por unos determinados par&aacute;metros. As&iacute;, el comando <span class="codefrag">GET</span> tiene la forma:</p>
+<pre class="code">GET   direccion ? parametros   version HTTP</pre>
+<p>Por ejemplo:</p>
+<pre class="code">GET   /cgi-bin/pagina.cgi?IDIOMA=C&amp;MODELO=a+b  HTTP/1.1</pre>
+<p>Los par&aacute;metros se indican con pares <em>nombre=valor</em>, separados por <span class="codefrag">'&amp;'</span>, y reciben el nombre de <strong>datos de formulario</strong>. El URI no puede contener espacios ni algunos caracteres, por lo que se utilizan c&oacute;digos especiales, como el '+' para indicar espacio en blanco, u otros c&oacute;digos <span class="codefrag">%XX</span> para representar otros caracteres. Uno de los trabajos m&aacute;s duros de los programas CGI es procesar esta cadena de par&aacute;metros para extraer la informaci&oacute;n necesaria.</p>
+<p>
+<strong>OTROS METODOS</strong>
+</p>
+<p>En la versi&oacute;n 1.1 de HTTP se definen otros m&eacute;todos adem&aacute;s de <span class="codefrag">GET</span>:</p>
+<ul>
+			
+<li>
+<span class="codefrag">OPTIONS</span>: para consultar al servidor acerca de las funcionalidades que proporciona</li>
+			
+<li>
+<span class="codefrag">HEAD</span>: el servidor responde de forma id&eacute;ntica a un comando <span class="codefrag">GET</span>, pero no devuelve el cuerpo del documento respuesta, s&oacute;lo las cabeceras. Suele emplearse para comprobar caracter&iacute;sticas del documento.</li>
+			
+<li>
+<span class="codefrag">POST</span>: se emplea para enviar al servidor un bloque de datos en el cuerpo de la petici&oacute;n</li>
+			
+<li>
+<span class="codefrag">PUT</span>: solicita que el cuerpo de la petici&oacute;n que env&iacute;a se almacene en el espacio de direcciones del servidor, con el identificador URI solicitado (guarda un documento en el servidor)</li>
+			
+<li>
+<span class="codefrag">DELETE</span>: solicita borrar un documento espec&iacute;fico del servidor</li>
+			
+<li>
+<span class="codefrag">TRACE</span>: se utiliza para seguir el camino de la petici&oacute;n por m&uacute;ltiples servidores y proxies (&uacute;til para depurar problemas de red).</li>
+		
+</ul>
+<p>
+<strong>GET Y POST</strong>
+</p>
+<p>Los dos m&eacute;todos m&aacute;s com&uacute;nmente usados son <span class="codefrag">GET</span> y <span class="codefrag">POST</span>. Veremos las diferencias entre uno y otro con un ejemplo:</p>
+<ul>
+			
+<li>
+				
+<p>Un ejemplo de petici&oacute;n <span class="codefrag">GET</span> es:</p>
+
+<pre class="code">GET  /dir/cargaPagina.php?id=21&amp;nombre=Pepe  HTTP/1.1
+&lt;cabeceras&gt;</pre>
+			
+</li>
+			
+<li>
+				
+<p>Este ejemplo, convertido a petici&oacute;n <span class="codefrag">POST</span> es:</p>
+
+<pre class="code">POST  /dir/cargaPagina.php  HTTP/1.1
+&lt;cabeceras&gt;
+id=21&amp;nombre=Pepe</pre>
+				
+<p>Vemos que los par&aacute;metros se pasan en el cuerpo de la petici&oacute;n, fuera de la l&iacute;nea del comando. </p>
+			
+</li>
+		
+</ul>
+<p>Com&uacute;nmente existen 3 formas de enviar una petici&oacute;n <span class="codefrag">GET</span>:</p>
+<ul>
+			
+<li>
+				
+<p>Teclear la petici&oacute;n directamente en la barra del navegador:</p>
+				
+<pre class="code">http://www.xx.com/pag.html?id=123&amp;nombre=pepe</pre>
+			
+</li>
+			
+<li>
+				
+<p>Colocar la petici&oacute;n en un enlace y pinchar el enlace para realizarla:</p>
+				
+<pre class="code">&lt;a href="http://www.xx.com/pag.html?id=123&amp;nombre=pepe"&gt;Pulsa Aqui&lt;/a&gt;</pre>
+			
+</li>
+			
+<li>
+				
+<p>Enviar la petici&oacute;n tras rellenar un formulario con <span class="codefrag">METHOD=GET</span> (o sin <span class="codefrag">METHOD</span>) con los dos par&aacute;metros a enviar:</p>
+
+<pre class="code">&lt;html&gt;
+&lt;body&gt;
+	&lt;form action="http://www.xx.com/pag.html"&gt;
+		&lt;input type="text" name="id" value="123"&gt;
+		&lt;input type="text" name="nombre" value="pepe"&gt;
+		&lt;input type="submit" value="Enviar"&gt; 
+	&lt;/form&gt; 
+&lt;/body&gt; 
+&lt;/html&gt; </pre>
+			
+</li>
+		
+</ul>
+<p>Para enviar una petici&oacute;n POST, normalmente se utiliza un formulario con <span class="codefrag">METHOD=POST</span>:</p>
+<pre class="code">&lt;html&gt;
+&lt;body&gt;
+	&lt;form action="http://www.xx.com/pag.html" METHOD=POST&gt;
+		&lt;input type="text" name="id" value="123"&gt;
+		&lt;input type="text" name="nombre" value="pepe"&gt;
+		&lt;input type="submit" value="Enviar"&gt;
+	&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt; </pre>
+<a name="N1011B"></a><a name="Respuestas+del+servidor"></a>
+<h3 class="underlined_5">Respuestas del servidor</h3>
+<p>Las respuestas del servidor tambi&eacute;n tienen tres partes: </p>
+<ul>
+			
+<li>
+				
+<p>Una <strong>l&iacute;nea de estado</strong> con la versi&oacute;n del protocolo HTTP utilizado en el servidor, un c&oacute;digo de estado y una breve descripci&oacute;n del mismo:</p>
+				
+<pre class="code">HTTP/1.0  200  OK</pre>
+			
+</li>
+			
+<li>Informaci&oacute;n de <strong>cabeceras</strong>, donde se env&iacute;a al cliente informaci&oacute;n sobre el servidor y sobre el documento solicitado. El formato de estas cabeceras es el mismo que el visto para las peticiones del cliente, terminando en una l&iacute;nea en blanco.</li>
+			
+<li>Finalmente, se env&iacute;a el <strong>documento solicitado</strong>. Para marcar el final del mismo se env&iacute;a tambi&eacute;n otra l&iacute;nea en blanco.</li>
+		
+</ul>
+<a name="N10141"></a><a name="Cabeceras"></a>
+<h3 class="underlined_5">Cabeceras</h3>
+<p>Vamos a poder implementar programas que lean las cabeceras que env&iacute;a un cliente (un navegador, por ejemplo) y que modifiquen el documento servido en funci&oacute;n de dichas cabeceras (por ejemplo, enviar una p&aacute;gina en funci&oacute;n del idioma que se especifique). Por otra parte, podremos utilizar las cabeceras que env&iacute;e el servidor como respuesta para obligar al navegador a hacer determinadas acciones, como saltar a otra URL. </p>
+<p>Veremos a continuaci&oacute;n las cabeceras m&aacute;s comunes tanto en las peticiones de los clientes como en las respuestas de los servidores. La RFC donde se especifican estas cabeceras es la 2616. </p>
+<p>
+<strong>CABECERAS DE PETICION (HTTP/1.1)</strong> 
+</p>
+<ul>
+			
+<li>
+<strong>Accept</strong>: Tipos MIME que puede manejar el cliente</li>
+			
+<li>
+<strong>Accept-Charset</strong>: Conjunto de caracteres que el cliente puede manejar</li>
+			
+<li>
+<strong>Accept-Encoding</strong>: Define si el navegador puede aceptar datos codificados</li>
+			
+<li>
+<strong>Accept-Language</strong>: Idiomas aceptados</li>
+			
+<li>
+<strong>Authorization</strong>: Para identificarse cuando se accede a p&aacute;ginas protegidas</li>
+			
+<li>
+<strong>Cache-Control</strong>: Opciones relacionadas con el servidor proxy. Esta cabecera se llamaba <em>Pragma</em> en HTTP 1.0</li>
+			
+<li>
+<strong>Connection</strong>: Define si el cliente es capaz de realizar conexiones persistentes (<em>keep-alive</em>, valor por defecto), o no (<em>close</em>). Nueva en HTTP 1.1</li>
+			
+<li>
+<strong>Content-Length</strong>: Longitud de los datos enviados. Aplicable a peticiones <span class="codefrag">POST</span>
+</li>
+			
+<li>
+<strong>Content-Type</strong>: Tipo MIME de los datos enviados. Aplicable a peticiones <span class="codefrag">POST</span>
+</li>
+			
+<li>
+<strong>Cookie</strong>: Para las cookies que se manejen</li>
+			
+<li>
+<strong>From</strong>: Direcci&oacute;n de correo electr&oacute;nico responsable de la petici&oacute;n</li>
+			
+<li>
+<strong>Host</strong>: Unica cabecera requerida por HTTP 1.1. Indica el host y el puerto tal y como se especifica en la URL original.</li>
+			
+<li>
+<strong>If-Modified-Since</strong>: El cliente s&oacute;lo desea el documento si ha sido modificado despu&eacute;s de la fecha indicada en esta cabecera.</li>
+			
+<li>
+<strong>Referer</strong>: URL origen de la petici&oacute;n. Si estamos en la p&aacute;gina 1 y pinchamos en un enlace a la p&aacute;gina 2, la URL de la p&aacute;gina 1 se incluye en esta cabecera cuando se realiza la petici&oacute;n de la p&aacute;gina 2.</li>
+			
+<li>
+<strong>User-Agent</strong>: Cliente que est&aacute; realizando la petici&oacute;n (normalmente muestra datos del navegador, como nombre, etc).</li>
+		
+</ul>
+<p>
+<strong>CABECERAS DE RESPUESTA</strong> 
+</p>
+<ul>
+			
+<li>
+<strong>Allow</strong>: M&eacute;todos disponibles (<span class="codefrag">GET</span>, <span class="codefrag">POST</span>, etc) a los que puede responder el recurso que se est&aacute; solicitando</li>
+			
+<li>
+				
+<p>
+<strong>Cache-Control</strong>: Dice al cliente en qu&eacute; circunstancias puede hacer una cach&eacute; del documento que est&aacute; sirviendo:</p>
+				
+<ul>
+					
+<li>
+<span class="codefrag">public</span>: el documento puede almacenarse en una cach&eacute;</li>
+					
+<li>
+<span class="codefrag">private</span>: el documento es para un solo usuario y s&oacute;lo puede almacenarse en una cach&eacute; privada (no compartida)</li>
+					
+<li>
+<span class="codefrag">no-cache</span>: el documento nunca debe ser almacenado en cach&eacute;</li>
+					
+<li>
+<span class="codefrag">no-store</span>: el documento no debe almacenarse en cach&eacute; ni almacenarse localmente de forma temporal en el disco duro</li>
+					
+<li>
+<span class="codefrag">must-revalidate</span>: el cliente debe revalidar la copia del documento con el servidor original, no con servidores proxy intermedios, cada vez que se use</li>
+					
+<li>
+<span class="codefrag">max-age=xxx</span>: el documento debe considerarse caducado despu&eacute;s de <em>xxx</em> segundos.</li>
+				
+</ul>
+				
+<p>Esta cabecera se llamaba <span class="codefrag">Pragma</span> en HTTP 1.0</p>
+			
+</li>
+			
+<li>
+<strong>Content-Encoding</strong>: Tipo de compresi&oacute;n (<em>gzip</em>, etc) en que se devuelve el documento solicitado</li>
+			
+<li>
+<strong>Content-Language</strong>: Idioma en que est&aacute; escrito el documento. En la RFC 1766 est&aacute;n los idiomas disponibles</li>
+			
+<li>
+<strong>Content-Length</strong>: N&uacute;mero de bytes de la respuesta</li>
+			
+<li>
+<strong>Content-MD5</strong>: Una forma de fijar el <em>checksum</em> (verificaci&oacute;n de integridad) del documento enviado</li>
+			
+<li>
+<strong>Content-Type</strong>: Tipo MIME de la respuesta</li>
+			
+<li>
+<strong>Date</strong>: Hora y fecha, en formato GMT, en que la respuesta ha sido generada</li>
+			
+<li>
+<strong>Expires</strong>: Hora y fecha, en formato GMT, en que la respuesta debe considerarse caducada</li>
+			
+<li>
+<strong>Last-Modified</strong>: Fecha en que el documento servido se modific&oacute; por &uacute;ltima vez. Con esto, el documento se sirve s&oacute;lo si su <span class="codefrag">Last-Modified</span> es mayor que la fecha indicada en el <span class="codefrag">If-Modified-Since</span> de la cabecera del cliente.</li>
+			
+<li>
+<strong>Location</strong>: Indica la nueva URL donde encontrar el documento. Debe usarse con un c&oacute;digo de estado de tipo 300. El navegador se redirigir&aacute; autom&aacute;ticamente a la direcci&oacute;n indicada en esta cabecera.</li>
+			
+<li>
+				
+<p>
+<strong>Refresh</strong>: Indica al cliente que debe recargar la p&aacute;gina despu&eacute;s de los segundos especificados. Tambi&eacute;n puede indicarse la direcci&oacute;n de la p&aacute;gina a cargar despu&eacute;s de los segundos indicados:</p>
+				
+<pre class="code">Refresh: 5; URL=http://www.unapagina.com</pre>
+			
+</li>
+			
+<li>
+<strong>Set-Cookie</strong>: Especifica una cookie asociada a la p&aacute;gina</li>
+			
+<li>
+<strong>WWW-Authenticate</strong>: Tipo de autorizaci&oacute;n y dominio que deber&iacute;a indicar el cliente en su cabecera <span class="codefrag">Authorization</span>.</li>
+		
+</ul>
+<p>Para colocar estas cabeceras en un documento se tienen varios m&eacute;todos, dependiendo de c&oacute;mo estemos tratando las p&aacute;ginas (mediante servlets, HTML, etc). Por ejemplo, con HTML podemos enviar cabeceras mediante etiquetas <span class="codefrag">META</span> en la cabecera (<span class="codefrag">&lt;HEAD&gt;</span>) de la p&aacute;gina HTML: </p>
+<pre class="code">&lt;META HTTP-EQUIV="Cabecera" CONTENT="Valor"&gt;</pre>
+<p>Por ejemplo: </p>
+<pre class="code">&lt;META HTTP-EQUIV="Location" CONTENT="http://www.unapagina.com"&gt;</pre>
+<a name="N10259"></a><a name="C%C3%B3digos+de+estado"></a>
+<h3 class="underlined_5">C&oacute;digos de estado</h3>
+<p>El c&oacute;digo de estado que un servidor devuelve a un cliente en una petici&oacute;n indica el resultado de dicha petici&oacute;n. Se tiene una descripci&oacute;n completa de los mismos en el RFC 2616. Est&aacute;n agrupados en 5 categor&iacute;as:</p>
+<ul>
+			
+<li>
+<strong>100 - 199</strong>: c&oacute;digos de informaci&oacute;n, indicando que el cliente debe responder con alguna otra acci&oacute;n.</li>
+		
+</ul>
+<ul>
+			
+<li>
+<strong>200 - 299</strong>: c&oacute;digos de aceptaci&oacute;n de petici&oacute;n. Por ejemplo:</li>
+		
+</ul>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+			
+<tr>
+				
+<th colspan="1" rowspan="1"></th>
+				<th colspan="1" rowspan="1"></th>
+				<th colspan="1" rowspan="1"></th>
+			
+</tr>
+			
+<tr>
+				
+<td colspan="1" rowspan="1"><span class="codefrag">200</span></td>
+				<td colspan="1" rowspan="1"><span class="codefrag">OK</span></td>
+				<td colspan="1" rowspan="1">Todo est&aacute; bien</td>
+				
+</tr>
+				
+<tr>
+				
+<td colspan="1" rowspan="1"><span class="codefrag">204</span></td>
+				<td colspan="1" rowspan="1"><span class="codefrag">No Content</span></td>
+				<td colspan="1" rowspan="1">No hay documento nuevo</td>
+			
+</tr>
+		
+</table>
+<ul>
+			
+<li>
+<strong>300 - 399</strong>: c&oacute;digos de redirecci&oacute;n. Indican que el documento solicitado ha sido movido a otra URL. Por ejemplo:</li>
+		
+</ul>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+			
+<tr>
+				
+<th colspan="1" rowspan="1"></th>
+				<th colspan="1" rowspan="1"></th>
+				<th colspan="1" rowspan="1"></th>
+			
+</tr>
+			
+<tr>
+				
+<td colspan="1" rowspan="1"><span class="codefrag">301</span></td>
+				<td colspan="1" rowspan="1"><span class="codefrag">Moved Permanently</span></td>
+				<td colspan="1" rowspan="1">El documento est&aacute; en otro lugar, indicado en la cabecera <em>Location</em></td>
+			
+</tr>
+			
+<tr>
+				
+<td colspan="1" rowspan="1"><span class="codefrag">302</span></td>
+				<td colspan="1" rowspan="1"><span class="codefrag">Found</span></td>
+				<td colspan="1" rowspan="1">Como el anterior, pero la nueva URL es temporal, no permanente.</td>
+			
+</tr>
+			
+<tr>
+				
+<td colspan="1" rowspan="1"><span class="codefrag">304</span></td>
+				<td colspan="1" rowspan="1"><span class="codefrag">Not Modified</span></td>
+				<td colspan="1" rowspan="1">El documento pedido no ha sufrido cambios con respecto al actual (para cabeceras <span class="codefrag">If-Modified-Since</span>)</td>
+			
+</tr>
+		
+</table>
+<ul>
+			
+<li>
+<strong>400 - 499</strong>: c&oacute;digos de error del cliente. Por ejemplo:</li>
+		
+</ul>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+			
+<tr>
+				
+<th colspan="1" rowspan="1"></th>
+				<th colspan="1" rowspan="1"></th>
+				<th colspan="1" rowspan="1"></th>
+			
+</tr>
+			
+<tr>
+				
+<td colspan="1" rowspan="1"><span class="codefrag">400</span></td>
+				<td colspan="1" rowspan="1"><span class="codefrag">Bad Request</span></td>
+				<td colspan="1" rowspan="1">Mala sintaxis en la petici&oacute;n</td>
+			
+</tr>
+			
+<tr>
+				
+<td colspan="1" rowspan="1"><span class="codefrag">401</span></td>
+				<td colspan="1" rowspan="1"><span class="codefrag">Unauthorized</span></td>
+				<td colspan="1" rowspan="1">El cliente no tiene permiso para acceder a la p&aacute;gina. Se deber&iacute;a devolver una cabecera <span class="codefrag">WWW-Authenticate</span> para que el usuario introduzca login y password</td>
+			
+</tr>
+			
+<tr>
+				
+<td colspan="1" rowspan="1"><span class="codefrag">403</span></td>
+				<td colspan="1" rowspan="1"><span class="codefrag">Forbidden</span></td>
+				<td colspan="1" rowspan="1">El recurso no est&aacute; disponible</td>
+			
+</tr>
+			
+<tr>
+				
+<td colspan="1" rowspan="1"><span class="codefrag">404</span></td>
+				<td colspan="1" rowspan="1"><span class="codefrag">Not Found</span></td>
+				<td colspan="1" rowspan="1">No se pudo encontrar el recurso</td>
+			
+</tr>
+			
+<tr>
+				
+<td colspan="1" rowspan="1"><span class="codefrag">408</span></td>
+				<td colspan="1" rowspan="1"><span class="codefrag">Request Timeout</span></td>
+				<td colspan="1" rowspan="1">El cliente tarda demasiado en enviar la petici&oacute;n</td>
+			
+</tr>
+		
+</table>
+<ul>
+			
+<li>
+<strong>500 - 599</strong>: c&oacute;digos de error del servidor. Por ejemplo:</li>
+		
+</ul>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+			
+<tr>
+				
+<th colspan="1" rowspan="1"></th>
+				<th colspan="1" rowspan="1"></th>
+				<th colspan="1" rowspan="1"></th>
+			
+</tr>
+			
+<tr>
+				
+<td colspan="1" rowspan="1"><span class="codefrag">500</span></td>
+				<td colspan="1" rowspan="1"><span class="codefrag">Internal Server Error</span></td>
+				<td colspan="1" rowspan="1">Error en el servidor</td>
+			
+</tr>
+			
+<tr>
+				
+<td colspan="1" rowspan="1"><span class="codefrag">501</span></td>
+				<td colspan="1" rowspan="1"><span class="codefrag">Not Implemented</span></td>
+				<td colspan="1" rowspan="1">El servidor no soporta la petici&oacute;n realizada</td>
+			
+</tr>
+			
+<tr>
+				
+<td colspan="1" rowspan="1"><span class="codefrag">504</span></td>
+				<td colspan="1" rowspan="1"><span class="codefrag">Gateway Timeout</span></td>
+				<td colspan="1" rowspan="1">Usado por servidores que act&uacute;an como proxies o gateways, indica que el servidor no obtuvo una respuesta a tiempo de un servidor remoto</td>
+			
+</tr>
+		
+</table>
+<a name="N103DF"></a><a name="Cookies"></a>
+<h3 class="underlined_5">Cookies</h3>
+<p>Las <strong>cookies</strong> son un mecanismo general mediante el que los programas de un servidor web pueden almacenar informaci&oacute;n en la parte del cliente de la conexi&oacute;n. Es una forma de a&ntilde;adir estado a las conexiones HTTP, aunque el manejo de cookies no es parte del protocolo HTTP, pero es soportado por la mayor&iacute;a de los clientes.</p>
+<p>Las cookies son objetos de tipo: <em>nombre = valor</em>, donde se asigna un <em>valor</em> determinado (una cadena de texto) a una variable del <em>nombre</em> indicado. Dicho objeto es almacenado y recordado por el servidor web y el navegador durante un per&iacute;odo de tiempo (indicado como un par&aacute;metro interno de la propia <em>cookie</em>). As&iacute;, se puede tener una lista de <em>cookies</em> con distintas variables y distintos valores, para almacenar informaci&oacute;n relevante para cada usuario (se tienen listas de cookies independientes para cada usuario).</p>
+<p>El funcionamiento es: el servidor, con la cabecera <span class="codefrag">Set-Cookie</span>, env&iacute;a al cliente informaci&oacute;n de estado que &eacute;ste almacenar&aacute;. Entre la informaci&oacute;n se encuentra la descripci&oacute;n de los rangos de URLs para los que este estado es v&aacute;lido, de forma que para cualquier petici&oacute;n HTTP a alguna de esas URLs el cliente incluir&aacute; esa informaci&oacute;n de estado, utilizando la cabecera <span class="codefrag">Cookie</span>.</p>
+<p>La sintaxis de la cabecera <span class="codefrag">Set-Cookie</span> es:</p>
+<pre class="code">Set-Cookie: CLAVE1=VALOR1;...;CLAVEN=VALORN [OPCIONES]</pre>
+<p>donde OPCIONES es una lista opcional con cualquiera de estos atributos:</p>
+<pre class="code">expires=FECHA;path=PATH;domain=DOMINIO;secure</pre>
+<ul>
+			
+<li>Las parejas de <em>CLAVE</em> y <em>VALOR</em> representan la informaci&oacute;n almacenada en la cookie</li>
+			
+<li>Los atributos <span class="codefrag">domain</span> y <span class="codefrag">path</span> definen las URL en las que el navegador mostrar&aacute; la cookie. <span class="codefrag">domain</span> es por defecto el <em>hostname </em>del servidor. El navegador mostrar&aacute; la cookie cuando acceda a una URL que se empareje correctamente con ambos atributos. Por ejemplo, un atributo <span class="codefrag">domain="eps.ua.es"</span> har&aacute; que el navegador muestra la cookie cuando acceda a cualquier URL terminada en <span class="codefrag">"eps.ua.es"</span>. <span class="codefrag">path</span> funciona de forma similar, pero con la parte del path de la URL. Por ejemplo, el path <span class="codefrag">"/foo"</span> har&aacute; que el navegador muestre la cookie en todas las URLs que comiencen por <span class="codefrag">"/foo"</span>.</li>
+			
+<li>
+				
+<p>
+<span class="codefrag">expires</span> define la fecha a partir de la cual la cookie caduca. La fecha se indica en formato GMT, separando los elementos de la fecha por guiones. Por ejemplo:</p>
+				
+<pre class="code">expires=Wed, 09-Nov-1999 23:12:40 GMT</pre>
+			
+</li>
+			
+<li>
+<span class="codefrag">secure</span> har&aacute; que la cookie s&oacute;lo se transmita si el canal de comunicaci&oacute;n es seguro (tipo de conexi&oacute;n HTTPS).</li>
+		
+</ul>
+<p>Por otra parte, cuando el cliente solicita una URL que empareja con el dominio y path de alguna cookie, env&iacute;a la cabecera:</p>
+<pre class="code">Cookie: CLAVE1=VALOR1;CLAVE2=VALOR2;...;CLAVEN=VALORN</pre>
+<p>El n&uacute;mero m&aacute;ximo de cookies que est&aacute; garantizado que acepte cualquier navegador es de 300, con un m&aacute;ximo de 20 por cada servidor o dominio. El tama&ntilde;o m&aacute;ximo de una cookie es de 4096 bytes.</p>
+<a name="N1045D"></a><a name="Autentificaciones"></a>
+<h3 class="underlined_5">Autentificaciones</h3>
+<p>Veremos ahora algunos mecanismos que pueden emplearse con HTTP para autentificar (validar) al usuario que intenta acceder a un determinado recurso. </p>
+<p>
+<strong>Autentificaciones elementales</strong>
+</p>
+<p>El protocolo HTTP incorpora un mecanismo de autentificaci&oacute;n b&aacute;sico (<strong>basic</strong>)<strong> </strong>basado en cabeceras de autentificaci&oacute;n para solicitar datos del usuario (el servidor) y para enviar los datos del usuario (el cliente), de forma que comprobando la exactitud de los datos se permitir&aacute; o no al usuario acceder a los recursos. Esta autentificaci&oacute;n no proporciona confidencialidad ni integridad, s&oacute;lo se emplea una codificaci&oacute;n Base64. </p>
+<p>Una variante de esto es la autentificaci&oacute;n <strong>digest</strong>, donde, en lugar de transmitir el password por la red, se emplea un password codificado. Dicha codificaci&oacute;n se realiza tomando el login, password, URI, m&eacute;todo HTTP y un valor generado aleatoriamente, y todo ello se combina utilizando el m&eacute;todo de encriptado MD5, muy seguro. De este modo, ambas partes de la comunicaci&oacute;n conocen el password, y a partir de &eacute;l pueden comprobar si los datos enviados son correctos. Sin embargo, algunos servidores no soportan este tipo de autentificaci&oacute;n. </p>
+<p>
+<strong>Certificados digitales y SSL</strong>
+</p>
+<p>Las aplicaciones reales pueden requerir un nivel de seguridad mayor que el proporcionado por las autentificaciones <em>basic</em> o <em>digest</em>. Tambi&eacute;n pueden requerir confidencialidad e integridad aseguradas. Todo esto se consigue mediante los <strong>certificados digitales</strong>. </p>
+<ul>
+			
+<li>
+				
+<p>
+<strong>Criptograf&iacute;a de clave p&uacute;blica</strong>:La clave de los certificados digitales reside en la <strong>criptograf&iacute;a de clave p&uacute;blica</strong>, mediante la cual cada participante en el proceso tiene dos claves, que le permiten encriptar y desencriptar la informaci&oacute;n. Una es la clave p&uacute;blica, que se distribuye libremente. La otra es la clave privada, que se mantiene secreta. Este par de claves es asim&eacute;trico, es decir, una clave sirve para desencriptar algo codificado con la otra. Por ejemplo, supongamos que A quiere enviar datos encriptados a B. Para ello, hay dos posibilidades: </p>
+				
+<ul>
+					
+<li>A toma la clave p&uacute;blica de B, codifica con ella los datos y se los env&iacute;a. Luego B utiliza su clave privada (que s&oacute;lo &eacute;l conoce) para desencriptar los datos.</li>
+					
+<li>A toma su clave privada, codifica los datos y se los env&iacute;a a B, que toma la clave p&uacute;blica de A para descodificarlos. Con esto, B sabe que A es el remitente de los datos.</li>
+				
+</ul>
+				
+<p>El encriptado con clave p&uacute;blica se basa normalmente en el algoritmo RSA, que emplea n&uacute;meros primos grandes para obtener un par de claves asim&eacute;tricas. Las claves pueden darse con varias longitudes; as&iacute;, son comunes claves de 1024 o 2048 bits.  </p>
+			
+</li>
+			
+<li>
+				
+<p>
+<strong>Certificados digitales</strong>: L&oacute;gicamente, no es pr&aacute;ctico teclear las claves del sistema de clave p&uacute;blica, pues son muy largas. Lo que se hace en su lugar es almacenar estas claves en disco en forma de <strong>certificados digitales</strong>. Estos certificados pueden cargarse por muchas aplicaciones (servidores web, navegadores, gestores de correo, etc). </p>
+				
+<p>Notar que con este sistema se garantiza la <strong>confidencialidad</strong> (porque los datos van encriptados), y la <strong>integridad</strong> (porque si los datos se desencriptan bien, indica que son correctos). Sin embargo, no proporciona <strong>autentificaci&oacute;n</strong> (B no sabe que los datos se los ha enviado A), a menos que A utilice su clave privada para encriptar los datos, y luego B utilice la clave p&uacute;blica de A para desencriptarlos. As&iacute;, B descodifica primero el mensaje con su clave privada, y luego con la p&uacute;blica de A. Si el proceso tiene &eacute;xito, los datos se sabe que han sido enviados por A, porque s&oacute;lo A conoce su clave privada. </p>
+			
+</li>
+			
+<li>
+				
+<p>
+<strong>SSL</strong>: SSL (<em>Secure Socket Layer</em>) es una capa situada entre el protocolo a nivel de aplicaci&oacute;n (HTTP, en este caso) y el protocolo a nivel de transporte (TCP/IP). Se encarga de gestionar la seguridad mediante criptograf&iacute;a de clave p&uacute;blica que encripta la comunicaci&oacute;n entre cliente y servidor. La versi&oacute;n 2.0 de SSL (la primera mundialmente aceptada), proporciona autentificaci&oacute;n en la parte del servidor, confidencialidad e integridad. Funciona como sigue: </p>
+				
+<ul>
+					
+<li>Un cliente se conecta a un lugar seguro utilizando el protocolo HTTPS (HTTP + SSL). Podemos detectar estos sitios porque las URLs comienzan con <span class="codefrag">https://</span>
+</li>
+					
+<li>El servidor env&iacute;a su clave p&uacute;blica al cliente.</li>
+					
+<li>El navegador comprueba si la clave est&aacute; firmada por un certificado de confianza. Si no es as&iacute;, pregunta al cliente si quiere confiar en la clave proporcionada.</li>
+				
+</ul>
+				
+<p>SSL 3.0 proporciona tambi&eacute;n soporte para certificados y autentificaci&oacute;n del cliente. Funcionan de la misma forma que los explicados para el servidor, pero residiendo en el cliente.</p>
+			
+</li>
+		
+</ul>
+</div>
+
+
+
+<a name="N104DA"></a><a name="Introducci%C3%B3n+a+las+aplicaciones+web+en+Java"></a>
+<h2 class="underlined_10">Introducci&oacute;n a las aplicaciones web en Java</h2>
+<div class="section">
+<a name="N104E0"></a><a name="Qu%C3%A9+es+una+aplicaci%C3%B3n+web"></a>
+<h3 class="underlined_5">Qu&eacute; es una aplicaci&oacute;n web</h3>
+<p>Una aplicaci&oacute;n web es una aplicaci&oacute;n a la que accedemos mediante protocolo HTTP utilizando un navegador web. Hemos visto el protocolo HTTP, pero no c&oacute;mo utilizarlo para implementar una aplicaci&oacute;n. </p>
+<p>
+<strong>Aplicaciones en el lado del servidor</strong>
+</p>
+<p>En el lado del servidor, tenemos que conseguir que nuestro servidor HTTP sea capaz de ejecutar programas de aplicaci&oacute;n que recojan los par&aacute;metros de peticiones del cliente, los procesen y devuelvan al servidor un documento que &eacute;ste pasar&aacute; a su vez al cliente.</p>
+<p>As&iacute;, para el cliente el servidor no habr&aacute; hecho nada distinto a lo estipulado en el protocolo HTTP, pero el servidor podr&aacute; valerse de herramientas externas para procesar y servir la petici&oacute;n solicitada, pudiendo as&iacute; no limitarse a servir p&aacute;ginas est&aacute;ticas, sino utilizar otras aplicaciones (servlets, JSP, PHP, etc) para servir documentos con contenido din&aacute;mico.</p>
+<p>Los programas de aplicaci&oacute;n son t&iacute;picamente programas que realizan consultas a bases de datos, procesan la informaci&oacute;n resultante y devuelven la salida al servidor, entre otras tareas.</p>
+<p>Vamos a centrarnos en las aplicaciones web JavaEE, en las que los componentes din&aacute;micos que recibir&aacute;n las peticiones HTTP en el servidor ser&aacute;n los servlets y JSPs. Estos componentes podr&aacute;n analizar esta petici&oacute;n y utilizar otros componentes Java para realizar las acciones necesarias (beans, EJBs, etc).</p>
+<p>
+<strong>Aplicaciones en el lado del cliente</strong>
+</p>
+<p>Se tienen muchas tecnolog&iacute;as relacionadas con extensiones del lado del cliente (entendiendo cliente como un navegador que interpreta c&oacute;digo HTML). El c&oacute;digo HTML es un c&oacute;digo est&aacute;tico que s&oacute;lo permite formatear la apariencia de una p&aacute;gina y definir enlaces a otras p&aacute;ginas o URLs. Esto no es suficiente si queremos que el navegador realice funciones m&aacute;s complicadas: validar entradas de formularios, mostrar la evoluci&oacute;n del precio de unas acciones, etc.</p>
+<p>Para ampliar las funcionalidades del navegador (respetando el protocolo HTTP), se utilizan tecnolog&iacute;as como JavaScript, Applets, Flash, etc. Estas se basan en hacer que el navegador ejecute c&oacute;digo que le pasa el servidor, bien embebido en documentos HTML (como es el caso de JavaScript), o bien mediante ficheros compilados multiplataforma (como es el caso de los Applets Java o los ficheros Flash).<strong> </strong>
+</p>
+<a name="N10506"></a><a name="Estructura+de+una+aplicaci%C3%B3n+web+JavaEE"></a>
+<h3 class="underlined_5">Estructura de una aplicaci&oacute;n web JavaEE</h3>
+<p>Una aplicaci&oacute;n web JavaEE que utilice servlets o p&aacute;ginas JSP debe tener una estructura de ficheros y directorios determinada: </p>
+<ul>
+			
+<li>En el directorio ra&iacute;z de la aplicaci&oacute;n se colocan las p&aacute;ginas HTML o JSP (podemos dividirlas tambi&eacute;n en directorios si queremos)</li>
+			
+<li>
+				
+<p>Colgando del directorio inicial de la aplicaci&oacute;n, se tiene un directorio <strong><span class="codefrag">WEB-INF</span></strong>, que contiene la informaci&oacute;n Web relevante para la aplicaci&oacute;n. Esta informaci&oacute;n se divide en: </p>
+				
+<ul>
+					
+<li>Fichero <strong>descriptor de despliegue</strong> de la aplicaci&oacute;n: es el fichero descriptor de la aplicaci&oacute;n web. Es un fichero XML (llamado <span class="codefrag">web.xml</span>) que contiene informaci&oacute;n gen&eacute;rica sobre la aplicaci&oacute;n. Lo veremos con m&aacute;s detalle m&aacute;s adelante</li>
+					
+<li>Subdirectorio <strong><span class="codefrag">classes</span></strong>: en &eacute;l ir&aacute;n todas las clases Java utilizadas en la aplicaci&oacute;n (ficheros <span class="codefrag">.class</span>), es decir, clases externas a la API de Java que se utilicen en las p&aacute;ginas JSP, servlets, etc. Las clases deber&aacute;n mantener la estructura de paquetes, es decir, si queremos colocar la clase <span class="codefrag">paquete1.subpaquete1.MiClase</span> dentro de <span class="codefrag">classes</span>, se quedar&aacute; almacenada en el directorio <span class="codefrag">classes/paquete1/subpaquete1/MiClase</span>.</li>
+					
+<li>Subdirectorio <strong><span class="codefrag">lib</span></strong>: aqu&iacute; colocaremos las clases Java que est&eacute;n empaquetadas en ficheros JAR (es decir, colocaremos los ficheros JAR de nuestra aplicaci&oacute;n Web, y las librer&iacute;as ajenas a la API de JDK o de servlets y JSP que se necesiten)</li>
+				
+</ul>
+			
+</li>
+			
+<li>El resto de elementos de la aplicaci&oacute;n (im&aacute;genes, etc), podemos estructurarlos como nos convenga.</li>
+		
+</ul>
+<p>Notar que se separan los ficheros <span class="codefrag">.class</span> de los ficheros JAR, colocando los primeros en el directorio <span class="codefrag">classes</span> y los segundos en <span class="codefrag">lib</span>.</p>
+<p>Esta estructura estar&aacute; contenida dentro de alg&uacute;n directorio, que ser&aacute; el directorio correspondiente a la aplicaci&oacute;n Web, y que podremos, si lo hacemos convenientemente, copiar en el servidor que nos convenga. Es decir, cualquier servidor Web JavaEE soporta esta estructura en una aplicaci&oacute;n Web, s&oacute;lo tendremos que copiarla en el directorio adecuado de cada servidor.</p>
+<p>Cada aplicaci&oacute;n web JavaEE es un contexto, una unidad que comprende un conjunto de recursos, clases Java y su configuraci&oacute;n. Cuando hablemos de contexto, nos estaremos refiriendo a la aplicaci&oacute;n web en conjunto. Por ello utilizaremos indistintamente los t&eacute;rminos aplicaci&oacute;n web y contexto.</p>
+<p>
+<strong>Rutas relativas al contexto</strong>
+</p>
+<p>Cada contexto (aplicaci&oacute;n web) instalado en el servidor tendr&aacute; asociado una ruta para acceder a &eacute;l desde la web. Por ejemplo, podemos asociar nuestro contexto la ruta <span class="codefrag">/aplic</span>, de forma que accediendo a la siguiente URL:</p>
+<pre class="code">http://localhost:8080/aplic/index.htm</pre>
+<p>Estaremos leyendo el recurso <span class="codefrag">/index.htm</span> de nuestro contexto. </p>
+<p>Supongamos que tenemos alguna imagen o recurso al que queremos acceder desde otro, en nuestra aplicaci&oacute;n Web. Por ejemplo, supongamos que colgando del directorio ra&iacute;z de la aplicaci&oacute;n tenemos la imagen <span class="codefrag">miImagen.jpg</span> dentro de la carpeta <span class="codefrag">imagenes </span>(es decir, <span class="codefrag">imagenes/miImagen.jpg</span>).</p>
+<p>Podemos acceder a esta imagen de varias formas, aunque a veces podemos tener problemas con alguna, porque luego el contenedor Web tome la ruta relativa al lugar desde donde queremos cargar la imagen (o recurso, en general). Este problema lo podemos tener accediendo a elementos desde servlets, sobre todo.</p>
+<p>Una soluci&oacute;n para evitar esto es acceder a todos los elementos de la aplicaci&oacute;n a partir de la ruta del contexto. Por ejemplo, si nuestro contexto tiene la ruta <span class="codefrag">/aplic</span> asociada, para acceder a la imagen desde una p&aacute;gina HTML, pondr&iacute;amos:</p>
+<pre class="code">&lt;img src="/aplic/imagenes/miImagen.jpg"&gt;</pre>
+<a name="N10588"></a><a name="Empaquetamiento+de+aplicaciones+web%3A+ficheros+WAR"></a>
+<h3 class="underlined_5">Empaquetamiento de aplicaciones web: ficheros WAR</h3>
+<p>Una forma de distribuir aplicaciones Web es empaquetar toda la aplicaci&oacute;n (a partir de su directorio inicial) dentro de un fichero WAR (de forma parecida a como se hace con un TAR o un JAR), y distribuir dicho fichero. Podemos crear un fichero WAR de la misma forma que creamos un JAR, utilizando la herramienta JAR. </p>
+<p>Estos ficheros WAR son un est&aacute;ndar de JavaEE, por lo que podremos utilizarlos en los diferentes servidores de aplicaciones JavaEE existentes. </p>
+<p>Por ejemplo, si tenemos en el directorio <span class="codefrag">C:/web/ejemplo</span> los siguientes ficheros:</p>
+<pre class="code">C:/web/ejemplo/
+		index.html
+		WEB-INF/
+				web.xml
+				classes/
+						ClaseServlet.class</pre>
+<p>Para crear la aplicaci&oacute;n WAR se siguen los pasos:</p>
+<ul>
+			
+<li>
+				
+<p>Crear el WAR coloc&aacute;ndonos en dicho directorio <span class="codefrag">C:/web/ejemplo</span> y escribiendo:</p>
+				
+<pre class="code">jar cMvf ejemplo.war *</pre>
+				
+<p>Las opciones <span class="codefrag">c</span>, <span class="codefrag">v</span> y <span class="codefrag">f</span> son para crear el WAR como un JAR comprimido normal. La opci&oacute;n <span class="codefrag">M</span> (may&uacute;scula) es para que no se a&ntilde;ada el fichero <span class="codefrag">MANIFEST</span>. </p>
+				
+<p>Tambi&eacute;n es IMPORTANTE destacar que no debe haber subdirectorios desde la ra&iacute;z de la aplicaci&oacute;n, es decir, la estructura del fichero WAR debe ser:</p>
+
+<pre class="code">index.html
+WEB-INF/
+		web.xml
+		classes/
+				ClaseServlet.class</pre>
+				
+<p>sin ning&uacute;n subdirectorio previo (ni <span class="codefrag">ejemplo/</span> ni <span class="codefrag">web/ejemplo/</span> ni nada por el estilo).</p>
+			
+</li>
+			
+<li>Copiar el fichero WAR al servidor web para poner en marcha la aplicaci&oacute;n. Veremos esto con detalle en el siguiente apartado.</li>
+		
+</ul>
+</div>
+
+<a name="N105D8"></a><a name="Despliegue+de+archivos+WAR"></a>
+<h2 class="underlined_10">Despliegue de archivos WAR</h2>
+<div class="section">
+<p>Vamos a ver las diferentes formas de desplegar un archivo WAR en Tomcat. El empaquetamiento en archivos WAR es algo est&aacute;ndar, pero no as&iacute;
+el proceso de despliegue, que es dependiente del servidor. No obstante, la mayor&iacute;a de servidores JavaEE funcionan en este aspecto de modo similar: permiten desplegar las aplicaciones
+desde una consola de administraci&oacute;n y tambi&eacute;n "dejando caer" el fichero en determinado directorio.</p>
+<a name="N105E1"></a><a name="Copiar+el+.WAR+a+Tomcat"></a>
+<h3 class="underlined_5">Copiar el .WAR a Tomcat</h3>
+<p>En Tomcat la forma m&aacute;s simple de desplegar un archivo .war consiste en "dejarlo caer" en el directorio <span class="codefrag">webapps</span>. Con la configuraci&oacute;n por defecto,
+Tomcat examina peri&oacute;dicamente el directorio y si aparece en &eacute;l alg&uacute;n archivo nuevo lo descomprime autom&aacute;ticamente en el directorio y "activa" la apicaci&oacute;n en el servidor.
+Esto se conoce en Tomcat como <span class="codefrag">autodeploy</span>, y se puede desactivar en la configuraci&oacute;n si as&iacute; lo deseamos.</p>
+<p>La URL por defecto para acceder a la aplicaci&oacute;n ser&aacute; el nombre del .war. Es decir, que si nuestro fichero se llama
+<span class="codefrag">ejemplo.war</span>, Tomcat lo descomprimir&aacute; creando un subdirectorio llamado <span class="codefrag">ejemplo</span> y desde el navegador accederemos
+con URLs del tipo <span class="codefrag">http://nombre_del_host:8080/ejemplo/...</span>
+</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Con esta forma de despliegue, Tanto la URL como otros aspectos pueden configurarse  en un archivo
+<span class="codefrag">context.xml</span> que colocaremos en determinado directorio dentro del .war. En temas posteriores veremos
+detalladamente esta configuraci&oacute;n.</div>
+</div>
+<p>Podemos eliminar una aplicaci&oacute;n sin m&aacute;s que borrar el directorio donde tomcat la ha descomprimido.</p>
+<div class="frame warning">
+<div class="label">Aviso</div>
+<div class="content">Bajo Windows no se puede borrar directamente el directorio de la aplicaci&oacute;n porque el sistema interpreta 
+que Tomcat lo est&aacute; usando y no lo permite. Para
+permitir el borrado es necesario activar el <em>anti-locking</em> en la configuraci&oacute;n de Tomcat. </div>
+</div>
+<a name="N1060B"></a><a name="La+aplicaci%C3%B3n+%22manager%22+de+Tomcat"></a>
+<h3 class="underlined_5">La aplicaci&oacute;n "manager" de Tomcat</h3>
+<p>Tomcat incluye una aplicaci&oacute;n llamada <span class="codefrag">manager</span>, que nos permitir&aacute; desplegar y gestionar las aplicaciones web instaladas en el servidor en tiempo de ejecuci&oacute;n. Con el <em>manager</em> podremos subir y desplegar una aplicaci&oacute;n, ver la lista de aplicaciones desplegadas, y detener, recargar, reanudar o desinstalar estas aplicaciones.</p>
+<p>El manager de Tomcat cuenta con una interfaz HTML desde la cual podremos desplegar aplicaciones y gestionar las aplicaciones instaladas. Para acceder a esta interfaz HTML del manager introduciremos la siguiente URL en cualquier navegador:</p>
+<pre class="code">http://localhost:8080/manager/html</pre>
+<p>Nos pedir&aacute; usuario y password. Los autorizados para acceder a esta aplicaci&oacute;n deben tener rol de <span class="codefrag">manager</span>. Las versiones de Tomcat existentes en el momento de imprimir estas p&aacute;ginas
+		ya tienen asignado este rol al usuario <span class="codefrag">admin</span>.</p>
+<p>
+		En versiones antiguas de Tomcat no hab&iacute;a un usuario con rol de manager creado por defecto, por tanto si usamos
+		una de estas versiones tendremos que crearlo a mano. Para ello editaremos el fichero <span class="codefrag">${tomcat.home}/conf/tomcat-users.xml</span> e introduciremos las siguientes l&iacute;neas:
+	</p>
+<pre class="code">&lt;role rolename="<strong>manager</strong>"/&gt;
+&lt;user username="<strong>admin</strong>" password="<strong>JavaEE</strong>" roles="<strong>manager</strong>"/&gt;</pre>
+<p>Con esto ya podremos acceder al manager con nuestro usuario. En este caso el usuario tendr&aacute; el nombre <span class="codefrag">admin</span> y el password <span class="codefrag">JavaEE</span>.
+		</p>
+<p>Una vez accedamos al manager veremos una p&aacute;gina como la que se muestra a continuaci&oacute;n:</p>
+<p>
+<img alt="Vista del manager de Tomcat" content-width="12cm" src="imagenes/manager1.gif" width="700"></p>
+<p>Aqu&iacute; podemos ver las aplicaciones instaladas en el servidor y podemos gestionarlas. Podemos detener (<em>Stop</em>) las aplicaciones para que dejen de estar disponibles, pero sin borrarlas del servidor, y posteriormente reanudar su ejecuci&oacute;n con <em>Start</em>. Tambi&eacute;n podemos recargar las aplicaciones con <em>Reload</em>. Esto ser&aacute; &uacute;til cuando hayamos modificado la aplicaci&oacute;n y queramos que Tomcat reconozca estos cambios, por ejemplo si hemos cambiado la configuraci&oacute;n de la aplicaci&oacute;n (<span class="codefrag">web.xml</span>) o hemos a&ntilde;adido o modificado clases Java. Por &uacute;ltimo, con <em>Remove</em> podremos desinstalar la aplicaci&oacute;n del servidor. Al hacer esto se eliminar&aacute;n todos los ficheros de la aplicaci&oacute;n y ya no podr&aacute; reanudarse.</p>
+<p>En la parte inferior de esta p&aacute;gina encontramos los siguientes formularios:</p>
+<p>
+<img alt="" content-width="12cm" src="imagenes/manager2.gif" width="700"></p>
+<p>Desde aqu&iacute; podremos desplegar aplicaciones web en el servidor. Con el formulario superior podremos desplegar una aplicaci&oacute;n que ya se encuentre en un directorio de la m&aacute;quina en la que est&aacute; el servidor. </p>
+<p>Con el formulario inferior ser&aacute; muy sencillo desplegar una aplicaci&oacute;n web. Simplemente necesitamos tener el fichero WAR de la aplicaci&oacute;n en nuestra m&aacute;quina. Pulsamos sobre <em>Examinar...</em> para buscar y seleccionar este fichero WAR, y una vez seleccionado pulsaremos sobre <span class="codefrag">Desplegar</span> para que suba y despliegue la aplicaci&oacute;n al servidor web. </p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007 Depto. CCIA</div>
+</div>
+</body>
+</html>

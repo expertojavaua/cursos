@@ -1,0 +1,563 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Introducci&oacute;n a Struts: El controlador y las acciones </title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Proyecto de Integracion" src="images/baner_j2ee_der.gif" title="Proyecto de Integracion"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="external" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="external" href="javascript:location.href='../aplic-web.html'">Aplicaciones Web</a>
+</li>
+<li>
+<a class="external" href="javascript:location.href='../aplic-ent.html'">Aplicaciones Enterprise</a>
+</li>
+<li>
+<a class="external" href="javascript:location.href='../charlas.html'">Charlas</a>
+</li>
+<li>
+<a class="external" href="javascript:location.href='../proy-int/index.html'">Proyecto</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Struts</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Struts</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Struts">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menupage">
+<div class="menupagetitle">Sesion 1</div>
+</div>
+<div class="menuitem">
+<a href="sesion02-struts-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-struts-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-struts-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-struts.html">Roadmap Struts</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-struts-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-struts-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-struts-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-struts-ejercicios.html">Sesion 4</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion01-struts-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Introducci&oacute;n a Struts: El controlador y las acciones </h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Introducci%C3%B3n+a+Struts">Introducci&oacute;n a Struts</a>
+<ul class="minitoc">
+<li>
+<a href="#Por+qu%C3%A9+usar+Struts.+Alternativas">Por qu&eacute; usar Struts. Alternativas</a>
+</li>
+<li>
+<a href="#MVC+y+Struts">MVC y Struts</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#El+controlador">El controlador</a>
+</li>
+<li>
+<a href="#Las+acciones">Las acciones</a>
+<ul class="minitoc">
+<li>
+<a href="#Implementar+las+acciones">Implementar las acciones</a>
+</li>
+<li>
+<a href="#Asociar+la+petici%C3%B3n+con+la+acci%C3%B3n+a+ejecutar">Asociar la petici&oacute;n con la acci&oacute;n a ejecutar</a>
+</li>
+<li>
+<a href="#Tratamiento+de+errores+en+las+acciones">Tratamiento de errores en las acciones</a>
+</li>
+<li>
+<a href="#Acceder+a+una+p%C3%A1gina+a+trav%C3%A9s+de+una+acci%C3%B3n">Acceder a una p&aacute;gina a trav&eacute;s de una acci&oacute;n</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Seguridad+declarativa+en+Struts">Seguridad declarativa en Struts</a>
+</li>
+</ul>
+</div>
+
+<p>Struts es un <em>framework</em> para construir aplicaciones web Java basadas 
+	en la filosof&iacute;a MVC. En una charla anterior sobre patrones de dise&ntilde;o ya vimos c&oacute;mo estaba estructurada
+una arquitectura MVC y cu&aacute;l era el papel de cada uno de los componentes. Veremos
+aqu&iacute; la forma en que Struts implementa esta filosof&iacute;a.</p>
+
+<a name="N10012"></a><a name="Introducci%C3%B3n+a+Struts"></a>
+<h2 class="underlined_10">Introducci&oacute;n a Struts</h2>
+<div class="section">
+<p>Antes de entrar en detalles sobre el funcionamiento de Struts vamos a ver primero 
+la filosof&iacute;a general de funcionamiento. Veremos tambi&eacute;n por qu&eacute; usar Struts y las posibles alternativas.</p>
+<p>La versi&oacute;n actual de Struts es la 1.3. No es probable que aparezcan demasiadas versiones de Struts posteriores
+a la 1.3 ya que la "nueva generaci&oacute;n" es Struts 2, un <em>framework</em> que hereda muchas caracter&iacute;sticas
+de Struts 1.x pero tiene un dise&ntilde;o m&aacute;s potente y flexible, fruto de los a&ntilde;os de experiencia con Struts de muchos
+usuarios y desarrolladores.</p>
+<a name="N10021"></a><a name="Por+qu%C3%A9+usar+Struts.+Alternativas"></a>
+<h3 class="underlined_5">Por qu&eacute; usar Struts. Alternativas</h3>
+<p>Antes de hablar de las supuestas bondades de Struts, conviene detenerse un momento a recalcar la diferencia entre <em>framework</em>
+y <em>librer&iacute;a</em>. Struts es un <em>framework</em>, lo cual significa que no solo nos proporciona un API
+con el que trabajar (esto ya lo har&iacute;a una librer&iacute;a) sino tambi&eacute;n una filosof&iacute;a de desarrollo, una "forma de
+hacer las cosas". Por tanto, el primer beneficio de usar un framework es que estamos haciendo las cosas
+de una forma ya probada, la misma idea que constituye la base de los patrones de dise&ntilde;o software. </p>
+<p>Por supuesto Struts no es el &uacute;nico framework MVC existente en el mundo J2EE.Aunque existen muchos otros,
+Struts es el m&aacute;s extendido con mucha diferencia, hasta el punto de haberse convertirdo en un est&aacute;ndar 
+"de facto" en el mundo J2EE. Por tanto, usando Struts estamos seguros de que dispondremos de una gran
+cantidad de recursos: documentaci&oacute;n (tutoriales, art&iacute;culos, libros,...) interacci&oacute;n con otros usuarios
+del framework a trav&eacute;s de foros y similares y una amplia base de desarrolladores expertos 
+a los que podremos acudir si necesitamos personal para un proyecto.</p>
+<p>Hay varios frameworks "alternativos" a Struts. Spring, que veremos en uno de los m&oacute;dulos siguientes, incorpora tambi&eacute;n su parte
+ MVC. Webwork,
+que hasta hace poco era un framework competidor de Struts se ha unificado con &eacute;ste dando
+lugar a Struts 2. Aunque Struts 2 tiene una filosof&iacute;a que lo hace sumamente interesante (incorporando
+por ejemplo AOP) en el momento de escribir estas l&iacute;neas todav&iacute;a se usa mucho menos en producci&oacute;n que Struts 1.x, simplemente
+por su novedad. Por tanto
+aqu&iacute; nos ce&ntilde;iremos a Struts 1. Esta breve discusi&oacute;n sobre otros frameworks "alternativos" no quedar&iacute;a completa
+sin nombrar a JavaServer Faces (JSF).
+JSF se solapa en algunos aspectos con Struts, ya que tambi&eacute;n implementa MVC (aunque de modo distinto).
+No obstante, la aportaci&oacute;n principal de JSF no es MVC sino los componentes gr&aacute;ficos de usuario (GUI) 
+de "alto nivel" para la web.</p>
+<a name="N1003A"></a><a name="MVC+y+Struts"></a>
+<h3 class="underlined_5">MVC y Struts</h3>
+<p>Veamos c&oacute;mo implementa Struts los componentes del patr&oacute;n Modelo-Vista-Controlador:</p>
+<ul>
+
+<li>El <strong>controlador</strong> es un servlet, de una clase proporcionada por Struts. 
+Ser&aacute; necesario configurar la aplicaci&oacute;n web (a trav&eacute;s del fichero 
+<span class="codefrag">web.xml</span>) para que todas las peticiones del usuario se redirijan a este servlet.</li>
+
+
+<li>El controlador despacha las peticiones del usuario a la clase adecuada para ejecutar la <strong>acci&oacute;n</strong>. En
+struts, las clases que ejecuten las acciones deben <em>heredar de la clase <strong>Action</strong></em>.</li>
+
+
+<li>La <strong>vista</strong> se implementar&aacute; normalmente mediante p&aacute;ginas JSP. Struts ofrece dos herramientas para
+ayudar en la presentaci&oacute;n de datos: los <strong>ActionForm</strong>s son clases que capturan los datos
+introducidos en formularios y permiten su validaci&oacute;n. Las <strong>librer&iacute;as de etiquetas</strong> permiten mostrar
+errores y facilitar el trabajo con formularios.</li>
+
+
+<li>La implementaci&oacute;n del <strong>modelo</strong> corre enteramente a cargo del desarrollador, ya que es propio de la capa
+de negocio y no est&aacute; dentro del &aacute;mbito de Struts.</li>
+
+
+</ul>
+<p>En este primer tema de los dos dedicados a Struts trataremos la parte del controlador y las acciones.
+ En el tema 2 trataremos de la vista, describiendo algunas de las librer&iacute;as de etiquetas del framework.</p>
+<p>El ciclo que se sigue cuando Struts procesa una petici&oacute;n
+	HTTP aparece en la siguiente figura	</p>
+<p>
+
+
+<img alt="El ciclo de proceso de MVC en Struts" content-width="10cm" src="img/sesion1/struts.gif">
+</p>
+<ol>
+	
+
+<li>El cliente realiza la <strong>petici&oacute;n</strong>, que recibe el controlador de Struts. Todas las peticiones pasan por &eacute;l, ya que la petici&oacute;n no es una URL f&iacute;sica (no es un servlet o un JSP) sino que es un nombre simb&oacute;lico para una <strong>acci&oacute;n</strong>.</li>
+	
+
+<li>El controlador <strong>despacha la petici&oacute;n</strong>,	identificando la acci&oacute;n y disparando la l&oacute;gica de negocio apropiada.</li>
+	
+
+<li>La l&oacute;gica de negocio <strong>actualiza el modelo</strong> y obtiene datos del mismo, almacen&aacute;ndolos en beans.</li>
+	
+
+<li>En funci&oacute;n del valor devuelto por la l&oacute;gica de negocio, el controlador elige la <strong>siguiente vista</strong> a mostrar.</li>
+	
+
+<li>
+
+<strong>La vista toma los datos</strong> obtenidos por la l&oacute;gica de negocio.</li>
+	
+
+<li>
+
+<strong>La vista muestra los datos</strong> en el cliente</li>
+
+
+</ol>
+</div>
+
+<a name="N100A6"></a><a name="El+controlador"></a>
+<h2 class="underlined_10">El controlador</h2>
+<div class="section">
+<p>La instalaci&oacute;n de Struts es sencilla. Basta con colocar en la carpeta <span class="codefrag">WEB-INF/lib</span> de nuestra
+ aplicaci&oacute;n web las librer&iacute;as (ficheros .jar) que vienen con la distribuci&oacute;n est&aacute;ndar 
+ de Struts.</p>
+<p>La instanciaci&oacute;n del servlet que har&aacute; de controlador, como en todos los servlets, hay que hacerla en el web.xml de la aplicaci&oacute;n.
+ Salvo que tengamos necesidades muy especiales, podemos usar
+ directamente la clase <span class="codefrag">org.apache.struts.action.ActionServlet</span>, 
+ que ya viene implementada en la distribuci&oacute;n de Struts. Al servlet se le puede pasar opcionalmente
+ como par&aacute;metro (en la forma est&aacute;ndar, con <span class="codefrag">&lt;init-param&gt;</span>) el nombre que va a tener
+ el fichero de configuraci&oacute;n de Struts, que normalmente es <span class="codefrag">struts-config.xml</span> dentro de la
+ carpeta <span class="codefrag">WEB-INF</span>. 
+ Por &uacute;ltimo, para que todas las peticiones del usuario se redirijan al servlet habr&aacute; que mapear
+ el servlet en la forma habitual. Veamos un ejemplo de web.xml: </p>
+<pre class="code">
+
+
+<strong>&lt;!-- Definir el servlet que hace de controlador --&gt;</strong>
+ &lt;servlet&gt;
+    &lt;servlet-name&gt;controlador&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;org.apache.struts.action.ActionServlet&lt;/servlet-class&gt;
+    <strong>&lt;!-- vamos a cambiar la carpeta por defecto del fich. de configuracion --&gt;</strong>
+    &lt;init-param&gt;
+       &lt;param-name&gt;config&lt;/param-name&gt;
+       &lt;param-value&gt;/WEB-INF/classes/struts-config.xml&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;load-on-startup&gt;2&lt;/load-on-startup&gt;
+ &lt;/servlet&gt;
+ <strong>&lt;!-- redirigir ciertas peticiones al controlador --&gt;</strong>
+ &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;controlador&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;*.do&lt;/url-pattern&gt;
+ &lt;/servlet-mapping&gt;
+</pre>
+<p>En el ejemplo anterior, todas las peticiones que sigan el patr&oacute;n <span class="codefrag">*.do</span> se redirigir&aacute;n 
+al controlador de Struts. Por ejemplo la petici&oacute;n <span class="codefrag">login.do</span> ser&aacute;
+ capturada por Struts y redirigida a la acci&oacute;n de nombre <span class="codefrag">login</span>.</p>
+</div>
+
+<a name="N100DB"></a><a name="Las+acciones"></a>
+<h2 class="underlined_10">Las acciones</h2>
+<div class="section">
+<p>En Struts, las acciones son clases Java, uno de cuyos m&eacute;todos se ejecutar&aacute; en respuesta a una 
+petici&oacute;n HTTP del cliente. Para que todo funcione adecuadamente hay que asociar las peticiones con las acciones que disparar&aacute;n e implementar la l&oacute;gica de negocio dentro de las acciones.</p>
+<a name="N100E4"></a><a name="Implementar+las+acciones"></a>
+<h3 class="underlined_5">Implementar las acciones</h3>
+<p>Las clases encargadas de ejecutar las acciones deben descender de la clase abstracta 
+<span class="codefrag">org.apache.struts.action.Action</span>, proporcionada por Struts. Cuando se ejecuta una acci&oacute;n
+ lo que hace Struts es llamar a su m&eacute;todo <span class="codefrag">execute</span>, que debemos sobreescribir para que 
+ realice la tarea deseada. Por ejemplo, para el caso de una hipot&eacute;tica acci&oacute;n de login en una aplicaci&oacute;n web:</p>
+<pre class="code">
+package acciones;
+import javax.servlet.http.*;
+import org.apache.struts.action.*;
+public class AccionLogin <strong>extends Action</strong> 
+   <strong>public ActionForward execute(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) 
+			throws Exception {</strong>
+	boolean usuarioOK;
+	//obtener login y password y autentificar al usuario
+	//si es correcto, poner usuarioOK a 'true'
+	...
+	//dirigirnos a la vista adecuada seg&uacute;n el resultado
+	if (usuarioOK)
+	   return <strong>mapping.findForward("OK")</strong>;
+	else
+	   return <strong>mapping.findForward("errorUsuario")</strong>;
+   }
+}
+</pre>
+<p>Hay que destacar varias cosas del c&oacute;digo de la
+	acci&oacute;n:</p>
+<ul>
+	
+
+<li>Como se ha dicho, una acci&oacute;n debe heredar de la clase <span class="codefrag">org.apache.struts.action.Action</span>.
+</li>
+	
+
+<li>El m&eacute;todo <span class="codefrag">execute</span> recibe como <strong>par&aacute;metros</strong> la petici&oacute;n y la respuesta HTTP, lo que nos permite interactuar con ellas. No obstante, tambi&eacute;n tenemos accesibles los datos incluidos en la petici&oacute;n (normalmente a trav&eacute;s de formularios) mediante el objeto <span class="codefrag">ActionForm</span>, si es que hemos asociado un objeto de esta clase a la acci&oacute;n en el <span class="codefrag">struts-config.xml</span>. El uso de <span class="codefrag">ActionForm</span> lo trataremos en el tema 2.</li>
+	
+
+<li>El m&eacute;todo execute debe <strong>devolver</strong> un objeto de la clase <span class="codefrag">ActionForward</span>, que especifica la siguiente vista a mostrar.</li>
+	
+
+<li>Una acci&oacute;n puede tener varios resultados distintos, por ejemplo en nuestro caso el login puede ser exitoso o no. Lo l&oacute;gico en cada
+caso es mostrar una vista distinta. Para evitar el acoplamiento en el c&oacute;digo Java entre la vista a mostrar y el resultado de la acci&oacute;n, Struts
+nos ofrece el objeto <span class="codefrag">ActionMapping</span> que se pasa como par&aacute;metro del m&eacute;todo <span class="codefrag">execute</span>. Dicho objeto contiene un mapeo
+entre nombres simb&oacute;licos de resultados para una acci&oacute;n y vistas a mostrar. La llamada al
+m&eacute;todo <span class="codefrag">findForward</span> de dicho objeto nos devuelve un <span class="codefrag">ActionForward</span> que representa la vista asociada
+al resultado de la acci&oacute;n.</li>
+
+</ul>
+<a name="N1013A"></a><a name="Asociar+la+petici%C3%B3n+con+la+acci%C3%B3n+a+ejecutar"></a>
+<h3 class="underlined_5">Asociar la petici&oacute;n con la acci&oacute;n a ejecutar</h3>
+<p>Una vez el controlador recibe la petici&oacute;n debe despacharla a las clases Java que implementan la 
+l&oacute;gica de negocio.La asociaci&oacute;n entre el nombre simb&oacute;lico de la acci&oacute;n y la clase Java 
+que la procesa se realiza en el fichero de configuraci&oacute;n <span class="codefrag">struts-config.xml</span>, que se coloca en el
+directorio <span class="codefrag">WEB-INF</span> de la aplicaci&oacute;n. A lo largo de estos dos temas iremos viendo los
+distintos elementos de este fichero de configuraci&oacute;n.</p>
+<p>Todos los mapeados entre peticiones y acciones se colocan dentro de la etiqueta XML <span class="codefrag">&lt;action-mappings&gt;</span> del 
+fichero <span class="codefrag">struts-config.xml</span>. Cada mapeado concreto es un <span class="codefrag">&lt;action&gt;</span>, cuyo atributo
+<span class="codefrag">path</span> es la petici&oacute;n (sin el .do, que en nuestro ejemplo es lo que llevan todas
+las peticiones que van para Struts) y <span class="codefrag">type</span> el nombre de la clase que implementa la acci&oacute;n. 
+Por ejemplo, recordemos nuestra clase Java <span class="codefrag">acciones.AccionLogin</span> y supongamos que
+que es la encargada de procesar la petici&oacute;n a la URL <span class="codefrag">login.do</span>. El fichero <span class="codefrag">struts-config.xml</span> 
+ quedar&iacute;a:</p>
+<pre class="code">
+&lt;?xml version = "1.0" encoding = "ISO-8859-1"?&gt;
+&lt;!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts
+ Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd"&gt;
+&lt;struts-config&gt;
+&lt;!--definici&oacute;n de otros elementos del fichero de configuraci&oacute;n --&gt;
+   ...
+   ...
+&lt;!--definici&oacute;n de acciones --&gt;
+&lt;action-mappings&gt;
+   &lt;!-- hacer login --&gt;
+   <strong>&lt;action path="/login" type="acciones.AccionLogin"&gt;
+       &lt;forward name="OK" path="/personal.jsp"/&gt;
+       &lt;forward name="errorUsuario" path="/error.html"/&gt;
+   &lt;/action&gt;</strong>
+   &lt;!-- definici&oacute;n de otras acciones --&gt;
+   ...
+&lt;/action-mappings&gt;
+&lt;/struts-config&gt;
+</pre>
+<p>Como se ve en el ejemplo, dentro de cada <span class="codefrag">&lt;action&gt;</span> hay uno o m&aacute;s <span class="codefrag">&lt;forward&gt;</span>,
+que son los posibles resultados de la acci&oacute;n, y que asocian un nombre simb&oacute;lico con una vista, en este caso un JSP, que es
+lo m&aacute;s com&uacute;n. Revisad el c&oacute;digo del m&eacute;todo <span class="codefrag">execute</span> del apartado anterior para comprobar que los nombres simb&oacute;licos se corresponden
+con los que aparecen en el c&oacute;digo Java.</p>
+<div class="frame warning">
+<div class="label">Aviso</div>
+<div class="content">Cualquier modificaci&oacute;n del fichero struts-config.xml requerir&aacute; la recarga de la aplicaci&oacute;n
+en el servidor, ya que Struts no detecta autom&aacute;ticamente los cambios en este fichero.</div>
+</div>
+<a name="N1017B"></a><a name="Tratamiento+de+errores+en+las+acciones"></a>
+<h3 class="underlined_5">Tratamiento de errores en las acciones</h3>
+<p>La ejecuci&oacute;n de la acci&oacute;n puede generar uno o varios errores que deseamos mostrar al usuario. En 
+Struts, el tratamiento de errores requiere seguir una serie de pasos:</p>
+<ul>
+  
+
+<li>Crear una lista de errores vac&iacute;a. Esta lista se modela con el objeto <span class="codefrag">ActionMessages</span>.</li>
+  
+
+<li>A&ntilde;adir errores a la lista. Cada error es un objeto <span class="codefrag">ActionMessage</span>.</li>
+  
+
+<li>Finalmente, si la lista contiene alg&uacute;n error
+  <ul>
+    
+
+<li>Guardar la lista en la petici&oacute;n HTTP para que no se pierda. Para ello se utiliza el m&eacute;todo <span class="codefrag">saveErrors</span>.</li>
+    
+
+<li>La acci&oacute;n debe devolver un <span class="codefrag">forward</span> que indique que se ha producido un error.</li>
+  
+
+</ul>
+
+</li>
+
+
+</ul>
+<p>Por ejemplo, el siguiente c&oacute;digo, que habr&iacute;a que colocar dentro del m&eacute;todo
+<span class="codefrag">execute</span> de la acci&oacute;n, realiza los pasos descritos:</p>
+<pre class="code">
+
+
+<strong>//crear una lista de errores vac&iacute;a</strong>
+ActionMessages errores = new ActionMessages();
+try {
+   //c&oacute;digo que ejecuta la l&oacute;gica de negocio. 
+   ...   
+}
+catch(Exception e) {
+   <strong>//a&ntilde;adir errores a la lista</strong>
+   errores.add(ActionMessages.GLOBAL_MESSAGE,
+               new ActionMessage("error.bd");
+}
+<strong>//comprobar si la lista de errores est&aacute; vac&iacute;a</strong>
+if (!errores.empty()) {
+<strong>   //guardar los errores en la petici&oacute;n HTTP</strong>
+   saveErrors(request, errores);
+   <strong>//devolver un resultado que indique error. En struts-config.xml
+   //estar&aacute; definida la p&aacute;gina jsp asociada a este resultado</strong>
+   return mapping.findForward("error");
+}
+</pre>
+<p>El constructor de un <span class="codefrag">ActionMessage</span> requiere como m&iacute;nimo un argumento: el mensaje de error. Los mensajes de error no son directamente cadenas, sino claves dentro de un fichero de texto del tipo <span class="codefrag">properties</span>. Por ejemplo, la clave "<span class="codefrag">error.bd</span>" significar&aacute; que debe haber un fichero <span class="codefrag">.properties</span> en el que se especifique algo como:</p>
+<pre class="code">
+error.bd = se ha producido un error con la base de datos
+</pre>
+<p>Para indicar a struts c&oacute;mo encontrar el fichero <span class="codefrag">.properties</span>, utilizamos el fichero de configuraci&oacute;n <span class="codefrag">struts-config.xml</span>, mediante 
+la etiqueta <span class="codefrag">&lt;message-resources&gt;</span> (que se pone detr&aacute;s de la etiqueta &lt;action-mappings&gt;). 
+Por ejemplo:</p>
+<pre class="code">
+ &lt;message-resources parameter="util.recursos"/&gt;
+</pre>
+<p>Indicar&iacute;a a struts que busque un fichero <strong>recursos.properties</strong> dentro de la carpeta 
+<span class="codefrag">util</span>. Normalmente, se toma como base de la b&uacute;squeda la carpeta <span class="codefrag">/WEB_INF/classes</span>,
+ por lo que el fichero buscado ser&aacute; finalmente<span class="codefrag">/WEB-INF/classes/util/recursos.properties</span>.</p>
+<p>Las claves de error pueden utilizar hasta 4 par&aacute;metros. Por ejemplo supongamos que se desea mostrar un error 
+indicando que
+hay un campo requerido para el que el usuario no ha introducido valor.
+ Ser&iacute;a demasiado tedioso hacer un mensaje distinto para cada campo: ("login requerido", "password requerido",
+  etc). Es m&aacute;s f&aacute;cil definir un mensaje con par&aacute;metros:</p>
+<pre class="code">
+error.requerido = Es necesario especificar un valor para el campo {0}
+</pre>
+<p>Como se ve, los par&aacute;metros son simplemente n&uacute;meros entre <span class="codefrag">{}</span>. El constructor de la clase 
+<span class="codefrag">ActionMessage</span> permite especificar los par&aacute;metros (como se ha dicho, hasta 4) 
+adem&aacute;s de la clave de error</p>
+<pre class="code">
+ActionMessage error = new ActionMessage("error.requerido", "login");
+</pre>
+<p>Vamos a ver con detalle c&oacute;mo funciona el c&oacute;digo anterior. Como ya se ha dicho, para a&ntilde;adir los errores a 
+la lista se emplea el m&eacute;todo 
+<span class="codefrag">add</span> de la clase <span class="codefrag">ActionMessages</span>. Este m&eacute;todo admite como primer par&aacute;metro una
+ cadena que indica el tipo de error (lo m&aacute;s t&iacute;pico es usar la constante <span class="codefrag">ActionMessages.GLOBAL_MESSAGE</span>) y como segundo 
+ par&aacute;metro el propio objeto <span class="codefrag">ActionMessage</span>. Si en el tipo de error utilizamos un nombre arbitrario, quedar&aacute; asociado a este
+  y podremos mostrarlo espec&iacute;ficamente en
+   la p&aacute;gina JSP.</p>
+<p> Para mostrar los errores en la p&aacute;gina JSP se puede la etiqueta <span class="codefrag">&lt;html:messages/&gt;</span>
+, que viene con las <em>taglibs</em> de Struts. Dicha etiqueta va iterando por los <span class="codefrag">ActionMessages</span>,
+de manera que podemos mostrar su valor. En un JSP incluir&iacute;amos c&oacute;digo similar al siguiente:</p>
+<pre class="code">
+
+<em>&lt;!-- referenciar la taglib de Struts que include la etiqueta --&gt;</em>
+&lt;%@taglib uri="http://struts.apache.org/tags-html" prefix="html" %&gt;
+...
+<em>&lt;!-- mostrar los mensajes almacenados --&gt;</em>
+&lt;html:messages id="e"&gt;
+&lt;ul&gt;
+   &lt;li&gt;${e}&lt;/li&gt;
+&lt;/ul&gt;	
+&lt;/html:messages&gt;
+</pre>
+<p>como se ve, la etiqueta <span class="codefrag">&lt;html:messages&gt;</span> va iterando por una variable,
+de nombre arbitrario, fijado por nosotros. Al mostrar el contenido de la variable estamos
+mostrando el mensaje de error. En el ejemplo anterior se utiliza una lista con vi&ntilde;etas de HTML
+simplemente por mejorar el aspecto de los mensajes. </p>
+<p>Tambi&eacute;n podemos mostrar solo ciertos mensajes, en lugar de todos. En ese caso, a la hora
+de guardarlos debemos asignarles un identificador arbitrario en lugar de <span class="codefrag">ActionMessages.GLOBAL_MESSAGE</span>
+</p>
+<pre class="code">
+errors.add("password", new ActionMessage("error.passwordcorto"));
+</pre>
+<p>Para mostrar solo este mensaje en el JSP, usar&iacute;amos el atributo <span class="codefrag">property</span>
+de la etiqueta <span class="codefrag">&lt;/html:messages&gt;</span>:</p>
+<pre class="code">
+&lt;html:messages id="e" property="password"&gt;
+  ${e}
+&lt;/html:messages&gt;
+</pre>
+<p>Otra posibilidad m&aacute;s simple de mostrar solo un mensaje es usar la etiqueta <span class="codefrag">&lt;html:errors&gt;</span>, que tiene
+tambi&eacute;n el mismo atributo <span class="codefrag">property</span> pero solo muestra un mensaje, no haciendo iteraci&oacute;n por la lista de
+mensajes disponibles. </p>
+<p>Veremos con m&aacute;s detalle otras etiquetas de las <em>taglibs</em> de Struts en el tema siguiente.</p>
+<a name="N10255"></a><a name="Acceder+a+una+p%C3%A1gina+a+trav%C3%A9s+de+una+acci%C3%B3n"></a>
+<h3 class="underlined_5">Acceder a una p&aacute;gina a trav&eacute;s de una acci&oacute;n</h3>
+<p>Si al movernos de una p&aacute;gina a otra no vamos a realizar ninguna operaci&oacute;n, sino que &uacute;nicamente
+ estamos navegando, podemos poner simplemente un enlace al .jsp o .html. No obstante, esto va
+  "contra la filosof&iacute;a" de MVC, en la que todas las peticiones pasan por el controlador. Adem&aacute;s y como
+  veremos, el controlador puede verificar autom&aacute;ticamente los permisos de acceso, de modo
+  que en muchos casos ser&aacute; vital que todas las peticiones pasen por el controlador.La
+  forma m&aacute;s sencilla de conseguirlo en Struts es mediante el atributo <span class="codefrag">forward</span> de
+  la etiqueta <span class="codefrag">&lt;action&gt;</span>
+</p>
+<pre class="code">
+&lt;action path="/registroNuevoUsuario" forward="/registro.jsp"&gt;
+&lt;/action&gt; 
+</pre>
+<p>De esta manera, la petici&oacute;n a la URL <span class="codefrag">registroNuevoUsuario.do</span>, se redirige a
+ la p&aacute;gina <span class="codefrag">registro.jsp</span> pero pasando antes por el controlador. </p>
+</div>
+
+<a name="N10272"></a><a name="Seguridad+declarativa+en+Struts"></a>
+<h2 class="underlined_10">Seguridad declarativa en Struts</h2>
+<div class="section">
+<p>La versi&oacute;n 1.1 de Struts introdujo la seguridad basada en acciones. Esto quiere decir que podemos combinar 
+los mecanismos est&aacute;ndar de seguridad declarativa J2EE con el funcionamiento de nuestra
+ aplicaci&oacute;n Struts. Por tanto, primero necesitamos configurar el web.xml para restringir el acceso a los recursos
+ protegidos a los usuarios que tengan determinado rol.</p>
+<p>Para cada acci&oacute;n especificaremos qu&eacute; rol o roles pueden ejecutarla,
+  mediante el atributo <span class="codefrag">roles</span> de la etiqueta <span class="codefrag">&lt;action&gt;</span> en el <span class="codefrag">struts-config.xml</span>.Por ejemplo:</p>
+<pre class="code">
+&lt;action <strong>roles="admin,manager"</strong>
+        path="/admin/borrarUsuario"
+        ...
+&lt;/action&gt;
+</pre>
+</div>
+
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2008-2009 Depto. CCIA</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,690 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>La vista: ActionForms y taglibs propias</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Proyecto de Integracion" src="images/baner_j2ee_der.gif" title="Proyecto de Integracion"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="external" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="external" href="javascript:location.href='../aplic-web.html'">Aplicaciones Web</a>
+</li>
+<li>
+<a class="external" href="javascript:location.href='../aplic-ent.html'">Aplicaciones Enterprise</a>
+</li>
+<li>
+<a class="external" href="javascript:location.href='../charlas.html'">Charlas</a>
+</li>
+<li>
+<a class="external" href="javascript:location.href='../proy-int/index.html'">Proyecto</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Struts</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Struts</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Struts">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-struts-apuntes.html">Sesion 1</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 2</div>
+</div>
+<div class="menuitem">
+<a href="sesion03-struts-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-struts-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-struts.html">Roadmap Struts</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-struts-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-struts-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-struts-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-struts-ejercicios.html">Sesion 4</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion02-struts-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>La vista: ActionForms y taglibs propias</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#ActionForms">ActionForms</a>
+<ul class="minitoc">
+<li>
+<a href="#Introducci%C3%B3n">Introducci&oacute;n</a>
+</li>
+<li>
+<a href="#El+ciclo+de+vida+de+un+ActionForm">El ciclo de vida de un ActionForm</a>
+</li>
+<li>
+<a href="#C%C3%B3mo+definir+un+ActionForm">C&oacute;mo definir un ActionForm</a>
+</li>
+<li>
+<a href="#Tipos+de+datos+del+ActionForm%3A+conversi%C3%B3n+y+validaci%C3%B3n">Tipos de datos del ActionForm: conversi&oacute;n y validaci&oacute;n</a>
+</li>
+<li>
+<a href="#DynaActionForms">DynaActionForms</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#La+taglib+HTML+de+Struts">La taglib HTML de Struts</a>
+<ul class="minitoc">
+<li>
+<a href="#Definir+el+formulario">Definir el formulario</a>
+</li>
+<li>
+<a href="#Campos+de+texto">Campos de texto</a>
+</li>
+<li>
+<a href="#Cuadros+de+lista">Cuadros de lista</a>
+<ul class="minitoc">
+<li>
+<a href="#Tomar+los+valores+para+%22option%22+autom%C3%A1ticamente+de+un+objeto">Tomar los valores para "option" autom&aacute;ticamente de un objeto</a>
+</li>
+<li>
+<a href="#Tomar+los+valores+para+%22option%22+autom%C3%A1ticamente+de+un+ActionForm">Tomar los valores para "option" autom&aacute;ticamente de un ActionForm</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Botones+de+radio">Botones de radio</a>
+</li>
+<li>
+<a href="#Casillas+de+verificaci%C3%B3n">Casillas de verificaci&oacute;n</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<p>En este tema trataremos sobre la vista en Struts. En este aspecto el framework nos aporta unos componentes
+muy &uacute;tiles
+que act&uacute;an de interfaz entre la vista y las acciones: los <em>ActionForms</em>. Como veremos, estos
+  objetos nos permiten recoger autom&aacute;ticamente los valores de los formularios y validar sus datos,
+ entre otras funciones. Veremos tambi&eacute;n las librer&iacute;as de etiquetas propias de Struts. Aunque algunas de ellas
+ han quedado obsoletas tras la aparici&oacute;n de JSTL, otras siguen siendo de utilidad en conjunto con los
+ ActionForms.</p>
+ 
+<a name="N10012"></a><a name="ActionForms"></a>
+<h2 class="underlined_10">ActionForms</h2>
+<div class="section">
+<a name="N10018"></a><a name="Introducci%C3%B3n"></a>
+<h3 class="underlined_5">Introducci&oacute;n</h3>
+<p>Aunque los datos introducidos en formularios pueden obtenerse dentro del c&oacute;digo de las acciones
+  directamente  de la petici&oacute;n HTTP (como hemos visto en los ejemplos del tema anterior),
+   Struts ofrece un mecanismo alternativo que proporciona distintas ventajas: los
+    <strong>ActionForm</strong>s. Empleando ActionForms podemos conseguir:</p>
+<ul>
+  
+
+<li>
+
+<strong>Recolecci&oacute;n autom&aacute;tica de datos</strong> a partir de los incluidos en la
+ petici&oacute;n HTTP.</li>
+  
+
+<li>
+
+<strong>Validaci&oacute;n de datos modular</strong> (realizada fuera del c&oacute;digo de la acci&oacute;n), 
+y en caso de utilizar el plugin <em>Validator</em>, validaci&oacute;n autom&aacute;tica seg&uacute;n 
+lo especificado en un fichero de configuraci&oacute;n.</li>
+  
+
+<li>
+
+<strong>Recuperaci&oacute;n de los datos</strong> para volver a rellenar formularios. De esta forma se 
+evita el t&iacute;pico problema de que el usuario tenga que volver a rellenar un formulario entero porque 
+uno de los datos es incorrecto.</li>
+
+
+</ul>
+<p>Podemos considerar un ActionForm como si fuera un JavaBean que captura los datos de un formulario. Los datos se pueden extraer, validar, cambiar y volver a colocar en otro formulario. No obstante, no tiene por qu&eacute; haber una correspondencia uno a uno entre un ActionForm y un formulario HTML, de manera que se puede utilizar el mismo ActionForm para englobar varios formularios separados en distintas p&aacute;ginas (caso t&iacute;pico de un asistente). Tambi&eacute;n se puede reutilizar el mismo ActionForm en distintos formularios que compartan datos (por ejemplo, para dar de alta o modificar los datos de un usuario registrado).</p>
+<p>En Struts hay dos tipos principales de ActionForms</p>
+<ul>
+  
+
+<li>Clases descendientes de la clase base <strong>ActionForm</strong>. Deben incorporar m&eacute;todos Java 
+para obtener/cambiar cada uno de los datos (al estilo JavaBeans), cuya definici&oacute;n puede resultar
+ tediosa. Desde Struts 1.1 las propiedades se pueden almacenar en un Map, con lo que solo es necesario 
+ definir un &uacute;nico m&eacute;todo para acceso a todas las propiedades, pasando como par&aacute;metro 
+ el nombre de la deseada.</li>
+  
+
+<li>Instancias de la clase <strong>DynaActionForm</strong> o descendientes de &eacute;sta. Permiten definir 
+los campos en el fichero <span class="codefrag">struts-config.xml</span>, de manera que se pueden
+ a&ntilde;adir o modificar campos minimizando la necesidad de recompilar c&oacute;digo. 
+ Mediante la clase <strong>DynaValidatorForm</strong> se puede incluso validar datos de manera 
+ autom&aacute;tica, seg&uacute;n las reglas especificadas en un fichero de configuraci&oacute;n aparte.</li>
+
+
+</ul>
+<a name="N10058"></a><a name="El+ciclo+de+vida+de+un+ActionForm"></a>
+<h3 class="underlined_5">El ciclo de vida de un ActionForm</h3>
+<p>La generaci&oacute;n y procesamiento de un ActionForm pasa por varias etapas:</p>
+<ol>
+  
+
+<li>El controlador recibe la petici&oacute;n del usuario, y chequea si la acci&oacute;n asociada utiliza un ActionForm. De ser as&iacute;, crea el objeto</li>
+  
+
+<li>Se llama al m&eacute;todo <span class="codefrag">reset()</span> del objeto, que el desarrollador puede sobreescribir para "limpiar" sus campos. Esto tiene sentido si el ActionForm persiste m&aacute;s all&aacute; de la petici&oacute;n actual (lo cual se puede especificar al definirlo).</li>
+  
+
+<li>El ActionForm se almacena en el &aacute;mbito especificado en su definici&oacute;n (petici&oacute;n, sesi&oacute;n o aplicaci&oacute;n)</li>
+  
+
+<li>Los datos del ActionForm se rellenan con los que contiene la petici&oacute;n HTTP. Cada par&aacute;metro HTTP se asocia con el dato del mismo nombre del ActionForm. Un punto importante es que en HTTP los par&aacute;metros son cadenas, con lo que en principio las propiedades del ActionForm deben ser Strings, aunque los valores booleanos se convierten a boolean. No obstante, m&aacute;s all&aacute; de esta conversi&oacute;n b&aacute;sica no hay conversi&oacute;n autom&aacute;tica de tipos.</li>
+  
+
+<li>Se validan los datos, llamando al m&eacute;todo <span class="codefrag">validate()</span>, que el desarrollador debe sobreescribir para implementar la validaci&oacute;n deseada.</li>
+  
+
+<li>Si se han producido errores de validaci&oacute;n, se efect&uacute;a una redirecci&oacute;n a
+ la p&aacute;gina especificada para este caso. Si no, se llama al <span class="codefrag">execute()</span> de la acci&oacute;n y finalmente se muestra la vista asociada a esta.</li>
+  
+
+<li>Si en la vista se utilizan las <em>taglibs</em> de Struts para mostrar datos, aparecer&aacute;n los datos del ActionForm.</li>
+
+
+</ol>
+<a name="N10086"></a><a name="C%C3%B3mo+definir+un+ActionForm"></a>
+<h3 class="underlined_5">C&oacute;mo definir un ActionForm</h3>
+<p>Los ActionForm se definen dentro del fichero <span class="codefrag">struts-config.xml</span>, dentro de la secci&oacute;n 
+<span class="codefrag">&lt;form-beans&gt;</span>. Cada ActionForm viene definido por un elemento <span class="codefrag">&lt;form-bean&gt;</span>. 
+Por ejemplo, para definir un ActionForm con el nombre <span class="codefrag">FormLogin</span> y asociado a la clase Java 
+<span class="codefrag">acciones.forms.FormLogin</span> har&iacute;amos:</p>
+<pre class="code">
+&lt;form-beans&gt;
+   &lt;form-bean name="FormLogin" type="acciones.forms.FormLogin"&gt;
+&lt;/form-beans&gt;
+</pre>
+<p>Dentro de un momento veremos qu&eacute; condiciones debe cumplir la clase <span class="codefrag">acciones.forms.FormLogin</span>, que tendremos
+que definir nosotros.</p>
+<p>Para que los datos de un <span class="codefrag">ActionForm</span> sean accesibles a una acci&oacute;n, hay que definir 
+una serie de atributos dentro del elemento <span class="codefrag">action</span> de <span class="codefrag">struts-config.xml</span>. Por
+ ejemplo, para asociar un ActionForm de la clase <span class="codefrag">FormLogin</span> a la acci&oacute;n 
+ <span class="codefrag">login</span> de los ejemplos anteriores, se podr&iacute;a hacer:</p>
+<pre class="code">
+&lt;action path="/login" type="acciones.AccionLogin" 
+<strong>        name="FormLogin" scope="session"
+        validate="true" input="/index.jsp"&gt;</strong>
+   &lt;forward name="OK" path="/personal.jsp"/&gt;
+   &lt;forward name="errorUsuario" path="/error.html"/&gt;
+&lt;/action&gt;
+</pre>
+<p>El atributo <span class="codefrag">name</span> indica el nombre simb&oacute;lico para el <span class="codefrag">ActionForm</span>.
+ El <span class="codefrag">scope</span> tiene el mismo significado que cuando tratamos con JavaBeans. En caso de que se desee
+  validar los datos, hay que especificar el atributo <span class="codefrag">validate=true</span> y utilizar el atributo 
+  <span class="codefrag">input</span> para designar la p&aacute;gina a la que se
+volver&aacute; si se han producido errores de validaci&oacute;n.</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Como puede verse, los nombres de los atributos del ActionForm en el XML no son demasiado descriptivos
+del papel que desempe&ntilde;an (excepto, quiz&aacute;s, scope). Este es un problema reconocido por los propios
+desarrolladores de Struts y que se soluciona en la versi&oacute;n 2 del framework.</div>
+</div>
+<p>Por otro lado hay que escribir el c&oacute;digo Java con la clase del ActionForm. Esta tarea es muy similar a 
+definir un JavaBean. Hay que especificar m&eacute;todos get/set para cada campo, y colocar la 
+l&oacute;gica de validaci&oacute;n en el m&eacute;todo
+ <span class="codefrag">validate()</span>. Por ejemplo:</p>
+<pre class="code">
+package acciones.formularios;
+import org.apache.struts.action.*;
+import javax.servlet.http.HttpServletRequest;
+
+public class FormLogin <strong>extends ActionForm</strong> {
+   private String login;
+   private String password;
+   
+   public void setLogin(String login) {
+      this.login = login; 
+   }
+   public String getLogin() {
+      return login;
+   }
+   
+   public ActionErrors validate(ActionMapping mapping,
+                                HttpServletRequest request) {
+      ActionErrors errores = new ActionErrors();                          
+      if ((getlogin()==null)||(getLogin.equals("")))
+         errores.add(ActionMessages.GLOBAL_MESSAGE
+                     , new ActionMessage("error.requerido.usuario"));
+      return errores; 
+   }
+}
+</pre>
+<p>N&oacute;tese que el ActionForm no es m&aacute;s que un bean, eso s&iacute;, debe heredar de la clase <span class="codefrag">ActionForm</span>.</p>
+<p>El m&eacute;todo <span class="codefrag">validate()</span> debe devolver una colecci&oacute;n de errores (o null),
+ representada por el objeto <strong>ActionErrors</strong>.</p>
+<div class="frame warning">
+<div class="label">Aviso</div>
+<div class="content">Si en el struts-config.xml ponemos validate="true" o no especificamos el valor de este atributo, Struts
+ llamar&aacute; al m&eacute;todo validate() de nuestro ActionForm, generando un error si &eacute;ste no existe. Si no deseamos
+ validar los datos, debemos ponerlo espec&iacute;ficamente con validate="false"</div>
+</div>
+<p>Desde la versi&oacute;n 1.1 de Struts, se pueden utilizar ActionForms que almacenen internamente las propiedades en un objeto
+Map (<em>Map-backed Action Forms)</em>. Para el acceso a/modificaci&oacute;n de cualquier propiedad solo ser&aacute; necesario implementar dos m&eacute;todos</p>
+<pre class="code">
+public void setValue(String clave, Object valor)
+public Object getValue(String clave)
+</pre>
+<a name="N10100"></a><a name="Tipos+de+datos+del+ActionForm%3A+conversi%C3%B3n+y+validaci%C3%B3n"></a>
+<h3 class="underlined_5">Tipos de datos del ActionForm: conversi&oacute;n y validaci&oacute;n</h3>
+<p>En el ejemplo anterior, todas las propiedades del ActionForm eran Strings, pero esto
+no tiene por qu&eacute; ser siempre as&iacute;. Una propiedad de un ActionForm puede ser de cualquier tipo, pero
+como Struts copia autom&aacute;ticamente los valores de la petici&oacute;n HTTP a las propiedades del ActionForm
+tiene que "saber hacer" la conversi&oacute;n de tipos. Struts puede convertir de String (el tipo que tienen
+todos los par&aacute;metros HTTP) a cualquier tipo primitivo de Java. El problema es que si usamos
+una propiedad de tipo int, por ejemplo, y el usuario escribe en el campo de formulario correspondiente
+algo que no se puede convertir a entero, la conversi&oacute;n fallar&aacute; y el campo pasar&aacute; a valer 0. Esto
+puede causar problemas si queremos mostrar de nuevo los valores introducidos para que el usuario los pueda corregir (veremos
+c&oacute;mo se hace esto con las taglibs de Struts). 
+Para el usuario puede ser un poco desconcertante ver un 0 donde antes se hab&iacute;a tecleado otra cosa totalmente distinta.
+Adoptando por tanto un punto de vista pragm&aacute;tico, muchos desarrolladores de Struts usan solo Strings para las propiedades
+de los ActionForms y se ocupan manualmente de hacer la conversi&oacute;n y de detectar los posibles errores. Esto es tedioso,
+pero es dif&iacute;cil de evitar dado el dise&ntilde;o de Struts.</p>
+<a name="N1010A"></a><a name="DynaActionForms"></a>
+<h3 class="underlined_5">DynaActionForms</h3>
+<p>En ActionForms con muchos campos, resulta tedioso tener que definir manualmente m&eacute;todos <em>get/set</em> 
+para cada uno de ellos. En su lugar, podemos utilizar <span class="codefrag">DynaActionForms</span>, en los que los campos
+ se definen en el fichero de configuraci&oacute;n de Struts.
+Por ejemplo:</p>
+<pre class="code">
+ &lt;form-bean name="FormLogin" type="org.apache.struts.action.DynaActionForm"&gt;
+   &lt;form-property name="login" type="java.lang.String"/&gt;
+   &lt;form-property name="password" type="java.lang.String"/&gt;
+ &lt;/form-bean&gt;
+</pre>
+<p>Como se ve, en este caso la clase del ActionForm no la definimos nosotros sino que es propia de Struts. 
+Para acceder a los campos del <span class="codefrag">DynaActionForm</span> se usa un m&eacute;todo gen&eacute;rico
+ <strong>get</strong> al que se pasa como par&aacute;metro el nombre del campo (por ejemplo <span class="codefrag">get("login")</span>). Algo similar ocurre para 
+ cambiar el valor de un campo (m&eacute;todo <strong>set</strong>).</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">En JSP, el acceso a una propiedad de un DynaActionForm con EL se debe hacer a trav&eacute;s de la propiedad predefinida <span class="codefrag">map</span>. As&iacute;
+ en el ejemplo anterior, la propiedad login ser&iacute;a accesible con ${<em>nombreDelBean</em>.map.login}</div>
+</div>
+<p>Para validar un <span class="codefrag">DynaActionForm</span>, tendremos que definir una clase propia 
+que herede de <span class="codefrag">org.apache.struts.action.DynaActionForm</span>, y sobreescribir su m&eacute;todo <span class="codefrag">validate()</span>, o mejor a&uacute;n,
+ podemos validar datos autom&aacute;ticamente utilizando el plugin de Struts denominado
+  <strong>validator</strong>, que ser&aacute; objeto del siguiente tema. </p>
+</div>
+ 
+<a name="N10146"></a><a name="La+taglib+HTML+de+Struts"></a>
+<h2 class="underlined_10">La taglib HTML de Struts</h2>
+<div class="section">
+<p>Struts viene con varias taglibs: de ellas, la m&aacute;s importante es la HTML, que es la que sirve para
+ capturar/mostrar los datos de los ActionForms. Esta taglib es muy &uacute;til en cualquier aplicaci&oacute;n de Struts. Entre otras cosas, podemos volver a mostrar
+ los valores introducidos en un formulario  si se ha producido un error en alguno sin
+  que el usuario tenga que rellenarlos todos de nuevo y generar  <em>checkboxes</em>, opciones de un <span class="codefrag">select</span>
+  etc a partir de colecciones o arrays, sin tener que hacerlas una por una.</p>
+<p> Las otras taglibs (<em>logic</em>, <em>bean</em>,...) aunque tambi&eacute;n muy &uacute;tiles en su momento, quedaron obsoletas
+  con la aparici&oacute;n de JSTL. Por tanto discutiremos aqu&iacute; &uacute;nicamente la taglib de HTML. Adem&aacute;s, nos centraremos
+  en la definici&oacute;n de formularios y campos de formulario, aunque la taglib tiene otras etiquetas adicionales.</p>
+<p>Para poder usar la taglib HTML en un JSP, hay que incluir en el JSP la directiva</p>
+<pre class="code">
+  &lt;%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %&gt;
+  </pre>
+<p>
+<strong>La versi&oacute;n "cl&aacute;sica" de la taglib HTML no permite el uso del lenguaje de expresiones (EL)</strong>. Si deseamos
+  usarlo en nuestras p&aacute;ginas, hay que importar a nuestro proyecto el archivo <span class="codefrag">struts-el.jar</span>
+  y usar en los JSPs la directiva </p>
+<pre class="code">
+ &lt;%@ taglib uri="http://struts.apache.org/tags-html-el" prefix="html-el" %&gt;
+ </pre>
+<div class="frame warning">
+<div class="label">Aviso</div>
+<div class="content">En algunas versiones anteriores de Struts las URIs comienzan por jakarta.apache.org en lugar de struts.apache.org, consecuencia
+ del cambio de dominio del proyecto Struts.</div>
+</div>
+<a name="N10174"></a><a name="Definir+el+formulario"></a>
+<h3 class="underlined_5">Definir el formulario</h3>
+<p>Lo primero que necesitamos para definir un formulario con las taglibs de Struts es una acci&oacute;n a ejecutar
+  y un ActionForm asociado a dicha acci&oacute;n. Sin acci&oacute;n o ActionForm no tiene mucho sentido usar para el formulario
+  la taglib de Struts (usar&iacute;amos directamente un formulario HTML). </p>
+<p>En general, las etiquetas de la taglib HTML de Struts son muy similares a su contrapartida HTML. El caso
+  de la definici&oacute;n de formulario no es una excepci&oacute;n. Por ejemplo, vamos a ir viendo c&oacute;mo se podr&iacute;a
+  hacer un formulario de registro de nuevo usuario con las taglibs de Struts:</p>
+<pre class="code">
+  
+<strong>&lt;%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %&gt;</strong>
+  &lt;html&gt;
+  &lt;head&gt;&lt;title&gt;Ejemplo de tag form&lt;title&gt;&lt;/head&gt;
+  &lt;body&gt;
+    <strong>&lt;html:form action="/registrar"&gt;
+     &lt;-- aqu&iacute; vienen los campos. Ahora veremos c&oacute;mo se definen --&gt;
+    &lt;/html:form&gt;</strong> 
+  &lt;/body&gt;
+  &lt;/html&gt;
+  </pre>
+<p>La primera diferencia que se puede observar entre este formulario y uno HTML (aparte del prefijo <span class="codefrag">html:</span>) es que
+  el nombre del <span class="codefrag">action</span> no es una URL "f&iacute;sica" sino una acci&oacute;n de Struts.</p>
+<p>El primer campo que necesitamos para que al menos los datos lleguen al servidor es un bot&oacute;n de tipo 
+  <span class="codefrag">submit</span>. Struts nos ofrece adem&aacute;s la posibilidad de definir un bot&oacute;n para cancelar.
+  Veamos de nuevo el ejemplo anterior (pero ahora omitiendo el HTML de fuera del formulario).</p>
+<pre class="code">
+  
+&lt;html:form action="/registrar"&gt;
+   &lt;html:submit&gt;Registrar nuevo usuario&lt;/html:submit&gt;
+   &lt;html:cancel&gt;Cancelar&lt;/html:cancel&gt;
+&lt;/html:form&gt;
+  </pre>
+<p>Como vemos, la principal diferencia de sintaxis con el HTML "puro" es que el "cartel" del bot&oacute;n se pone dentro de la etiqueta, en lugar
+  de con el atributo "value". La acci&oacute;n asociada se disparar&aacute; se haya pulsado en el submit o en el cancel, pero  en 
+  este &uacute;ltimo caso el m&eacute;todo <span class="codefrag">isCancelled</span> de la clase <span class="codefrag">Action</span> devolver&aacute; <span class="codefrag">true</span>.</p>
+<pre class="code">
+   ...
+    public ActionForward execute(
+            ActionMapping mapping,
+            ActionForm form,
+            HttpServletRequest request,
+            HttpServletResponse response)
+            throws Exception {
+    	...		
+    	if (isCancelled(request)) {
+    		...
+    	}
+    	...
+   }      
+  </pre>
+<p>Cuando una acci&oacute;n se cancela no se efect&uacute;a la validaci&oacute;n del ActionForm. Struts controla
+  la cancelaci&oacute;n enviando un par&aacute;metro HTTP especial, lo cual puede dar lugar
+  a que usuarios malintencionados intenten manipular este par&aacute;metro para evitar la validaci&oacute;n. En Struts 1.2.X, a partir
+  de la versi&oacute;n 1.2.9 cuando una acci&oacute;n es cancelable hay que especificarlo en el <span class="codefrag">struts-config.xml</span>: </p>
+<pre class="code">
+&lt;action path="/registrar"
+        input="/registrar.jsp"
+        validate="true"&gt;
+    <strong>&lt;set-property property="cancellable" value="true"/&gt;</strong>
+    &lt;forward name="OK" path="/resultado.jsp"/&gt;
+&lt;/action&gt;
+  </pre>
+<p>En caso de no hacer esto, la acci&oacute;n lanzar&aacute; una excepci&oacute;n de tipo <span class="codefrag">InvalidCancelException</span>.</p>
+<p>A partir de Struts 1.3.X esto se hace con un atributo <span class="codefrag">cancellable</span>
+</p>
+<pre class="code">
+&lt;action path="/registrar"
+        input="/registrar.jsp"
+        validate="true"<strong> cancellable="true"</strong>&gt;
+    &lt;forward name="OK" path="/resultado.jsp"/&gt;
+&lt;/action&gt;
+  </pre>
+<a name="N101CD"></a><a name="Campos+de+texto"></a>
+<h3 class="underlined_5">Campos de texto</h3>
+<p>Los campos para introducir texto son muy similares a los de HTML, con la diferencia de que en lugar de elegir el tipo de campo con 
+  el atributo type se hace con la propia etiqueta. El atributo property nos permite asociar un campo a la propiedad del mismo nombre
+  del ActionForm asociado al formulario. Por ejemplo:</p>
+<pre class="code">
+  
+&lt;html:form action="/registrar"&gt;
+<strong>   &lt;html:text property="login"&gt;Introduce aqu&iacute; el nombre que deseas tener&lt;/html:text&gt;
+   &lt;html:password property="password"/&gt;
+</strong>   &lt;html:submit&gt;Registrar nuevo usuario&lt;/html:submit&gt;
+   &lt;html:cancel&gt;Cancelar&lt;/html:cancel&gt;
+&lt;/html:form&gt;
+  </pre>
+<p>Para que el ejemplo funcione, debemos tener un ActionForm asociado a la acci&oacute;n "registrar" que tenga al menos las propiedades login y password. Como
+  ya se ha visto en el ciclo de vida de los ActionForms, cuando se rellena el formulario Struts copiar&aacute; los datos introducidos en las propiedades
+  correspondientes del ActionForm. A la inversa, si el m&eacute;todo validate() del ActionForm devuelve false y el struts-config.xml indica que hay que 
+  volver a la misma p&aacute;gina, Struts copiar&aacute; los datos desde el ActionForm al formulario, para que el usuario pueda corregirlos.</p>
+<p>En el caso de las contrase&ntilde;as, puede que no resulte adecuado volver a mostrar el valor introducido. Para
+  ello se utiliza el atributo <span class="codefrag">redisplay</span>, al que hay que asignar el valor <span class="codefrag">false</span>
+</p>
+<p>Como es de esperar a estas alturas (visto el resto de etiquetas) los campos de texto multil&iacute;nea se consiguen con la etiqueta <span class="codefrag">html:textarea</span>.</p>
+<pre class="code">
+&lt;html:textarea property="descripcion" cols="40" rows="6"/&gt;
+  </pre>
+<a name="N101F3"></a><a name="Cuadros+de+lista"></a>
+<h3 class="underlined_5">Cuadros de lista</h3>
+<p>La sintaxis de los cuadros de lista es pr&aacute;cticamente id&eacute;ntica a la de HTML, si es que
+  vamos a poner las opciones manualmente, una por una:</p>
+<pre class="code">
+&lt;html:select property="sexo"&gt;
+   &lt;html:option value="H"&gt;Hombre&lt;/html:option&gt;
+   &lt;html:option value="M"&gt;Mujer&lt;/html:option&gt;
+   &lt;html:option value="N"&gt;No especificado&lt;/html:option&gt;
+&lt;/html:select&gt;
+  </pre>
+<p>Struts asociar&aacute; este campo a la propiedad "sexo" del ActionForm correspondiente a la acci&oacute;n
+  ejecutada</p>
+<a name="N10203"></a><a name="Tomar+los+valores+para+%22option%22+autom%C3%A1ticamente+de+un+objeto"></a>
+<h4>Tomar los valores para "option" autom&aacute;ticamente de un objeto</h4>
+<p>Lo interesante es que Struts puede tomar los valores del select de una colecci&oacute;n o
+  un array, ahorr&aacute;ndonos el tener que especificar las opciones "a mano". Para ello, debemos
+  tener en la petici&oacute;n o la sesi&oacute;n el array con las opciones. La manera m&aacute;s sencilla de conseguir esto
+  (sin meterlo en el propio JSP) es ponerlo en la acci&oacute;n que nos lleva a la p&aacute;gina con el formulario. Veamos
+  un ejemplo, con el siguiente struts-config.xml</p>
+<pre class="code">
+...
+&lt;form-beans&gt;
+   &lt;form-bean name="FormRegistro" type="actionForms.FormRegistro"/&gt;
+&lt;/form-beans&gt;
+...
+&lt;action-mappings&gt;
+    &lt;action
+       path="/prepararRegistro"
+       type="acciones.AccionPrepararRegistro"&gt;
+       &lt;forward name="OK" path="/registro.jsp"/&gt;            
+    &lt;/action&gt;
+    &lt;action
+       path="/registrar"
+       name="FormRegistro" scope="request" 
+       type="acciones.AccionRegistrar"&gt;
+       &lt;forward name="OK" path="/resultRegistro.jsp"/&gt;
+    &lt;/action&gt;
+&lt;/action-mappings&gt;
+...
+  </pre>
+<p>Como vemos, la acci&oacute;n <span class="codefrag">AccionPrepararRegistro</span> muestra la p&aacute;gina <span class="codefrag">registro.jsp</span>, que 
+  contiene el formulario que ve&iacute;amos en los ejemplos anteriores. Este formulario llama a <span class="codefrag">registrar.do</span>,
+  que resulta en la ejecuci&oacute;n de <span class="codefrag">AccionRegistrar</span>. El sitio m&aacute;s adecuado para colocar en alg&uacute;n &aacute;mbito
+  (petici&oacute;n, sesi&oacute;n o aplicaci&oacute;n) la lista de opciones para el select ser&iacute;a entonces en <span class="codefrag">AccionPrepararRegiatro</span>, simplemente
+  haciendo algo como</p>
+<pre class="code">
+String[] lista = { "Hombre", "Mujer", "No especificado"};
+request.setAttribute("listaSexos", lista);  
+  </pre>
+<p>N&oacute;tese que aunque hemos usado un array, <span class="codefrag">listaSexos</span> podr&iacute;a ser cualquier tipo
+  de <span class="codefrag">Collection</span>
+</p>
+<p>Ahora podemos decirle a Struts en el HTML que tome las opciones del objeto <span class="codefrag">listaSexos</span>.
+  Autom&aacute;ticamente buscar&aacute; este en la petici&oacute;n, sesi&oacute;n y aplicaci&oacute;n, por este orden.</p>
+<pre class="code">
+&lt;html:select property="sexo"&gt;
+   <strong>&lt;html:options value="listaSexos"/&gt;</strong>
+&lt;/html:select&gt;
+  </pre>
+<p>Esto nos generar&aacute; un select en HTML en el que tanto los atributos "value" como las etiquetas
+  que se muestran en pantalla se toman de <span class="codefrag">listaSexos</span>. Si deseamos que los value sean
+  distintos a las etiquetas har&iacute;amos algo como </p>
+<pre class="code">
+&lt;html:select property="sexo"&gt;
+   <strong>&lt;html:options name="codSexos" labelName="listaSexos"/&gt;</strong>
+&lt;/html:select&gt;
+</pre>
+<p>As&iacute;, los valores del atributo value se tomar&aacute;n del objeto <span class="codefrag">codSexos</span> (que debemos haber instanciado antes) y
+las etiquetas que se muestran en pantalla de <span class="codefrag">listaPerfiles</span>
+</p>
+<a name="N10251"></a><a name="Tomar+los+valores+para+%22option%22+autom%C3%A1ticamente+de+un+ActionForm"></a>
+<h4>Tomar los valores para "option" autom&aacute;ticamente de un ActionForm</h4>
+<p>Podemos tambi&eacute;n tomar los valores para las etiquetas "option" de un ActionForm. Lo m&aacute;s l&oacute;gico es usar el asociado al
+  formulario (hablando con m&aacute;s propiedad, el asociado a la acci&oacute;n disparada por el formulario).
+  En ese caso, debemos a&ntilde;adir a nuestro ActionForm un m&eacute;todo "getXXX" que devuelva un array
+  o colecci&oacute;n con el que se rellenar&aacute; el cuadro de lista. Por ejemplo:</p>
+<pre class="code">
+  public class FormRegistro {
+   ...
+   private static String[] listaSexos = { "Hombre", "Mujer", "No especificado"};
+   
+   public String[] getListaSexos() {
+	   return listaSexos;
+   }
+   ...
+  </pre>
+<p>Ahora, en el JSP hacemos</p>
+<pre class="code">
+...
+&lt;html:select property="sexo"&gt;
+  &lt;html:options property="listaSexos"/&gt;
+&lt;/html:select&gt;
+...
+  </pre>
+<p>Tambi&eacute;n podemos tomar de un "getXXX" los valores del atributo "value" y de otro "getYYY" las etiquetas que se muestran en pantalla.
+Para especificar de d&oacute;nde sacar las etiquetas, usaremos el atributo <span class="codefrag">labelProperty</span> de
+<span class="codefrag">&lt;html:options&gt;</span>.</p>
+<a name="N10270"></a><a name="Botones+de+radio"></a>
+<h3 class="underlined_5">Botones de radio</h3>
+<p>La etiqueta de Struts para definir botones de radio es pr&aacute;cticamente equivalente a la de HTM, con
+  la diferencia b&aacute;sica de que podemos asociar el bot&oacute;n a una propiedad de un ActionForm:</p>
+<pre class="code">
+&lt;html:radio property="sexo" value="hombre"/&gt; hombre
+&lt;html:radio property="sexo" value="mujer"/&gt; mujer 
+  </pre>
+<p>Para generar varios botones de radio con distintos <span class="codefrag">value</span> de manera autom&aacute;tica
+  no tendremos m&aacute;s remedio que usar JSTL, ya que Struts no ofrece ning&uacute;n mecanismo para hacerlo. Por ejemplo, supongamos que el ActionForm 
+  <span class="codefrag">FormRegistro</span> tiene un m&eacute;todo <span class="codefrag">getListaSexos</span> que devuelve los
+  valores posibles para el sexo, como en el ejemplo de la secci&oacute;n anterior. Podr&iacute;amos
+  hacer:</p>
+<pre class="code">
+  
+&lt;%@ taglib uri="http://struts.apache.org/tags-html-el" prefix="html-el" %&gt;
+&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;
+...  
+&lt;c:forEach items="${FormRegistro.listaSexos}" var="sexo"&gt;
+   &lt;html-el:radio property="sexo" value="${sexo}"/&gt; ${sexo}
+&lt;/c:forEach&gt;  
+  
+  </pre>
+<p>N&oacute;tese que en el ejemplo anterior hemos usado la versi&oacute;n EL de la taglib para poder
+  emplear el lenguaje de expresiones dentro de las etiquetas de Struts.</p>
+<a name="N10291"></a><a name="Casillas+de+verificaci%C3%B3n"></a>
+<h3 class="underlined_5">Casillas de verificaci&oacute;n</h3>
+<p>Struts nos ofrece dos etiquetas para hacer casillas de verificaci&oacute;n (<em>checkboxes</em>), seg&uacute;n si
+  queremos una sola casilla o una serie de casillas relacionadas. En el primer caso, la asociaci&oacute;n
+  se hace con una propiedad booleana de un ActionForm y en el segundo con un array de valores,
+  normalmente Strings (ya que
+  en este caso podemos marcar varias casillas simult&aacute;neamente)</p>
+<p>Cuando queremos una &uacute;nica casilla podemos usar la etiqueta <span class="codefrag">checkbox</span>, que es pr&aacute;cticamente
+  equivalente a su contrapartida HTML:</p>
+<pre class="code">
+
+&lt;html:checkbox property="publi"/&gt; S&iacute;, deseo recibir publicidad sobre sus productos
+  </pre>
+<p>El checkbox se asociar&iacute;a a una propiedad booleana del ActionForm llamada "publi". Deben
+  existir los m&eacute;todos isPubli/getPubli para que Struts pueda consultar/fijar su valor.</p>
+<div class="frame warning">
+<div class="label">Aviso</div>
+<div class="content">Hay que llevar mucho cuidado con las casillas de verificaci&oacute;n si se usa un ActionForm
+  con &aacute;mbito de sesi&oacute;n o de aplicaci&oacute;n. Cuando el checkbox no se marca, el navegador <strong>no env&iacute;a</strong>
+  el valor asociado, ni siquiera como false ni nada similar. Esto puede causar el que aunque el usuario
+  ha desmarcado la casilla, la propiedad asociada sigue con true, ya que Struts no ha llamado al
+  setXXX correspondiente. Para evitarlo, se debe inicializar la propiedad asociada a <span class="codefrag">false</span>. De este modo, antes
+  de mostrar el formulario
+  Struts pone el valor a <span class="codefrag">false</span>. Cuando se env&iacute;an los datos, si la casilla est&aacute; marcada cambiar&aacute; a <span class="codefrag">true</span> y si no,
+  no ocurrir&aacute; nada. 
+  en el m&eacute;todo <span class="codefrag">reset()</span> del ActionForm</div>
+</div>
+<p>Para hacer m&aacute;s de una casilla de verificaci&oacute;n asociada a una sola propiedad de un
+  ActionForm se usa la etiqueta
+  <span class="codefrag">multibox</span>. Dentro de la etiqueta hay que poner el valor que se a&ntilde;adir&aacute; a la propiedad.
+  Decimos que se a&ntilde;adir&aacute; porque la propiedad debe ser un array de valores, donde se colocar&aacute;n
+  los asociados a las casillas marcadas.</p>
+<pre class="code">
+
+&lt;html:multibox property="aficiones"&gt;cine&lt;/html:multibox&gt; Cine
+&lt;html:multibox property="aficiones"&gt;m&uacute;sica&lt;/html:multibox&gt; M&uacute;sica
+&lt;html:multibox property="aficiones"&gt;videojuegos&lt;/html:multibox&gt; Videojuegos
+  </pre>
+<p>Como en el caso de los botones de radio, si tenemos muchas opciones es m&aacute;s conveniente generar
+ las casillas de manera autom&aacute;tica. Esto tendremos que hacerlo iterando sobre una colecci&oacute;n con
+ los valores, como en la secci&oacute;n anterior. Suponiendo que el ActionForm tiene un m&eacute;todo <span class="codefrag">getListaAficiones</span>
+ que devuelve un array con "cine", "m&uacute;sica" y "videojuegos", El ejemplo anterior se convertir&iacute;a en:</p>
+<pre class="code">
+ 
+&lt;c:forEach items="${FormRegistro.listaAficiones}" var="aficion"&gt;
+   &lt;html-el:multibox property="aficiones"&gt;${aficion}&lt;/html-el:multibox&gt; ${aficion}
+&lt;/c:forEach&gt;   
+ </pre>
+</div>
+ 
+<p class="pageBreakAfter"></p>
+ 
+ 
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2008-2009 Depto. CCIA</div>
+</div>
+</body>
+</html>

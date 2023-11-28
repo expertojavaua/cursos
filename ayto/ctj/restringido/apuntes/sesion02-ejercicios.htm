@@ -1,0 +1,135 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<title>Ejercicios sesi&oacute;n 2: Tipos de datos y colecciones</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2>Ejercicios de Tipos de datos y colecciones </h2>
+<p><strong>2.1.</strong>Trabajando con wrappers</p>
+<p>Utiliza la clase <em>sesion02.Ej1</em> que se proporciona en la plantilla para construir un programa que tome como par&aacute;metro (en el <em>main</em>) dos valores reales (<em>doubles</em>), y muestre por pantalla el producto del primero y el segundo.</p>
+<p>AYUDAS: utiliza la clase <strong>Double</strong>, y mira entre sus  m&eacute;todos cu&aacute;les pueden servirte para convertir los par&aacute;metros a n&uacute;meros  reales.</p>
+<p>&nbsp;</p>
+<p><strong>2.2.</strong>Aprovechando los elementos de Object </p>
+<p>Echa un vistazo a la clase <em>sesion02.Ej2</em> de la plantilla. Ver&aacute;s que hay una clase interna llamada <strong>MiObject </strong>que  contiene un valor entero y una cadena. Tiene un constructor para poder  asignar valor a cada campo. Despu&eacute;s, desde la clase principal <em>Ej2</em> se crean varios objetos de este tipo, cada uno con un valor entero y una cadena. Despu&eacute;s se utiliza el m&eacute;todo <em>equals</em> para compararlos entre s&iacute;, e indicar si son iguales o no. Finalmente, se imprime por pantalla cada uno de los objetos creados.</p>
+<p>Asumimos que dos objetos de tipo <em>MiObject</em> son iguales si sus campos enteros son iguales, y si sus cadenas tambi&eacute;n son iguales. Teniendo en cuenta todo esto:</p>
+<ul>
+  <li>Ejecuta el programa. &iquest;Funcionan bien las comparaciones? &iquest;Qu&eacute; resultados obtienes con ellas?</li>
+  <li> &iquest;Qu&eacute; texto aparece cuando imprimes los objetos m1, m2 y m3? &iquest;Te resultan entendibles? </li>
+</ul>
+<p>Probablemente habr&aacute;s descubierto que las comparaciones no funcionan  del todo bien: m1 y m2 son aparentemente iguales, y sin embargo dice  que son diferentes. Tambi&eacute;n habr&aacute;s visto que a la hora de imprimir el  objeto saca una ristra de caracteres que no se entienden. Vamos a  corregir todo esto por separado.</p>
+<ul>
+  <li>Para poder comparar bien los objetos <em>MiObject</em> entre s&iacute; necesitamos definir en esta clase su propio m&eacute;todo <em>equals</em>, que redefina el que viene heredado de <em>Object</em>. As&iacute; que coloca un m&eacute;todo <em>equals</em> en esta clase:</li>
+</ul>
+<blockquote>
+<pre class="codigo">public boolean equals(Object o)
+{
+	...
+}</pre>
+  <p>y rell&eacute;nalo de forma adecuada para que devuelva <em>true</em> si el objeto <em>o</em> es igual al actual (<em>this</em>), es decir, si tiene su campo entero y su campo cadena igual al actual.</p>
+  <p>AYUDA: observa que tendr&aacute;s que convertir el objeto <em>o</em> a tipo <em>MiObject</em> para poder comparar. El m&eacute;todo <em>equals</em> exige que el objeto que se le pasa como par&aacute;metro sea SIEMPRE de tipo <em>Object</em>, para poder hacer bien la herencia y sobreescritura del m&eacute;todo <em>equals </em>original. Despu&eacute;s, en el c&oacute;digo, deberemos convertir este objeto al tipo concreto con que trabajemos:</p>
+  <pre class="codigo">MiObject mo = (MiObject) o;</pre>
+</blockquote>
+<ul>
+  <li>Para poder imprimir algo entendible al indicar que se imprima el objeto, debemos redefinir su m&eacute;todo <em>toString</em>. A&ntilde;ade un m&eacute;todo <em>toString</em> al c&oacute;digo de <em>MiObject</em>: </li>
+</ul>
+<blockquote>
+<pre class="codigo">public String toString()
+{
+	...
+}</pre>
+  <p>y haz que devuelva una cadena conteniendo el n&uacute;mero entero, una coma, y la cadena del objeto <em>MiObject</em>.</p>
+</blockquote>
+<ul>
+  <li>Ejecuta de nuevo el programa, y comprueba que funciona correctamente. </li>
+</ul>
+<br /><br />
+<p><strong>2.3.</strong>Recorrido de vectores y listas </p>
+<p>La clase <em>sesion02.Ej3</em> de la plantilla tiene un m&eacute;todo <em>main</em>, donde hemos creado un objeto de tipo <em>Vector</em>, y le hemos a&ntilde;adido 10 cadenas: <em>Hola0, Hola1, Hola2...Hola9</em>. Con este vector deber&aacute;s hacer lo siguiente:</p>
+<ul>
+  <li>Primero, recorrerlo mediante el objeto <em>Enumeration</em> que puedes obtener del propio vector. Si observas la API de <em>Vector</em>, ver&aacute;s que tiene un m&eacute;todo:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">Enumeration elements();</pre>
+  <p>que devuelve un <em>Enumeration</em> para poder recorrer los elementos del vector. Se trata de que obtengas  esa enumeraci&oacute;n, y formes un bucle como se ha explicado en los apuntes,  para recorrerla de principio a fin. Para cada elemento, saca su valor  por pantalla (imprime la cadena).</p>
+</blockquote>
+<ul>
+  <li> A continuaci&oacute;n de lo anterior, haz otro recorrido del vector, pero esta vez utilizando su <em>Iterator</em>. Ver&aacute;s tambi&eacute;n en la API que el objeto <em>Vector</em> tiene un m&eacute;todo:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">Iterator iterator();</pre>
+  <p>que devuelve un <em>Iterator</em> para poder recorrer los elementos del vector. Haz ahora otro bucle como  el que se explica en los apuntes, para recorrer los elementos del  vector, esta vez con el <em>Iterator</em>. Para cada elemento, vuelve a imprimir su valor por pantalla.</p>
+</blockquote>
+<ul>
+  <li> Finalmente, tras los dos bucles anteriores, a&ntilde;ade un  tercer bucle, donde a mano vayas recorriendo todo el vector, accediendo  a sus elementos, y sac&aacute;ndolos por pantalla. En este caso, ya no podr&aacute;s  utilizar los m&eacute;todos <em>nextElement</em>, <em>hasNext</em>, ni  similares que has utilizado en los bucles anteriores. Deber&aacute;s ir  posici&oacute;n por posici&oacute;n, accediendo al valor de esa posici&oacute;n del vector  (puedes utilizar el m&eacute;todo que prefieras: <em>get</em> o <em>elementAt</em>), y sacando el valor obtenido por pantalla. </li>
+</ul>
+<p>Una vez tengas los tres bucles hechos, ejecuta el programa, y  observa lo que saca cada uno de los bucles por pantalla. &iquest;Encuentras  alguna diferencia en el comportamiento de cada uno? &iquest;Qu&eacute; forma de  recorrer el vector te resulta m&aacute;s c&oacute;moda de programar y por qu&eacute;? </p>
+<p>NOTA: algunas de las t&eacute;cnicas que has utilizado para recorrer el  vector se pueden utilizar de la misma forma para recorrer otros tipos  de listas. Por ejemplo, puedes obtener el <em>Iterator </em>de un <em>ArrayList </em> y recorrerlo, o ir elemento por elemento... </p>
+<br /><br />
+<p><strong>2.4.</strong>Ventajas de los mapas </p>
+<p>Trabajar con mapas es la forma m&aacute;s eficiente y c&oacute;moda de almacenar pares <em>clave=valor</em>. La clase <em>sesion02.Ej4</em> contiene una subclase llamada <em>Parametro</em>, que utilizamos para guardar ciertos par&aacute;metros de configuraci&oacute;n, y sus valores. Ver&aacute;s que esta clase tiene un campo <em>nombre</em> donde pondremos el nombre del par&aacute;metro, y otro <em>valor</em> con su valor.</p>
+<p>La clase principal Ej4 crea muchos par&aacute;metros de este tipo, y los almacena en un <em>ArrayList</em>. Finalmente, busca en dicho <em>ArrayList</em> el valor del par&aacute;metro cuya clave se le pasa en el <em>main</em>. Saca un mensaje indicando en qu&eacute; posici&oacute;n lo encontr&oacute;, y luego imprime todos los <em>Parametros </em> por pantalla, sacando su nombre y su valor. </p>
+<ul>
+  <li>Haz una clase <em>sesion02.Ej4Hash</em> que haga lo mismo, pero utilizando una <em>Hashtable</em> en lugar de un <em>ArrayList</em>. Debes tener en cuenta lo siguiente:
+    <ul>
+        <li>En esta clase no tendr&aacute;s que usar la subclase <em>Parametro</em>, ya que podr&aacute;s almacenar el nombre por un lado y el valor por el otro dentro de la tabla hash. Es decir, donde antes hac&iacute;as:</li>
+    </ul>
+    <blockquote>
+        <pre class="codigo">ArrayList al = new ArrayList();
+...
+al.add(new Parametro(&quot;Clave1&quot;, &quot;Valor1&quot;));</pre>
+        <p>ahora har&aacute;s:</p>
+      <pre class="codigo">Hashtable ht = new Hashtable();
+...
+ht.put(&quot;Clave1&quot;, &quot;Valor1&quot;);</pre>
+      </blockquote>
+    <ul>
+        <li>A la hora de buscar el elemento en la hash ya no necesitas ning&uacute;n bucle. El m&eacute;todo <em>get</em> de la <em>Hashtable</em> te permite obtener un valor si le das el nombre con que lo guardaste. Te devolver&aacute; el objeto asociado a ese nombre (como un <em>Object</em> que deber&aacute;s convertir al tipo adecuado), o <em>null</em> si no lo encontr&oacute;.</li>
+    </ul>
+    <blockquote>
+        <pre class="codigo">String valor = (String)(ht.get(nombre));<strong>
+</strong>if (valor == null) ... else ...</pre>
+        <p>En  este caso no hace falta que indiques en qu&eacute; posici&oacute;n encontraste al  elemento, puesto que, como ver&aacute;s despu&eacute;s, las tablas hash no mantienen  las posiciones como te esperas. </p>
+    </blockquote>
+    <ul>
+        <li>A  la hora de imprimir todos los elementos por pantalla, una opci&oacute;n es  obtener todo el listado de claves, y luego para cada una ir sacando su  valor, e imprimir ambos. Para obtener un listado de todas las claves,  tienes el siguiente m&eacute;todo en <em>Hashtable</em>:
+          <pre class="codigo">Enumeration keys();</pre>
+            <p>te devuelve una enumeraci&oacute;n de las claves. Luego util&iacute;zala para recorrerlas, y con cada una sacar su valor e imprimirlo:</p>
+<pre class="codigo">Enumeration en = ht.keys();
+while (en.hasMoreElements())
+{
+	String clave = (String)(en.nextElement());
+	String valor = (String)(ht.get(clave));
+	... // Imprimir clave y valor por pantalla
+}</pre>
+        </li>
+    </ul>
+  </li>
+  <li>Comenta las conclusiones  que obtienes tras haber hecho este ejercicio, y qu&eacute; ventajas e  inconvenientes encuentras a la hora de a&ntilde;adir elementos en la hash, y  de recuperarlos.</li>
+  <li>Observa c&oacute;mo se imprimen los valores de la  hash al sacarlos por pantalla. &iquest;Conservan el orden en que se  introdujeron? &iquest;A qu&eacute; crees que puede deberse? </li>
+  <li>Si en lugar  de trabajar con listas o tablas hash de 10 elementos fuesen de  1.000.000 de elementos, &iquest;qui&eacute;n se comportar&iacute;a m&aacute;s eficientemente (<em>ArrayList </em>o <em>Hashtable</em>) y por qu&eacute;? No hace falta que lo pruebes, haz una estimaci&oacute;n bas&aacute;ndote en lo que has visto hasta ahora. </li>
+</ul>
+<br /><br />
+<p><strong>2.5.</strong> Ordenar tus propios datos </p>
+<p>La clase <em>datos.Persona</em> de la plantilla almacena los datos  generales de una persona, como son su nombre, primer apellido, segundo  apellido, direcci&oacute;n y tel&eacute;fono. Tiene un constructor que se encarga de  asignar todos esos campos, y m&eacute;todos <em>get </em>y <em>set</em> para obtener sus valores o cambiarlos, respectivamente. </p>
+<p>Adem&aacute;s, al final tiene un m&eacute;todo <em>main</em> que crea varios objetos de tipo <em>Persona</em>, los coloca en un <em>ArrayList</em>, y luego intenta ordenarlos llamando al m&eacute;todo <em>Collections.sort</em>.  Sin embargo, de momento el m&eacute;todo no funciona (probablemente salte una  excepci&oacute;n, porque no sabe c&oacute;mo comparar los elementos de la lista). </p>
+<p>Haz las modificaciones necesarias en la clase para que el m&eacute;todo  ordene correctamente. Queremos que se siga el siguiente criterio de  ordenaci&oacute;n:</p>
+<ul>
+  <li>Ordenar de menor a mayor, seg&uacute;n el primer apellido</li>
+  <li>Si el primer apellido coincide, ordenar de menor a mayor seg&uacute;n el segundo apellido</li>
+  <li>Si  tambi&eacute;n coincide, ordenar de menor a mayor por el nombre. Si tambi&eacute;n  coinciden, se considerar&aacute; que los nombres son iguales en orden. </li>
+</ul>
+<p>Comprueba, una vez lo tengas hecho, que la secuencia que saca el programa tras ordenar es la correcta:</p>
+<pre class="codigo">Elemento 1: &quot;Bravo Murillo, Manuel, C/La Huerta - 22, 965123456&quot;
+Elemento 2: &quot;García Hernández, Marta, C/Aloma - 22, 634253456&quot;
+Elemento 3: &quot;García Hernández, Rafael, C/Aloma - 1, 601123546&quot;
+Elemento 4: &quot;García Rodríguez, Carolina, Avda. Doctor Rico - 25, 661228844&quot;
+Elemento 5: &quot;Simón Mas, Eva, Camino del Prado - 30, 966124627&quot;  </pre>
+<p>Imagina que queremos cambiar el criterio de ordenaci&oacute;n, y ahora  queremos ordenar de mayor a menor por el nombre. &iquest;Qu&eacute; cambios  tendr&iacute;amos que hacer? No los hagas, simplemente d&eacute;jalos indicados en la  respuesta a esta pregunta. </p>
+<p>&nbsp;</p>
+</body>
+</html>

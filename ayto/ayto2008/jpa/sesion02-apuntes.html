@@ -1,0 +1,581 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Conceptos b&aacute;sicos de JPA</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="JPA con Hibernate" src="images/baner_j2ee_der.gif" title="JPA con Hibernate"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Persistencia</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">JPA</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="JPA">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 2</div>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="roadmap.html">Roadmap JPA</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-ejercicios.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-ejercicios.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-ejercicios.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-ejercicios.html">Sesion 8</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion02-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Conceptos b&aacute;sicos de JPA</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Entidades">Entidades</a>
+<ul class="minitoc">
+<li>
+<a href="#Persistencia">Persistencia</a>
+</li>
+<li>
+<a href="#Identidad">Identidad</a>
+</li>
+<li>
+<a href="#Transaccionalidad">Transaccionalidad</a>
+</li>
+<li>
+<a href="#Granularidad">Granularidad</a>
+</li>
+<li>
+<a href="#Metadatos">Metadatos</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Definici%C3%B3n+de+una+Entidad">Definici&oacute;n de una Entidad</a>
+</li>
+<li>
+<a href="#Entity+Manager">Entity Manager</a>
+<ul class="minitoc">
+<li>
+<a href="#Obtenci%C3%B3n+de+un">Obtenci&oacute;n de un EntityManager</a>
+</li>
+<li>
+<a href="#Haciendo+persistente+una+entidad">Haciendo persistente una entidad</a>
+</li>
+<li>
+<a href="#B%C3%BAsqueda+de+entidades">B&uacute;squeda de entidades</a>
+</li>
+<li>
+<a href="#Borrado+de+entidades">Borrado de entidades</a>
+</li>
+<li>
+<a href="#Actualizaci%C3%B3n+de+entidades">Actualizaci&oacute;n de entidades</a>
+</li>
+<li>
+<a href="#Transacciones">Transacciones</a>
+</li>
+<li>
+<a href="#Queries">Queries</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Implementando+un+DAO+con+JPA">Implementando un DAO con JPA</a>
+</li>
+<li>
+<a href="#Cambiando+el+patr%C3%B3n+DAO+por+el+EAO">Cambiando el patr&oacute;n DAO por el EAO</a>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="Entidades"></a>
+<h2 class="underlined_10">Entidades</h2>
+<div class="section">
+<p>Como hemos visto en la sesi&oacute;n anterior, una entidad es esencialmente un nombre, o un conjunto de estados (atributos) asociados juntos en una unidad. Puede participar en relaciones con otras entidades, en las que una entidad puede estar relacionada con una o muchas instancias de otra entidad. </p>
+<p>Las entidades integran las ventajas de la Programaci&oacute;n Orientada a Objetos y de las bases de datos. La caracter&iacute;stica m&aacute;s importante de una entidad es su persistencia. &iquest;Qu&eacute; otras caracter&iacute;sticas podemos destacar en las entidades?</p>
+<a name="N10018"></a><a name="Persistencia"></a>
+<h3 class="underlined_5">Persistencia</h3>
+<p>La primera y m&aacute;s importante caracter&iacute;stica de las entidades es que son persistentes. Esto quiere decir que su estado puede volcarse un almac&eacute;n de datos y que puede ser consultado con posterioridad, quiz&aacute;s justo despu&eacute;s del proceso que ha creado la entidad.</p>
+<p>Podr&iacute;amos llamarlas objetos persistentes, y mucha gente lo hace, pero no es t&eacute;cnicamente correcto. Hablando estrictamente, un objeto persistente se vuelve persistente en el momento en que se instancia. Si existe un objeto persistente, entonces por definici&oacute;n ya es persistente. Una entidad, sin embargo, es persistente porque <em>puede</em> guardarse en un almac&eacute;n persistente. La diferencia es que no se hace persistente autom&aacute;ticamente, sino que debemos invocar a alg&uacute;n m&eacute;todo del API para iniciar el proceso. Esto representa una distinci&oacute;n importante, ya que deja el control sobre la persistencia en manos de la aplicaci&oacute;n. De esta forma se ofrece a la aplicaci&oacute;n la flexibilidad de manipular los datos, realizar l&oacute;gica de negocio sobre la entidad y decidir cu&aacute;ndo es el momento correcto de efectuar la persistencia. O sea, que las entidades pueden manipularse sin tener necesariamente repercusiones persistentes.</p>
+<a name="N10028"></a><a name="Identidad"></a>
+<h3 class="underlined_5">Identidad</h3>
+<p>Como cualquier objeto Java, una entidad tiene una identidad que lo distingue de otros objetos, pero cuando existen en el almac&eacute;n de datos tambi&eacute;n tiene una identidad persistente. La identidad persistente, definida por el identificador (id) de la entidad, es la clave &uacute;nica que identifica a un instancia entidad y la diferencia de otras instancias del mismo tipo de entidad.</p>
+<p>Una entidad tiene una identidad persistente cuando existe una representaci&oacute;n de ella en el almac&eacute;n de datos, esto es, una fila en una tabla de una base de datos. Si no est&aacute; en la base de datos, entonces incluso aunque en memoria tenga su campo identidad definido, no tienen una identidad persistente. El identificador de la entidad es, por tanto, equivalente a la clave primaria de la tabla de la base de datos en la que se almacena la entidad.</p>
+<a name="N10035"></a><a name="Transaccionalidad"></a>
+<h3 class="underlined_5">Transaccionalidad</h3>
+<p>Las entidades son transaccionales. Normalmente se crean, actualizan y borran dentro de una transacci&oacute;n, y se requiere una transacci&oacute;n para que los cambios se actualicen (<em>commit</em>) en la base de datos. Los cambios realizados en la base de datos o bien fallan o bien tienen &eacute;xito de forma at&oacute;mica.</p>
+<p>En memoria, sin embargo, la historia es diferente. Las entidades pueden cambiarse sin que los cambios sean ni siquiera hechos persistentes. Incluso cuando est&aacute; incluida en una transacci&oacute;n una entidad puede quedar en un estado inconsistente si se produce un <em>rollback</em> o falla la transacci&oacute;n. Las entidades en memoria son simples objetos Java que obedecen todas las reglas y restricciones que la m&aacute;quina virtual Java aplica a todos los objetos.</p>
+<a name="N10048"></a><a name="Granularidad"></a>
+<h3 class="underlined_5">Granularidad</h3>
+<p>Tambi&eacute;n podemos aprender cosas sobre las entidades describiendo lo que <em>no</em> son. No son objetos primitivos, ni <em>wrappers</em>. Un <span class="codefrag">string</span>, por ejemplo, no puede ser una entidad. Su granularidad es demasiado fina para ser parte de un dominio dado. Sin embargo, un <span class="codefrag">string</span> ser&aacute; parte normalmente de una entidad en forma del tipo de datos de alguno de sus atributos.</p>
+<p>Las entidades son objetos de grano fino que tienen un conjunto de atributos que normalmente se almacenan en un &uacute;nico lugar, como una fila de una tabla. &iquest;Cu&aacute;l es la dimensi&oacute;n correcta de una entidad? Var&iacute;a seg&uacute;n la aplicaci&oacute;n, pero definitivamente no es correcto ni hacer una entidad de 100 columnas, ni una entidad de una &uacute;nica columna. En general, lo m&aacute;s habitual es utilizar entidades m&aacute;s bien peque&ntilde;as, en forma de objetos ligeros, relacionados unos con otros, que pueden ser gestionados eficientemente por la aplicaci&oacute;n.</p>
+<a name="N10061"></a><a name="Metadatos"></a>
+<h3 class="underlined_5">Metadatos</h3>
+<p>Los metadatos de la entidad son caracter&iacute;sticas asociadas a la entidad necesarias para su configuraci&oacute;n. Son usados por JPA para reconocer, interpretar y gestionar correctamente la entidad desde el momento en que se carga hasta el momento de invocaci&oacute;n en tiempo de ejecuci&oacute;n.</p>
+<p>Deben ser unos datos m&iacute;nimos, pero la forma de definirlos debe ser flexible para poder configurar opciones avanzadas. En JPA existen dos posibles formas de definir los metadatos: anotaciones y XML. Hasta la llegada de JPA, cuando la herramienta de persistencia m&aacute;s com&uacute;n era Hibernate, los ficheros XML eran la forma m&aacute;s habitual de configurar los metadatos de las entidades. En JPA se ha hecho un gran esfuerzo en simplificar la configuraci&oacute;n de las entidades y se ha dado gran importancia a las anotaciones (aunque se sigue manteniendo la posibilidad de utilizar ficheros XML). </p>
+<p>Las anotaciones se introdujeron en Java SE 5 y se han convertido en una parte fundamental de la especificaci&oacute;n Java EE, en la que se utilizan para especificar los metadatos de las entidades JPA y de los <em>Enterprise JavaBeans</em>. Las anotaciones son sentencias con par&aacute;metros opcionales que se colocan justo antes de elementos de programaci&oacute;n Java como clases, m&eacute;todos, campos y variables. A continuaci&oacute;n mostramos un ejemplo sencillo con bastantes anotaciones JPA, en el que se define una entidad con un identificador autogenerado y con un atributo asociado a una columna espec&iacute;fica de la base de datos.</p>
+<pre class="code">@Entity
+public class Empleado {
+   @Id @GeneratedValue
+   private int id;
+   @Column(name="E_NOMBRE")
+   private String nombre;
+}</pre>
+<p>El compilador Java procesa las anotaciones, y las a&ntilde;ade a los ficheros de clases o las elimina, dependiendo del tipo de anotaci&oacute;n. Cuando se mantienen en el fichero de clases, pueden consultarse en tiempo de ejecuci&oacute;n mediante un API basada en la reflexi&oacute;n. </p>
+<p>Junto al uso de anotaciones, otro principio determinante de la simplicidad de JPA es la idea de <em>configurar excepcionalmente</em> (<em>configuration by exception</em> en ingl&eacute;s). Esto significa que el motor de persistencia de JPA define opciones por defecto que funcionan correctamente en la mayor&iacute;a de las ocasiones, y que los usuarios necesitan realizar una configuraci&oacute;n expl&iacute;cita s&oacute;lo cuando necesiten modificar el valor por defecto. En otras palabras, el que el usuario deba proporcionar valores de configuraci&oacute;n debe ser la excepci&oacute;n, no la regla.</p>
+<p>El uso extendido de los valores por defecto tiene, sin embargo, un coste. Cuando los valores por defecto se incluyen en el API y no tienen que ser especificados, tampoco son visibles ni evidentes a los usuarios. &Eacute;stos pueden olvidar que est&aacute;n ah&iacute; y que el buen funcionamiento de la aplicaci&oacute;n se debe a ellos, haciendo algo m&aacute;s complicado realizar una depuraci&oacute;n o modificar el comportamiento de la aplicaci&oacute;n cuando sea necesario.</p>
+<p>Los valores por defecto no deber&iacute;an, por tanto, servir para hacer olvidar a los usuarios las complejidades del desarrollo de aplicaciones con entidades persistentes. Deber&iacute;an servir para permitir al desarrollador comenzar f&aacute;cil y r&aacute;pidamente con algo que funcione y para despu&eacute;s poder ir modific&aacute;ndolo iterativamente conforme el proyecto lo requiere.</p>
+</div>
+
+
+<a name="N1008B"></a><a name="Definici%C3%B3n+de+una+Entidad"></a>
+<h2 class="underlined_10">Definici&oacute;n de una Entidad</h2>
+<div class="section">
+<p>Vimos en la sesi&oacute;n anterior varios ejemplos de entidades. Vamos a detallar algo su construcci&oacute;n.</p>
+<p>Vamos a comenzar con una sencilla clase Java con un constructor sin argumentos. Por ejemplo, una clase normal Java que define un empleado:</p>
+<pre class="code">public class Empleado {
+   private int id;
+   private String nombre;
+   private long salario;
+
+   public Empleado() {}
+   public Empleado(int id) { this.id = id; }
+
+   public int getId() { return id; }
+   public void setId(int id) { this.id = id; }
+   public String getNombre() { return nombre; }
+   public void setNombre(String nombre) { this.nombre = nombre; }
+   public long getSalario() { return salario; }
+   public void setSalario(long salario) { this.salario = salario; }
+}</pre>
+<p>Como ya habr&aacute;s notado, estamos definiendo una clase al estilo JavaBean con tres propieades: <span class="codefrag">id</span>, <span class="codefrag">nombre</span> y <span class="codefrag">salario</span>. Cada una de estas propiedades se representan por un par de m&eacute;todos de acceso para obtener y definir la propiedad y est&aacute; respaldada por una variable de instancia privada en la clase. Estas propiedades o atributos son las unidades de estado dentro de la entidad que deseamos hacer persistentes en el almac&eacute;n de datos.</p>
+<p>Para convertir <span class="codefrag">Empleado</span> en una entidad debemos comenzar por anotar la clase con <span class="codefrag">@Entity</span>. Este marcador indica al motor de persistencia que la clase es una entidad.</p>
+<p>La segunda anotaci&oacute;n que debemos a&ntilde;adir es <span class="codefrag">@Id</span>. Esta anotaci&oacute;n define que una propiedad o atributo particular es la que va a contener la identidad persistente de la entidad (la clave primaria) y es necesaria para que motor conozca qu&eacute; campo usar como clave primaria en la tabla. Esta anotaci&oacute;n debe colocarse o bien antes de la definici&oacute;n del campo o en el m&eacute;todo de acceso. Normalmente utilizaremos la primera forma. De esta forma, la entidad que definida como sigue:</p>
+<pre class="code">@Entity
+public class Empleado {
+   @Id
+   private int id;
+   private String nombre;
+   private long salario;
+   ...
+}</pre>
+<p>Los campos de la entidad son hechos persistentes autom&aacute;ticamente utilizando el principio comentado de usar valores por defecto. &iquest;Cu&aacute;les son estos valores por defecto?.</p>
+<p>Para contestar a la pregunta debemos profundizar en la anotaci&oacute;n <span class="codefrag">@Entity</span>. All&iacute; nos encontramos un elemento llamado <span class="codefrag">name</span> que identifica de forma &uacute;nica el tipo de la entidad. Este elemento puede ser definido expl&iacute;citamente por el programador, como <span class="codefrag">@Entity(name="Emp")</span>. El valor por defecto de este elemento es el propio nombre de la entidad (<span class="codefrag">Empleado</span>, en este caso). Este valor ser&aacute; utilizado para dar nombre a la tabla en la que se almacenar&aacute;n los datos de las entidades.</p>
+<p>Cada uno de los atributos de la entidad define una columna de la tabla. El nombre de la columna ser&aacute; por defecto el del propio campo. Es posible cambiar este nombre utilizando el elemento <span class="codefrag">name</span> de la anotaci&oacute;n.</p>
+<p>La posibilidad de especificar los nombres de las tablas y de las columnas de la base de datos resultante del mapeado ORM hace posible reutilizar bases de datos ya existentes y adaptarlas a JPA.</p>
+</div>
+
+
+<a name="N100D6"></a><a name="Entity+Manager"></a>
+<h2 class="underlined_10">Entity Manager</h2>
+<div class="section">
+<p>Hemos comentado que es necesario invocar un API para hacer persistentes las entidades en la base de datos. De hecho, son necesarias llamadas a este API para realizar la mayor parte de operaciones sobre las entidades. Este API est&aacute; implementado por el <em>gestor de entidades</em> (<span class="codefrag">EntityManager</span> en ingl&eacute;s) y est&aacute; especificado en una &uacute;nica interfaz llamada <span class="codefrag">EntityManager</span> (<a href="http://www.jtech.ua.es/j2ee/2007-2008/restringido/documents/javaee/api/javax/persistence/EntityManager.html">enlace a javadoc</a>).</p>
+<p>Cuando un <span class="codefrag">EntityManager</span> obtiene una referencia a una entidad, se dice que la entidad est&aacute; gestionada (una <em>managed entity</em> en ingl&eacute;s) por el <span class="codefrag">EntityManager</span>. Al conjunto de entidades gestionadas por un <span class="codefrag">EntityManager</span> se le denomina su <em>contexto de persistencia</em> (<em>persistence context</em> en ingl&eacute;s). Los entity managers trabajan con la base de datos mediante un <em>proveedor de persistencia</em> (<em>persistence provider</em> en ingl&eacute;s). El proveedor es el que proporciona al <span class="codefrag">EntityManager</span> compatibilidad con el tipo de base de datos con la que trabaja a trav&eacute;s de la implementaci&oacute;n de la interfaz <span class="codefrag">Query</span> y de la generaci&oacute;n de SQL.</p>
+<p>Los entity managers se obtienen a trav&eacute;s de factor&iacute;as del tipo <span class="codefrag">EntityManagerFactory</span>. El <span class="codefrag">EntityManager</span> se configura mediante la especificaci&oacute;n de una <em>unidad de persistencia</em> (<em>persistence unit</em> en ingl&eacute;s) definida en un fichero de propiedades (XML normalmente) cuyo nombre se pasa a la factor&iacute;a. La unidad de persistencia define las caracter&iacute;sticas concretas de la base de datos con la que van a trabajar todos los gestores de persistencia obtenidos a partir de esa factor&iacute;a y queda asociada a ella en el momento de su creaci&oacute;n. Existe, por tanto, una relaci&oacute;n uno-a-uno entre una unidad de persistencia y su <span class="codefrag">EntityManagerFactory</span> concreto.</p>
+<p>Por &uacute;ltimo, para obtener una factor&iacute;a <span class="codefrag">EntityManagerFactory</span> debemos llamar a un m&eacute;todo est&aacute;tico de la clase <span class="codefrag">Persistence</span> .</p>
+<p>Las relaciones entre las clases que intervienen en la configuraci&oacute;n y en la creaci&oacute;n de <em>entity managers</em> se muestran en la siguiente figura. </p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/entity-manager.png" width="500"></p>
+<a name="N10135"></a><a name="Obtenci%C3%B3n+de+un"></a>
+<h3 class="underlined_5">Obtenci&oacute;n de un EntityManager</h3>
+<p>Un <span class="codefrag">EntityManager</span> siempre se obtiene a partir de un <span class="codefrag">EntityManagerFactory</span>. La forma de obtener la factor&iacute;a var&iacute;a dependiendo de si estamos utilizando JPA gestionado por la aplicaci&oacute;n (cuando utilizamos JPA en Java SE) o si estamos utilizando un contenedor de persistencia (proporcionado por un servidor de aplicaciones). En el segundo caso se utiliza un m&eacute;todo denominado <em>inyecci&oacute;n de dependencias</em> que analizaremos en detalle en el m&oacute;dulo del Especialista en el que hablemos de la arquitectura EJB. En el primer caso, el que vamos a utilizar durante todo este m&oacute;dulo, debemos usar el m&eacute;todo est&aacute;tico <span class="codefrag">createEntityMaagerFactory()</span> de la clase <span class="codefrag">Persistence</span>. En este m&eacute;todo se debe proporcionar el nombre de la unidad de persistencia que vamos a asociar a la factor&iacute;a. Por ejemplo, para obtener un <span class="codefrag">EntityManagerFactory</span> asociado a la unidad de persistencia llamada "SimpleJPA" hay que escribir lo siguiente:</p>
+<pre class="code">EntityManagerFactory emf =
+   Persistence.createEntityManagerFactory("SimpleJPA");
+</pre>
+<p>El nombre "SimpleJPA" indica el nombre de la unidad de persistencia en la que se especifican los par&aacute;metros de configuraci&oacute;n de la conexi&oacute;n con la base de datos (URL de la conexi&oacute;n, nombre de la base de datos, usuario, contrase&ntilde;a, gestor de base de datos, caracter&iacute;sticas del <em>pool</em> de conexiones, etc.). Esta unidad de persistencia se especifica en el fichero est&aacute;ndar de JPA <span class="codefrag">META-INF/persistence.xml</span>.</p>
+<p>Una vez que tenemos una factor&iacute;a, podemos obtener f&aacute;cilmente un <span class="codefrag">EntityManager</span>:</p>
+<pre class="code">EntityManager em = emf.createEntityManager();
+</pre>
+<p>Normalmente esta llamada no es demasiado costosa, ya que las implementaciones de JPA (como Hibernate) implementan <em>pools</em> de entity managers.</p>
+<a name="N10170"></a><a name="Haciendo+persistente+una+entidad"></a>
+<h3 class="underlined_5">Haciendo persistente una entidad</h3>
+<p>Hacer persistente una entidad consiste en tomar una entidad transitoria, que no tiene representaci&oacute;n persistente en la base de datos, y almacenar su estado de forma que podamos recuperarlo m&aacute;s tarde. &Eacute;sta es la base de la persistencia; crear un estado que pueda sobrevivir al proceso que lo cre&oacute;. Veamos c&oacute;mo hacerlo de forma sencilla:</p>
+<pre class="code">Empleado emp = new Empleado(146);
+em.persist(emp);
+</pre>
+<p>El m&eacute;todo <span class="codefrag">persist</span> es el que se encarga de comenzar a hacer persistente la entidad. Veremos m&aacute;s adelante que la entidad se vuelca realmente a la base de datos cuando se realiza un <em>flush</em> del contexto de persistencia y se generan las instrucciones SQL que se ejecutan en la base de datos (normalmente al hacer un <em>commit</em> de la transacci&oacute;n actual). Si el <span class="codefrag">EntityManager</span> encuentra alg&uacute;n problema al ejecutar el m&eacute;todo, se lanza la excepci&oacute;n no chequeada <span class="codefrag">PersistenceException</span>. Cuando termine la ejecuci&oacute;n del m&eacute;todo, si no se ha producido ninguna excepci&oacute;n, <span class="codefrag">emp</span> ser&aacute; a partir de ese momento una entidad gestionada dentro del contexto de persistencia del <span class="codefrag">EntityManager</span>. El siguiente c&oacute;digo muestra como definir un sencillo m&eacute;todo que crea un nuevo empleado y lo hace persistente en la base de datos:</p>
+<pre class="code">public Empleado createEmpleado(int id, String nombre, long salario) {
+   Empleado emp = new Empleado(id);
+   emp.setNombre(nombre);
+   emp.setSalario(salario);
+   em.persist(emp);
+   return emp;
+}</pre>
+<p>El m&eacute;todo asume la existencia de un <span class="codefrag">EntityManager</span> en la variable de instancia <span class="codefrag">em</span> y lo usa para hacer persistente el empleado reci&eacute;n creado. La llamada a <span class="codefrag">persist()</span> podr&iacute;a generar una excepci&oacute;n de tiempo de ejecuci&oacute;n de tipo <span class="codefrag">PersistenceException</span> que se propagar&iacute;a al llamador del m&eacute;todo.</p>
+<a name="N101A9"></a><a name="B%C3%BAsqueda+de+entidades"></a>
+<h3 class="underlined_5">B&uacute;squeda de entidades</h3>
+<p>Una vez que la entidad est&aacute; en la base de datos, lo siguiente que podemos hacer es encontrarla de nuevo. Para ello basta con escribir una l&iacute;nea de c&oacute;digo:</p>
+<pre class="code">Empeado emp = em.find(Empleado.class, 146);</pre>
+<p>Pasamos la clase de la entidad que estamos buscando (en el ejemplo estamos buscando una instancia de la clase <span class="codefrag">Empleado</span>) y el identificador o clave primaria que identifica la entidad. El entity manager buscar&aacute; esa entidad en la base de datos y devolver&aacute; la instancia buscada. La entidad devuelta ser&aacute; una entidad gestionada que existir&aacute; en el contexto de persistencia actual asociado al entity manager.</p>
+<p>En el caso en que no existiera ninguna entidad con ese identificador, se devolver&iacute;a simplemente <span class="codefrag">null</span>.</p>
+<p>La llamada a <span class="codefrag">find</span> puede devolver dos posibles excepciones de tiempo de ejecuci&oacute;n, ambas de la clase <span class="codefrag">PersistenceException</span>: <span class="codefrag">IllegalStateException</span> si el entitiy manager ha sido previamente cerrado o <span class="codefrag">IllegalArgumentException</span> si el primer argumento no contiene una clase entidad o el segundo no es el tipo correcto de la clave primaria de la entidad.</p>
+<p>El m&eacute;todo para buscar entidades de tipo empleado ser&iacute;a tan sencillo como sigue:</p>
+<pre class="code">public Empleado findEmpleado(int id) {
+   return em.find(Employee.class, id);
+}</pre>
+<a name="N101D9"></a><a name="Borrado+de+entidades"></a>
+<h3 class="underlined_5">Borrado de entidades</h3>
+<p>Un borrado de una entidad realiza una sentencia <span class="codefrag">DELETE</span> en la base de datos. Esta acci&oacute;n no es demasiado frecuente, ya que las aplicaciones de gesti&oacute;n normalmente conservan todos los datos obtenidos y marcan como no activos aquellos que quieren dejar fuera de vista de los casos de uso. Se suele utilizar para eliminar datos que se han introducido por error en la base de datos o para trasladar de una tabla a otra los datos (se borra el dato de una y se inserta en la otra). En el caso de entidades esto &uacute;ltimo ser&iacute;a equivalente a un cambio de tipo de una entidad.</p>
+<p>Para eliminar una entidad, la entidad debe estar gestionada, esto es, debe existir en el contexto de persistencia. Esto significa que la aplicaci&oacute;n debe obtener la entidad antes de eliminarla. Un ejemplo sencillo es:</p>
+<pre class="code">Empleado emp = em.find(Empleado.class, 146);
+em.remove(emp);</pre>
+<p>Un posible problema del c&oacute;digo anterior es que podr&iacute;a darse el caso de que la llamada a <span class="codefrag">find()</span> no encontrara la entidad, lo que causar&iacute;a una excepci&oacute;n en la llamada a <span class="codefrag">remove()</span>. Podemos incluir un chequeo de que la entidad no es <span class="codefrag">null</span> en nuestro m&eacute;todo para borrar un empleado:</p>
+<pre class="code">public void removeEmpleado(int id) {
+   Empleado emp = em.find(Empleado.class, id);
+   if (emp != null) {
+      em.remove(emp);
+   }
+}</pre>
+<a name="N101FD"></a><a name="Actualizaci%C3%B3n+de+entidades"></a>
+<h3 class="underlined_5">Actualizaci&oacute;n de entidades</h3>
+<p>Una entidad puede ser actualizada en unas pocas formas diferentes, pero veremos ahora el caso m&aacute;s com&uacute;n y sencillo. Es el caso en el que tenemos una entidad gestionada y queremos hacer cambios en ella. Para actualizar una entidad, primero debemos obtenerla para convertirla en gestionada. Despu&eacute;s podremos colocar los nuevos valores en sus atributos utilizando los m&eacute;todos <span class="codefrag">set</span> de la entidad. Por ejemplo, supongamos que queremos subir el sueldo del empleado 146 en 1.000 euros. Tendr&iacute;amos que hacer lo siguiente:</p>
+<pre class="code">Empleado emp = em.find(Empleado.class, 146);
+emp.setSueldo(emp.getSueldo() + 1000);</pre>
+<p>N&oacute;tese la diferencia con las operaciones anteriores, en las que el <span class="codefrag">EntityManager</span> era el responsable de realizar la operaci&oacute;n directamente. Aqu&iacute; no llamamos al <span class="codefrag">EntityManager</span> sino a la propia entidad. Estamos, por as&iacute; decirlo, trabajando con una cach&eacute; de los datos de la base de datos. Posteriormente, cuando se finalice la transacci&oacute;n, el <span class="codefrag">EntityManager</span> har&aacute; persistentes los cambios mediante las correspondientes sentencias SQL.</p>
+<p>Podemos definir un m&eacute;todo que aumente el sueldo de un empleado en una determinada cantidad:</p>
+<pre class="code">public Empleado subeSueldoEmpleado(int id, long aumento) {
+   Empleado emp = em.find(Empleado.class, id);
+   if (emp != null) {
+      emp.setSueldo(emp.getSueldo + aumento);
+   }
+}</pre>
+<p>La otra forma de actualizar una entidad es con el m&eacute;todo <span class="codefrag">merge()</span> del <span class="codefrag">EntityManager</span>. A este m&eacute;todo se le pasa como par&aacute;metro una entidad no gestionada. El <span class="codefrag">EntityManager</span> busca la entidad en su contexto de persistencia (utilizando su identificador) y actualiza los valores del contexto de persistencia con los de la entidad no gestionada. En el caso en que la entidad no existiera en el contexto de persistencia, se crea con los valores que lleva la entidad no gestionada.</p>
+<p>Veamos el siguiente c&oacute;digo para aclararlo un poco.</p>
+<pre class="code">em.getTransaction().begin();
+Empleado emp1 = new Empleado();
+emp1.setId(200);
+emp1.setNombre("Juan");
+em.persist(emp1);
+Empleado emp2 = new Empleado();
+emp2.setId(200);
+emp2.setNombre("Luisa");
+em.merge(emp2);
+em.getTransaction().commit();</pre>
+<p>En el c&oacute;digo creamos un empleado con el nombre "Juan" y lo hacemos persistente, con lo que la entidad se incorpora al contexto de persistencia. Despu&eacute;s creamos otro empleado con el nombre "Luisa" y el mismo identificador. Al no hacerlo persistente, se trata de una entidad no gestionada (si hubi&eacute;ramos llamado a <span class="codefrag">persist()</span> hubi&eacute;ramos tenido un error porque ya hay una entidad con ese identificador). Cuando llamamos al m&eacute;todo <span class="codefrag">merge()</span>, la entidad en el contexto de persistencia (referenciada por la variable <span class="codefrag">emp1</span>) es actualizada con los valores de la entidad <span class="codefrag">emp2</span> (se actualiza su nombre a "Luisa"). Por &uacute;ltimo, al grabar la transacci&oacute;n los datos que se hacen persistentes en la base de datos son los &uacute;ltimos actualizados.</p>
+<a name="N10243"></a><a name="Transacciones"></a>
+<h3 class="underlined_5">Transacciones</h3>
+<p>Cualquier operaci&oacute;n que conlleve una creaci&oacute;n, modificaci&oacute;n o borrado de entidades debe hacerse dentro de una transacci&oacute;n. En JPA las transacciones se gestionan de forma distinta dependiendo de si estamos en un entorno Java SE o en un entorno Java EE. La diferencia fundamental entre ambos casos es que en un entorno Java EE las transacciones se manejan con JTA (Java Transaction API), un API que implementa el <em>two face commit</em> y que permite gestionar operaciones sobre m&uacute;ltiples recursos transaccionales o m&uacute;ltiples operaciones transaccionales sobre el mismo recurso. En el caso de Java SE las transacciones se implementan con el gestor de transacciones propio del recurso local (la base de datos) y se especifican en la interfaz <span class="codefrag">EntityTransaction</span>.</p>
+<p>El gestor de transacciones locales se obtiene con la llamada <span class="codefrag">getTransaction()</span> al <span class="codefrag">EntityManager</span>. Una vez obtenido, podemos pedirle cualquiera de los m&eacute;todos definidos en la interfaz: <span class="codefrag">begin()</span> para comenzar la transacci&oacute;n, <span class="codefrag">commit()</span> para actualizar los cambios en la base de datos (en ese momento JPA vuelca las sentencias SQL en la base de datos) o <span class="codefrag">rollback()</span> para deshacer la transacci&oacute;n actual.</p>
+<p>El siguiente listado muestra un ejemplo de uso de transacciones con los m&eacute;todos que estamos definiendo:</p>
+<pre class="code">em.getTransaction().begin();
+createEmpleado(146, "Juan Garcia", 30000);
+em.getTransaction().commit();
+</pre>
+<p>En los m&eacute;todos que hemos ido construyendo se asume que la gesti&oacute;n de las transacciones se va a realizar fuera de ellos, que se ejecutan en una transacci&oacute;n ya comenzada y que la aplicaci&oacute;n se encargar&aacute; de hacer el <em>commit</em> de la transacci&oacute;n. Esto nos permite mayor flexibilidad en el uso de los m&eacute;todos, ya que podremos encadenar m&aacute;s de uno de estos m&eacute;todos en una &uacute;nica transacci&oacute;n.</p>
+<a name="N10272"></a><a name="Queries"></a>
+<h3 class="underlined_5">Queries</h3>
+<p>Uno de los aspectos fundamentales de JPA es la posibilidad de realizar consultas sobre las entidades, muy similares a las consultas SQL. El lenguaje en el que se realizan las consultas se denomina <em>Java Persistence Query Language</em> (JPQL).</p>
+<p>Una consulta se implementa mediante un objeto <span class="codefrag">Query</span>. Los objetos <span class="codefrag">Query</span> se construyen utilizando el <span class="codefrag">EntityManager</span> como una factor&iacute;a. La interfaz <span class="codefrag">EntityManager</span> proporciona un conjunto de m&eacute;todos que devuelven un objeto <span class="codefrag">Query</span> nuevo. Veremos alg&uacute;n ejemplo ahora, pero profundizaremos en el tema m&aacute;s adelante.</p>
+<p>Una consulta puede ser est&aacute;tica o din&aacute;mica. Las consultas est&aacute;ticas se definen con metadatos en forma de anotaciones o XML, y deben incluir la consulta propiamente dicha y un nombre asignado por el usuario. Este tipo de consulta se denomina una consulta con nombre (<em>named query</em> en ingl&eacute;s). El nombre se utiliza en tiempo de ejecuci&oacute;n para recuperar la consulta.</p>
+<p>Una consulta din&aacute;mica puede lanzarse en tiempo de ejecuci&oacute;n y no es necesario darle un nombre, sino especificar &uacute;nicamente las condiciones. Son un poco m&aacute;s costosas de ejecutar, porque el proveedor de persistencia (el gestor de base de datos) no puede realizar ninguna preparaci&oacute;n, pero son muy &uacute;tiles y vers&aacute;tiles porque pueden construirse en funci&oacute;n de la l&oacute;gica del programa, o incluso de los datos proporcionados por el usuario.</p>
+<p>El siguiente c&oacute;digo muestra un ejemplo de consulta din&aacute;mica:</p>
+<pre class="code">Query query = em.createQuery("SELECT e FROM Empleado e " + 
+                             "WHERE e.sueldo &gt; :sueldo");
+query.setParameter("sueldo", 20000);
+List emps = query.getResultList();
+</pre>
+<p>En el ejemplo vemos que, al igual que en JDBC, es posible especificar consultas con par&aacute;metros y posteriormente especificar esos par&aacute;metros con el m&eacute;todo <span class="codefrag">setParameter()</span>. Una vez definida la consulta, el m&eacute;todo <span class="codefrag">getResultList()</span> devuelve la lista de entidades que cumplen la condici&oacute;n. Este m&eacute;todo devuelve un objeto que implementa la interfaz <span class="codefrag">List</span>, una subinterfaz de <span class="codefrag">Collection</span> que soporta ordenaci&oacute;n. Hay que notar que no se devuelve una <span class="codefrag">List&lt;Empleado&gt;</span> ya que no se pasa ninguna clase en la llamada y no es posible parametrizar el tipo devuelto. S&iacute; que podemos hacer un casting en los valores devueltos por los m&eacute;todos que implementan las b&uacute;squedas, como muestra el siguiente c&oacute;digo:</p>
+<pre class="code">public List&lt;Empleado&gt; findEmpleadosSueldo(long sueldo) {
+   Query query = em.createQuery("SELECT e FROM Empleado e " + 
+                             "WHERE e.sueldo &gt; :sueldo");
+   query.setParameter("sueldo", 20000);
+   return (List&lt;Empleado&gt;) query.getResultList();
+}</pre>
+<p>M&aacute;s adelante veremos las consultas con mayor profundidad.</p>
+</div>
+
+
+<a name="N102BB"></a><a name="Implementando+un+DAO+con+JPA"></a>
+<h2 class="underlined_10">Implementando un DAO con JPA</h2>
+<div class="section">
+<p>Veamos a continuaci&oacute;n una primera implementaci&oacute;n de un DAO t&iacute;pico utilizando JPA. En temas sucesivos incluiremos m&aacute;s adelante algunas mejoras en el c&oacute;digo. En el DAO los objetos que se pasan como par&aacute;metros y que se devuelven son valores no persistentes. El patr&oacute;n DAO tambi&eacute;n obliga a operaciones at&oacute;micas. En cada m&eacute;todo se debe abrir y cerrar el <em>entity manager</em>:</p>
+<pre class="code">import javax.persistence.*;
+import java.util.List;
+
+public class EmpleadoDAO {
+   
+   protected EntityManagerFactory emf;
+
+   public EmpleadoDAO() {
+      emf = Persistence.createEntityManagerFactory("simplejpa");
+   }
+
+   public Empleado createEmpleado(int id, String nombre, long sueldo)  {
+      EntityManager em = emf.createEntityManager();
+      em.getTransaction().begin();
+      Empleado emp = em.find(Empleado.class, id);
+      if (emp == null) {
+         emp = new Empleado(id);
+      }
+      emp.setNombre(nombre);
+      emp.setSueldo(sueldo);
+      em.persist(emp);
+      em.getTransaction().commit();
+      em.close();
+      return emp;
+   }
+
+   public void removeEmpleado(int id) {
+      EntityManager em = emf.createEntityManager();
+      em.getTransaction().begin();
+      Empleado emp = em.find(Empleado.class, id);
+      if (emp != null) {
+         em.remove(emp);
+      }
+      em.getTransaction().commit();
+      em.close();
+   }
+
+   public void subeSueldoEmpleado(int id, long aumento) {
+      EntityManager em = emf.createEntityManager();
+      em.getTransaction().begin();
+      Empleado emp = em.find(Empleado.class, id);
+      if (emp != null) {
+         emp.setSueldo(emp.getSueldo() + aumento);
+      }
+      em.getTransaction().commit();
+      em.close();
+   }
+   
+   public void cambiaNombreEmpleado(int id, String nuevoNombre) {
+      EntityManager em = emf.createEntityManager();
+      em.getTransaction().begin();
+      Empleado emp = em.find(Empleado.class, id);
+      if (emp != null) {
+         emp.setNombre(nuevoNombre);
+      }
+      em.getTransaction().commit();
+      em.close();
+   }
+
+   public Empleado findEmpleado(int id) {
+      EntityManager em = emf.createEntityManager();
+      em.getTransaction().begin();
+      Empleado emp= em.find(Empleado.class, id);
+      em.getTransaction().commit();
+      em.close();
+      return emp;
+   }
+
+   public List&lt;Empleado&gt; findEmpleadosSueldoMayorQue(long sueldo) {
+      EntityManager em = emf.createEntityManager();
+      em.getTransaction().begin();
+      Query query = em.createQuery("SELECT e FROM Empleado e " + 
+                                "WHERE e.sueldo &gt; :sueldo");
+      query.setParameter("sueldo", sueldo);
+      List&lt;Empleado&gt; list = (List&lt;Empleado&gt;) query.getResultList();
+      em.getTransaction().commit();
+      em.close();
+      return list;
+   }
+}</pre>
+<p>El siguiente listado proporciona un ejemplo de utilizaci&oacute;n de este DAO:</p>
+<pre class="code">package ayto;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Collection;
+
+public class EmpleadoDAOTest {
+
+   public static void main(String[] args) {
+      int numEmpleado=0;
+      String nombre=null;
+
+      EmpleadoDAO empDAO = new EmpleadoDAO();
+
+      try {
+         BufferedReader in = new BufferedReader(
+               new InputStreamReader(System.in));
+         System.out.print("Id: ");
+         numEmpleado = Integer.parseInt(in.readLine());
+         System.out.print("Nombre: ");
+         nombre = in.readLine();
+      } catch (IOException e) {
+         System.exit(-1);
+      }
+      
+      // crear y hacer persistente el empleado
+      Empleado emp = empDAO.createEmpleado(numEmpleado,nombre, 50000);
+      System.out.println("Empleado" + emp + "hecho persistente");
+
+      // busca un empleado
+      emp = empDAO.findEmpleado(numEmpleado);
+      System.out.println("Encontrado empleado" + emp);
+
+      // lista empleados
+      Collection&lt;Empleado&gt; empleados = empDAO.findEmpleadosSueldoMayorQue(30000);
+      System.out.println("Hay " + empleados.size() + " ejecutivos");
+   }
+}</pre>
+</div>
+
+
+<a name="N102D3"></a><a name="Cambiando+el+patr%C3%B3n+DAO+por+el+EAO"></a>
+<h2 class="underlined_10">Cambiando el patr&oacute;n DAO por el EAO</h2>
+<div class="section">
+<p>JPA nos proporciona la posibilidad de trabajar con objetos gestionados, que est&aacute;n conectados a la base de datos y est&aacute;n enlazados unos con otros en relaciones que pueden navegarse (siempre que tengamos el contexto de persistencia activo).</p>
+<p> El patr&oacute;n DAO, sin embargo, obliga a una separaci&oacute;n entre aplicaci&oacute;n y datos. Los objetos que devuelven son obtenidos de la capa de persistencia pero est&aacute;n separados de ella.</p>
+<p>Parece interesante no utilizar el patr&oacute;n DAO tal cual en JPA, sino trabajar con una peque&ntilde;a variaci&oacute;n del mismo. En lugar de DAO lo llamaremos EAO (<em>EntityAccessObjet</em>). El EAO proporciona una forma de encapsular algunas complejidades de JPA (queries, sobre todo), sin perder sus caracter&iacute;sticas fundamentales que lo hacen distinto de JDBC.</p>
+<p>Asumimos que la gesti&oacute;n de las transacciones y la creaci&oacute;n del entity manager se va a realizar fuera del EAO. El programador que lo use debe conocer estos aspectos b&aacute;sicos de JPA: obtener <em>entity managers</em> y abrir y cerrar transacciones. Todos los dem&aacute;s detalles de JPA los encapsulamos en los m&eacute;todos.</p>
+<p>Existen importantes diferencias con los DAO vistos hasta ahora en el proyecto de integraci&oacute;n. En primer lugar, hay que pasar un <span class="codefrag">EntityManager</span> en el momento de creaci&oacute;n del EAO. Esto hace posible que podamos definir un <span class="codefrag">EntityManager</span> y un contexto de persistencia com&uacute;n a varios EAO y que podamos incluir estos EAO en una misma transacci&oacute;n.</p>
+<p>Otra diferencia es la no utilizaci&oacute;n de <em>transfer objects</em>. Devolvemos <em>entidades gestionadas</em> de tipo <span class="codefrag">Empleado</span>. Estas entidades existen en el contexto de persistencia del <span class="codefrag">EntityManager</span> (no cerramos el <span class="codefrag">EntityManager</span> ni la transacci&oacute;n al finalizar el m&eacute;todo) y podr&iacute;an usarse como par&aacute;metros de m&eacute;todos de otros EAO (o incluso, a&ntilde;adir otros perfiles de los propios m&eacute;todos del EAO en el que se utilicen entidades como par&aacute;metros, en lugar de identificadores).</p>
+<pre class="code">package ayto;
+
+import javax.persistence.*;
+import java.util.List;
+
+public class EmpleadoEAO {
+   protected EntityManager em;
+
+   public EmpleadoEAO(EntityManager em) {
+      this.em = em;
+   }
+
+   public Empleado createEmpleado(int id, String nombre, long sueldo) {
+      Empleado emp = new Empleado(id);
+      emp.setNombre(nombre);
+      emp.setSueldo(sueldo);
+      em.persist(emp);
+      return emp;
+   }
+   
+   public void removeEmpleado(Empleado emp) {
+      em.remove(emp);
+   }
+
+   public void subeSueldoEmpleado(Empleado emp, long aumento) {
+      emp.setSueldo(emp.getSueldo() + aumento);
+   }
+
+   public void cambiaNombreEmpleado(Empleado emp, String nuevoNombre) {
+      emp.setNombre(nuevoNombre);
+   }
+
+   public Empleado findEmpleado(int id) {
+      return em.find(Empleado.class, id);
+   }
+
+   public List&lt;Empleado&gt; findEmpleadosSueldo(long sueldo) {
+      Query query = em.createQuery("SELECT e FROM Empleado e "
+            + "WHERE e.sueldo &gt; :sueldo");
+      query.setParameter("sueldo", 20000);
+      return (List&lt;Empleado&gt;) query.getResultList();
+   }
+}</pre>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007-2008 Depto. CCIA</div>
+</div>
+</body>
+</html>

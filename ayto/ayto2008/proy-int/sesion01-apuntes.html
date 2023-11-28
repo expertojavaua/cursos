@@ -1,0 +1,891 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Acceso a la base de datos</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Proyecto de Integracion" src="images/baner_j2ee_der.gif" title="Proyecto de Integracion"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="external" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li class="current">
+<a class="external" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Proyecto SIGEM</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Proyecto de Integraci&oacute;n">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion00-apuntes.html" title="Sesi&oacute;n 0: Puesta en marcha del SIGEM">Sesi&oacute;n 0</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesi&oacute;n 1</div>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html" title="Sesi&oacute;n 2: Despliegue y componentes web">Sesi&oacute;n 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html" title="Sesi&oacute;n 3: Persistencia Java">Sesi&oacute;n 3</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion01-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Acceso a la base de datos</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Introducci%C3%B3n">Introducci&oacute;n</a>
+</li>
+<li>
+<a href="#Preparaci%C3%B3n+del+entorno">Preparaci&oacute;n del entorno</a>
+<ul class="minitoc">
+<li>
+<a href="#Eclipse">Eclipse</a>
+</li>
+<li>
+<a href="#C%C3%B3digo+fuente">C&oacute;digo fuente</a>
+</li>
+<li>
+<a href="#Administrador+de+la+BD">Administrador de la BD</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Arquitectura+general+de+SIGEM">Arquitectura general de SIGEM</a>
+</li>
+<li>
+<a href="#M%C3%B3dulos+de+SIGEM">M&oacute;dulos de SIGEM</a>
+<ul class="minitoc">
+<li>
+<a href="#Tipos+de+m%C3%B3dulos">Tipos de m&oacute;dulos</a>
+</li>
+<li>
+<a href="#Dependencias+entre+m%C3%B3dulos">Dependencias entre m&oacute;dulos</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Clases+de+SIGEM">Clases de SIGEM</a>
+<ul class="minitoc">
+<li>
+<a href="#N%C3%BAcleo+de+SIGEM">N&uacute;cleo de SIGEM</a>
+</li>
+<li>
+<a href="#Clases+b%C3%A1sicas">Clases b&aacute;sicas</a>
+</li>
+<li>
+<a href="#M%C3%B3dulo+de+librer%C3%ADa%3A+administraci%C3%B3n+del+registro+presencial">M&oacute;dulo de librer&iacute;a: administraci&oacute;n del registro presencial</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Base+de+datos">Base de datos</a>
+<ul class="minitoc">
+<li>
+<a href="#Administraci%C3%B3n+de+la+base+de+datos">Administraci&oacute;n de la base de datos</a>
+</li>
+<li>
+<a href="#Volcado+de+la+base+de+datos">Volcado de la base de datos</a>
+</li>
+<li>
+<a href="#Acceso+a+la+base+de+datos+desde+la+aplicaci%C3%B3n">Acceso a la base de datos desde la aplicaci&oacute;n</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Pruebas+y+depuraci%C3%B3n">Pruebas y depuraci&oacute;n</a>
+<ul class="minitoc">
+<li>
+<a href="#Pruebas+con+JUnit">Pruebas con JUnit</a>
+</li>
+<li>
+<a href="#Gesti%C3%B3n+de+logs">Gesti&oacute;n de logs</a>
+</li>
+<li>
+<a href="#Acceso+a+otros+m%C3%B3dulos">Acceso a otros m&oacute;dulos</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="Introducci%C3%B3n"></a>
+<h2 class="underlined_10">Introducci&oacute;n</h2>
+<div class="section">
+<p>En esta sesi&oacute;n vamos a comenzar a estudiar el c&oacute;digo fuente de 
+algunos m&oacute;dulos de SIGEM. Por el momento hemos visto &uacute;nicamente
+algunos aspectos determinados de la programaci&oacute;n en lenguaje Java 
+y una serie herramientas de desarrollo, por lo que todav&iacute;a nos 
+encontramos bastante limitados a la hora de estudiar el sistema. 
+Nos centraremos en aquellos m&oacute;dulos que &uacute;nicamente utilizan las
+tecnolog&iacute;as vistas hasta el momento, centr&aacute;ndonos especialmente
+en el acceso a bases de datos.</p>
+</div>
+
+
+<a name="N10016"></a><a name="Preparaci%C3%B3n+del+entorno"></a>
+<h2 class="underlined_10">Preparaci&oacute;n del entorno</h2>
+<div class="section">
+<p>Antes de comenzar a trabajar con el c&oacute;digo fuente de SIGEM deberemos
+preparar el entorno de desarrollo en la m&aacute;quina virtual, ya que
+en principio est&aacute; &uacute;nicamente preparada para probar la aplicaci&oacute;n
+como vimos en la sesi&oacute;n inicial.</p>
+<a name="N1001F"></a><a name="Eclipse"></a>
+<h3 class="underlined_5">Eclipse</h3>
+<p>El primer paso que deberemos dar es instalar Eclipse en la m&aacute;quina
+virtual, para as&iacute; poder utilizar este entorno de desarrollo para el
+estudio, modificaci&oacute;n, y pruebas de diferentes componentes de SIGEM.</p>
+<p>Para instalar Eclipse simplemente descomprimiremos la versi&oacute;n de 
+Linux de este entorno en nuestro directorio HOME (<span class="codefrag">/home/sigem/</span>).
+Podemos encontrar esta versi&oacute;n de Eclipse tanto en la web del curso
+como en el DVD de Software. Una vez lo hayamos descomprimido, veremos
+que tenemos un directorio <span class="codefrag">eclipse</span> dentro de nuestro
+directorio HOME. Para ejecutar Eclipse entraremos en este directorio
+y ejecutaremos el comando:</p>
+<pre class="code">&gt; ./eclipse &amp;</pre>
+<a name="N10036"></a><a name="C%C3%B3digo+fuente"></a>
+<h3 class="underlined_5">C&oacute;digo fuente</h3>
+<p>A continuaci&oacute;n, instalaremos el c&oacute;digo fuente de SIGEM en la VM. 
+Podemos encontrar el fichero con los fuentes (<span class="codefrag">SIGEM_codigofuente.zip</span>)
+en el DVD de Software entregado. Descomprimiremos este fichero en nuestro directorio
+HOME, cre&aacute;ndose as&iacute; un subdirectorio <span class="codefrag">CodigoFuente</span> conteniendo
+los fuentes de todos los m&oacute;dulos de SIGEM. Cada uno de estos m&oacute;dulos
+es un proyecto de Eclipse, que podr&aacute; ser importado posteriormente
+en este entorno de desarrollo.</p>
+<div class="frame note">
+<div class="label">Importante</div>
+<div class="content">En la &uacute;ltima versi&oacute;n de los fuentes de SIGEM
+(la entregrada en el DVD), debido a un error gran parte de los 
+proyectos han perdido los ficheros de configuraci&oacute;n de Eclipse
+(los ficheros ocultos <span class="codefrag">.project</span> y <span class="codefrag">.classpath</span>),
+imprescindibles para poder importar el proyecto. Para solucionar
+este problema, proporcionamos en el apartado software de la web
+del curso un fichero <span class="codefrag">SIGEM_codigofuente_fix.zip</span> que
+contiene estos ficheros de configuraci&oacute;n perdidos. Deberemos
+descomprimir este fichero en el mismo directorio en el que descomprimimos
+el anterior (directorio HOME), para as&iacute; a&ntilde;adir los ficheros necesarios
+al directorio de cada proyecto. </div>
+</div>
+<a name="N10053"></a><a name="Administrador+de+la+BD"></a>
+<h3 class="underlined_5">Administrador de la BD</h3>
+<p>Para poder administrar la base de datos Postgres y consultar las
+bases de datos de las que disponemos en SIGEM es recomendable
+instalar la herramienta pgAdmin III. Esta herramienta puede ser
+descargada de la web del curso, o de su p&aacute;gina oficial 
+(<span class="codefrag">http://www.pgadmin.org</span>). Una vez descargado el RPM, 
+lo instalaremos con:</p>
+<pre class="code">&gt; sudo rpm -i pgadmin3-1.8.4-1.i586.rpm</pre>
+<p>Con esto ya tendremos instalado pgAdmin III, y podremos ejecutarlo 
+con:</p>
+<pre class="code">&gt; pgadmin3</pre>
+</div>
+
+
+<a name="N1006C"></a><a name="Arquitectura+general+de+SIGEM"></a>
+<h2 class="underlined_10">Arquitectura general de SIGEM</h2>
+<div class="section">
+<p>El sistema SIGEM se compone de 4 grandes aplicaciones. Estas aplicaciones
+son: </p>
+<ul>
+
+<li>Registro</li>
+
+<li>Gesti&oacute;n de Expedientes</li>
+
+<li>Archivo</li>
+
+<li>Tramitaci&oacute;n Electr&oacute;nica</li>
+
+</ul>
+<p>
+<img alt="Arquitectura general de SIGEM" content-width="9cm" height="204" src="imagenes/s1a/arquitectura.gif" width="450"></p>
+<p>Para permitir la intercomunicaci&oacute;n entre dichas aplicaciones se 
+define una pasarela que permite a cada una de ellas acceder a los
+servicios de las dem&aacute;s. Dentro de esta pasarela, se permitir&aacute; tanto
+el acceso local a una de las aplicaciones, como el acceso remoto
+a trav&eacute;s de servicios web.</p>
+<p>La pasarela de comunicaci&oacute;n se implementa mediante una factor&iacute;a
+que nos independiza de la forma de acceso a los dem&aacute;s m&oacute;dulos (local
+o remota). </p>
+<p>
+<img alt="Pasarela de comunicaci&oacute;n" content-width="9cm" height="309" src="imagenes/s1a/pasarela.gif" width="450"></p>
+<p>Estas aplicaciones y la pasarela de comunicaci&oacute;n se componen a
+su vez de numerosos m&oacute;dulos que comenzaremos a analizar a continuaci&oacute;n.</p>
+</div>
+
+
+
+<a name="N1009E"></a><a name="M%C3%B3dulos+de+SIGEM"></a>
+<h2 class="underlined_10">M&oacute;dulos de SIGEM</h2>
+<div class="section">
+<p>Una vez tenemos instalado Eclipse y el c&oacute;digo fuente de SIGEM, vamos
+a pasar a estudiar como se encuentran organizados los diferentes 
+m&oacute;dulos de la aplicaci&oacute;n. Cada subdirectorio dentro del directorio
+<span class="codefrag">CodigoFuente</span> corresponde a un m&oacute;dulo diferente. Vamos
+a ver los distintos tipos de m&oacute;dulos que podemos encontrar y las 
+dependencias que existen entre ellos.</p>
+<a name="N100AA"></a><a name="Tipos+de+m%C3%B3dulos"></a>
+<h3 class="underlined_5">Tipos de m&oacute;dulos</h3>
+<p>Podemos distinguir diferentes tipos de m&oacute;dulos del sistema SIGEM:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+
+<th colspan="1" rowspan="1">Tipo</th>
+<th colspan="1" rowspan="1">Nomenclatura</th>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">M&oacute;dulo Web</td>
+<td colspan="1" rowspan="1"><span class="codefrag">SIGEM_</span><em><span class="codefrag">NombreModulo</span></em><span class="codefrag">Web</span></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">M&oacute;dulo Servicio Web</td>
+<td colspan="1" rowspan="1"><span class="codefrag">SIGEM_</span><em><span class="codefrag">NombreModulo</span></em><span class="codefrag">WS</span></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">M&oacute;dulo Cliente Servicio Web</td>
+<td colspan="1" rowspan="1"><span class="codefrag">SIGEM_</span><em><span class="codefrag">NombreModulo</span></em><span class="codefrag">WSClient</span></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">M&oacute;dulo de librer&iacute;a</td>
+<td colspan="1" rowspan="1"><span class="codefrag">SIGEM_</span><em><span class="codefrag">NombreModulo</span></em></td>
+
+</tr>
+
+</table>
+<p>A continuaci&oacute;n pasamos a describir cada uno de estos tipos:</p>
+<ul>
+
+<li>
+<em>M&oacute;dulos Web</em>: Estos son los m&oacute;dulos "visibles" por el
+usuario de la aplicaci&oacute;n. Son los que implementan la capa web de 
+cada una de las diferentes funcionalidades de SIGEM. Esta capa de
+presentaci&oacute;n depender&aacute; de los m&oacute;dulos de librer&iacute;a en los que tenemos
+implementada la l&oacute;gica de negocio y de datos.</li>
+
+<li>
+<em>M&oacute;dulos de Servicio Web</em>: Estos m&oacute;dulos ofrecen 
+determinadas funcionalidades de SIGEM en forma de Servicios Web, 
+de forma que pueda accederse a ellos tanto de forma local como
+remota. Las distintas aplicaciones dentro de SIGEM se comunicar&aacute;n
+entre ellas utilizando estos servicios.</li>
+
+<li>
+<em>M&oacute;dulos de Cliente de Servicios Web</em>: Estos m&oacute;dulos
+encapsulan el acceso a los diferentes servicios del sistema 
+SIGEM. Cuando un determinado subsistema de SIGEM necesita comunicarse
+con otro, podr&aacute; utilizar el cliente que nos d&eacute; acceso a los servicios
+del segundo. Estos m&oacute;dulos forman parte de la pasarela de 
+comunicaciones entre las aplicaciones de SIGEM.</li>
+
+<li>
+<em>M&oacute;dulos de librer&iacute;a</em>: Estos m&oacute;dulos nos proporcionan
+librer&iacute;as de clases que pueden ser utilizadas por los m&oacute;dulos 
+anteriores. Entre estas librer&iacute;as podemos encontrar librer&iacute;as de
+clases &uacute;tiles, o la implementaci&oacute;n de las capas de negocio y 
+acceso a datos.</li>
+
+</ul>
+<p>Dado que hasta el momento no hemos visto componentes web ni 
+servicios web, nos limitaremos a estudiar alguno de los m&oacute;dulos de
+librer&iacute;a.</p>
+<a name="N1012B"></a><a name="Dependencias+entre+m%C3%B3dulos"></a>
+<h3 class="underlined_5">Dependencias entre m&oacute;dulos</h3>
+<p>Si importamos en Eclipse alguno de los m&oacute;dulos de SIGEM, lo m&aacute;s
+seguro es que obtengamos una serie de errores debidos a que dicho
+m&oacute;dulo dependa de otros para poder funcionar. Por ejemplo, un
+m&oacute;dulo web depender&aacute; del m&oacute;dulo que se encargue del acceso a datos
+necesario para sus funcionalidades.</p>
+<p>Es f&aacute;cil descubrir las dependencias de un m&oacute;dulo mediante Eclipse.
+Lo que haremos ser&aacute; importar el m&oacute;dulo con el que estemos interesados
+en trabajar, y entrar en <em>Properties &gt; Java Build Path &gt; Projects</em>.
+Ah&iacute; veremos la lista de proyectos de los que depende. Si estos 
+proyectos no se encuentran actualmente abiertos en Eclipse, se
+mostrar&aacute;n con un signo de advertencia. Para que Eclipse pueda 
+reconocer el proyecto correctamente deberemos abrir los proyectos
+necesarios, y repetir el proceso para cada uno de ellos, hasta 
+que no haya m&aacute;s dependencias.</p>
+<p>
+<img alt="Dependencias entre modulos de SIGEM" content-width="9cm" height="94" src="imagenes/s1a/modulos.gif" width="450"></p>
+<p>Vamos a seguir este procedimiento para trabajar con el m&oacute;dulo de
+administraci&oacute;n del registro presencial. Este m&oacute;dulo se encuentra implementado en
+<span class="codefrag">SIGEM_RegistroPresencialAdminWeb</span>, que depende (entre otros) 
+de la librer&iacute;a <span class="codefrag">SIGEM_RegistroPresencialAdmin</span> que es donde 
+se encuentra la l&oacute;gica de negocio y de datos. Dado que por el momento
+no hemos estudiado los contenidos necesarios para entender el m&oacute;dulo
+web, importaremos desde Eclipse directamente el m&oacute;dulo
+<span class="codefrag">SIGEM_RegistroPresencialAdmin</span>. Para importar este 
+m&oacute;dulo seleccionaremos <em>File &gt; Import ... &gt; General &gt; Existing 
+projects into workspace</em>.</p>
+<p>
+<img alt="Importar un m&oacute;dulo de SIGEM" content-width="8cm" height="412" src="imagenes/s1a/import.gif" width="400"></p>
+<p>En la ventana de importar proyectos seleccionamos la opci&oacute;n 
+<em>Select root directory</em> y en ella el directorio correspondiente
+al m&oacute;dulo <span class="codefrag">SIGEM_RegistroPresencialAdmin</span> (si se han 
+seguido los pasos de este documento estar&aacute; en el directorio
+<span class="codefrag">/home/sigem/CodigoFuente/SIGEM_RegistroPresencialAdmin</span>).</p>
+<div class="frame note">
+<div class="label">Recomendaci&oacute;n</div>
+<div class="content">Es recomendable dejar marcada la casilla
+<em>Copy projects into workspace</em>. De esta forma no estaremos
+trabajando con el proyecto en <span class="codefrag">CodigoFuente</span>, sino 
+con una copia del mismo en el workspace. De esta forma, podremos hacer
+todos los cambios y pruebas que queramos, y en caso de que sea 
+necesario siempre podremos recuperar el proyecto original simplemente 
+volvi&eacute;ndolo a importar.</div>
+</div>
+<p>Una vez importado el proyecto, veremos que Eclipse nos lo marca
+con errores. Podemos consultar la causa de estos errores en la pesta&ntilde;a
+<em>Problems</em> de Eclipse. Veremos que estos problemas se deben
+al <em>build path</em> (faltan proyectos requeridos). Entramos
+en la pantalla del <em>build path</em> del proyecto para mirar
+qu&eacute; dependencias nos faltan. Veremos las siguientes:</p>
+<p>
+<img alt="Dependencias del modulo en Eclipse" content-width="9cm" height="269" src="imagenes/s1a/dependencias.gif" width="450"></p>
+<p>Deberemos por lo tanto importar los proyectos <span class="codefrag">SIGEM_ClasesBase</span>
+y <span class="codefrag">SIGEM_Core</span>.</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Al importar algunos proyectos podr&iacute;an producirse
+errores por tener configurado un nivel de compilaci&oacute;n inapropiado. 
+Para solucionar este problema podemos ir a <em>Properties &gt; 
+Java Compiler</em>, marcar la casilla <em>Enable project specific
+settings</em>, y en <em>Compiler compliance level</em> 
+seleccionar 1.4. De forma alternativa, tambi&eacute;n podr&iacute;amos haber
+configurado este nivel del compilador en las preferencias generales
+de Eclipse como valor por defecto para todos los proyectos.</div>
+</div>
+<p>
+<img alt="Nivel del compilador en Eclipse" content-width="9cm" height="269" src="imagenes/s1a/compiler.gif" width="450"></p>
+<p>Para que el proyecto <span class="codefrag">SIGEM_ClasesBase</span> compile correctamente
+tambi&eacute;n deberemos solucionar otros problemas del <em>build path</em>. La
+librer&iacute;a del JRE est&aacute; mal enlazada, por lo que deberemos eliminarla y 
+a&ntilde;adirla de nuevo. Por otro lado, debemos a&ntilde;adir al <em>build path</em>
+del proyecto la librer&iacute;a <em>commons</em>, que est&aacute; incluida en el
+directorio <span class="codefrag">lib</span> pero no est&aacute; a&ntilde;adida al <em>build path</em>, 
+y es necesaria para que compile.</p>
+</div>
+
+<a name="N101B8"></a><a name="Clases+de+SIGEM"></a>
+<h2 class="underlined_10">Clases de SIGEM</h2>
+<div class="section">
+<p>Los proyectos <span class="codefrag">SIGEM_ClasesBase</span> y <span class="codefrag">SIGEM_Core</span>
+proporcionan una librer&iacute;a de clases com&uacute;n que es utilizada en todos
+los m&oacute;dulos de SIGEM. </p>
+<a name="N101C7"></a><a name="N%C3%BAcleo+de+SIGEM"></a>
+<h3 class="underlined_5">N&uacute;cleo de SIGEM</h3>
+<p>Todo el c&oacute;digo del proyecto <span class="codefrag">SIGEM_Core</span> est&aacute; contenido
+en subpaquetes de <span class="codefrag">ieci.tecdoc.sgm.core</span>. Encontramos
+los siguientes subpaquetes:</p>
+<ul>
+
+<li>
+<span class="codefrag">base64</span>: Contiene s&oacute;lo una clase para codificar y 
+descodificar datos en este formato.</li>
+
+<li>
+<span class="codefrag">config</span>: Gestiona el acceso a ficheros de configuraci&oacute;n
+de la aplicaci&oacute;n, en los que por ejemplo se especifican las
+fuentes de datos que se utilizar&aacute;n (fichero 
+<span class="codefrag">SIGEM_spring.xml</span>). Estos ficheros pertenecen 
+al <em>framework</em> Spring, as&iacute; como las clases que se utilizan
+para leer de ellos, por lo que por el momento no vamos a estudiar
+esta parte del c&oacute;digo.</li>
+
+<li>
+<span class="codefrag">db</span>: Contiene una serie de clases para gestionar
+las fuentes de datos de la aplicaci&oacute;n. Estas fuentes de datos se
+utilizar&aacute;n cuando tengamos la aplicaci&oacute;n en un servidor web, por 
+lo que de momento tampoco vamos a trabajar con estas clases. En 
+este paquete tambien podemos encontrar una clase con m&eacute;todos &uacute;tiles
+encargados de formatear una fecha en el formato utilizado por 
+PostgresSQL.</li>
+
+<li>
+<span class="codefrag">exception</span>: Contiene la clase base para todas las
+excepciones propias de SIGEM (<span class="codefrag">SigemException</span>).</li>
+
+<li>
+<span class="codefrag">services</span>: Contiene multitud de subpaquetes. En ellos 
+podemos encontrar numerosos <em>Transfer Objects</em> utilizados
+en SIGEM (realmente ser&iacute;a m&aacute;s correcto hablar de ellos como
+<em>beans</em>, ya que no cumplen la condici&oacute;n de ser serializables,
+necesaria para considerarse <em>transfer objects</em>). 
+Tambi&eacute;n podemos encontrar interfaces para los distintos 
+servicios de SIGEM, excepciones propias de esta aplicaci&oacute;n
+(todas ellas derivan de <span class="codefrag">SigemException</span>), y ficheros
+de configuraci&oacute;n (<em>properties</em>). En el paquete principal
+se encuentra la clase <span class="codefrag">LocalizadorServicios</span> que es
+la <em>factor&iacute;a</em> para obtener los distintos tipos de servicios
+disponibles en el sistema. Con ella podremos obtener la interfaz
+para acceder de forma local o remota a los diferentes servicios de 
+SIGEM. Esta factor&iacute;a
+nos devuelve la interfaz del servicio solicitado, cuya implementaci&oacute;n 
+podr&iacute;a ser el mismo servicio (acceso local) o el cliente para el
+servicio web correspondiente (acceso remoto).</li>
+
+<li>
+<span class="codefrag">ws</span>: Tenemos una clase de utilidad para obtener informaci&oacute;n
+de los mensajes utilizados en los servicios web de SIGEM. No 
+analizaremos esta parte hasta haber visto el m&oacute;dulo de servicios web.</li>
+
+</ul>
+<a name="N10216"></a><a name="Clases+b%C3%A1sicas"></a>
+<h3 class="underlined_5">Clases b&aacute;sicas</h3>
+<p>Por otro lado, en el proyecto <span class="codefrag">SIGEM_ClasesBase</span> tenemos
+una serie de librer&iacute;as de clases gen&eacute;ricas que se utilizar&aacute;n como
+apoyo en la aplicaci&oacute;n. Todas estas clases est&aacute;n dentro de subpaquetes
+de <span class="codefrag">ieci.tecdoc.sgm.base</span>, y por ejemplo podemos encontrar
+en <span class="codefrag">db</span> una serie de clases que encapsulan el acceso a una
+base de datos mediante JDBC. Tambi&eacute;n encontramos clases para acceso
+a ficheros, conexiones FTP, tipos de colecciones de datos propias, etc.
+La diferencia fundamental entre <span class="codefrag">SIGEM_Core</span> y 
+<span class="codefrag">SIGEM_ClasesBase</span> es que el primero de ellos contiene
+librer&iacute;as de clases del dominio concreto de la aplicaci&oacute;n, mientras 
+que en el segundo tenemos librer&iacute;as gen&eacute;ricas. </p>
+<a name="N1022F"></a><a name="M%C3%B3dulo+de+librer%C3%ADa%3A+administraci%C3%B3n+del+registro+presencial"></a>
+<h3 class="underlined_5">M&oacute;dulo de librer&iacute;a: administraci&oacute;n del registro presencial</h3>
+<p>Una vez vistas las librer&iacute;as de clases comunes de SIGEM, vamos a
+pasar a estudiar un m&oacute;dulo de librer&iacute;a que da soporte a un grupo de
+funcionalidades concretas del sistema. Nos centraremos en el m&oacute;dulo
+que se encarga de la administraci&oacute;n del registro presencial 
+(<span class="codefrag">SIGEM_RegistroPresencialAdmin</span>). Las clases de este
+m&oacute;dulo est&aacute;n contenidas en el paquete <span class="codefrag">ieci.tecdoc.sgm.rpadmin</span>
+y subpaquetes del mismo.</p>
+<p>Entre las clases de este m&oacute;dulo destaca la clase <span class="codefrag">ServicioRPAdminAdapter</span>
+en el paquete principal. Esta clase implementa la interfaz definida
+para este servicio en el m&oacute;dulo <em>core</em>: <span class="codefrag">ServicioRPAdmin</span>, 
+contenida en el paquete <span class="codefrag">ieci.tecdoc.sgm.core.services.rpadmin</span>, 
+en el que encontramos tambi&eacute;n <em>transfer objects</em>, excepciones, 
+y ficheros de configuraci&oacute;n utilizados en este m&oacute;dulo.</p>
+<p>Esta clase <span class="codefrag">ServicioRPAdminAdapter</span> implementa el
+patr&oacute;n fachada (<em>facade</em>). Este patr&oacute;n consiste en proporcionar
+una interfaz &uacute;nica (fachada) para acceder a las funcionalidades de
+un determinado m&oacute;dulo, aisl&aacute;ndonos as&iacute; de la complejidad
+subyacente de dicho m&oacute;dulo. Podemos observar que este m&oacute;dulo esta
+compuesto por un gran n&uacute;mero de clases, y puede resultar altamente
+complejo para quien quiera acceder a los servicios proporcionados
+por &eacute;l aprender a utilizar esta librer&iacute;a de clases. Sin embargo,
+teniendo una interfaz a trav&eacute;s de la cual acceder a estos servicios
+ser&aacute; mucho m&aacute;s intuitivo utilizarlos. </p>
+<p>Por lo tanto, partiremos de dicha fachada para estudiar lo que
+nos ofrece este m&oacute;dulo. Si nos fijamos en el c&oacute;digo fuente podemos 
+ver que en este m&oacute;dulo tenemos implementado el DAO para acceder a 
+los datos para la administraci&oacute;n del registro presencial. La fachada
+utiliza una serie de clases que se encuentran en el paquete 
+<span class="codefrag">manager</span> para acceder a los datos (por ejemplo
+<span class="codefrag">RPAdminUserManager</span> para el acceso a los datos de los
+usuarios). Este conjunto de clases nos aporta las operaciones 
+sobre datos necesarias para cada una de las funcionalidades que
+debe ofrecer este m&oacute;dulo. Estas clases a su vez utilizan las clases
+del paquete <span class="codefrag">database</span> que son las que realizan el acceso
+a la BD a un m&aacute;s bajo nivel. Las clases de este paquete se conectar&aacute;n 
+a la BD mediante la librer&iacute;a gen&eacute;rica que tenemos en el proyecto 
+<span class="codefrag">SIGEM_ClasesBase</span>, que como ya comentamos est&aacute; basada
+en JDBC.</p>
+<p>Por otro lado, algunos de los m&eacute;todos de las clases del paquete
+<span class="codefrag">manager</span>, en lugar de acceder directamente a la BD,
+utilizan servicios de otros m&oacute;dulos de SIGEM. As&iacute; ocurre por ejemplo
+en las operaciones sobre usuarios, que utilizan la clase
+<span class="codefrag">LocalizadorServicios</span> para obtener acceso a otros
+servicios (concretamente <span class="codefrag">ServicioEstructuraOrganizativa</span>). 
+De forma similar, cuando otros m&oacute;dulos necesiten tener acceso local
+al servicio con el que estamos trabajando actualmente, utilizar&aacute;n
+la clase <span class="codefrag">LocalizadorServicios</span> para acceder a 
+<span class="codefrag">ServicioRPAdmin</span>. Obviamente, dado que actualmente 
+estamos probando &uacute;nicamente el m&oacute;dulo <span class="codefrag">SIGEM_RegistroPresencialAdmin</span>,
+no podremos utilizar ninguno de los m&eacute;todos de este m&oacute;dulo que 
+necesite tener acceso a otros m&oacute;dulos.</p>
+<p>Tambi&eacute;n en este m&oacute;dulo encontramos el paquete <span class="codefrag">beans</span>
+con los objetos Java que encapsulan los datos propios del m&oacute;dulo, 
+y el paquete <span class="codefrag">exception</span> con la excepci&oacute;n 
+<span class="codefrag">RPAdminDAOException</span> que es la excepci&oacute;n que lanzamos
+en caso de obtener alg&uacute;n error en los m&eacute;todos del DAO. Hemos de 
+hacer notar que en estos m&eacute;todos se utilizan <em>nested exceptions</em>.
+Podemos ver que cuando ocurre un error, se captura la excepci&oacute;n
+causante y se lanza una nueva de tipo <span class="codefrag">RPAdminDAOException</span>.</p>
+</div>
+
+
+<a name="N10291"></a><a name="Base+de+datos"></a>
+<h2 class="underlined_10">Base de datos</h2>
+<div class="section">
+<p>Antes de poder empezar a probar este m&oacute;dulo, necesitaremos poner
+en marcha el servidor de base de datos, ya que las operaciones que
+encontramos en los m&oacute;dulos estudiados son b&aacute;sicamente para acceso
+a datos. Seguiremos los pasos vistos en la sesi&oacute;n anterior para
+ejecutar el servidor de Postgres en la m&aacute;quina virtual.</p>
+<a name="N1029A"></a><a name="Administraci%C3%B3n+de+la+base+de+datos"></a>
+<h3 class="underlined_5">Administraci&oacute;n de la base de datos</h3>
+<p>Puede resultarnos &uacute;til contar con una herramienta visual de
+administraci&oacute;n de Postgres, para as&iacute; poder consultar
+la estructura y el contenido de las bases de datos con las que vamos a 
+trabajar. Para ello utilizaremos la aplicaci&oacute;n <strong>pgAdmin III</strong>,
+que puede obtenerse de la p&aacute;gina de software del curso o de su
+web oficial (<span class="codefrag">www.pgadmin.org</span>). Para instalar el fichero RPM
+en openSuse utilizaremos el siguiente comando:</p>
+<pre class="code">&gt; sudo rpm -i pgadmin3-1.8.4-1.i586.rpm</pre>
+<p>Para realizar la instalaci&oacute;n nos pedir&aacute; el password de <span class="codefrag">root</span>
+(recordamos que es <span class="codefrag">sigem</span>). Una vez instalada, podremos
+cargar la herramienta con:</p>
+<pre class="code">&gt; pgadmin3 &amp;</pre>
+<p>Para poder utilizarla deberemos haber puesto en marcha el servidor
+de Postgres previamente. Si esto es as&iacute;, dentro de la herramienta
+crearemos una nueva conexi&oacute;n indicando como servidor <span class="codefrag">localhost</span>,
+y utilizando como login y password <span class="codefrag"> postgres / postgres</span>.
+Con esto podremos ver un listado de las bases de datos instaladas, y los
+elementos que contienen.</p>
+<a name="N102C4"></a><a name="Volcado+de+la+base+de+datos"></a>
+<h3 class="underlined_5">Volcado de la base de datos</h3>
+<p>Tambi&eacute;n puede interesarnos hacer un volcado de la base de datos
+para posteriormente instalarla en otra m&aacute;quina o en otro sistema gestor
+de bases de datos. Podemos hacer esto mediante la aplicaci&oacute;n
+<strong>pgAdmin III</strong> instalada en el punto anterior. Para ello
+pulsaremos sobre la base de datos que queramos exportar con el bot&oacute;n
+derecho, y pulsaremos sobre la opci&oacute;n <em>Resguardo...</em>.</p>
+<p>Veremos que podemos exportar la base de datos en diferentes formatos. El 
+primero de ellos (<span class="codefrag">COMPRESS</span>) es un formato propio que
+exporta la base de datos en un fichero binario. Este formato tiene la
+ventaja de ser m&aacute;s compacto, pero s&oacute;lo podr&aacute; ser utilizado para
+restaurar la base de datos en Postgres. Los otros formatos exportar&aacute;n
+la base de datos en un fichero de texto con las sentencias SQL
+necesarias para crearla, por lo que nos podr&iacute;an servir para adaptar
+la base de datos a otro sistema gestor de bases de datos.</p>
+<p>De forma alternativa, tambi&eacute;n podemos exportar la base de datos
+desde l&iacute;nea de comando de la siguiente forma:</p>
+<pre class="code">pg_dump -U postgres -cif registro.sql registro_000</pre>
+<p>En este caso estamos exportando la base de datos <span class="codefrag">registro_000</span>, 
+que es la utilizado por los m&oacute;dulos que estamos estudiando en esta
+sesi&oacute;n.</p>
+<p>Una vez exportados los datos, con la herramienta <strong>pgAdmin III</strong>
+podr&iacute;amos crearnos una nueva base de datos e importar en ella los
+ficheros exportados, en cualquiera de los formatos vistos anteriormente.</p>
+<a name="N102ED"></a><a name="Acceso+a+la+base+de+datos+desde+la+aplicaci%C3%B3n"></a>
+<h3 class="underlined_5">Acceso a la base de datos desde la aplicaci&oacute;n</h3>
+<p>La aplicaci&oacute;n SIGEM accede a la base de datos a trav&eacute;s de fuentes
+de datos definidas en el servidor de aplicaciones. Actualmente todav&iacute;a
+no estamos trabajando con el servidor, por lo que no podremos acceder 
+de esta forma. Si cogemos alguno de los m&eacute;todos de la fachada
+<span class="codefrag">ServicioRPAdminAdapter</span> (por ejemplo <span class="codefrag">obtenerOficinas</span>)
+y vamos siguiendo las llamadas que se van haciendo para acceder
+a la base de datos, veremos que la conexi&oacute;n (<span class="codefrag">Connection</span>)
+se obtiene a partir de una clase <span class="codefrag">DBSessionManager</span>
+(perteneciente al paquete <span class="codefrag">ieci.tecdoc.sgm.rpadmin.manager</span>).</p>
+<p>Vamos a fijarnos en el c&oacute;digo de esta clase <span class="codefrag">DBSessionManager</span>.
+En ella se obtiene la conexi&oacute;n a partir de una fuente de datos del
+servidor. Realmente el nombre de esta fuente de datos se busca en
+un fichero de configuraci&oacute;n de Spring, y a este nombre se le a&ntilde;ade
+el c&oacute;digo de la entidad con la que estemos trabajando (el sistema
+permite tener una BD distinta para cada entidad). Para las pruebas
+que vamos a hacer accederemos a la base de datos de registro 
+correspondiente a la entidad <span class="codefrag">000</span>, que
+es la &uacute;nica que tenemos creada en el sistema. Los datos para la 
+conexi&oacute;n a esta base de datos est&aacute;n definidos en un fichero de 
+configuraci&oacute;n del servidor Tomcat. Para poder acceder a ella
+ejecutando la aplicaci&oacute;n de forma independiente, sin utilizar el 
+servidor, deberemos modificar el c&oacute;digo de <span class="codefrag">DBSessionManager</span>
+de forma que en lugar de buscar la fuente de datos, realice directamente
+la conexi&oacute;n mediante JDBC y nos devuelva el objeto <span class="codefrag">Connection</span>
+obtenido. Los datos que deberemos usar en la conexi&oacute;n son los siguientes: </p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+
+<th colspan="1" rowspan="1">Par&aacute;metro</th>
+<th colspan="1" rowspan="1">Valor</th>
+<th colspan="1" rowspan="1">&nbsp;</th>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Driver</td>
+<td colspan="2" rowspan="1"><span class="codefrag">org.postgresql.Driver</span></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">URL</td>
+<td colspan="2" rowspan="1"><span class="codefrag">jdbc:postgresql://localhost/registro_000</span></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Usuario</td>
+<td colspan="2" rowspan="1"><span class="codefrag">postgres</span></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Password</td>
+<td colspan="2" rowspan="1"><span class="codefrag">postgres</span></td>
+
+</tr>
+
+</table>
+<p>Ser&aacute; recomendable comentar la l&iacute;nea que obtiene la conexi&oacute;n a trav&eacute;s
+de la fuente de datos, e introducir el c&oacute;digo para conectar directamente.
+De esa forma posteriormente podremos recuperar el c&oacute;digo original, cuando
+vayamos a utilizar la aplicaci&oacute;n en un servidor web.</p>
+</div>
+
+
+<a name="N10366"></a><a name="Pruebas+y+depuraci%C3%B3n"></a>
+<h2 class="underlined_10">Pruebas y depuraci&oacute;n</h2>
+<div class="section">
+<p>Vamos a pasar ya a probar el m&oacute;dulo de la aplicaci&oacute;n. Para ello,
+lo primero que haremos ser&aacute; crear un programa principal 
+(<em>driver</em>) con el que probar alguna de las funcionalidades
+de nuestro m&oacute;dulo. Para ello introduciremos en el m&eacute;todo <span class="codefrag">main</span>
+el c&oacute;digo para llamar a alguna de las operaciones de la fachada
+(<span class="codefrag">ServicioRPAdminAdapter</span>). Por ejemplo, podemos probar
+a obtener el listado de oficinas:</p>
+<pre class="code">public class Prueba {
+
+  public static ServicioRPAdminAdapter oServicio = 
+                               new ServicioRPAdminAdapter();
+
+  public static Entidad entidad = new Entidad();
+
+  static {
+    entidad.setIdentificador("00001");
+  }
+
+  public static void testListarOficinas() {
+    try {
+      Oficinas oficinas = oServicio.obtenerOficinas(entidad);
+      System.out.println("Numero: " + oficinas.count());
+      Iterator iter = oficinas.getLista().iterator();
+      while(iter.hasNext()) {
+        Oficina oficina = (Oficina) iter.next();
+        System.out.println(oficina.getNombre());
+      }
+    } catch (RPAdminException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void main(String[] args) {
+    testListarOficinas();
+  }
+}</pre>
+<div class="frame note">
+<div class="label">Ayuda</div>
+<div class="content">Una vez conozcamos la clase en la que se implementa
+la fachada de nuestro m&oacute;dulo, podremos utilizar la caracter&iacute;stica
+de autocompletar de Eclipse para ver qu&eacute; operaciones ofrece y como
+usar cada una de ellas (tipos de par&aacute;metros, tipo de datos devueltos),
+as&iacute; como tambi&eacute;n para inspeccionar las propiedades de los tipos de 
+datos que nos devuelvan.</div>
+</div>
+<a name="N10380"></a><a name="Pruebas+con+JUnit"></a>
+<h3 class="underlined_5">Pruebas con JUnit</h3>
+<p>Podemos ver que en el proyecto <span class="codefrag">SIGEM_RegistroPresencialAdmin</span>
+existe un segundo directorio de fuentes llamado <span class="codefrag">test</span> donde
+se encuentra un <span class="codefrag">TestCase</span> de JUnit. Este fichero se
+encarga de probar la fachada (<span class="codefrag">ServicioRPAdminAdapter</span>),
+por lo que el resultado de las pruebas depender&aacute; del contenido de la 
+base de datos. Esto complica las pruebas, ya que adem&aacute;s de los par&aacute;metros
+de entrada de los m&eacute;todos probados, el contenido de la base de datos
+tambi&eacute;n se considerar&aacute; como entrada, y deber&aacute; ser conocido de antemano
+a la hora de dise&ntilde;ar las pruebas.</p>
+<p>Para solucionar este problema muchas veces estas pruebas se realizan
+no utilizando el DAO real, sino un DAO falso (<em>mock</em>) que no se
+conecta a la base de datos real, sino que devuelve siempre una serie
+de datos predefinidos. Algo as&iacute; se pretende con la clase 
+<span class="codefrag">ServicioRPAdminDummy</span>, que implementa la misma interfaz
+de la fachada pero no accede de verdad a la base de datos. Este tipo de
+objetos deber&iacute;an definirse en el directorio <span class="codefrag">test</span>, ya que
+no deber&iacute;a estar mezclado con el c&oacute;digo real de la aplicaci&oacute;n. 
+Tambi&eacute;n es recomendable que estos <em>mocks</em> se encuentren en 
+las capas m&aacute;s bajas de la aplicaci&oacute;n (las que acceden realmente a JDBC),
+para as&iacute; al menos estar probando el resto de componentes de nuestra 
+aplicaci&oacute;n. Por lo tanto, el fichero <em>mock</em> definido en este
+proyecto no tiene mucha utilidad, &uacute;nicamente nos servir&aacute; para
+comprobar que el <span class="codefrag">TestCase</span> est&aacute; funcionando correctamente, 
+pero no ser&aacute; &uacute;til para probar los componentes de nuestra aplicaci&oacute;n. 
+En esta aplicaci&oacute;n sobretodo lo que nos interesa es probar que 
+accede a los datos reales de forma correcta, por lo que utilizaremos
+la fachada real para las pruebas.</p>
+<p>Sin embargo, el <span class="codefrag">TestCase</span> tampoco est&aacute; adaptado al 
+contenido que hay actualmente en la base de datos, y ni siquiera 
+se hacen comprobaciones (<em>asserts</em>) de si el resultado ha sido
+correcto en muchos de los m&eacute;todos de prueba. Por ello, ser&aacute; conveniente
+dejar guardado este <span class="codefrag">TestCase</span> con otro nombre, para 
+tenerlo como referencia, pero crear nosotros uno nuevo m&aacute;s reducido
+desde cero, teniendo en cuenta el estado actual de la base de datos
+y haciendo los <em>asserts</em> correspondientes en cada caso. Para
+que las pruebas resulten &uacute;tiles deberiamos guardar un backup de la base
+de datos que hemos definido como entrada a la hora de dise&ntilde;ar las pruebas,
+y permitir que este estado de la base de datos pueda ser restaurado de
+forma sencilla cada vez que queramos volver a ejecutar dichas pruebas
+(por ejemplo definiendo un <em>script</em> de ant que ejecute las
+sentencias SQL necesarias).</p>
+<p>Podr&iacute;amos definir un <span class="codefrag">TestCase</span> inicial que compruebe
+que se obtiene el n&uacute;mero correcto de oficinas, como el siguiente:</p>
+<pre class="code">public void testListarOficinasListado() {
+  try {
+    Oficinas oficinas = oServicio.obtenerOficinas(entidad);
+    assertEquals(oficinas.count(), 2);
+  } catch (RPAdminException e) {
+    fail();
+  }
+}</pre>
+<p>Ser&aacute; conveniente tambi&eacute;n <strong>refactorizar</strong> el 
+<span class="codefrag">TestCase</span> para moverlo al mismo paquete en el que se
+encuentra la clase probada, tal como se recomienda.</p>
+<a name="N103D0"></a><a name="Gesti%C3%B3n+de+logs"></a>
+<h3 class="underlined_5">Gesti&oacute;n de logs</h3>
+<p>Podemos ver que en el c&oacute;digo de la aplicaci&oacute;n se utiliza Log4J para
+generar <em>logs</em> de la aplicaci&oacute;n. Sin embargo, no vemos en los
+proyectos que estamos estudiando ning&uacute;n fichero <span class="codefrag">log4j.properties</span>
+con la configuraci&oacute;n de esta librer&iacute;a. Esto se debe a que este fichero
+se encuentra en los proyectos web, que son los que utilizan estas librer&iacute;as.
+Cada uno de los m&oacute;dulos web generan sus <em>logs</em> en un directorio
+separado, todos ellos bajo el directorio <span class="codefrag">/home/sigem/SIGEM/logs</span>.</p>
+<p>Si queremos poder ver los <em>logs</em> mientras probamos nuestro
+m&oacute;dulo de forma independiente, podr&iacute;amos incluir en &eacute;l un fichero
+<span class="codefrag">log4j.properties</span> que por ejemplo muestre los <em>logs</em>
+en la consola.</p>
+<pre class="code">DefaultAppenderType=org.apache.log4j.ConsoleAppender
+DefaultLayout=org.apache.log4j.PatternLayout
+DefaultLayoutPattern=%d %-5p %-40c{3} - %m%n
+
+log4j.rootLogger=INFO, A1
+log4j.appender.A1=${DefaultAppenderType}
+log4j.appender.A1.layout=${DefaultLayout}
+log4j.appender.A1.layout.ConversionPattern=${DefaultLayoutPattern}</pre>
+<a name="N103F6"></a><a name="Acceso+a+otros+m%C3%B3dulos"></a>
+<h3 class="underlined_5">Acceso a otros m&oacute;dulos</h3>
+<p>Hemos visto antes que algunas operaciones de nuestro m&oacute;dulo no 
+pod&iacute;an ser utilizadas por depender de otros m&oacute;dulos (por ejemplo la
+operaci&oacute;n <span class="codefrag">obtenerUsuarios</span> que depende del m&oacute;dulo
+<span class="codefrag">SIGEM_EstructuraOrganizativa</span>). El acceso a este m&oacute;dulo
+se realiza mediante la pasarela de intercomunicaci&oacute;n, implementada
+en la factor&iacute;a <span class="codefrag">LocalizadorServicios</span>, que nos proporciona
+acceso a la interfaz local o remota para acceder a cada m&oacute;dulo.</p>
+<p>Vamos a probar a acceder a la operaci&oacute;n <span class="codefrag">obtenerUsuarios</span>
+desde nuestro programa principal de prueba:</p>
+<pre class="code">public static void testListarUsuarios() {
+  try {
+    UsuariosRegistradores usuarios = 
+                          oServicio.obtenerUsuarios(entidad);
+    System.out.println("Usuarios: " + usuarios.count());
+    Iterator iterUsuarios = usuarios.getLista().iterator();
+    while(iterUsuarios.hasNext()) {
+      UsuarioRegistrador usuario = 
+                         (UsuarioRegistrador)iterUsuarios.next();
+      System.out.println(usuario.getNombre());
+    }
+  } catch (RPAdminException e) {
+    e.printStackTrace();
+  }
+}</pre>
+<p>Si lo ejecutamos, veremos que nos da un error al intentar localizar
+la clase que implementa el acceso al m&oacute;dulo necesario. Comprobaremos as&iacute;
+que efectivamente necesitamos el m&oacute;dulo de estructura organizativa.</p>
+<p>Vamos a seguir los pasos necesarios para solucionar este problema
+y as&iacute; poder probar esta operaci&oacute;n. Para ello deberemos importar en 
+Eclipse el m&oacute;dulo necesario (<span class="codefrag">SIGEM_EstructuraOrganizativa</span>)
+teniendo en cuenta que:</p>
+<ul>
+
+<li>Este m&oacute;dulo puede contener m&aacute;s dependencias, que deber&iacute;an ser
+importadas para su correcto funcionamiento.</li>
+
+<li>Para que <span class="codefrag">SIGEM_RegistroPresencialAdmin</span> pueda acceder
+a las clases de <span class="codefrag">SIGEM_EstructuraOrganizativa</span> este segundo
+proyecto deber&aacute; figurar como dependencia del primero.</li>
+
+<li>Las clases del m&oacute;dulo <span class="codefrag">SIGEM_EstructuraOrganizativa</span> 
+obtienen la conexi&oacute;n a la base de datos a trav&eacute;s de su propio objeto
+<span class="codefrag">DBSessionManager</span> que por defecto obtiene la conexi&oacute;n
+a trav&eacute;s de una fuente de datos del servidor. Deberemos modificarlo
+para que establezca la conexi&oacute;n directamente.</li>
+
+</ul>
+<p>Ahora podr&iacute;amos plantearnos a&ntilde;adir un mayor n&uacute;mero de pruebas
+a nuestro <span class="codefrag">TestCase</span> de JUnit.</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007-2008 Depto. CCIA</div>
+</div>
+</body>
+</html>

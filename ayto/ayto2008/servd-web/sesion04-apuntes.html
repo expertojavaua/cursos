@@ -1,0 +1,506 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Introducci&oacute;n a JBoss. Servicios en JavaEE: fuentes de datos</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servidores Web" src="images/baner_j2ee_der.gif" title="Servidores Web"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Servidores web</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Servidores Web</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Servidores Web">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 4</div>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html">Roadmap</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion04-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Introducci&oacute;n a JBoss. Servicios en JavaEE: fuentes de datos</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Introducci%C3%B3n+a+JBoss">Introducci&oacute;n a JBoss</a>
+<ul class="minitoc">
+<li>
+<a href="#Instalaci%C3%B3n+y+arranque">Instalaci&oacute;n y arranque</a>
+<ul class="minitoc">
+<li>
+<a href="#La+consola+JMX">La consola JMX</a>
+</li>
+<li>
+<a href="#Parar+el+servidor+desde+l%C3%ADnea+de+comandos">Parar el servidor desde l&iacute;nea de comandos</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Configuraci%C3%B3n+de+JBoss">Configuraci&oacute;n de JBoss</a>
+<ul class="minitoc">
+<li>
+<a href="#Estructura+f%C3%ADsica%3A+directorios">Estructura f&iacute;sica: directorios</a>
+</li>
+<li>
+<a href="#Cambiar+la+configuraci%C3%B3n">Cambiar la configuraci&oacute;n</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Despliegue">Despliegue</a>
+<ul class="minitoc">
+<li>
+<a href="#Despliegue+de+aplicaciones">Despliegue de aplicaciones</a>
+</li>
+<li>
+<a href="#Despliegue+de+servicios">Despliegue de servicios</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Servicios+en+JavaEE">Servicios en JavaEE</a>
+<ul class="minitoc">
+<li>
+<a href="#Fuentes+de+datos+y+JNDI">Fuentes de datos y JNDI</a>
+</li>
+<li>
+<a href="#Fuentes+de+datos+en+JBoss">Fuentes de datos en JBoss</a>
+</li>
+<li>
+<a href="#Fuentes+de+datos+en+Tomcat">Fuentes de datos en Tomcat</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<a name="N1000C"></a><a name="Introducci%C3%B3n+a+JBoss"></a>
+<h2 class="underlined_10">Introducci&oacute;n a JBoss</h2>
+<div class="section">
+<a name="N10012"></a><a name="Instalaci%C3%B3n+y+arranque"></a>
+<h3 class="underlined_5">Instalaci&oacute;n y arranque</h3>
+<p>La instalaci&oacute;n y ejecuci&oacute;n con la configuraci&oacute;n por defecto de JBoss es bastante sencilla. Basta con </p>
+<ul>
+	
+<li>Descomprimir la distribuci&oacute;n de JBoss en alguna carpeta del sistema. En estos momentos la versi&oacute;n actual es la
+	4.2, con la 5 en proceso de <em>candidate release</em>.</li>
+	
+<li>Definir la variable de entorno <span class="codefrag">JBOSS_HOME</span> para que apunte al directorio de instalaci&oacute;n de JBoss</li>
+	
+<li>Ejecutar el <em>script</em> de arranque, llamado <span class="codefrag">run</span> (.bat o .sh, dependiendo del S.O) y contenido
+	en el subdirectorio <span class="codefrag">bin</span> de JBoss.</li>
+	
+<li>En la consola aparecer&aacute;n mensajes a medida que van arrancando todos los servicios. Una vez completado el arranque, se mostrar&aacute;
+	el mensaje <span class="codefrag">"Started in ..."</span> con el tiempo que ha tardado JBoss en arrancar.</li>
+	
+<li> Para
+	comprobar que todo es correcto, se puede abrir la consola de administraci&oacute;n. En un navegador, abrir la URL
+	<span class="codefrag">http://localhost:8080</span>. Debe aparecer una p&aacute;gina web con el logo de JBoss y acceso a las diferentes consolas de
+	administraci&oacute;n y monitorizaci&oacute;n.</li>
+	
+</ul>
+<a name="N10042"></a><a name="La+consola+JMX"></a>
+<h4>La consola JMX</h4>
+<p>JBoss 4 implementa el est&aacute;ndar JMX para administraci&oacute;n y monitorizaci&oacute;n de servicios JavaEE. Este est&aacute;ndar permite
+		interactuar con los servicios a trav&eacute;s de componentes llamados <em>MBeans</em>.</p>
+<p>Podemos acceder a la consola JMX en JBoss a trav&eacute;s del enlace <span class="codefrag">JMX Console</span>. Aparecer&aacute; una lista
+		con todos los MBeans disponibles, ordenados por categor&iacute;as (dominios, en terminolog&iacute;a JMX). Podemos
+		elegir por ejemplo el dominio <span class="codefrag">jboss.system</span>, que contiene informaci&oacute;n sobre
+		el servidor propiamente dicho: en el cuadro de texto, teclear <span class="codefrag">jboss.system:</span> para filtrar
+		los MBeans de este dominio.</p>
+<p>
+<img alt="consola JMX" content-width="14cm" src="imagenes/jmx-console1.jpg" width="700"></p>
+<p>Podemos seleccionar por ejemplo el MBean <span class="codefrag">type=Server</span>, que representa al propio servidor. Como podr&aacute; verse, cada componente tiene
+		una serie de propiedades, que podemos examinar, y operaciones, que podemos invocar desde la consola JMX. Por ejemplo, pulsando
+		sobre el "Invoke" de la operaci&oacute;n <span class="codefrag">shutdown()</span> podemos parar el servidor.</p>
+<p>
+<img alt="servidor en consola JMX" content-width="14cm" src="imagenes/jmx-console2.jpg" width="700"></p>
+<a name="N10072"></a><a name="Parar+el+servidor+desde+l%C3%ADnea+de+comandos"></a>
+<h4>Parar el servidor desde l&iacute;nea de comandos</h4>
+<p>En desarrollo, es habitual tener disponible la consola desde donde hemos arrancado JBoss. En ese caso, para parar
+		el servidor basta con pulsar <span class="codefrag">Ctrl-C</span>. Si estamos ejecutando JBoss como un servicio del sistema, o en un
+		sistema remoto, podemos pararlo con el <em>script</em> <span class="codefrag">stop</span> (.bat o .sh) del directorio
+		<span class="codefrag">bin</span>.</p>
+<a name="N10089"></a><a name="Configuraci%C3%B3n+de+JBoss"></a>
+<h3 class="underlined_5">Configuraci&oacute;n de JBoss</h3>
+<a name="N1008F"></a><a name="Estructura+f%C3%ADsica%3A+directorios"></a>
+<h4>Estructura f&iacute;sica: directorios</h4>
+<p>JBoss viene originalmente con tres configuraciones alternativas, que se diferencian en los servicios
+	que se ponen en marcha cuando se arranca el servidor: <em>minimal</em>, con el m&iacute;nimo de servicios para que JBoss 
+	funcione, <em>default</em>, la configuraci&oacute;n usada por defecto, con los servicios JavaEE m&aacute;s t&iacute;picos, y <em>all</em>,
+	que pone en marcha todos los servicios incluidos en la distribuci&oacute;n.</p>
+<p>Para poner en marcha una configuraci&oacute;n determinada basta con pasar su nombre en el par&aacute;metro <span class="codefrag">-c</span>
+	del script de arranque. Por ejemplo (en windows)</p>
+<pre class="code">run.bat -c minimal</pre>
+<p>Las 3 configuraciones iniciales se corresponden con los tres subdirectorios existentes dentro del
+	directorio <span class="codefrag">server</span>. Podr&iacute;amos crear una configuraci&oacute;n propia copiando la estructura de directorios de una de
+	las ya existentes y adaptando los archivos de configuraci&oacute;n a nuestras necesidades, a&ntilde;adiendo o quitando servicios o 
+	cambiando su configuraci&oacute;n.</p>
+<ul>
+	
+<li>
+<span class="codefrag">conf</span>: contiene un fichero de configuraci&oacute;n XML donde se definen los servicios "fijos" durante
+	todo el ciclo de vida del servidor. Adem&aacute;s de estos podemos a&ntilde;adir servicios sobre la marcha, como ya veremos.</li>
+	
+<li>
+<span class="codefrag">data</span>: disponible para servicios que quieran almacenar datos de manera permanente. JBoss lo utiliza para la
+	base de datos que lleva integrada (hypersonic).</li>
+	
+<li>
+<span class="codefrag">deploy</span>: aqu&iacute; es donde se despliegan las aplicaciones y los nuevos servicios.</li>
+	
+<li>
+<span class="codefrag">lib</span>: librer&iacute;as comunes al servidor y a las aplicaciones. Por ejemplo, drivers JDBC.</li>
+	
+<li>
+<span class="codefrag">log</span>: evidentemente, guarda los <em>logs</em>. JBoss usa <em>log4j</em>, que se configura en un XML guardado
+	en <span class="codefrag">conf</span>.</li>
+	
+<li>
+<span class="codefrag">tmp</span> y <span class="codefrag">work</span>: son directorios de trabajo de JBoss, similares a los del mismo nombre de Tomcat</li>
+	
+</ul>
+<a name="N100DF"></a><a name="Cambiar+la+configuraci%C3%B3n"></a>
+<h4>Cambiar la configuraci&oacute;n</h4>
+<p>Configurar JBoss hasta el &uacute;ltimo detalle es una cuesti&oacute;n compleja, de modo que aqu&iacute; simplemente daremos unas  breves
+	indicaciones. Se recomienda consultar la excelente documentaci&oacute;n de referencia disponible en el sitio de JBoss.</p>
+<p>Los servicios que se definen en la configuraci&oacute;n como fijos durante toda la "vida" del servidor se especifican
+	en el archivo <span class="codefrag">conf/jboss-service.xml</span>. Si editamos este archivo veremos que en &eacute;l se define un conjunto
+	de <em>MBeans</em>. El archivo est&aacute; extensamente comentado, lo que unido a la documentaci&oacute;n de referencia hace relativamente
+	sencillo (aunque tedioso) cambiar la configuraci&oacute;n manualmente. Por ejemplo, el siguiente MBean (tomado de la configuraci&oacute;n <span class="codefrag">minimal</span>) 
+	define el servicio de gesti&oacute;n de <em>logs</em>.</p>
+<pre class="code">
+&lt;mbean code="org.jboss.logging.Log4jService"
+      name="jboss.system:type=Log4jService,service=Logging"&gt;
+      &lt;attribute name="ConfigurationURL"&gt;resource:jboss-log4j.xml&lt;/attribute&gt;
+&lt;/mbean&gt;</pre>
+<p>Bastar&iacute;a comentar la secci&oacute;n anterior para que no se pusiera en marcha el <em>logging</em> al arrancar JBoss,
+	o cambiar el valor del atributo <span class="codefrag">ConfigurationURL</span> para usar otro fichero de configuraci&oacute;n
+	para <em>log4j</em>.</p>
+<p>La configuraci&oacute;n tambi&eacute;n se puede cambiar a trav&eacute;s de la consola JMX, pero los cambios no son permanentes y 
+	solamente se mantendr&aacute;n mientras el servidor est&eacute; en marcha.</p>
+<p>Finalmente, n&oacute;tese que JBoss usa internamente Tomcat como servidor web, por lo que podemos
+	aplicar todo lo visto en la configuraci&oacute;n de Tomcat a la parte web de JBoss. Tomcat est&aacute; configurado
+	como un servicio m&aacute;s de JBoss, dentro del directorio <span class="codefrag">deploy/jboss-web.deployer</span>. All&iacute; podemos
+	encontrar por ejemplo el <span class="codefrag">server.xml</span> de Tomcat.</p>
+<a name="N10115"></a><a name="Despliegue"></a>
+<h3 class="underlined_5">Despliegue</h3>
+<a name="N1011B"></a><a name="Despliegue+de+aplicaciones"></a>
+<h4>Despliegue de aplicaciones</h4>
+<p>JBoss tiene un directorio en el que basta "dejar caer" las aplicaciones web para que se desplieguen en el servidor. Se
+		trata del directorio <span class="codefrag">deploy</span>. En &eacute;l podemos dejar un .war o bien un directorio con
+		la aplicaci&oacute;n web descomprimida. Recordemos que en Tomcat el directorio equivalente era <span class="codefrag">webapps</span>.</p>
+<p>Para eliminar una aplicaci&oacute;n basta con borrarla del directorio <span class="codefrag">deploy</span>.
+		</p>
+<p>Con Eclipse, la forma de trabajo ser&aacute; id&eacute;ntica a la que emple&aacute;bamos con Tomcat, &uacute;nicamente necesitaremos definir el servidor JBoss y lo usaremos como <em>runtime</em> para nuestro proyecto web din&aacute;mico. </p>
+<a name="N10137"></a><a name="Despliegue+de+servicios"></a>
+<h4>Despliegue de servicios</h4>
+<p>Una caracter&iacute;stica muy interesante de JBoss es la posibilidad de desplegar y eliminar servicios "en caliente", con
+		el servidor en marcha. Estos servicios se despliegan en el mismo directorio que las aplicaciones, es
+		decir, en <span class="codefrag">deploy</span>.</p>
+<p>Los servicios se despliegan colocando un XML con su configuraci&oacute;n en dicho directorio. Aquellos que requieran
+		alg&uacute;n recurso adicional (librer&iacute;as, otros archivos) se empaquetan en lo que JBoss llama ficheros SAR (Service
+		Application Archive) que no son m&aacute;s que JARs con metainformaci&oacute;n especial.</p>
+<p>Al igual que con las aplicaciones, para eliminar un servicio basta con borrarlo del directorio <span class="codefrag">deploy</span>. Por ejemplo,
+		JBoss ofrece un servicio de <em>scheduling</em> que podemos usar para ejecutar una tarea a intervalos regulares.
+		Si no necesitamos dicho servicio, podemos eliminarlo "en caliente" sin m&aacute;s que borrar el fichero
+		<span class="codefrag">scheduler-service.xml</span>.
+		</p>
+</div>
+
+<a name="N10155"></a><a name="Servicios+en+JavaEE"></a>
+<h2 class="underlined_10">Servicios en JavaEE</h2>
+<div class="section">
+<p>Un servidor de aplicaciones, adem&aacute;s de permitirnos ejecutar nuestras aplicaciones web, ofrece una serie de servicios
+que pueden usar dichas aplicaciones, como conexi&oacute;n con bases de datos, localizaci&oacute;n de recursos externos, ejecuci&oacute;n
+de componentes distribuidos, etc. El est&aacute;ndar
+JavaEE especifica los servicios que debe incorporar un servidor de aplicaciones para poder ser considerado "compatible JavaEE". JBoss
+es uno de tales servidores, pero Tomcat no puede ser considerado completamente como tal, ya que le faltan algunos servicios
+exigidos por el est&aacute;ndar.</p>
+<a name="N1015E"></a><a name="Fuentes+de+datos+y+JNDI"></a>
+<h3 class="underlined_5">Fuentes de datos y JNDI</h3>
+<p>Las aplicaciones web que acceden a una base de datos son muy frecuentes. Si la aplicaci&oacute;n es para 
+	uso particular, o para un uso muy reducido y poco concurrente, podemos configurar un acceso por JDBC simple 
+	desde las diferentes p&aacute;ginas y clases que la componen.</p>
+<p>Sin embargo, la situaci&oacute;n cambia cuando se hace un acceso concurrente. Abrir una conexi&oacute;n JDBC con la
+	base de datos es un proceso costoso en tiempo. Si cada operaci&oacute;n requiere una nueva conexi&oacute;n, este tiempo
+	se multiplicar&aacute; peligrosamente. Es m&aacute;s eficiente mantener lo que se denomina un <em>pool</em> de conexiones,
+	una serie de conexiones que se abren al arranque del servidor y se mantienen abiertas. Cuando un cliente realiza
+	alguna operaci&oacute;n con la BD se usa una conexi&oacute;n ya abierta, y cuando esta acaba, se devuelve al <em>pool</em>, pero en
+	realidad no
+	se cierra.
+	De esta forma el proceso es mucho m&aacute;s eficiente.</p>
+<p>Todos los servidores JavaEE ofrecen <em>pools</em> de conexiones a trav&eacute;s de la clase <span class="codefrag">DataSource</span>, que
+	adem&aacute;s puede ofrecer transaccionalidad y otros aspectos. El acceso al <span class="codefrag">DataSource</span> o fuente de datos
+	se hace a trav&eacute;s de un "nombre simb&oacute;lico" para evitar dependencias del nombre f&iacute;sico de la base de datos. Para
+	esto, el servidor hace uso de un est&aacute;ndar JavaEE denominado JNDI. Este est&aacute;ndar permite localizar recursos f&iacute;sicos
+	a partir de un nombre l&oacute;gico. Aqu&iacute; lo usaremos para fuentes de datos pero en principio puede usarse para acceder a cualquier
+	recurso: componentes distribuidos, servicios de mail, etc.</p>
+<p>Para configurar una fuente de datos necesitaremos realizar los siguientes pasos, aunque el procedimiento concreto
+	depender&aacute; del servidor:</p>
+<ul>
+	
+<li>Dejar el <em>driver</em> de la base de datos accesible al servidor de aplicaciones, ya que es el que va a abrir y cerrar f&iacute;sicamente las conexiones, no nuestra aplicaci&oacute;n.
+	Este driver normalmente lo va a proporcionar el propio distribuidor de la base de datos. En nuestro caso, como
+	usaremos MySQL, el driver est&aacute; accesible desde su web, con el nombre de <em>conector java</em>.
+	 </li>
+	 
+<li>Configurar las propiedades del DataSource, indicando el nombre l&oacute;gico (JNDI), nombre f&iacute;sico de la BD, n&uacute;mero
+	 de conexiones m&aacute;ximas simult&aacute;neas, etc. Generalmente el proceso se realiza en un fichero de configuraci&oacute;n XML o
+	 a trav&eacute;s de alguna consola de administraci&oacute;n.</li>
+	 
+<li>Ya podemos acceder al DataSource en nuestro c&oacute;digo Java y realizar operaciones con la BD.</li>
+	
+</ul>
+<p>Vamos a ver c&oacute;mo se realiza este proceso en JBoss y en Tomcat.</p>
+<a name="N10195"></a><a name="Fuentes+de+datos+en+JBoss"></a>
+<h3 class="underlined_5">Fuentes de datos en JBoss</h3>
+<p>Lo primero es dejar el <em>driver</em> java de la base de datos a disposici&oacute;n de JBoss. Ya hemos visto que las librer&iacute;as que deben estar accesibles
+durante todo el ciclo de vida se colocan en el directorio <span class="codefrag">lib</span> de JBoss. El driver no es m&aacute;s que un JAR
+con las clases que lo implementan.</p>
+<p>Una vez colocado el <em>driver</em> en <span class="codefrag">lib</span>, tenemos que rearrancar el servidor. Podemos comprobar que
+se ha cargado correctamente a trav&eacute;s de la consola JMX. En la parte superior de la pantalla aparecer&aacute; el dominio <span class="codefrag">JMImplementation</span>,
+que contiene 3 MBeans. Nos interesa el primero de ellos (<span class="codefrag">LoaderRepository</span>). En &eacute;l podemos ver una lista de los JAR cargados
+por JBoss entre los que deber&iacute;a aparecer el de MySQL (<span class="codefrag">mysql-connector-java...</span>). Tambi&eacute;n podemos invocar la operaci&oacute;n
+<span class="codefrag">displayClassInfo()</span> introduciendo el nombre de la clase que implementa el driver (<span class="codefrag">com.mysql.jdbc.Driver</span>), que mostrar&aacute;
+si la clase est&aacute; accesible o no.</p>
+<p>Nos queda configurar las propiedades del DataSource. En JBoss un DataSource se considera
+un servicio desplegable "en caliente" y por tanto se configura a trav&eacute;s de un fichero XML que se deja en el
+directorio <span class="codefrag">deploy</span>. La distribuci&oacute;n de JBoss incluye en el directorio <span class="codefrag">docs/examples/jca</span>
+ficheros de configuraci&oacute;n de ejemplo para distintas bases de datos. Nosotros tomaremos el de MySQL: <span class="codefrag">mysql-ds.xml</span>.
+N&oacute;tese que todos estos ficheros siguen la convenci&oacute;n de que su nombre acaba por <span class="codefrag">-ds</span>. El servidor busca los nuevos DataSources en los 
+ficheros XML que sigan esta convenci&oacute;n.</p>
+<p>Aqu&iacute; tenemos un ejemplo de una posible configuraci&oacute;n para MySQL:</p>
+<pre class="code">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;datasources&gt;
+  &lt;local-tx-datasource&gt;
+    &lt;jndi-name&gt;PruebaDS&lt;/jndi-name&gt;
+    &lt;connection-url&gt;jdbc:mysql://localhost:3306/prueba&lt;/connection-url&gt;
+    &lt;driver-class&gt;com.mysql.jdbc.Driver&lt;/driver-class&gt;
+    &lt;user-name&gt;prueba&lt;/user-name&gt;
+    &lt;password&gt;prueba&lt;/password&gt;
+    &lt;exception-sorter-class-name&gt;
+       org.jboss.resource.adapter.jdbc.
+           vendor.MySQLExceptionSorter
+    &lt;/exception-sorter-class-name&gt;
+  &lt;/local-tx-datasource&gt;
+&lt;/datasources&gt;
+</pre>
+<p>Aunque el fichero de ejemplo original contiene m&aacute;s informaci&oacute;n, se ha eliminado la que no es estrictamente necesaria.
+Veamos los elementos definidos:</p>
+<ul>
+
+<li>
+<span class="codefrag">&lt;local-tx-datasource&gt;</span>: define una fuente de datos con transaccionalidad local (), es decir, que
+no va a haber transaccionalidad distribuida, que implique a varias bases de datos.</li>
+
+<li>
+<span class="codefrag">&lt;jndi-name&gt;</span>: es el nombre JNDI, es decir, el nombre l&oacute;gico que usaremos en nuestro c&oacute;digo Java. </li>
+
+<li>
+<span class="codefrag">&lt;connection-url&gt;</span>: la URL de conexi&oacute;n con la BD, al igual que cuando abrimos la conexi&oacute;n manualmente.</li>
+
+<li>
+<span class="codefrag">&lt;driver-class&gt;</span>: clase que implementa el driver.</li>
+
+<li>
+<span class="codefrag">&lt;user-name&gt;</span> y <span class="codefrag">&lt;password&gt;</span>: datos del usuario de la BD.</li>
+
+</ul>
+<p>Al dejar el fichero en <span class="codefrag">deploy</span> aparecer&aacute; en la terminal donde est&aacute; arrancado el servidor un mensaje
+indicando la incorporaci&oacute;n de una nueva fuente de datos, algo como:</p>
+<pre class="code">
+Bound ConnectionManager 
+'jboss.jca:service=DataSourceBinding,name=PruebaDS'
+ to JNDI name 'java:PruebaDS'
+</pre>
+<p>N&oacute;tese que el nombre JNDI en realidad es <span class="codefrag">java:PruebaDS</span>, como vemos tambi&eacute;n en el c&oacute;digo java
+de ejemplo para acceder a la fuente de datos:</p>
+<pre class="code">
+
+<strong>//Obtener el contexto JNDI</strong>
+Context initCtx = new InitialContext();
+<strong>//Obtener el recurso con su nombre l&oacute;gico (JNDI)</strong>
+DataSource ds = (DataSource) initCtx.lookup("java:PruebaDS");
+<strong>//A trav&eacute;s del DataSource podemos obtener una conexi&oacute;n con la BD</strong>
+Connection conn = ds.getConnection();
+<strong>//A partir de aqu&iacute; trabajar&iacute;amos como es habitual en JDBC</strong>
+... 
+</pre>
+<p>Aunque una descripci&oacute;n m&aacute;s detallada del funcionamiento de JNDI est&aacute; fuera del alcance de este tema, para nuestros prop&oacute;sitos basta saber
+que el servidor de aplicaciones mantiene un servidor JNDI. El acceso inicial al servidor JNDI se hace a trav&eacute;s
+del <span class="codefrag">InitialContext</span>. Una vez obtenido el contexto, podemos obtener recursos (<span class="codefrag">lookup</span>) por su nombre l&oacute;gico.</p>
+<a name="N1021E"></a><a name="Fuentes+de+datos+en+Tomcat"></a>
+<h3 class="underlined_5">Fuentes de datos en Tomcat</h3>
+<p>Los pasos a realizar para configurar la fuente de datos en Tomcat son similares a los que hemos seguido con JBoss.</p>
+<p>Primero,el driver java se coloca en el directorio <span class="codefrag">lib</span> de Tomcat (el mismo nombre que ten&iacute;a en JBoss). Tenemos
+	que rearrancar el servidor para que se cargue la librer&iacute;a.</p>
+<p>Ahora hay que configurar las propiedades de la fuente de datos. Esto se hace dentro de los ficheros
+	de configuraci&oacute;n de Tomcat, en el elemento <span class="codefrag">&lt;Context&gt;</span>. Ya hemos visto que b&aacute;sicamente hay dos sitios donde se
+	pueden configurar las aplicaciones: de manera centralizada, en el <span class="codefrag">server.xml</span> o bien en un XML propio 
+	de la aplicaci&oacute;n (<span class="codefrag">context.xml</span>). Veremos la segunda forma, aunque todo esto es aplicable tambi&eacute;n
+	a una configuraci&oacute;n centralizada.</p>
+<p>Deberemos crear en una carpeta <strong><span class="codefrag">META-INF</span></strong> dentro de nuestra aplicaci&oacute;n web, un fichero llamado <strong><span class="codefrag">context.xml</span></strong>, con el siguiente contenido:</p>
+<pre class="code">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;Context&gt;
+    &lt;Resource
+        name="<strong>PruebaDS</strong>"
+        type="javax.sql.DataSource"
+        auth="Container"
+        username="<strong>prueba</strong>"
+        password="<strong>prueba</strong>"
+        driverClassName="com.mysql.jdbc.Driver"
+        url="<strong>jdbc:mysql://localhost:3306/prueba</strong>"
+        maxActive="20"
+        maxIdle="5"
+        maxWait="10000"/&gt;
+&lt;/Context&gt;
+</pre>
+<p>Se ha establecido as&iacute; un pool de conexiones a una base de datos MySQL. Partiendo de esta premisa, los elementos en negrita son modificables:</p>
+<ul>
+				
+<li>
+<strong>name:</strong> El atributo <span class="codefrag">name</span> de la etiqueta <span class="codefrag">Resource</span> indica el nombre que le queremos dar al pool de conexiones. Es arbitrario, y totalmente a nuestra elecci&oacute;n</li>
+				
+<li>
+<strong>username y password:</strong> Estos atributos de <span class="codefrag">Resource</span> indican el usuario y password para acceso a la base de datos MySQL</li>
+				
+<li>
+<strong>url:</strong> El atributo <span class="codefrag">url</span> de la etiqueta <span class="codefrag">Resource</span> especifica la URL de conexi&oacute;n a la base de datos. En general, la URL ser&aacute; casi igual que la del ejemplo, cambiando &uacute;nicamente el nombre de la base de datos (<em>bdprueba</em>) por el que nos interese</li>
+				
+<li>
+					
+<p>Hay una serie de par&aacute;metros adicionales de configuraci&oacute;n para especificar caracter&iacute;sticas del pooling:</p>
+					
+<ul>
+						
+<li>
+<strong>maxActive:</strong> m&aacute;ximo n&uacute;mero de conexiones a la BD que se mantendr&aacute;n activas</li>
+						
+<li>
+<strong>maxIdle:</strong> m&aacute;ximo n&uacute;mero de conexiones libres que habr&aacute; en el pool (poner 0 para no tener l&iacute;mite). Este par&aacute;metro permitir&aacute; limitar el m&aacute;ximo de conexiones activas en cada momento. Por ejemplo, si <span class="codefrag">maxActive</span> est&aacute; puesto a 100, pero s&oacute;lo tenemos 20 conexiones activas, y permitimos 5 desocupadas, en total habr&aacute; 25 conexiones en el pool en ese momento (luego se crear&aacute;n m&aacute;s si son necesarias)</li>
+						
+<li>
+<strong>maxWait:</strong> tiempo en milisegundos que se deber&aacute; esperar como m&aacute;ximo para recibir una conexi&oacute;n libre (10 segundos, en el ejemplo)</li>
+					
+</ul>
+				
+</li>
+			
+</ul>
+<p>El c&oacute;digo Java para acceder a la fuente de datos es pr&aacute;cticamente id&eacute;ntico al que us&aacute;bamos con JBoss, con
+			la &uacute;nica diferencia del "prefijo" del nombre JNDI. En JBoss es <span class="codefrag">java:</span> mientras que en Tomcat es
+			<span class="codefrag">java:comp/env/</span>
+</p>
+<pre class="code">
+//Obtener el contexto JNDI
+Context initCtx = new InitialContext();
+<strong>//Obtener el recurso con su nombre l&oacute;gico (JNDI)</strong>
+DataSource ds = (DataSource) initCtx.lookup(<strong>"java:comp/env/PruebaDS"</strong>);
+//A trav&eacute;s del DataSource podemos obtener una conexi&oacute;n con la BD
+Connection conn = ds.getConnection();
+//A partir de aqu&iacute; trabajar&iacute;amos como es habitual en JDBC
+... 
+</pre>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007 Depto. CCIA</div>
+</div>
+</body>
+</html>

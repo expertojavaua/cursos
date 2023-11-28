@@ -1,0 +1,1130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Servicios Web RESTful</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servicios Web" src="images/baner_j2ee_der.gif" title="Servicios Web"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-web.html'">Aplicaciones Web</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-ent.html'">Aplicaciones Enterprise</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../charlas.html'">Charlas</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Servicios Web</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Servicios Web</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Servicios Web">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 4</div>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html" title="Roadmap">Roadmap</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion04-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Servicios Web RESTful</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Fundamentos+de+REST">Fundamentos de REST</a>
+</li>
+<li>
+<a href="#Crear+servicios+RESTful+con+Netbeans">Crear servicios RESTful con Netbeans</a>
+<ul class="minitoc">
+<li>
+<a href="#Crear+un+servicio+RESTful+sencillo">Crear un servicio RESTful sencillo</a>
+</li>
+<li>
+<a href="#Crear+un+servicio+RESTful+a+partir+de+JPA">Crear un servicio RESTful a partir de JPA</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Integrar+servicios+RESTful+ajenos">Integrar servicios RESTful ajenos</a>
+</li>
+<li>
+<a href="#Crear+un+cliente+para+servicios+RESTful">Crear un cliente para servicios RESTful</a>
+</li>
+</ul>
+</div>
+
+
+<p>El estilo REST (<em>Representational State Transfer</em>) es una forma alternativa de crear Servicios Web. Frente a los servicios de tipo SOAP vistos en 
+sesiones anteriores, los servicios REST son una forma ligera de implementar Servicios Web. En este caso 
+el elemento principal en el que se basan estos servicios son las URLs. En l&iacute;neas generales podemos decir que 
+estos servicios consisten en URLs a las que podemos acceder, por ejemplo mediante protocolo HTTP, para obtener
+informaci&oacute;n o realizar alguna operaci&oacute;n. El formato de la informaci&oacute;n que se intercambie con estas URLs lo
+decidir&aacute; el desarrollador del servicio. Este tipo de servicios vuelve a acercar los Servicios Web al tipo de 
+arquitectura de la <em>web</em>, siendo especialmente interesantes para su utilizaci&oacute;n
+en AJAX.</p> 
+
+
+<a name="N10015"></a><a name="Fundamentos+de+REST"></a>
+<h2 class="underlined_10">Fundamentos de REST</h2>
+<div class="section">
+<p>La clave principal de la arquitectura REST es que en ella los recursos est&aacute;n representados mediante URLs. 
+Los nombres de estas URLs ser&aacute;n sustantivos, que indicar&aacute;n la entidad a la que representan. Por ejemplo, 
+si en nuestra aplicaci&oacute;n tenemos informaci&oacute;n de cursos, podr&iacute;amos acceder a la lista de cursos disponibles
+mediante una URL como la siguiente:</p>
+<pre class="code">http://jtech.ua.es/resources/cursos</pre>
+<p>Esto nos devolver&aacute; la lista de cursos en el formato que el desarrollador del servicio haya decidido. Hay que
+destacar por lo tanto que en este caso debe haber un entendimiento entre el consumidor y el productor del servicio,
+de forma que el primero comprenda el lenguaje utilizado por el segundo.</p>
+<p>Esta URL nos podr&iacute;a devolver un documento como el siguiente:</p>
+<pre class="code">&lt;?xml version="1.0"?&gt;
+&lt;j:Cursos xmlns:j="http://www.jtech.ua.es" 
+         xmlns:xlink="http://www.w3.org/1999/xlink"&gt;
+  &lt;Curso id="1" 
+         xlink:href="http://jtech.ua.es/resources/cursos/1"/&gt;
+  &lt;Curso id="2" 
+         xlink:href="http://jtech.ua.es/resources/cursos/2"/&gt;
+  &lt;Curso id="4" 
+         xlink:href="http://jtech.ua.es/resources/cursos/4"/&gt;
+  &lt;Curso id="6" 
+         xlink:href="http://jtech.ua.es/resources/cursos/6"/&gt;
+&lt;/j:Cursos&gt;</pre>
+<p>En este documento se muestra la lista de cursos registrados en la aplicaci&oacute;n, cada uno de ellos representado
+tambi&eacute;n por una URL. Accediendo a estas URLs podremos obtener informaci&oacute;n sobre cada curso concreto o bien
+modificarlo.</p>
+<p>Cuando utilizamos estos servicios sobre HTTP, podemos aprovechar los distintos m&eacute;todos que ofrece este 
+protocolo para representar cada una de las posibles operaciones a realizar con los datos. En la siguiente
+tabla se muestran los diferentes m&eacute;todos HTTP que podemos utilizar y la operaci&oacute;n SQL an&aacute;loga:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+
+<th colspan="1" rowspan="1">M&eacute;todo HTTP</th>
+<th colspan="1" rowspan="1">Operaci&oacute;n SQL equivalente</th>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">GET</td>
+<td colspan="1" rowspan="1">SELECT</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">POST</td>
+<td colspan="1" rowspan="1">INSERT</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">PUT</td>
+<td colspan="1" rowspan="1">UPDATE</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">DELETE</td>
+<td colspan="1" rowspan="1">DELETE</td>
+
+</tr>
+
+</table>
+<p>Como ya hemos comentado, el lenguaje para el intercambio de informaci&oacute;n con el 
+servicio queda a elecci&oacute;n del desarrollador. Formatos comunes que podemos utilizar
+para intercambiar esta informaci&oacute;n son los siguientes:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+
+<th colspan="1" rowspan="1">Formato</th>
+<th colspan="1" rowspan="1">Tipo MIME</th>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Texto plano</td>
+<td colspan="1" rowspan="1"><span class="codefrag">text/plain</span></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">HTML</td>
+<td colspan="1" rowspan="1"><span class="codefrag">text/html</span></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">XML</td>
+<td colspan="1" rowspan="1"><span class="codefrag">application/xml</span></td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">JSON</td>
+<td colspan="1" rowspan="1"><span class="codefrag">application/json</span></td>
+
+</tr>
+
+</table>
+<p>De especial inter&eacute;s es el formato JSON. Se trata de un lenguaje ligero de intercambio
+de informaci&oacute;n, que puede utilizarse en lugar de XML (que resulta considerablemente
+m&aacute;s pesado) para aplicaciones AJAX. De hecho, en Javascript puede leerse este tipo de
+formato simplemente utilizando el m&eacute;todo <span class="codefrag">eval()</span>.</p>
+<p>A continuaci&oacute;n se muestra una tabla resumen con las principales diferencias entre
+los servicios RESTful y los servicios SOAP.</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+
+<th colspan="1" rowspan="1">RESTful</th>
+<th colspan="1" rowspan="1">SOAP</th>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Ligeros</td>
+<td colspan="1" rowspan="1">Pesados</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Se trata de un estilo arquitect&oacute;nico</td>
+<td colspan="1" rowspan="1">Se definen de forma est&aacute;ndar</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">No necesitan herramientas adicionales para construirlos</td>
+<td colspan="1" rowspan="1">Contamos con herramientas que facilitan el trabajo</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Protocolo de comunicaciones entendible por un humano</td>
+<td colspan="1" rowspan="1">Se pueden integrar de forma autom&aacute;tica en aplicaciones</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">El desarrollador del servicio debe dejar documentaci&oacute;n, ejemplos de uso y librer&iacute;as para acceder al servicio</td>
+<td colspan="1" rowspan="1">Interoperables</td>
+
+</tr>
+
+</table>
+<p>A la hora de decidir si implementar nuestros servicios web de tipo SOAP o RESTful, podemos tener en cuenta
+los siguientes factores:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+
+<th colspan="1" rowspan="1">RESTful</th>
+<th colspan="1" rowspan="1">SOAP</th>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">
+
+<ul>
+
+<li>Si tenemos servicios sin estado.</li>
+
+<li>Si devuelve datos no din&aacute;micos, que puedan ser almacenados en la cach&eacute; del navegador.</li>
+
+<li>Si el ancho de banda el limitado (dispositivos m&oacute;viles).</li>
+
+<li>Si queremos incluirlos en documentos web (por ejemplo mediante Javascript).</li>
+
+<li>Si existe un entiendimiento entre productor y consumidor respecto a la forma de intercambiar los datos,
+o bien se quiere proporcionar un <em>toolkit</em> de desarrollo para los clientes.</li>
+
+</ul>
+
+</td>
+<td colspan="1" rowspan="1">
+
+<ul>
+
+<li>Si necesitamos un contrato formal entre cliente y servicio (WSDL).</li>
+
+<li>Si queremos interconectar sistemas sin tener que definir nosotros el formato para el intercambio de datos.</li>
+
+<li>Si queremos que los servicios sean capaces de almacenar informaci&oacute;n de estado.</li>
+
+<li>Si vamos a utilizar m&eacute;todos de comunicaci&oacute;n as&iacute;ncronos.</li>
+
+<li>Si necesitamos otras caracter&iacute;sticas avanzadas como el env&iacute;o fiable de mensajes, manejo de transacciones, 
+seguridad, etc.</li>
+
+</ul>
+
+</td>
+
+</tr>
+
+</table>
+</div>
+
+
+<a name="N10163"></a><a name="Crear+servicios+RESTful+con+Netbeans"></a>
+<h2 class="underlined_10">Crear servicios RESTful con Netbeans</h2>
+<div class="section">
+<p>En Netbeans encontramos diferentes altermativas para crear nuestros servicios
+RESTful. Lo primero que necesitamos es tener un proyecto web en el cual crear los 
+servicios.</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Al contrario que en el caso de los servicios SOAP, en este caso 
+no podemos crear servicios RESTful dentro de un m&oacute;dulo EJB, ya que estos &uacute;ltimos 
+servicios est&aacute;n fuertemente vinculados a la arquitectura de la web.</div>
+</div>
+<p>La primera vez que vayamos a crear servicios RESTful en Netbeans deberemos a&ntilde;adir
+un <em>plugin</em> necesario para que soporte este tipo de servicios. Para ello iremos
+al men&uacute; <em>Tools &gt; Plugins</em>.</p>
+<p>
+<img alt="Instalaci&oacute;n de plugins en Netbeans." content-width="5cm" height="314" src="imagenes/sesion4/nb_plugin_rest_1.gif" width="273"></p>
+<p>En la ventana que se abrir&aacute; vamos a la pesta&ntilde;a
+<em>Available Plugins</em>, y en la lista de <em>plugins</em> marcamos 
+<em>RESTful Web Services</em>. A continuaci&oacute;n pulsamos sobre el bot&oacute;n <em>Install</em>
+para comenzar a instalar el <em>plugin</em>.</p>
+<p>
+<img alt="Instalaci&oacute;n del plugin para servicios REST." content-width="11cm" height="411" src="imagenes/sesion4/nb_plugin_rest_2.gif" width="530"></p>
+<p>Una vez tengamos instalado el <em>plugin</em> necesario (esto s&oacute;lo tendremos que 
+hacerlo una vez), dentro de nuestro proyecto web podremos a&ntilde;adir servicios RESTful pulsando con
+el bot&oacute;n derecho del rat&oacute;n y seleccionando una de las siguientes opciones:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>RESTful Web Services from Patterns...</em></td>
+<td colspan="1" rowspan="1">Esta opci&oacute;n sirve para crear nuevos servicios siguiendo diferentes
+tipos de patrones. Se crear&aacute; una plantilla en la que deberemos introducir 
+nosotros el c&oacute;digo que implementa el servicio.</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>RESTful Web Services from Entity Classes...</em></td>
+<td colspan="1" rowspan="1">Con esta opci&oacute;n Netbeans genera autom&aacute;ticamente los servicios a partir de 
+las entidades que seleccionemos, de forma que se pueda acceder a ellas y 
+manipularlas a trav&eacute;s de URLs.</td>
+
+</tr>
+
+</table>
+<p>
+<img alt="Opciones para crear un servicio RESTful desde Netbeans." content-width="12cm" height="244" src="imagenes/sesion4/nb_rest_1.gif" width="603"></p>
+<p>En el caso de elegir la opci&oacute;n de crear un nuevo servicio utilizando patrones, nos
+dar&aacute; a elegir entre los siguientes tipos de patrones para nuestro servicio:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>Singleton</em></td>
+<td colspan="1" rowspan="1">El servicio se encontrar&aacute; accesible en una &uacute;nica URL. Accediendo a esta URL
+se obtendr&aacute; informaci&oacute;n o se podr&aacute; realizar alguna operaci&oacute;n. &Uacute;til para servicios 
+muy sencillos, tipo <em>Hola Mundo</em>, o para dar acceso a servicios SOAP mediante
+una arquitectura REST.</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>Container-Item</em></td>
+<td colspan="1" rowspan="1">Encontramos dos tipos de URLs: una URL contenedora, y varias URLs representando
+items dentro de ese contenedor. Este tipo de patr&oacute;n se utilizar&aacute; cuando estemos 
+tratando con colecciones de datos. Por ejemplo podremos utilizar este patr&oacute;n para 
+acceder a una entidad <span class="codefrag">Curso</span> de una base de datos. En este caso podremos consultar
+la lista de cursos (GET) o a&ntilde;adir nuevos cursos (POST) a trav&eacute;s del contenedor, o
+consultar los datos de un curso concreto mediante una de las URLs hijas (items).</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>Client-Controlled Container-Item</em></td>
+<td colspan="1" rowspan="1">Se trata de una variaci&oacute;n de la anterior, en la que para a&ntilde;adir un nuevo item
+al contenedor no se utiliza el m&eacute;todo POST sobre el contenedor, sino el m&eacute;todo
+PUT sobre los items. Por eso recibe el nombre de <em>Client-Controlled</em>.</td>
+
+</tr>
+
+</table>
+<p>
+<img alt="Patrones para crear un servicio RESTful." content-width="11cm" height="411" src="imagenes/sesion4/nb_rest_2.gif" width="539"></p>
+<a name="N10209"></a><a name="Crear+un+servicio+RESTful+sencillo"></a>
+<h3 class="underlined_5">Crear un servicio RESTful sencillo</h3>
+<p>Para empezar vamos a crear un servicio <em>Hola Mundo</em> simple utilizando patrones.
+Partiremos de un proyecto web llamado <span class="codefrag">HolaMundoWeb</span>, al que a&ntilde;adiremos los servicios
+RESTful siguiendo los siguientes pasos:</p>
+<ul>
+
+<li>Pulsaremos sobre el proyecto web con el bot&oacute;n derecho y seleccionaremos <em>RESTful Web Services 
+from Patterns...</em>
+
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful sencillo. Paso 1." content-width="12cm" height="244" src="imagenes/sesion4/nb_hello_1.gif" width="603"></p>
+
+
+</li>
+
+
+<li>Como se trata de un servicio sencillo, en el que no tratamos con colecciones de
+datos, seleccionaremos el patr&oacute;n <em>Singleton</em>.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful sencillo. Paso 2." content-width="11cm" height="411" src="imagenes/sesion4/nb_hello_2.gif" width="539"></p>
+
+
+</li>
+
+
+<li>Vamos a ubicar la implementaci&oacute;n del servicio en el paquete 
+<span class="codefrag">es.ua.jtech.servcweb.rest</span>, y al recurso al que accederemos mediante
+este servicio le daremos el nombre <span class="codefrag">HolaMundo</span>. Autom&aacute;ticamente se 
+actualizar&aacute; el nombre de la clase que implementar&aacute; dicho servicio y la ruta en la que se
+encontrar&aacute;. Como tipo MIME de la respuesta seleccionaremos <span class="codefrag">text/html</span>.
+Una vez introducidos estos datos pulsamos <em>Finish</em>.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful sencillo. Paso 3." content-width="11cm" height="385" src="imagenes/sesion4/nb_hello_3.gif" width="528"></p>
+
+
+</li>
+
+
+<li>Veremos en el entorno el servicio reci&eacute;n creado. La implementaci&oacute;n de este servicio
+se encuentra en una clase <span class="codefrag">HolaMundoResource</span>. Como vamos a utilizar este
+servicio &uacute;nicamente para obtener datos, s&oacute;lo necesitaremos introducir c&oacute;digo en el 
+m&eacute;todo <span class="codefrag">getHtml</span> de dicha clase, que es el que se invocar&aacute; cuando se
+haga una petici&oacute;n <span class="codefrag">GET</span>. Deberemos devolver una cadena con el contenido
+que queramos enviar al cliente (en este caso ser&aacute; de tipo HTML). Haremos que devuelva
+una cadena con un p&aacute;rrafo HTML en el que nos diga <em>Hola Mundo!</em>.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful sencillo. Paso 4." content-width="13cm" height="374" src="imagenes/sesion4/nb_hello_4.gif" width="651"></p>
+
+
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Si simplemente quisieramos enviar datos al servidor, sin obtener
+datos como respuesta, utilizar&iacute;amos el m&eacute;todo <span class="codefrag">putHtml</span>. En este
+caso podremos enviar al servicio una cadena con contenido en cualquier formato.</div>
+</div>
+</li>
+
+
+<li>Una vez implementado el servicio, vamos a probarlo. Contamos con una 
+herramienta integrada en el entorno de Netbeans para probar este tipo de servicios, 
+al igual que en el caso de los servicios SOAP. Para probarlos pulsaremos con 
+el bot&oacute;n derecho sobre nuestro proyecto y seleccionaremos la opci&oacute;n 
+<em>Test RESTful Web Services</em>. 
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful sencillo. Paso 5." content-width="7cm" height="257" src="imagenes/sesion4/nb_hello_5.gif" width="325"></p>
+
+
+</li>
+
+
+<li>Se abrir&aacute; una ventana del navegador con el cliente de prueba. En esta interfaz
+deberemos seleccionar en primer lugar el recurso al que queremos acceder (en nuestro
+caso <span class="codefrag">holaMundo</span>), y nos aparecer&aacute;n las operaciones que podremos hacer con 
+&eacute;l. Veremos que tenemos la operaci&oacute;n GET seleccionada por defecto, y adem&aacute;s se 
+muestra la URL a la que est&aacute; vinculado el recurso.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful sencillo. Paso 6." content-width="10cm" height="202" src="imagenes/sesion4/nb_hello_6.gif" width="486"></p>
+
+
+</li>
+
+
+<li>Pulsaremos sobre el bot&oacute;n <em>Test</em> para acceder mediante m&eacute;doto GET a la URL.
+Veremos informaci&oacute;n sobre la respuesta distribuida en varias pesta&ntilde;as. En la pesta&ntilde;a 
+<em>Raw View</em> podemos observar lo que ha devuelto el servicio. 
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful sencillo. Paso 7." content-width="9cm" height="132" src="imagenes/sesion4/nb_hello_7.gif" width="462"></p>
+
+
+</li>
+
+
+<li>Vamos ahora a parametrizar el servicio, para poderle indicar el nombre al que 
+queremos que salude. Para a&ntilde;adir un par&aacute;metro al servicio, simplemente a&ntilde;adiremos un
+argumento al m&eacute;todo <span class="codefrag">getHtml</span>. Este argumento deber&aacute; tener la anotaci&oacute;n
+<span class="codefrag">@QueryParam</span> para indicar que se trata de un par&aacute;metro para la consulta
+del servicio, y de forma opcional podremos a&ntilde;adirle tambi&eacute;n un valor por defecto con
+la anotaci&oacute;n <span class="codefrag">@DefaultValue</span>. Por ejemplo, en nuestro caso pondremos 
+un par&aacute;metro tipo <span class="codefrag">String</span> con el nombre al que se quiere saludar, con
+las correspondientes anotaciones:
+
+<pre class="code">@GET
+@ProduceMime("text/html")
+public String getHtml(<strong>@QueryParam</strong>("nombre") 
+                      <strong>@DefaultValue</strong>("John Doe")
+                      String nombre) {
+    return "&lt;p&gt;Hola " + nombre + "&lt;/p&gt;";
+}</pre>
+
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful sencillo. Paso 8." content-width="9cm" height="329" src="imagenes/sesion4/nb_hello_8.gif" width="460"></p>
+
+
+</li>
+
+
+<li>Si volvemos a pulsar sobre <em>Test RESTful Web Services</em> se volver&aacute; a
+desplegar el servicio, actualizando los &uacute;ltimos cambios, y se nos volver&aacute; a mostrar
+el cliente de prueba. En este caso podremos observar que la operaci&oacute;n GET nos 
+pide un par&aacute;metro, cuyo valor por defecto es el que hemos especificado en el c&oacute;digo.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful sencillo. Paso 9." content-width="11cm" height="242" src="imagenes/sesion4/nb_hello_9.gif" width="519"></p>
+
+
+</li>
+
+
+<li>Por &uacute;ltimo, tambi&eacute;n debemos destacar que la URL en la que estar&aacute; dicho servicio es: 
+<pre class="code">http://localhost:8080/HolaMundoWeb/resources/holaMundo?nombre=John Doe</pre>
+</li>
+
+</ul>
+<p>Podemos hacer un cliente sencillo en Java para acceder a este
+servicio</p>
+<pre class="code">// Definimos la URL en la que se encuentra el servicio
+URL url = new URL("http://localhost:8080/HolaMundoWeb/resources/" + 
+                  + "holaMundo?nombre=Pepe");
+HttpURLConnection httpConn = (HttpURLConnection)url.openConnection();
+
+// Establecemos la conexi&oacute;n con el servicio
+httpConn.setRequestMethod("GET");
+InputStream is = httpConn.getInputStream();
+
+// Imprimimos el resultado devuelto por la URL        
+BufferedReader br = new BufferedReader(new InputStreamReader(is));
+String s;
+while( (s=br.readLine())!=null ){
+    System.out.println(s);
+}</pre>
+<p>Si en lugar de acceder a informaci&oacute;n, lo que queremos es enviar informaci&oacute;n
+al servicio, utilizaremos el m&eacute;todo PUT. En el caso de nuestro servicio
+<em>Hola Mundo</em>, podr&iacute;amos definir el m&eacute;todo <span class="codefrag">putHtml</span> como
+se muestra a continuaci&oacute;n:</p>
+<pre class="code">static String texto="";
+
+@PUT
+@ConsumeMime("text/html")
+public void putHtml(String content) {
+    texto+=content;
+}</pre>
+<p>Podemos escribir un cliente sencillo que publique informaci&oacute;n en el
+servicio utilizando este m&eacute;todo:</p>
+<pre class="code">// Definimos la URL en la que se encuentra el servicio
+URL url = new URL(
+    "http://localhost:8080/HolaMundoWeb/resources/holaMundo");
+HttpURLConnection httpConn = (HttpURLConnection)url.openConnection();
+
+// Establecemos el m&eacute;todo PUT
+httpConn.setRequestMethod("PUT");
+httpConn.setDoOutput(true);
+
+// Enviamos texto al servicio
+OutputStream os = httpConn.getOutputStream();
+PrintStream ps = new PrintStream(os);
+ps.println("&lt;p&gt;Contenido a enviado&lt;/p&gt;");
+httpConn.getInputStream();</pre>
+<a name="N102E9"></a><a name="Crear+un+servicio+RESTful+a+partir+de+JPA"></a>
+<h3 class="underlined_5">Crear un servicio RESTful a partir de JPA</h3>
+<p>Hemos visto que existen diferentes patrones a partir de los cuales crear
+servicios de tipo RESTful. El patr&oacute;n <em>Container-Item</em> hemos visto que es adecuado
+para representar colecciones de datos. Normalmente se utilizar&aacute; para
+acceder a los datos en una base de datos (una tabla puede ser vista como
+una colecci&oacute;n de registros). Dado que este ser&aacute; el uso
+m&aacute;s com&uacute;n de este tipo de servicios, Netbeans nos permitir&aacute; crear 
+directamente los servicios a partir de las entidades existentes.</p>
+<p>Para crear servicios RESTful que nos permitan acceder a entidades
+de nuestra base de datos deberemos contar primero con objetos JPA que
+nos den acceso a ellas.</p>
+<p>Vamos a ver un ejemplo paso a paso de c&oacute;mo crear servicios RESTful a 
+partir de entidades JPA con Netbeans:</p>
+<ul>
+
+<li>Empezaremos creando una base de datos sencilla en MySQL. Para ello primero deberemos poner en marcha el
+servidor MySQL (si no lo est&aacute; ya), y crear mediante la consola MySQL una nueva base de datos llamada 
+<span class="codefrag">guia</span>:
+<pre class="code">CREATE DATABASE guia;</pre>
+
+</li>
+
+<li>Ahora vamos a establecer una conexi&oacute;n a esta base de datos desde Netbeans. Para ello vamos a <em>Services &gt;
+Databases &gt; Drivers &gt; MySQL</em>, pulsamos sobre &eacute;l con el bot&oacute;n derecho del rat&oacute;n, y seleccionamos la opci&oacute;n
+<em>Connect Using ...</em>.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 1." content-width="6cm" height="204" src="imagenes/sesion4/nb_jpa_1.gif" width="292"></p>
+
+
+</li>
+
+<li>En la ventana que aparece introducimos la URL de la base de datos que acabamos de crear 
+(<span class="codefrag">jdbc:mysql://localhost/guia</span>), y los datos de acceso del usuario <span class="codefrag">root</span>.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 2." content-width="8cm" height="318" src="imagenes/sesion4/nb_jpa_2.gif" width="378"></p>
+
+
+</li>
+
+</ul>
+<p>De forma alternativa, tambi&eacute;n podr&iacute;amos crear un base de datos Derby desde dentro del entorno Netbeans. Para ello:</p>
+<ul>
+
+<li>Iremos al men&uacute; <em>Tools</em> y seleccionaremos la opci&oacute;n <em>Java DB Database &gt; Create Database ...</em>. 
+
+<p>
+<img alt="Creaci&oacute;n de una base de datos Derby. Paso 1." content-width="7cm" height="281" src="imagenes/sesion4/nb_derby_1.gif" width="378"></p>
+
+</li>
+
+<li>Introduciremos los datos de la nueva base de datos que queremos probar, proporcionando un <em>login</em> y <em>password</em>
+para acceder a ella:
+
+<p>
+<img alt="Creaci&oacute;n de una base de datos Derby. Paso 2." content-width="8cm" height="208" src="imagenes/sesion4/nb_derby_2.gif" width="310"></p>
+
+</li>
+
+</ul>
+<p>Independientemente del m&eacute;todo que hayamos seguido para crear la base de datos, en este momento tendremos en el grupo
+<em>Databases</em> de la pesta&ntilde;a <em>Services</em> una conexi&oacute;n a nuestra base de datos. Si la conexi&oacute;n no estuviese establecida,
+podemos pulsar con el bot&oacute;n derecho sobre la conexi&oacute;n y seleccionar <em>Connect ...</em> para conectar con 
+la base de datos.</p>
+<ul>
+
+<li>Desplegamos la conexi&oacute;n reci&eacute;n creada, y pulsamos sobre <em>Tables</em> con el bot&oacute;n derecho para
+crear una nueva tabla con la opci&oacute;n <em>Create Table ...</em>.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 3." content-width="6cm" height="244" src="imagenes/sesion4/nb_jpa_3.gif" width="292"></p>
+
+
+</li>
+
+<li>La tabla se llamar&aacute; <span class="codefrag">ESTABLECIMIENTOS</span>, y tendr&aacute; 4 columnas (<span class="codefrag">id, nombre, actividad, 
+direccion)</span>). Una vez introducidos los datos pulsamos sobre <em>OK</em> y se crear&aacute; la tabla.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 4." content-width="11cm" height="251" src="imagenes/sesion4/nb_jpa_4.gif" width="541"></p>
+
+
+</li>
+
+<li>Vamos ahora a introducir algunos datos iniciales de prueba en la tabla. Para ello pinchamos sobre la
+conexi&oacute;n a nuestra base de datos con el bot&oacute;n derecho y seleccionamos <em>Execute Command ...</em>. 
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 5." content-width="7cm" height="203" src="imagenes/sesion4/nb_jpa_5.gif" width="346"></p>
+
+</li>
+
+<li>Introduciremos las siguientes sentencias SQL y las ejecutaremos:
+
+<pre class="code">INSERT INTO establecimientos(id,nombre,actividad,direccion) 
+    VALUES(1,'Telepizza','Restaurante',
+    'Avenida de la estacion, 5, Alicante, Spain');
+INSERT INTO establecimientos(id,nombre,actividad,direccion) 
+    VALUES(2,'Cines Aana','Cine',
+    'Calle M&eacute;dico Pascual P&eacute;rez, 46, Alicante, Spain');</pre>
+
+
+</li>
+
+<li>Una vez creada la base de datos, pasaremos a la pesta&ntilde;a <em>Projects</em>, y crearemos una nueva aplicaci&oacute;n web a la que 
+llamaremos <span class="codefrag">GuiaLocal</span>.
+</li>
+
+<li>Pulsamos con el bot&oacute;n derecho sobre el proyecto que acabamos de crear, y seleccionamos <em>New &gt;
+Entity Classes from Database ...</em>, para que genere de forma autom&aacute;tica las clase JPA a partir de la 
+base de datos.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 6." content-width="11cm" height="222" src="imagenes/sesion4/nb_jpa_6.gif" width="566"></p>
+
+
+</li>
+
+<li>En <em>Data Source</em>, seleccionamos <em>New Data Source ...</em> para crear una nueva fuente de datos.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 7." content-width="7cm" height="103" src="imagenes/sesion4/nb_jpa_7.gif" width="364"></p>
+
+</li>
+
+<li>Como nombre de la fuente de datos escribimos <span class="codefrag">jndi/guia</span>, y especificamos la conexi&oacute;n a 
+nuestra base de datos. Tras introducir estos datos pulsamos <em>OK</em> para crear la fuente de datos.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 8." content-width="8cm" height="147" src="imagenes/sesion4/nb_jpa_8.gif" width="410"></p>
+
+</li>
+
+<li>Ahora debemos especificar las tablas de las que queremos crear las entidades JPA. Pulsamos sobre 
+<em>Add All &gt;&gt;</em>, y a continuaci&oacute;n a <em>Next</em> para pasar al siguiente paso.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 9." content-width="12cm" height="451" src="imagenes/sesion4/nb_jpa_9.gif" width="582"></p>
+
+</li>
+
+<li>Introducimos el nombre del paquete en el que queremos crear la clase de JPA 
+(<span class="codefrag">es.ua.jtech.servcweb.rest.jpa</span>), y pulsamos sobre 
+<em>Create Persistence Unit ...</em> para crear la unidad de persistencia.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 10." content-width="10cm" height="403" src="imagenes/sesion4/nb_jpa_10.gif" width="510"></p>
+
+</li>
+
+<li>Dejamos los datos por defecto de la unidad de persistencia, y pulsamos sobre <em>Create</em> para crearla.
+Tras esto, pulsamos el bot&oacute;n <em>Finish</em> para terminar de crear las entidades JPA.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 11." content-width="7cm" height="231" src="imagenes/sesion4/nb_jpa_11.gif" width="366"></p>
+
+</li>
+
+<li>Ahora que tenemos creadas las entidades JPA, vamos a generar de forma autom&aacute;tica los servicios RESTful
+a partir de ellas. Para ello pulsamos con el bot&oacute;n derecho sobre el nombre del proyecto, y seleccionamos <em>
+New &gt; RESTful Web Services from Entity Classes ...</em>
+
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 12." content-width="11cm" height="219" src="imagenes/sesion4/nb_jpa_12.gif" width="572"></p>
+
+</li>
+
+<li>Pulsamos sobre <em>Add All &gt;&gt;</em> para exportar todas las entidades como servicios REST, y pulsamos
+<em>Next</em> para continuar.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 13." content-width="8cm" height="366" src="imagenes/sesion4/nb_jpa_13.gif" width="396"></p>
+
+</li>
+
+<li>Nos muestra los nombres que va a utilizar para los recursos que compondr&aacute;n el servicio. Podemos adaptar los
+nombres de los paquetes a la estructura de paquetes de nuestro proyecto, y pulsamos <em>Finish</em> para terminar.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 14." content-width="12cm" height="403" src="imagenes/sesion4/nb_jpa_14.gif" width="602"></p>
+
+</li>
+
+<li>Ya podemos abrir el cliente de prueba para probar los servicios que acabamos de crear. Al ejecutar el
+cliente de prueba vemos en la parte izquierda un nodo <span class="codefrag">establecimientoes</span> que representa el
+<em>contenedor</em>, que nos permitir&aacute; acceder a la lista de establecimientos (GET) o a&ntilde;adir uno nuevo (POST).
+Pincharemos sobre dicho nodo, y ejecutaremos la operaci&oacute;n GET como se muestra a continuaci&oacute;n:
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 15." content-width="11cm" height="253" src="imagenes/sesion4/nb_jpa_15.gif" width="554"></p>
+
+
+</li>
+
+<li>En la parte inferior veremos el resultado. En este caso, al tratarse de un contenedor podemos ver
+en modo tabla (<em>Tabular</em>) la lista de recursos que contiene. Nos aparece as&iacute; nuestra lista de <em>items</em> (establecimientos), 
+mostrando para cada uno la URL a la que se encuentra mapeado (por ejemplo 
+<span class="codefrag">http://localhost:8080/GuiaLocal/resources/establecimientoes/1/</span>), y adem&aacute;s un enlace para acceder
+a dicho <em>item</em> mediante el cliente de prueba (por ejemplo <span class="codefrag">/establecimientoes/1/</span>).
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 16." content-width="10cm" height="199" src="imagenes/sesion4/nb_jpa_16.gif" width="516"></p>
+
+</li>
+
+<li>Si consultamos la vista <em>Raw</em>, vemos como es realmente el documento que nos ha proporcionado la
+URL contenedora (que en nuestro caso es <span class="codefrag">http://localhost:8080/GuiaLocal/resources/establecimientoes</span>).
+Podemos observar que en el documento XML figura la lista de <em>items</em> obtenidos, indicando para cada uno de
+ellos la URL en la que podemos acceder a su informaci&oacute;n.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 17." content-width="11cm" height="219" src="imagenes/sesion4/nb_jpa_17.gif" width="525"></p>
+
+</li>
+
+<li>Volvemos a la vista <em>Tabular</em>, y entramos en la URL correspondiente al primero de los establecimientos.
+Esta URL nos devolver&aacute; el siguiente documento XML, en el que como podemos observar figuran todos los datos
+de dicho establecimiento:
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 18." content-width="11cm" height="122" src="imagenes/sesion4/nb_jpa_18.gif" width="543"></p>
+
+</li>
+
+<li>Volvemos a la pantalla del cliente de prueba correspondiente al contenedor, y ahora vamos a acceder 
+mediante POST para a&ntilde;adir un nuevo <em>item</em>. Los datos del nuevo establecimiento que proporcionaremos
+ser&aacute;n los siguientes:
+<pre class="code">&lt;establecimiento&gt;
+&lt;actividad&gt;Cine&lt;/actividad&gt;
+&lt;direccion&gt;Plaza del Carmen, 16, Alicante, Spain&lt;/direccion&gt;
+&lt;id&gt;3&lt;/id&gt;
+&lt;nombre&gt;Cines Astoria&lt;/nombre&gt;
+&lt;/establecimiento&gt;</pre>
+
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 19." content-width="10cm" height="171" src="imagenes/sesion4/nb_jpa_19.gif" width="515"></p>
+
+
+</li>
+
+<li>Una vez enviado, si volvemos a consultar la lista de recursos, veremos que aparece el nuevo establecimiento. 
+Debemos hacer notar que en este caso saber con qu&eacute; formato debemos pasar la informaci&oacute;n al servicio no es
+inmediato. Ser&aacute; complicado que alguien que no ha desarrollado el servicio pueda hacer un cliente para acceder a 
+&eacute;l si no le proporcionamos ayuda (documentaci&oacute;n, ejemplos, y a ser posible un kit de desarrollo).</li>
+
+<li>Si desde la vista <em>Tabular</em> obtenida tras ejecutar GET en el contenedor pinchamos sobre en enlace
+<span class="codefrag">/establecimientoes/1/</span> nos llevar&aacute; a la pantalla del cliente de prueba que nos permitir&aacute; 
+tratar con un <em>item</em> concreto. En este caso ser&aacute; el primero de los establecimientos.
+
+<p>
+<img alt="Creaci&oacute;n de un servicio RESTful a partir de entidades JPA. Paso 20." content-width="11cm" height="92" src="imagenes/sesion4/nb_jpa_20.gif" width="544"></p>
+
+</li>
+
+<li>Desde esta interfaz, adem&aacute;s de poder utilizar la operaci&oacute;n GET para obtener la informaci&oacute;n del establecimiento,
+podremos ejecutar las operaciones PUT y DELETE para modificar o eliminar, respectivamente, dicho <em>item</em>.</li>
+
+</ul>
+<p>Si observamos el c&oacute;digo fuente que se ha generado para implementar el servicio, podemos observar que est&aacute; 
+repartido en dos paquetes diferentes: <span class="codefrag">converter</span> y <span class="codefrag">service</span>. En el primero de ellos se
+encuentran los conversores entre XML y las entidades que manipula nuestro servicio. En el segundo tenemos las
+clases principales del servicio. Si nos fijamos en este &uacute;ltimo paquete veremos las clases <span class="codefrag">EstablecimientoesResource</span>
+y <span class="codefrag">EstablecimientoResource</span>. La primera de ellas representa el contenedor, e implementa las operaciones
+GET y POST, para obtener la lista de establecimientos y a&ntilde;adir un nuevo establecimiento respectivamente. La 
+segunda de ellas representa los <em>items</em> (establecimientos concretos), y en ella tendremos las operaciones 
+GET, PUT y DELETE, que nos permitir&aacute;n consultar los datos de un establecimiento, modificarlo, o borrarlo.</p>
+</div>
+
+
+
+<a name="N104C4"></a><a name="Integrar+servicios+RESTful+ajenos"></a>
+<h2 class="underlined_10">Integrar servicios RESTful ajenos</h2>
+<div class="section">
+<p>Netbeans nos permite integrar de forma sencilla algunos de los servicios existentes m&aacute;s populares en
+nuestros propios servicios. Al abrir una de las clases que implementan nuestro servicio RESTful (aquellas cuyo
+nombre acaba en <span class="codefrag">Resource</span>), se nos mostrar&aacute; una paleta con servicios que podemos integrar
+simplemente arrastr&aacute;ndolos sobre nuestro servicio.</p>
+<p>Vamos a ver un ejemplo guiado de como utilizar el servicio de mapas proporcionado por Google dentro de 
+nuestro servicio de establecimientos. Lo que pretendemos es que, para un establecimiento dado, nuestro servicio
+sea capaz de mostrarnos un mapa con su ubicaci&oacute;n. Para ello seguiremos los siguientes pasos:</p>
+<ul>
+
+<li>Abrimos la clase <span class="codefrag">EstablecimientoResource</span> en el editor. Dado que nuestro objetivo es mostrar
+la ubicaci&oacute;n de un establecimiento concreto, esta ser&aacute; la clase que tendr&aacute; la informaci&oacute;n necesaria.</li>
+
+<li>Podemos observar a la derecha la paleta de servicios que incorpora Netbeans para ser integrados de forma 
+autom&aacute;tica. Arrastraremos el servicio <em>Map</em> de Google sobre el c&oacute;digo de nuestra clase.
+
+<p>
+<img alt="Integraci&oacute;n de servicios de Google. Paso 1." content-width="11cm" height="285" src="imagenes/sesion4/nb_google_1.gif" width="553"></p>
+
+
+</li>
+
+<li>Nos mostrar&aacute; una ventana donde podremos especificar la ruta a la que mapearemos el servicio de Google, que
+ser&aacute; relativa a la ruta en la que se encuentre el recurso (establecimiento) sobre el que queramos 
+ejecutarlo. Tambi&eacute;n podemos indicar los par&aacute;metros por defecto que proporcionaremos al servicio de Google. Uno
+de los par&aacute;metros necesarios es una clave (<span class="codefrag">apiKey</span>). Podemos obtener una en la siguiente web:
+
+<pre class="code">http://code.google.com/apis/maps/signup.html</pre>
+
+Indicaremos que el sitio web desde el cual vamos a utilizar el servicio de Google es <span class="codefrag">http://localhost:8080</span>.
+Una vez tengamos la clave, podemos ponerla como valor por defecto para el par&aacute;metro <span class="codefrag">apiKey</span>.
+
+<p>
+<img alt="Integraci&oacute;n de servicios de Google. Paso 2." content-width="8cm" height="325" src="imagenes/sesion4/nb_google_2.gif" width="384"></p>
+
+
+</li>
+
+<li>Una vez hecho esto, veremos que Netbeans ha a&ntilde;adido autom&aacute;ticamente el siguiente m&eacute;todo a nuestra clase
+<span class="codefrag">EstablecimientoResource</span>:
+
+<pre class="code">@Path("googleMap/")
+public GoogleMapResource getGoogleMap() {
+    try {
+        String apiKey = null;
+        String address = null;
+        Integer zoom = null;
+        return new GoogleMapResource(apiKey, address, zoom);
+    } finally {
+        PersistenceService.getInstance().close();
+    }
+}</pre>
+
+</li>
+
+<li>Poniendo los par&aacute;metros a <span class="codefrag">null</span>, estos tomar&aacute;n sus valores por defecto. Podemos modificar este 
+c&oacute;digo, para que tome la direcci&oacute;n de la direcci&oacute;n del establecimiento que estemos consultando. Esto lo 
+haremos de la siguiente forma:
+
+<pre class="code">String address = getEntity().getDireccion();</pre>
+
+</li>
+
+<li>Podemos tambi&eacute;n introducir en el c&oacute;digo de dicho m&eacute;todo nuestro c&oacute;digo (<span class="codefrag">apiKey</span>) y el <em>zoom</em>
+con el que mostrar&aacute; el mapa. Si volvemos a probar los servicios con el cliente de prueba, y vamos a obtener la
+informaci&oacute;n de un establecimiento concreto, ahora como resultados en modo tabla nos aparecer&aacute; lo siguiente:
+
+<p>
+<img alt="Integraci&oacute;n de servicios de Google. Paso 3." content-width="10cm" height="185" src="imagenes/sesion4/nb_google_3.gif" width="521"></p>
+
+
+</li>
+
+<li>Esto significa que el acceso al mapa es un subrecurso de cada establecimiento. Por ejemplo, para acceder
+al mapa correspondiente al primer establecimiento, tendremos una URL como la siguiente:
+
+<pre class="code">http://localhost:8080/GuiaLocal/resources/establecimientoes/1/googleMap/</pre>
+</li>
+
+<li>Si accedemos a dicha URL veremos el mapa correspondiente (este servicio nos devuelve contenido HTML):
+
+<p>
+<img alt="Integraci&oacute;n de servicios de Google. Paso 4." content-width="10cm" height="300" src="imagenes/sesion4/nb_google_4.gif" width="500"></p>
+
+
+</li>
+
+</ul>
+</div>
+
+
+<a name="N10539"></a><a name="Crear+un+cliente+para+servicios+RESTful"></a>
+<h2 class="underlined_10">Crear un cliente para servicios RESTful</h2>
+<div class="section">
+<p>Para finalizar, vamos a ver como podemos crear un <em>stub</em> que pueda ser utilizado para acceder a 
+nuestro servicio desde otros clientes. Dado que en este caso no tenemos un contrato estricto como era el WSDL,
+que nos permit&iacute;a generar de forma autom&aacute;tica los <em>stubs</em> para acceder al servicio, ser&aacute; buena idea
+dejar a los posibles clientes alguna librer&iacute;a que les permita acceder a las operaciones de nuestro servicio.
+</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Para suplir esta carencia, Sun ha definido el lenguaje WADL (<em>Web Application Description Language</em>), 
+con el que se pretende definir la interfaz de estos servicios REST de forma similar a como lo hac&iacute;a WSDL en
+el caso de los servicios SOAP.</div>
+</div>
+<p>Podemos crear de forma autom&aacute;tica una librer&iacute;a Javascript para acceder a nuestro servicio. Esta librer&iacute;a 
+podr&iacute;amos dejarla de forma p&uacute;blica en nuestro servidor, para que los clientes que quieran utilizar nuestros
+servicios puedan importarla desde sus p&aacute;ginas web, pudiendo incluso acceder a ellas desde sitios web est&aacute;ticos.</p>
+<p>Para generar esta librer&iacute;a seguiremos los siguientes pasos:</p>
+<ul>
+
+<li>Pulsamos con el bot&oacute;n derecho sobre el proyecto en el que queramos crear la librer&iacute;a Javascript que d&eacute; 
+acceso al servicio, y seleccionamos <em>New &gt; RESTful Web Service Client Stubs ...</em>.
+
+<p>
+<img alt="Creaci&oacute;n del stub para servicios RESTful. Paso 1." content-width="11cm" height="240" src="imagenes/sesion4/nb_cli_1.gif" width="570"></p>
+
+</li>
+
+<li>Pulsamos sobre el bot&oacute;n <em>Add Project ...</em> y seleccionamos el proyecto en el que est&eacute;n los servicios
+a los que queremos dar acceso. Tras esto desmarcaremos la casilla <em>Create jMaki Rest Components</em> para que
+se limite a crear una librer&iacute;a Javascript b&aacute;sica, y pulsamos sobre <em>Finish</em>.
+
+<p>
+<img alt="Creaci&oacute;n del stub para servicios RESTful. Paso 2." content-width="12cm" height="361" src="imagenes/sesion4/nb_cli_2.gif" width="600"></p>
+
+</li>
+
+</ul>
+</div>
+
+
+<p>Una vez creado el <em>stub</em>, podremos probarlo mediante la p&aacute;gina <span class="codefrag">TestStubs.html</span> que habr&aacute; sido
+generada de forma autom&aacute;tica, como ejemplo de uso de la librer&iacute;a.</p>
+
+
+<div class="frame warning">
+<div class="label">Advertencia</div>
+<div class="content">Debido a un <em>bug</em> del <em>plugin</em> para servicios RESTful, en algunos casos 
+el cliente puede no crearse correctamente. Cuando creamos servicios RESTful a partir de una entidad, para generar el
+contenedor, Netbeans pasa de forma autom&aacute;tica su nombre a plural (por ejemplo <span class="codefrag">Cliente &gt; Clientes</span>). En 
+algunos casos el plural se forma a&ntilde;adiendo el sufijo <span class="codefrag">-es</span>, ya que as&iacute; es como se forma el plural de determinadas
+palabras en ingl&eacute;s (por ejemplo las palabras acabadas en <span class="codefrag">-o</span>, lo que dar&iacute;a lugar a que convierta 
+<span class="codefrag">Establecimiento &gt; Establecimientoes</span>). Al generar el cliente, las entidades que forman el plural con
+<span class="codefrag">-es</span> no son reconocidas como Contenedor-Item, por lo que no se generar&aacute; la librer&iacute;a de forma correcta.
+</div>
+</div>
+
+
+<p>De forma alternativa tambi&eacute;n podemos crear componentes jMaki para el cliente del servicio. jMaki es un <em>framework</em> 
+AJAX que puede ser utilizado tanto en el lado del cliente como en el del servidor. Por ejemplo, nos proporciona una colecci&oacute;n
+de <em>tags</em> JSP con los que podemos a&ntilde;adir una serie de <em>widgets</em> basados en AJAX a nuestras p&aacute;ginas. De esta
+forma, podremos generar <em>widgets</em> jMaki que den acceso a nuestros servicios RESTful. Para generar estos
+componentes previamente deberemos tener instalado el <em>plugin</em> de jMaki en Netbeans (<em>jMaki Ajax support</em>): </p>
+
+
+<p>
+<img alt="Creaci&oacute;n de un stub con jMaki. Paso 1." content-width="11cm" height="450" src="imagenes/sesion4/nbjmaki1.gif" width="524"></p>
+
+
+<p>Adem&aacute;s, deberemos a&ntilde;adir jMaki a la lista de <em>frameworks</em> del proyecto en el que vayamos a crear este tipo de
+componentes. Para ello entramos en las propiedades del proyecto (pulsando con el bot&oacute;n derecho sobre el proyecto y 
+seleccionando <em>Properties</em>, y en la secci&oacute;n <em>Frameworks</em> a&ntilde;adimos el <em>framework</em> jMaki (si no lo
+hab&iacute;amos a&ntilde;adido previamente en la creaci&oacute;n del proyecto):</p>
+
+
+<p>
+<img alt="Creaci&oacute;n de un stub con jMaki. Paso 2." content-width="13cm" height="605" src="imagenes/sesion4/nbjmaki9.gif" width="662"></p>
+
+
+<p>Una vez hecho esto podemos crear el <em>stub</em> jMaki igual que en el caso anterior, pero esta vez dejando marcada la 
+casilla <em>Create jMaki Rest Components</em>.</p>
+
+
+<div class="frame warning">
+<div class="label">Advertencia</div>
+<div class="content">El <em>stub</em> jMaki siempre debe crearse en un proyecto diferente al proyecto en el que
+se encuentran implementados los servicios, ya que los recursos jMaki se crean en un directorio <span class="codefrag">resources</span> que
+entrar&iacute;a en conflicto con la ruta <span class="codefrag">/resources</span> en la que se encuentran los servicios RESTful.</div>
+</div>
+
+
+<p>Una vez generado el <em>stub</em>, adem&aacute;s de tener una librer&iacute;a Javascript en la carpeta web con los componentes jMaki, tendremos
+un fichero ZIP en el directorio ra&iacute;z de nuestro proyecto cliente, que tendr&aacute; como nombre el nombre del proyecto en el que
+se encuentran los servicios. Este ZIP contiene los componentes jMaki para acceder al servicio. Podemos importarlo en Netbeans a&ntilde;adiendo
+estos componentes a la paleta de componentes <em>jMaki</em>. Para ello vamos al men&uacute; <em>Tools</em> y seleccionamos 
+<em>Palette &gt; Add jMaki Library</em>:</p>
+
+
+<p>
+<img alt="Creaci&oacute;n de un stub con jMaki. Paso 3." content-width="8cm" height="389" src="imagenes/sesion4/nbjmaki10.gif" width="400"></p>
+
+
+<p>Seleccionamos el fichero ZIP que hemos generado previamente, para a&ntilde;adir los componentes que contiene. De esta forma, 
+cuando editemos una p&aacute;gina JSP tendremos disponibles estos componentes en la paleta:</p>
+
+
+<p>
+<img alt="Creaci&oacute;n de un stub con jMaki. Paso 4." content-width="10cm" height="392" src="imagenes/sesion4/nbjmaki11.gif" width="506"></p>
+
+
+
+<p class="pageBreakAfter"></p>
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2008-2009 Depto. CCIA</div>
+</div>
+</body>
+</html>

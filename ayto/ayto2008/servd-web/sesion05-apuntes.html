@@ -1,0 +1,682 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Seguridad y autentificaci&oacute;n con Tomcat</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servidores Web" src="images/baner_j2ee_der.gif" title="Servidores Web"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li>
+<a class="base-not-selected" href="index.html">Servidores web</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_1.1', 'skin/')" id="menu_1.1Title" class="menutitle">Servidores Web</div>
+<div id="menu_1.1" class="menuitemgroup">
+<div class="menuitem">
+<a href="index.html" title="Servidores Web">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.2', 'skin/')" id="menu_1.1.2Title" class="menutitle">Teor&iacute;a</div>
+<div id="menu_1.1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html">Roadmap</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion05-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Seguridad y autentificaci&oacute;n con Tomcat</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Seguridad+del+servidor">Seguridad del servidor</a>
+<ul class="minitoc">
+<li>
+<a href="#Pol%C3%ADticas+de+seguridad">Pol&iacute;ticas de seguridad</a>
+</li>
+<li>
+<a href="#Autentificaci%C3%B3n+en+Tomcat%3A">Autentificaci&oacute;n en Tomcat: realms</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Seguridad+en+aplicaciones+web">Seguridad en aplicaciones web</a>
+<ul class="minitoc">
+<li>
+<a href="#Tipolog%C3%ADas+de+seguridad+y+autentificaci%C3%B3n">Tipolog&iacute;as de seguridad y autentificaci&oacute;n</a>
+</li>
+<li>
+<a href="#Autentificaci%C3%B3n+basada+en+formularios">Autentificaci&oacute;n basada en formularios</a>
+</li>
+<li>
+<a href="#Autentificaci%C3%B3n">Autentificaci&oacute;n basic</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Autentificaci%C3%B3n+y+confidencialidad+mediante+SSL">Autentificaci&oacute;n y confidencialidad mediante SSL</a>
+<ul class="minitoc">
+<li>
+<a href="#Configurar+SSL+en+Tomcat">Configurar SSL en Tomcat</a>
+</li>
+<li>
+<a href="#Configurar+SSL+en+la+aplicaci%C3%B3n+web">Configurar SSL en la aplicaci&oacute;n web</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="Seguridad+del+servidor"></a>
+<h2 class="underlined_10">Seguridad del servidor</h2>
+<div class="section">
+<a name="N10012"></a><a name="Pol%C3%ADticas+de+seguridad"></a>
+<h3 class="underlined_5">Pol&iacute;ticas de seguridad</h3>
+<p>Si los usuarios del servidor pueden colocar en &eacute;l sus propias aplicaciones web es necesario asegurar que dichas aplicaciones no van a comprometer la seguridad de las dem&aacute;s, del servidor o del propio sistema. Aunque confiemos en la buena fe del que desarrolla las aplicaciones, alguien podr&iacute;a aprovechar un "bug" en una de ellas para efectuar operaciones no permitidas.</p>
+<p>Tomcat utiliza los mecanismos est&aacute;ndar de seguridad de Java para asegurar que las clases ejecutadas en el servidor cumplen una serie de restricciones. Dichas restricciones se definen en el fichero de pol&iacute;ticas de seguridad <span class="codefrag">conf/catalina.policy</span>. No obstante, por defecto estas restricciones no est&aacute;n activadas salvo que se arranque Tomcat con la opci&oacute;n <span class="codefrag">-security</span>.</p>
+<p>
+<strong>Pol&iacute;ticas de seguridad por defecto</strong>
+</p>
+<p>Si se observa el contenido del fichero <span class="codefrag">conf/catalina.policy</span> se ver&aacute; que por defecto, a las clases que componen Tomcat y a las pertenecientes al JDK se les asignan todos los permisos posibles. A continuaci&oacute;n se muestra un extracto de dicho fichero:</p>
+<pre class="code">...
+<strong>// Permisos para las clases del JDK </strong>
+// (est&aacute;n dentro de JAVA_HOME)   
+grant codeBase "file:${java.home}/lib/-" {
+	permission java.security.AllPermission;   
+};   
+...
+<strong>// Permisos para las clases de Tomcat </strong>
+// (est&aacute;n dentro de CATALINA_HOME)   
+grant codeBase "file:${catalina.home}/bin/bootstrap.jar" {
+	permission java.security.AllPermission;   
+};   
+...
+<strong>// Permisos para aplicaciones web</strong>
+grant {      
+	// Required for JNDI lookup of named JDBC DataSource's and     
+	// javamail named MimePart DataSource used to send mail     
+	permission java.util.PropertyPermission "java.home", "read";   
+	...</pre>
+<p>Como puede observarse si se examina detenidamente el fichero, a las clases que componen una aplicaci&oacute;n web cualquiera se les dan permisos adecuados para poder acceder a JNDI, leer ciertas propiedades del sistema, etc.</p>
+<p>
+<strong>Cambiar las pol&iacute;ticas de seguridad</strong>
+</p>
+<p>Cambiando el fichero de pol&iacute;ticas podemos asignar permisos especiales a ciertas aplicaciones web que lo requieran, manteniendo las restricciones en las dem&aacute;s. Por ejemplo, para dar ciertos permisos a la aplicaci&oacute;n j2ee habr&aacute; que introducir un c&oacute;digo similar al siguiente en el fichero de pol&iacute;ticas</p>
+<pre class="code">grant codeBase "file:${catalina.home}/webapps/j2ee/-" {   
+	permission ...
+}</pre>
+<a name="N1004A"></a><a name="Autentificaci%C3%B3n+en+Tomcat%3A"></a>
+<h3 class="underlined_5">Autentificaci&oacute;n en Tomcat: realms</h3>
+<p>Los mecanismos de autentificaci&oacute;n en Tomcat se basan en el concepto de <span class="codefrag">realm</span>. Un <span class="codefrag">realm</span> es un conjunto de usuarios, cada uno con un <em>password</em> y uno o m&aacute;s <em>roles</em>. Los roles determinan qu&eacute; permisos tiene el usuario en una aplicaci&oacute;n web (esto es configurable en cada aplicaci&oacute;n a trav&eacute;s del descriptor de despliegue, <span class="codefrag">web.xml</span>).</p>
+<p>Tomcat proporciona distintas implementaciones para los realms, que b&aacute;sicamente se diferencian en d&oacute;nde est&aacute;n almacenados los datos de <em>logins</em>, <em>passwords</em> y <em>roles</em>. En la configuraci&oacute;n de Tomcat por defecto, dichos datos est&aacute;n en el fichero <span class="codefrag">conf/tomcat-users.xml</span>, pero pueden almacenarse en una base de datos con JDBC, tomarse de un directorio LDAP u obtenerse mediante JAAS, el API est&aacute;ndar de Java para autentificaci&oacute;n.</p>
+<p>Los <em>realms</em> se definen en el fichero de configuraci&oacute;n <span class="codefrag">server.xml</span> introduciendo el elemento <span class="codefrag">Realm</span> con un atributo <span class="codefrag">className</span> que indique la implementaci&oacute;n que deseamos utilizar. El resto de atributos dependen de la implementaci&oacute;n en concreto. Podemos definir <em>realms</em> en distintos puntos del fichero, de manera que afecten a todo el servidor, a un <em>host</em> o solo a una aplicaci&oacute;n. En cada caso, siempre se utilizar&aacute; el <em>realm</em> aplicable m&aacute;s bajo en la "jerarqu&iacute;a de configuraci&oacute;n", de modo que si se configura para una aplicaci&oacute;n en concreto, el general deja de utilizarse.</p>
+<p>
+<strong>UserDatabaseRealm</strong>
+</p>
+<p>Es la implementaci&oacute;n que utiliza por defecto la distribuci&oacute;n de Tomcat, y como se ha comentado, toma los datos de un fichero. Este fichero se lee cuando arranca el servidor, de modo que cualquier cambio en el mismo requiere el rearranque de Tomcat para tener efecto. La definici&oacute;n del <em>realm</em> en el fichero de configuraci&oacute;n se realiza de la siguiente manera:</p>
+<pre class="code">&lt;Realm className="org.apache.catalina.realm.UserDatabaseRealm"   
+       debug="0" resourceName="UserDatabase"/&gt;</pre>
+<p>Donde el atributo <span class="codefrag">resourceName</span> determina el recurso del que se obtiene la informaci&oacute;n. Este est&aacute; definido dentro de GlobalNamingResources para que apunte al fichero <span class="codefrag">conf/tomcat-users.xml</span>.</p>
+<p>Dicho fichero tiene un formato similar al siguiente:</p>
+<pre class="code">&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
+&lt;tomcat-users&gt;	
+	&lt;user name="pepe" password="pepepw" roles="usuario"/&gt;	
+	&lt;user name="manuel" password="manolo" roles="admin"/&gt;	
+	&lt;user name="toni" password="toni" roles="usuario, admin"/&gt;
+&lt;/tomcat-users&gt;</pre>
+<p>As&iacute;, por ejemplo, para un recurso (URL) al que s&oacute;lo puedan acceder roles de tipo <em>admin</em>, podr&iacute;an acceder los usuarios <em>manuel</em> y <em>toni</em>. Notar tambi&eacute;n que los passwords est&aacute;n visibles en un fichero de texto f&aacute;cilmente accesible por casi cualquiera, con lo que no es una buena forma de gestionar los passwords para una aplicaci&oacute;n profesional. </p>
+<p>
+<strong>JDBCRealm</strong>
+</p>
+<p>Esta implementaci&oacute;n almacena los datos de los usuarios en una base de datos con JDBC, lo cual es mucho m&aacute;s flexible y escalable que el mecanismo anterior y adem&aacute;s no requiere el rearranque de Tomcat cada vez que se cambia alg&uacute;n dato. Para configurar Tomcat con esta implementaci&oacute;n de <em>realm</em> se puede descomentar uno que ya viene definido en el <span class="codefrag">server.xml</span>, a nivel global dentro del elemento <span class="codefrag">Engine</span>. Los atributos de este <em>realm</em> indican c&oacute;mo efectuar la conexi&oacute;n JDBC y cu&aacute;les son los campos de la base de datos que contienen <em>logins</em>, <em>passwords</em> y roles.</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+		    
+<tr>
+		      
+<th colspan="1" rowspan="1"><strong>Atributo</strong></th>
+		      <th colspan="1" rowspan="1"><strong>Significado</strong></th>
+		    
+</tr>
+		    
+<tr>
+		      
+<td colspan="1" rowspan="1"><span class="codefrag">className</span></td>
+		      <td colspan="1" rowspan="1">clase Java que implementa este <em>realm</em>. Debe ser <span class="codefrag">org.apache.catalina.realm.JDBCRealm</span></td>
+		    
+</tr>
+		    
+<tr>
+		      
+<td colspan="1" rowspan="1"><span class="codefrag">connectionName</span></td>
+		      <td colspan="1" rowspan="1">nombre de usuario para la conexi&oacute;n JDBC</td>
+		    
+</tr>
+		    
+<tr>
+		      
+<td colspan="1" rowspan="1"><span class="codefrag">connectionPassword</span></td>
+		      <td colspan="1" rowspan="1">password para la conexi&oacute;n JDBC</td>
+		    
+</tr>
+		    
+<tr>
+		      
+<td colspan="1" rowspan="1"><span class="codefrag">connectionURL</span></td>
+		      <td colspan="1" rowspan="1">URL de la base de datos</td>
+		    
+</tr>
+		    
+<tr>
+		      
+<td colspan="1" rowspan="1"><span class="codefrag">debug</span></td>
+		      <td colspan="1" rowspan="1">nivel de depuraci&oacute;n. Por defecto 0 (ninguno). Valores m&aacute;s altos indican m&aacute;s detalle.</td>
+		    
+</tr>
+		    
+<tr>
+		      
+<td colspan="1" rowspan="1"><span class="codefrag">digest</span></td>
+		      <td colspan="1" rowspan="1">Algoritmo de "digest" (puede ser SHA, MD2 o MD5). Por defecto es <span class="codefrag">cleartext</span></td>
+		    
+</tr>
+		    
+<tr>
+		      
+<td colspan="1" rowspan="1"><span class="codefrag">driverName</span></td>
+		      <td colspan="1" rowspan="1">clase Java que implementa el <em>driver</em> de la B.D.</td>
+		    
+</tr>
+		    
+<tr>
+		      
+<td colspan="1" rowspan="1"><span class="codefrag">roleNameCol</span></td>
+		      <td colspan="1" rowspan="1">nombre del campo que almacena los roles</td>
+		    
+</tr>
+		    
+<tr>
+		      
+<td colspan="1" rowspan="1"><span class="codefrag">userNameCol</span></td>
+		      <td colspan="1" rowspan="1">nombre del campo que almacena los <em>logins</em></td>
+		    
+</tr>
+		    
+<tr>
+		      
+<td colspan="1" rowspan="1"><span class="codefrag">userCredCol</span></td>
+		      <td colspan="1" rowspan="1">nombre del campo que almacena los <em>passwords</em></td>
+		    
+</tr>
+		    
+<tr>
+		      
+<td colspan="1" rowspan="1"><span class="codefrag">userRoleTable</span></td>
+		      <td colspan="1" rowspan="1">nombre de la tabla que almacena la relaci&oacute;n entre <em>login</em> y roles</td>
+		    
+</tr>
+		    
+<tr>
+		      
+<td colspan="1" rowspan="1"><span class="codefrag">userTable</span></td>
+		      <td colspan="1" rowspan="1">nombre de la tabla que almacena la relaci&oacute;n entre <em>login</em> y <em>password</em></td>
+		    
+</tr>
+		
+</table>
+</div>
+
+<a name="N101A0"></a><a name="Seguridad+en+aplicaciones+web"></a>
+<h2 class="underlined_10">Seguridad en aplicaciones web</h2>
+<div class="section">
+<a name="N101A6"></a><a name="Tipolog%C3%ADas+de+seguridad+y+autentificaci%C3%B3n"></a>
+<h3 class="underlined_5">Tipolog&iacute;as de seguridad y autentificaci&oacute;n</h3>
+<p>Podemos tener b&aacute;sicamente dos motivos para proteger una aplicaci&oacute;n web: </p>
+<ul>
+			
+<li>Evitar que usuarios no autorizados accedan a determinados recursos.</li>
+			
+<li>Prevenir que se acceda a los datos que se intercambian en una transferencia a lo largo de la red.</li>
+		
+</ul>
+<p>Para cubrir estos agujeros, un sistema de seguridad se apoya en tres aspectos importantes: </p>
+<ul>
+			
+<li>
+<strong>Autentificaci&oacute;n</strong>: medios para identificar a los elementos que intervienen en el acceso a recursos. </li>
+			
+<li>
+<strong>Confidencialidad</strong>: asegurar que s&oacute;lo los elementos que intervienen entienden el proceso de comunicaci&oacute;n establecido.</li>
+			
+<li>
+<strong>Integridad</strong>: verificar que el contenido de la comunicaci&oacute;n no se modifica durante la transmisi&oacute;n.</li>
+		
+</ul>
+<p>
+<strong>Control de la seguridad</strong>
+</p>
+<p>Desde el punto de vista de qui&eacute;n controla la seguridad en una aplicaci&oacute;n web, existen dos formas de implantaci&oacute;n: </p>
+<ul>
+			
+<li>
+<strong>Seguridad declarativa</strong>: Aquella estructura de seguridad sobre una aplicaci&oacute;n que es externa a dicha aplicaci&oacute;n. Con ella, no tendremos que preocuparnos de gestionar la seguridad en ning&uacute;n servlet, p&aacute;gina JSP, etc, de nuestra aplicaci&oacute;n, sino que el propio servidor Web se encarga de todo. As&iacute;, ante cada petici&oacute;n, comprueba si el usuario se ha autentificado ya, y si no le pide login y password para ver si puede acceder al recurso solicitado. Todo esto se realiza de forma transparente al usuario. Mediante el descriptor de la aplicaci&oacute;n principalmente (fichero <em>web.xml</em> en Tomcat), comprueba la configuraci&oacute;n de seguridad que queremos dar.</li>
+			
+<li>
+<strong>Seguridad programada</strong>: Mediante la seguridad programada, son los servlets y p&aacute;ginas JSP quienes, al menos parcialmente, controlan la seguridad de la aplicaci&oacute;n.</li>
+		
+</ul>
+<p>En este tema veremos la seguridad declarativa, que es la que puede configurar el administrador del servidor web, dejando para m&oacute;dulos posteriores la seguridad programada</p>
+<p>
+<strong>Autentificaci&oacute;n</strong>
+</p>
+<p>Tenemos distintos tipos de autentificaci&oacute;n que podemos emplear en una aplicaci&oacute;n web: </p>
+<ul>
+			
+<li>
+<strong>Autentificaci&oacute;n <em>basic</em></strong>: Con HTTP se proporciona un mecanismo de autentificaci&oacute;n b&aacute;sico, basado en cabeceras de autentificaci&oacute;n para solicitar datos del usuario (el servidor) y para enviar los datos del usuario (el cliente). Esta autentificaci&oacute;n no proporciona confidencialidad ni integridad, s&oacute;lo se emplea una codificaci&oacute;n Base64. </li>
+			
+<li>
+<strong>Autentificaci&oacute;n <em>digest</em></strong>: Existe una variante de lo anterior, la autentificaci&oacute;n <strong>digest</strong>, donde, en lugar de transmitir el password por la red, se emplea un password codificado utilizando el m&eacute;todo de encriptado MD5. Sin embargo, algunos servidores no soportan este tipo de autentificaci&oacute;n. </li>
+			
+<li>
+<strong>Autentificaci&oacute;n basada en formularios</strong>: Con este tipo de autentificaci&oacute;n, el usuario introduce su login y password mediante un formulario HTML (y no con un cuadro de di&aacute;logo, como las anteriores). El fichero descriptor contiene para ello entradas que indican la p&aacute;gina con el formulario de autentificaci&oacute;n y una p&aacute;gina de error. Tiene el mismo inconveniente que la autentificaci&oacute;n <em>basic</em>: el password se codifica con un mecanismo muy pobre. </li>
+			
+<li>
+<strong>Certificados digitales y SSL</strong>: Con HTTP tambi&eacute;n se permite el uso de SSL y los certificados digitales, apoyados en los sistemas de criptograf&iacute;a de clave p&uacute;blica. As&iacute;, la capa SSL, trabajando entre TCP/IP y HTTP, asegura, mediante criptograf&iacute;a de clave p&uacute;blica, la integridad, confidencialidad y autentificaci&oacute;n. </li>
+		
+</ul>
+<a name="N10210"></a><a name="Autentificaci%C3%B3n+basada+en+formularios"></a>
+<h3 class="underlined_5">Autentificaci&oacute;n basada en formularios</h3>
+<p>Veremos ahora con m&aacute;s profundidad la autentificaci&oacute;n basada en formularios comentada anteriormente. Esta es la forma m&aacute;s com&uacute;nmente usada para imponer seguridad en una aplicaci&oacute;n, puesto que se emplean <strong>formularios HTML</strong>. </p>
+<p>El programador emplea el descriptor de despliegue para identificar los recursos a proteger, e indicar la p&aacute;gina con el formulario a mostrar, y la p&aacute;gina con el error a mostrar en caso de autentificaci&oacute;n incorrecta. As&iacute;, un usuario que intente acceder a la parte restringida es redirigido autom&aacute;ticamente a la p&aacute;gina del formulario, si no ha sido autentificado previamente. Si se autentifica correctamente accede al recurso, y si no se le muestra la p&aacute;gina de error. Todo este proceso lo controla el servidor autom&aacute;ticamente. </p>
+<p>Este tipo de autentificaci&oacute;n no se garantiza que funcione cuando se emplea reescritura de URLs en el seguimiento de sesiones. Tambi&eacute;n podemos incorporar SSL a este proceso, de forma que no se vea modificado el funcionamiento aparente del mismo. </p>
+<p>Para utilizar la autentificaci&oacute;n basada en formularios, se siguen los pasos que veremos a continuaci&oacute;n. S&oacute;lo el primero es dependiente del servidor que se utilice. </p>
+<p>
+<strong>1. Establecer los logins, passwords y roles</strong>
+</p>
+<p>En este paso definir&iacute;amos un <em>realm</em> del modo que se ha explicado en apartados anteriores. </p>
+<p>
+<strong>2. Indicar al servlet que se emplear&aacute; autentificaci&oacute;n basada en formularios, e indicar las p&aacute;ginas de formulario y error. </strong>
+</p>
+<p>Se coloca para ello una etiqueta <span class="codefrag">&lt;login-config&gt;</span> en el descriptor de despliegue. Dentro, se emplean las subetiquetas: </p>
+<ul>
+			
+<li> 
+				
+<p>
+<span class="codefrag">&lt;auth-method&gt;</span> que en general puede valer:</p>
+	    		
+<ul>
+	      			
+<li>
+<span class="codefrag">FORM</span>: para autentificaci&oacute;n basada en formularios (como es el caso)</li>
+					
+<li>
+<span class="codefrag">BASIC</span>: para autentificaci&oacute;n BASIC</li>
+					
+<li>
+<span class="codefrag">DIGEST</span>: para autentificaci&oacute;n DIGEST</li>
+					
+<li>
+<span class="codefrag">CLIENT-CERT</span>: para SSL</li>
+				
+</ul>
+			
+</li>
+			
+<li> 
+				
+<p>
+<span class="codefrag">&lt;form-login-config&gt;</span> que indica las dos p&aacute;ginas HTML (la del formulario y la de error) con las etiquetas:</p>
+				
+<ul>
+					
+<li> 
+<span class="codefrag">&lt;form-login-page&gt;</span> (para la de autentificaci&oacute;n) </li>
+					
+<li>
+<span class="codefrag">&lt;form-error-page&gt;</span> (para la p&aacute;gina de error).</li>
+				
+</ul>
+			
+</li>
+		
+</ul>
+<p>Por ejemplo, podemos tener las siguientes l&iacute;neas en el descriptor de despliegue: </p>
+<pre class="code">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;!DOCTYPE web-app PUBLIC  
+"-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN" 
+"http://java.sun.com/j2ee/dtds/web-app_2_2.dtd"&gt;
+&lt;web-app&gt;	
+	...
+	<strong>&lt;login-config&gt;		
+		&lt;auth-method&gt;FORM&lt;/auth-method&gt;		
+		&lt;form-login-config&gt;
+			&lt;form-login-page&gt;
+				/login.jsp
+			&lt;/form-login-page&gt;			
+			&lt;form-error-page&gt;
+				/error.html			
+			&lt;/form-error-page&gt;		
+		&lt;/form-login-config&gt;	
+	&lt;/login-config&gt;</strong>
+	...
+&lt;/web-app&gt;</pre>
+<p>
+<strong>3. Crear la p&aacute;gina de login </strong>
+</p>
+<p>El formulario de esta p&aacute;gina debe contener campos para introducir el login y el password, que deben llamarse <em>j_username</em> y <em>j_password</em>. La acci&oacute;n del formulario debe ser <em>j_security_check</em>, y el METHOD = POST (para no mostrar los datos de identificaci&oacute;n en la barra del explorador). Por ejemplo, podr&iacute;amos tener la p&aacute;gina: </p>
+<pre class="code">&lt;!DOCTYPE HTML PUBLIC 
+"-//W3C//DTD HTML 4.0 Transitional//EN"&gt;
+&lt;html&gt;
+&lt;body&gt;
+	&lt;form action="j_security_check" METHOD="POST"&gt;
+	&lt;table&gt;		
+	&lt;tr&gt;
+		&lt;td&gt;
+			Login:&lt;input type="text" name="j_username"/&gt;
+		&lt;/td&gt;
+	&lt;/tr&gt;	
+	&lt;tr&gt;
+		&lt;td&gt;			
+			Password:&lt;input type="text" name="j_password"/&gt;
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td&gt;
+			&lt;input type="submit" value="Enviar"/&gt;
+		&lt;/td&gt;
+	&lt;/tr&gt;	
+	&lt;/table&gt;
+	&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>
+<strong>4. Crear la p&aacute;gina de error </strong>
+</p>
+<p>La p&aacute;gina puede tener el mensaje de error que se quiera. Ante fallos de autentificaci&oacute;n, se redirigir&aacute; a esta p&aacute;gina con un c&oacute;digo 401. Un ejemplo de p&aacute;gina ser&iacute;a: </p>
+<pre class="code">&lt;!DOCTYPE HTML PUBLIC 
+"-//W3C//DTD HTML 4.0 Transitional//EN"&gt;
+&lt;html&gt;
+&lt;body&gt;
+	&lt;h1&gt;ERROR AL AUTENTIFICAR USUARIO&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>
+<strong>5. Indicar qu&eacute; direcciones deben protegerse con autentificaci&oacute;n </strong>
+</p>
+<p>Para ello utilizamos etiquetas &lt;security-constraint&gt; en el descriptor de despliegue. Dichos elementos debe ir inmediatamente antes de <em>&lt;login-config&gt;</em>, y utilizan las subetiquetas: </p>
+<ul>
+			
+<li>
+<span class="codefrag">&lt;display-name&gt;</span> para dar un nombre identificativo a emplear (opcional)</li>
+			
+<li>
+				
+<p>
+<span class="codefrag">&lt;web-resource-collection&gt;</span> para especificar los patrones de URL que se protegen (requerido). Se permiten varias entradas de este tipo para especificar recursos de varios lugares. Cada uno contiene: </p>
+				
+<ul>
+					
+<li>Una etiqueta <span class="codefrag">&lt;web-resource-name&gt;</span> que da un nombre identificativo arbitrario al recurso o recursos</li>
+					
+<li>Una etiqueta <span class="codefrag">&lt;url-pattern&gt;</span> que indica las URLs que deben protegerse</li>
+					
+<li>Una etiqueta <span class="codefrag">&lt;http-method&gt;</span> que indica el m&eacute;todo o m&eacute;todos HTTP a los que se aplicar&aacute; la restricci&oacute;n (opcional)</li>
+					
+<li>Una etiqueta <span class="codefrag">&lt;description&gt;</span> con documentaci&oacute;n sobre el conjunto de recursos a proteger (opcional)</li>
+				
+</ul>
+				
+<p>
+<strong>NOTA</strong>: este modo de restricci&oacute;n se aplica s&oacute;lo cuando se accede al recurso directamente, no a trav&eacute;s de arquitecturas MVC (Modelo-Vista-Controlador), con un <em>RequestDispatcher</em>. Es decir, si por ejemplo un servlet accede a una p&aacute;gina JSP protegida, este mecanismo no tiene efecto, pero s&iacute; cuando se intenta a acceder a la p&aacute;gina JSP directamente.</p>
+			
+</li>
+			
+<li>
+				
+<p>
+<span class="codefrag">&lt;auth-constraint&gt;</span> indica los roles de usuario que pueden acceder a los recursos indicados (opcional) Contiene:</p>
+				
+<ul>
+					
+<li>Uno o varios subelementos <span class="codefrag">&lt;role-name&gt;</span> indicando cada rol que tiene permiso de acceso. Si queremos dar permiso a todos los roles, utilizamos una etiqueta <em><span class="codefrag">&lt;role-name&gt;*&lt;/role-name&gt;</span></em>.</li>
+					
+<li>Una etiqueta <span class="codefrag">&lt;description&gt;</span> indicando la descripci&oacute;n de los mismos.</li>
+				
+</ul>
+				
+<p>En teor&iacute;a esta etiqueta es opcional, pero omiti&eacute;ndola indicamos que ning&uacute;n rol tiene permiso de acceso. Aunque esto puede parecer absurdo, recordar que este sistema s&oacute;lo se aplica al acceso directo a las URLs (no a trav&eacute;s de un modelo MVC), con lo que puede tener su utilidad.</p>
+			
+</li>
+		
+</ul>
+<p>A&ntilde;adimos alguna direcci&oacute;n protegida al fichero que vamos construyendo:</p>
+<pre class="code">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;!DOCTYPE web-app PUBLIC  
+"-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN" 
+"http://java.sun.com/j2ee/dtds/web-app_2_2.dtd"&gt;
+&lt;web-app&gt;
+	<strong>&lt;security-constraint&gt;
+		&lt;web-resource-collection&gt;
+			&lt;web-resource-name&gt; 
+				Prueba 
+			&lt;/web-resource-name&gt;
+			&lt;url-pattern&gt;				
+				/prueba/*
+			&lt;/url-pattern&gt;		
+		&lt;/web-resource-collection&gt;		
+		&lt;auth-constraint&gt;			
+			&lt;role-name&gt;admin&lt;/role-name&gt;
+			&lt;role-name&gt;subadmin&lt;/role-name&gt;		
+		&lt;/auth-constraint&gt;	
+	&lt;/security-constraint&gt;</strong>	
+
+	&lt;login-config&gt;	
+		...
+&lt;/web-app&gt;</pre>
+<p>En este caso protegemos todas las URLs de la forma <em><span class="codefrag">http//host/ruta_aplicacion/prueba/*</span></em>, de forma que s&oacute;lo los usuarios que tengan roles de <em>admin</em> o de <em>subadmin</em> podr&aacute;n acceder a ellas.</p>
+<p>Adem&aacute;s,por cada <span class="codefrag">role-name</span> que hayamos usado hay que incluir una definici&oacute;n aparte. Esta es obligatoria
+		pero algunos servidores la ignoran ,ya que parece un poco superflua:</p>
+<pre class="code">
+&lt;security-role&gt;
+  &lt;description&gt;administrador de la web&lt;/description&gt;
+  &lt;role-name&gt;admin&lt;/role-name&gt;
+&lt;/security-role&gt;
+&lt;security-role&gt;
+  &lt;description&gt;el segundo de a bordo&lt;/description&gt;
+  &lt;role-name&gt;subadmin&lt;/role-name&gt;
+&lt;/security-role&gt;
+</pre>
+<a name="N10317"></a><a name="Autentificaci%C3%B3n"></a>
+<h3 class="underlined_5">Autentificaci&oacute;n basic</h3>
+<p>El m&eacute;todo de autentificaci&oacute;n basada en formularios tiene algunos inconvenientes: si el navegador no soporta cookies, el proceso tiene que hacerse mediante reescritura de URLs, con lo que no se garantiza el funcionamiento. </p>
+<p>Por ello, una alternativa es utilizar el modelo de autentificaci&oacute;n <em>basic</em> de HTTP, donde se emplea un cuadro de di&aacute;logo para que el usuario introduzca su login y password, y se emplea la cabecera <em>Authorization</em> de petici&oacute;n para recordar qu&eacute; usuarios han sido autorizados y cu&aacute;les no. Una diferencia con respecto al m&eacute;todo anterior es que es dif&iacute;cil entrar como un usuario distinto una vez que hemos entrado como un determinado usuario (habr&iacute;a que cerrar el navegador y volverlo a abrir). </p>
+<p>Al igual que en el caso anterior, podemos utilizar SSL sin ver modificado el resto del esquema del proceso. </p>
+<p>El m&eacute;todo de autentificaci&oacute;n <em>basic</em> consta de los siguientes pasos: </p>
+<p>
+<strong>1. Establecer los logins, passwords y roles </strong>
+</p>
+<p>Este paso es exactamente igual que el visto para la autentificaci&oacute;n basada en formularios. </p>
+<p>
+<strong>2. Indicar al servlet que se emplear&aacute; autentificaci&oacute;n BASIC, y designar los dominios </strong>
+</p>
+<p>Se utiliza la misma etiqueta <span class="codefrag">&lt;login-config&gt;</span> vista antes, pero ahora una etiqueta <span class="codefrag">&lt;auth-method&gt;</span> con valor BASIC. Se emplea una subetiqueta <span class="codefrag">&lt;realm-name&gt;</span> para indicar qu&eacute; dominio se emplear&aacute; en la autorizaci&oacute;n. Por ejemplo:  </p>
+<pre class="code">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;!DOCTYPE web-app PUBLIC  
+"-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN" 
+"http://java.sun.com/j2ee/dtds/web-app_2_2.dtd"&gt;
+&lt;web-app&gt;	
+	...
+	<strong>&lt;login-config&gt;
+		&lt;auth-method&gt;BASIC&lt;/auth-method&gt;
+		&lt;realm-name&gt;dominio&lt;/realm-name&gt;	
+	&lt;/login-config&gt;</strong>	
+	...
+&lt;/web-app&gt;</pre>
+<p>
+<strong>3. Indicar qu&eacute; direcciones deben protegerse con autentificaci&oacute;n </strong>
+</p>
+<p>Este paso tambi&eacute;n es id&eacute;ntico al visto en la autentificaci&oacute;n basada en formularios. </p>
+</div> 
+
+
+<a name="N1035B"></a><a name="Autentificaci%C3%B3n+y+confidencialidad+mediante+SSL"></a>
+<h2 class="underlined_10">Autentificaci&oacute;n y confidencialidad mediante SSL</h2>
+<div class="section">
+<a name="N10361"></a><a name="Configurar+SSL+en+Tomcat"></a>
+<h3 class="underlined_5">Configurar SSL en Tomcat</h3>
+<p>SSL (Secure Socket Layer) es una tecnolog&iacute;a que permite que servidores y clientes web se comuniquen a trav&eacute;s de un canal seguro. Los datos que se intercambian cliente y servidor est&aacute;n encriptados, asegurando la confidencialidad. Adem&aacute;s, cuando se inicia la conexi&oacute;n, el servidor le presenta al cliente un certificado que garantiza su identidad, con lo que se garantiza tambi&eacute;n la autentificaci&oacute;n del servidor, suponiendo que dicho certificado est&aacute; firmado por una autoridad certificadora conocida (como Verisign). El servidor puede solicitar tambi&eacute;n al cliente un certificado para autentificar su identidad, aunque esto es menos com&uacute;n.</p>
+<p>La instalaci&oacute;n por defecto de Tomcat no soporta SSL, y tenemos que dar algunos pasos extra para a&ntilde;adir esta funcionalidad. Suponiendo que disponemos como m&iacute;nimo de la versi&oacute;n 1.4 del Java SDK, estos pasos se
+detallan a continuaci&oacute;n.</p>
+<p>
+<strong>Crear un certificado de clave p&uacute;blica</strong>. Los servidores basados en SSL utilizan certificados X509 para validar que los usuarios son quienes dicen ser. En el mundo real, el certificado necesita ser firmado por una autoridad de confianza, como por ejemplo Verisign. Pero para realizar pruebas, un certificado auto-firmado es suficiente. Para hacer esto ejecutamos:</p>
+<pre class="code">keytool -genkey -alias tomcat -keyalg RSA</pre>
+<p>El sistema nos pedir&aacute; cierta informaci&oacute;n: primero un password. Este mismo password lo deberemos indicar m&aacute;s adelante en el fichero server.xml. Despu&eacute;s alguna informaci&oacute;n adicional como nombre y apellidos (para un certificado del servidor, esto debe ser el nombre del servidor, no el nuestro), organizaci&oacute;n, localizaci&oacute;n, y finalmente otro password que debe ser el mismo que el primero que pusimos.</p>
+<p>Con todo esto, el sistema crea un fichero llamado .keystore en nuestro directorio por defecto (/home/nuestro-usuario en Unix, o C:\Documents and Settings\nuestro-usuario en Windows XP, por ejemplo). Podemos utilizar el par&aacute;metro -keystore al generar el certificado para indicar d&oacute;nde guardar el fichero y con qu&eacute; nombre.</p>
+<pre class="code">keytool -genkey -alias tomcat -keyalg RSA -keystore /dir/keystore</pre>
+<p>Opcionalmente, podemos copiar el certificado en el directorio inicial de Tomcat, que es el directorio donde se espera encontrar el certificado por defecto, aunque este aspecto es configurable a trav&eacute;s del fichero server.xml.</p>
+<p>
+<strong>Descomentar la conexi&oacute;n SSL en el fichero de configuraci&oacute;n</strong>. Tenemos finalmente que editar el fichero conf/server.xml de Tomcat y buscar un elemento Connector que originalmente est&aacute; comentado y que viene indicado en el fichero como que representa un "SSL HTTP/1.1 Connector" o similar. Una vez localizado, descomentamos ese c&oacute;digo. Luego, podemos cambiar algunos atributos de configuraci&oacute;n</p>
+<ul>
+    
+<li> Normalmente se cambiar&aacute; el puerto al valor por defecto para SSL, que es 443 (hay que tener en cuenta que el uso de puertos por debajo de 1024 en muchos sistemas requiere permisos de administrador). Si lo cambiamos aqu&iacute;, luego lo tendremos que cambiar tambi&eacute;n en el atributo redirectPort del Connector que maneja la conexi&oacute;n no SSL</li>
+    
+<li> En el elemento Factory que hay dentro del Connector, puede que necesitemos configurar los siguientes atributos:
+         <ul>
+         
+<li>className: la clase que implementa el SocketFactory. Dejar el valor por defecto</li>
+          
+<li>clientAuth: dejar en true si queremos que todos los clientes presenten un certificado para utilizar el socket. En nuestro caso lo dejar&iacute;amos en false, ya que el que se autentifica es el servidor, no los clientes.</li>
+          
+<li>keystoreFile: indicando el nombre del fichero "keystore" generado anteriormente (en caso de que no se encuentre en el directorio por defecto del usuario). Podemos indicar rutas absolutas, o relativas al directorio ra&iacute;z de Tomcat.</li>
+          
+<li>keystorePass: indicando el password que hayamos especificado al crear el fichero "keystore".</li>
+          
+<li>protocol: protocolo de encriptado/desencriptado. Dejar el valor por defecto.</li>
+          
+</ul>
+    
+</li>      
+
+</ul>
+<p>
+<strong>Cambiar la entrada del conector principal en el fichero de configuraci&oacute;n</strong> para que utilice el puerto para redirecciones SSL</p>
+<p>Como hemos dicho anteriormente, si hemos cambiado el puerto SSL, deberemos reflejar ese cambio en el conector principal en el atributo redirectPort.</p>
+<p>
+<strong> Reiniciar y probar el servidor</strong>. Para probar la conexi&oacute;n SSL accedemos a la p&aacute;gina ra&iacute;z de Tomcat utilizando HTTPS (HTTP + SSL):</p>
+<pre class="code">https://localhost:8443/</pre>
+<p>Tras esto, en nuestro navegador veremos algunas pantallas iniciales de advertencia indicando que el sitio utiliza certificados y que el firmante del certificado no es una autoridad reconocida (l&oacute;gico, ya que somos nosotros mismos), y despu&eacute;s ya veremos la p&aacute;gina de arranque de Tomcat.</p>
+<a name="N103B8"></a><a name="Configurar+SSL+en+la+aplicaci%C3%B3n+web"></a>
+<h3 class="underlined_5">Configurar SSL en la aplicaci&oacute;n web</h3>
+<p>Podemos incorporar SSL a los m&eacute;todos de autentificaci&oacute;n basados en seguridad declarativa vistos antes, sin m&aacute;s que incluyendo, dentro de la etiqueta <span class="codefrag">&lt;security-constraint&gt;</span>, una subetiqueta <span class="codefrag">&lt;user-data-constraint&gt;</span>. No necesitamos modificar el resto de la estructura para utilizar SSL, lo &uacute;nico que se necesita es adaptar el servidor Web para que soporte SSL, y a&ntilde;adir esta etiqueta, que contiene:</p>
+<ul>
+
+<li>Una subetiqueta &lt;transport-guarantee&gt;, que tendr&aacute; como posibles valores NONE, INTEGRAL o CONFIDENTIAL.
+     <ul>
+       
+<li> Con NONE no se imponen restricciones en el protocolo de comunicaci&oacute;n</li>
+       
+<li> Con INTEGRAL se impone una variedad de comunicaci&oacute;n que previene el hecho de modificar los datos mientras se env&iacute;an, sin que se detecte dicho cambio.</li>
+       
+<li> Con CONFIDENTIAL se indica que los datos se env&iacute;an para evitar que cualquiera que los intercepte pueda leerlos.</li>
+     
+</ul>     
+
+</li>     
+
+<li> Un elemento &lt;description&gt; opcional</li>
+
+</ul>
+<p>La API de servlets proporciona, adem&aacute;s, una forma de requerir a los clientes que se identifiquen con un certificado. Se puede proporcionar un valor de CLIENT-CERT a la etiqueta &lt;auth-method&gt; de &lt;login-config&gt;. Sin embargo, s&oacute;lo los servidores que soporten J2EE por completo soportar&aacute;n esta posibilidad. Incluso los servidores que soportan las versiones 2.3 de servlets y 1.2 de JSP no tienen por qu&eacute; soportar SSL, con lo que esta caracter&iacute;stica puede no ser portable.</p>
+</div>
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007 Depto. CCIA</div>
+</div>
+</body>
+</html>

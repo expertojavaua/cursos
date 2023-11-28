@@ -1,0 +1,264 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Ejercicios de MVC en Spring</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Spring" src="images/baner_j2ee_der.gif" title="Spring"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-web.html'">Aplicaciones Web</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-ent.html'">Aplicaciones Enterprise</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../charlas.html'">Charlas</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto</a>
+</li>
+<li>
+<a class="base-not-selected" href="index.html">Spring</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion03-ejercicios.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Ejercicios de MVC en Spring</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Configuraci%C3%B3n+inicial+del+proyecto">Configuraci&oacute;n inicial del proyecto</a>
+</li>
+<li>
+<a href="#MVC+sin+procesamiento+de+datos+de+entrada">MVC sin procesamiento de datos de entrada</a>
+</li>
+<li>
+<a href="#MVC+con+procesamiento+de+datos+de+entrada">MVC con procesamiento de datos de entrada</a>
+</li>
+<li>
+<a href="#Validaci%C3%B3n+de+datos">Validaci&oacute;n de datos</a>
+</li>
+</ul>
+</div>
+
+<p>Continuaremos en esta sesi&oacute;n con la aplicaci&oacute;n AmigosSpring, refactorizando la capa de presentaci&oacute;n
+para que parte de ella pase de estar basada en servlets a usar Spring MVC</p>
+
+<a name="N1000F"></a><a name="Configuraci%C3%B3n+inicial+del+proyecto"></a>
+<h2 class="underlined_10">Configuraci&oacute;n inicial del proyecto</h2>
+<div class="section">
+<ol>
+
+<li>Copiar la librer&iacute;a <a href="material/spring-webmvc.jar">Spring webMVC</a>
+a la carpeta <span class="codefrag">WEB-INF/lib</span> de nuestro proyecto. Dicha librer&iacute;a se incluye en la distribuci&oacute;n
+est&aacute;ndar de Spring, pero no como parte del m&oacute;dulo principal, <span class="codefrag">spring.jar</span>.</li>
+
+<li>Configurar el <em>dispatcher servlet</em> en el <span class="codefrag">web.xml</span> para que las URL con
+.do se asocien con Spring, tal y como aparece en los apuntes de
+la sesi&oacute;n:
+<pre class="code">
+
+&lt;servlet&gt;
+   &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;
+   &lt;servlet-class&gt;
+      org.springframework.web.servlet.DispatcherServlet
+   &lt;/servlet-class&gt;
+   &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+   &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;
+   &lt;url-pattern&gt;*.do&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+
+</pre>
+
+
+
+</li>
+
+<li>Crear el fichero de configuraci&oacute;n para los beans de la capa web. Ayudarse del plugin de Spring:
+<span class="codefrag">File &gt; New &gt; Other...&gt; Spring bean definition</span>. Recordad que con la configuraci&oacute;n por
+defecto del <em>dispatcher servlet</em>, el archivo debe llamarse <span class="codefrag">dispatcher-servlet.xml</span>
+y residir en la carpeta <span class="codefrag">WEB-INF</span>. En el asistente de creaci&oacute;n, incluye el <em>namespace</em>
+"context" en el fichero, ya que vas a necesitar la etiqueta "context:component-scan".</li>
+
+<li>Finalmente, introduce en el fichero <span class="codefrag">dispatcher-servlet.xml</span> la etiqueta
+"context:component-scan" para que Spring explore las clases de la capa web en busca de anotaciones.</li>
+
+</ol>
+</div>
+
+<a name="N1004B"></a><a name="MVC+sin+procesamiento+de+datos+de+entrada"></a>
+<h2 class="underlined_10">MVC sin procesamiento de datos de entrada</h2>
+<div class="section">
+<p>Cambiar el caso de uso "leer mensaje" para que emplee Spring MVC. Esto supondr&aacute;:</p>
+<ol>
+
+<li>Cambiar el servlet <span class="codefrag">LeerMensajeServlet</span> por un <em>controller</em> de Spring: 
+<ol>
+    
+<li>Crear un paquete es.ua.jtech.spring.mvc para meter el c&oacute;digo</li>
+    
+<li>Crear en este paquete la clase LeerMensajeController. A&ntilde;adir las anotaciones necesarias
+    para convertirlo en controlador y asociarlo con la URL "/leerMensaje.do".</li>
+    
+<li>El m&eacute;todo que va a procesar la petici&oacute;n HTTP debe ser <span class="codefrag">public String procesar(String id, ModelMap modelo)</span>. Recuerda
+que debes usar una anotaci&oacute;n para asociar "id" con el par&aacute;metro HTTP del mismo nombre. Recuerda tambi&eacute;n que
+el ModelMap es para poder colocar el resultado que devuelve la capa de negocio, y que el String
+que devuelve el m&eacute;todo es el nombre l&oacute;gico de la vista</li>
+
+</ol>  
+
+</li>
+
+<li>En el fichero <span class="codefrag">dispatcher-servlet.xml</span> debes definir el <span class="codefrag">ViewResolver</span> que asocia el nombre l&oacute;gico de la vista con el nombre
+f&iacute;sico ("mensaje.jsp").</li>
+
+<li>Finalmente, cambia el enlace que aparece en la p&aacute;gina "correo.jsp" que ahora es a "leerMensaje.servlet" por
+"leerMensaje.do", para que la petici&oacute;n la reciba el controller en lugar del servlet.</li>
+
+</ol>
+</div>
+
+<a name="N1007C"></a><a name="MVC+con+procesamiento+de+datos+de+entrada"></a>
+<h2 class="underlined_10">MVC con procesamiento de datos de entrada</h2>
+<div class="section">
+<p>Cambiar el caso de uso "buscar usuarios" para que emplee Spring MVC. Esto supondr&aacute;:</p>
+<ol>
+
+<li>Definir una clase <span class="codefrag">es.ua.jtech.spring.mvc.CriteriosBusqueda</span> que pueda capturar los datos que se introducen en el formulario
+de b&uacute;squeda (con propiedades int edadMin, int edadMax, String localidad, Sexo sexo)</li>
+
+<li>Cambiar el servlet <span class="codefrag">BuscarUsuariosServlet</span> por un <em>controller</em> de Spring 
+<ol>
+    
+<li>Crear la clase <span class="codefrag">es.ua.jtech.spring.mvc.BuscarUsuariosController</span>. Usando
+anotaciones, convertirla en controlador y mapearla con la URL "/busqueda.do"</li>
+    
+<li>El controlador tendr&aacute; dos m&eacute;todos: uno de ellos mapeado con GET y otro con POST:<ul>
+        
+<li>
+<span class="codefrag">public String preparaForm()</span>: simplemente devuelve el nombre l&oacute;gico de la vista
+con el formulario ("busqueda") (podr&iacute;a crear un <span class="codefrag">es.ua.jtech.spring.mvc.CriteriosBusqueda</span>
+    vac&iacute;o y colocarlo en el modelo, pero no es estrictamente necesario) </li>
+
+<li>
+<span class="codefrag">public String procesaForm(CriteriosBusqueda criterios, BindingResult result, ModelMap modelo)</span>: Con 
+@ModelAttribute,
+asociamos el primer par&aacute;metro al modelo. Si 
+<span class="codefrag">result</span> contiene errores vuelve otra vez al formulario. Si no, llama a la l&oacute;gica de
+negocio, coloca el resultado en el modelo bajo el nombre "encontrados" y devuelve
+el nombre l&oacute;gico de la vista que mostrar&aacute; los datos ("encontrados"). <strong>Por el momento
+no preocuparse de detectar errores de validaci&oacute;n adicionales ni de mostrar mensajes de error
+en el JSP.</strong>
+</li>
+        
+    
+</ul>
+</li>     
+
+</ol>
+</li>
+
+<li>En la p&aacute;gina "busqueda.jsp" el action debe ser vac&iacute;o (action="") y el method="POST"</li>
+
+<li>Finalmente, en la barra de navegaci&oacute;n (p&aacute;gina "navegacion.jsp") cambia el enlace a 
+"busqueda.jsp" por "busqueda.do", para llamar al controller de Spring. En la p&aacute;gina 
+"encontrados.jsp" aparece otro enlace a "busqueda.jsp" que debes cambiar.</li>
+
+</ol>
+</div>
+
+<a name="N100BD"></a><a name="Validaci%C3%B3n+de+datos"></a>
+<h2 class="underlined_10">Validaci&oacute;n de datos</h2>
+<div class="section">
+<p>Implementar validaci&oacute;n de datos para el caso de uso "buscar usuarios". En concreto, verificar
+que tanto la edad m&iacute;nima como la m&aacute;xima son como m&iacute;nimo 18 y que la m&aacute;xima es efectivamente
+un n&uacute;mero mayor que la m&iacute;nima.</p>
+<p>Ten en cuenta que:</p>
+<ol>
+    
+<li>Necesitar&aacute;s a&ntilde;adir c&oacute;digo de validaci&oacute;n en el m&eacute;todo <span class="codefrag">procesaForm</span>
+del controlador</li>
+
+<li>Tienes que crear el ".properties" con los mensajes de error y referenciarlo en el
+<span class="codefrag">dispatcher-servlet.xml</span>
+</li>
+
+<li>Debes usar las etiquetas de Spring en el formulario de "busqueda.jsp", para poder
+mostrar los mensajes de error de validaci&oacute;n. 
+<ul>
+
+<li>Debes usar el mismo nombre para "CriteriosBusqueda"
+en la anotaci&oacute;n @ModelAttribute del m&eacute;todo "procesaForm" y en el "modelAttribute" del
+formulario.</li>
+
+<li> Al asociar el formulario al objeto de la clase
+"CriteriosBusqueda" ser&aacute; necesario que dicho objeto est&eacute; disponible cuando se vuelva del <span class="codefrag">preparaForm</span>.
+Por ello en este m&eacute;todo debes a&ntilde;adir dicho objeto (vac&iacute;o) al <span class="codefrag">ModelMap</span>.</li>
+
+</ul>
+
+</li>
+
+<li>Debes crear el .properties con los mensajes de error y configurarlo en el 
+<span class="codefrag">dispatcher-servlet.xml</span>.</li>
+
+</ol>
+</div>
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2006-2007 Depto. CCIA</div>
+</div>
+</body>
+</html>

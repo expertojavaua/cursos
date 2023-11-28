@@ -1,0 +1,980 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Servicios Web Avanzados</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servicios Web" src="images/baner_j2ee_der.gif" title="Servicios Web"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-web.html'">Aplicaciones Web</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-ent.html'">Aplicaciones Enterprise</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../charlas.html'">Charlas</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Servicios Web</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Servicios Web</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Servicios Web">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 3</div>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html" title="Roadmap">Roadmap</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion03-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Servicios Web Avanzados</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Optimizaci%C3%B3n+de+mensajes">Optimizaci&oacute;n de mensajes</a>
+</li>
+<li>
+<a href="#Fiabilidad+en+la+transmisi%C3%B3n+de+mensajes">Fiabilidad en la transmisi&oacute;n de mensajes</a>
+</li>
+<li>
+<a href="#Servicios+web+con+estado">Servicios web con estado</a>
+</li>
+<li>
+<a href="#Servicios+web+seguros">Servicios web seguros</a>
+</li>
+<li>
+<a href="#Confidencialidad+e+integridad">Confidencialidad e integridad</a>
+</li>
+<li>
+<a href="#Autentificaci%C3%B3n">Autentificaci&oacute;n</a>
+</li>
+<li>
+<a href="#Configurar+la+seguridad+en+Netbeans">Configurar la seguridad en Netbeans</a>
+</li>
+<li>
+<a href="#Configurar+la+seguridad+en+el+servicio">Configurar la seguridad en el servicio</a>
+</li>
+<li>
+<a href="#Configurar+la+seguridad+en+el+cliente">Configurar la seguridad en el cliente</a>
+</li>
+<li>
+<a href="#Transacciones+at%C3%B3micas">Transacciones at&oacute;micas</a>
+</li>
+</ul>
+</div>
+
+
+<p>Vamos a ver una serie de caracter&iacute;sticas avanzadas de los Servicios Web SOAP dirigidas a mejorar
+su calidad, lo que se conoce como <em>Quality of Service</em> (QoS). Estas caracter&iacute;sticas vendr&aacute;n dadas 
+por tecnolog&iacute;as de segunda generaci&oacute;n, que se a&ntilde;aden a los lenguajes SOAP y WSDL para dotarlos de 
+capacidades adicionales. Estudiaremos las siguientes caracter&iacute;sticas:</p>
+
+
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+
+<td colspan="1" rowspan="1">Optimizaci&oacute;n de mensajes</td>
+<td colspan="1" rowspan="1">MTOM, Fast Infoset</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Fiabilidad en la transmisi&oacute;n de mensajes</td>
+<td colspan="1" rowspan="1">WS-ReliableMessaging</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Servicios con estado</td>
+<td colspan="1" rowspan="1">Basados en WS-Addressing</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Seguridad a nivel de mensaje</td>
+<td colspan="1" rowspan="1">WS-Security, WS-Trust</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Transacciones at&oacute;micas</td>
+<td colspan="1" rowspan="1">WS-AtomicTransactions</td>
+
+</tr>
+
+</table>
+
+
+<p>Estas caracter&iacute;sticas avanzadas se implementan en Java dentro de lo que se conoce como WSIT (<em>Web 
+Services Interoperability Technologies</em>). Esta plataforma desarrollada por Sun, adem&aacute;s de dar soporte
+a las anteriores tecnolog&iacute;as de segunda generaci&oacute;n, tiene como objetivo hacer que los servicios desarrollados
+en ella sean interoperables con los servicios de Microsoft .NET 3.0. Estos &uacute;ltimos servicios se implementan
+en la plataforma <em>Windows Communication Foundation</em> (WCF), que es el producto equivalente a WSIT en
+las tecnolog&iacute;as de Microsoft. </p>
+
+
+<p>En anteriores sesiones estudiamos JAX-WS, que nos permite trabajar con las tecnolog&iacute;as b&aacute;sicas para 
+servicios web (SOAP y WSDL). En esta sesi&oacute;n vamos a estudiar las caracter&iacute;sticas avanzadas que ofrece
+WSIT. Para m&aacute;s informaci&oacute;n sobre WSIT, se puede consultar el siguiente tutorial de Sun:</p>
+
+
+<p>
+<a href="http://java.sun.com/webservices/reference/tutorials/wsit/doc/">http://java.sun.com/webservices/reference/tutorials/wsit/doc/</a>
+</p>
+
+
+<p>En Netbeans podemos configurar estas opciones avanzadas a trav&eacute;s de la secci&oacute;n <em>Quality of Service</em> (QoS)
+de la vista de dise&ntilde;o de nuestros servicios:</p>
+
+
+<p>
+<img alt="Opciones de QoS." content-width="8cm" height="157" src="imagenes/sesion3/nb_qos.gif" width="390"></p>
+
+
+
+<a name="N10075"></a><a name="Optimizaci%C3%B3n+de+mensajes"></a>
+<h2 class="underlined_10">Optimizaci&oacute;n de mensajes</h2>
+<div class="section">
+<p>Cuando hablamos de optimizaci&oacute;n de mensajes nos referimos a conseguir que los mensajes sean enviados
+de forma eficiente a trav&eacute;s de la red. En los servicios SOAP los mensajes son documentos XML que requieren
+una gran cantidad de informaci&oacute;n para cumplir con el est&aacute;ndar. Es decir, no tenemos &uacute;nicamente los datos 
+que nos interesa comunicar, sino que estos datos se ven envueltos por varias etiquetas XML con informaci&oacute;n
+sobre el nombre de la operaci&oacute;n, el espacio de nombres en el que se encuentra, las distintas partes del
+documento SOAP, etc.</p>
+<p>Toda esta informaci&oacute;n transmitida como texto en formato XML podr&iacute;a ser codificada en otros formatos
+m&aacute;s compactos, para de esta forma ganar eficiencia en su transmisi&oacute;n a trav&eacute;s de la red. Esto es 
+precisamente en lo que consiste la optimizaci&oacute;n de mensajes.</p>
+<p>Un caso en el que la transmisi&oacute;n en XML resulta especialmente poco eficiente es en el que tratamos
+con un volumen elevado de datos binarios. Para poder incluir informaci&oacute;n binaria en un mensaje de texto
+debemos utilizar una codificaci&oacute;n como <em>base64</em>, que transforme la informaci&oacute;n binaria a un conjunto
+de caracteres imprimibles, lo cual produce que este contenido ocupe un espacio considerablemente mayor.</p>
+<p>Podemos optimizar el env&iacute;o de datos binarios mediante MTOM (<em>Message Transmission Optimization Mechanism</em>).
+Este mecanismo de optimizaci&oacute;n de mensajes SOAP lo que har&aacute; ser&aacute; enviar los datos binarios como un anexo al 
+mensaje, en lugar de enviarlo dentro del mismo texto. De esta forma los datos binarios se pueden enviar en
+su formato original, sin necesidad de convertirlos a texto.</p>
+<p>Utilizar MTOM en servicios desarrollados con Netbeans es sencillo. Simplemente deberemos activar la casilla
+<em>Optimize Transfer of Binary Data (MTOM)</em> en la secci&oacute;n <em>Quality Of Service</em> dentro de la 
+vista de dise&ntilde;o del servicio web.</p>
+<p>
+<img alt="Activar MTOM." content-width="8cm" height="157" src="imagenes/sesion3/nb_qos_mtom.gif" width="390"></p>
+<p>Si entramos en la ventana de caracter&iacute;sticas avanzadas de QoS, pulsando sobre el bot&oacute;n <em>Advanced...</em>
+de dicha secci&oacute;n, veremos dos opciones adicionales relacionadas con la optimizaci&oacute;n en la transmisi&oacute;n de 
+los datos. Estas opciones son:</p>
+<ul>
+
+<li>
+<em>Allow TCP Transport</em>: Permite realizar las comunicaciones con el servicio mediante protocolo TCP, 
+en lugar de utilizar HTTP. Si habilitamos esta casilla, y se conecta un cliente que utilice este protocolo, 
+el servicio lo aceptar&aacute;.</li>
+
+<li>
+<em>Disable Fast Infoset</em>: <em>Fast Infoset</em> es una forma de codificar de forma m&aacute;s compacta
+un mensaje XML. Por defecto el servicio soportar&aacute; este formato, a no ser que se active esta casilla para
+deshabilitarlo. Si no est&aacute; deshabilitado, el servicio utilizar&aacute; este formato cuando se conecte un cliente
+que tenga entre sus tipos de contenido aceptados (cabecera <span class="codefrag">Accept</span> de la petici&oacute;n HTTP) 
+dicho formato.</li>
+
+</ul>
+</div>
+
+<a name="N100B8"></a><a name="Fiabilidad+en+la+transmisi%C3%B3n+de+mensajes"></a>
+<h2 class="underlined_10">Fiabilidad en la transmisi&oacute;n de mensajes</h2>
+<div class="section">
+<p>Cuando hablamos de fiabilidad en la transmisi&oacute;n de los mensajes nos referimos a asegurarnos de que los
+mensajes enviados lleguen a su destino. Esto podemos conseguirlo mediante la utilizaci&oacute;n de la tecnolog&iacute;a 
+<em>WS-ReliableMessaging</em>. Esta es otra forma de mejorar la calidad del servicio (QoS).</p>
+<p>La invocaci&oacute;n de servicios web normalmente se realiza sobre protocolo HTTP (mecanismo petici&oacute;n-respuesta). 
+Si durante la invocaci&oacute;n del servicio se produce un error puntual en la red, se pueden presentar m&uacute;ltiples 
+problemas. En primer lugar se producir&aacute; un fallo en la llamada. Podemos programar el cliente para que reintente
+la invocaci&oacute;n tras el fallo, pero &iquest;el fallo ocurri&oacute; en la petici&oacute;n (antes de que se llegase a ejecutar 
+la operaci&oacute;n en el <em>endpoint</em>), o en la respuesta? Esto supone un problema importante, sobretodo cuando
+estemos realizando operaciones sensibles que no deban ejecutarse m&aacute;s de una vez (por ejemplo una transferencia
+a una cuenta bancaria). Si reintentamos la operaci&oacute;n desde el cliente tras obtener el fallo, pero en realidad
+la operaci&oacute;n ya se hubiese ejecutado, entonces tendr&iacute;amos un problema.</p>
+<p>Otro caso problem&aacute;tico es el de los servicios unidireccionales (<em>OneWay</em>). En este caso env&iacute;amos un
+mensaje sin esperar respuesta. Por lo tanto no sabremos ni siquiera si el mensaje ha llegado a su destino o 
+no.</p>
+<p>Estos problema pueden resolverse mediante el uso de <em>WS-ReliableMessaging</em>. Cuando utilizamos
+esta tecnolog&iacute;a se nos asegura de que los mensajes van a llegar a su destino una, y s&oacute;lo una vez. Esta
+tecnolog&iacute;a incorpora mecanismos que permiten recuperarse de fallos temporales en las comunicaciones. De forma
+opcional, tambi&eacute;n podremos asegurarnos de que los mensajes lleguen a su destino en el mismo orden en el que fueron
+enviados.</p>
+<p>El funcionamiento de este tecnolog&iacute;a est&aacute; inspirado en TCP. Es decir, se crear un canal de comunicaciones
+entre cliente y servicio, mediante el intercambio de mensajes adicionales utilizados para controlar el 
+flujo de datos.</p>
+<p>El inconveniente de utilizar este mecanismo es su mayor coste de procesamiento. Mantener el canal de datos
+supone un aumento considerable en el n&uacute;mero de mensajes enviados. Esto se acent&uacute;a todav&iacute;a m&aacute;s en el caso en el
+que queramos asegurarnos de que los mensajes llegan en orden a su destino. Por lo tanto, esta &uacute;ltima 
+caracter&iacute;stica deberemos utilizarla s&oacute;lo cuando sea estrictamente necesaria.</p>
+<p>En Netbeans podemos activar la transmisi&oacute;n fiable de mensajes directamente a trav&eacute;s de la secci&oacute;n QoS de
+la vista de dise&ntilde;o del servicio, marcando la casilla <em>Reliable Message Delivery</em>.</p>
+<p>
+<img alt="Activaci&oacute;n de transmisi&oacute;n fiable." content-width="8cm" height="157" src="imagenes/sesion3/nb_qos_rel.gif" width="419"></p>
+<p>Podemos configurar con mayor detalle la forma en la que se realizar&aacute; la transmisi&oacute;n fiable entrando en
+la ventana de caracter&iacute;sticas avanzadas de QoS. De esta forma podremos configurar por ejemplo que se 
+asegure que los mensajes lleguen en orden.</p>
+<p>
+<img alt="Opciones avanzadas de transmisi&oacute;n fiable." content-width="10cm" height="186" src="imagenes/sesion3/nb_qos_rel_adv.gif" width="511"></p>
+<p>Las opciones que aqu&iacute; se presentan son:</p>
+<ul>
+
+<li>
+<em>Deliver Messager in Exact Order</em>: Nos asegura que los mensajes llegan al destino en el mismo
+orden en el que fueron enviados. El hacer esto supone un elevado coste adicional en las comunicaciones. 
+S&oacute;lo debe utilizarse cuando sea necesario.</li>
+
+<li>
+<em>Flow Control</em>: Esta caracter&iacute;stica funciona de forma conjunta con la siguiente (m&aacute;ximo tama&ntilde;o de 
+<em>buffer</em>). Si los mensajes deben llegar ordenados, y han llegado algunos mensajes, pero faltan por 
+llegar mensajes anteriores, los mensajes llegados hasta el momento son almacenados en un <em>buffer</em>, a la 
+espera de que lleguen los anteriores para de esta forma poder se entregados a la aplicaci&oacute;n en orden. Con 
+esta caracter&iacute;stica podemos especificar el n&uacute;mero m&aacute;ximo de mensajes que pueden ser almacenados a la 
+espera de que lleguen los que faltan para poder entregarlos en orden. Si se rebasa el l&iacute;mite, los siguientes
+mensajes que lleguen ser&aacute;n ignorados.</li>
+
+<li>
+<em>Maximum Flow Control Buffer Size</em>: N&uacute;mero m&aacute;ximo de mensajes que se pueden almacenar en el 
+<em>buffer</em> a la espera de que lleguen los mensajes que faltan de la secuencia. S&oacute;lo se utiliza si est&aacute;
+activada la caracter&iacute;stica <em>Flow Control</em>.</li>
+
+<li>
+<em>Inactivity Timeout (ms)</em>: Si el canal de datos permanece inactivo, &eacute;ste ser&aacute; cerrado autom&aacute;ticamente
+transcurrido un tiempo. Esta caracter&iacute;stica indica el tiempo (en milisegundos) que transcurrir&aacute;
+desde la &uacute;ltima actividad realizada hasta que el canal sea cerrado autom&aacute;ticamente (por defecto son 10 minutos).</li>
+
+</ul>
+<p>Aunque acabamos de ver que se define un <em>timeout</em> para que el canal sea cerrado de forma autom&aacute;tica 
+si permanece inactivo, dado que el mantener un canal de datos abierto resulta costoso, ser&aacute; recomendable 
+cerrar manualmente el canal cuando no esperemos recibir ni enviar m&aacute;s mensajes a trav&eacute;s de &eacute;l. Podemos 
+cerrar el canal de datos desde el cliente de la siguiente forma:</p>
+<pre class="code">ConversionSW port = service.getConversioSWPort();
+int result = port.euro2ptas(18.95);
+out.println("Result: " + result);
+<strong>((Closeable)port).close();</strong>
+</pre>
+</div>
+
+
+<a name="N10128"></a><a name="Servicios+web+con+estado"></a>
+<h2 class="underlined_10">Servicios web con estado</h2>
+<div class="section">
+<p>Una de las caracter&iacute;sticas que m&aacute;s se han echado en falta en los primeros a&ntilde;os de existencia de los 
+servicios web es la capacidad de mantener un estado. Los servicios web eran servicios sin estado, en los que
+cada llamada era independiente de las dem&aacute;s, y si quer&iacute;amos identificar de alguna forma al cliente que
+estaba realizando la llamada deb&iacute;amos proporcionar como par&aacute;metro un identificador creado por nosotros
+que nos indicase de qu&eacute; cliente se trataba. Esta carencia complicaba implementar elementos como por ejemplo
+un carrito de la compra mediante servicios web, al que pudiesemos a&ntilde;adir productos en sucesivas llamadas.</p>
+<p>Para suplir esta carencia se han ideado diferentes t&eacute;cnicas, como por ejemplo el acceder a sesiones HTTP
+a trav&eacute;s del objeto <span class="codefrag">WebServiceContext</span>. Tambi&eacute;n encontramos otro enfoque consistente en aprovechar la
+tecnolog&iacute;a <em>WS-ReliableMessaging</em> para implementar el estado. Cada canal de datos tiene un identificador
+de sesi&oacute;n &uacute;nico, al que podemos acceder a trav&eacute;s de la propiedad <span class="codefrag">com.sun.xml.ws.sessionid</span> del 
+objeto <span class="codefrag">WebServiceContext</span>, y que puede ser utilizado para identificar a cada cliente y de 
+esta forma mantener su estado.</p>
+<p>Sin embargo, a partir de JAX-WS 2.1 aparece la tan esperada posibilidad de crear servicios web con estado
+(<em>stateful</em>). En este caso tendremos una instancia diferente de la clase del servicio para cada cliente.
+De esta forma, dentro de la clase JWS podremos definir variables de instancia (a diferencia de los servicios
+<em>stateless</em>, en los que todos los campos deb&iacute;an ser est&aacute;ticos), y cada cliente
+acceder&aacute; a sus datos propios (almacenados en los campos de la instancia concreta a la que est&eacute; accediendo).</p>
+<p>Estos servicios con estado est&aacute;n basados en la tecnolog&iacute;a <em>WS-Addressing</em>. Esta
+tecnolog&iacute;a permite identificar un <em>endpoint</em> de un servicio mediante XML, de forma independiente
+al protocolo de transporte que se vaya a utilizar para acceder a &eacute;l. De esta forma se podr&aacute; especificar
+no s&oacute;lo la direcci&oacute;n del servicio, sino tambi&eacute;n la instancia concreta a la que deseamos acceder de dicho
+servicio.</p>
+<p>Vamos a ver un ejemplo sencillo de servicio con estado. Para crear un servicio de este tipo deber&aacute; estar 
+anotado con <span class="codefrag">@Addressing</span>, para poder identificar desde el cliente la instancia concreta del 
+servicio a la que conectarse, y con <span class="codefrag">@Stateful</span> para marcarlo como servicio web con estado. Al
+estar marcado de esta forma, el contenedor le inyectar&aacute; de forma autom&aacute;tica un objeto de tipo 
+<span class="codefrag">StatefulWebServiceManager</span> en un campo <span class="codefrag">manager</span> que ser&aacute; p&uacute;blico y est&aacute;tico 
+(o bien privado y accesible mediante <em>getters</em> y <em>setters</em>).</p>
+<pre class="code">
+<strong>@Stateful</strong>
+@WebService
+<strong>@Addressing</strong>
+public class CuentaSW {
+
+    private int id;
+    private int saldo;
+
+    public CuentaSW(int id) {
+        this.id = id;
+        this.saldo = 0;
+    }
+
+    public void ingresar(int cantidad) {
+        saldo += cantidad;
+    }
+
+    public int saldo() {
+        return saldo;
+    }
+    
+    public void cerrar() {
+        <strong>manager.unexport(this);</strong>
+    }
+    
+    <strong>public static StatefulWebServiceManager&lt;CuentaSW&gt; manager;</strong>
+}
+</pre>
+<p>Sabemos que cada cliente tendr&aacute; acceso a una instancia de este servicio. Pero, &iquest;cu&aacute;ndo se crea dicha instancia?
+&iquest;y qui&eacute;n ser&aacute; el encargado de crearla? No puede hacerse autom&aacute;ticamente cuando desde el cliente llega una
+petici&oacute;n, ya que no conocemos qu&eacute; par&aacute;metros hay que pasarle al constructor (por esa raz&oacute;n los servicios 
+<em>stateless</em> deben tener un constructor vac&iacute;o, que es el que utiliza el contenedor para instanciarlos). 
+Por lo tanto, estos servicios con estado deber&aacute;n ser instanciados desde otros servicios. Por ejemplo, si 
+queremos acceder a nuestra cuenta podemos hacerlo a trav&eacute;s de un servicio <span class="codefrag">BancoSW</span> como el
+siguiente:</p>
+<pre class="code">@WebService
+public class BancoSW {
+
+    static Map&lt;Integer, CuentaSW&gt; cuentas = new HashMap();
+
+    @WebMethod
+    public synchronized <strong>W3CEndpointReference</strong> abrirCuenta(int id) {
+        CuentaSW c = cuentas.get(id);
+        if (c == null) {
+            c = new CuentaSW(id);
+            cuentas.put(id, c);
+        }
+
+        <strong>W3CEndpointReference endpoint = CuentaSW.manager.export(c);</strong>        
+        return endpoint;
+    }
+}</pre>
+<p>Lo &uacute;nico que tiene de especial este servicio es que como resultado nos devuelve un objeto 
+<span class="codefrag">W3CEndpointReference</span>, es decir, una referencia a un <em>endpoint</em> codificada mediante
+<em>WS-Addressing</em>. El <em>endpoint</em> al que har&aacute; referencia ser&aacute; a la instancia del servicio
+<span class="codefrag">CuentaSW</span> correspondiente a la cuenta solicitada. De esta forma cada cliente podr&aacute; acceder a una
+cuenta diferente, manteniendo cada una de ellas su estado por separado.</p>
+<p>Podemos destacar tambi&eacute;n que la operaci&oacute;n <span class="codefrag">export</span> del <em>manager</em> de la cuenta es la
+que genera la referencia al <em>endpoint</em>. Cuando queramos cerrar la sesi&oacute;n podemos utilizar 
+<span class="codefrag">unexport</span> para que la instancia especificada del servicio deje de estar disponible como 
+servicio web.</p>
+<p>Vamos ahora a ver c&oacute;mo accederemos a este servicio desde el cliente. Para ello lo primero que deberemos
+hacer es crear en nuestro proyecto cliente los <em>stubs</em> para acceder a los dos servicios 
+creados anteriormente (al igual que hicimos en sesiones anteriores). Una vez hecho esto podremos introducir
+el c&oacute;digo del cliente como se muestra a continuaci&oacute;n:</p>
+<pre class="code">BancoSWService bService = new BancoSWService();
+CuentaSWService cService = new CuentaSWService();
+BancoSW bPort = bService.getBancoSWPort();
+                             
+W3CEndpointReference endpoint = bPort.abrirCuenta(1);
+
+CuentaSW c = cService.<strong>getPort(endpoint,CuentaSW.class)</strong>;              
+
+c.ingresar(10);
+c.ingresar(5);
+out.println("Saldo: " + c.saldo());
+c.ingresar(20);
+out.println("Nuevo saldo: " + c.saldo());
+c.cerrar();</pre>
+<p>Podemos observar que creamos los servicios <span class="codefrag">BancoSW</span> y <span class="codefrag">CuentaSW</span> igual que cualquier
+otro servicio. El puerto del banco tambi&eacute;n se obtiene de la misma forma que anteriormente, y a partir de &eacute;l
+podemos llamar a la operaci&oacute;n <span class="codefrag">abrirCuenta</span> para obtener el <em>endpoint</em> de la cuenta a la
+que queremos acceder. Ahora es cuando viene la parte diferente, ya que el puerto de la cuenta deber&aacute; 
+obtenerse para que acceda al <em>endpoint</em> concreto que nos ha suministrado el banco. Para ello debemos
+utilizar una versi&oacute;n alternativa del m&eacute;todo <span class="codefrag">getPort</span> sobre el servicio <span class="codefrag">CuentaSWService</span>. En
+esta versi&oacute;n deberemos suministar tanto el <em>endpoint</em> obtenido, como la clase que define el tipo de puerto
+al que accederemos (<span class="codefrag">CuentaSW</span>). Esta versi&oacute;n de <span class="codefrag">getPort</span> s&oacute;lo est&aacute; disponible a partir de
+JAX-WS 2.1, por lo que con versiones anteriores de la librer&iacute;a no podremos acceder a este tipo de 
+servicios. </p>
+<div class="frame warning">
+<div class="label">Advertencia</div>
+<div class="content">Los servicios con estado son una caracter&iacute;stica nueva en JAX-WS 2.1. En JDK 1.6
+se ha venido incluyendo JAX-WS 2.0 hasta su update 3 (a partir de JDK 1.6.0_04 se incluye JAX-WS 2.1). Si 
+tenemos instalada una versi&oacute;n de JDK 1.6 con JAX-WS 2.0, aunque en Netbeans tengamos incluida la versi&oacute;n 2.1
+de la librer&iacute;a, las clases del n&uacute;cleo de Java tienen preferencia, por lo que a efectos del entorno no
+reconocer&aacute; el m&eacute;todo <span class="codefrag">getPort</span> adicional de JAX-WS 2.1 necesario para utilizar servicios 
+<em>stateful</em>. Sin embargo, a la hora de ejecutar, Netbeans si que configurar&aacute; JAX-WS 2.1 como 
+<em>endorsed</em>, de forma que quede por delante de las clases del n&uacute;cleo de JDK 1.6, por lo que si que 
+funcionar&aacute; bien. El efecto de esto es que veremos un error de compilaci&oacute;n en el entorno, pero la aplicaci&oacute;n 
+funcionar&aacute; de forma correcta.</div>
+</div>
+</div>
+
+<a name="N101E6"></a><a name="Servicios+web+seguros"></a>
+<h2 class="underlined_10">Servicios web seguros</h2>
+<div class="section">
+<p>Antes de empezar, vamos a recordar una serie de conceptos necesarios para entender los distintos 
+mecanismos para dotar de seguridad a los servicios web.</p>
+<ul>
+
+<li>
+<em>Cifrado con clave sim&eacute;trica</em>: Se utiliza una misma clave para cifrar y descifrar los datos. En
+este caso esa clave debe ser conocida por los dos extremos de la comunicaci&oacute;n.</li>
+
+<li>
+<em>Cifrado con clave asim&eacute;trica</em>: Se tienen dos claves, una p&uacute;blica y otra privada. La clave p&uacute;blica 
+puede ser difundida, pero la privada nunca se le comunicar&aacute; a nadie. Lo que se cifra con la clave p&uacute;blica, s&oacute;lo
+puede ser discifrado con la privada, y viceversa. Por lo tanto, si queremos que los datos que nos env&iacute;en vengan
+cifrados, deberemos proporcionar nuestra clave p&uacute;blica al otro extremo de la comunicaci&oacute;n, el emisor en este
+caso, que utilizar&aacute; la clave para cifrar los datos y envi&aacute;rnoslos. Nosotros podremos descifrarlos con nuestra
+clave privada, que nunca habremos entregado a nadie.</li>
+
+<li>
+<em>Huella digital</em>: Consiste en un c&oacute;digo de una determinada longitud (por ejemplo 128bits) generado
+a partir de un documento mediante un algoritmo conocido como <em>digest</em>, como por ejemplo MD5 o SHA. Dos
+documentos exactos tendr&aacute;n la misma huella, pero cualquier peque&ntilde;o cambio que se produzca alterar&aacute; fuertemente
+dicha huella. Una misma huella podr&iacute;a corresponder a varios documentos diferentes.</li>
+
+<li>
+<em>Firma digital</em>: Consiste en cifrar la huella de los datos que estamos env&iacute;ando mediante nuestra
+clave privada. El receptor de dicho documento podr&aacute; recuperar la huella descifr&aacute;ndola mediante nuestra clave 
+p&uacute;blica, pero nunca podr&aacute; generar una nueva firma ya que no cuenta con nuestra clave privada. Una vez descifrada
+la huella, podr&aacute; generar la huella de los datos recibidos y comprobar si coincide con la que le env&iacute;amos. Esto
+le garantizar&aacute; que los datos no hayan sido modificados por nadie m&aacute;s a parte de nosotros, ya que somos los 
+&uacute;nicos que tenemos en nuestro poder la clave privada necesaria para firmarlos.</li>
+
+<li>
+<em>Certificado digital</em>: Un certificado digital relaciona una clave p&uacute;blica con una determinada
+entidad. Es un documento en el que figuran los datos de la entidad y su clave p&uacute;blica (necesaria para 
+poder validar los datos recibidos de dicha entidad, o para enviarle informaci&oacute;n propia cifrada). Adem&aacute;s, 
+dicho certificado habr&aacute; sido emitido por una Autoridad Certificadora (CA), y estar&aacute; firmado por ella, para 
+as&iacute; poder confiar en su autenticidad. El protocolo m&aacute;s utilizado para certificar es el X.509.</li>
+
+<li>
+<em>Certificado ra&iacute;z</em>: Son los certificados correspondientes a las CAs, que contienen la clave p&uacute;blica
+necesaria para validar los certificados emitidos por ellas. Son un caso especial de certificados, ya que
+representan a la misma entidad que los ha emitido, por lo que no hay forma de validarlos, estos certificados
+se presuponen v&aacute;lidos. Suelen venir ya instalados en las aplicaciones o dispositivos que utilizamos para
+conectarnos, como son los navegadores web o dispositivos m&oacute;viles.</li>
+
+</ul>
+<p>Cuando hablamos de seguridad en el intercambio de informaci&oacute;n encontramos tres aspectos que 
+debemos diferenciar:</p>
+<ul>
+
+<li>
+<em>Confidencialidad</em>: Se trata de evitar que la informaci&oacute;n privada pueda ser vista por 
+personas no autorizadas. Esto se resuelve mediante el cifrado de los datos (con clave sim&eacute;trica o 
+asim&eacute;trica).</li>
+
+<li>
+<em>Integridad</em>: Se trata de evitar que los datos sean alterados indebidamente. Esto se resuelve
+mediante el uso de una huella digital. Normalmente esta huella se encuentra cifrada mediante la 
+clave privada de quien envi&oacute; estos datos, dando lugar a lo que se conoce como firma digital.</li>
+
+<li>
+<em>Autentificaci&oacute;n</em>: Se trata de verificar la identidad del otro extremo. Para autentificar a los
+usuarios normalmente basta con que proporcionen <em>login</em> y <em>password</em>. Si se requiere
+un mayor nivel de seguridad, se puede proporcionar al usuario un certificado firmado digitalmente
+(como por ejemplo los certificados extendidos por la FNMT que nos permiten acceder a servicios para presentar
+la declaraci&oacute;n de la renta). Para autentificar
+a los sitios web (por ejemplo, cuando accedemos a nuestro banco, saber que realmente nos estamos 
+comunicando con &eacute;l), tambi&eacute;n se utilizar&aacute; la firma digital (la informaci&oacute;n que nos proporcione
+el servidor vendr&aacute; firmada por un certificado de su propiedad).</li>
+
+</ul>
+<p>En el caso de los servicios web debemos tener tambi&eacute;n en cuenta
+  que estamos permitiendo invocar procedimientos remotos mediante 
+  protocolo HTTP, que en un principio fue dise&ntilde;ado para la extracci&oacute;n 
+  de documentos. Por lo tanto, sus puertos no suelen ser cortados por ning&uacute;n 
+  <em>firewall</em>, de forma cualquiera podr&aacute; utilizar estos servicios 
+  libremente, sin que los <em>firewalls</em> puedan controlarlo. Esto tambi&eacute;n
+  podr&iacute;a suponer un problema de seguridad en la red si no tenemos cuidado.</p>
+</div>
+
+<a name="N10238"></a><a name="Confidencialidad+e+integridad"></a>
+<h2 class="underlined_10">Confidencialidad e integridad</h2>
+<div class="section">
+<p>Cuando un cliente utiliza un Servicio Web, deber&aacute; enviarle un mensaje 
+  a este servicio a trav&eacute;s de la red, y el servicio le responder&aacute; 
+  mediante otro mensaje. Estos mensajes contendr&aacute;n informaci&oacute;n que 
+  puede ser confidencial. En los casos en los que estemos transmitiendo informaci&oacute;n
+  sensible en la invocaci&oacute;n al servicio, deberemos contar con m&eacute;todos para cifrar
+  estos datos.</p>
+<p>Dado que estos mensajes se env&iacute;an mediante protocolo HTTP, al igual que en el
+  caso de las aplicaciones web podr&aacute;n ser encriptados mediante SSL (HTTPS), evitando 
+  de esta forma que puedan ser le&iacute;dos o modificados por un tercero. El protocolo SSL en l&iacute;neas 
+  generales consiste en los siguientes pasos:</p>
+<ul>
+  
+<li>El cliente negocia con el servidor una clave sim&eacute;trica para cifrar la informaci&oacute;n (<em>handshake</em>). 
+  Esta negociaci&oacute;n se hace utilizando la clave p&uacute;blica del certificado del servidor (el cliente obtiene 
+  la clave p&uacute;blica del certificado del servidor, genera una clave sim&eacute;trica para la sesi&oacute;n, y se la env&iacute;a 
+  cifrada al servidor mediante su clave p&uacute;blica). De forma opcional, el cliente podr&iacute;a autentificarse 
+  mediante su propio certificado si fuese necesario. </li>
+  
+<li>Cliente y servidor intercambian la informaci&oacute;n cifr&aacute;ndola y firmandola mediante la clave sim&eacute;trica
+  acordada. De esta manera dicho protocolo nos proporciona confidencialidad e integridad en las
+  comunicaciones.</li>
+
+</ul>
+<p>Sin embargo, en aplicaciones en las que el mensaje deba atravesar una cadena 
+  de nodos intermedios, este mensaje deber&aacute; desencriptarse y volverse a encriptar 
+  entero en cada uno de estos servicios, por lo que los datos estar&aacute;n inseguros 
+  dentro de cada nodo. Es decir, SSL nos proporciona seguridad a nivel de transporte, pero
+  una vez el mensaje haya llegado a un nodo se descodificar&aacute; completamente, quedando as&iacute; 
+  expuesto en su totalidad. Esto nos puede plantear un problema cuando el mensaje contenga 
+  informaci&oacute;n destinada a diferentes servicios, y no queramos que desde uno de ellos se pueda
+  acceder a informaci&oacute;n dirigida a los dem&aacute;s.</p>
+<p>Este problema se puede solucionar cifrando por separado cada elemento del mensaje, y 
+  permitiendo que se cada nodo descifre s&oacute;lo la parte del mensaje que le ata&ntilde;e, pero que no 
+  pueda acceder al resto de elementos del mensaje que no le conciernen. Esto es lo que se 
+  conoce como seguridad a nivel de mensaje.</p>
+<p>Por lo tanto, encontramos dos formas para cifrar y firmar la informaci&oacute;n intercambiada en
+la invocaci&oacute;n del servicio:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+
+<th colspan="1" rowspan="1">Seguridad a nivel de transporte</th>
+<th colspan="1" rowspan="1">Seguridad a nivel de mensaje</th>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Se implementa mediante SSL.</td>
+<td colspan="1" rowspan="1">Basada en la especificaci&oacute;n WS-Security.</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Es dependiente del protocolo de transporte.</td>
+<td colspan="1" rowspan="1">Es independiente del protocolo de transporte utilizado.</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Resulta m&aacute;s eficiente.</td>
+<td colspan="1" rowspan="1">Tiene un mayor coste.</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Se puede aplicar a cualquier servicio accesible mediante HTTP.</td>
+<td colspan="1" rowspan="1">Requiere que los actores soporten WS-Security.</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Se protege el mensaje HTTP completo s&oacute;lo en su transmisi&oacute;n por la red.</td>
+<td colspan="1" rowspan="1">Se protegen partes determinadas del mensaje hasta su llegada al <em>endpoint</em>.</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">Si el cliente debe autentificarse mediante un certificado, s&oacute;lo podr&aacute; hacerlo ante el primer intermediario.</td>
+<td colspan="1" rowspan="1">La autentificaci&oacute;n del cliente valdr&aacute; para todos los destinatarios.</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1">No plantea problemas cuando tengamos una conexi&oacute;n punto-a-punto.</td>
+<td colspan="1" rowspan="1">No plantea problemas ni aunque haya intermediarios.</td>
+
+</tr>
+
+</table>
+</div>
+
+<a name="N102C8"></a><a name="Autentificaci%C3%B3n"></a>
+<h2 class="underlined_10">Autentificaci&oacute;n</h2>
+<div class="section">
+<p>Puede que necesitemos identificar a un usuario para prestarle un determinado 
+  servicio, o bien para saber si tiene autorizaci&oacute;n para acceder a dicho 
+  servicio. </p>
+<p>Para identificar al usuario podemos simplemente solicitar un <em>login</em>
+y <em>password</em>. En general, lo que haremos ser&aacute; proporcionar al servicio un
+<em>token</em> con el que se identificar&aacute; al cliente. Encontramos los siguientes
+tipos de <em>tokens</em>:</p>
+<ul>
+
+<li>
+<em>Username token</em>: Consiste en un <em>login</em> y un <em>password</em>.</li>
+
+<li>
+<em>SAML token</em>: Un <em>token</em> SAML (<em>Security Assertion Markup Language</em>) est&aacute;
+basado en XML y nos permitir&aacute; intercambiar informaci&oacute;n de autentificaci&oacute;n y autorizaci&oacute;n.</li>
+
+<li>
+<em>X.509 token</em>: Se autentifica al cliente mediante un certificado digital de su propiedad.</li>
+
+</ul>
+<p>Al aplicar la autentificaci&oacute;n a servicios web, al igual que en el caso anterior, tambi&eacute;n encontramos
+un problema. Si necesitamos invocar un conjunto de servicios, deberemos autentificarnos por 
+separado para cada uno de ellos, ya que pueden estar distribuidos en distintos servidores 
+a trav&eacute;s de Internet. Para solucionar este problema, deber&iacute;amos contar con un contexto compartido 
+global (gestor de identidades) de donde cualquier servicio pudiese obtener esta informaci&oacute;n de 
+autentificaci&oacute;n, y de esta manera no tener que autentificarse por separado con cada servicio 
+individual. Esto es lo que se conoce como <em>Single Sign On</em> (SSO).</p>
+<p>Tanto <em>Microsoft Passport</em> como <em>Liberty Project</em> (formado por una 
+alianza de empresas entre las que se encuentra Sun) pretenden dar soluci&oacute;n a este problema, 
+proporcionando un servicio de autentificaci&oacute;n centralizado. De esta forma podremos acceder 
+a diferentes servicios utilizando siempre el mismo <em>login</em>, ya que todos podr&iacute;an 
+utilizar el mismo servidor de identidades para autentificarnos.</p>
+<p>Para implementar SSO podemos utilizar los <em>tokens</em> SAML. Para acceder a un servicio lo que
+haremos ser&aacute;:</p>
+<ul>
+
+<li>Acceder a un proveedor de identidades proporcionando nuestros credenciales.</li>
+
+<li>El proveedor de identidades env&iacute;a al cliente un aserto SAML con la informaci&oacute;n de autentificaci&oacute;n y autorizaci&oacute;n.</li>
+
+<li>El cliente podr&aacute; utilizar el aserto SAML para acceder al servicio.</li>
+
+</ul>
+<p>Glassfish nos permite instalar como a&ntilde;adido opcional <em>Sun Java System Access Manager</em>, un gestor
+de identidades con el que podremos implementar SSO. Hemos de destacar que SSO es tanto aplicable a servicios 
+web como a aplicaciones web. En este &uacute;ltimo caso los mensajes SAML se suelen pasar como campos ocultos
+en formularios HTML, haciendo redirecciones entre el proveedor de identidades y el proveedor del servicio.</p>
+<p>Tambi&eacute;n podemos proporcionar asertos SAML mediante un <em>Security Token Service</em> (STS). Un STS es un
+servicio web que nos proporciona un <em>token</em> de seguridad. De esta forma puede proporcionar <em>tokens</em>
+SAML que podamos utilizar para autentificarnos. Nuestro cliente acceder&aacute; al STS para obtener un <em>token</em>
+de seguridad, y utilizar&aacute; dicho <em>token</em> para conectarse al servicio.</p>
+</div>
+
+<a name="N1033B"></a><a name="Configurar+la+seguridad+en+Netbeans"></a>
+<h2 class="underlined_10">Configurar la seguridad en Netbeans</h2>
+<div class="section">
+<p>Para poder utilizar servicios web seguros, lo primero que necesitaremos hacer es instalar en Glassfish
+los certificados necesarios (certificados X.509 version 3). Estos certificados, y las instrucciones para
+actualizarlos en Glassfish, pueden encontrarse en la siguiente direcci&oacute;n:</p>
+<p>
+<a href="http://docs.sun.com/app/docs/doc/820-1072/6ncp48v4k?a=view#gfrgz">http://docs.sun.com/app/docs/doc/820-1072/6ncp48v4k?a=view#gfrgz</a>
+</p>
+<p>Para algunos tipos de seguridad, tambi&eacute;n ser&aacute; necesario crear un usuario un Glassfish con el que los clientes
+puedan autentificarse. El usuario que utilizar&aacute;n por defecto los clientes de servicios tiene <em>login</em> 
+<span class="codefrag">"wsitUser"</span> y <em>password</em> <span class="codefrag">"changeit"</span>. El usuario deber&aacute; crearse dentro del 
+<em>realm</em> <span class="codefrag">file</span>, y pertenecer&aacute; al grupo <span class="codefrag">wsit</span>. Podemos a&ntilde;adir este usuario desde la 
+consola de administraci&oacute;n de Glassfish, entrando en la secci&oacute;n <em>Configuration &gt; Security &gt; Realms &gt; file</em>, 
+y dentro de ella pulsando el bot&oacute;n <em>Manage Users</em>. En esta pantalla de gesti&oacute;n de usuarios, pulsaremos
+el bot&oacute;n <em>New ...</em> para crear el usuario proporcionando los datos anteriormente citados, y tras ello
+veremos dicho usuario en la lista:</p>
+<p>
+<img alt="Usuarios de Glassfish." content-width="11cm" height="322" src="imagenes/sesion3/gf_users.gif" width="556"></p>
+</div>
+
+<a name="N10373"></a><a name="Configurar+la+seguridad+en+el+servicio"></a>
+<h2 class="underlined_10">Configurar la seguridad en el servicio</h2>
+<div class="section">
+<p>Una vez tenemos configurado Glassfish, vamos a ver ahora como a&ntilde;adir seguridad a uno de nuestros 
+servicios web mediante Netbeans. La forma m&aacute;s inmediata de hacer esto es simplemente pulsando sobre la opci&oacute;n
+<em>Secure Service</em> de la secci&oacute;n QoS de la vista de dise&ntilde;o del servicio. </p>
+<p>
+<img alt="Activaci&oacute;n de la seguridad." content-width="8cm" height="157" src="imagenes/sesion3/nb_qos_secure.gif" width="419"></p>
+<p>Con esto habremos a&ntilde;adido seguridad a nivel de mensaje mediante el uso de certificados X.509. Pero antes
+de seguir vamos a ver m&aacute;s a fondo las opciones avanzadas que nos ofrece Netbeans para configurar la seguridad
+de nuestros servicios. Para ello entramos en la ventana de opciones avanzadas de QoS, pulsando el bot&oacute;n
+<em>Advanced ...</em> de dicha secci&oacute;n:</p>
+<p>
+<img alt="Opciones avanzadas de seguridad." content-width="11cm" height="196" src="imagenes/sesion3/nb_qos_secure_adv.gif" width="579"></p>
+<p>En primer lugar vemos que nos permite elegir el mecanismo de seguridad. Los tipos b&aacute;sicos que encontramos son:</p>
+<ul>
+
+<li>
+<em>Username Authentication with Symmetric Keys</em>: Seguridad a nivel de mensaje. El cliente se identifica
+simplemente mediante <em>login</em> y <em>password</em> (por defecto <span class="codefrag">wsitUser/changeit</span>), y en tiempo
+de ejecuci&oacute;n se genera una clave sim&eacute;trica que es cifrada mediante el certificado del servicio.</li>
+
+<li>
+<em>Mutual Certificates Security</em>: Seguridad a nivel de mensaje. En este caso el cliente se autentifica
+mediante un certificado X.509, por lo que tanto cliente como servicio deber&aacute;n tener sus propios certificados.</li>
+
+<li>
+<em>Transport Security (SSL)</em>: Seguridad a nivel de transporte mediante SSL. Si activamos esta opci&oacute;n,
+se a&ntilde;adir&aacute; autom&aacute;ticamente una restricci&oacute;n de seguridad al descriptor de despliegue (<span class="codefrag">web.xml</span>) en
+la que se protege la URL asociada al servicio mediante seguridad declarativa. Es decir, la seguridad se 
+implementa como en una aplicaci&oacute;n web.</li>
+
+</ul>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Cuando utilicemos SSL, al generar el cliente deberemos utilizar como URL del documento WSDL
+la URL segura (<span class="codefrag">https</span>), y adem&aacute;s con el nombre de <em>host</em> real (no <span class="codefrag">localhost</span>). Por
+ejemplo, podr&iacute;a ser algo como <span class="codefrag">https://mihost:8181/WebServicio/MiServicio?wsdl</span>.</div>
+</div>
+<p>Dentro del resto de opciones encontramos alguna basadas tambi&eacute;n en seguridad a nivel de transporte
+(<em>Message Authentication over SSL</em> y <em>SAML Authorization over SSL</em>), en las que
+dentro del mensaje se ajunta un <em>token</em> de seguridad (SAML o de otros tipos). Encontramos tambi&eacute;n
+opciones para utilizar <em>tokens</em> de autorizaci&oacute;n SAML utilizando seguridad de nivel de mensaje 
+(<em>SAML Sender Vouches with Certificates</em> y <em>SAML Holder of Key</em>), y tambi&eacute;n
+para utilizar <em>tokens</em> de seguridad emitidos por un servicio de tipo STS (que podremos crear mediante 
+Netbeans, creando un nuevo proyecto, y como tipo seleccionando <em>Web Services &gt; Secure Token Service</em>). </p>
+<p>Por defecto observamos adem&aacute;s que tenemos marcada la casilla <em>Use Development Defaults</em>. Durante el
+desarrollo la podemos dejar marcada para no tener que preocuparnos de configurar los certificados. Si la 
+desmarcamos, seg&uacute;n el tipo de servicio, deberemos seleccionar los certificados que se van a utilizar. Tenemos
+dos almacenes de certificados:</p>
+<ul>
+
+<li>
+<em>Keystore</em>: Certificados X.509 propios. De cada uno se almacena el certificado y la clave privada 
+asociada.</li>
+
+<li>
+<em>Truststore</em>: Certificados ra&iacute;z. Son los certificados en los que confiamos.</li>
+
+</ul>
+<p>Adem&aacute;s, en la parte inferior de la ventana de caracter&iacute;sticas avanzadas podemos especificar la configuraci&oacute;n
+para cada mensaje concreto utilizado en el servicio: </p>
+<p>
+<img alt="Seguridad en las operaciones." content-width="12cm" height="287" src="imagenes/sesion3/nb_qos_secure_ops.gif" width="597"></p>
+<p>Pulsando sobre el bot&oacute;n <em>Message Parts ...</em> podremos configurar qu&eacute; partes del mensaje queremos cifrar
+y cuales queremos firmar. Aquellas que s&oacute;lo est&eacute;n firmadas podr&aacute;n ser vistas por cualquiera, pero no alteradas
+(se protege su integridad), mientras que las que est&eacute;n cifradas tampoco podr&aacute;n ser le&iacute;das sin permiso (se
+protege su confidencialidad). Como es evidente, est&aacute; opci&oacute;n s&oacute;lo est&aacute; disponible cuando se usa seguridad a nivel
+de mensaje.</p>
+<p>
+<img alt="Partes del mensaje." content-width="10cm" height="253" src="imagenes/sesion3/nb_qos_secure_parts.gif" width="512"></p>
+<p>Dejaremos la configuraci&oacute;n de seguridad por defecto (<em>Mutual Certificates Security</em>), y pasamos a ver
+c&oacute;mo crear el cliente del servicio seguro.</p>
+</div>
+
+
+<a name="N10414"></a><a name="Configurar+la+seguridad+en+el+cliente"></a>
+<h2 class="underlined_10">Configurar la seguridad en el cliente</h2>
+<div class="section">
+<p>Los servicios web seguros no podr&aacute;n ser ejecutados por el cliente de prueba, por lo que deberemos desarrollar
+nuestro propio cliente. Adem&aacute;s, estos servicios deben invocarse desde un contenedor capaz de gestionar la seguridad. 
+Es decir, dentro de servlets, EJBs, u otros servicios web. Por lo tanto, lo primero que haremos ser&aacute; crear un
+proyecto web, y dentro de &eacute;l generaremos el cliente (<em>Web Service Client</em>) para acceder al servicio 
+creado en la secci&oacute;n anterior, de la misma forma en la que crear&iacute;amos cualquier otro cliente para acceder a 
+un servicio web. Para crearlo podemos o bien especificar la direcci&oacute;n de su documento WSDL, o directamente 
+especificar el proyecto en el que se encuentra definido el servicio al que queremos acceder.</p>
+<p>Dado que la especificaci&oacute;n de seguridad del servicio se encuentra en su documento WSDL, al generarse el
+cliente se habr&aacute; configurado de forma autom&aacute;tica para utilizar el mecanismo de seguridad especificado en
+el servicio. De esta forma, podremos acceder a la configuraci&oacute;n de seguridad del cliente pulsando con el bot&oacute;n derecho
+sobre la referencia al servicio y seleccionando la opci&oacute;n <em>Edit Web Service Attributes</em>:</p>
+<p>
+<img alt="Configuraci&oacute;n del cliente." content-width="7cm" height="223" src="imagenes/sesion3/nb_qos_secure_client.gif" width="348"></p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Debemos destacar de este men&uacute; tambi&eacute;n la opci&oacute;n <em>Refresh Client</em>. Si cambiasemos 
+la especificaci&oacute;n de seguridad en el servidor, deberemos actualizar el cliente con esta opci&oacute;n para as&iacute;
+adaptar el <em>stub</em> generado al nuevo mecanismo de seguridad.</div>
+</div>
+<p>Como en el servidor estamos utilizando los valores de configuraci&oacute;n por defecto para el desarrollo, en el 
+cliente podemos hacer lo mismo, marcando la casilla <em>Use development defaults</em>. Si no fuese as&iacute;, deber&iacute;amos
+especificar la configuraci&oacute;n necesaria (certificado de usuario, certificados de confianza, nombre de usuario 
+y <em>password</em>, etc).</p>
+<p>
+<img alt="Seguridad en el cliente." content-width="9cm" height="511" src="imagenes/sesion3/nb_qos_secure_client_qos.gif" width="466"></p>
+<p>Una vez configurada la seguridad, a&ntilde;adiremos el c&oacute;digo del cliente para invocar el servicio a alg&uacute;n 
+componente de la aplicaci&oacute;n (por ejemplo a un Servlet), al igual que har&iacute;amos para invocar cualquier 
+otro servicio.</p>
+<div class="frame warning">
+<div class="label">Advertencia</div>
+<div class="content">Deberemos a&ntilde;adir el c&oacute;digo del cliente a un componente gestionado por el contenedor
+en el que el cliente del servicio se inyecte mediante la anotaci&oacute;n <span class="codefrag">@WebServiceRef</span>. Si
+lo a&ntilde;adimos a una clase Java normal o a un JSP, por ejemplo, no funcionar&aacute;.</div>
+</div>
+</div>
+
+<a name="N10454"></a><a name="Transacciones+at%C3%B3micas"></a>
+<h2 class="underlined_10">Transacciones at&oacute;micas</h2>
+<div class="section">
+<p>Para implementar transacciones en servicios web no necesitaremos nuevas APIs, sino que utilizaremos la API
+de transacciones Java Transaction API (JTA). Podremos definir para cada operaci&oacute;n del servicio la forma en la 
+que tratar&aacute; las transacciones.</p>
+<p>El significado de cada uno de estos modos es:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+
+<th colspan="1" rowspan="1">Modo</th>
+<th colspan="1" rowspan="1">Si el cliente se encuentra dentro de una transacci&oacute;n ...</th>
+<th colspan="1" rowspan="1">Si el cliente no se encuentra dentro de ninguna transacci&oacute;n ...</th>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>Required</em></td>
+<td colspan="1" rowspan="1">... la operaci&oacute;n de ejecuta en dicha transacci&oacute;n.</td>
+<td colspan="1" rowspan="1">... se crea una nueva transacci&oacute;n antes de ejecutar la operaci&oacute;n.</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>Requires New</em></td>
+<td colspan="1" rowspan="1">... &eacute;sta se suspende y se inicia una nueva dentro de la cual se ejecutar&aacute; la operaci&oacute;n. Una vez la operaci&oacute;n se ha ejecutado, se reanuda la transacci&oacute;n anterior.</td>
+<td colspan="1" rowspan="1">... se crea una nueva antes de ejecutar la operaci&oacute;n.</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>Supported</em></td>
+<td colspan="1" rowspan="1">... la operaci&oacute;n se ejecuta dentro de ella.</td>
+<td colspan="1" rowspan="1">... la operaci&oacute;n se ejecuta sin estar dentro de ninguna transacci&oacute;n.</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>Not Supported</em></td>
+<td colspan="1" rowspan="1">... &eacute;sta se suspende antes de ejecutar la operaci&oacute;n. Una vez ejecutada, se reanuda la transacci&oacute;n anterior.</td>
+<td colspan="1" rowspan="1">... se ejecuta sin crear ninguna transacci&oacute;n.</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><em>Mandatory</em></td>
+<td colspan="1" rowspan="1">... la operaci&oacute;n se ejecuta dentro de dicha transacci&oacute;n.</td>
+<td colspan="1" rowspan="1">... el contenedor lanza una excepci&oacute;n <span class="codefrag">TransactionRequired Exception</span>.</td>
+
+</tr>
+
+</table>
+<p>Esto lo configuraremos en la ventana de caracter&iacute;sticas avanzadas de QoS. Se especificar&aacute; una configuraci&oacute;n
+para cada operaci&oacute;n del servicio.</p>
+<p>
+<img alt="Configuraci&oacute;n de las transacciones." content-width="5cm" height="171" src="imagenes/sesion3/nb_qos_tx.gif" width="218"></p>
+<p>El cliente podr&aacute; ser alg&uacute;n componente de la capa web o un EJB. En ellos podremos utilizar un objeto 
+<span class="codefrag">UserTransaction</span> para gestionar la transacci&oacute;n. </p>
+<pre class="code">public class ServletCliente extends HttpServlet {
+    @WebServiceRef(wsdlLocation = 
+        "http://localhost:8080/Hotel/ServicioHotel?wsdl")
+    private es.ua.jtech.servcweb.wsat.HotelSWService sHotel;
+    
+    @WebServiceRef(wsdlLocation = 
+        "http://localhost:8080/Vuelos/ServicioVuelos?wsdl")
+    private es.ua.jtech.servcweb.wsat.VuelosSWService sVuelos;
+        
+    <strong>@Resource UserTransaction ut;</strong>
+    
+    protected void processRequest(HttpServletRequest request, 
+                                  HttpServletResponse response)
+    throws ServletException, IOException {
+        
+        try {
+            HotelSW pHotel = sHotel.getHotelSW();
+            VuelosSW pVuelos = sVuelos.getVuelosSW();
+                        
+            <strong>ut.begin();</strong>
+
+            boolean hotelReservado = 
+                pHotel.reservaHabitacion(datosHabitacion);
+            boolean vueloReservado = 
+                pVuelos.reservaVuelo(datosVuelo);
+                
+            if(!hotelReservado || !vueloReservado) {
+                <strong>ut.rollback();</strong>
+            } else {                
+                <strong>ut.commit();</strong>
+            }
+        } catch(Exception e) { 
+            try {
+                <strong>ut.rollback();</strong>
+            } catch (Exception e) { ... }            
+        }
+    }
+}</pre>
+<div class="frame warning">
+<div class="label">Atenci&oacute;n</div>
+<div class="content">Las transacciones no se propagan con los mensajes unidireccionales (de tipo 
+<span class="codefrag">OneWay</span>).</div>
+</div>
+</div>
+
+
+
+<p class="pageBreakAfter"></p>
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2008-2009 Depto. CCIA</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,896 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Consultas a una BD con JDBC</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Java y Herramientas de Desarrollo" src="images/baner_j2ee_der.gif" title="Java y Herramientas de Desarrollo"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Java y Herramientas de Desarrollo</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Materiales</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Java y Herramientas de Desarrollo">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 9</div>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesion 10</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html">Roadmap</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-ejercicios.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-ejercicios.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-ejercicios.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-ejercicios.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-ejercicios.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-ejercicios.html">Sesion 10</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion09-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Consultas a una BD con JDBC</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Introducci%C3%B3n+a+JDBC">Introducci&oacute;n a JDBC</a>
+<ul class="minitoc">
+<li>
+<a href="#Drivers+de+acceso">Drivers de acceso</a>
+<ul class="minitoc">
+<li>
+<a href="#Tipos+de+drivers">Tipos de drivers</a>
+</li>
+<li>
+<a href="#Instalaci%C3%B3n+de+drivers">Instalaci&oacute;n de drivers</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Conexi%C3%B3n+a+la+BD">Conexi&oacute;n a la BD</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Consulta+a+una+base+de+datos+con+JDBC">Consulta a una base de datos con JDBC</a>
+<ul class="minitoc">
+<li>
+<a href="#Creaci%C3%B3n+y+ejecuci%C3%B3n+de+sentencias+SQL">Creaci&oacute;n y ejecuci&oacute;n de sentencias SQL</a>
+</li>
+<li>
+<a href="#Sentencias+de+consulta">Sentencias de consulta</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Restricciones+y+movimientos+en+el">Restricciones y movimientos en el ResultSet</a>
+<ul class="minitoc">
+<li>
+<a href="#Actualizaci%C3%B3n+de+datos">Actualizaci&oacute;n de datos</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Sentencias+de+actualizaci%C3%B3n">Sentencias de actualizaci&oacute;n</a>
+</li>
+<li>
+<a href="#Otras+llamadas+a+la+BD">Otras llamadas a la BD</a>
+</li>
+</ul>
+</div>
+
+<a name="N1000C"></a><a name="Introducci%C3%B3n+a+JDBC"></a>
+<h2 class="underlined_10">Introducci&oacute;n a JDBC</h2>
+<div class="section">
+<p>En la mayor&iacute;a de las aplicaciones que nos vamos a encontrar,
+aparecer&aacute; una base de datos como fuente de informaci&oacute;n.
+JDBC nos va a permitir acceder a bases de datos (BD) desde Java. Con
+JDBC no es necesario escribir distintos programas para distintas BD,
+sino que un &uacute;nico programa sirve para acceder a BD de distinta
+naturaleza. Incluso, podemos acceder a m&aacute;s de una BD de distinta
+fuente (Oracle, Access, MySql, etc.) en la misma aplicaci&oacute;n.
+Podemos pensar en JDBC como el puente entre una base de datos y nuestro
+programa Java. Un ejemplo sencillo puede ser un applet que muestra
+din&aacute;micamente informaci&oacute;n contenida en una base de datos.
+El applet utilizar&aacute; JDBC para obtener dichos datos.</p>
+<p>El esquema a seguir en un programa que use JDBC es el siguiente:
+<img alt="Esquema general de conexi&oacute;n con una base de datos" content-width="12cm" src="imagenes/figura1.jpg"></p>
+<p>Un programa Java que utilice JDBC primero deber&aacute; establecer
+una conexi&oacute;n con el SGBD. Para realizar dicha conexi&oacute;n
+haremos uso de un driver espec&iacute;fico para cada SGBD que estemos
+utilizando. Una vez establecida la conexi&oacute;n ya podemos
+interrogar la BD con cualquier comando SQL (select, update, create,
+etc.). El resultado de un comando <em>select</em> es un objeto de la
+clase ResultSet, que contiene los datos que devuelve la consulta.
+Disponemos de m&eacute;todos en <em>ResultSet </em>para manejar los
+datos devueltos. Tambi&eacute;n podemos realizar cualquier
+operaci&oacute;n en SQL (creaci&oacute;n de tablas, gesti&oacute;n de
+usuarios, etc.).
+<img alt="Conexi&oacute;n a trav&eacute;s del API y un driver de JDBC" content-width="12cm" src="imagenes/figura2.jpg"></p>
+<p>Para realizar estas operaciones necesitaremos contar con un SGBD
+(sistema gestor de bases de datos) adem&aacute;s de un driver
+espec&iacute;fico para poder acceder a este SGBD.&nbsp;Vamos a utilizar
+dos SGBD: MySQL (disponible para Windows y Linux, de libre
+distribuci&oacute;n) y PostGres (s&oacute;lo para Linux, tambi&eacute;n
+de libre distribuci&oacute;n).</p>
+<a name="N1002C"></a><a name="Drivers+de+acceso"></a>
+<h3 class="underlined_5">Drivers de acceso</h3>
+<p>Los drivers para poder acceder a cada SGBD no forman parte de la
+distribuci&oacute;n de Java por lo que deberemos obtenerlos por
+separado. &iquest;Por qu&eacute; hacer uso de un driver?. El
+principal problema que se nos puede plantear es que cada SGBD dispone
+de su propio API (la mayor&iacute;a propietario), por lo que un cambio
+en el SGBD implica una modificaci&oacute;n de nuestro c&oacute;digo. Si
+colocamos una capa intermedia, podemos abstraer la conectividad, de tal
+forma que nosotros utilizamos un objeto para la conexi&oacute;n, y el
+driver se encarga de traducir la llamada al API. El driver lo suelen
+distribuir las propias empresas que fabrican el SGBD. </p>
+<a name="N10035"></a><a name="Tipos+de+drivers"></a>
+<h4>Tipos de drivers</h4>
+<p>Existe un est&aacute;ndar establecido que divide los drivers en cuatro
+grupos:</p>
+<ul>
+  
+<li>
+<strong>Tipo 1: Puente JDBC-ODBC</strong>. ODBC (Open Database Connectivity) fue creado 
+    para proporcionar una conexi&oacute;n a bases de datos en Microsoft Windows.
+    ODBC permite acceso a bases de datos desde diferentes lenguajes de programaci&oacute;n, 
+    tales como C y Cobol. El puente JDBC-ODBC permite enlazar Java con cualquier 
+    base de datos disponible en ODBC. No se aconseja el uso de este tipo de driver 
+    cuando tengamos que acceder a bases de datos de alto rendimiento, pues las 
+    funcionalidades est&aacute;n limitadas a las que marca ODBC. Cada cliente 
+    debe tener instalado el driver. J2SE incluye este driver en su versi&oacute;n 
+    Windows y Solaris.
+
+    <img alt="Configuraci&oacute;n de un driver de tipo 1" content-width="10cm" src="imagenes/driver1.jpg">
+  </li>
+  
+<li>
+<strong>Tipo 2: Parte Java, parte driver nativo</strong>. Es una combinaci&oacute;n 
+    de implementaci&oacute;n Java y API nativo para el acceso a la base de datos. 
+    Este tipo de driver es m&aacute;s r&aacute;pido que el anterior, pues no se 
+    realiza el paso por la capa ODBC. Las llamadas JDBC se traducen en llamadas 
+    espec&iacute;ficas del API de la base de datos. Cada cliente debe tener instalado 
+    el driver. Tiene menor rendimiento que los dos siguientes y no se pueden usar 
+    en Internet, ya que necesita el API de forma local.
+    <img alt="Configuraci&oacute;n de un driver de tipo 2" content-width="10cm" src="imagenes/driver2.jpg">
+   </li>
+  
+<li>
+<strong>Tipo 3: Servidor intermediario de acceso a base de datos</strong>.
+Este tipo de driver
+proporciona una abstracci&oacute;n de la conexi&oacute;n. El cliente se
+conecta a los SGBD
+mediante un componente servidor intermedio, que act&uacute;a como una
+puerta para m&uacute;ltiples servidores. La ventaja de este tipo de
+driver es el nivel de abstracci&oacute;n. El servidor
+de aplicaciones WebLogic incorpora este tipo de driver.
+<img alt="Configuraci&oacute;n de un driver de tipo 3" content-width="10cm" src="imagenes/driver3.jpg">
+  </li>
+  
+<li>
+<strong>Tipo 4: Drivers Java</strong>. Este es el m&aacute;s directo. La
+llamada JDBC se traduce
+directamente en una llamada de red a la base de datos, sin
+intermediarios. Proporcionan
+mejor rendimiento. La mayor&iacute;a de SGBD proporcionan drivers de
+este tipo.
+<img alt="Configuraci&oacute;n de un driver de tipo 4" content-width="8cm" src="imagenes/driver4.jpg">
+</li>
+
+</ul>
+<a name="N1006A"></a><a name="Instalaci%C3%B3n+de+drivers"></a>
+<h4>Instalaci&oacute;n de drivers</h4>
+<p> La distribuci&oacute;n de JDBC incorpora los drivers para el puente JDBC-ODBC 
+  que nos permite acceder a cualquier BD que se gestione con ODBC. Para MySQL, 
+  deberemos descargar e instalar el SGBD y el driver, que puede ser obtenido en 
+  la direcci&oacute;n <a href="http://dev.mysql.com/doc/mysql/en/Java_Connector.html">http://dev.mysql.com/doc/mysql/en/Java_Connector.html</a>. 
+  El driver para PostGres se obtiene en <a href="http://jdbc.postgresql.org">http://jdbc.postgresql.org</a>
+</p>
+<p>Para instalar el driver lo &uacute;nico que deberemos hacer es
+incluir el fichero JAR que lo contiene en el CLASSPATH. Por ejemplo,
+para MySQL:</p>
+<pre class="code">export CLASSPATH=$CLASSPATH:
+        <strong>/directorio-donde-este/mysql-connector-java-3.0.15-ga-bin.jar</strong>
+
+</pre>
+<p>Con el driver instalado, podremos cargarlo desde nuestra
+aplicaci&oacute;n simplemente cargando din&aacute;micamente la clase
+correspondiente al driver:</p>
+<pre class="code">Class.forName("<strong>com.mysql.jdbc.Driver</strong>");
+</pre>
+<p>El driver JDBC-ODBC se carga como se muestra a continuaci&oacute;n:</p>
+<pre class="code">Class.forName("<strong>sun.jdbc.odbc.JdbcOdbcDriver</strong>");
+</pre>
+<p>Y de forma similar para PostGres:</p>
+<pre class="code">Class.forName("<strong>org.postgresql.Driver</strong>");
+</pre>
+<p> La carga del driver se deber&iacute;a hacer siempre antes de
+conectar con la BD. </p>
+<p>Como hemos visto anteriormente, pueden existir distintos tipos de
+drivers para la misma base de datos. Por ejemplo, a una BD en MySQL
+podemos acceder mediante ODBC o mediante su propio driver.
+Podr&iacute;amos pensar que la soluci&oacute;n m&aacute;s sencilla
+ser&iacute;a utilizar ODBC para todos las conexiones a SGBD. Sin
+embargo, dependiendo de la complejidad de la aplicaci&oacute;n a
+desarrollar esto nos podr&iacute;a dar problemas. Determinados SGBD
+permiten realizar operaciones (transacciones, mejora de rendimiento,
+escabilidad, etc.) que se ven mermadas al realizar su conexi&oacute;n a
+trav&eacute;s del driver ODBC. Por ello es preferible hacer uso de
+driver espec&iacute;ficos para el SGBD en cuesti&oacute;n. </p>
+<p>El ejemplo m&aacute;s claro de problemas en el uso de drivers es con
+los <em>Applets</em>. Cuando utilicemos acceso a bases de datos mediante
+JDBC desde un <em>Applet</em>, deberemos tener en cuenta que el <em>Applet</em>
+se ejecuta en la m&aacute;quina del cliente, por lo que si la BD
+est&aacute; alojada en nuestro servidor tendr&aacute; que establecer
+una conexi&oacute;n remota. Aqu&iacute; encontramos el problema de que
+si el <em>Applet</em> es visible desde Internet, es muy posible que el
+puerto en el que escucha el servidor de base de datos puede estar
+cortado por alg&uacute;n <em>firewall</em>, por lo que el acceso desde
+el exterior no ser&iacute;a posible.</p>
+<p>El uso del puente JDBC-ODBC tampoco es recomendable en <em>Applets</em>,
+ya que requiere que cada cliente tenga configurada la fuente de datos
+ODBC adecuada en su m&aacute;quina. Esto podemos controlarlo en el caso
+de una intranet, pero en el caso de Internet ser&aacute; mejor utilizar
+otros m&eacute;todos para la conexi&oacute;n.</p>
+<p>En cuanto a las excepciones, debemos capturar la excepci&oacute;n <em>SQLException</em>
+en casi todas las operaciones en las que se vea involucrado
+alg&uacute;n objeto JDBC. </p>
+<a name="N100C8"></a><a name="Conexi%C3%B3n+a+la+BD"></a>
+<h3 class="underlined_5">Conexi&oacute;n a la BD</h3>
+<p>Una vez cargado el driver apropiado para nuestro SGBD deberemos
+establecer la conexi&oacute;n con la BD. Para ello utilizaremos el
+siguiente m&eacute;todo:</p>
+<pre class="code">
+<strong>Connection</strong> con = DriverManager.<strong>getConnection</strong>(url);
+<strong>Connection</strong> con = DriverManager.<strong>getConnection</strong>(url, login, password);
+</pre>
+<p>La conexi&oacute;n a la BD est&aacute; encapsulada en un objeto <span class="codefrag">Connection</span>.
+Para su creaci&oacute;n debemos proporcionar la <em> url</em> de la BD
+y, si la BD est&aacute; protegida con contrase&ntilde;a, el <em>login</em>
+y <em> password</em> para acceder a ella. El formato de la <em> url</em>
+variar&aacute; seg&uacute;n el driver que utilicemos. Sin embargo,
+todas las <em>url</em> tendr&aacute;n la siguiente forma general: <em>jdbc</em>:&lt;<em>subprotocolo</em>&gt;:&lt;<em>nombre</em>&gt;,
+con <em>subprotocolo</em> indicando el tipo de SGBD y con <em>nombre</em>
+indicando el nombre de la BD y aportando informaci&oacute;n adicional
+para la conexi&oacute;n. </p>
+<p>Para conectar a una fuente ODBC de nombre <em>bd</em>, por ejemplo,
+utilizaremos la siguiente URL:</p>
+<pre class="code">Connection con = DriverManager.getConnection("<strong>jdbc:odbc:bd</strong>");
+</pre>
+<p>En el caso de MySQL, si queremos conectarnos a una BD de nombre <em>bd</em>
+alojada en la m&aacute;quina local (<em>localhost</em>) y con usuario <em>miguel</em>
+y contrase&ntilde;a <em>m++24</em>, lo haremos de la siguiente forma:</p>
+<pre class="code">Connection con = 
+    DriverManager.getConnection("<strong>jdbc:mysql://localhost/bd</strong>", 
+                                "miguel", "m++24");
+</pre>
+<p>En el caso de PostGres (notar que hemos indicado un puerto de
+conexi&oacute;n, el 5432):</p>
+<pre class="code">Connection con = DriverManager.getConnection(
+    "<strong>jdbc:postgresql://localhost:5432/bd</strong>", "miguel", "m++24");
+</pre>
+<p>Podemos depurar la conexi&oacute;n y determinar qu&eacute; llamadas
+est&aacute; realizando JDBC. Para ello haremos uso de un par de
+m&eacute;todos que incorpora <strong>DriverManager</strong>. En el siguiente
+ejemplo se indica que las operaciones que realice JDBC se
+mostrar&aacute;n por la salida est&aacute;ndar:</p>
+<pre class="code">DriverManager.<strong>setLogWriter</strong>(new PrintWriter(System.out, true));
+</pre>
+<p>Una vez realizada esta llamada tambi&eacute;n podemos mostrar
+mensajes usando:</p>
+<pre class="code">DriverManager.<strong>println</strong>("Esto es un mensaje");
+</pre>
+</div>
+
+<a name="N1014A"></a><a name="Consulta+a+una+base+de+datos+con+JDBC"></a>
+<h2 class="underlined_10">Consulta a una base de datos con JDBC</h2>
+<div class="section">
+<a name="N10150"></a><a name="Creaci%C3%B3n+y+ejecuci%C3%B3n+de+sentencias+SQL"></a>
+<h3 class="underlined_5">Creaci&oacute;n y ejecuci&oacute;n de sentencias SQL</h3>
+<p>Una vez obtenida la conexi&oacute;n a la BD, podemos utilizarla para
+realizar consultas, inserci&oacute;n y/o borrado de datos de dicha BD.
+Todas estas operaciones se realizar&aacute;n mediante lenguaje SQL. La
+clase <strong>Statement</strong> es la que permite realizar todas estas
+operaciones. La instanciaci&oacute;n de esta clase se realiza haciendo
+uso del siguiente m&eacute;todo que proporciona el objeto <strong>Connection</strong>:</p>
+<pre class="code">
+<strong>Statement</strong> stmt = con.createStatement();
+</pre>
+<p>Podemos dividir las sentencias SQL en dos grupos: las que actualizan
+la BD y las que &uacute;nicamente la consultan. En las siguientes
+secciones veremos c&oacute;mo podemos realizar estas dos acciones.</p>
+<a name="N10169"></a><a name="Sentencias+de+consulta"></a>
+<h3 class="underlined_5">Sentencias de consulta</h3>
+<p>Para obtener datos almacenados en la BD podemos realizar una
+consulta SQL (<em>query</em>). Podemos ejecutar la consulta utilizando el
+objeto <strong>Statement</strong>, pero ahora haciendo uso del m&eacute;todo <strong>executeQuery
+</strong> al que le pasaremos una cadena con la consulta SQL. Los datos
+resultantes nos los devolver&aacute; como un objeto <strong>ResultSet</strong>.</p>
+<pre class="code">
+<strong>ResultSet</strong> result = stmt.<strong>executeQuery</strong>(query);
+</pre>
+<p>La consulta SQL nos devolver&aacute; una tabla, que tendr&aacute;
+una serie de campos y un conjunto de registros, cada uno de los cuales
+consistir&aacute; en una tupla de valores correspondientes a los campos
+de la tabla.&nbsp; </p>
+<p> Los campos que tenga la tabla resultante depender&aacute;n de la
+consulta que hagamos, de los datos que solicitemos que nos devuelva.
+Por ejemplo, podemos solicitar que una consulta nos devuelva los campos
+<em>expediente </em>y <em>nombre</em> de los alumnos o bien que nos
+devuelva todos los campos de la tabla <em>alumnos</em>. </p>
+<p>Veamos el funcionamiento de las consultas SQL mediante un ejemplo:</p>
+<pre class="code">String query = "SELECT * FROM ALUMNOS WHERE sexo = 'M'";
+ResultSet result = stmt.executeQuery(query);
+</pre>
+<p>En esta consulta estamos solicitando todos los registros de la tabla
+ALUMNOS
+en los que el sexo sea <em>mujer </em>(M), pidiendo que nos devuelva
+todos los
+campos (indicado con *) de dicha tabla. Nos devolver&aacute; una tabla
+como la
+siguiente:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+    
+<tr>
+      
+<td colspan="1" rowspan="1"><strong>exp</strong></td>
+      <td colspan="1" rowspan="1"><strong>nombre</strong></td>
+      <td colspan="1" rowspan="1"><strong>sexo</strong></td>
+    
+</tr>
+    
+<tr>
+      
+<td colspan="1" rowspan="1">1286</td>
+      <td colspan="1" rowspan="1">Amparo</td>
+      <td colspan="1" rowspan="1">M</td>
+    
+</tr>
+    
+<tr>
+      
+<td colspan="1" rowspan="1">1287</td>
+      <td colspan="1" rowspan="1">Manuela</td>
+      <td colspan="1" rowspan="1">M</td>
+    
+</tr>
+    
+<tr>
+      
+<td colspan="1" rowspan="1">1288</td>
+      <td colspan="1" rowspan="1">Lucrecia</td>
+      <td colspan="1" rowspan="1">M</td>
+    
+</tr>
+
+</table>
+<p>Estos datos nos los devolver&aacute; como un objeto <strong>ResultSet</strong>.
+A continuaci&oacute;n veremos c&oacute;mo podemos acceder a los valores
+de este objeto y c&oacute;mo podemos movernos por los distintos
+registros.</p>
+<p>El objeto <strong>ResultSet </strong>dispone de un <em>cursor</em> que
+estar&aacute; situado en el registro que podemos consultar en cada
+momento. Este <em>cursor</em> en un principio estar&aacute; situado en
+una posici&oacute;n anterior al primer registro de la tabla. Podemos
+mover el cursor al siguiente registro con el m&eacute;todo <strong>next</strong>
+del <strong>ResultSet</strong>. La llamada a este m&eacute;todo nos
+devolver&aacute; <strong>true</strong> mientras pueda pasar al siguiente
+registro, y <strong>false </strong>en el caso de que ya estuvi&eacute;ramos en
+el &uacute;ltimo registro de la tabla. Para la consulta de todos los
+registros obtenidos utilizaremos normalmente un bucle como el siguiente:</p>
+<pre class="code">while(result.<strong>next</strong>()) {
+      // Leer registro
+}
+</pre>
+<p>Ahora necesitamos obtener los datos del registro que marca el <em>cursor</em>,
+para lo cual podremos acceder a los campos de dicho registro. Esto lo
+haremos utilizando los m&eacute;todos <strong>getXXXX(campo)</strong> donde <strong>XXXX</strong>
+ser&aacute; el tipo de datos de Java en el que queremos que nos
+devuelva el valor del campo. Hemos de tener en cuenta que el tipo del
+campo en la tabla debe ser convertible al tipo de datos Java
+solicitado. Para especificar el campo que queremos leer podremos
+utilizar bien su nombre en forma de cadena, o bien su &iacute;ndice que
+depender&aacute; de la ordenaci&oacute;n de los campos que devuelve la
+consulta. Tambi&eacute;n debemos tener en cuenta que no podemos acceder
+al mismo campo dos veces seguidas en el mismo registro. Si lo hacemos
+nos dar&aacute; una excepci&oacute;n.</p>
+<p>Los tipos principales que podemos obtener son los siguientes:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+    
+<tr>
+      
+<td colspan="1" rowspan="1"><strong>getInt</strong></td>
+      <td colspan="1" rowspan="1">Datos enteros</td>
+    
+</tr>
+    
+<tr>
+      
+<td colspan="1" rowspan="1"><strong>getDouble</strong></td>
+      <td colspan="1" rowspan="1">Datos reales</td>
+    
+</tr>
+    
+<tr>
+      
+<td colspan="1" rowspan="1"><strong>getBoolean</strong></td>
+      <td colspan="1" rowspan="1">Campos booleanos (si/no)</td>
+    
+</tr>
+    
+<tr>
+      
+<td colspan="1" rowspan="1"><strong>getString</strong></td>
+      <td colspan="1" rowspan="1">Campos de texto</td>
+    
+</tr>
+    
+<tr>
+      
+<td colspan="1" rowspan="1"><strong>getDate</strong></td>
+      <td colspan="1" rowspan="1">Tipo fecha (Devuelve <strong>Date</strong>)</td>
+    
+</tr>
+    
+<tr>
+      
+<td colspan="1" rowspan="1"><strong>getTime</strong>
+      </td>
+      <td colspan="1" rowspan="1">Tipo hora (Devuelve<strong> Time</strong>)
+      </td>
+    
+</tr>
+
+</table>
+<p>Si queremos imprimir todos los datos obtenidos de nuestra tabla
+ALUMNOS del ejemplo podremos hacer lo siguiente:</p>
+<pre class="code">int exp;
+String nombre;
+String sexo;
+
+while(result.next()){
+    exp = result.getInt("exp");
+    nombre = result.getString("nombre");
+    sexo = result.getString("sexo");
+    System.out.println(exp + "\t" + nombre + "\t" + sexo);
+}
+</pre>
+<p>Cuando un campo de un registro de una tabla no tiene asignado
+ning&uacute;n valor, la consulta de ese valor devuelve NULL. Esta
+situaci&oacute;n puede dar problemas al intentar manejar ese dato. La
+clase <strong>ResultSet</strong> dispone de un m&eacute;todo <strong>wasNull</strong> que
+llamado despu&eacute;s de acceder a un registro nos dice si el valor
+devuelto fue NULL. Esto no sucede as&iacute; para los datos
+num&eacute;ricos, ya que devuelve el valor 0. Comprobemos qu&eacute;
+sucede en el siguiente c&oacute;digo:</p>
+<pre class="code">String sexo;
+
+while(result.next()){
+    exp = result.getInt("exp");
+    nombre = result.getString("nombre");
+    sexo = result.getString("sexo");
+    System.out.println(exp + "\t" + nombre.<strong>trim</strong>() + "\t" + sexo);
+}
+</pre>
+<p>La llamada al m&eacute;todo <strong>trim</strong> devolver&aacute; una
+excepci&oacute;n si el objeto <strong>nombre</strong> es NULL. Por ello podemos
+realizar la siguiente modificaci&oacute;n: </p>
+<pre class="code">String sexo;
+
+while(result.next()){
+    exp = result.getInt("exp");
+    System.out.print(exp + "\t");
+    nombre = result.getString("nombre");	
+    if (result.<strong>wasNull</strong>()) {
+        System.out.print("Sin nombre asignado");
+    else
+        System.out.print(nombre.trim());
+    sexo = result.getString("sexo");
+    System.out.println("\t" + sexo);
+}
+</pre>
+</div>
+
+<a name="N102AC"></a><a name="Restricciones+y+movimientos+en+el"></a>
+<h2 class="underlined_10">Restricciones y movimientos en el ResultSet</h2>
+<div class="section">
+<p>Cuando realizamos llamadas a BD de gran tama&ntilde;o el resultado
+de la consulta puede ser demasiado grande y no deseable en
+t&eacute;rminos de eficiencia y memoria. JDBC permite restringir el
+n&uacute;mero de filas que se devolver&aacute;n en el <strong>ResultSet</strong>.
+La clase <strong>Statement</strong> incorpora dos m&eacute;todos, <strong>getMaxRows</strong>
+y <strong>setMaxRows</strong>, que permiten obtener e imponer dicha
+restricci&oacute;n. Por defecto, el l&iacute;mite es cero, indicando
+que no se impone la restricci&oacute;n. Si, por ejemplo, antes de
+ejecutar la consulta imponemos un l&iacute;mite de 30 usando el
+m&eacute;todo <strong>setMaxRows(30)</strong>, el resultado devuelto s&oacute;lo
+contendr&aacute; las 30 primeras filas que cumplan con los criterios de
+la consulta.</p>
+<p>Hasta ahora, el manejo de los datos devueltos en una consulta se
+realizaba con el m&eacute;todo <strong>next</strong> de <strong>ResultSet</strong>.
+Podemos manejar otros m&eacute;todos para realizar un movimiento no
+lineal por el <strong>ResultSet</strong>. Es lo que se conoce como <strong>ResultSet</strong>
+arrastable. Para que esto sea posible debemos utilizar el siguiente
+m&eacute;todo en la creaci&oacute;n del <strong>Statement</strong>:</p>
+<pre class="code">Statement createStatement (int <strong>resultSetType</strong>, 
+                                   int <strong>resultSetConcurrency</strong>)
+</pre>
+<p>Los posibles valores que puede tener <strong>resultSetType</strong> son: <strong>ResultSet.TYPE_FORWARD_ONLY</strong>,
+<strong>ResultSet.TYPE_SCROLL_INSENSITIVE</strong>, <strong>ResultSet.TYPE_SCROLL_SENSITIVE</strong>.
+El primer valor es el funcionamiento por defecto: el <strong>ResultSet</strong>
+s&oacute;lo se mueve hacia adelante. Los dos siguientes permiten que el
+resultado sea arrastable. Una caracter&iacute;stica importante en los
+resultados arrastables es que los cambios que se produzcan en la BD se
+reflejan en el resultado, aunque dichos cambios se hayan producido
+despu&eacute;s de la consulta. <em>Esto depender&aacute; de si el
+driver y/o la BD soporta este tipo de comportamiento</em>. En el caso de
+<strong>INSENSITIVE</strong>, el resultado no es sensible a dichos cambios y en
+el caso de <strong>SENSITIVE</strong>, s&iacute;. Los
+m&eacute;todos que podemos
+utilizar para movernos por el <strong>ResultSet</strong> son:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+    
+<tr>
+      
+<td colspan="1" rowspan="1"><strong>next</strong></td>
+      <td colspan="1" rowspan="1">Pasa a la siguiente fila</td>
+    
+</tr>
+    
+<tr>
+      
+<td colspan="1" rowspan="1"><strong>previous</strong></td>
+      <td colspan="1" rowspan="1">&Iacute;dem fila anterior</td>
+    
+</tr>
+    
+<tr>
+      
+<td colspan="1" rowspan="1"><strong>last</strong></td>
+      <td colspan="1" rowspan="1">&Iacute;dem &uacute;ltima fila</td>
+    
+</tr>
+    
+<tr>
+      
+<td colspan="1" rowspan="1"><strong>first</strong></td>
+      <td colspan="1" rowspan="1">&Iacute;dem primera fila</td>
+    
+</tr>
+    
+<tr>
+      
+<td colspan="1" rowspan="1"><strong>absolute(int fila)</strong></td>
+      <td colspan="1" rowspan="1">Pasa a la fila n&uacute;mero fila</td>
+    
+</tr>
+    
+<tr>
+      
+<td colspan="1" rowspan="1"><strong>relative(int fila)</strong></td>
+      <td colspan="1" rowspan="1">Pasa a la fila n&uacute;mero fila desde la actual</td>
+    
+</tr>
+    
+<tr>
+      
+<td colspan="1" rowspan="1"><strong>getRow</strong></td>
+      <td colspan="1" rowspan="1">Devuelve la n&uacute;mero de fila actual</td>
+    
+</tr>
+    
+<tr>
+      
+<td colspan="1" rowspan="1"><strong>isLast</strong></td>
+      <td colspan="1" rowspan="1">Devuelve si la fila actual es la &uacute;ltima</td>
+    
+</tr>
+    
+<tr>
+      
+<td colspan="1" rowspan="1"><strong>isFirst</strong></td>
+      <td colspan="1" rowspan="1">&Iacute;dem la primera</td>
+    
+</tr>
+
+</table>
+<p>El otro par&aacute;metro, <strong>resultSetConcurrency</strong>, puede ser
+uno de estos dos valores: <strong>ResultSet.CONCUR_READ_ONLY</strong> y <strong>ResultSet.CONCUR_UPDATABLE</strong>.
+El primero es el utilizado por defecto y no permite actualizar el
+resultado. El segundo permite que los cambios realizados en el <strong>ResultSet</strong>
+se actualicen en la base de datos. Si queremos modificar los datos
+obtenidos en una consulta y queremos reflejar esos cambios en la BD
+debemos crear una sentencia con <strong>TYPE_FORWARD_SENSITIVE</strong>
+y <strong>CONCUR_UPDATABLE</strong>.</p>
+<a name="N10396"></a><a name="Actualizaci%C3%B3n+de+datos"></a>
+<h3 class="underlined_5">Actualizaci&oacute;n de datos</h3>
+<p>Para actualizar un campo disponemos de m&eacute;todos <strong>updateXXXX</strong>,
+de la misma forma que ten&iacute;amos m&eacute;todos <strong>getXXXX</strong>.
+Estos m&eacute;todos reciben dos par&aacute;metros: el primero indica
+el nombre del campo (o n&uacute;mero de orden dentro del <strong>ResultSet</strong>);
+el segundo indica el nuevo valor que tomar&aacute; el campo del
+registro actual. Para que los cambios tengan efecto en la BD debemos
+llamar al m&eacute;todo <strong>updateRow</strong>. El siguiente c&oacute;digo
+es un ejemplo de modificaci&oacute;n de datos:</p>
+<pre class="code">rs.<strong>updateString</strong>("nombre","manolito");
+rs.<strong>updateRow</strong>();
+</pre>
+<p>Si queremos desechar los cambios producidos en la fila actual (antes
+de llamar a <strong>updateRow</strong>) podemos llamar a <strong>cancelRowUpdates</strong>.
+Para borrar la fila actual tenemos el m&eacute;todo <strong>deleteRow</strong>.
+La llamada a este m&eacute;todo deja una fila vac&iacute;a en el <strong>ResultSet</strong>.
+Si intentamos acceder a los datos de esa fila nos dar&aacute; una
+excepci&oacute;n. Podemos llamar al m&eacute;todo <strong>rowDeleted</strong> el
+cual devuelve cierto si la fila actual ha sido eliminada (m&eacute;todo
+no implementado en MySQL).</p>
+<p>Debemos tener en cuenta varias restricciones a la hora de actualizar
+un <strong>ResultSet</strong>: la sentencia SELECT que ha generado el <strong>ResultSet</strong>
+debe:</p>
+<ul>
+  
+<li>Referenciar s&oacute;lo una tabla.</li>
+  
+<li>No contener una cla&uacute;sula <em>join</em> o <em>group by</em>.</li>
+  
+<li>Seleccionar la clave primaria de la tabla.</li>
+
+</ul>
+<p>Existe un registro especial al que no se puede acceder como hemos
+visto anteriormente, que es el registro de inserci&oacute;n. Este
+registro se utiliza para insertar nuevos registros en la tabla. Para
+situarnos en &eacute;l deberemos llamar al m&eacute;todo <strong>moveToInsertRow</strong>.
+Una vez situados en &eacute;l deberemos asignar los datos con los
+m&eacute;todos <strong>updateXXXX</strong> anteriormente descritos y una vez
+hecho esto llamar a <strong>insertRow </strong>para que el registro se inserte
+en la BD. Podemos volver al registro donde nos encontr&aacute;bamos
+antes de movernos al registro de inserci&oacute;n llamando a <strong>moveToCurrentRow</strong>.</p>
+</div>
+
+<a name="N103F3"></a><a name="Sentencias+de+actualizaci%C3%B3n"></a>
+<h2 class="underlined_10">Sentencias de actualizaci&oacute;n</h2>
+<div class="section">
+<p>La clase <strong>statement</strong> dispone de un m&eacute;todo llamado <strong>executeUpdate</strong>
+el cual recibe como par&aacute;metro la cadena de caracteres que
+contiene la sentencia SQL a ejecutar. Este m&eacute;todo
+&uacute;nicamente permite realizar sentencias de actualizaci&oacute;n
+de la BD: creaci&oacute;n de tablas (CREATE), inserci&oacute;n
+(INSERT), actualizaci&oacute;n (UPDATE) y borrado de datos (DELETE). El
+m&eacute;todo a utilizar es el
+siguiente:</p>
+<pre class="code">stmt.<strong>executeUpdate</strong>(sentencia);
+</pre>
+<p>Vamos a ver a continuaci&oacute;n un ejemplo de estas operaciones.
+Crearemos una tabla ALUMNOS en nuestra base de datos y
+a&ntilde;adiremos datos a la misma. La sentencia para la
+creaci&oacute;n de la tabla ser&aacute; la siguiente:</p>
+<pre class="code">String st_crea = "<strong>CREATE TABLE</strong> ALUMNOS (
+    exp <strong>INTEGER</strong>,
+    nombre <strong>VARCHAR</strong>(32),
+    sexo <strong>CHAR</strong>(1),
+    <strong>PRIMARY</strong> <strong>KEY</strong> (exp)
+)";
+stmt.<strong>executeUpdate</strong>(st_crea);
+</pre>
+<p>Una vez creada la tabla podremos insertar datos en ella como se
+muestra a continuaci&oacute;n:</p>
+<pre class="code">String st_inserta = "<strong>INSERT</strong> <strong>INTO</strong> ALUMNOS(exp, nombre) 
+    <strong>VALUES</strong>(1285, 'Manu', 'M')";
+stmt.<strong>executeUpdate</strong>(st_inserta);
+</pre>
+<p>Cuando tengamos datos dentro de la tabla, podremos modificarlos
+utilizando para ello una sentencia UPDATE:</p>
+<pre class="code">String st_actualiza = "<strong>UPDATE FROM</strong> ALUMNOS 
+    <strong>SET</strong> sexo = 'H' <strong>WHERE</strong> exp = 1285";
+stmt.<strong>executeUpdate</strong>(st_actualiza);
+</pre>
+<p>Si queremos eliminar un registro de la tabla utilizaremos una
+sentencia DELETE como se muestra a continuaci&oacute;n:</p>
+<pre class="code">String st_borra = "<strong>DELETE FROM</strong> ALUMNOS
+    <strong>WHERE</strong> exp = 1285";
+stmt.<strong>executeUpdate</strong>(st_borra);
+</pre>
+<p>El m&eacute;todo <strong>executeUpdate </strong>nos devuelve un entero que
+nos dice el n&uacute;mero de registros a los que ha afectado la
+operaci&oacute;n, en caso de sentencias INSERT, UPDATE y DELETE. La
+creaci&oacute;n de tablas nos devuelve siempre 0.</p>
+</div>
+
+
+<a name="N10462"></a><a name="Otras+llamadas+a+la+BD"></a>
+<h2 class="underlined_10">Otras llamadas a la BD</h2>
+<div class="section">
+<p>En la interfaz <strong>Statement</strong> podemos observar un tercer
+m&eacute;todo que podemos utilizar para la ejecuci&oacute;n de
+sentencias SQL. Hasta ahora hemos visto como para la ejecuci&oacute;n
+de sentencias que devuelven datos (consultas) debemos usar <strong>executeQuery</strong>,
+mientras que para las sentencias INSERT, DELETE, UPDATE e instrucciones
+DDL utilizamos <strong>executeUpdate</strong>. Sin embargo, puede haber
+ocasiones en las que no conozcamos de antemano el tipo de la sentencia
+que vamos a utilizar (por ejemplo si la sentencia la introduce el
+usuario). En este caso podemos usar el m&eacute;todo <strong>execute</strong>.</p>
+<pre class="code">boolean hay_result = stmt.<strong>execute</strong>(sentencia);
+</pre>
+<p>Podemos ver que el m&eacute;todo devuelve un valor <em>booleano</em>.
+Este valor ser&aacute; <em>true</em> si la sentencia ha devuelto
+resultados (uno o varios objetos <strong>ResultSet</strong>), y <em>false</em> en
+el caso de que s&oacute;lo haya devuelto el n&uacute;mero de registros
+afectados. Tras haber ejecutado la sentencia con el m&eacute;todo
+anterior, para obtener estos datos devueltos proporciona una serie de
+m&eacute;todos:</p>
+<pre class="code">int n = stmt.<strong>getUpdateCount</strong>();
+</pre>
+<p>El m&eacute;todo <strong>getUpdateCount</strong> nos devuelve el
+n&uacute;mero de registros a los que afecta la actualizaci&oacute;n,
+inserci&oacute;n o borrado, al igual que el resultado que
+devolv&iacute;a <strong>executeUpdate</strong>.</p>
+<pre class="code">ResultSet rs = stmt.<strong>getResultSet</strong>();
+</pre>
+<p>El m&eacute;todo <strong>getResultSet</strong> nos devolver&aacute; el objeto
+<strong>ResultSet</strong> que haya devuelto en el caso de ser una consulta, al
+igual que hac&iacute;a <strong>executeQuery</strong>. Sin embargo, de esta forma
+nos permitir&aacute; adem&aacute;s tener m&uacute;ltiples objetos <strong>ResultSet</strong>
+como resultado de una llamada. Eso puede ser necesario, por ejemplo, en
+el caso de una llamada a un procedimiento, que nos puede devolver
+varios resultados como veremos m&aacute;s adelante. Para movernos al
+siguiente <strong>ResultSet</strong> utilizaremos el siguiente m&eacute;todo:</p>
+<pre class="code">boolean hay_mas_results = stmt.<strong>getMoreResults</strong>();
+</pre>
+<p>La llamada a este m&eacute;todo nos mover&aacute; al siguiente <strong>ResultSet</strong>
+devuelto, devolvi&eacute;ndonos <em>true</em> en el caso de que exista,
+y <em>false</em> en el caso de que no haya m&aacute;s resultados. Si
+existe, una vez nos hayamos movido podremos consultar el nuevo <strong>ResultSet</strong>
+llamando nuevamente al m&eacute;todo <strong>getResultSet</strong>.</p>
+<p>Otra llamada disponible es el m&eacute;todo <strong>executeBatch</strong>.
+Este m&eacute;todo nos permite enviar varias sentencias SQL a la vez.
+No puede contener sentencias SELECT. Devuelve un array de enteros que
+indicar&aacute; el n&uacute;mero de registros afectados por las
+sentencias SQL. Para a&ntilde;adir sentencias haremos uso del
+m&eacute;todo <strong>addBatch</strong>. Un ejemplo de ejecuci&oacute;n es el
+siguiente: </p>
+<pre class="code">stmt.<strong>addBatch</strong>("INSERT INTO ALUMNOS(exp, nombre) 
+    <strong>VALUES</strong>(1285, 'Manu', 'M')");
+stmt.<strong>addBatch(</strong>"INSERT INTO ALUMNOS(exp, nombre) 
+    <strong>VALUES</strong>(1299, 'Miguel', 'M')");
+
+int[] res = stmt.<strong>executeBatch</strong>();
+</pre>
+<p>Por &uacute;ltimo, vamos a comentar el m&eacute;todo <span class="codefrag">getGeneratedKeys</span>, tambi&eacute;n
+del objeto <span class="codefrag">Statement</span>. En muchas ocasiones hacemos inserciones
+en tablas cuyo identificador es un autonum&eacute;rico. Por lo tanto, este valor
+no lo especificaremos nosotros manualmente, sino que se asignar&aacute; de forma
+autom&aacute;tica en la inserci&oacute;n. Sin embargo, muchas veces nos puede interesar
+conocer cual ha sido dicho identificador, para as&iacute; por ejemplo poder
+insertar a continuaci&oacute;n un registro de otra tabla que haga referencia al primero. 
+Esto lo podremos hacer con el m&eacute;todo <span class="codefrag">getGeneratedKeys</span>, que
+nos devuelve un <span class="codefrag">ResultSet</span> que contiene la clave generada:</p>
+<pre class="code">ResultSet res = sentSQL.<strong>getGeneratedKeys</strong>();
+int id = -1;
+if(res.next()) {
+    id = res.getInt(1);
+}</pre>
+</div>
+
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2008-2009 Depto. CCIA</div>
+</div>
+</body>
+</html>

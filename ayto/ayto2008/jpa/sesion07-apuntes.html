@@ -1,0 +1,335 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Consultas. Arquitectura de una aplicaci&oacute;n JPA</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="JPA con Hibernate" src="images/baner_j2ee_der.gif" title="JPA con Hibernate"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Persistencia</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">JPA</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="JPA">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 7</div>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="roadmap.html">Roadmap JPA</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-ejercicios.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-ejercicios.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-ejercicios.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-ejercicios.html">Sesion 8</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion07-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Consultas. Arquitectura de una aplicaci&oacute;n JPA</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Consultas+en+JPA">Consultas en JPA</a>
+<ul class="minitoc">
+<li>
+<a href="#Java+Persistence+Query+Language">Java Persistence Query Language</a>
+<ul class="minitoc">
+<li>
+<a href="#Comenzando">Comenzando</a>
+</li>
+<li>
+<a href="#Filtrando+los+resultados">Filtrando los resultados</a>
+</li>
+<li>
+<a href="#Proyectando+los+resultados">Proyectando los resultados</a>
+</li>
+<li>
+<a href="#Joins+entre+entidades">Joins entre entidades</a>
+</li>
+<li>
+<a href="#Par%C3%A1metros+de+las+consultas">Par&aacute;metros de las consultas</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Definici%C3%B3n+de+consultas">Definici&oacute;n de consultas</a>
+<ul class="minitoc">
+<li>
+<a href="#Consultas+din%C3%A1micas">Consultas din&aacute;micas</a>
+</li>
+<li>
+<a href="#Consultas+con+nombre">Consultas con nombre</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Ejecuci%C3%B3n+de+consultas">Ejecuci&oacute;n de consultas</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="Consultas+en+JPA"></a>
+<h2 class="underlined_10">Consultas en JPA</h2>
+<div class="section">
+<a name="N10012"></a><a name="Java+Persistence+Query+Language"></a>
+<h3 class="underlined_5">Java Persistence Query Language</h3>
+<a name="N10018"></a><a name="Comenzando"></a>
+<h4>Comenzando</h4>
+<p>La consulta m&aacute;s sencilla en JPQL es la que selecciona todas las instancias de un &uacute;nico tipo de entidad:</p>
+<pre class="code">SELECT e
+FROM Empleado e</pre>
+<p>La sintaxis de JPQL es similar a la de SQL. De esta forma los desarrolladores con experiencia en SQL pueden comenzar a utilizarlo r&aacute;pidamente. La diferencia principal es que en SQL se seleccionan filas de una tabla mientras que en JPQL se seleccionan instancias de un tipo de entidad del modelo del dominio. La cl&aacute;usula <span class="codefrag">SELECT</span> es ligeramente distinta a la de SQL listando s&oacute;lo el alias <span class="codefrag">e</span> del <span class="codefrag">Empleado</span>. Este tipo indica el tipo de datos que va a devolver la consulta, una lista de cero o m&aacute;s instancias <span class="codefrag">Empleado</span>.</p>
+<p>A partir del alias, podemos obtener sus atributos y recorrer las relaciones en las que participa utilizando el operador punto (.). Por ejemplo, si s&oacute;lo queremos los nombres de los empleados podemos definir la siguiente consulta:</p>
+<pre class="code">SELECT e.nombre
+FROM Empleado e</pre>
+<p>Ya que la entidad <span class="codefrag">Empleado</span> tiene un campo persistente llamado <span class="codefrag">nombre</span> de tipo <span class="codefrag">String</span>, esta consulta devolver&aacute; una lista de cero o m&aacute;s objetos de tipo <span class="codefrag">String</span>.</p>
+<p>Podemos tambi&eacute;n seleccionar una entidad cuyo tipo no listamos en la cl&aacute;usula <span class="codefrag">SELECT</span>, utilizando los atributos relaci&oacute;n. Por ejemplo:</p>
+<pre class="code">SELECT e.departamento
+FROM Empleado e</pre>
+<p>Debido a la relaci&oacute;n muchos-a-uno entre <span class="codefrag">Empleado</span> y <span class="codefrag">Departamento</span> la consulta devolver&aacute; una lista de instancias de tipo <span class="codefrag">Departamento</span>.</p>
+<a name="N10061"></a><a name="Filtrando+los+resultados"></a>
+<h4>Filtrando los resultados</h4>
+<p>Igual que SQL, JPQL contiene una cl&aacute;usula <span class="codefrag">WHERE</span> para especificar condiciones que deben cumplir los datos que se devuelven. La mayor&iacute;a de los operadores disponibles en SQL est&aacute;n en JPQL, incluyendo las operaciones b&aacute;sicas de comparaci&oacute;n: <span class="codefrag">IN</span>, <span class="codefrag">LIKE</span> y <span class="codefrag">BETWEEN</span>, funciones como <span class="codefrag">SUBSTRING</span> o <span class="codefrag">LENGTH</span> y subqueries. Igual que antes, la diferencia fundamental es que se utilizan expresiones sobre entidades y no sobre columnas. El siguiente c&oacute;digo muestra un ejemplo:</p>
+<pre class="code">SELECT e
+FROM Empleado e
+WHERE e.departamento.name = 'NA42' AND
+      e.direccion.provincia IN ('ALC','VAL')</pre>
+<a name="N10081"></a><a name="Proyectando+los+resultados"></a>
+<h4>Proyectando los resultados</h4>
+<p>Es posible recuperar s&oacute;lo alguno de los atributos de las instancias. Esto es &uacute;til cuando tenemos una gran cantidad de atributos (columnas) y s&oacute;lo vamos a necesitar listar algunos. Por ejemplo, la siguiente consulta selecciona s&oacute;lo el nombre y el salario de los empleados:</p>
+<pre class="code">SELECT e.nombre, e.salario
+FROM Empleado e</pre>
+<p>El resultado ser&aacute; una colecci&oacute;n de cero o m&aacute;s instancias de arrays de tipo <span class="codefrag">Object</span>. Cada array contiene dos elementos, el primero un <span class="codefrag">String</span> y el segundo un <span class="codefrag">Double</span>.</p>
+<a name="N1009B"></a><a name="Joins+entre+entidades"></a>
+<h4>Joins entre entidades</h4>
+<p>Al igual que en SQL es posible definir consultas que realicen una selecci&oacute;n en el resultado de unir (<em>join</em>) entidades entre las que se ha establecido una relaci&oacute;n. Por ejemplo, el siguiente c&oacute;digo muestra un join entre las entidades <span class="codefrag">Empleado</span> y <span class="codefrag">CuentaCorreo</span> para recuperar todos los correos electr&oacute;nicos de un departamento espec&iacute;fico:</p>
+<pre class="code">SELECT c.correo
+FROM Empleado e, CuentaCorreo c
+WHERE e = c.empleado AND
+      e.departamento.nombre = 'NA42'</pre>
+<p>En JPQL tambi&eacute;n es posible especificar joins en la cl&aacute;usula <span class="codefrag">FROM</span> utilizando el operador <span class="codefrag">JOIN</span>. Una ventaja de este operador es que el join puede especificarse en t&eacute;rminos de la propia asociaci&oacute;n y que el motor de consultas proporcionar&aacute; autom&aacute;ticamente el criterio de join necesario cuando genere el SQL. El siguiente c&oacute;digo muestra la misma consulta reescrita para utilizar este operador:</p>
+<pre class="code">SELECT c.correo
+FROM Empleado e JOIN e.cuentasCorreo c
+WHERE e.departamento.nombre = 'NA42'</pre>
+<p>JPQL soporta m&uacute;ltiples tipos de joins, incluyendo inner y outer joins, left joins y una t&eacute;cnica denominada fetch joins para cargar datos asociados a las entidades que no se devuelven directamente. No tenemos tiempo de detallar todos ellos. Vamos a ver algunos ejemplos m&aacute;s, para tener una idea de la potencia de la sintaxis.</p>
+<p>Selecciona todos los departamentos distintos asociados a empleados:</p>
+<pre class="code">SELECT DISTINCT e.departamento
+FROM Empleado e</pre>
+<p>Otra forma de hacer la misma consulta utilizando el operador <span class="codefrag">JOIN</span>:</p>
+<pre class="code">SELECT DISTINCT d
+FROM Empleado e JOIN e.departamento d</pre>
+<p>Selecciona los departamentos distintos que trabajan en Alicante y que participan en el proyecto 'BlueBook':</p>
+<pre class="code">SELECT DISTINCT e.departamento
+FROM Proyecto p JOIN p.empleados e
+WHERE p.nombre = 'BlueBook' AND
+      e.direccion.localidad = 'ALC'</pre>
+<p>Selecciona los proyectos distintos que pertenecen a empleados de un departamento:</p>
+<pre class="code">SELECT DISTINCT p
+FROM Departamento d JOIN d.empleados JOIN e.proyectos p</pre>
+<p>Selecciona todos los empleados y recupera la entidad <span class="codefrag">Direccion</span> con la que est&aacute; relacionado cada uno:</p>
+<pre class="code">SELECT e
+FROM Empleado e JOIN FETCH e.direccion</pre>
+<a name="N100EB"></a><a name="Par%C3%A1metros+de+las+consultas"></a>
+<h4>Par&aacute;metros de las consultas</h4>
+<p>JPQL soporta dos tipos de sintaxis para la ligadura (<em>binding</em>) de par&aacute;metros: posicional y por nombre. Vemos un ejemplo del primer caso: </p>
+<pre class="code">SELECT  e
+FROM Empleado e
+WHERE e.departamento = ?1 AND
+      e.salario &gt; ?2
+</pre>
+<p>Veremos en el siguiente apartado como ligar par&aacute;metros determinados a esas posiciones. La segunda forma de definir par&aacute;metros es por nombre:</p>
+<pre class="code">SELECT  e
+FROM Empleado e
+WHERE e.departamento = :dept AND
+  e.salario &gt; :sal
+</pre>
+<a name="N10104"></a><a name="Definici%C3%B3n+de+consultas"></a>
+<h3 class="underlined_5">Definici&oacute;n de consultas</h3>
+<p>El API JPA proporciona la interfaz <span class="codefrag">Query</span> para configurar y ejecutar consultas. Podemos obtener una instancia que implemente esa interfaz mediante un dos de m&eacute;todos del entity manager: <span class="codefrag">createQuery()</span> y <span class="codefrag">createNamedQuery()</span>. El primer m&eacute;todo se utilizar para crear una consulta din&aacute;mica y el segundo una consulta con nombre.</p>
+<p>Una vez obtenida la consulta podemos pasarle los par&aacute;metros con <span class="codefrag">setParameter()</span> y ejecutarla. Se definen dos m&eacute;todos para ejecutar consultas: el m&eacute;todo <span class="codefrag">getSingleResult()</span> que devuelve un <span class="codefrag">Object</span> que es la &uacute;nica instancia resultante de la consulta y el m&eacute;todo <span class="codefrag">getResultList()</span> que devuelve una lista de instancias resultantes de la consulta.</p>
+<a name="N10125"></a><a name="Consultas+din%C3%A1micas"></a>
+<h4>Consultas din&aacute;micas</h4>
+<p>Se puede crear una consulta din&aacute;mica pas&aacute;ndole la cadena con la consulta al m&eacute;todo <span class="codefrag">createQuery</span>. El proveedor de persistencia transforma en ese momento la consulta en el c&oacute;digo SQL que se ejecutar&aacute; en la base de datos. Veamos un ejemplo de consulta, que utiliza el paso de par&aacute;metros por nombre visto anteriormente:</p>
+<pre class="code">public class EmpleadoDAO {
+   private static final String QUERY =
+      "SELECT e.salary " + 
+      "FROM Empleado e " +
+      "WHERE e.departamento.nombre = : deptNombre AND " +
+      "      e.nombre = : empNombre";
+
+   // ...
+   public long	queryEmpleadoSalario(String empNombre, String deptNombre) {
+      return (Long) em.createQuery(QUERY)
+                      .setParameter("deptNombre", deptNombre)
+                      .setParameter("empNombre", empNombre)
+                      .getSingleResult();
+   }
+}</pre>
+<p>Un inconveniente de las consultas din&aacute;micas es que se procesan en tiempo de ejecuci&oacute;n de la aplicaci&oacute;n, con la consiguiente p&eacute;rdida de rendimiento. Su ventaja principal es que se pueden definir con mucha comodidad.</p>
+<a name="N10139"></a><a name="Consultas+con+nombre"></a>
+<h4>Consultas con nombre</h4>
+<p>Las consultas con nombre se definen junto con la entidad, utilizando la anotaci&oacute;n <span class="codefrag">@NamedQuery</span>. Mejoran el rendimiento con respecto a las consultas din&aacute;micas, ya que son procesadas una &uacute;nica vez. El siguiente c&oacute;digo muestra un ejemplo:</p>
+<pre class="code">@NamedQuery(name="salarioPorNombreDepartamento",
+         query="SELECT e.salary " +
+               "FROM Empleado e " +
+               "WHERE e.departamento.nombre = : deptNombre AND " +
+               "      e.nombre = : empNombre")</pre>
+<p>Si se necesita m&aacute;s de una consulta para una entidad, deben incluirse en la anotaci&oacute;n <span class="codefrag">@NamedQueries</span>, que acepta una array de una o m&aacute;s anotaciones <span class="codefrag">@NamedQuery</span>:</p>
+<pre class="code">@NamedQueries({
+   @NamedQuery(name="Empleado.findAll",
+               query="SELECT e FROM Empleado e"),
+   @NamedQuery(name="Empleado.findById",
+               query="SELECT e FROM Empleado e WHERE e.id = :id"),
+   @NamedQuery(name="Empleado.findByNombre",
+               query="SELECT e FROM Empleado e WHERE e.nombre = :nombre")
+})</pre>
+<p>Para ejecutar la consulta hay que llamar al m&eacute;todo <span class="codefrag">createNamedQuery</span> pas&aacute;ndole como par&aacute;metro el nombre de la consulta. El siguiente c&oacute;digo muestra un ejemplo:</p>
+<pre class="code">public class EmpleadoDAO {
+   // ...
+   public Empleado findEmpleadoByNombre(String nombre) {
+      return (Empleado) em.createNamedQuery("Empleado.findByNombre")
+                          .setParameter("nombre", nombre)
+                          .getSingleResult();
+   }
+
+   public List&lt;Empleado&gt; findAll() {
+      return (List&lt;Empleado&gt;) em.createNamedQuery("Empleado.findAll")
+                                .getResultList();
+   }
+}</pre>
+<a name="N10162"></a><a name="Ejecuci%C3%B3n+de+consultas"></a>
+<h3 class="underlined_5">Ejecuci&oacute;n de consultas</h3>
+<p>Veamos por &uacute;ltimo los m&eacute;todos del interfaz <span class="codefrag">Query</span> para ejecutar las consultas definidas. Son los m&eacute;todos <span class="codefrag">getSingleResult()</span> y <span class="codefrag">getResultList()</span>.</p>
+<p>Ambos m&eacute;todos se deben lanzar sobre una <span class="codefrag">Query</span> ya construida y en la que se han introducido los par&aacute;metros. El m&eacute;todo <span class="codefrag">getSingleResult()</span> se utiliza con consultas que devuelven un &uacute;nico resultado. Devuelve un <span class="codefrag">Object</span> que contiene el resultado de la consulta. Despu&eacute;s de llamarlo conviene hacer un casting al tipo (entidad o tipo b&aacute;sico) que esperamos. Puede suceder que la consulta ejecutada no devuelva ning&uacute;n resultado o devuelva m&aacute;s de uno. En el primer caso se genera la excepci&oacute;n <span class="codefrag">NoResultException</span> y en el segundo <span class="codefrag">NonUniqueResultException</span>.</p>
+<p>Si no tenemos seguridad de una consulta vaya a devolver un &uacute;nico valor deber&iacute;amos llamar a <span class="codefrag">getResultList()</span>. Este m&eacute;todo devuelve una <span class="codefrag">List</span> de <span class="codefrag">Object</span>. La utilizaci&oacute;n de la interfaz <span class="codefrag">List</span> en lugar de <span class="codefrag">Collection</span> es para soportar la devoluci&oacute;n de colecciones ordenadas, generadas por consultas con la cl&aacute;usula <span class="codefrag">ORDER BY</span>. En el caso en que la consulta no obtenga resultados, se devuelve una lista vac&iacute;a. El siguiente c&oacute;digo muestra un ejemplo de utilizaci&oacute;n de una consulta que devuelve una lista ordenada:</p>
+<pre class="code">public void muestraEmpleadosProyecto(String nombreProyecto) {
+   List&lt;Empleado&gt; result = em.createQuery(
+                             "SELECT e " +
+                             "FROM Proyecto p JOIN p.empleados e " +
+                             "WHERE p.nombre = ?1 " +
+                             "ORDER BY e.name")
+                             .setParameter(1, nombreProyecto)
+                             .getResultList();
+   for (empleado : result) {
+      System.out.println(empleado.nombre);
+   }
+}</pre>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007-2008 Depto. CCIA</div>
+</div>
+</body>
+</html>

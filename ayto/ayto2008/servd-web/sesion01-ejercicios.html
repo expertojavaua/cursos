@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Ejercicios de protocolo HTTP e introducci&oacute;n a las aplicaciones web</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servidores Web" src="images/baner_j2ee_der.gif" title="Servidores Web"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Servidores web</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Servidores Web</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Servidores Web">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.2', 'skin/')" id="menu_1.1.2Title" class="menutitle">Teor&iacute;a</div>
+<div id="menu_1.1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html">Roadmap</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.3', 'skin/')" id="menu_selected_1.1.3Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Ejercicios</div>
+<div id="menu_selected_1.1.3" class="selectedmenuitemgroup" style="display: block;">
+<div class="menupage">
+<div class="menupagetitle">Sesion 1</div>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion01-ejercicios.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Ejercicios de protocolo HTTP e introducci&oacute;n a las aplicaciones web</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Pruebas+con+protocolo+HTTP">Pruebas con protocolo HTTP</a>
+</li>
+<li>
+<a href="#Recursos+est%C3%A1ticos+en+Tomcat">Recursos est&aacute;ticos en Tomcat</a>
+</li>
+<li>
+<a href="#Instalar+una+aplicaci%C3%B3n+web+sencilla">Instalar una aplicaci&oacute;n web sencilla</a>
+</li>
+</ul>
+</div>
+
+<a name="N1000C"></a><a name="Pruebas+con+protocolo+HTTP"></a>
+<h2 class="underlined_10">Pruebas con protocolo HTTP</h2>
+<div class="section">
+<p>En las plantillas de la sesi&oacute;n ten&eacute;is un par de archivos JAR que implementan un cliente
+	y un servidor HTTP de "pruebas". Estos &uacute;nicamente establecen la conexi&oacute;n y nos permiten escribir manualmente
+	los comandos HTTP y ver la respuesta del otro lado.</p>
+<ul>
+		
+<li>
+			
+<p>Utilizando el programa que simula ser un cliente HTTP (<span class="codefrag">ClienteHTTP.jar</span>) vamos a abrir la p&aacute;gina
+			principal del ayuntamiento de Alicante.</p>
+			
+<p>Para ello como <span class="codefrag">host</span> deber&eacute;is indicar <span class="codefrag">www.alicante.es</span>, y como petici&oacute;n la siguiente:</p>
+
+<pre class="code">GET / HTTP/1.0
+
+</pre>
+			
+<p>NOTA: es importante respetar la l&iacute;nea en blanco al final de la petici&oacute;n</p>
+		
+</li>
+		
+<li>
+			
+<p>Utilizando el programa que simula ser un servidor HTTP que ten&eacute;is en la plantilla (<span class="codefrag">ServidorHTTP.jar</span>), hacer lo siguiente:</p>
+			
+<ul>
+				
+<li>
+					
+<p>Utilizar un navegador para hacer un petici&oacute;n HTTP a nuestro servidor de prueba. Podemos poner una URL como la siguiente:</p>
+					
+<pre class="code">http://localhost:1080/index.htm</pre>
+					
+<p>Observar en el servidor esp&iacute;a la petici&oacute;n que ha hecho el navegador. &iquest;Qu&eacute; informaci&oacute;n ha enviado el navegador en esta petici&oacute;n? &iquest;C&oacute;mo se identifica el navegador (versi&oacute;n + sistema operativo)?</p>
+				
+</li>
+				
+<li>Abrir la p&aacute;gina HTML <span class="codefrag">form_get.htm</span> con cualquier navegador web. Introducir datos en el formulario y enviar una petici&oacute;n. Esta petici&oacute;n se estar&aacute; realizando al servidor esp&iacute;a instalado. Observar en este servidor la petici&oacute;n realizada. &iquest;C&oacute;mo se han enviado los datos del formulario?</li>
+				
+<li>Vamos a hacer lo mismo que en el apartado anterior, pero con la p&aacute;gina <span class="codefrag">form_post.htm</span>. &iquest;Qu&eacute; diferencia hay entre esta petici&oacute;n y la realizada en el caso anterior? &iquest;C&oacute;mo se env&iacute;an los datos introducidos en el formulario?</li>
+			
+</ul>
+		
+</li>
+	
+</ul>
+</div>
+
+
+<a name="N10057"></a><a name="Recursos+est%C3%A1ticos+en+Tomcat"></a>
+<h2 class="underlined_10">Recursos est&aacute;ticos en Tomcat</h2>
+<div class="section">
+<p>Vamos a probar el servidor web Tomcat y a subir recursos est&aacute;ticos a &eacute;l.</p>
+<ul>
+		
+<li>
+			
+<p>Instalar y poner en marcha el servidor web Tomcat. Comprobar que est&aacute; activo accediendo a la siguiente URL desde cualquier navegador:</p>
+			
+<pre class="code">http://localhost:8080/</pre>
+		
+</li>
+		
+<li>
+			
+<p>Copiar el fichero <span class="codefrag">pagina.htm</span> (podr&aacute;s encontrarlo en las plantillas de la sesi&oacute;n) a la aplicaci&oacute;n ra&iacute;z (<span class="codefrag">ROOT</span>) instalada por defecto en Tomcat. Comprobar que se puede acceder correctamente a este recurso introduciendo la siguiente URL </p>
+			
+<pre class="code">http://localhost:8080/pagina.htm</pre>
+		
+</li>
+	
+</ul>
+</div>
+
+
+<a name="N1007E"></a><a name="Instalar+una+aplicaci%C3%B3n+web+sencilla"></a>
+<h2 class="underlined_10">Instalar una aplicaci&oacute;n web sencilla</h2>
+<div class="section">
+<p>En las plantillas de la sesi&oacute;n hay una sencilla aplicaci&oacute;n web que permite mantener una p&aacute;gina y que
+	los visitantes puedan a&ntilde;adir comentarios. Vamos a empaquetar y desplegar la aplicaci&oacute;n en Tomcat</p>
+<p>
+<strong>Empaquetamiento en .war</strong>. Observar la estructura de directorios que cuelga del directorio
+	<span class="codefrag">comentarios</span>. Podemos empaquetar la aplicaci&oacute;n mediante la herramienta <span class="codefrag">jar</span> inclu&iacute;da
+	en el JDK, como se especifica en los apuntes:</p>
+<pre class="code">jar cvf comentarios.war *</pre>
+<p>La operaci&oacute;n anterior hay que hacerla <strong>desde dentro del directorio <span class="codefrag">comentarios</span></strong>,
+	es decir, el .war creado no debe contener la carpeta "comentarios" propiamente dicha, sino lo que contiene &eacute;sta.</p>
+<p>Si no tenemos la herramienta <span class="codefrag">jar</span> en el <em>path</em>, podemos comprimir los archivos en un
+	.zip convencional y cambiarle manualmente la extensi&oacute;n.</p>
+<p>
+<strong>Despliegue manual en Tomcat</strong> Para desplegar el .war manualmente basta con dejarlo en la carpeta <span class="codefrag">webapps</span>
+	del directorio de instalaci&oacute;n de Tomcat. Observar que transcurridos unos segundos el .war se descomprime autom&aacute;ticamente
+	en una carpeta con el mismo nombre. Para probar la aplicaci&oacute;n abre un navegador y accede a la URL
+	</p>
+<pre class="code">http://localhost:8080/comentarios/comentarios.jsp</pre>
+<p>
+<strong>Repliegue de la aplicaci&oacute;n: </strong> para eliminar la aplicaci&oacute;n del servidor basta con borrar
+	el .war <strong>y tambi&eacute;n</strong> el directorio descomprimido.</p>
+<p>
+<strong>Despliegue a trav&eacute;s del <em>manager</em> de Tomcat:</strong>. Esta ser&iacute;a la forma de trabajar
+	si no estuvi&eacute;ramos en la misma m&aacute;quina que el servidor. Para ello, exportamos a un .WAR en cualquier directorio (que no
+	sea de Tomcat). El acceso al <em>manager</em> se hace a trav&eacute;s de la URL</p>
+<pre class="code">http://localhost:8080/manager/html</pre>
+<p>Tomcat nos pedir&aacute; un usuario con rol manager. Introducir el usuario de administraci&oacute;n. El .war se despliega
+	con el formulario que aparece al final de la p&aacute;gina. Una vez desplegado, comprobar que la aplicaci&oacute;n aparece en la lista
+	de aplicaciones activas. Comprobar tambi&eacute;n que si la aplicaci&oacute;n se recarga a trav&eacute;s del manager, los comentarios se pierden (ya que por 
+	el momento la aplicaci&oacute;n los guarda en memoria del servidor).
+	</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007 Depto. CCIA</div>
+</div>
+</body>
+</html>

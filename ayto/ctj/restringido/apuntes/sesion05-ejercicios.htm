@@ -1,0 +1,52 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<title>Ejercicios sesi&oacute;n 5: Introducción a Java EE</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css"></head>
+<body>
+
+<h2>Ejercicios de Introducci&oacute;n a Java EE </h2>
+<p><strong>5.1. </strong>Carga de p&aacute;ginas simples en Tomcat </p>
+<p>Una vez tenemos instalado Tomcat y lo ponemos en ejecuci&oacute;n, es muy sencillo probar p&aacute;ginas sencillas (HTML o JSP) en el servidor.</p>
+<p>Las p&aacute;ginas sueltas (que no forman una aplicaci&oacute;n web junto con otras) se pueden probar en la carpeta <strong>webapps/ROOT</strong> de Tomcat. Para probarlo, copia las p&aacute;ginas <em>prueba.html</em> y <em>prueba2.jsp</em> de la plantilla en esta carpeta, y prueba cada una con la URL correspondiente:</p>
+<pre class="codigo">http://localhost:8080/prueba.html</pre>
+<pre class="codigo">http://localhost:8080/prueba2.jsp</pre>
+<p>Observa que, para los recursos que se copian en <em>ROOT</em>, no hace falta especificar una carpeta de contexto, sino que el recurso va justo despu&eacute;s del servidor (despu&eacute;s de <em>localhost</em>, en este caso). </p>
+<p><strong>5.2. </strong>Instalar una aplicaci&oacute;n web sencilla  </p>
+<p>Ahora vamos a crear un nuevo contexto (aplicaci&oacute;n web) en Tomcat, que contendr&aacute; &uacute;nicamente recursos est&aacute;ticos (HTML).</p>
+<ul>
+  <li>Detener Tomcat </li>
+  <li>Crear un nuevo subdirectorio en <em>${tomcat.home}/webapps</em> para nuestra nueva aplicaci&oacute;n. Por ejemplo podemos llamar <strong>prueba</strong> a este directorio.</li>
+  <li>Crear la estructura de directorios necesaria dentro del directorio de la nueva aplicaci&oacute;n. Introducir el fichero <em>pagina.htm</em> de la plantilla y el descriptor de despliegue (<em>web.xml</em>), situando cada uno de estos ficheros en el directorio que corresponda.</li>
+  <li>Poner en marcha Tomcat y comprobar que este nuevo contexto se carga correctamente. Para comprobar su correcto funcionamiento podemos acceder a la URL:</li>
+</ul>
+<blockquote>
+  <pre class="codigo">http://localhost:8080/prueba/pagina.htm</pre>
+</blockquote>
+<p>Si hemos utilizado otro nombre para el directorio de nuestra aplicaci&oacute;n web, sustituir <em>prueba</em> por el nombre que hayamos elegido.</p>
+<p><strong>5.3.</strong> Instalar una aplicaci&oacute;n web m&aacute;s compleja </p>
+<p>Vamos a crear un aplicaci&oacute;n web m&aacute;s compleja con elementos din&aacute;micos (<em>servlets</em>),  que deber&aacute;n ser compilados previamente, y p&aacute;ginas din&aacute;micas JSP. En este caso no trabajaremos  directamente en el directorio de Tomcat, sino que trabajaremos en un  directorio de desarrollo (nuestro proyecto Eclipse) y una vez  construida la aplicaci&oacute;n la desplegaremos en Tomcat.</p>
+<ul>
+  <li>Crear un proyecto <em>sesion05</em> en Eclipse, con su carpeta de fuentes <em>src</em>. Crear adem&aacute;s una carpeta normal llamada <em>web</em>, en la ra&iacute;z del proyecto. Aqu&iacute; pondremos nuestras p&aacute;ginas (HTML o JSP), y la subcarpeta <em>WEB-INF</em>, donde pondremos el fichero <em>web.xml</em> y otros ficheros de librer&iacute;as si son necesarios.</li>
+  <li>A&ntilde;adir al <em>Build Path</em> del proyecto la librer&iacute;a de servlets de tomcat (<em>${tomcat.home}/common/lib/servlet-api.jar</em>), para poder trabajar con servlets</li>
+  <li>Copiar el servlet <em>Conversor</em> de la plantilla a la carpeta <em>src</em>, dentro del paquete que le corresponda</li>
+  <li>Copiar los recursos est&aacute;ticos (fichero <em>index.html</em> y <em>web.xml</em>) a la carpeta <em>web</em>, cada uno en la carpeta o subcarpeta que le corresponda</li>
+  <li>Copiar el fichero <em>build.xml</em> en la ra&iacute;z del proyecto Eclipse</li>
+</ul>
+<p><strong>Trabajar con Ant</strong></p>
+<p>El fichero <em>build.xml</em> es un fichero que utiliza una herramienta llamada Ant. Esta herramienta se basa en ficheros de configuraci&oacute;n XML como &eacute;ste, donde se le indican una serie de operaciones a realizar (por ejemplo, compilar una aplicaci&oacute;n, o copiarla (desplegarla) a otro sitio, como pueda ser la carpeta <em>webapps</em> del servidor web).</p>
+<p>De esta forma es bastante c&oacute;modo trabajar fuera del servidor web (algo recomendado) y volcar la web cuando queramos al servidor para probar.</p>
+<p>Para poder ejecutar el fichero Ant, tenemos que cargar la vista de Ant en eclipse (<em>Window - Show View - Ant</em>), y despu&eacute;s a&ntilde;adir en ella el fichero Ant del proyecto correspondiente. Saldr&aacute;n listadas las tareas preparadas en dicho fichero:   </p>
+<img src="imagenes/j2ee/eclipse_ant_2.gif" /><br />
+<img src="imagenes/j2ee/eclipse_ant_3.gif" />
+<p>Puedes ver que hay objetivos (<em>targets</em>) que dependen de otros, por ejemplo, para desplegar (<em>deploy</em>) la aplicaci&oacute;n en el servidor, antes tendr&aacute; que empaquetarse en un fichero WAR para distribuirse (<em>dist</em>), y para eso antes tendr&aacute; que compilarse (<em>compile</em>), y para eso antes tendr&aacute; que estar preparada la estructura de carpetas necesaria (<em>prepare</em>).</p>
+<p>Para desplegar la aplicaci&oacute;n en el servidor con Ant, se ofrecen ciertos comandos en XML para copiar grupos de archivos, con lo que simplemente usando estos comandos, podr&iacute;amos copiar la carpeta con la aplicaci&oacute;n web al <em>webapps</em>. </p>
+<p>Haz un <em>deploy</em> de la aplicaci&oacute;n una vez est&eacute; todo listo. Si no hay errores, podr&aacute;s probarla en:</p>
+<pre class="codigo">http://localhost:8080/aplic/index.htm</pre>
+<p>&nbsp; </p>
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Ejercicios de Excepciones e hilos</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Java y Herramientas de Desarrollo" src="images/baner_j2ee_der.gif" title="Java y Herramientas de Desarrollo"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Java y Herramientas de Desarrollo</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Materiales</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Java y Herramientas de Desarrollo">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.2', 'skin/')" id="menu_1.1.2Title" class="menutitle">Teor&iacute;a</div>
+<div id="menu_1.1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesion 10</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html">Roadmap</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.3', 'skin/')" id="menu_selected_1.1.3Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Ejercicios</div>
+<div id="menu_selected_1.1.3" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 4</div>
+</div>
+<div class="menuitem">
+<a href="sesion05-ejercicios.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-ejercicios.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-ejercicios.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-ejercicios.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-ejercicios.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-ejercicios.html">Sesion 10</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion04-ejercicios.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Ejercicios de Excepciones e hilos</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Captura+de+excepciones">Captura de excepciones</a>
+</li>
+<li>
+<a href="#Lanzamiento+de+excepciones+%28*%29">Lanzamiento de excepciones (*)</a>
+</li>
+<li>
+<a href="#Terminaci%C3%B3n+de+hilos">Terminaci&oacute;n de hilos</a>
+</li>
+<li>
+<a href="#Carrera+de+hilos+%28*%29">Carrera de hilos (*)</a>
+</li>
+<li>
+<a href="#Productor+y+consumidor+%28*%29">Productor y consumidor (*)</a>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="Captura+de+excepciones"></a>
+<h2 class="underlined_10">Captura de excepciones</h2>
+<div class="section">
+<p>El fichero <span class="codefrag">Ej1.java</span> es un programa que toma un n&uacute;mero 
+  como par&aacute;metro, y como salida muestra el logaritmo de dicho n&uacute;mero. 
+  Sin embargo, en ning&uacute;n momento comprueba si se ha proporcionado alg&uacute;n 
+  par&aacute;metro, ni si ese par&aacute;metro es un n&uacute;mero. Se pide:</p>
+<p>
+<em>a)</em> Compilar el programa y ejecutadlo de tres formas distintas:</p>
+<ul>
+    
+<li>Sin par&aacute;metros</li>
+  
+</ul>
+<pre class="code">java Ej1 </pre>
+<ul>
+    
+<li>Poniendo un par&aacute;metro no num&eacute;rico</li>
+  
+</ul>
+<pre class="code">java Ej1 pepe</pre>
+<ul>
+    
+<li>Poniendo un par&aacute;metro
+num&eacute;rico&nbsp;</li>
+  
+</ul>
+<pre class="code">java Ej1 30</pre>
+<p>Anotad las excepciones que se lanzan en cada caso (si se lanzan)</p>
+<p>
+<em>b)</em> Modificar el c&oacute;digo de <span class="codefrag">main </span>para 
+    que capture las excepciones producidas y muestre los errores correspondientes 
+    en cada caso:</p>
+<ul>
+    
+<li>Para comprobar si no hay par&aacute;metros se capturar&aacute; una excepci&oacute;n de tipo 
+      <span class="codefrag">ArrayIndexOutOfBoundsException</span> (para ver si el <em>array</em> 
+      de <span class="codefrag">String</span> que se pasa en el <span class="codefrag">main</span> tiene alg&uacute;n elemento).</li>
+    
+<li>Para comprobar si el par&aacute;metro es num&eacute;rico, se capturar&aacute; una excepci&oacute;n 
+      de tipo <span class="codefrag">NumberFormatException</span>.</li>
+  
+</ul>
+<p>As&iacute;, tendremos en el <span class="codefrag">main </span>algo como:</p>
+<pre class="code">try
+{
+	// Tomar par&aacute;metro y asignarlo a un double
+} catch (ArrayIndexOutOfBoundsException e1) {
+	// Codigo a realizar si no hay parametros
+} catch (NumberFormatException e2) {
+	// Codigo a realizar con parametro no numerico
+}</pre>
+<p>Probad de nuevo el programa 
+    igual que en el caso anterior comprobando que las excepciones son capturadas 
+    y tratadas.</p>
+</div>
+
+<a name="N1006C"></a><a name="Lanzamiento+de+excepciones+%28*%29"></a>
+<h2 class="underlined_10">Lanzamiento de excepciones (*)</h2>
+<div class="section">
+<p>El fichero <span class="codefrag">Ej2.java</span> es similar al anterior, 
+  aunque ahora no vamos a tratar las excepciones del <span class="codefrag">main</span>, sino las 
+  del m&eacute;todo<span class="codefrag"> logaritmo</span>:<em> </em> en la funci&oacute;n que calcula 
+  el logaritmo se comprueba si el valor introducido es menor o igual que 0, ya 
+  que para estos valores la funci&oacute;n logaritmo no est&aacute; definida. 
+  Se pide:</p>
+<p>
+<em>a)</em> Buscar entre las excepciones de Java la m&aacute;s adecuada para 
+    lanzar en este caso, que indique que a un m&eacute;todo se le ha pasado un 
+    argumento ilegal. (Pista: Buscar entre las clases derivadas de <span class="codefrag">Exception</span>. 
+    En este caso la m&aacute;s adecuada se encuentra entre las derivadas de <span class="codefrag">RuntimeException</span>).</p>
+<p>
+<em>b)</em> Una vez elegida la excepci&oacute;n adecuada, a&ntilde;adir 
+    c&oacute;digo (en el m&eacute;todo <span class="codefrag">logaritmo</span>)<em> </em>para que en el 
+    caso de haber introducido un par&aacute;metro incorrecto se lance dicha excepci&oacute;n.&nbsp;</p>
+<pre class="code">throw new ... // excepcion elegida</pre>
+<p> Probar el programa para comprobar el efecto que tiene el lanzamiento de 
+    la excepci&oacute;n.</p>
+<p>
+<em>c)</em> Al no ser una excepci&oacute;n del tipo <em>checked</em> no har&aacute; 
+    falta que la capturemos ni que declaremos que puede ser lanzada. Vamos a crear 
+    nuestro propio tipo de excepci&oacute;n derivada de <span class="codefrag">Exception</span> 
+    (de tipo <em>checked</em>) para ser lanzada en caso de introducir un valor no 
+    v&aacute;lido como par&aacute;metro. La excepci&oacute;n se llamar&aacute; 
+    <span class="codefrag">WrongParameterException</span> y tendr&aacute; la siguiente forma:</p>
+<pre class="code">public class WrongParameterException extends Exception 
+{
+	public WrongParameterException(String msg) {
+		super(msg);
+	}
+}</pre>
+<p>Deberemos lanzarla en lugar de la escogida en el punto anterior.&nbsp;</p>
+<pre class="code">throw new WrongParameterException(...);</pre>
+<p> Intentar compilar el programa y observar los errores que aparecen. &iquest;Por 
+    qu&eacute; ocurre esto? A&ntilde;adir los elementos necesarios al c&oacute;digo 
+    para que compile y probarlo.&nbsp;</p>
+<p>
+<em>d)</em> Por el momento controlamos que no se pase un n&uacute;mero negativo como entrada.
+  &iquest;Pero qu&eacute; ocurre si la entrada no es un n&uacute;mero v&aacute;lido? En ese caso se producir&aacute; una excepci&oacute;n
+  al convertir el valor de entrada y esa excepci&oacute;n se propagar&aacute; autom&aacute;ticamente al nivel 
+  superior. Ya que tenemos una excepci&oacute;n que indica cuando el par&aacute;metro de entrada de nuestra
+  funci&oacute;n es incorrecto, ser&iacute;a conveniente que siempre que esto ocurra se lance dicha excepci&oacute;n,
+  independientemente de si ha sido causada por un n&uacute;mero negativo o por algo que no es un 
+  n&uacute;mero, pero siempre conservando la informaci&oacute;n sobre la causa que produjo el error. Utilizar
+  <em>nested exceptions</em> para realizar esto.</p>
+<div class="frame note">
+<div class="label">Ayuda</div>
+<div class="content">Deberemos a&ntilde;adir un nuevo constructor a <span class="codefrag">WrongParameterException</span>
+  en el que se proporcione la excepci&oacute;n que caus&oacute; el error. En la funci&oacute;n <span class="codefrag">logaritmo</span>
+  capturaremos cualquier excepci&oacute;n que se produzca al convertir la cadena a n&uacute;mero, y lanzaremos
+  una excepci&oacute;n <span class="codefrag">WrongParameterException</span> que incluya la excepci&oacute;n causante.</div>
+</div>
+</div>
+
+<a name="N100D3"></a><a name="Terminaci%C3%B3n+de+hilos"></a>
+<h2 class="underlined_10">Terminaci&oacute;n de hilos</h2>
+<div class="section">
+<p>En la clase <span class="codefrag">Ej3 </span>se crean hilos utilizando la interfaz 
+  <span class="codefrag">Runnable</span>. De esta forma podremos crear m&uacute;ltiples hilos que ejecuten 
+  el mismo m&eacute;todo <span class="codefrag">run </span>de esta clase accediendo al mismo espacio de 
+  memoria de este objeto. Ejecutar el programa, ver lo que hace, consultar el 
+  c&oacute;digo fuente y contestar a las siguientes preguntas: </p>
+<p>
+<em>a)</em> Explica que es lo que hace la condici&oacute;n de terminaci&oacute;n del 
+	bucle <span class="codefrag">while </span>en el m&eacute;todo <span class="codefrag">run</span>. &iquest;Qu&eacute; utilidad le ves?</p>
+<p>
+<em>b)</em> &iquest;Puede haber en alg&uacute;n momento dos hilos ejecutando simult&aacute;neamente 
+    el m&eacute;todo <span class="codefrag">run</span>?</p>
+<p>
+<em>c)</em> &iquest;Si hubiese dos hilos ejecutando el <span class="codefrag">run</span>, podr&iacute;a haber 
+    conflictos en el acceso a la variable <span class="codefrag">ini</span>? Es decir, que un hilo 
+    sobrescriba el valor que hab&iacute;a escrito en ella el otro hilo &iquest;Por qu&eacute;?</p>
+<p>
+<em>d)</em> &iquest;C&oacute;mo podemos parar este hilo sin crear uno nuevo?</p>
+<p>
+<em>e)</em> Escribir un programa <span class="codefrag">Ej3b</span> que realice una funci&oacute;n similar
+  pero utilizando temporizadores en lugar de hilos. No es necesario que sea exactamente igual 
+  al anterior programa, simplemente debe ser similar.</p>
+<div class="frame note">
+<div class="label">Ayuda</div>
+<div class="content">Se deber&aacute; crear una <span class="codefrag">TimerTask</span>
+  que guarde en un campo privado el instante de tiempo en el que fue creada. Cada vez que
+  se ejecute esta tarea deber&aacute; imprimir ese instante. Desde el programa principal crearemos
+  la tarea, y la programaremos en un temporizador que la ejecute peri&oacute;dicamente. Transcurridos 5
+  segundos, el programa principal deber&aacute; cancelar el temporizador.</div>
+</div>
+</div>
+
+<a name="N10118"></a><a name="Carrera+de+hilos+%28*%29"></a>
+<h2 class="underlined_10">Carrera de hilos (*)</h2>
+<div class="section">
+<p>En la clase <span class="codefrag">Ej4</span> tenemos un programa que muestre 
+una carrera entre tres hilos de distintas prioridades. Se pide:</p>
+<p>
+<em>a)</em> Cada hilo tiene su propio contador que se va incrementando cada 
+    iteraci&oacute;n de dicho hilo. En este caso, &iquest;podr&aacute; haber conflicto en el acceso 
+    al contador del hilo entre los distintos hilos? &iquest;Por qu&eacute;?</p>
+<p>
+<em>b)</em> F&iacute;jate en el bucle principal en el que se imprime el contador de 
+    cada hilo, &iquest;cu&aacute;l es su condici&oacute;n de terminaci&oacute;n?</p>
+<p>
+<em>c)</em> En cada iteraci&oacute;n los hilos hacen una operaci&oacute;n costosa. En este 
+    caso estamos forzando a que llamen al colector de basura (<em>garbage collector</em>) 
+    con la instrucci&oacute;n <span class="codefrag">System.gc()</span>. Sustituir esta instrucci&oacute;n por 
+    dormir durante 100ms y probar. &iquest;Qu&eacute; ocurre en este caso? &iquest;Por qu&eacute;? Volver 
+    a dejar el programa como antes, con la llamada al colector de basura.</p>
+<p>
+<em>d)</em> En el m&eacute;todo <span class="codefrag">run</span> de <span class="codefrag">Hilo</span>, a&ntilde;ade la instrucci&oacute;n 
+    necesaria para que en el caso de que el hilo <span class="codefrag">t </span>sea distinto de 
+    <span class="codefrag">null</span> se quede bloqueado hasta que dicho hilo termine su 
+    ejecuci&oacute;n. Probar el programa y ver lo que ocurre en este caso.</p>
+<p>
+<em>e)</em> Prueba cambiando las prioridades de los hilos. Cuando tenemos hilos 
+    de alta prioridad e hilos de baja prioridad, cuando los de alta prioridad 
+    terminan, &iquest;qu&eacute; ocurre con los de baja prioridad? &iquest;por qu&eacute;?</p>
+</div>
+
+<a name="N10150"></a><a name="Productor+y+consumidor+%28*%29"></a>
+<h2 class="underlined_10">Productor y consumidor (*)</h2>
+<div class="section">
+<p>En este ejercicio vamos a resolver el problema de los 
+  productores y los consumidores. Vamos a definir 3 clases: el hilo <span class="codefrag">Productor</span>, 
+  el hilo <span class="codefrag">Consumidor</span>, y el objeto <span class="codefrag">Recipiente </span>donde el 
+  productor deposita el valor producido, y de donde el consumidor extrae los datos. 
+</p>
+<ul>
+  
+<li>El productor se ejecuta durante 10 iteraciones y en cada una de ellas deposita 
+    en el recipiente el n&uacute;mero de la iteraci&oacute;n actual. Entre iteraci&oacute;n 
+    e iteraci&oacute;n se quedar&aacute; durmiendo durante un tiempo aleatorio entre 
+    1 y 2 segundos.</li>
+  
+<li>El consumidor se ejecuta el mismo n&uacute;mero de iteraciones que el productor, 
+    pero en cada una de ellas saca el valor almacenado en el recipiente y lo muestra 
+    por pantalla. Entre cada iteraci&oacute;n duerme tambi&eacute;n un tiempo aleatorio 
+    entre 1 y 2 segundos.</li>
+  
+<li>El recipiente proporciona los m&eacute;todos <span class="codefrag">produce</span> y <span class="codefrag">consume 
+    </span>para depositar un dato en &eacute;l y para sacarlo de &eacute;l respectivamente. 
+  </li>
+
+</ul>
+<p>El programa mostrar&aacute; cuando el productor produce un valor y cuando el consumidor 
+  lo consume. El funcionamiento correcto deber&iacute;a ser que el consumidor consuma 
+  exactamente los mismos valores que el productor ha producido, sin saltarse ninguno 
+  ni repetirlos. Se pide:</p>
+<p>
+<em>a)</em> Compilar y probar el programa. &iquest;Funciona correctamente? &iquest;Por qu&eacute;? 
+    Ejecutar varias veces y explicar lo que pasa. &iquest;Qu&eacute; tendremos que hacer para 
+    que funcione correctamente?</p>
+<p>
+<em>b)</em> Vamos a a&ntilde;adir el c&oacute;digo necesario en los m&eacute;todos <span class="codefrag">produce 
+    </span>y <span class="codefrag">consume</span> para sincronizar el acceso a ellos. El comportamiento 
+    deber&iacute;a ser el siguiente:</p>
+<ul>
+    
+<li>Si queremos producir y todav&iacute;a hay datos disponibles en el recipiente, 
+      esperaremos hasta que se saquen, si no produciremos y avisamos a posibles 
+      consumidores que est&eacute;n a la espera.</li>
+    
+<li>Si queremos consumir y no hay datos disponibles en el recipiente, esperaremos 
+      hasta que se produzcan, si no consumimos el valor disponible y avisamos 
+      a posibles productores que est&eacute;n a la espera.</li>
+  
+</ul>
+<p>&iquest;Qu&eacute; m&eacute;todos utilizaremos para la sincronizaci&oacute;n? Insertar el c&oacute;digo necesario 
+    y compilar. Probar el programa, &iquest;da alguna excepci&oacute;n? En caso afirmativo, 
+    &iquest;por qu&eacute;? &iquest;ser&aacute; necesario a&ntilde;adir algo m&aacute;s en el encabezado de los m&eacute;todos 
+    <span class="codefrag">produce </span>y <span class="codefrag">consume</span>? Hacer las modificaciones necesarias.</p>
+<p>Compilar y comprobar que el programa funciona correctamente.</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+  
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2008-2009 Depto. CCIA</div>
+</div>
+</body>
+</html>

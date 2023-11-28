@@ -1,0 +1,659 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 15: Seguridad y activaci&oacute;n push</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+<h1>15. Seguridad y activaci&oacute;n <em>push</em> </h1>
+<h2>15.1. Registro push</h2>
+<p>Hasta ahora hemos visto que cuando queremos obtener informaci&oacute;n primero 
+  debemos abrir la aplicaci&oacute;n cliente que nos da acceso a esa informaci&oacute;n. 
+  Para recibir algo antes tenemos que solicitarlo desde nuestra aplicaci&oacute;n, 
+  esto es lo que se conoce como una conexi&oacute;n <em>pull</em>, en la que el 
+  cliente debe &quot;tirar&quot; de los datos para obtenerlos.</p>
+<p>Para determinadas aplicaciones puede ser interesante poder recibir datos sin 
+  tener que solicitarlos. Por ejemplo pensemos en una aplicaci&oacute;n de foro, 
+  en el que varios usuarios pueden publicar mensajes. Nosotros querremos visualizar 
+  en nuestro cliente la lista de mensajes publicados en el servidor, pero no sabemos 
+  cuando llega un mensaje al servidor, ya que puede haberlo enviado cualquier 
+  otro cliente, s&oacute;lo el servidor sabe cuando llegan nuevos mensajes.</p>
+<p>Cuando el usuario abra la aplicaci&oacute;n del foro se descargar&aacute;n 
+  todos los mensajes publicados y se mostrar&aacute;n. Esto sigue un modelo <em>pull</em>, 
+  en el que el usuario tiene que abrir la aplicaci&oacute;n para obtener los datos 
+  deseados, debe &quot;tirar&quot; de los datos.</p>
+<p>Pero imaginemos que queremos implementar una funci&oacute;n de avisos en el 
+  foro, con la cual un usuario puede programar un aviso, de forma que cuando alguien 
+  publique una contestaci&oacute;n a un tema que sea de su inter&eacute;s, el 
+  usuario reciba una notificaci&oacute;n. De esta forma se evita tener que estar 
+  entrando en la aplicaci&oacute;n peri&oacute;dicamente para ver si alguien ha 
+  contestado. Esto es un modelo <em>push</em>, en el que es la aplicaci&oacute;n 
+  la que &quot;empuja&quot; los datos hacia nosotros en el momento en el que llegan. 
+</p>
+<p>Para implementar este comportamiento podr&iacute;amos utilizar una t&eacute;cnica 
+  conocida como <em>polling</em>, que consiste en interrogar al servidor cada 
+  cierto periodo de tiempo para comprobar si han llegado mensajes nuevos, y en 
+  tal caso recibirlos y mostrarlos al usuario. Esto nos obligar&aacute; a estar 
+  continuamente realizando peticiones al servidor, aunque no se haya recibido 
+  ning&uacute;n mensaje, con lo que se estar&aacute; produciendo un tr&aacute;fico 
+  innecesario en la red. Adem&aacute;s deberemos tener la aplicaci&oacute;n continuamente 
+  en funcionamiento, aunque sea en segundo plano, para que haga las comprobaciones.</p>
+<p>Con un modelo de tipo <em>push</em> podremos solucionar este problema, ya que 
+  en este caso el servidor podr&aacute; enviarnos informaci&oacute;n sin tener 
+  que pedirla nosotros previamente. De esta forma cuando el servidor haya recibido 
+  nuevos mensajes nos los enviar&aacute; mediante <em>push</em>, sin tener que 
+  estar interrog&aacute;ndolo nosotros continuamente.</p>
+<p>Es decir, <em>push</em> es un mecanismo que nos va a permitir recibir informaci&oacute;n 
+  de forma as&iacute;ncrona, sin tenerla que solicitar nosotros previamente, y 
+  evitando el elevado consumo de recursos que producen las t&eacute;cnicas de 
+  <em>polling</em>. </p>
+<p>En MIDP 2.0 aparece el registro <em>push</em>, que nos permitir&aacute; utilizar 
+  este mecanismo de recepci&oacute;n de informaci&oacute;n de forma as&iacute;ncrona 
+  en nuestro dispositivo.</p>
+<h3>15.1.1. Aplicaciones activadas por push</h3>
+<p>El registro <em>push</em> nos permitir&aacute; que nuestras aplicaciones sean 
+  activadas autom&aacute;ticamente mediante <em>push</em>. Es decir, no har&aacute; 
+  falta que nosotros abramos la aplicaci&oacute;n manualmente para que esta pueda 
+  realizar alguna funci&oacute;n, sino que se podr&aacute; activar autom&aacute;ticamente 
+  cuando suceda alg&uacute;n evento externo.</p>
+<p>Por ejemplo, una utilidad bastante clara de este mecanismo es la programaci&oacute;n 
+  de alarmas. Imaginemos una agenda que deba hacer sonar una alarma cuando llegue 
+  la hora de una reuni&oacute;n. En MIDP 1.0 una aplicaci&oacute;n s&oacute;lo 
+  podr&aacute; programar una alarma si abrimos manualmente esa aplicaci&oacute;n, 
+  y deberemos mantener esta aplicaci&oacute;n abierta en segundo plano permanentemente, 
+  ya que si la cerr&aacute;semos tambi&eacute;n se cerrar&iacute;a la alarma programada. 
+  Esto hace que en MIDP 1.0 este tipo de aplicaciones sea poco &uacute;tiles, 
+  ya que si se nos olvida abrir la aplicaci&oacute;n cuando encendamos el m&oacute;vil 
+  no sonar&aacute; ninguna de las alarmas programadas.</p>
+<p>Sin embargo, en MIDP 2.0 con el registro <em>push</em> podremos hacer que la 
+  aplicaci&oacute;n se abra autom&aacute;ticamente cuando llegue la hora de la 
+  alarma, es decir, la aplicaci&oacute;n se estar&aacute; activando autom&aacute;ticamente 
+  mediante <em>push</em>. En este caso el evento externo que activa la aplicaci&oacute;n 
+  ser&aacute; un temporizador.</p>
+<h3><strong>15.1.1.1. M&eacute;todos de activaci&oacute;n</strong></h3>
+<p>La activaci&oacute;n mediante push puede suceder por dos tipos de eventos:</p>
+<ul>
+  <li><strong>Temporizador</strong>: La aplicaci&oacute;n se abrir&aacute; a una 
+    determinada hora que debemos programar.<br>
+  </li>
+  <li><strong>Conexi&oacute;n de red entrante</strong>: La aplicaci&oacute;n se 
+    abrir&aacute; cuando se reciba una determinada conexi&oacute;n de red entrante. 
+    Esta conexi&oacute;n puede ser una conexi&oacute;n mediante sockets, datagramas 
+    o bien la recepci&oacute;n de un mensaje de texto por ejemplo.</li>
+</ul>
+<div align="center"><img src="imagenes/red/activacion_push.gif" width="417" height="354"> 
+</div>
+<p class="caption">Figura 5. M&eacute;todos de activaci&oacute;n de MIDlets</p>
+<h3><strong>15.1.1.2. Responsabilidad compartida</strong></h3>
+<p>Deberemos tener en cuenta que el registro <em>push</em> s&oacute;lo estar&aacute; 
+  pendiente de estos eventos externos mientras nuestra aplicaci&oacute;n est&eacute; 
+  cerrada. Cuando ejecutemos la aplicaci&oacute;n, ser&aacute; responsabilidad 
+  suya escuchar las conexiones entrantes y registrar los temporizadores adecuados 
+  para que se disparen las alarmas. </p>
+<p>Es decir, que la responsabilidad de la escucha y la gesti&oacute;n de los eventos 
+  <em>push</em> ser&aacute; compartida entre el MIDlet y el AMS: </p>
+<ul>
+  <li>Mientras el MIDlet se est&eacute; ejecutando ser&aacute; responsabilidad 
+    suya atender a estos eventos.<br>
+  </li>
+  <li>Mientras el MIDlet no se est&eacute; ejecutando ser&aacute; el AMS el que 
+    se encargar&aacute; de escuchar estos eventos, y cuando uno de ellos se produzca 
+    ejecutar&aacute; autom&aacute;ticamente el MIDlet para que &eacute;ste realice 
+    la funci&oacute;n oportuna. </li>
+</ul>
+<p>La facilidad que nos proporciona el registro <em>push</em> es esta capacidad 
+  de ejecutar la aplicaci&oacute;n autom&aacute;ticamente cuando se produzca un 
+  determinado evento externo, pero mientras nuestra aplicaci&oacute;n se est&eacute; 
+  ejecutando este registro no realizar&aacute; ninguna funci&oacute;n.</p>
+<h3><strong>15.1.1.3. Emulaci&oacute;n en WTK</strong></h3>
+<p>A partir de WTK 2.0 se puede utilizar la activaci&oacute;n push en los emuladores. 
+  Pero para disponer de esta funcionalidad deberemos cargar la aplicaci&oacute;n 
+  utilizando provisionamiento OTA, instalando de esta forma la aplicaci&oacute;n 
+  utilizando el AMS del emulador.</p>
+<h3>15.1.2. Temporizadores</h3>
+<p>Vamos a ver c&oacute;mo podemos registrar un temporizador <em>push</em>, para 
+  que la aplicaci&oacute;n se ejecute autom&aacute;ticamente a una determinada 
+  hora. Para hacer esto deberemos utilizar la API de <code>PushRegistry</code>, 
+  que nos permitir&aacute; registrar este tipo de eventos en el registro <em>push</em>.</p>
+<p>Podremos registrar una alarma <em>push</em> con el siguiente m&eacute;todo:</p>
+<pre class="codigo">long t = PushRegistry.<strong>registerAlarm</strong>(String midletClassName, long hora);</pre>
+<p>Deberemos proporcionar como par&aacute;metros el nombre de la clase del MIDlet 
+  que queremos que se ejecute, y el tiempo del sistema en milisegundos del instante 
+  en el que queremos que se produzca la alarma.</p>
+<p>Hemos de tener en cuenta que s&oacute;lo podemos registrar una alarma por MIDlet, 
+  de forma que si hubi&eacute;semos registrado otra alarma previamente, al invocar 
+  este m&eacute;todo de sobrescribir&aacute;. </p>
+<p>Si hubiese una alarma registrada previamente, la llamada a esta funci&oacute;n 
+  nos devolver&aacute; como valor de tiempo <code>t</code> el instante en el que 
+  estaba programada la alarma previa que ha sido sobrescrita. En caso contrario, 
+  nos devolver&aacute; <code>0</code>. </p>
+<p>Si nuestra aplicaci&oacute;n tuviese que programar varias alarmas, lo que deber&iacute;amos 
+  hacer es registrar mediante push la alarma que tenga la fecha m&aacute;s temprana, 
+  y una vez se haya producido esta alarma, se registrar&aacute; la siguiente, 
+  y as&iacute; consecutivamente.</p>
+<h3><strong>15.1.2.1. Programar una alarma para una fecha absoluta</strong></h3>
+<p>Si queremos programar una alarma para que se produzca en una determinada fecha, 
+  independientemente de la fecha actual, simplemente deberemos proporcionar al 
+  m&eacute;todo <code>registerAlarm</code> el tiempo del sistema en milisegundos 
+  de la hora en la que queremos que se produzca. </p>
+<p>Para hacer esto simplemente deberemos obtener un objeto <code>Date</code> que 
+  represente dicha hora. Podemos o bien solicitar que el usuario introduzca la 
+  fecha manualmente en un campo de fecha, y leer de ese campo el objeto <code>Date</code> 
+  con la fecha introducida, o bien generar desde nuestra aplicaciones una determinada 
+  fecha utilizando un objeto <code>Calendar</code>.</p>
+<p>Una vez tengamos el objeto <code>Date</code> correspondiente a esta fecha, 
+  obtendremos de &eacute;l el tiempo en milisegundos de dicha fecha para proporcion&aacute;rselo 
+  a la funci&oacute;n <code>registerAlarm</code>:</p>
+<pre class="codigo">Date fecha = obtenerFecha();
+long t = PushRegistry.<strong>registerAlarm</strong>(midlet.getClass().getName(), fecha.getTime());</pre>
+<h3> <strong>15.1.2.2. Programar una alarma para un intervalo de tiempo</strong></h3>
+<p>Es posible que no queramos dar una fecha absoluta a la alarma, sino que queramos 
+  establecer una alarma que suene pasado cierto tiempo desde el instante actual. 
+  Por ejemplo, podemos querer poner una alarma para que suene dentro de 5 minutos. 
+</p>
+<p>Para hacer esto deberemos establecer la fecha de forma relativa a la fecha 
+  actual. Primero obtendremos la fecha actual mediante un objeto <code>Date</code>, 
+  y a esta fecha podremos sumarle el n&uacute;mero de milisegundos del intervalo 
+  de tiempo que queremos que tarde en sonar la alarma:</p>
+<pre class="codigo">Date ahora = new Date(); // Obtiene la fecha actual
+long t = PushRegistry.<strong>registerAlarm</strong>(midlet.getClass().getName(), 
+                                    ahora.getTime() + intervalo);</pre>
+<h3><strong>15.1.2.3. Responsabilidad del MIDlet</strong></h3>
+<p>Cuando el MIDlet est&eacute; en ejecuci&oacute;n, los temporizadores registrados 
+  mediante push no tendr&aacute;n efecto, estos temporizadores s&oacute;lo servir&aacute;n 
+  para activar la aplicaci&oacute;n cuando est&eacute; cerrada. </p>
+<p>Por lo tanto, normalmente durante la ejecuci&oacute;n de la aplicaci&oacute;n 
+  crearemos temporizadores utilizando la clase <code>Timer</code> de Java. Como 
+  estos temporizadores ser&aacute;n hilos de la aplicaci&oacute;n, cuando &eacute;sta 
+  se cierre los temporizadores tambi&eacute;n se anular&aacute;n. Entonces ser&aacute; 
+  este el momento en el que deberemos registrar el temporizador <em>push</em>.</p>
+<p>El lugar adecuado para registrar los temporizadores <em>push</em> ser&aacute; 
+  el m&eacute;todo <code>destroyApp</code> del MIDlet. De esta forma, si al destruirse 
+  la aplicaci&oacute;n todav&iacute;a tuvi&eacute;semos alg&uacute;n temporizador 
+  pendiente, los registraremos mediante <em>push</em> para que siga siendo efectivo.</p>
+<h3><strong>15.1.2.4. Activaci&oacute;n del MIDlet</strong></h3>
+<p>Cuando el MIDlet se active v&iacute;a push, debido a un temporizador, simplemente 
+  se pondr&aacute; en marcha la aplicaci&oacute;n como si la hubi&eacute;semos 
+  abierto manualmente, y no tendr&aacute; constancia en ning&uacute;n momento 
+  de que se ha abierto debido a un temporizador.</p>
+<p>Si queremos que cuando se abra autom&aacute;ticamente se ejecute la alarma, 
+  deberemos implementar este comportamiento manualmente. Para hacer esto deberemos 
+  registrar las alarmas pendientes utilizando RMS. </p>
+<p>Cuando queramos programar una alarma, los datos de esta alarma se registrar&aacute;n 
+  de forma persistente utilizando RMS, y se programar&aacute; un <code>Timer</code> 
+  para ella. </p>
+<p>Si salimos de la aplicaci&oacute;n, en el m&eacute;todo <code>destroyApp</code> 
+  se buscar&aacute; la siguiente alarma pendiente, si hay alguna, y la registrar&aacute; 
+  mediante <em>push</em>. </p>
+<p>Cuando la aplicaci&oacute;n se active la pr&oacute;xima vez, podr&aacute; leer 
+  las alarmas pendientes en RMS y programar un <code>Timer</code> para la siguiente. 
+  De esta forma, si la aplicaci&oacute;n se hubiese abierto de forma manual y 
+  no correspondiese activar ninguna alarma, como en RMS no hay ninguna alarma 
+  programada para este momento no suceder&aacute; nada. Si por el contrario, se 
+  hubiese abierto debido al temporizador push, como tendremos en RMS una alarma 
+  programada justo para el momento actual, se activar&aacute; la alarma. As&iacute;, 
+  aunque la aplicaci&oacute;n no sepa cual ha sido la forma de activarse, mediante 
+  la informaci&oacute;n almacenada en RMS podremos saber cu&aacute;ndo debemos 
+  disparar las alarmas y cuando no.</p>
+<h3>15.1.3. Conexiones push</h3>
+<p>Podemos hacer que las aplicaciones se activen mediante conexiones de red entrantes. 
+  Utilizando protocolo HTTP no tenemos este tipo de conexiones, ya que &eacute;ste 
+  es un protocolo s&iacute;ncrono en el que debemos realizar una petici&oacute;n 
+  para obtener una respuesta.</p>
+<p>Sin embargo, en MIDP 2.0 se definen otros tipos de conexiones a bajo nivel 
+  que si que soportan conexiones entrantes. Estas son las conexiones de sockets 
+  y datagramas. Podremos hacer que el dispositivo escuche en un determinado puerto 
+  conexiones entrantes mediante sockets o datagramas.</p>
+<p>El problema de estos tipos de conexiones es que en la mayor&iacute;a de los 
+  casos los operadores de telefon&iacute;a m&oacute;vil actuales utilizan IPs 
+  din&aacute;micas, por lo que cada vez que se establezca una nueva conexi&oacute;n 
+  (por ejemplo mediante GPRS) se obtendr&aacute; una IP distinta. Esto complica 
+  la tarea de registrar nuestro m&oacute;vil para recibir avisos, ya que si la 
+  IP cambia frecuentemente no se sabr&aacute; a qu&eacute; direcci&oacute;n se 
+  debe enviar la informaci&oacute;n.</p>
+<p>Otro tipo de conexi&oacute;n que tenemos disponible en un gran n&uacute;mero 
+  de dispositivos y que nos resultar&aacute; m&aacute;s &uacute;til es la conexi&oacute;n 
+  de mensajes que aporta la API WMA. Los mensajes de texto se env&iacute;an a 
+  un n&uacute;mero de tel&eacute;fono que sabemos que no va a cambiar. De esta 
+  manera podremos tener identificado claramente el dispositivo en el cual queremos 
+  recibir notificaciones.</p>
+<p>Tenemos dos formas de registrar conexiones <em>push</em> entrantes:</p>
+<ul>
+  <li><strong>Registro est&aacute;tico</strong>: Se registran en el momento en 
+    que se instala la suite. Para hacer esto podemos incluir la informaci&oacute;n 
+    sobre las conexiones entrantes en el fichero JAD.<br>
+  </li>
+  <li><strong>Registro din&aacute;mico</strong>: Utilizamos la API de <code>PushRegistry</code> 
+    para registrar las conexiones en tiempo de ejecuci&oacute;n, de la misma forma 
+    en la que se registran los temporizadores.</li>
+</ul>
+<h3><strong>15.1.3.1. Registro est&aacute;tico</strong></h3>
+<p>Podremos utilizar registro est&aacute;tico cuando las direcciones de nuestras 
+  conexiones entrantes sean est&aacute;ticas. Este ser&aacute; el caso de las 
+  conexiones de mensajes (SMS) en cualquier dispositivo, o de las conexiones de 
+  sockets y datagramas en aquellos dispositivos que tengan asignada una IP est&aacute;tica 
+  y su puerto se configure tambi&eacute;n de forma est&aacute;tica. </p>
+<p>Para registrar una conexi&oacute;n <em>push</em> entrante a&ntilde;adiremos 
+  un atributo como el siguiente en el fichero JAD:</p>
+<pre class="codigo">MIDlet-Push-&lt;n&gt;: &lt;URL&gt;, &lt;NombreClaseMIDlet&gt;, &lt;RemitentesPermitidos&gt;</pre>
+<p>Debemos especificar para cada conexi&oacute;n <em>push</em> que queramos permitir 
+  la URL de la conexi&oacute;n entrante y el MIDlet que se ejecutar&aacute; cuando 
+  recibamos datos. Adem&aacute;s como tercer elemento podemos indicar los remitentes 
+  a los que les permitimos enviarnos datos. Con <code>*</code> indicamos que aceptamos 
+  datos de cualquier remitente. </p>
+<div align="center"><img src="imagenes/red/wtk_push.gif" width="465" height="194"> 
+</div>
+<p>Estas conexiones se registrar&aacute;n en el momento en que se instale la aplicaci&oacute;n, 
+  y se eliminar&aacute;n cuando se desinstale.</p>
+<p>Este tipo de registro no es posible cuando tengamos asignaci&oacute;n din&aacute;mica 
+  de IPs, ya que en tiempo de despliegue no podremos conocer cual ser&aacute; 
+  la IP que tenga el dispositivo cuando se utilice la aplicaci&oacute;n. En este 
+  caso deberemos utilizar registro din&aacute;mico, como veremos m&aacute;s adelante.</p>
+<p>Para configurar conexiones entrantes de sockets, datagramas y mensajes podremos 
+  utilizar URLs de los siguientes tipos:</p>
+<pre class="codigo">socket://:&lt;puerto&gt;
+datagram://:&lt;puerto&gt;<br>sms://:&lt;puerto&gt;</pre>
+<p>Al utilizar registro est&aacute;tico siempre deberemos indicar expl&iacute;citamente 
+  el puerto, ya que si dejamos que el puerto se asigne din&aacute;micamente no 
+  sabremos a qu&eacute; puerto del m&oacute;vil hay que conectarse para activar 
+  la aplicaci&oacute;n.</p>
+<p>Por ejemplo, podemos registrar una conexi&oacute;n de mensajes entrantes de 
+  la siguiente forma:</p>
+<pre class="codigo">MIDlet-Push-1: sms://:4444, es.ua.jtech.sms.MIDletRecibirSMS, *</pre>
+<p>De esta forma se escuchar&aacute; la llegada de SMSs en el puerto 4444, y en 
+  el momento que llegue uno se ejecutar&aacute; el MIDlet <code>MIDletRecibirSMS</code>, 
+  permitiendo que lleguen desde cualquier remitente.</p>
+<h3><strong>15.1.3.2. Registro din&aacute;mico</strong></h3>
+<p>Cuando utilicemos registro din&aacute;mico podremos configurar, adem&aacute;s 
+  de las conexiones anteriores, las conexiones de sockets y datagramas para las 
+  que se asigne el puerto de forma din&aacute;mica:</p>
+<pre class="codigo">socket://
+datagram://</pre>
+<p>Utilizaremos este tipo de registro cuando estemos utilizando direcciones din&aacute;micas, 
+  o bien cuando utilizando direcciones est&aacute;ticas queramos registrar la 
+  conexi&oacute;n s&oacute;lo si se cumplen ciertas condiciones. </p>
+<p>En este caso el registro lo realizaremos en tiempo de ejecuci&oacute;n, utilizando 
+  la API de <code>PushRegistry</code>. Podemos registrar una conexi&oacute;n entrante 
+  din&aacute;micamente de la siguiente forma:</p>
+<pre class="codigo">PushRegistry.<strong>registerConnection</strong>(url, 
+    nombreClaseMIDlet, remitentesPermitidos);</pre>
+<p>Si estamos utilizando una conexi&oacute;n entrante asignada din&aacute;micamente, 
+  encontramos el problema de que el sistema externo no sabr&aacute; a qu&eacute; 
+  direcci&oacute;n debe enviar la informaci&oacute;n para contactar con nuestra 
+  aplicaci&oacute;n. Para solucionar este problema deberemos comunicar a este 
+  sistema externo la direcci&oacute;n en la que estamos escuchando. Esto podemos 
+  hacerlo de la siguiente forma:</p>
+<pre class="codigo">// Creamos socket servidor asignando el puerto din&aacute;micamente<br>ServerSocketConnection ssc =
+   (ServerSocketConnection)Connector.open(&quot;socket://&quot;);
+<br>// Obtenemos el puerto que ha asignado el sistema<br>String url = &quot;socket://:&quot; + ssc.<strong>getLocalPort</strong>();
+<br>// Registramos en push una conexion entrante con este mismo puerto<br>PushRegistry.<strong>registerConnection</strong>(url, midletClassName, filter);
+<br>// Obtenemos la URL completa de nuestra aplicaci&oacute;n<br>url = &quot;socket://&quot; + ssc.<strong>getLocalAddress</strong>() + &quot;:&quot; + ssc.<strong>getLocalPort</strong>(); <br><br>// Publicamos la URL en el sistema externo<br>publicarURL(url);</pre>
+<p>De esta forma cada vez que el sistema asigne un nuevo puerto a nuestra aplicaci&oacute;n 
+  deberemos publicar la nueva URL en el sistema externo. </p>
+<p>Hemos visto que publicando la direcci&oacute;n en el sistema externo podemos 
+  utilizar direcciones en las que el puerto de asigna de forma din&aacute;mica 
+  por el sistema. Sin embargo, el caso en el que nuestro operador de telefon&iacute;a 
+  asigne al dispositivo la IP de forma din&aacute;mica ser&aacute; m&aacute;s 
+  complicado, ya que cualquier p&eacute;rdida de la conexi&oacute;n har&aacute; 
+  que la IP cambie y el sistema externo ser&aacute; incapaz de comunicarse con 
+  nuestra aplicaci&oacute;n. </p>
+<p>En este caso los cambios de direcci&oacute;n pueden ser muy frecuentes, y si 
+  la aplicaci&oacute;n Java est&aacute; cerrada no tendremos constancia del momento 
+  en el que esto ocurra, por lo que estos tipos de conexi&oacute;n push no ser&aacute;n 
+  de utilidad. En ese caso la soluci&oacute;n ser&aacute; utilizar conexiones 
+  de mensajes, para las que si que tenemos una direcci&oacute;n (n&uacute;mero 
+  de tel&eacute;fono) asignada de forma est&aacute;tica.</p>
+<h3><strong>15.1.3.3. Eliminar conexi&oacute;n entrante</strong></h3>
+<p>Las conexiones entrantes <em>push</em> que registremos de forma din&aacute;mica 
+  podr&aacute;n ser eliminadas. Para eliminar una conexi&oacute;n utilizaremos 
+  el siguiente m&eacute;todo:</p>
+<pre class="codigo">try {
+  boolean estado = PushRegistry.<strong>unregisterConnection</strong>(url);
+} catch(SecurityException e) {
+  // Error de seguridad<br>}</pre>
+<p>El m&eacute;todo <code>unregisterConnection</code> nos devolver&aacute; <code>true</code> 
+  si ha podido eliminar la conexi&oacute;n <em>push</em> correctamente, y <code>false</code> 
+  en caso contrario.</p>
+<h3><strong>15.1.3.4. Activaci&oacute;n de la aplicaci&oacute;n</strong></h3>
+<p>Cuando la aplicaci&oacute;n haya sido activada mediante una conexi&oacute;n 
+  entrante push, a diferencia de la activaci&oacute;n mediante temporizador, si 
+  que tendremos constancia de la forma en la que se ha activado. </p>
+<p>Para esto utilizaremos el m&eacute;todo <code>listConnections</code>, que nos 
+  devuelve la lista de conexiones push registradas para el MIDlet. Si a este m&eacute;todo 
+  le pasamos <code>true</code> como par&aacute;metro, nos devolver&aacute; s&oacute;lo 
+  aquellas conexiones en las que tengamos datos disponibles para ser leidos.</p>
+<p>De esta forma, si al ejecutarse la aplicaci&oacute;n existe alguna conexi&oacute;n 
+  <em>push</em> con datos disponibles sabremos que la aplicaci&oacute;n se ha 
+  activado mediante <em>push</em> debido a la recepci&oacute;n de datos en dichas 
+  conexiones.</p>
+<pre class="codigo">public boolean isPushActivated() {
+<br>  String [] conexiones = PushRegistry.<strong>listConnections</strong>(true);
+<br>  if (conexiones != null &amp;&amp; conexiones.length &gt; 0) {
+    for (int i=0; i &lt; conexiones.length; i++) {
+      leerDatos(conexiones[i]);<br>    }
+    return true ;<br>  } else {<br>    return false;<br>  }
+}</pre>
+<p>Cuando hayamos recibido datos en una de estas conexiones ser&aacute; responsabilidad 
+  de nuestro MIDlet abrir esta conexi&oacute;n y leer los datos. </p>
+<p>Hemos de tener en cuenta que en conexiones como los sockets el AMS no crear&aacute; 
+  ning&uacute;n buffer con los datos, sino que ser&aacute; el MIDlet activado 
+  el que los lea directamente de la red. Por lo tanto, deberemos leerlos lo m&aacute;s 
+  r&aacute;pidamente posible, ya que si demor&aacute;semos la lectura de datos 
+  se podr&iacute;a producir un <em>timeout</em>.</p>
+<h2>15.2. Seguridad</h2>
+<p>Vamos a estudiar la seguridad de las aplicaciones MIDP. Nos referiremos a seguridad 
+  en cuanto a que las aplicaciones que se instale el usuario en el m&oacute;vil 
+  no puedan realizar actividades da&ntilde;inas para &eacute;l. Otros tipos de 
+  seguridad dependientes de la aplicaci&oacute;n, como son la autentificaci&oacute;n 
+  y la confidencialidad de la informaci&oacute;n transmitida por la red los estudiaremos 
+  en el tema de aplicaciones corporativas.</p>
+<p>El usuario navegando por la red puede encontrar aplicaciones MIDP que para 
+  utilizarlas deber&aacute;n ser instaladas de forma local en su m&oacute;vil. 
+  Si permiti&eacute;semos que estas aplicaciones, una vez instaladas, pudiesen 
+  realizar cualquier acci&oacute;n, ser&iacute;a bastante peligroso utilizar este 
+  tipo de aplicaciones. El usuario deber&iacute;a estar muy seguro que la aplicaci&oacute;n 
+  que se instala es de su confianza, porque de no serlo la aplicaci&oacute;n podr&iacute;a 
+  realizar tareas como por ejemplo:</p>
+<ul>
+  <li>Eliminar datos de otras aplicaciones del m&oacute;vil.</li>
+  <li>Leer datos confidenciales del usuario almacenados en el m&oacute;vil y enviarlos 
+    a trav&eacute;s de la red.</li>
+  <li>Establecer conexiones de red que le costar&aacute;n dinero al usuario sin 
+    que &eacute;ste lo sepa.</li>
+</ul>
+<p>Por lo tanto, es importante garantizar que las aplicaciones MIDP son seguras 
+  y no pueden realizar ninguna acci&oacute;n da&ntilde;ina, para que de esta forma 
+  los usuarios puedan confiar en ellas y descarg&aacute;rselas sin ning&uacute;n 
+  temor. A continuaci&oacute;n veremos c&oacute;mo se garantiza esta seguridad 
+  en las aplicaciones MIDP.</p>
+<h3>15.2.1. Sandbox</h3>
+<p>La seguridad de las aplicaciones MIDP se debe a que est&aacute;s aplicaciones 
+  se debe a que &eacute;stas se ejecutan en un entorno restringido y controlado. 
+  Al ejecutarse sobre una m&aacute;quina virtual, y no directamente sobre el dispositivo, 
+  se puede limitar el n&uacute;mero de acciones que estas aplicaciones pueden 
+  realizar, evitando de esta forma que se realicen acciones que puedan resultar 
+  da&ntilde;inas.</p>
+<p>Las aplicaciones se ejecutan dentro de lo que se conoce como un caj&oacute;n 
+  de arena (<em>sandbox</em>), como los que existen en los parques para que los 
+  ni&ntilde;os jueguen de forma segura. Este caj&oacute;n de arena es un entorno 
+  limitado y cerrado en el que podr&aacute; trabajar la aplicaci&oacute;n, y en 
+  el que no se tendr&aacute; acceso a nada que pudiera resultar da&ntilde;ino. 
+</p>
+<p>En el caso de las aplicaciones MIDP, este <em>sandbox</em> ser&aacute; la <em>suite</em> 
+  de MIDlets. Es decir, ninguna aplicaci&oacute;n podr&aacute; acceder a nada 
+  externo a su <em>suite</em>:</p>
+<ul>
+  <li>S&oacute;lo podremos instanciar clases contenidas en nuestra <em>suite</em>.</li>
+  <li>S&oacute;lo podremos leer recursos incluidos en nuestra <em>suite</em>.</li>
+  <li>S&oacute;lo podremos acceder a almacenes de registros RMS creados por MIDlets 
+    de nuestra <em>suite</em>.</li>
+</ul>
+<p>Como las aplicaciones MIDP no permiten acceder al sistema de ficheros del dispositivo, 
+  ni tampoco permiten utilizar su API nativa, no tendremos problemas de seguridad 
+  en este aspecto.</p>
+<p>La &uacute;nica funcionalidad que podr&iacute;a resultar peligrosa es la capacidad 
+  que tienen estas aplicaciones de establecer conexiones de red. Una aplicaci&oacute;n 
+  podr&iacute;a estar intercambiando informaci&oacute;n por la red, lo cual le 
+  costar&aacute; dinero al usuario, sin que &eacute;ste se diese cuenta. Sin embargo, 
+  esta es una funcionalidad imprescindible de las aplicaciones MIDP, por lo que 
+  no podemos privar a estas aplicaciones de su API de red. Por esta raz&oacute;n, 
+  a partir de MIDP 2.0 surge un modelo de seguridad que limitar&aacute; la utilizaci&oacute;n 
+  de estas funciones a las aplicaciones que obtengan permiso para hacerlo.</p>
+<h3>15.2.2. Solicitud de permisos</h3>
+<p>En la API de MIDP 2.0 existen diferentes permisos para cada tipo de conexi&oacute;n 
+  que pueda realizar el dispositivo. Estos permisos son los siguientes:</p>
+<pre class="codigo">javax.microedition.io.Connector.http
+javax.microedition.io.Connector.socket
+javax.microedition.io.Connector.https
+javax.microedition.io.Connector.ssl
+javax.microedition.io.Connector.datagram
+javax.microedition.io.Connector.serversocket
+javax.microedition.io.Connector.datagramreceiver
+javax.microedition.io.Connector.comm
+javax.microedition.io.PushRegistry</pre>
+<p>Cuando en nuestra aplicaci&oacute;n necesitemos utilizar alguna conexi&oacute;n 
+  de cualquiera de estos tipos, deberemos solicitar el permiso para poder hacerlo. 
+  Solicitaremos los permisos en el fichero JAD, mediante las propiedades <code>MIDlet-Permissions</code> 
+  y <code>MIDlet-Permissions-Opt</code>, en las que especificaremos todos los 
+  permisos solicitados separados por comas:</p>
+<pre class="codigo">MIDlet-Permissions: javax.microedition.io.Connector.http,javax.microedition.io.PushRegistry
+MIDlet-Permissions-Opt: javax.microedition.io.Connector.https</pre>
+<p>El atributo <code>MIDlet-Permissions</code> indicar&aacute; aquellos permisos 
+  que son esenciales para que nuestra aplicaci&oacute;n pueda funcionar. Si el 
+  dispositivo en el que se va a instalar la aplicaci&oacute;n no pudiese conceder 
+  estos permisos a nuestra aplicaci&oacute;n, debido a que no conf&iacute;a en 
+  ella, se producir&aacute; un error en la instalaci&oacute;n ya que la aplicaci&oacute;n 
+  no funcionar&aacute; sin estos permisos.</p>
+<p>En el caso de <code>MIDlet-Permissions-Opt</code>, especificamos permisos que 
+  solicitamos, pero que son opcionales. Si no se pudiesen obtener estos permisos 
+  la aplicaci&oacute;n podr&iacute;a funcionar.</p>
+<p>En WTK podremos introducir esta informaci&oacute;n en la pesta&ntilde;a <strong>Permissions</strong> 
+  de la ventana <strong>Settings...</strong> de nuestra aplicaci&oacute;n:</p>
+<div align="center"><img src="imagenes/red/wtk_perm.gif" width="465" height="319"> 
+</div>
+<p>Desde esta ventana, pulsando sobre <strong>Add</strong> podremos a&ntilde;adir 
+  permisos de forma visual:</p>
+<div align="center"><img src="imagenes/red/wtk_perm_2.gif" width="268" height="408"> 
+</div>
+<p>Aqu&iacute; podremos seleccionar los permisos deseados entre todos los permisos 
+  proporcionados por la API que estemos utilizando.</p>
+<h3>15.2.3. Dominios</h3>
+<p>Los permisos que se le otorguen a cada aplicaci&oacute;n MIDP depender&aacute;n 
+  del dominio en el que se encuentre dicha aplicaci&oacute;n. Un dominio comprende:</p>
+<ul>
+  <li>Un conjunto de permisos que se otorgar&aacute;n a los MIDlets que pertenezcan 
+    a este dominio.<br>
+  </li>
+  <li>Un serie de criterios para decidir qu&eacute; MIDlets pertenecen a dicho 
+    dominio.</li>
+</ul>
+<p>Podemos distinguir distintos tipos de dominios seg&uacute;n lo restrictivos 
+  que sean:</p>
+<ul>
+  <li>Las aplicaciones que se ejecuten en un dominio de confianza tendr&aacute;n 
+    permiso para establecer cualquiera de las conexiones vistas en el punto anterior. 
+    <br>
+  </li>
+  <li>En el otro extremo tendremos un dominio de m&aacute;xima seguridad, en el 
+    que se denieguen todas estas operaciones. En esta caso, cada vez que la aplicaci&oacute;n 
+    quiera establecer una conexi&oacute;n se producir&aacute; una excepci&oacute;n 
+    de tipo <code>SecurityException</code>. <br>
+  </li>
+  <li>Tambi&eacute;n podemos encontrar un punto intermedio, en el que cada vez 
+    que se va a realizar una operaci&oacute;n de este tipo, no se deniegue directamente, 
+    sino que se pregunte al usuario si autoriza la realizaci&oacute;n de dicha 
+    operaci&oacute;n. Si la autoriza, la operaci&oacute;n podr&aacute; realizarse, 
+    y si no lo hace, se producir&aacute; una excepci&oacute;n de tipo <code>SecurityException</code>.</li>
+</ul>
+<p>Hemos visto tres casos de dominios extremos como ejemplo, pero podemos tener 
+  muchos m&aacute;s tipos de dominios distintos. Un dominio se definir&aacute; 
+  otorgando a cada operaci&oacute;n sensible un determinado tipo de permiso. En 
+  un dominio se pueden conceder permisos de dos formas distintas:</p>
+<ul>
+  <li>Permisos concedidos (<code>allow</code>): Se concede el permiso para que 
+    la aplicaci&oacute;n pueda realizar la correspondiente operaci&oacute;n sin 
+    tener que obtener la confirmaci&oacute;n del usuario.</li>
+  <li>Permisos de usuario: Cuando la aplicaci&oacute;n vaya a realizar dicha operaci&oacute;n, 
+    se pedir&aacute; la confirmaci&oacute;n del usuario. Seg&uacute;n cuantas 
+    veces se pida esta confirmaci&oacute;n distinguimos los siguientes tipos: 
+    <ul>
+      <li><code>oneshot</code>: Se pedir&aacute; confirmaci&oacute;n al usuario 
+        cada vez que se vaya a realizar la operaci&oacute;n.</li>
+      <li><code>session</code>: Se pedir&aacute; confirmaci&oacute;n al usuario 
+        s&oacute;lo la primera vez que se vaya a realizar la operaci&oacute;n 
+        en cada sesi&oacute;n. Cuando se cierre la aplicaci&oacute;n y vuelva 
+        a abrirse, se volver&aacute; a realizar la pregunta.</li>
+      <li><code>blanket</code>: Se pedir&aacute; confirmaci&oacute;n s&oacute;lo 
+        la primera vez que se vaya a realizar la operaci&oacute;n. La aplicaci&oacute;n 
+        recordar&aacute; la opci&oacute;n que tom&oacute; el usuario en las sucesivas 
+        sesiones, hasta que sea desinstalada.</li>
+    </ul>
+  </li>
+</ul>
+<p>Esta definici&oacute;n de los dominios ser&aacute; responsabilidad del fabricante 
+  del dispositivo, por lo que no deberemos ocuparnos de ello. Nuestras aplicaciones 
+  simplemente ser&aacute;n asignadas a uno de los dominios disponibles en el dispositivo 
+  que las instalemos.<strong></strong></p>
+<h3><strong>15.2.3.1. Dominios en dispositivos reales</strong></h3>
+<p>Normalmente, los dispositivos reales incluyen a las aplicaciones por defecto 
+  en un dominio como el &uacute;ltimo. Es decir, cualquier aplicaci&oacute;n que 
+  instalemos se considera que no es de confianza, y se le preguntar&aacute; al 
+  usuario cada vez que la aplicaci&oacute;n vaya a realizar una operaci&oacute;n 
+  restringida. </p>
+<p>Adem&aacute;s, en el caso de los dispositivos reales, tambi&eacute;n se suele 
+  poder cambiar la configuraci&oacute;n de este dominio por defecto en la pantalla 
+  de configuraci&oacute;n del AMS de nuestro m&oacute;vil. Por ejemplo, en el 
+  caso del Nokia 6600, podremos cambiar los permisos que se le otorgan a cada 
+  aplicaci&oacute;n manualmente. Para cada operaci&oacute;n restringida nos dar&aacute; 
+  4 posibilidades:</p>
+<ul>
+  <li>No permitido</li>
+  <li> Preguntar la primera vez</li>
+  <li>Preguntar siempre</li>
+  <li>Siempre permitido</li>
+</ul>
+<p>Deberemos tener cuidado de no asignarle permisos a una aplicaci&oacute;n que 
+  no sea de nuestra confianza.</p>
+<p>La forma en la que el dispositivo decide en qu&eacute; dominio se debe incluir 
+  la aplicaci&oacute;n no est&aacute; especificada en MIDP, sin embargo se recomienda 
+  la utilizaci&oacute;n de firmas criptogr&aacute;ficas y certificados. </p>
+<p>De esta forma, si la aplicaci&oacute;n instalada no lleva una firma de confianza, 
+  la aplicaci&oacute;n se incluir&aacute; en el dominio definido por defecto de 
+  aplicaciones que no son de confianza. Si por el contrario, contiene una firma 
+  reconocida por el dispositivo, la aplicaci&oacute;n se a&ntilde;adir&aacute; 
+  a un dominio de confianza correspondiente a dicha firma, que nos otorgar&aacute; 
+  un determinado conjunto de permisos para los cuales no ser&aacute; necesaria 
+  la confirmaci&oacute;n del usuario.</p>
+<p>Seg&uacute;n la firma se puede a&ntilde;adir la aplicaci&oacute;n a diferentes 
+  dominios, y en cada uno de ellos se pueden conceder o denegar distintas operaciones. 
+  De esta forma, puede ocurrir que una aplicaci&oacute;n firmada por A tenga s&oacute;lo 
+  permiso para utilizar conexiones HTTP, una aplicaci&oacute;n firmada por B tenga 
+  s&oacute;lo permiso para utilizar sockets, y una firmada por C tenga permiso 
+  para utilizar cualquier tipo de conexi&oacute;n. Los distintos tipos de dominios 
+  definidos y la asignaci&oacute;n de permisos a cada uno de ellos depender&aacute; 
+  del fabricante del dispositivo.</p>
+<h3><strong>15.2.3.2. Dominios en los emuladores</strong></h3>
+<p>Los emuladores incluidos en WTK definen un conjunto de 4 dominios en los que 
+  se podr&aacute;n incluir las aplicaciones. Estos dominios son:</p>
+<ul>
+  <li><em>minimum</em>: No se permite realizar ninguna operaci&oacute;n restringida. 
+    Cuando se intente realizar alguna de ellas se producir&aacute; una excepci&oacute;n 
+    de tipo <code>SecurityException</code> directamente.<br>
+  </li>
+  <li><em>untrusted</em>: Cada vez que se intente realizar una operaci&oacute;n 
+    no permitida se preguntar&aacute; al usuario si desea permitirlo o no:</li>
+</ul>
+<div align="center"><img src="imagenes/red/wtk_perm_3.gif" width="181" height="208"></div>
+<ul>
+  <li><em>trusted/maximum</em>: La aplicaci&oacute;n puede realizar cualquier 
+    operaci&oacute;n directamente, sin necesidad de preguntar al usuario.</li>
+</ul>
+<p>Podemos indicar en la configuraci&oacute;n de WTK cual ser&aacute; el dominio 
+  por defecto en el que se ejecutar&aacute;n las aplicaciones cuando las carguemos 
+  directamente en el emulador (sin utilizar OTA). Podemos cambiar este dominio 
+  por defecto en la ventana de preferencias (<strong>Preferences...</strong>) 
+  del WTK. </p>
+<div align="center"><img src="imagenes/red/wtk_dom.gif" width="588" height="473"> 
+</div>
+<p>Cuando se utilice provisionamiento OTA, el emulador se comportar&aacute; como 
+  un dispositivo real, asignando a la aplicaci&oacute;n un dominio seg&uacute;n 
+  su firma.</p>
+<h3>15.2.4. Firmar MIDlets</h3>
+<p>En la especificaci&oacute;n de MIDP no se establece ning&uacute;n m&eacute;todo 
+  para decidir a qu&eacute; dominio corresponde cada MIDlet, pero se recomienda 
+  que para tomar esta decisi&oacute;n se utilicen firmas y certificados.</p>
+<p>Cada dispositivo contendr&aacute; una serie de certificados de confianza. Cada 
+  uno de estos certificados estar&aacute; asociado a un determinado dominio. Es 
+  responsabilidad del fabricante decidir qu&eacute; certificados se incluyen en 
+  el dispositivo y a qu&eacute; dominio se asocia cada uno.</p>
+<h3><strong>15.2.4.1. Certificados en los dispositivos</strong></h3>
+<p>Para que a un MIDlet se le otorguen ciertos permisos, deber&aacute; estar firmado 
+  por un certificado que sea conocido por el dispositivo donde se instala. Al 
+  instalar el MIDlet en el dispositivo, si est&aacute; firmado se comprobar&aacute; 
+  si el dispositivo contiene el certificado que se ha utilizado para firmarlo. 
+  De ser as&iacute;, se comprobar&aacute; la autenticidad de la aplicaci&oacute;n 
+  descargada mediante este certificado, y de ser correcta se instalar&aacute; 
+  la aplicaci&oacute;n en el dominio que el dispositivo tuviese asociado a dicho 
+  certificado.</p>
+<p>Si el certificado con el que se ha firmado la aplicaci&oacute;n no fuese conocido 
+  por el dispositivo, simplemente instalar&aacute; la aplicaci&oacute;n en el 
+  dominio de aplicaciones que no son de confianza. Normalmente en este dominio 
+  se preguntar&aacute; al usuario cada vez que se va a realizar una operaci&oacute;n 
+  restringida.</p>
+<p>Por lo tanto, para conseguir que a nuestro MIDlet se le otorguen permisos deberemos 
+  firmarlo por un certificado que est&eacute; incluido en el dispositivo. </p>
+<p>La especificaci&oacute;n de MIDP 2.0 recomienda que se incluyan 3 tipos de 
+  certificados:</p>
+<ul>
+  <li><strong>Del fabricante</strong>: Certificados pertenecientes al fabricante 
+    del dispositivo. Por ejemplo, en el m&oacute;viles de Nokia, se pueden incluir 
+    certificados con los que Nokia pueda firmar las aplicaciones que realice.<br>
+  </li>
+  <li><strong>Del operador</strong>: Certificados pertenecientes al operador de 
+    telefon&iacute;a que utiliza el m&oacute;vil. Estos certificados pueden almacenarse 
+    en la tarjeta SIM, ya que es propia del operador de telefon&iacute;a utilizado. 
+    Por ejemplo, si en nuestro m&oacute;vil utilizamos una tarjeta Movistar, en 
+    ella se pueden almacenar certificados de esta compa&ntilde;&iacute;a, de forma 
+    que podamos instalar sus aplicaciones en un dominio de confianza.<br>
+  </li>
+  <li><strong>De terceros</strong>: Certificados pertenecientes a terceros adquiridos 
+    de Autoridades Certificadoras como Verisign o Thwate. Cada dispositivo contendr&aacute; 
+    un conjunto de estos certificados. Deberemos asegurarnos de que el certificado 
+    con el que vayamos a firmar nuestra aplicaci&oacute;n est&eacute; incluido 
+    en los dispositivos en los que vamos a desplegarla.</li>
+</ul>
+<p>Si el certificado con el que hemos firmado nuestra aplicaci&oacute;n no est&aacute; 
+  entre los anteriores, o bien no hemos firmado la aplicaci&oacute;n, &eacute;sta 
+  se instalar&aacute; en el dominio de aplicaciones no fiables que existir&aacute; 
+  en cualquier dispositivo.</p>
+<h3><strong>15.2.4.2. Certificados en WTK</strong></h3>
+<p>Para que nuestra aplicaci&oacute;n obtenga permisos en un dispositivo m&oacute;vil 
+  real deber&iacute;amos tenerla firmada por un certificado incorporado en el 
+  dispositivo en el que la instalamos. Sin embargo, cuando la probemos en emuladores 
+  podremos crear nuestros propios certificados y a&ntilde;adirlos al emulador, 
+  sin necesidad de obtenerlos a partir de una Autoridad Certificadora. De esta 
+  forma en el emulador las aplicaciones firmadas por nosotros podr&aacute;n obtener 
+  los permisos que solicitemos.</p>
+<p>Vamos a ver como firmar aplicaciones MIDP utilizando WTK. Para firmar una aplicaci&oacute;n, 
+  lo primero que deberemos hacer es crear el paquete con la aplicaci&oacute;n, 
+  ya que es necesario contar con el fichero JAR para obtener su <em>digest</em>. 
+  Una vez creado el paquete utilizaremos la opci&oacute;n <strong>Project &gt; 
+  Sign</strong> para firmar la aplicaci&oacute;n. Aparecer&aacute; la siguiente 
+  ventana:</p>
+<div align="center"><img src="imagenes/red/wtk_sign_1.gif" width="422" height="274"> 
+</div>
+<p>Aqu&iacute; podremos utilizar alguna de las claves disponibles para firmar 
+  nuestra aplicaci&oacute;n, o bien crear un nuevo par de claves. Pulsaremos sobre 
+  <strong>New Key Pair...</strong> para crear nuestras propias claves:</p>
+<div align="center"><img src="imagenes/red/wtk_sign_2.gif" width="269" height="187"> 
+</div>
+<p>Aqu&iacute; introducimos informaci&oacute;n sobre nuestra compa&ntilde;&iacute;a, 
+  para crear un certificado correspondiente a esta compa&ntilde;&iacute;a. Cuando 
+  pulsemos sobre <strong>Create</strong> se crear&aacute; este certificado asign&aacute;ndole 
+  su correspondiente par de claves, y nos mostrar&aacute; la siguiente ventana 
+  para indicar a qu&eacute; dominio se asignar&aacute;n las aplicaciones firmadas 
+  por nosotros:</p>
+<div align="center"><img src="imagenes/red/wtk_sign_3.gif" width="349" height="124"> 
+</div>
+<p>De esta forma, nuestro certificado ser&aacute; instalado en el emulador. Cuando 
+  instalemos una aplicaci&oacute;n firmada por nosotros en el emulador, esta aplicaci&oacute;n 
+  se instalar&aacute; en el dominio que hayamos indicado aqu&iacute;. Si elegimos 
+  <em>trusted</em>, nuestras aplicaciones dispondr&aacute;n de todos los permisos 
+  sin tener que pedir la confirmaci&oacute;n del usuario.</p>
+<p>El &uacute;ltimo paso que debemos realizar es firmar nuestra aplicaci&oacute;n 
+  utilizando el certificado que acabamos de crear. Para esto simplemente seleccionaremos 
+  en la ventana <strong>Sign MIDlet Suite</strong> el certificado que queremos 
+  utilizar, y pulsaremos sobre el bot&oacute;n <strong>Sign MIDlet Suite...</strong></p>
+<p>Una vez firmada, podremos probarla en el emulador para comprobar que se le 
+  otorgan los permisos correspondientes. Para que esto sea as&iacute;, deberemos 
+  probarla utilizando provisionamiento OTA, ya que si lo hacemos de otra forma 
+  la firma no se tendr&iacute;a en cuenta.</p>
+<p>Recordemos que si ejecutamos la aplicaci&oacute;n directamente se tiene en 
+  cuenta el dominio que se haya configurado por defecto para los emuladores. Cuando 
+  utilizamos OTA se comportar&aacute; como un dispositivo real, utilizando los 
+  certificados de los que dispone para asignar un dominio a nuestra aplicaci&oacute;n.</p>
+</body>
+</html>

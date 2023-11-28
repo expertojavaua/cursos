@@ -1,0 +1,539 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>Sesi&oacute;n 5: Introducci&oacute;n a Java EE</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h1> 5. Introducción a Java EE </h1>
+             
+<p>&nbsp; </p>
+<p>Según la definición de Sun, Java Enterprise Edition (Java EE) es el estándar
+de la industria para desarrollar applicaciones Java portables, rebustas,
+escalables y seguras en el lado del servidor (server-side). Basado en Java SE,
+proporciona APIs para servicios web, modelo de componetes, gestión y comunicación. </p>
+<p>Veremos en esta sesión una introducción al concepto de aplicaciones web y
+su estructura. Después veremos una introducción al manejo de servidores web
+(viendo como ejemplo el servidor web Tomcat), y pasaremos dar algunos detalles
+introductorios sobre algunas de las herramientas principales para el desarrollo
+de aplicaciones Java EE, como son los servlets y las páginas JSP, viendo cómo
+se integra todo en algunos ejemplos sencillos de aplicación que podremos
+probar. </p>
+
+<h2>5.1. Cliente-servidor y protocolo HTTP</h2>
+<p>Toda aplicación web (sea o no Java EE) se basa para su funcionamiento en un
+protocolo <b>cliente-servidor</b>: por un lado, el usuario abre un navegador
+(cliente), que le mostrará una serie de interfaces para la aplicación web a
+probar (formularios, enlaces, etc). Interactuando con estos formularios enviará
+una serie de órdenes a un servidor remoto, que las ejecutará, y mostrará al
+usuario las páginas con los resultados obtenidos (resultados de una búsqueda,
+alta en un sistema de registro, etc).</p>
+<p>En todo este proceso intervienen varios factores: el cliente envía una serie
+de <b>peticiones</b> al servidor, y éste le emite, para cada una su
+correspondiente <b>respuesta</b>. En la petición del cliente puede haber una
+serie de <b>cabeceras de petición</b>, incluidas por el propio navegador, con
+información sobre la petición (tipo de navegador, idiomas aceptados, etc). Por
+otro lado, en la respuesta del servidor también pueden incluirse <b>cabeceras
+de respuesta</b>, con información sobre el contenido que se envía al navegador
+(tamaño del contenido, idioma, fecha de la última modificación, etc).
+Además, el servidor envía un <b>código de estado</b>, indicando si la
+petición previa del cliente se ha podido responder bien o ha habido errores
+(por ejemplo, un código 404 indicará que el servidor no ha podido encontrar la
+página solicitada por el cliente).</p>
+<p>Todos estos elementos (cabeceras de petición, cuerpo de la petición,
+código de estado de la respuesta, cabeceras de respuesta y texto de la
+respuesta) se envían entre cliente y servidor utilizando el <b>protocolo HTTP</b>,
+que establece la forma en la que deben separarse estos elementos para enviarse,
+y la estructura que debe tener cada bloque.</p>
+
+<h2>5.2. El servidor web Tomcat</h2>
+<p>En el caso de aplicaciones Java EE, en el lado del servidor, necesitamos uno
+que dé soporte a la arquitectura Java EE. Típicamente los <b>servidores de
+aplicaciones</b> Java EE son servidores potentes, que abarcan todo el potencial
+de funcionalidades que ofrece la plataforma Java EE. Sin embargo estos
+servidores son pesados (ocupan mucho espacio en disco y memoria), y requieren de
+máquinas relativamente potentes y dedicadas para su correcto funcionamiento.</p>
+<p>En el caso de no necesitar toda la plataforma, sino su núcleo básico (esto
+es, manejo de servlets, páginas JSP, struts, JSF y alguna que otra
+característica), podemos &quot;conformarnos&quot; con un <b>servidor web</b>
+con soporte para Java EE. Estos servidores lógicamente no disponen de todas las
+funcionalidades de un gran servidor de aplicaciones, pero nos permiten cargar
+aplicaciones web más ligeras, consumiendo menos recursos y siendo más
+fácilmente mantenibles.</p>
+<p>El servidor web estándar que se suele emplear para estos primeros pasos, o
+estas aplicaciones ligeras con Java EE es Tomcat. Es un servidor Java EE
+desarrollado por el proyecto Jakarta (los mismos desarrolladores que el servidor
+Apache), y proporciona diferentes funcionalidades para desarrollar aplicaciones
+Java EE basadas en servlets, páginas JSP, struts, y otras librerías que son un
+estándar en el desarrollo de aplicaciones Java EE.</p>
+<p>La página donde encontrar las últimas versiones y documentación sobre su
+funcionamiento y configuración es:</p>
+<p><a href="http://tomcat.apache.org/">http://tomcat.apache.org/</a> </p>
+<h3>5.2.1. Instalación de Tomcat</h3>
+<p>Para poder instalar Tomcat (versión 5.5.x) tenemos que tener instalada
+previamente la versión 1.5.x de JDK. Una vez hecho esto, deberemos tener una
+variable de entorno <span class="codefrag">JAVA_HOME</span> que apunte al
+directorio donde se ha instalado JDK (algunas versiones de Tomcat ya la
+establecen automáticamente).</p>
+<p>Una vez tengamos JDK instalado, ya podemos instalar Tomcat:</p>
+<ul>
+  <li>Para <strong>Windows</strong>, se tiene un programa autoinstalable, que al
+    ejecutarlo pide dónde queremos instalar Tomcat.</li>
+  <li>Para <strong>Unix</strong> (y también como versión ZIP para Windows) si
+    se dispone de una distribución binaria, se debe descomprimir en el
+    directorio donde queramos que esté Tomcat.</li>
+</ul>
+<p>Tomcat necesita además otra variable de entorno, llamada <span class="codefrag">CATALINA_HOME</span>,
+que apunte al directorio donde está instalado Tomcat. Si no se autoestablece
+deberemos asignarla nosotros.</p>
+<h3>5.2.2. Ejecución de Tomcat</h3>
+<p>Una vez tenemos instalado Tomcat, la ejecución del mismo difiere según la
+distribución que nos hayamos descargado.</p>
+<p>Para la versión <b>ejecutable</b> <strong>Windows</strong>, en el botón de <em>Inicio</em>,
+en <em>Programas</em>, tendremos creada una carpeta <em>Apache Tomcat 5.5</em>,
+y dentro de ella una opción <em>Monitor Tomcat</em>. Al ejecutarla, nos
+aparecerá un icono en la barra inferior, junto al reloj, mediante el que
+podremos parar y arrancar el servidor, con el botón derecho. También tenemos
+una opción en ese menú que es <em>Configure Tomcat</em>, que nos servirá para
+configurar alguna de las opciones de Tomcat que veremos más adelante.</p>
+<p>Para <strong>la versión ZIP</strong> (Linux o Windows) dentro del
+subdirectorio <span class="codefrag">bin</span> donde hayamos instalado Tomcat
+tenemos, entre otros, dos ejecutables (ficheros <span class="codefrag">.sh </span>):</p>
+<ul>
+  <li><strong><span class="codefrag">startup</span></strong>: al ejecutar este
+    comando se <strong>arranca el servidor</strong>.</li>
+  <li><strong><span class="codefrag">shutdown</span></strong>: al ejecutar este
+    comando se <strong>detiene el servidor</strong>.</li>
+</ul>
+<p>Una vez tengamos el servidor arrancado podemos probarlo con la dirección raíz:</p>
+<pre class="code">http://localhost:8080/</pre>
+<p>Que debería mostrar una página como:</p>
+<img src="imagenes/j2ee/tomcatini.jpg" width="598" height="410" />
+<h3>5.2.3. Estructura de Tomcat</h3>
+<p>La distribución de Tomcat está dividida en los siguientes directorios:</p>
+<ul>
+  <li><span class="codefrag"><b>bin</b></span>: ejecutables y scripts para arrancar y
+    parar Tomcat.</li>
+  <li><span class="codefrag"><b>common</b></span>: clases y librerías compartidas
+    entre Tomcat y las aplicaciones web. Las clases se deben colocar en <span class="codefrag"><i>common/classes</i></span>,
+    mientras que las librerías en formato JAR se deben poner en <span class="codefrag"><i>common/lib</i></span>.</li>
+  <li><span class="codefrag"><b>conf</b></span>: ficheros de configuración.</li>
+  <li><span class="codefrag"><b>logs</b></span>: directorio donde se guardan por
+    defecto los logs.</li>
+  <li><span class="codefrag"><b>server</b></span>: las clases que componen Tomcat.</li>
+  <li><span class="codefrag"><b>shared</b></span>: clases compartidas por todas las
+    aplicaciones web.</li>
+  <li><span class="codefrag"><b>webapps</b></span>: directorio usado por defecto como
+    raíz donde se colocan todas las aplicaciones web.</li>
+  <li><span class="codefrag"><b>work</b></span> y <span class="codefrag"><b>temp</b></span>:
+    directorios para almacenar información temporal</li>
+</ul>
+<p>La configuración de Tomcat está almacenada en cuatro ficheros que se
+encuentran en el directorio <strong><span class="codefrag">conf</span></strong>.
+Tres de ellos están en formato XML y el cuarto es un fichero de políticas de
+seguridad en el formato estándar de Java:</p>
+<ul>
+  <li><span class="codefrag"><b>server.xml</b></span>: el fichero principal de
+    configuración.</li>
+  <li><b><span class="codefrag">web.xml</span></b>: es un fichero en el formato estándar
+    para aplicaciones web con servlets, que contiene la configuración global a
+    todas las aplicaciones.</li>
+  <li><span class="codefrag"><b>tomcat-users.xml</b></span>: lista de usuarios y
+    contraseñas para autentificación.</li>
+  <li><span class="codefrag"><b>catalina.policy</b></span>: políticas de seguridad
+    para la ejecución del servidor.</li>
+</ul>
+<h2>5.3. Introducción a las aplicaciones web Java EE</h2>
+<h3>5.3.1. Elementos a considerar en las aplicaciones web</h3>
+<p>Hemos visto que una aplicación web es una aplicación a la que accedemos
+mediante protocolo HTTP utilizando un navegador web.</p>
+<p><strong>Aplicaciones en el lado del servidor</strong></p>
+<p>En el lado del servidor, tenemos que conseguir que nuestro servidor HTTP sea
+capaz de ejecutar programas de aplicación que recojan los parámetros de
+peticiones del cliente, los procesen y devuelvan al servidor un documento que éste
+pasará a su vez al cliente.</p>
+<p>Así, para el cliente el servidor no habrá hecho nada distinto a lo
+estipulado en el protocolo HTTP, pero el servidor podrá valerse de herramientas
+externas para procesar y servir la petición solicitada, pudiendo así no
+limitarse a servir páginas estáticas, sino utilizar otras aplicaciones (servlets,
+JSP, PHP, etc) para servir documentos con contenido dinámico.</p>
+<p>Los programas de aplicación son típicamente programas que realizan
+consultas a bases de datos, procesan la información resultante y devuelven la
+salida al servidor, entre otras tareas.</p>
+<p>Vamos a centrarnos en las aplicaciones web J2EE, en las que los componentes
+dinámicos que recibirán las peticiones HTTP en el servidor serán los servlets
+y JSPs. Estos componentes podrán analizar esta petición y utilizar otros
+componentes Java para realizar las acciones necesarias (beans, EJBs, etc).</p>
+<p><strong>Aplicaciones en el lado del cliente</strong></p>
+<p>Se tienen muchas tecnologías relacionadas con extensiones del lado del
+cliente (entendiendo cliente como un navegador que interpreta código HTML). El
+código HTML es un código estático que sólo permite formatear la apariencia
+de una página y definir enlaces a otras páginas o URLs. Esto no es suficiente
+si queremos que el navegador realice funciones más complicadas: validar
+entradas de formularios, mostrar la evolución del precio de unas acciones, etc.</p>
+<p>Para ampliar las funcionalidades del navegador (respetando el protocolo
+HTTP), se utilizan tecnologías como JavaScript, Applets, Flash, etc. Estas se
+basan en hacer que el navegador ejecute código que le pasa el servidor, bien
+embebido en documentos HTML (como es el caso de JavaScript), o bien mediante
+ficheros compilados multiplataforma (como es el caso de los Applets Java o los
+ficheros Flash).</p>
+<h3>5.3.2. Estructura de una aplicación web Java EE</h3>
+<p>Una aplicación web J2EE que utilice servlets o páginas JSP debe tener una
+estructura de ficheros y directorios determinada:</p>
+<ul>
+  <li>En el <b>directorio raíz</b> de la aplicación se colocan las <b>páginas</b>
+    HTML o JSP (podemos dividirlas también en directorios si queremos)</li>
+  <li>
+    <p>Colgando del directorio inicial de la aplicación, se tiene un directorio
+    <strong><span class="codefrag">WEB-INF</span></strong>, que contiene la
+    información Web relevante para la aplicación. Esta información se divide
+    en:</p>
+    <ul>
+      <li>Fichero <strong>descriptor de despliegue</strong> de la aplicación:
+        es el fichero descriptor de la aplicación web. Es un fichero XML
+        (llamado <span class="codefrag"><b>web.xml</b></span>) que contiene
+        información genérica sobre la aplicación. Lo veremos con más detalle
+        más adelante</li>
+      <li>Subdirectorio <strong><span class="codefrag">classes</span></strong>:
+        en él irán todas las clases Java utilizadas en la aplicación
+        (ficheros <span class="codefrag">.class</span>), es decir, clases
+        externas a la API de Java que se utilicen en las páginas JSP, servlets,
+        etc. Las clases deberán mantener la estructura de paquetes, es decir,
+        si queremos colocar la clase <span class="codefrag">paquete1.subpaquete1.MiClase</span>
+        dentro de <span class="codefrag">classes</span>, se quedará almacenada
+        en el directorio <span class="codefrag">classes/paquete1/subpaquete1/MiClase</span>.</li>
+      <li>Subdirectorio <strong><span class="codefrag">lib</span></strong>: aquí
+        colocaremos las clases Java que estén empaquetadas en ficheros JAR (es
+        decir, colocaremos los ficheros JAR de nuestra aplicación Web, y las
+        librerías ajenas a la API de JDK o de servlets y JSP que se necesiten)</li>
+    </ul>
+  </li>
+  <li>El resto de elementos de la aplicación (imágenes, etc), podemos
+    estructurarlos como nos convenga.</li>
+</ul>
+<p>Notar que se separan los ficheros <span class="codefrag">.class</span> de los
+ficheros JAR, colocando los primeros en el directorio <span class="codefrag">classes</span>
+y los segundos en <span class="codefrag">lib</span>.</p>
+<p>Esta estructura estará contenida dentro de algún directorio, que será el
+directorio correspondiente a la aplicación Web, y que podremos, si lo hacemos
+convenientemente, copiar en el servidor que nos convenga. Es decir, <b>cualquier
+servidor Web J2EE soporta esta estructura</b> en una aplicación Web, sólo
+tendremos que copiarla en el directorio adecuado de cada servidor.</p>
+<p>Cada aplicación web J2EE es un contexto, una unidad que comprende un
+conjunto de recursos, clases Java y su configuración. Cuando hablemos de
+contexto, nos estaremos refiriendo a la aplicación web en conjunto. Por ello
+utilizaremos indistintamente los términos aplicación web y contexto.</p>
+<p><strong>Rutas relativas al contexto</strong></p>
+<p>Cada contexto (aplicación web) instalado en el servidor tendrá asociado una
+ruta para acceder a él desde la web. Por ejemplo, podemos asociar nuestro
+contexto la ruta <span class="codefrag">/aplic</span>, de forma que accediendo a
+la siguiente URL:</p>
+<pre class="codigo">http://localhost:8080/aplic/index.htm</pre>
+<p>Estaremos leyendo el recurso <span class="codefrag">/index.htm</span> de
+nuestro contexto.</p>
+<p><strong>Ficheros WAR</strong></p>
+<p>Una forma de distribuir aplicaciones Web es empaquetar toda la aplicación (a
+partir de su directorio inicial) dentro de un fichero WAR (de forma parecida a
+como se hace con un TAR o un JAR), y distribuir dicho fichero. Podemos crear un
+fichero WAR de la misma forma que creamos un JAR, utilizando la herramienta JAR.</p>
+<p>Estos ficheros WAR son un estándar de J2EE, por lo que podremos utilizarlos
+en los diferentes servidores de aplicaciones J2EE existentes.</p>
+<h2>5.4. La base de las aplicaciones Java EE: servlets y JSP</h2>
+<h3>5.4.1. Servlets</h3>
+<p><b>Concepto de servlet</b></p>
+<p>Un <strong>servlet</strong> es un programa Java que se ejecuta en un servidor
+Web y construye o sirve páginas web. De esta forma se pueden construir páginas
+dinámicas, basadas en diferentes fuentes variables: datos proporcionados por el
+usuario, fuentes de información variable (páginas de noticias, por ejemplo), o
+programas que extraigan información de bases de datos.</p>
+<p>Comparado con un CGI, un servlet es más sencillo de utilizar, más eficiente
+(se arranca un hilo por cada petición y no un proceso entero), más potente y
+portable. Con los servlets podremos, entre otras cosas, procesar, sincronizar y
+coordinar múltiples peticiones de clientes, reenviar peticiones a otros
+servlets o a otros servidores, etc.</p>
+<p><b>Arquitectura de servlets</b></p>
+<p>Normalmente al hablar de servlets se habla de JSP y viceversa, puesto que
+ambos conceptos están muy interrelacionados. Para trabajar con ellos se
+necesitan tener presentes algunos recursos:</p>
+<ul>
+  <li>Un <strong>servidor web</strong> que dé soporte a servlets / JSP
+    (contenedor de servlets y páginas JSP). Ejemplos de estos servidores son
+    Apache Tomcat, Resin, JRun, Java Web Server, BEA WebLogic, etc.</li>
+  <li>Las <strong>librerías</strong> (clases) necesarias para trabajar con
+    servlets / JSP. Normalmente vienen en ficheros JAR en un directorio <span class="codefrag">lib</span>
+    del servidor (<span class="codefrag">common/lib</span> en Tomcat): <span class="codefrag"><b>servlet-api.jar</b></span>
+    (con la API de servlets), y <span class="codefrag"><b>jsp-api.jar</b></span>,
+    para JSP. Al desarrollar nuestra aplicación, deberemos incluir las librerías
+    necesarias en el classpath para que compilen los ficheros (sólo
+    necesitaremos compilar los servlets, no los JSP). También se puede utilizar
+    el fichero JAR <span class="codefrag">j2ee.jar</span> que viene con Java
+    Enterprise Edition, pero no es recomendable si se puede disponer de las
+    librerías específicas del servidor.</li>
+  <li>La <strong>documentación</strong> sobre la API de servlets / JSP (no
+    necesaria, pero sí recomendable)</li>
+</ul>
+<p>Dentro del paquete <strong><span class="codefrag">javax.servlet</span></strong>
+tenemos toda la infraestructura para poder trabajar con servlets. El elemento
+central es la interfaz <strong><span class="codefrag">Servlet</span></strong>,
+que define los métodos para cualquier servlet. La clase <strong><span class="codefrag">GenericServlet</span></strong>
+es una clase abstracta que implementa dicha interfaz para un servlet genérico,
+independiente del protocolo. Para definir un servlet que se utilice vía web, se
+tiene la clase <strong><span class="codefrag">HttpServlet</span></strong> dentro
+del subpaquete <strong><span class="codefrag">javax.servlet.http</span></strong>.
+Esta clase hereda de <span class="codefrag">GenericServlet</span>, y también es
+una clase abstracta, de la que heredaremos para construir los servlets para
+nuestras aplicaciones web.</p>
+<p>Cuando un servlet acepta una petición de un cliente, se reciben dos objetos:</p>
+<ul>
+  <li>Un objeto de tipo <strong><span class="codefrag">ServletRequest</span></strong>
+    que contiene los datos de la petición del usuario (toda la información
+    entrante). Con esto se accede a los parámetros pasados por el cliente, el
+    protocolo empleado, etc. Se puede obtener también un objeto <strong><span class="codefrag">ServletInputStream</span></strong>
+    para obtener datos del cliente que realiza la petición. La subclase <strong><span class="codefrag">HttpServletRequest</span></strong>
+    procesa peticiones de tipo HTTP.</li>
+  <li>Un objeto de tipo <strong><span class="codefrag">ServletResponse</span></strong>
+    que contiene (o contendrá) la respuesta del servlet ante la petición (toda
+    la información saliente). Se puede obtener un objeto <strong><span class="codefrag">ServletOutputStream</span></strong>,
+    y un <span class="codefrag">Writer</span>, para poder escribir la respuesta.
+    La clase <strong>HttpServletResponse</strong> se emplea para respuestas a
+    peticiones HTTP.</li>
+</ul>
+<p><b>Estructura básica de un servlet</b></p>
+<p>La plantilla común para implementar un servlet es:</p>
+<pre class="codigo">import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ClaseServlet extends HttpServlet
+{
+	public void doGet(HttpServletRequest request, 
+	                  HttpServletResponse response) 
+	throws ServletException, IOException
+	{
+	<strong>	// ... codigo para una peticion GET
+</strong>	}
+
+	public void doPost(HttpServletRequest request, 
+	                   HttpServletResponse response) 
+	throws ServletException, IOException
+
+	{
+	<strong>	// ... codigo para una peticion POST
+</strong>	}
+}</pre>
+<p>El servlet hereda de la clase <span class="codefrag">HttpServlet</span>.
+Normalmente se deben sobreescribir los métodos <span class="codefrag">doGet()</span>,
+<span class="codefrag">doPost()</span> o ambos, colocando el código que
+queremos que se ejecute cuando se reciba una petición GET o POST,
+respectivamente. Conviene definir los dos para distinguir ambas peticiones. En
+caso de que queramos hacer lo mismo para GET o POST, definimos el código en uno
+de ellos, y hacemos que el otro lo llame.</p>
+<p><b>Llamada de servlets</b></p>
+<p>La forma &quot;plana&quot; de llamar a un servlet es acceder a una carpeta
+&quot;virtual&quot; llamada <i>servlet</i> dentro de nuestra aplicación web.
+Esta carpeta no existe, y es interpretada automáticamente por el servidor web
+correspondiente como que tiene que cargar un servlet, cuya clase (incluyendo
+paquetes y subpaquetes) proporcionamos tras esta carpeta. Por ejemplo:</p>
+<pre class="codigo">http://localhost:8080/miapp/servlet/paquete1.subpaquete1.MiServlet</pre>
+<p>Otra opción es añadir unas líneas de configuración en el fichero
+descriptor <b>WEB-INF/web.xml</b>, para indicar que al servlet, en lugar de
+llamarlo a través del alias <i>servlet</i>, le vamos a llamar con otra URL
+alternativa (virtual). Por ejemplo, si añadimos estas líneas para el servlet
+anterior:</p>
+<pre class="codigo">&lt;servlet&gt;
+	&lt;servlet-name&gt;nombre&lt;/servlet-name&gt;
+	&lt;servlet-class&gt;paquete1.subpaquete1.MiServlet&lt;/servlet-class&gt;
+&lt;/servlet&gt;</pre>
+<pre class="codigo">&lt;servlet-mapping&gt;
+	&lt;servlet-name&gt;nombre&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;/ejemploservlet&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;</pre>
+<p>Lo que hacemos es asignar al servlet un nombre (en este caso <i>nombre</i>) y
+luego mapear ese nombre con una URL (en este caso <i>/ejemploservlet</i>). Así,
+podemos llamar al servlet, además de con la URL anterior, con:</p>
+<pre class="codigo">http://localhost:8080/miapp/ejemploservlet</pre>
+<p><b>Ejemplos básicos</b></p>
+<p><b>a) </b>Servlet que genera texto plano</p>
+<p>El siguiente ejemplo de servlet muestra una página con un mensaje de saludo:
+&quot;Este es un servlet de prueba&quot;. Lo cargamos mediante petición GET.</p>
+<pre class="codigo">package ejemplos;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ClaseServlet extends HttpServlet
+{
+	public void doGet(HttpServletRequest request, 
+	                  HttpServletResponse response) 
+	throws ServletException, IOException
+	{
+<strong>		</strong>PrintWriter out = response.getWriter();<strong>
+		</strong>out.println (&quot;Este es un servlet de prueba&quot;);<strong>
+</strong>	}
+}</pre>
+<p>Se obtiene un <span class="codefrag">Writer</span> para poder enviar datos al
+usuario. Simplemente se le envía la cadena que se mostrará en la página
+generada.</p>
+<p><b>b) </b>Servlet que genera contenido HTML</p>
+<p>Este otro ejemplo escribe código HTML para mostrar una página web.</p>
+<pre class="codigo">package ejemplos;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ClaseServletHTML extends HttpServlet
+{
+	public void doGet(HttpServletRequest request, 
+	                  HttpServletResponse response) 
+	throws ServletException, IOException
+	{
+		response.setContentType(&quot;text/html&quot;);
+		PrintWriter out = response.getWriter();
+		out.println (&quot;&lt;!DOCTYPE HTML PUBLIC \&quot;&quot;+
+		             &quot;-//W3C//DTD HTML 4.0 &quot; + 
+		             &quot;Transitional//EN\&quot;&gt;&quot;);
+		out.println (&quot;&lt;HTML&gt;&quot;);
+		out.println (&quot;&lt;BODY&gt;&quot;);
+		out.println (&quot;&lt;h1&gt;Titulo&lt;/h1&gt;&quot;);
+		out.println (&quot;&lt;br&gt;Servlet que genera HTML&quot;);
+		out.println (&quot;&lt;/BODY&gt;&quot;);
+		out.println (&quot;&lt;/HTML&gt;&quot;);
+<strong>	</strong>}
+}</pre>
+<p>Para generar una página HTML con un servlet debemos seguir dos pasos:</p>
+<ul>
+  <li>
+    <p>Indicar que el contenido que se va a enviar es HTML (mediante el método <span class="codefrag">setContentType()
+    </span>de <span class="codefrag">HttpServletResponse</span>):</p>
+    <pre class="code">response.setContentType(&quot;text/html&quot;);</pre>
+    <p>Esta línea es una cabecera de respuesta, que veremos más adelante cómo
+    utilizar. Hay que ponerla antes de obtener el <span class="codefrag">Writer</span>.</p>
+  </li>
+  <li>Escribir en el flujo de salida el texto necesario para generar la página
+    HTML. La línea que genera el DOCTYPE no es necesaria, aunque sí muy
+    recomendada para que se sepa qué versión de HTML se está empleando.</li>
+</ul>
+<p>Sin embargo, lo normal no es que el servlet genere línea a línea la página
+HTML, sino dejarla definida en un fichero aparte, y hacer que el servlet
+redirija a esta página (HTML, o JSP):</p>
+<pre class="codigo">package ejemplos;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ClaseServletHTML2 extends HttpServlet
+{
+	public void doGet(HttpServletRequest request, 
+	                  HttpServletResponse response) 
+	throws ServletException, IOException
+	{
+		response.setContentType(&quot;text/html&quot;);
+		<strong>response.sendRedirect(&quot;miPagina.jsp&quot;);</strong>
+	}
+}</pre>
+<h3>5.4.2. Páginas JSP</h3>
+<p>La filosofía de las páginas JSP es la contraria a los servlets: los
+servlets eran clases Java que generaban o mostraban contenido HTML, y las
+páginas JSP son páginas HTML con código Java incrustado en diferentes partes
+de las mismas.</p>
+<p>El denominado <em>contenedor JSP</em> (que sería un componente del servidor
+web) es el encargado de tomar la página, sustituir el código Java que contiene
+por el resultado de su ejecución, y enviarla al cliente. Así, se pueden diseñar
+fácilmente páginas con partes fijas y partes variables. El siguiente es un
+ejemplo muy sencillo de página JSP:</p>
+<pre class="codigo">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0 Transitional//EN&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Mi primera página JSP&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt; Hoy es: 
+&lt;%= new java.util.Date() %&gt; 
+&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p><b>Scripts JSP</b></p>
+<p>La principal forma (aunque hay otras) de introducir código Java en una
+página JSP se basan en <i>scriptlets</i>. Son bloques de código que comienzan
+por <b>&lt;% </b>y terminan con <b>%&gt;</b>, y dentro tienen código Java
+normal:</p>
+<pre class="codigo"><strong>&lt;%
+  java.util.Calendar ahora = java.util.Calendar.getInstance();
+  int hora = ahora.get(java.util.Calendar.HOUR_OF_DAY);
+%&gt;</strong>
+&lt;b&gt; Hola mundo, &lt;i&gt;
+<strong>&lt;% if ((hora&gt;20)||(hora&lt;6)) { %&gt; </strong>
+     buenas noches
+<strong>&lt;% }  
+   else if ((hora&gt;=6)&amp;&amp;(hora&lt;=12)) { %&gt;</strong>
+          buenos días
+<strong>&lt;%      }
+	else { %&gt; </strong>
+          buenas tardes
+<strong>&lt;%      } %&gt;</strong>
+&lt;/i&gt; &lt;/b&gt;</pre>
+<p>Otra forma de introducir código es con un <i>scriptlet</i> de asignación,
+que comienza por <b>&lt;%=</b>, y lo que hace es sacar directamente a la página
+el valor de la expresión que se le ponga. Por ejemplo:</p>
+<pre class="codigo">Hoy es &lt;%= new java.util.Date() %&gt; </pre>
+<p><b>Objetos implícitos en JSP</b></p>
+<p>Desde dentro de páginas JSP podemos acceder a objetos que también tienen
+los servlets, como son por ejemplo la petición (<i>request</i>) y la respuesta
+(<i>response</i>). De esta forma, desde una página JSP también podemos
+redirigir a otra página:</p>
+<pre class="codigo">&lt;% reponse.sendRedirect(&quot;mipagina.jsp&quot;); %&gt; </pre>
+<p><b>Acciones</b></p>
+<p>En JSP, entre otras muchas cosas, también tenemos disponibles unas <b>acciones</b>,
+que permiten hacer mediante etiquetas parecidas a las de HTML una serie de
+operaciones, como por ejemplo, incluir el contenido de otra página en la
+actual:</p>
+<pre class="codigo">&lt;jsp:include page=&quot;otraPagina.jsp&quot;/&gt;</pre>
+<p>o redirigir a otra página sin forzar una nueva petición:</p>
+<pre class="codigo">&lt;jsp:forward page=&quot;error.html&quot;/&gt;</pre>
+<h3>5.4.3. Relación entre servlets y JSP</h3>
+<p>Aunque JSP y servlets parecen a primera vista tecnologías distintas, en
+realidad el servidor web traduce internamente el JSP a un servlet, lo compila y
+finalmente lo ejecuta cada vez que el cliente solicita la página JSP. Por ello,
+en principio, JSPs y servlets ofrecen la misma funcionalidad, aunque sus
+características los hacen apropiados para distinto tipo de tareas. Los JSP son
+mejores para generar páginas con gran parte de contenido estático. Un servlet
+que realice la misma función debe incluir gran cantidad de sentencias del tipo <span class="codefrag">out.println()</span>
+para producir el HTML. Por el contrario, los servlets son mejores en tareas que
+generen poca salida, datos binarios o páginas con gran parte de contenido
+variable. En proyectos más complejos, lo recomendable es combinar ambas
+tecnologías: los servlets para el procesamiento de información y los JSP para
+presentar los datos al cliente.</p>
+<h3>5.4.4. Más información</h3>
+<p>Para encontrar información sobre servlets y JSP, son de utilidad las
+siguientes direcciones:</p>
+<ul>
+  <li><a href="http://java.sun.com/j2ee/">http://java.sun.com/j2ee/</a>:
+    referencia de todos los elementos que componen J2EE</li>
+  <li><a href="http://java.sun.com/products/jsp">http://java.sun.com/products/jsp</a>:
+    referencia para las últimas actualizaciones en JSP</li>
+  <li><a href="http://java.sun.com/products/servlets">http://java.sun.com/products/servlets</a>:
+    referencia para las últimas actualizaciones en servlets</li>
+</ul>
+<h2>5.5. Visión global de Java EE</h2>
+<p>Lo que hemos visto en esta sesión proporciona una visión introductoria del
+núcleo de las aplicaciones Java EE: su estructura, sus elementos principales (servlets
+y JSP) y un ejemplo de servidor donde probar estas aplicaciones (Tomcat). </p>
+<p>Desde un punto de vista más global, Java EE proporciona una arquitectura
+multi-capa. La capa cliente puede estar constituida por aplicaciones Java de
+escritorio o navegadores HTML. Las capas proporcionadas por Java EE propiamente
+dicha son las capas Web (mediante las tecnologías Servlets, JSP y JSF) y las
+capas de Negocio (mediante tecnologías como EJB, JMS o Web Services). Por último,
+estas capas se comunican con una capa de datos (base de datos o aplicaciones y
+sistemas legacy)</p>
+<img src="imagenes/j2ee/jee-multitiered.gif" width="435" height="300" />
+<p>La siguiente figura muestra las APIs y tecnologías que forman parte de Java
+EE.</p>
+<img src="imagenes/j2ee/jee-architecture.gif" />
+</body>
+</html>

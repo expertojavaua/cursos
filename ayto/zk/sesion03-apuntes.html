@@ -1,0 +1,780 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Sesi&oacute;n 3: El lenguaje zscript</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/banner-aplicaciones-ria.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/baner_j2ee_der.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Apuntes</a>
+</li>
+<li>
+<a class="base-not-selected" href="software.html">Software</a>
+</li>
+<li>
+<a class="base-not-selected" href="doc.html">Documentaci&oacute;n</a>
+</li>
+<li>
+<a class="base-not-selected" href="enlaces.html">Enlaces</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Apuntes</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 3</div>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesion 10</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion03-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Sesi&oacute;n 3: El lenguaje zscript</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#El+lenguaje+zscript">El lenguaje zscript</a>
+<ul class="minitoc">
+<li>
+<a href="#BeanShell">BeanShell</a>
+</li>
+<li>
+<a href="#Utilizando+zscript+para+incializar">Utilizando zscript para incializar</a>
+</li>
+<li>
+<a href="#Acceder+a+componentes+utilizando+su+ID">Acceder a componentes utilizando su ID</a>
+</li>
+<li>
+<a href="#%C3%81mbito+de+las+variables">&Aacute;mbito de las variables</a>
+</li>
+<li>
+<a href="#Otros+lenguajes+de+script">Otros lenguajes de script</a>
+</li>
+<li>
+<a href="#Un+ejemplo+final">Un ejemplo final</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Expresiones+EL">Expresiones EL</a>
+<ul class="minitoc">
+<li>
+<a href="#Acceso+a+JavaBean">Acceso a JavaBean</a>
+</li>
+<li>
+<a href="#Acceder+a+un+componente+ZUML">Acceder a un componente ZUML</a>
+</li>
+<li>
+<a href="#Objetos+impl%C3%ADctos">Objetos impl&iacute;ctos</a>
+</li>
+<li>
+<a href="#Ejemplos+adicionales">Ejemplos adicionales</a>
+</li>
+<li>
+<a href="#zscript+y+EL">zscript y EL</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Atributos+ZK">Atributos ZK</a>
+<ul class="minitoc">
+<li>
+<a href="#if+y+unless">if y unless</a>
+</li>
+<li>
+<a href="#forEach">forEach</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Espacio+de+identificadores">Espacio de identificadores</a>
+<ul class="minitoc">
+<li>
+<a href="#Espacios+de+nombres+y+espacios+ID">Espacios de nombres y espacios ID</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Procesamiento+de+una+p%C3%A1gina+ZUL">Procesamiento de una p&aacute;gina ZUL</a>
+<ul class="minitoc">
+<li>
+<a href="#Fase+de+inicializaci%C3%B3n+de+la+p%C3%A1gina">Fase de inicializaci&oacute;n de la p&aacute;gina</a>
+</li>
+<li>
+<a href="#Fase+de+creaci%C3%B3n+de+componentes">Fase de creaci&oacute;n de componentes</a>
+</li>
+<li>
+<a href="#Fase+de+renderizado">Fase de renderizado</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+<a name="N1000C"></a><a name="El+lenguaje+zscript"></a>
+<h2 class="underlined_10">El lenguaje zscript</h2>
+<div class="section">
+<p>Para hacer un prototipado r&aacute;pido es posible embeber c&oacute;digo Java en las p&aacute;ginas ZUML. Se trata de c&oacute;digo Java declarado entre etiquetas <span class="codefrag">&lt;zscript&gt;</span> e interpretado por la librer&iacute;a <a href="http://www.beanshell.org/">BeanShell</a> cuando el cargador de ZK carga la p&aacute;gina.</p>
+<p>En este c&oacute;digo es posible definir variables, m&eacute;todos, manejadores de eventos, datos e incluso clases que pueden ser utilizados en los componentes de la p&aacute;gina. En el c&oacute;digo tambi&eacute;n se pueden leer datos de los componentes de la p&aacute;gina y de los objetos predefinidos del framework.</p>
+<p>Hay dos formas de escribir c&oacute;digo zscript. La primera es dentro de las etiquetas <span class="codefrag">&lt;zscript&gt;</span>:</p>
+<pre class="code">
+&lt;zscript&gt;
+Date now = new Date();
+abc ="def";
+&lt;/zscript&gt;
+${now}
+${abc}
+</pre>
+<p>La segunda es dentro del manejador de eventos:</p>
+<pre class="code">&lt;button label="Haz click"
+   onClick='alert("Click en bot&oacute;n.")'/&gt;
+&lt;label value="Mi etiqueta"
+   onClick='alert("Click en etiqueta.")'
+   onRightClick='alert("Bot&oacute;n derecho")'/&gt;</pre>
+<p>Es conveniente utilizar zscript en ZUML. Tiene bastantes ventajas: no es compilado por lo que se puede modificar el contenido de la p&aacute;gina din&aacute;micamente, sin redesplegar la aplicaci&oacute;n web. La sintaxis es muy intuitiva y sencilla de usar. Se complementa perfectamente con las expresiones EL y con la definici&oacute;n de componentes en la p&aacute;gina.</p>
+<p>Pero tambi&eacute;n tiene algunos inconvenietes. Por ejemplo, el rendimiento de la aplicaci&oacute;n se ve penalizado al ejecutar zscript. Para aplicaciones con un gran n&uacute;mero de usuarios es conveniente portar todo el c&oacute;digo zscript a c&oacute;igo Java. Otro inconveniente es que no es posible depurar el c&oacute;digo zscript, ni poner breakpoints en &eacute;l.</p>
+<p>En general, podemos decir que zscript es muy &uacute;til para el prototipado r&aacute;pido de las p&aacute;ginas, pero es m&aacute;s complicado de depurar, mantener y reutilizar. El c&oacute;digo que hacemos en una p&aacute;gina zscript es complicado de reutilizar en otras p&aacute;ginas.</p>
+<p>Vamos a repasar algo m&aacute;s despacio algunas de las caracter&iacute;sticas y usos de zscript.</p>
+<a name="N1003C"></a><a name="BeanShell"></a>
+<h3 class="underlined_5">BeanShell</h3>
+<p>ZK usa BeanShell como int&eacute;rprete del c&oacute;digo zscript. Por ello zscript soporta todas las caracter&iacute;sticas de BeanShell. Por ejemplo, como en otros lenguajes de scripting, es posible utilizar variables sin haberlas declarado previamente ni especificado su tipo. Tambi&eacute;n se puede acceder a campos de los componentes y de los objetos impl&iacute;citos, sin usar getters ni setters.</p>
+<p>Algunos paquetes de Java los importa impl&iacute;citamente BeanShell. Si necesitamos otros, los podemos importar expl&iacute;citamente con la sintaxis habitual. Por ejemplo, podemos importar clases de la capa de persistencia de la aplicaci&oacute;n:</p>
+<pre class="code">&lt;zscript&gt; 
+   import mysite.myproyect.PersonaDao; 
+   import mysite.myproject.Persona;
+
+   void addItem() {
+      PersonaDao personaDao = new PersonaDao();
+      Persona persona = new Persona (item.nombre, item.apellidos, item.dni);
+      personaDao.add(persona);
+   }
+&lt;/zscript&gt;</pre>
+<a name="N1004D"></a><a name="Utilizando+zscript+para+incializar"></a>
+<h3 class="underlined_5">Utilizando zscript para incializar</h3>
+<p>Hemos visto que en la fase de inicializaci&oacute;n de la p&aacute;gina, ZK procesa las instrucciones <span class="codefrag">?init</span>. Es posible definir un c&oacute;digo zscript que se ejecute en esta fase especificando un fichero que contenga el c&oacute;digo zscript utilizando el atributo <span class="codefrag">zscript</span>.</p>
+<p>Por ejemplo:</p>
+<pre class="code">&lt;?init zscript="/my/init.zs"?&gt;</pre>
+<p>Hay que notar que la p&aacute;gina todav&iacute;a no est&aacute; conectado al escritorio cuando se ejecuta la fase de inicalizaci&oacute;n de p&aacute;gina.</p>
+<a name="N10067"></a><a name="Acceder+a+componentes+utilizando+su+ID"></a>
+<h3 class="underlined_5">Acceder a componentes utilizando su ID</h3>
+<p>Es muy sencillo acceder a los componentes utilizando zscript. Los nombres de las variables coinciden con los identificadores dados a los componentes. Por ejemplo, podemos acceder a la ventana 1 cuyo identificador es <span class="codefrag">win_1</span> s&oacute;lo utilizando el nombre de variable <span class="codefrag">win_1</span>:</p>
+<pre class="code">&lt;window id="win_1" title="Venana 1"&gt;
+   &lt;zscript&gt;&lt;![CDATA[
+      win_1.title="Titulo por zscript";]]&gt;
+   &lt;/zscrip&gt;
+&lt;/window&gt;</pre>
+<p>Veremos m&aacute;s adelante, cuando hablemos del espacio de identificadores (<em>ID Space</em>), que es muy importante tener en cuenta el &aacute;mbito de las variables a la hora de utilizarlas.</p>
+<p>En el caso de c&oacute;digo Java, podemos acceder por el nombre a los componentes utilizando el m&eacute;todo <span class="codefrag">getComponent</span> de la clase <span class="codefrag">org.zkoss.zk.ui.Path</span>:</p>
+<pre class="code">
+import org.zkoss.zk.ui.Path;
+import org.zkoss.zul.Window;
+...
+Window win = (Window) Path.getComponent("/win_1");
+win.setTitle("T&iacute;tulo de Java");
+...</pre>
+<a name="N1008E"></a><a name="%C3%81mbito+de+las+variables"></a>
+<h3 class="underlined_5">&Aacute;mbito de las variables</h3>
+<p>BeanShell es un int&eacute;rprete <em>multi-scope</em> que crea &aacute;mbitos jer&aacute;rquicos. Si una variable no se encuentra definida en el &aacute;mbito actual, se busca en el &aacute;mbito del elemento padre. Desde el &aacute;mbito actual, los &aacute;mbitos de los componentes hijos no son accesibles. En ZK los &aacute;mbitos asociados a los componentes se denominan <em>espacios de identificadores</em> (<em>ID spaces</em>). Hablaremos m&aacute;s adelante de ellos.</p>
+<p>Por ejemplo, en el siguiente ejemplo se crean dos &aacute;mbitos, uno para la ventana <span class="codefrag">A</span> y otro para la ventana <span class="codefrag">B</span>. Variables y componentes definidos en el &aacute;mbito de la ventana <span class="codefrag">B</span> (por ejemplo <span class="codefrag">var2</span>) no son accesibles desde el &aacute;mbito de la ventana <span class="codefrag">A</span>. Por el contrario, <span class="codefrag">var1</span> es visible tanto para <span class="codefrag">A</span> como para <span class="codefrag">B</span>.</p>
+<pre class="code">&lt;window id="A"&gt;
+    &lt;zscript&gt;var1 = "abc";&lt;/zscript&gt;
+    &lt;window id="B"&gt;
+        &lt;zscript&gt;var2 = "def";&lt;/zscript&gt;
+    &lt;/window&gt;
+&lt;/window&gt;</pre>
+<p>En BeanShell es posible definir bloques de c&oacute;digo y variables locales a ellos cerr&aacute;ndolos entre llaves ({}). Para que una variable sea local a un bloque hay que declararla dentro de &eacute;l. Por ejemplo:</p>
+<pre class="code">&lt;window&gt;
+   &lt;zscript&gt;
+   {
+      int var1 = 12;
+      var2 ="abc";
+	}
+   &lt;/zscript&gt;
+   var1: ${var1}
+   var2: ${var2}
+&lt;/window&gt;</pre>
+<p>El resultado muestra la variable <span class="codefrag">var2</span>. La variable <span class="codefrag">var1</span> se declara en el bloque de c&oacute;digo y no es visible fuera de &eacute;l.</p>
+<a name="N100D0"></a><a name="Otros+lenguajes+de+script"></a>
+<h3 class="underlined_5">Otros lenguajes de script</h3>
+<p>Adem&aacute;s de Java, es posible utilizar otros lenguajes de script soportados por la m&aacute;quina virtual Java. En la actualidad, los lenguajes soportados son:</p>
+<ul>
+   
+<li>JavaScript, por medio del int&eacute;rprete <a href="http://www.mozilla.org/rhino">Rhino</a>
+</li>
+   
+<li>Ruby, por medio del int&eacute;rprete <a href="http://jruby.codehaus.org/">JRuby</a>
+</li>
+   
+<li>Groovy, por medio del int&eacute;rprete <a href="http://groovy.codehaus.org/">Groovy</a>
+</li>
+
+</ul>
+<p>En una p&aacute;gina pueden coexistir scripts en diferentes lenguajes. Un ejemplo:</p>
+<pre class="code">&lt;button onClick="javascript:do_something_in_js()"/&gt;
+&lt;zscript language="groovy"&gt;
+	do_something_in_Groovy();
+&lt;/zscript&gt;
+</pre>
+<p>Cada lenguaje de scripting est&aacute; asociado con un int&eacute;rprete. Por ello, los variables y m&eacute;todos definidos en un script no son visibles en el otro. Por ejemplo, <span class="codefrag">var1</span> y <span class="codefrag">var2</span> pertenecen a dos int&eacute;rpretes distintos en el siguiente ejemplo:</p>
+<pre class="code">&lt;zscript language="Java"&gt;
+     var1 = 123;
+&lt;/zscript&gt;
+&lt;zscript language="JavaScript"&gt;
+     var2 = 234;
+&lt;/zscript&gt;
+</pre>
+<p>Si se omite el lenguaje de script, se asume que es Java. Tambi&eacute;n es posible cambiar el lenguaje de script por defecto de la p&aacute;gina, utilizando el atributo <span class="codefrag">zscriptLanguage</span> de la directiva <span class="codefrag">page</span>:</p>
+<pre class="code">&lt;?page zscriptLanguage="Groovy"?&gt;
+&nbsp;
+&lt;zscript&gt;
+	def name = "Hello World!";
+&lt;/zscript&gt;</pre>
+<p>Cada p&aacute;gina instancia su propio int&eacute;rprete para evaluar los scripts zscript. Si un desktop tiene m&uacute;ltiples p&aacute;ginas, entonces podr&iacute;a tener m&uacute;ltiples instancias de int&eacute;rpretes en marcha.</p>
+<a name="N10113"></a><a name="Un+ejemplo+final"></a>
+<h3 class="underlined_5">Un ejemplo final</h3>
+<p>Terminamos con un ejemplo completo de c&oacute;digo.</p>
+<pre class="code">&lt;window title="Ejemplo ZK" border="normal" width="200px"&gt;
+   &iquest;Qu&eacute; gestor de disposici&oacute;n es el que utilizas m&aacute;s?
+   &lt;hbox&gt;
+      &lt;checkbox id="l1" label="Border" onCheck="doChecked()" /&gt;
+      &lt;checkbox id="l2" label="Box" onCheck="doChecked()" /&gt;
+      &lt;checkbox id="l3" label="Table" onCheck="doChecked()" /&gt;
+      &lt;checkbox id="l4" label="Portal" onCheck="doChecked()" /&gt;
+      &lt;checkbox id="l5" label="Column" onCheck="doChecked()" /&gt;
+   &lt;/hbox&gt;
+   &lt;hbox&gt;
+      Has seleccionado :
+      &lt;label id="layout" /&gt;
+   &lt;/hbox&gt;
+   &lt;zscript&gt;
+      void doChecked() {
+         layout.value = (l1.isChecked() ? l1.label+' ' : &amp;quot;&amp;quot;) 
+                      + (l2.isChecked() ? l2.label+' ' : &amp;quot;&amp;quot;)
+                      + (l3.isChecked() ? l3.label+' ' : &amp;quot;&amp;quot;) 
+                      + (l4.isChecked() ? l4.label+' ' : &amp;quot;&amp;quot;)  
+                      + (l5.isChecked() ? l5.label+' ' : &amp;quot;&amp;quot;);
+         }
+   &lt;/zscript&gt;
+&lt;/window&gt;</pre>
+</div>
+
+
+
+<a name="N10122"></a><a name="Expresiones+EL"></a>
+<h2 class="underlined_10">Expresiones EL</h2>
+<div class="section">
+<p>Igual que JSP, es posible utilizar expresiones EL en las p&aacute;ginas ZUML. A trav&eacute;s de estas expresiones es posible leer valores y acceder a componentes JavaBeans. Tambi&eacute;n se utilizan para acceder a componentes de ZK y a objetos impl&iacute;citos. Sin embargo, a diferencia de JSP, no es posible utilizar el operador "=" para actualizar un valor de un JavaBean.</p>
+<p>Las expresiones EL tienen la sintaxis <span class="codefrag">${expr}</span>
+</p>
+<a name="N10130"></a><a name="Acceso+a+JavaBean"></a>
+<h3 class="underlined_5">Acceso a JavaBean</h3>
+<p>Por ejemplo:</p>
+<pre class="code">&lt;element attr1=${bean.property}&gt;</pre>
+<p>La expresi&oacute;n <span class="codefrag">${bean.property}</span> accede al m&eacute;todo <span class="codefrag">bean.getProperty</span> y actualiza el atributo <span class="codefrag">attr1</span>. La variable <span class="codefrag">bean</span> se puede declarar en c&oacute;digo zscript.</p>
+<p>Un ejemplo completo:</p>
+<pre class="code">&lt;window&gt;
+   &lt;zscript&gt;
+      Person person = new Person();
+      person.setFirstName("Tom");
+      person.setLastName("Hanks");
+   &lt;/zscript&gt;
+   First name is :${person.firstName}
+   Last name is :${person.lastName}
+   Full name is :${person.fullName}
+&lt;/window&gt;</pre>
+<p>Y la clase Java <span class="codefrag">Person.java</span>:</p>
+<pre class="code">public class Person {
+   private String firstName = "";
+   private String lastName = "";
+ 
+   // getter and setters
+   public void setFirstName(String firstName) {
+      this.firstName = firstName;
+   }
+ 
+   public String getFirstName() {
+      return firstName;
+   }
+ 
+   public void setLastName(String lastName) {
+      this.lastName = lastName;
+   }
+ 
+   public String getLastName() {
+      return lastName;
+   }
+ 
+   public String getFullName() {
+      return firstName + " " + lastName;
+   }
+}</pre>
+<a name="N1015E"></a><a name="Acceder+a+un+componente+ZUML"></a>
+<h3 class="underlined_5">Acceder a un componente ZUML</h3>
+<p>Podemos utilizar los identificadores de los componentes en las expresiones EL y acceder a sus atributos. Un ejemplo:</p>
+<pre class="code">&lt;window&gt;
+   &lt;textbox id="source" value="ABC"/&gt;
+   &lt;label value="${source.value}"/&gt;
+&lt;/window&gt;
+</pre>
+<a name="N1016C"></a><a name="Objetos+impl%C3%ADctos"></a>
+<h3 class="underlined_5">Objetos impl&iacute;ctos</h3>
+<p>Podemos acceder tambi&eacute;n a objetos impl&iacute;citos y obtener sus propiedades:</p>
+<pre class="code">&lt;window&gt;   
+   &lt;label value="${session.deviceType}"/&gt;
+&lt;/window&gt;
+</pre>
+<p>El navegador debe mostrar el resultado: <span class="codefrag">ajax</span>.</p>
+<a name="N10180"></a><a name="Ejemplos+adicionales"></a>
+<h3 class="underlined_5">Ejemplos adicionales</h3>
+<p>Otros ejemplos de expresiones EL:</p>
+<pre class="code">${empty myMap}
+${myMap[entry]}
+${3+counter}
+</pre>
+<p>
+<span class="codefrag">empty</span> es un operador que comprueba si una colecci&oacute;n, un mapa, un array o string es vac&iacute;o.</p>
+<p>La expresi&oacute;n <span class="codefrag">myMap[entry]</span> es una forma de acceder a un elemento del map.</p>
+<p>Las expresiones EL devuelve objetos Java de cualquier tipo (dependiendo del m&eacute;todo get del bean). Hay que tener cuidado de que sean compatibles con los atributos a los que se asignan. Por ejemplo, la siguiente expresi&oacute;n devuelve un objeto booleano:</p>
+<pre class="code">&lt;window if="${some &gt; 10}"&gt;</pre>
+<p>Tambi&eacute;n se soportan objetos impl&iacute;citos est&aacute;ndar como <span class="codefrag">param</span> y <span class="codefrag">requestScope</span> y objetos ZK impl&iacute;citos como <span class="codefrag">self</span> y <span class="codefrag">page</span>:</p>
+<pre class="code">&lt;textbox value="${param.who} does ${param.what}"/&gt;</pre>
+<a name="N101B3"></a><a name="zscript+y+EL"></a>
+<h3 class="underlined_5">zscript y EL</h3>
+<p>Hay que diferenciar entre el c&oacute;digo EL y el c&oacute;digo zscript. Ambos tienen diferente sintaxis y diferentes ciclos de vida y pueden ser usados en diferentes momentos. Por ejemplo, el c&oacute;ddigo EL permite llamar a funciones, acceder a campos de componentes y recuperar sus valores. El c&oacute;digo EL permite tambi&eacute;n intercalarse con c&oacute;digo de componentes para asignar propiedades de atributos o con las etiquetas de ZK <span class="codefrag">if</span>,<span class="codefrag">unless</span> o <span class="codefrag">foreach</span>. El c&oacute;digo zscript, por otra parte, es m&aacute;s similar al c&oacute;digo Java. Permite definir clases, m&eacute;todos y variables que pueden ser utilzadas en las expresiones EL.</p>
+<p>Por ejemplo, el siguiente c&oacute;digo define una variable usada despu&eacute;s en una expresi&oacute;n EL:</p>
+<pre class="code">
+&lt;zscript&gt;&lt;![CDATA[
+     Date now = new Date();
+   var="abc";
+]]&gt;
+&lt;/zscript&gt;
+&lt;window title="Ejemplo abc" border="normal"&gt;
+Fecha: ${now}; Variable: ${var}
+&lt;/window&gt;
+</pre>
+<p>Podemos cambiar el tipo y el valor de la variable y probar a ver c&oacute;mo se muestra en la p&aacute;gina.</p>
+<p>En el siguiente ejemplo, podemos ver c&oacute;mo se define una funci&oacute;n en el c&oacute;digo zscript y despu&eacute;s se utiliza en el manejador de eventos. Es interesante notar que la posibilidad de definir funciones independientes de clases es algo que no est&aacute; permitido en Java, pero s&iacute; en BeanShell y zscript.</p>
+<pre class="code">&lt;window&gt;
+   &lt;zscript&gt;
+   public void diHola(Button boton){
+      alert(boton.getLabel());
+   }
+   &lt;/zscript&gt;
+   &lt;button label="&iexcl;Di hola!" onClick="diHola(self)" /&gt;
+&lt;/window&gt;</pre>
+<p>En zscript es posible acceder los objetos impl&iacute;citos definidos por ZK. En el ejemplo se accede al objeto <span class="codefrag">self</span>. </p>
+</div>
+
+<a name="N101DE"></a><a name="Atributos+ZK"></a>
+<h2 class="underlined_10">Atributos ZK</h2>
+<div class="section">
+<p>Los atributos ZK son atributos de los elementos de ZUML que son usados por el motor de ZK para gestionar la carga de la p&aacute;gina, de los elementos o para relacionar c&oacute;digo y clases Java con la p&aacute;gina.</p>
+<p>Empezamos con un ejemplo en el que se utilizan los atributos <span class="codefrag">if</span>, <span class="codefrag">unless</span> y <span class="codefrag">forEach</span>. Son atributos que permiten modificar la creaci&oacute;n de los componentes. Toman valor de expresiones EL y variables definidas en zscript.</p>
+<pre class="code">&lt;window border="normal"&gt; 
+   &lt;zscript&gt;
+      newBtn = true;
+      dias = new String[] {"Lunes", "Martes","Mi&eacute;rcoles"};
+   &lt;/zscript&gt;
+   &lt;button label="Nuevo" if="${newBtn}"&gt;
+      &lt;attribute name="onClick"&gt; 
+         alert("I am a new Button!");
+      &lt;/attribute&gt;
+   &lt;/button&gt;
+   &lt;button label="Viejo" unless="${newBtn}"/&gt;
+   &lt;separator /&gt;
+   &lt;listbox width="100px"&gt;
+      &lt;listitem label="${each}" forEach="${dias}" /&gt;
+   &lt;/listbox&gt;
+&lt;/window&gt;</pre>
+<p>Vamos a utilizar este ejemplo e ir explicando m&aacute;s cosas utiliz&aacute;ndolo como base.</p>
+<a name="N101FA"></a><a name="if+y+unless"></a>
+<h3 class="underlined_5">if y unless</h3>
+<p>El atributo <span class="codefrag">if</span> permite definir una construcci&oacute;n condicional de un elemento.</p>
+<pre class="code">&lt;elemento if="${expr-EL}&gt;
+...
+&lt;/elemento&gt;</pre>
+<p>El elemento se construye si y s&oacute;lo si el resultado de evaluar la expresi&oacute;n EL asociada es <em>true</em>. Por ejemplo:</p>
+<pre class="code">&lt;window if="${a==1}"&gt;
+     ...
+&lt;/window&gt;</pre>
+<p>El atributo <span class="codefrag">unless</span> funciona al contrario; s&oacute;lo se compone el elemento si la expresi&oacute;n asociada es <span class="codefrag">false</span>.</p>
+<a name="N1021E"></a><a name="forEach"></a>
+<h3 class="underlined_5">forEach</h3>
+<p>La evaluaci&oacute;n de un elemento puede ser iterativa. La forma de hacerlo es especificando una colecci&oacute;n de objetos sobre la que se itera con el atributo <span class="codefrag">forEach</span>. La colecci&oacute;n de objetos debe ser el resultado de una expresi&oacute;n EL, en la que podemos utilizar alguna variable inicializada con <span class="codefrag">zscript</span>.</p>
+<p>La variable <span class="codefrag">each</span> recorre la colecci&oacute;n y va tomando los valores de sus elementos.</p>
+<p>Algunos ejemplos:</p>
+<pre class="code"> &lt;listbox&gt;
+   &lt;listitem label="${each}" forEach="Good, Better, Best"/&gt;
+ &lt;/listbox&gt;</pre>
+<pre class="code">&lt;window&gt;
+   &lt;zscript&gt;
+      grades = new String[] {"Good", "Better", "Best"};
+   &lt;/zscript&gt;
+   &lt;listbox&gt;
+      &lt;listitem label="${each}" forEach="${grades}" /&gt;
+   &lt;/listbox&gt;
+&lt;/window&gt;
+</pre>
+</div>
+
+
+
+
+<a name="N10240"></a><a name="Espacio+de+identificadores"></a>
+<h2 class="underlined_10">Espacio de identificadores</h2>
+<div class="section">
+<p>La interfaz de usuario es la encargada de interactuar con el usuario. Un conjunto de eventos internos  son procesados por ella de forma aut&oacute;nma. Pero tarde o temprano la IU deber&aacute; lanzar un evento para pedir a la aplicaci&oacute;n que realice alg&uacute;n procesamiento. Por ejemplo cuando se pulsa un bot&oacute;n. O cuando se elige una opci&oacute;n de un men&uacute;.</p>
+<p>La aplicaci&oacute;n debe poder obtener a partir de la IU y del evento que se ha producido informaci&oacute;n sobre el estado de la IU: los datos introducidos por el usuario, las opciones seleccionadas, el tama&ntilde;o de los paneles, etc. En resumen, debe poder recuperar datos de los componentes. Y, una vez realizado el procesamiento, debe poder actualizar sus atributos y su estado. Para ello es necesario que la aplicaci&oacute;n pueda acceder a los componentes.</p>
+<p>Una de las facilidades de ZK es que permite acceder a los componentes por identificadores definidos por el programador. El comportamiento termina siendo muy similar a la forma de acceder a variables en un lenguaje de programaci&oacute;n. De hecho, los componentes pueden ser manejados como variables desde el c&oacute;digo zscript.</p>
+<p>Esta idea de los componentes como variables abre la cuesti&oacute;n del &aacute;mbito. &iquest;En qu&eacute; &aacute;mbito est&aacute;n definidos los componentes? Cuando asignamos un identificador a un componente, &iquest;en qu&eacute; partes de la p&aacute;gina ZUML podemos usar ese identificador?</p>
+<p>Para contestar a estas preguntas ZK introduce el concepto de <em>espacio de identficadores</em> (<em>ID Space</em>). Un espacio de identificadores (espacio ID) es un subconjunto de componentes de un escritorio. S&oacute;lo dentro de esos componentes se pueden acceder a los identificadores asociados a los componentes. Dentro de un mismo espacio ID los identificadores no pueden estar repetidos.</p>
+<p>Los espacios ID est&aacute;n asociados a ciertos componentes. Los dos principales son la propia p&aacute;gina y el componente ventana (<span class="codefrag">org.zkoss.zul.Window</span>). Todos los componentes que se definen dentro de una ventana (sus hijos en el &aacute;rbol de componentes) forman un espacio ID que se asocia a la propia ventana.</p>
+<p>A su vez, una ventana est&aacute; incluida en la p&aacute;gina, que tambi&eacute;n contiene un espacio ID. El componente que est&aacute; m&aacute;s arriba de un espacio de identificadores se denomina el propietario del espacio. Puede obtenerse con el m&eacute;todo <span class="codefrag">getSpaceOwner</span> de cualquier componente del espacio. Ese componente es el que guarda los identificadores de todos los componentes hijos y se asegura de que no est&eacute;n repetidos.</p>
+<p>En el caso en que un espacio ID, digamos X, es descendiente de otro espacio ID, digamos Y, entonces el propietario del espacio X forma parte del espacio Y, pero no sus descencientes. Los descendientes son parte del espacio X.</p>
+<p>Un ejemplo:</p>
+<pre class="code">&lt;?page id="P"?&gt;
+&lt;zk&gt;
+   &lt;window id="A"&gt;
+      &lt;hbox id="B"&gt;
+         &lt;button id="D" /&gt;
+      &lt;/hbox&gt;
+      &lt;window id="C"&gt;
+         &lt;button id="E" /&gt;
+      &lt;/window&gt;
+   &lt;/window&gt;
+   &lt;hbox id="F"&gt;
+      &lt;button id="G" /&gt;
+   &lt;/hbox&gt;
+&lt;/zk&gt;</pre>
+<p>
+<img alt="" content-width="7cm" src="imagenes/id-space.png" width="450"></p>
+<p>El ejemplo muestra tres espacios de identificadores: P, A, y C. El espacio P incluye a los componentes P, A, F y G. El espacio A incluye A, B, C y D. El espacio C incluye C y E.</p>
+<p>Los componentes en un mismo espacio se denominan <em>fellow</em>s. Por ejemplo, A, B, C y D son <em>fellows</em> del mismo espacio de identificadores.</p>
+<p>El espacio ID se define en Java como la interfaz <span class="codefrag">org.zkoss.zk.ui.IdSpace</span>. El m&eacute;todo principal que define esta interfaz es <span class="codefrag">getFellow</span>, que permite obtener un componente a partir de su identificador. Este m&eacute;todo tambi&eacute;n est&aacute; definido en la interfaz Component, por lo que podemos llamarlo en cualquier componente de un espacio de identificadores no s&oacute;lo en el propietario del espacio.</p>
+<p>Veremos m&aacute;s adelante ejemplos de uso del m&eacute;todo <span class="codefrag">getFellow</span>.</p>
+<p>Otra forma de acceder a un componente es utilizando el m&eacute;todo est&aacute;tico <span class="codefrag">org.zkoss.zk.ui.Path.getComponent(String path)</span>. Por ejemplo, podemos obtener el componente E del ejemplo anterior de cualquiera de las dos siguientes formas:</p>
+<pre class="code">
+Path.getComponent("/A/C/E");
+Path.getComponent("//P/A/C/E");</pre>
+<p>Una vez que obtenemos el componente podemos llamar a m&eacute;todos Java para modificar sus caracter&iacute;sticas.</p>
+<p>Ejemplo de un fichero <span class="codefrag">path.zul</span>
+</p>
+<pre class="code">&lt;window id="w" apply="MyComposer"&gt;
+	&lt;button id="b" label="ok" forward="onClick=onChangeLabel"/&gt;
+&lt;/window&gt;</pre>
+<p>Y el fichero <span class="codefrag">MyComposer.java</span>:</p>
+<pre class="code">import org.zkoss.zk.ui.Path;
+import org.zkoss.zk.ui.util.GenericComposer;
+import org.zkoss.zul.Button;
+ 
+public class MyComposer extends GenericComposer {
+	Button btn = new Button();
+	public void onChangeLabel(){
+		btn = (Button)Path.getComponent("/w/b");
+		btn.setLabel("Changed");
+	}
+}</pre>
+<a name="N102B3"></a><a name="Espacios+de+nombres+y+espacios+ID"></a>
+<h3 class="underlined_5">Espacios de nombres y espacios ID</h3>
+<p>El int&eacute;rprete de zscript puede acceder a los componentes directamente, utilizando su identificador como nombre de variable. Para ello se utiliza el concepto de espacio de nombres. El espacio de nombres es el conjunto de variables definidas y usables en un determinado &aacute;mbito de la p&aacute;gina.</p>
+<p>Existe un espacio de nombres por cada espacio ID. Las variables definidas en un espacio de nombres son visibles en los scripts de zscript y en las expresiones EL que pertenecen al mismo espacio de nombres.</p>
+<p>en el siguiente ejemplo hay dos espacios de nombres. Uno pertenece a la ventana <span class="codefrag">w1</span> y el otro pertenece a <span class="codefrag">w2</span>. Por ello, el bot&oacute;n <span class="codefrag">b1</span> del script <span class="codefrag">onClick</span> se refiere a la etiqueta definida en la ventana <span class="codefrag">w2</span>, mientras que el bot&oacute;n <span class="codefrag">b2</span> se refiere al checkbox definido en la ventana <span class="codefrag">w1</span>
+</p>
+<pre class="code">&lt;window id="w1"&gt;
+   &lt;window id="w2"&gt;
+      &lt;label id="c"/&gt;
+      &lt;button id="b1" onClick='c.value = "OK"' label="click me"/&gt;
+   &lt;/window&gt;
+   &lt;checkbox id="c"/&gt;
+   &lt;button id="b2" onClick='c.label = "OK"' label="click me"/&gt;
+&lt;/window&gt;</pre>
+<p>El espacio de nombres es jer&aacute;rquico. Por ejemplo, en el c&oacute;digo zscript en la ventana <span class="codefrag">w2</span> podemos referenciar a componentes de la ventana <span class="codefrag">w1</span> (a no ser que hayan sido sobreescritos):</p>
+<pre class="code">&lt;window id="w1"&gt;
+	&lt;window id="w2"&gt;
+		&lt;button id="b1" onClick='c.value = "OK"' label="Click me"/&gt;
+	&lt;/window&gt;
+	&lt;label id="c"/&gt;
+&lt;/window&gt;
+</pre>
+<p>Parece extra&ntilde;o a primera vista que en el ejemplo podamos referirnos en el evento <span class="codefrag">onClick</span> a la etiqueta <span class="codefrag">c</span> que todav&iacute;a no ha sido creada. &iquest;No deber&iacute;amos de crear una variable antes de usarla? La respuesta tiene que ver con el ciclo de vida de la p&aacute;gina. El c&oacute;digo zscript del evento se eval&uacute;a realmente cuando el usuario hace click en el bot&oacute;n. En ese momento la etiqueta con el identificador <span class="codefrag">c</span> ha sido creada y es visible a zscript.</p>
+<p>Un &uacute;ltimo ejemplo:</p>
+<pre class="code">&lt;window id="w1"&gt;
+	&lt;label id="w1_L1" value="origin_w1_L1" /&gt;
+	&lt;button id="w1_b1" label="origin_w1_b1"
+		onClick='w2_L1.value="after_w1_b1"' /&gt;
+	&lt;zscript&gt;
+		w1_z1="origin_w1_z1";
+	&lt;/zscript&gt;
+	w1_1:${w1_z1}
+	&lt;window id="w2"&gt;
+		&lt;label id="w2_L1" value="origin_w2_L1" /&gt;
+		&lt;button id="w2_b1" label="origin_w2_b1"
+			onClick='w1_L1.value="after_w2_b1"' /&gt;
+		w2_1:${w2_z1}
+		&lt;zscript&gt;
+			w2_z1="origin_w2_z1";
+		&lt;/zscript&gt;
+		w2_2:${w2_z1} w2_3:${w1_z1}
+	&lt;/window&gt;
+	w1_2:${w2_z1}
+&lt;/window&gt;</pre>
+</div>
+
+
+<a name="N102FC"></a><a name="Procesamiento+de+una+p%C3%A1gina+ZUL"></a>
+<h2 class="underlined_10">Procesamiento de una p&aacute;gina ZUL</h2>
+<div class="section">
+<p>Hemos visto que una p&aacute;gina ZUL contiene un conjunto de componentes y c&oacute;digo zscript. Desde el c&oacute;digo zscript y desde los propios componentes se puede acceder a otros componentes, para leer o modificar sus atributos.La forma de acceder a un componente desde otro o desde c&oacute;digo zscript es utilizando su identificador.</p>
+<p>En muchos aspectos estas caracter&iacute;sticas son similares a las de un c&oacute;digo de un programa en un lenguaje de programaci&oacute;n determinado. En el programa se definen variables a las que se inicializa con ciertos valores. En el c&oacute;digo se utiliza estas variables y se puede leer y modificar sus valores.</p>
+<p>De la misma forma en que el programador debe saber c&oacute;mo se definen las variables, qu&eacute; &aacute;mbito (<em>scope</em>) tienen o desde qu&eacute; partes del c&oacute;digo se puede acceder a ellas, el programador de ZK debe c&oacute;nocer c&oacute;mo asociar identificadores con componentes y en qu&eacute; &aacute;mbitos se pueden utilizar estos identificadores. Tambi&eacute;n es muy importante conocer c&oacute;mo se procesa la p&aacute;gina ZUML.</p>
+<p>Vamos a empezar con un par de ejemplos muy sencillos que dan pistas sobre el procesamiento de la p&aacute;gina.</p>
+<p>En el primer ejemplo declaramos dos etiquetas (<span class="codefrag">label</span>). En la primera de ellas definimos el identificador <span class="codefrag">label1</span> que utilizamos en la segunda para leer su valor y ponerlo como valor de esta segunda etiqueta.</p>
+<pre class="code">&lt;window title="ejemplo" border="normal"&gt; 
+   &lt;label id="label1" value="Hola label 1"/&gt;
+   &lt;label value="${label1.value}"/&gt;
+&lt;/window&gt;</pre>
+<p>En pantalla aparecer&aacute; "Hola label 1 Hola label 1".</p>
+<p>Ahora cambiamos el orden de las etiquetas. &iquest;Qu&eacute; aparece por pantalla?</p>
+<pre class="code">&lt;window title="ejemplo" border="normal"&gt; 
+   &lt;label value="${label1.value}"/&gt;
+   &lt;label id="label1" value="Hola label 1"/&gt;
+&lt;/window&gt;</pre>
+<p>Si ejecutamos el ejemplo, vemos que aparecer&aacute; &uacute;nicamente "Hola label". Cuando ZK procesa la p&aacute;gina y construye la primera etiqueta, busca el valor de <span class="codefrag">label1.value</span> que todav&iacute;a no se ha declarado. Al no encontrarlo, deja vac&iacute;a el valor de la primera etiqueta.</p>
+<p>Veamos un segundo ejemplo, ahora con zscript. &iquest;Cu&aacute;l ser&aacute; el resultado?</p>
+<pre class="code">&lt;window title="ejemplo" border="normal"&gt;
+   &lt;label id="label1" value="Hola label"/&gt;
+   &lt;zscript&gt;
+      label1.value = "Hola zscript";
+   &lt;/zscript&gt;
+   ${label1.value}
+&lt;/window&gt;</pre>
+<p>Podemos comprobar que el resultado es "Hola zscript Hola zscript". La ejecuci&oacute;n del c&oacute;digo zscript cambia el valor de la etiqueta antes de que se muestre por pantalla. &iquest;Qu&eacute; pasa si cambiamos el orden de la instrucci&oacute;n <span class="codefrag">${label1.vale}</span>?</p>
+<pre class="code">&lt;window title="ejemplo" border="normal"&gt;
+   &lt;label id="label1" value="Hola label"/&gt;
+   ${label1.value}
+   &lt;zscript&gt;
+      label1.value = "Hola zscript";
+   &lt;/zscript&gt;
+&lt;/window&gt;</pre>
+<p>Vemos que el resultado es "Hola label Hola zscript".</p>
+<p>Evidentemente, es importante el orden en el que se construyen los componentes, se ejecuta el c&oacute;digo zscript y se transforman los componentes en c&oacute;digo HTML. Vamos a explicar estos conceptos en este apartado.</p>
+<p>Cuando el cargador de ZK (<em>ZK loader</em>) recibe una petici&oacute;n de una p&aacute;gina ZUL, debe procesar su descripci&oacute;n ZUML y generar HTML+JavaScript que manda al navegador. Lo hace siguiendo los siguientes pasos:</p>
+<ol>
+
+<li>Fase de inicializaci&oacute;n de la p&aacute;gina</li>
+
+<li>Fase de creaci&oacute;n de componentes</li>
+
+<li>Fase de procesado de eventos</li>
+
+<li>Fase de renderizado</li>
+
+</ol>
+<a name="N1035A"></a><a name="Fase+de+inicializaci%C3%B3n+de+la+p%C3%A1gina"></a>
+<h3 class="underlined_5">Fase de inicializaci&oacute;n de la p&aacute;gina</h3>
+<p>En esta fase se procesa la instrucci&oacute;n ZK <span class="codefrag">?init</span> en la que se puede llamar a un c&oacute;digo zscript o al m&eacute;todo <span class="codefrag">doInit</span> de una clase Java especificada.</p>
+<p>Para llamar a un c&oacute;digo zscript:</p>
+<pre class="code"></pre>
+<p>El fichero <em>init.zs</em> en el directorio <em>my</em> contiene c&oacute;digo zscript que se ejecuta al inicializar la p&aacute;gina. El fichero debe contener un programa zscript sin las etiquetas <span class="codefrag">&lt;zscript&gt;</span>.</p>
+<p>Por ejemplo, podemos inicializar un array de cadenas en el fichero <span class="codefrag">/my/init.zs</span>:</p>
+<pre class="code">diasSemana = new String[] {
+                "Lunes", "Martes", "Mi&eacute;rcoles", 
+                "Jueves", "Viernes", "S&aacute;bado", "Domingo"};</pre>
+<p>Y mostrarlas en una lista con el siguiente c&oacute;digo (veremos m&aacute;s adelante el atributo ZK <span class="codefrag">forEach</span>:</p>
+<pre class="code">&lt;?page title="D&iacute;as de la semana" contentType="text/html;charset=UTF-8"?&gt;
+&lt;?init zscript="/my/init.zs"?&gt;
+&lt;window title="D&iacute;as de la semana" border="normal"&gt;
+&lt;listbox width="200px"&gt;
+   &lt;listitem label="${each}" forEach="${diasSemana}" /&gt;  
+&lt;/listbox&gt;
+&lt;/window&gt;</pre>
+<p>Tambi&eacute;n es posible tambi&eacute;n llamar a c&oacute;digo Java en esta fase de inicializaci&oacute;n, utilizando el atributo <span class="codefrag">class</span>. La clase debe implementar la intefaz <span class="codefrag">org.zkoss.zk.ui.util.Initator</span>. En el momento de inicializaci&oacute;n de la p&aacute;gina se construye una instancia de la clase y se llama a su m&eacute;todo <span class="codefrag">doInit</span>. El m&eacute;todo <span class="codefrag">doFinally</span> se llama despu&eacute;s de que la p&aacute;gina se haya evaluado. Y el m&eacute;todo <span class="codefrag">doCatch</span> se llama si se produce alguna excepci&oacute;n durante la evaluaci&oacute;n de la p&aacute;gina.</p>
+<p>Tambi&eacute;n es posible pasar cadenas (<span class="codefrag">String</span>) como par&aacute;metros a la clase de inicializaci&oacute;n. Se guardan en un mapa que se recoge como par&aacute;metro en el m&eacute;todo <span class="codefrag">doInit</span>.</p>
+<p>Ampliamos el ejemplo anterior, en el que la clase de inicializaci&oacute;n <span class="codefrag">ayto.zk.MyInit</span> crea una lista de cadenas y las guarda en un singleton. El c&oacute;digo zscript las recoge llamando al m&eacute;todo <span class="codefrag">getMyStrings()</span> y se muestran en la p&aacute;gina de la misma forma que en el ejemplo anterior.</p>
+<pre class="code">&lt;?page title="Matriculados" contentType="text/html;charset=UTF-8"?&gt;
+&lt;?init class="ayto.zk.MyInit" numMatriculados="30"?&gt;
+&lt;zk&gt;
+&lt;zscript&gt;
+   import ayto.zk.MyModelSingleton;
+   MyModelSingleton model = MyModelSingleton.getInstance();
+   List matriculados = model.getMyStrings();
+&lt;/zscript&gt;
+
+&lt;window title="Matriculados" border="normal"&gt;
+&lt;listbox width="200px"&gt;
+   &lt;listitem label="${each}" forEach="${matriculados}" /&gt;  
+&lt;/listbox&gt;
+&lt;/window&gt;
+&lt;/zk&gt;</pre>
+<pre class="code">package ayto.zk;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.zkoss.zk.ui.Page;
+
+public class MyInit implements org.zkoss.zk.ui.util.Initiator {
+
+   @Override
+   public void doAfterCompose(Page arg0) throws Exception {
+   }
+
+   @Override
+   public boolean doCatch(Throwable arg0) throws Exception {
+	   return false;
+   }
+
+   @Override
+   public void doFinally() throws Exception {
+   }
+	
+   @Override
+   public void doInit(Page arg0, Map arg1) throws Exception {
+      MyModelSingleton model = MyModelSingleton.getInstance();
+      String num = (String) arg1.get("numMatriculados");
+      int i = Integer.parseInt(num);
+      List&lt;String&gt; nombres = new ArrayList&lt;String&gt;();
+      for (int j = 1; j &lt; i; j++)
+         nombres.add("Alumno " + j);
+      model.setMyStrings(nombres);
+   }
+}</pre>
+<a name="N103BD"></a><a name="Fase+de+creaci%C3%B3n+de+componentes"></a>
+<h3 class="underlined_5">Fase de creaci&oacute;n de componentes</h3>
+<p>En esta fase el cargador de ZK interpreta una p&aacute;gina ZUML. Crea e inicializa los componentes. Lo hace siguiendo los siguientes pasos:</p>
+<ol>
+
+<li>Para cada elemento, examina el atributo <span class="codefrag">if</span> y <span class="codefrag">unless</span> para decidir si hay que crearlo. Si no, el elemento y sus hijos son ignorados.</li>
+
+<li>Si se especifica el atributo <span class="codefrag">forEach</span> con una colecci&oacute;n de items, ZK repite los siguientes pasos para cada item en la colecci&oacute;n.</li>
+
+<li>Crea un componente basado en el nombre del elemento o usando la clase especificada en el atributo <span class="codefrag">use</span>, si existe.</li>
+
+<li>Inicializa los miembros uno a uno en el orden en el que se especifican los atributos en la p&aacute;gina ZUML.</li>
+
+<li>Interpreta los elementos anidados y repite el procedimiento completo.</li>
+
+<li>Invoca el metodo <span class="codefrag">afterCompose</span> si el componente implementa la interfaz <span class="codefrag">org.zkoss.zk.ui.ext.AfterCompose</span>.</li>
+
+<li>Despu&eacute;s de que se han creado todos los hijos, se env&iacute;a el evento <span class="codefrag">onCreate</span> al componente, de forma que la aplicaci&oacute;n puede realizar tareas de inicializaci&oacute;n de los elementos. Hay que notar que los eventos <span class="codefrag">onCreate</span> se han enviado a los componentes hijos.</li>
+
+</ol>
+<a name="N103F7"></a><a name="Fase+de+renderizado"></a>
+<h3 class="underlined_5">Fase de renderizado</h3>
+<p>En esta fase ZK convierte el &aacute;rbol de componentes en una p&aacute;gina HTML invocando el m&eacute;todo <span class="codefrag">redraw</span> de cada componente.</p>
+<p>Un componente podr&iacute;a tener apariencias diferentes incluso en la misma p&aacute;gina. ZK utiliza el concepto de <em>mold</em> (<em>molde</em> o plantilla). Se puede modificar el aspecto de un componente utilizando el m&eacute;todo <span class="codefrag">setMold</span> de la interfaz componente o el atributo <span class="codefrag">mold</span> del elemento. Si no se especifica ning&uacute;n mold, el elemento utiliza el mold denominado <span class="codefrag">default</span>. </p>
+<p>Por ejemplo, el elemento <span class="codefrag">tabbox</span> que define una caja de pesta&ntilde;as soporta tambi&eacute;n el mold <span class="codefrag">accordion</span>:</p>
+<pre class="code">&lt;tabbox&gt;
+   &lt;tabs&gt;
+      &lt;tab label="Default"/&gt; 
+   &lt;/tabs&gt;
+   &lt;tabpanels&gt;
+      &lt;tabpanel&gt;
+      &lt;tabbox mold="accordion"&gt;
+         &lt;tabs&gt;
+            &lt;tab label="First Accordion"/&gt;
+            &lt;tab label="Second Accordion"/&gt;
+         &lt;/tabs&gt;
+         &lt;tabpanels&gt;
+            &lt;tabpanel&gt;The first panel.&lt;/tabpanel&gt; 
+            &lt;tabpanel&gt;The second panel.&lt;/tabpanel&gt;
+         &lt;/tabpanels&gt; 
+      &lt;/tabbox&gt;
+      &lt;/tabpanel&gt;
+   &lt;/tabpanels&gt;
+&lt;/tabbox&gt;</pre>
+</div>
+
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010 Depto. CCIA</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<title>Ejercicios sesi&oacute;n 3: Excepciones e hilos</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2>Ejercicios de Excepciones e hilos </h2>
+<p><strong>3.1.</strong> Captura de excepciones </p>
+<p>El fichero <strong>Ej1.java</strong> es un programa que toma un n&uacute;mero como par&aacute;metro, y como salida muestra el logaritmo de dicho n&uacute;mero. Sin embargo, en ning&uacute;n momento comprueba si se ha proporcionado alg&uacute;n par&aacute;metro, ni si ese par&aacute;metro es un n&uacute;mero. Se pide: </p>
+<p>a) Compilar el programa y ejecutadlo de tres formas distintas: </p>
+<ul>
+  <li>Sin par&aacute;metros </li>
+</ul>
+<blockquote>
+  <p><em>java Ej1
+  </em></p>
+</blockquote>
+<ul>
+  <li>Poniendo un par&aacute;metro no num&eacute;rico </li>
+</ul>
+<blockquote>
+  <p><em>java Ej1 pepe
+  </em></p>
+</blockquote>
+<ul>
+  <li>Poniendo un par&aacute;metro num&eacute;rico&nbsp; </li>
+</ul>
+<blockquote>
+  <p><em>java Ej1 30
+  </em></p>
+</blockquote>
+<p>Anotad las excepciones que se lanzan en cada caso (si se lanzan) </p>
+<p>b) Modificar el c&oacute;digo de main para que capture las excepciones producidas y muestre los errores correspondientes en cada caso: </p>
+<ul>
+  <li>Para comprobar si no hay par&aacute;metros se capturar&aacute; una excepci&oacute;n de tipo <em>ArrayIndexOutOfBoundsException</em> (para ver si el array de String que se pasa en el main tiene alg&uacute;n elemento). </li>
+  <li>Para comprobar si el par&aacute;metro es num&eacute;rico, se capturar&aacute; una excepci&oacute;n de tipo <em>NumberFormatException</em> . </li>
+</ul>
+<p>As&iacute;, tendremos en el main algo como: </p>
+<pre class="codigo">try 
+{ 
+	// Tomar par&aacute;metro y asignarlo a un double 
+} catch (ArrayIndexOutOfBoundsException e1) { 
+	// Codigo a realizar si no hay parametros 
+} catch (NumberFormatException e2) { 
+	// Codigo a realizar con parametro no numerico 
+}</pre>
+<p>Probad de nuevo el programa igual que en el caso anterior comprobando que las excepciones son capturadas y tratadas. </p>
+<p><strong>3.2.</strong> Lanzamiento de excepciones </p>
+<p>El fichero <strong>Ej2.java</strong> es similar al anterior, aunque ahora no vamos a tratar las excepciones del main , sino las del m&eacute;todo logaritmo: en la funci&oacute;n que calcula el logaritmo se comprueba si el valor introducido es menor o igual que 0, ya que para estos valores la funci&oacute;n logaritmo no est&aacute; definida. Se pide: </p>
+<p>a) Buscar entre las excepciones de Java la m&aacute;s adecuada para lanzar en este caso, que indique que a un m&eacute;todo se le ha pasado un argumento ilegal. (Pista: Buscar entre las clases derivadas de <em>Exception</em> . En este caso la m&aacute;s adecuada se encuentra entre las derivadas de <em>RuntimeException</em> ). </p>
+<p>b) Una vez elegida la excepci&oacute;n adecuada, a&ntilde;adir c&oacute;digo (en el m&eacute;todo <em>logaritmo</em> ) para que en el caso de haber introducido un par&aacute;metro incorrecto se lance dicha excepci&oacute;n.&nbsp; </p>
+<pre class="codigo">throw new ... // excepcion elegida</pre>
+<p> Probar el programa para comprobar el efecto que tiene el lanzamiento de la excepci&oacute;n. </p>
+<p>c) Al no ser una excepci&oacute;n del tipo checked no har&aacute; falta que la capturemos ni que declaremos que puede ser lanzada. Vamos a crear nuestro propio tipo de excepci&oacute;n derivada de <em>Exception</em> (de tipo checked ) para ser lanzada en caso de introducir un valor no v&aacute;lido como par&aacute;metro. La excepci&oacute;n se llamar&aacute; <em>WrongParameterException</em> y tendr&aacute; la siguiente forma: </p>
+<pre class="codigo">public class WrongParameterException extends Exception 
+{ 
+	public WrongParameterException(String msg) 
+	{ 
+		super(msg); 
+	} 
+}</pre>
+<p>Deberemos lanzarla en lugar de la escogida en el punto anterior.&nbsp; </p>
+<pre class="codigo">throw new WrongParameterException(...);</pre>
+<p> Intentar compilar el programa y observar los errores que aparecen. &iquest;Por qu&eacute; ocurre esto? A&ntilde;adir los elementos necesarios al c&oacute;digo para que compile y probarlo.&nbsp; </p>
+<p><strong>3.3.</strong> Terminaci&oacute;n de hilos </p>
+<p>En la clase <strong>Ej3</strong> se crean hilos utilizando la interfaz Runnable . De esta forma podremos crear m&uacute;ltiples hilos que ejecuten el mismo m&eacute;todo run de esta clase accediendo al mismo espacio de memoria de este objeto. Ejecutar el programa, ver lo que hace, consultar el c&oacute;digo fuente y contestar a las siguientes preguntas: </p>
+<p>a) Explica que es lo que hace la condici&oacute;n de terminaci&oacute;n del bucle while en el m&eacute;todo run . &iquest;Qu&eacute; utilidad le ves? </p>
+<p>b) &iquest;Puede haber en alg&uacute;n momento dos hilos ejecutando simult&aacute;neamente el m&eacute;todo run ? </p>
+<p>c) &iquest;Si hubiese dos hilos ejecutando el run , podr&iacute;a haber conflictos en el acceso a la variable ini ? Es decir, que un hilo sobrescriba el valor que hab&iacute;a escrito en ella el otro hilo &iquest;Por qu&eacute;? </p>
+<p>d) &iquest;C&oacute;mo podemos parar este hilo sin crear uno nuevo? </p>
+<p><strong>3.4.</strong> Carrera de hilos</p>
+<p>En la clase <strong>Ej4</strong> tenemos un programa que muestre una carrera entre tres hilos de distintas prioridades. Se pide: </p>
+<p>a) Cada hilo tiene su propio contador que se va incrementando cada iteraci&oacute;n de dicho hilo. En este caso, &iquest;podr&aacute; haber conflicto en el acceso al contador del hilo entre los distintos hilos? &iquest;Por qu&eacute;? </p>
+<p>b) F&iacute;jate en el bucle principal en el que se imprime el contador de cada hilo, &iquest;cu&aacute;l es su condici&oacute;n de terminaci&oacute;n? </p>
+<p>c) En cada iteraci&oacute;n los hilos hacen una operaci&oacute;n costosa. En este caso estamos forzando a que llamen al colector de basura ( garbage collector ) con la instrucci&oacute;n System.gc() . Sustituir esta instrucci&oacute;n por dormir durante 100ms y probar. &iquest;Qu&eacute; ocurre en este caso? &iquest;Por qu&eacute;? Volver a dejar el programa como antes, con la llamada al colector de basura. </p>
+<p>d) En el m&eacute;todo run de Hilo , a&ntilde;ade la instrucci&oacute;n necesaria para que en el caso de que el hilo t sea distinto de null se quede bloqueado hasta que dicho hilo termine su ejecuci&oacute;n. Probar el programa y ver lo que ocurre en este caso. </p>
+<p>e) Prueba cambiando las prioridades de los hilos. Cuando tenemos hilos de alta prioridad e hilos de baja prioridad, cuando los de alta prioridad terminan, &iquest;qu&eacute; ocurre con los de baja prioridad? &iquest;por qu&eacute;? </p>
+<p><strong>3.5.</strong> Productor y consumidor</p>
+<p>En este ejercicio vamos a resolver el problema de los productores y los consumidores. Vamos a definir 3 clases: el hilo <strong>Productor</strong> , el hilo <strong>Consumidor</strong> , y el objeto <strong>Recipiente</strong> donde el productor deposita el valor producido, y de donde el consumidor extrae los datos. </p>
+<ul>
+  <li>El productor se ejecuta durante 10 iteraciones y en cada una de ellas deposita en el recipiente el n&uacute;mero de la iteraci&oacute;n actual. Entre iteraci&oacute;n e iteraci&oacute;n se quedar&aacute; durmiendo durante un tiempo aleatorio entre 1 y 2 segundos. </li>
+  <li>El consumidor se ejecuta el mismo n&uacute;mero de iteraciones que el productor, pero en cada una de ellas saca el valor almacenado en el recipiente y lo muestra por pantalla. Entre cada iteraci&oacute;n duerme tambi&eacute;n un tiempo aleatorio entre 1 y 2 segundos. </li>
+  <li>El recipiente proporciona los m&eacute;todos produce y consume para depositar un dato en &eacute;l y para sacarlo de &eacute;l respectivamente. </li>
+</ul>
+<p>El programa mostrar&aacute; cuando el productor produce un valor y cuando el consumidor lo consume. El funcionamiento correcto deber&iacute;a ser que el consumidor consuma exactamente los mismos valores que el productor ha producido, sin saltarse ninguno ni repetirlos. Se pide: </p>
+<p>a) Compilar y probar el programa. &iquest;Funciona correctamente? &iquest;Por qu&eacute;? Ejecutar varias veces y explicar lo que pasa. &iquest;Qu&eacute; tendremos que hacer para que funcione correctamente? </p>
+<p>b) Vamos a a&ntilde;adir el c&oacute;digo necesario en los m&eacute;todos produce y consume para sincronizar el acceso a ellos. El comportamiento deber&iacute;a ser el siguiente: </p>
+<ul>
+  <li>Si queremos producir y todav&iacute;a hay datos disponibles en el recipiente, esperaremos hasta que se saquen, si no produciremos y avisamos a posibles consumidores que est&eacute;n a la espera. </li>
+  <li>Si queremos consumir y no hay datos disponibles en el recipiente, esperaremos hasta que se produzcan, si no consumimos el valor disponible y avisamos a posibles productores que est&eacute;n a la espera. </li>
+</ul>
+<p>&iquest;Qu&eacute; m&eacute;todos utilizaremos para la sincronizaci&oacute;n? Insertar el c&oacute;digo necesario y compilar. Probar el programa, &iquest;da alguna excepci&oacute;n? En caso afirmativo, &iquest;por qu&eacute;? &iquest;ser&aacute; necesario a&ntilde;adir algo m&aacute;s en el encabezado de los m&eacute;todos produce y consume ? Hacer las modificaciones necesarias. </p>
+<p>Compilar y comprobar que el programa funciona correctamente. </p>
+<p>&nbsp;</p>
+</body>
+</html>

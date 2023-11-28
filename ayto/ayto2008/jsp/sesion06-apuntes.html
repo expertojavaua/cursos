@@ -1,0 +1,623 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>JavaBeans y lenguaje de expresiones</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Componentes Web" src="images/baner_j2ee_der.gif" title="Componentes Web"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Componentes Web</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Componentes Web</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Componentes Web">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 6</div>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesion 10</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html">Roadmap</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-ejercicios.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-ejercicios.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-ejercicios.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-ejercicios.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-ejercicios.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-ejercicios.html">Sesion 10</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion06-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>JavaBeans y lenguaje de expresiones</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#JavaBeans">JavaBeans</a>
+<ul class="minitoc">
+<li>
+<a href="#Caracter%C3%ADsticas+de+un">Caracter&iacute;sticas de un bean</a>
+</li>
+<li>
+<a href="#Uso+de">Uso de beans desde p&aacute;ginas JSP </a>
+</li>
+<li>
+<a href="#Compartir">Compartir beans</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Lenguaje+de+expresiones+en+JSP+2.0">Lenguaje de expresiones en JSP 2.0 </a>
+<ul class="minitoc">
+<li>
+<a href="#Introducci%C3%B3n+al+lenguaje+de+expresiones">Introducci&oacute;n al lenguaje de expresiones</a>
+</li>
+<li>
+<a href="#Atributos+y+expresiones">Atributos y expresiones</a>
+</li>
+<li>
+<a href="#Operadores">Operadores</a>
+</li>
+<li>
+<a href="#Nombres+de+variables">Nombres de variables</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<a name="N1000C"></a><a name="JavaBeans"></a>
+<h2 class="underlined_10">JavaBeans</h2>
+<div class="section">
+<p>Un <strong>JavaBean</strong> (o, para abreviar, un <em>bean</em>) es un componente software reutilizable escrito en Java. En realidad un <em>bean</em> no es m&aacute;s que una clase Java escrita siguiendo unas ciertas convenciones. Estas convenciones hacen posible que herramientas autom&aacute;ticas puedan acceder a sus propiedades y manipularlas sin necesidad de modificar el c&oacute;digo. Esto puede servir en el caso de un IDE, por ejemplo, para realizar "programaci&oacute;n visual". En JSP el uso principal de los <em>beans</em> es manipular componentes Java sin necesidad de incluir c&oacute;digo en la p&aacute;gina, accediendo a sus propiedades mediante etiquetas.</p>
+<p>El uso de <em>beans</em> en p&aacute;ginas JSP ofrece diversas ventajas con respecto al uso directo de c&oacute;digo Java:</p>
+<ul>
+		
+<li>Se evita el uso de sintaxis Java, en su lugar se emplean etiquetas con sintaxis XML. Esto permite separar m&aacute;s f&aacute;cilmente el trabajo de programadores y dise&ntilde;adores web.</li>
+		
+<li>Se simplifica la creaci&oacute;n y uso de objetos compartidos entre varias p&aacute;ginas.</li>
+		
+<li>Se simplifica la creaci&oacute;n de objetos a partir de los par&aacute;metros de la petici&oacute;n </li>
+	
+</ul>
+<a name="N10033"></a><a name="Caracter%C3%ADsticas+de+un"></a>
+<h3 class="underlined_5">Caracter&iacute;sticas de un bean</h3>
+<p>Como se ha comentado, un <em>bean</em> no es m&aacute;s que una clase Java en la que se observan ciertas convenciones. En lo que respecta a su uso con JSP, estas convenciones afectan al modo de definir  constructores, m&eacute;todos y variables miembro:</p>
+<ol>
+			
+<li>Un <em>bean</em> debe tener al menos un constructor sin argumentos. Este constructor ser&aacute; llamado cuando una p&aacute;gina JSP cree una instancia del <em>bean</em>.</li>
+			
+<li>Un <em>bean</em> no debe tener variables miembro de acceso p&uacute;blico. El acceso a las variables y su modificaci&oacute;n se debe hacer a trav&eacute;s de m&eacute;todos.</li>
+			
+<li>El nombre de los m&eacute;todos de acceso y modificaci&oacute;n de variables miembro debe seguir una norma: si la variable tiene el nombre <span class="codefrag">nombreVar</span>, entonces el m&eacute;todo de acceso debe llamarse <span class="codefrag">getNombreVar</span> (obs&eacute;rvese el cambio a may&uacute;sculas de la "N", siguiendo las convenciones habituales de Java), y el m&eacute;todo de cambio de valor (en caso de que exista) debe llamarse <span class="codefrag">setNombreVar</span>. En el caso especial de variables booleanas, el m&eacute;todo de acceso se debe denominar <span class="codefrag">isNombreVar</span>.</li>
+		
+</ol>
+<p>Por ejemplo, supongamos que se desea definir un <em>bean</em> para almacenar informaci&oacute;n relativa a un usuario (nombre, n&uacute;mero de visitas al sitio, fecha de la &uacute;ltima visita y sexo), y compartirla entre varias p&aacute;ginas, una vez que se ha autentificado en la aplicaci&oacute;n y sabemos qui&eacute;n es. Para ello podr&iacute;amos utilizar un c&oacute;digo similar al siguiente:</p>
+<pre class="code">package beans;
+
+import java.util.Date;
+
+public class UsuarioBean 
+{
+  <strong>//variables miembro, privadas</strong>
+  private String nombre;
+  private int visitas;
+  private Date ultimaVisita;
+  private boolean varon;
+
+  <strong>//constructor sin argumentos</strong>
+  public UsuarioBean() {
+     nombre = null;
+     visitas = 0; 
+     ultimaVisita = null;
+     varon = false; 
+  } 
+  
+  <strong>//m&eacute;todos de acceso: getXXX, isXXX</strong> 
+  public String getNombre() { 
+     return nombre; 
+  }
+  
+  public int getVisitas() {
+     return visitas; 
+  }
+  
+  public Date getUltimaVisita() {
+     return ultimaVisita;
+  }
+  
+  public boolean isVaron() {
+     return varon;
+  }
+  
+  <strong>//m&eacute;todos de cambio de valor: setXXX</strong> 
+  public void setNombre(String nom) {
+     nombre = nom; 
+  }
+  
+  public void setVisitas(int v) {
+     visitas = v; 
+  }
+  
+  public void setUltimaVisita(Date fecha) {
+     ultimaVisita = fecha; 
+  }
+  
+  public void setVaron(boolean valor) {
+     varon = valor; 
+  }
+}</pre>
+<a name="N10079"></a><a name="Uso+de"></a>
+<h3 class="underlined_5">Uso de beans desde p&aacute;ginas JSP </h3>
+<p>Para interactuar con un <em>bean</em> desde una p&aacute;gina JSP es necesario primero asignarle un nombre y especificar qu&eacute; clase Java lo define. Una vez hecho esto, se puede acceder a sus propiedades y darles nuevos valores.</p>
+<p>
+<strong>1. Acceso al <em>bean</em></strong>
+</p>
+<p>Para hacer accesible un <em>bean</em> a una p&aacute;gina JSP se emplea la etiqueta <strong>jsp:useBean</strong>. En su forma m&aacute;s simple la sintaxis es:</p>
+<pre class="code">&lt;jsp:useBean id="nombreBean" class="paquete.Clase"/&gt;</pre>
+<p>En caso de que el <em>bean</em> referenciado no existiera previamente, esta etiqueta se puede ver como la creaci&oacute;n de una variable en Java de nombre <span class="codefrag">nombreBean</span> y de tipo <span class="codefrag">paquete.Clase</span>. As&iacute;, para crear un <em>bean</em> de tipo <span class="codefrag">UsuarioBean</span> ser&iacute;a equivalente utilizar las siguientes expresiones:</p>
+<pre class="code">&lt;jsp:useBean id="usuario" class="beans.UsuarioBean" /&gt;</pre>
+<pre class="code">&lt;% beans.UsuarioBean usuario = new beans.UsuarioBean() %&gt;</pre>
+<p>La clase a la que pertenece el <em>bean</em> deber&iacute;a colocarse donde est&aacute;n habitualmente las clases Java que pertenecen a una aplicaci&oacute;n web, es decir, en <span class="codefrag">WEB-INF/classes</span>. Para que el contenedor JSP pueda encontrar la clase del <em>bean</em>, es conveniente que &eacute;ste pertenezca a un <em>package</em> (como en el ejemplo anterior). En caso contrario se asumir&iacute;a que pertenece al mismo <em>package</em> que el servlet generado a partir del JSP, con el problema de que el nombre de este <em>package</em> es desconocido.</p>
+<p>
+<strong>2. Acceso a las propiedades del <em>bean</em></strong>
+</p>
+<p>El acceso a una propiedad se realiza mediante la etiqueta <strong>jsp:getProperty</strong>. Su sintaxis es:</p>
+<pre class="code">&lt;jsp:getProperty name="nombreBean" property="nombrePropiedad"/&gt;</pre>
+<p>donde <span class="codefrag">nombreBean</span> debe corresponderse con el atributo <span class="codefrag">id</span> definido mediante alguna etiqueta anterior <span class="codefrag">jsp:useBean</span>. El acceso a la propiedad tambi&eacute;n se podr&iacute;a hacer llamando al m&eacute;todo Java correspondiente. De este modo, el acceso a la propiedad <span class="codefrag">visitas</span> del <em>bean</em> <span class="codefrag">usuario</span> se puede hacer mediante las dos formas alternativas: </p>
+<pre class="code">&lt;jsp:getProperty name="usuario" property="visitas"/&gt;</pre>
+<pre class="code">&lt;%= usuario.getVisitas() %&gt;</pre>
+<p>aunque se considera preferible la primera forma, ya que la sintaxis es m&aacute;s accesible a dise&ntilde;adores web que no programen en Java.</p>
+<p>
+<strong>3. Asignaci&oacute;n de valores a las propiedades del <em>bean</em></strong>
+</p>
+<p>La asignaci&oacute;n de valores se realiza mediante la etiqueta <strong>jsp:setProperty</strong>. Esta etiqueta requiere tres par&aacute;metros: <span class="codefrag">name</span> (el <span class="codefrag">id</span> del <em>bean</em>, definido anteriormente mediante alguna etiqueta <span class="codefrag">jsp:useBean</span>), <span class="codefrag">property</span> (el nombre de la propiedad) y <span class="codefrag">value</span> (el valor que se desea dar a la propiedad). Por ejemplo, para darle a la propiedad <span class="codefrag">visitas</span> del <em>bean</em> <span class="codefrag">usuario</span> el valor 1 se har&iacute;a:</p>
+<pre class="code">&lt;jsp:setProperty name="usuario" property="visitas" value="1"/&gt;</pre>
+<p>Una forma alternativa en c&oacute;digo Java ser&iacute;a llamar directamente al m&eacute;todo, aunque normalmente es preferible el uso de la sintaxis anterior:</p>
+<pre class="code">&lt;% usuario.setVisitas(1) %&gt;</pre>
+<p>Adem&aacute;s de poder asignar a una propiedad un valor fijo, se pueden usar expresiones JSP:</p>
+<pre class="code">&lt;jsp:setProperty name="usuario" property="ultimaVisita" 
+                 value="<strong>&lt;%= new java.util.Date() %&gt;</strong>"/&gt;</pre>
+<p>
+<strong>4. Inicializaci&oacute;n de un <em>bean</em></strong>
+</p>
+<p>En algunos casos, puede ser necesario inicializar un bean antes de empezar a usarlo. Esto no se puede hacer directamente con la etiqueta <span class="codefrag">jsp:useBean</span>, ya que no admite par&aacute;metros. Para solucionar el problema, en el cuerpo de la etiqueta <span class="codefrag">jsp:useBean</span> (siguiendo sintaxis XML) se pueden introducir etiquetas <span class="codefrag">jsp:setProperty</span> que inicialicen las propiedades. Adem&aacute;s se pueden colocar <em>scriptlets</em> y c&oacute;digo HTML.</p>
+<pre class="code">&lt;jsp:useBean id="usuario" class="beans.usuarioBean"&gt;
+   &lt;b&gt; inicializando datos de usuario &lt;/b&gt;
+   &lt;jsp:setProperty name="usuario" property="ultimaVisita" 
+                    value="<strong>&lt;%= new java.util.Date() %&gt;</strong>"/&gt;
+&lt;/jsp:useBean&gt;</pre>
+<p>Es importante destacar que el c&oacute;digo de inicializaci&oacute;n solo se ejecutar&aacute; en caso de que el <em>bean</em> no existiera previamente (no sea un <em>bean</em> compartido con otras p&aacute;ginas o creado por ejemplo por un servlet).</p>
+<p>
+<strong>5. Utilizar los par&aacute;metros de la petici&oacute;n HTTP</strong>
+</p>
+<p>JSP incluye un mecanismo para asignar los valores de los par&aacute;metros de la petici&oacute;n a las propiedades de un <em>bean</em>. Para ello hay que utilizar el par&aacute;metro <span class="codefrag">param</span> de la etiqueta <span class="codefrag">jsp:setProperty</span>. Por ejemplo, supongamos que se ha definido el siguiente formulario, que toma el nombre del usuario y llama a la p&aacute;gina <strong>main.jsp</strong> con los datos introducidos por el usuario (nombre y sexo):</p>
+<pre class="code">&lt;html&gt;
+&lt;body&gt;
+&lt;form action="<strong>main.jsp</strong>" method="get"&gt;
+	Nombre <strong>&lt;input type="text" name="nombre"&gt;</strong>
+	&lt;br&gt;
+	Sexo:	varon <strong>&lt;input type="radio" name="varon" value="true"&gt;</strong>
+		mujer: <strong>&lt;input type="radio" name="varon" value="false"&gt; </strong>&lt;br&gt;
+	&lt;input type="submit" value="entrar"&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>En la p&aacute;gina <strong>main.jsp</strong> se puede hacer uso de los par&aacute;metros para instanciar algunas propiedades del bean:</p>
+<pre class="code">&lt;html&gt;
+&lt;body&gt;
+   &lt;jsp:useBean id="usuario" class="beans.UsuarioBean"/&gt;
+   &lt;jsp:setProperty name="usuario" property="nombre" <strong>param="nombre"</strong>/&gt;
+   &lt;jsp:setProperty name="usuario" property="varon" <strong>param="varon"</strong>/&gt;
+   Buenos d&iacute;as, &lt;jsp:getProperty name="usuario" property="nombre"/&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>N&oacute;tese que, aunque los par&aacute;metros HTTP son en realidad cadenas, el contenedor JSP es capaz de efectuar la conversi&oacute;n al tipo correspondiente, al menos para tipos primitivos (por ejemplo, se ha convertido de la cadena "true" al valor <span class="codefrag">true</span> que requiere el m&eacute;todo <span class="codefrag">setVaron</span>. Esta conversi&oacute;n de tipos no funciona en caso de tipos no primitivos. Por ejemplo, no se puede aplicar a la propiedad <span class="codefrag">ultimaVisita</span>, de tipo <span class="codefrag">java.util.Date</span>, ya que no se puede convertir autom&aacute;ticamente de cadena a <span class="codefrag">Date</span> (al menos el est&aacute;ndar JSP no lo exige).</p>
+<p>En caso de que las propiedades del <em>bean</em> tengan el mismo nombre que los par&aacute;metros HTTP, (como en el caso anterior) la asignaci&oacute;n de todos los par&aacute;metros se puede hacer mediante una &uacute;nica etiqueta <span class="codefrag">setProperty</span>, con el par&aacute;metro <span class="codefrag">property="*"</span>.</p>
+<pre class="code">&lt;html&gt;
+&lt;body&gt;
+   &lt;jsp:useBean id="usuario" class="beans.UsuarioBean"/&gt;
+   &lt;jsp:setProperty name="usuario" <strong>property="*"</strong> /&gt;
+   Buenos d&iacute;as, &lt;jsp:getProperty name="usuario" property="nombre"/&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<a name="N101B4"></a><a name="Compartir"></a>
+<h3 class="underlined_5">Compartir beans</h3>
+<p>Hasta el momento, se han tratado los <em>beans</em> como si fueran objetos propios de la p&aacute;gina en la que se definen, y exclusivos de ella. Este es el comportamiento por defecto, pero podemos cambiar el <strong>&aacute;mbito</strong> de un <em>bean</em> para definir desde d&oacute;nde ser&aacute; accesible, lo que nos permite compartirlo entre varias p&aacute;ginas. El &aacute;mbito se controla con el atributo <span class="codefrag">scope</span> de la etiqueta <span class="codefrag">jsp:useBean</span>, y puede tomar cuatro valores distintos:</p>
+<ul>
+			
+<li>
+<strong><span class="codefrag">page</span></strong>: es el valor por defecto</li>
+			
+<li>
+<strong><span class="codefrag">application</span></strong>: el bean ser&aacute; accesible a todas las p&aacute;ginas JSP de la aplicaci&oacute;n web, y compartido entre todos los usuarios. Los servlets pueden acceder a &eacute;l a trav&eacute;s del objeto <span class="codefrag">ServletContext</span>.</li>
+			
+<li>
+<strong><span class="codefrag">session</span></strong>: el bean ser&aacute; accesible a todas las p&aacute;ginas JSP, pero cada usuario tendr&aacute; su propio objeto. Los servlets pueden acceder a &eacute;l a trav&eacute;s del objeto <span class="codefrag">HttpSession</span>, obteniendo su valor con el m&eacute;todo <span class="codefrag">getAttribute</span>.</li>
+			
+<li>
+<strong><span class="codefrag">request</span></strong>: el bean ser&aacute; accesible durante la petici&oacute;n actual, lo que significa que podr&aacute;n acceder a &eacute;l las p&aacute;ginas a las que se desv&iacute;e la petici&oacute;n con un <span class="codefrag">&lt;jsp:include&gt;</span> o un <span class="codefrag">&lt;jsp:forward&gt;</span>. Los servlets pueden acceder a &eacute;l a trav&eacute;s del objeto <span class="codefrag">ServletRequest</span>, de donde se puede obtener su valor con <span class="codefrag">getAttribute</span>.</li>
+		
+</ul>
+</div>
+
+
+<a name="N10200"></a><a name="Lenguaje+de+expresiones+en+JSP+2.0"></a>
+<h2 class="underlined_10">Lenguaje de expresiones en JSP 2.0 </h2>
+<div class="section">
+<a name="N10206"></a><a name="Introducci%C3%B3n+al+lenguaje+de+expresiones"></a>
+<h3 class="underlined_5">Introducci&oacute;n al lenguaje de expresiones</h3>
+<p>Desde las versi&oacute;n 2.0 de JSP se ha introducido en las p&aacute;ginas un lenguaje de expresiones que es equivalente en gran medida a los scriptlets &lt;%= ...  %&gt; que venimos utilizando hasta ahora. En realidad, dicho lenguaje se implant&oacute; con las primeras versiones de JSTL, una librer&iacute;a de etiquetas JSP que se considera est&aacute;ndar, y que permit&iacute;a utilizar este lenguaje de expresiones en los atributos de dichas etiquetas, constituyendo una caracter&iacute;stica muy importante de JSTL.</p>
+<p>Cualquier elemento que pertenezca al lenguaje de expresiones ir&aacute; englobado dentro de la marca <strong>${...}</strong>. En ella podremos colocar nombres de variables que hayamos definido en la p&aacute;gina, par&aacute;metros de petici&oacute;n HTTP, elementos de una sesi&oacute;n... etc.</p>
+<p>Por ejemplo, si previamente hemos creado una variable <em>miVar</em>, podr&iacute;amos acceder a ella desde el propio contenido JSP con algo como:</p>
+<pre class="code">&lt;h3&gt;La variable miVar vale <strong>${miVar}</strong>&lt;/h3&gt;</pre>
+<p>Si lo que queremos es mostrar el par&aacute;metro <em>password</em> que hemos tomado de un formulario, para sacarlo por pantalla o guardarlo en alguna base de datos, podr&iacute;amos acceder a &eacute;l con algo como:</p>
+<pre class="code">Accediendo al par&aacute;metro <strong>${param.password}</strong>
+</pre>
+<p>Tambi&eacute;n se pueden utilizar, como veremos, expresiones m&aacute;s complejas, que se eval&uacute;an desde el contenedor JSP. Por ejemplo, si tenemos una variable <em>edad </em>para una persona y queremos comprobar si dicha persona es mayor de edad, podr&iacute;amos poner:</p>
+<pre class="code">
+<strong>${edad &gt; 18}</strong>
+</pre>
+<p>Y luego utilizar el resultado de esta expresi&oacute;n en otras zonas (por ejemplo, etiquetas condicionales de JSTL) para realizar la acci&oacute;n correspondiente. </p>
+<p>Se describe a continuaci&oacute;n, y a grandes rasgos, el lenguaje de expresiones incluido en JSTL 1.0, y en general a partir de JSP 2.0. El lenguaje est&aacute; inspirado en los lenguajes ECMAScript y XPath, y est&aacute; basado en espacios de nombres (atributos <em>PageContext</em>), propiedades de elementos, operadores relacionales, l&oacute;gicos y aritm&eacute;ticos, y un conjunto de objetos impl&iacute;citos. </p>
+<a name="N10243"></a><a name="Atributos+y+expresiones"></a>
+<h3 class="underlined_5">Atributos y expresiones</h3>
+<p>Como hemos comentado anteriormente, podremos invocar a este lenguaje desde cualquier lugar de nuestra p&aacute;gina (en JSP 2.0), o dentro de un atributo de una etiqueta JSTL (desde JSTL 1.0), mediante el elemento <strong>${...}</strong>:</p>
+<pre class="code">${expresion}</pre>
+<p>Esta expresi&oacute;n podr&aacute; estar: </p>
+<ul>
+			
+<li>
+				
+<p>Por s&iacute; sola dentro de un atributo JSTL: :</p>
+				
+<pre class="code">&lt;c:set var="miVariable" value=<strong>"${expresion}"</strong>/&gt;</pre>
+				
+<p>En este caso, se eval&uacute;a la expresi&oacute;n y el resultado se convierte al tipo de dato del atributo, siguiendo las reglas de conversi&oacute;n internas del lenguaje.</p>
+			
+</li>
+			
+<li>
+				
+<p>Combinada con texto dentro de un atributo JSTL:</p>
+				
+<pre class="code">&lt;c:set var="miVariable" value=<strong>"texto${e1}y ${e2}texto"</strong>/&gt;</pre>
+				
+<p>Aqu&iacute;, las expresiones se eval&uacute;an de izquierda a derecha, y se intercalan entre el texto, convirti&eacute;ndolas a <em>String</em> (siguiendo reglas de conversi&oacute;n internas). Luego, la cadena resultante se convierte al tipo del atributo en el que est&eacute; (si est&aacute; dentro de alg&uacute;n atributo).</p>
+			
+</li>
+			
+<li>
+				
+<p>Fuera de atributos, dentro del contenido HTML de la p&aacute;gina JSP:</p>
+
+<pre class="code">&lt;h3&gt;Hola, esto es una p&aacute;gina&lt;/h3&gt;
+&lt;p&gt;Y aqu&iacute; ponemos una expresi&oacute;n <strong>${expresion}</strong>, para mostrar su valor&lt;/p&gt;</pre>
+				
+<p>Para cadenas que contengan la secuencia '${' sin que sea propiamente una expresi&oacute;n, se encapsula esa secuencia as&iacute;: <strong>${'${'}</strong>. Por ejemplo:</p>
+				
+<pre class="code">Cadena con <strong>${'${'}</strong>expr}"/&gt;</pre>
+				
+<p>Mostrar&iacute;a: "<em>Cadena con ${expr}</em>"</p>
+			
+</li>
+		
+</ul>
+<a name="N1029D"></a><a name="Operadores"></a>
+<h3 class="underlined_5">Operadores</h3>
+<ul>
+			
+<li>
+				
+<p>
+<strong>Operadores '[ ]' y '.'</strong>: se unifican los operadores [ ] y . de forma que son equivalentes:</p>
+
+<pre class="code">${expr.campo}
+${expr["campo"]}</pre>
+			
+</li>
+			
+<li>
+				
+<p>
+<strong>Operadores aritm&eacute;ticos</strong>:</p>
+				
+<ul>
+					
+<li>
+<strong>+, -, *, /</strong>: suma, resta, multiplicaci&oacute;n y divisi&oacute;n</li>
+					
+<li>
+<strong>div</strong>: divisi&oacute;n entera</li>
+					
+<li>
+<strong>%, mod</strong>: resto (se mantienen los dos por compatibilidad con XPath y ECMAScript)</li>
+					
+<li>
+<strong>-</strong>: cambio de signo</li>
+				
+</ul>
+			
+</li>
+			
+<li>
+				
+<p>
+<strong>Operadores relacionales</strong>:</p>
+				
+<ul>
+					
+<li>
+<strong>&gt;, gt</strong>: mayor que</li>
+					
+<li>
+<strong>&lt;, lt</strong>: menor que</li>
+					
+<li>
+<strong>&gt;=, ge</strong>: mayor o igual que</li>
+					
+<li>
+<strong>&lt;=, le</strong>: menor o igual que</li>
+					
+<li>
+<strong>==, eq</strong>: igual que</li>
+					
+<li>
+<strong>!=, ne</strong>: distinto que</li>
+				
+</ul>
+  			
+</li>
+			
+<li>
+				
+<p>
+<strong>Operadores l&oacute;gicos</strong>:</p>
+				
+<ul>
+					
+<li>
+<strong>&amp;&amp;, and</strong>: Y l&oacute;gica</li>
+					
+<li>
+<strong>||, or</strong>: O l&oacute;gica</li>
+					
+<li>
+<strong>!, not</strong>: NO l&oacute;gica</li>
+    			
+</ul>
+  			
+</li>
+			
+<li>
+				
+<p>
+<strong>Operador empty</strong>: utilizado delante de un elemento, para indicar si el elemento es nulo o vac&iacute;o (devolver&iacute;a <em>true</em>) o no (devolver&iacute;a <em>false</em>). Por ejemplo:</p>
+				
+<pre class="code">${empty A}</pre>
+			
+</li>
+		
+</ul>
+<p>
+<strong>PRECEDENCIA</strong>
+</p>
+<ul>
+			
+<li>
+<strong>[ ], .</strong>
+</li>
+			
+<li>
+<strong>( )</strong>
+</li>
+			
+<li>
+<strong>- </strong>(cambio de signo), <strong>not, !, empty</strong>
+</li>
+			
+<li>
+<strong>*, /, div, %, mod</strong>
+</li>
+			
+<li>
+<strong>+, -</strong>
+</li>
+			
+<li>
+<strong>&lt;, &gt;, &lt;=, &gt;=, lt, gt, le, ge</strong>
+</li>
+			
+<li>
+<strong>==, !=, eq, ne</strong>
+</li>
+			
+<li>
+<strong>&amp;&amp;, and</strong>
+</li>
+			
+<li>
+<strong>||, or</strong>
+</li>
+		
+</ul>
+<p>
+<strong>EJEMPLOS</strong>
+</p>
+<pre class="code">${empty param.nombre}	<strong>// Dar&iacute;a true si el parametro nombre no se ha enviado
+</strong>${num1 + num2}		<strong>// Devolver&iacute;a el resultado de la suma de ambas variables
+</strong>${valor1 &gt;= valor2}	<strong>// Devolver&iacute;a true si valor1 es mayor o igual que valor2
+</strong>${v1 ne v2 and v3 &lt; v4}	<strong>// Dar&iacute;a true si v1 fuese distinto a v2, y v3 menor que v4</strong>
+</pre>
+<a name="N10368"></a><a name="Nombres+de+variables"></a>
+<h3 class="underlined_5">Nombres de variables</h3>
+<p>El lenguaje de expresiones eval&uacute;a un identificador o nombre de elemento mirando su valor como un atributo, seg&uacute;n el comportamiento del m&eacute;todo <em>PageContext.findAttribute(String)</em>. Por ejemplo, si ponemos:</p>
+<pre class="code">${valor}</pre>
+<p>Se buscar&aacute; el atributo <em>valor</em> en los &aacute;mbitos de p&aacute;gina (<em>page</em>), petici&oacute;n (<em>request</em>), sesi&oacute;n (<em>session</em>) y aplicaci&oacute;n (<em>application</em>), y si lo encuentra devuelve su valor. Si no, se devuelve <em>null</em>.</p>
+<p>
+<strong>Objetos impl&iacute;citos</strong>
+</p>
+<p>Cuando como nombre de atributo se utiliza alguno de los que el lenguaje de expresiones considera como impl&iacute;citos, se devolver&aacute; el objeto asociado. Dichos objetos impl&iacute;citos son:</p>
+<ul>
+			
+<li>
+<strong>pageContext</strong>: el objeto <em>PageContext</em> actual</li>
+			
+<li>
+<strong>pageScope, requestScope, sessionScope, applicationScope</strong>: para obtener valores de atributos de p&aacute;gina / petici&oacute;n / sesi&oacute;n / aplicaci&oacute;n, respectivamente.</li>
+			
+<li>
+<strong>param</strong>: para obtener el valor de un par&aacute;metro de petici&oacute;n. Se obtiene un tipo <em>String</em> (utilizando el m&eacute;todo <em>ServletRequest.getParameter(String)</em>)</li>
+			
+<li>
+<strong>paramValues</strong>: para obtener los valores de un par&aacute;metro de petici&oacute;n. Se obtiene un tipo <em>String[ ] </em>(utilizando el m&eacute;todo <em>ServletRequest.getParameterValues(String)</em>).</li>
+			
+<li>
+<strong>header</strong>: para obtener el valor de un par&aacute;metro de cabecera. Se obtiene un tipo <em>String</em> (utilizando el m&eacute;todo <em>ServletRequest.getHeader(String)</em>)</li>
+			
+<li>
+<strong>headerValues</strong>: para obtener los valores de un par&aacute;metro de cabecera. Se obtiene un tipo <em>String[ ] </em>(utilizando el m&eacute;todo <em>ServletRequest.getHeaderValues(String)</em>).</li>
+			
+<li>
+<strong>cookie</strong>: para obtener el valor de una cookie. Se obtiene un objeto <em>Cookie</em>. Las cookies se buscan con <em>HttpServletRequest.getCookies()</em>
+</li>
+			
+<li>
+<strong>initParam</strong>: para obtener el valor de un par&aacute;metro de inicializaci&oacute;n. Se obtiene un tipo <em>String </em>(utilizando el m&eacute;todo <em>ServletContext.getInitParameter(String)</em>)</li>
+		
+</ul>
+<p>
+<strong>EJEMPLOS</strong>
+</p>
+<pre class="code">${sessionScope.profile}</pre>
+<p>Se obtiene el atributo <em>profile</em> de la sesi&oacute;n</p>
+<pre class="code">${param.id}</pre>
+<p>Se obtiene el valor del par&aacute;metro <em>id</em> de la petici&oacute;n, o <em>null</em> si no se encuentra.</p>
+<p>
+<strong>Palabras reservadas</strong>
+</p>
+<p>Se tienen algunos identificadores que no podemos utilizar como nombres de atributos, como son <em>and, eq, gt, true, instanceof, or, ne, le, false, empty, not, lt, ge, null, div</em> y <em>mod</em>.</p>
+</div>
+
+<p class="pageBreakAfter"></p>
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2008-2009 Depto. CCIA</div>
+</div>
+</body>
+</html>

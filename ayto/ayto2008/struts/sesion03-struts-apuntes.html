@@ -1,0 +1,531 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Validaci&oacute;n de datos con el plugin Validator</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Proyecto de Integracion" src="images/baner_j2ee_der.gif" title="Proyecto de Integracion"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="external" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="external" href="javascript:location.href='../aplic-web.html'">Aplicaciones Web</a>
+</li>
+<li>
+<a class="external" href="javascript:location.href='../aplic-ent.html'">Aplicaciones Enterprise</a>
+</li>
+<li>
+<a class="external" href="javascript:location.href='../charlas.html'">Charlas</a>
+</li>
+<li>
+<a class="external" href="javascript:location.href='../proy-int/index.html'">Proyecto</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Struts</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Struts</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Struts">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-struts-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-struts-apuntes.html">Sesion 2</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 3</div>
+</div>
+<div class="menuitem">
+<a href="sesion04-struts-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-struts.html">Roadmap Struts</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-struts-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-struts-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-struts-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-struts-ejercicios.html">Sesion 4</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion03-struts-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Validaci&oacute;n de datos con el plugin Validator</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Configuraci%C3%B3n">Configuraci&oacute;n</a>
+</li>
+<li>
+<a href="#Definir+qu%C3%A9+validar+y+c%C3%B3mo">Definir qu&eacute; validar y c&oacute;mo</a>
+</li>
+<li>
+<a href="#Los+validadores+est%C3%A1ndar">Los validadores est&aacute;ndar</a>
+</li>
+<li>
+<a href="#Mensajes+de+error">Mensajes de error</a>
+<ul class="minitoc">
+<li>
+<a href="#%C2%BFD%C3%B3nde+est%C3%A1n+definidos+realmente+los+mensajes+de+error%3F">&iquest;D&oacute;nde est&aacute;n definidos realmente los mensajes de error?</a>
+</li>
+<li>
+<a href="#Mensajes+de+error+con+par%C3%A1metros">Mensajes de error con par&aacute;metros</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Modificar+el+ActionForm+para+Validator">Modificar el ActionForm para Validator</a>
+</li>
+<li>
+<a href="#Validaci%C3%B3n+en+el+cliente">Validaci&oacute;n en el cliente</a>
+</li>
+</ul>
+</div>
+
+
+<p>El uso del m&eacute;todo <span class="codefrag">validate</span> del <span class="codefrag">ActionForm</span> 
+  requiere escribir c&oacute;digo Java. No obstante, muchas validaciones pertenecen 
+  a uno de varios tipos comunes: dato requerido, dato num&eacute;rico, verificaci&oacute;n 
+  de longitud, verificaci&oacute;n de formato de fecha, etc. Struts dispone de 
+  un paquete opcional llamado <strong>Validator</strong> que permite efectuar 
+  distintas validaciones t&iacute;picas de manera autom&aacute;tica, sin escribir 
+  c&oacute;digo. Validator tiene las siguientes caracter&iacute;sticas principales:</p>
+
+
+<ul>
+  
+<li>Es configurable sin necesidad de escribir c&oacute;digo, modificando un 
+    fichero XML</li>
+  
+<li>Es extensible, de modo que el usuario puede escribir sus propios validadores, 
+    que no son m&aacute;s que clases Java, si los est&aacute;ndares no son suficientes.</li>
+  
+<li>Puede generar autom&aacute;ticamente JavaScript para efectuar la validaci&oacute;n 
+    en el cliente o puede efectuarla en el servidor, o ambas una tras otra.</li>
+
+</ul>
+
+<a name="N10024"></a><a name="Configuraci%C3%B3n"></a>
+<h2 class="underlined_10">Configuraci&oacute;n</h2>
+<div class="section">
+<p>Antes que nada, necesitaremos incluir en nuestro proyecto el archivo .jar con la implementaci&oacute;n de validator
+   (<span class="codefrag">commons-validator-n&ordm;_version.jar</span>).</p>
+<p>Validator es un plugin de struts. Los plugins que se van a usar en una aplicaci&oacute;n
+deben colocarse en la etiqueta <span class="codefrag">&lt;plugin&gt;</span> del <span class="codefrag">struts-config.xml</span>.
+Esta etiqueta se coloca al final del fichero, inmediatamente antes de la etiqueta de cierre de <span class="codefrag">&lt;/struts-config&gt;</span>
+</p>
+<pre class="code">
+  &lt;plug-in className="org.apache.struts.validator.ValidatorPlugIn"&gt;
+   &lt;set-property property="pathnames"
+    value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/&gt;
+&lt;/plug-in&gt;</pre>
+<p>El atributo <span class="codefrag">value</span> de la propiedad <span class="codefrag">pathnames</span> indica d&oacute;nde 
+  est&aacute;n y c&oacute;mo se llaman los dos ficheros de configuraci&oacute;n 
+  de Validator, cuya sintaxis veremos en el siguiente apartado. Podemos tomar el 
+  <span class="codefrag">validator-rules.xml</span> que viene por defecto con la distribuci&oacute;n de Struts,
+  mientras que el <span class="codefrag">validation.xml</span> lo escribiremos nosotros.</p>
+</div>
+
+<a name="N1004F"></a><a name="Definir+qu%C3%A9+validar+y+c%C3%B3mo"></a>
+<h2 class="underlined_10">Definir qu&eacute; validar y c&oacute;mo</h2>
+<div class="section">
+<p>La definici&oacute;n de qu&eacute; hay que validar y c&oacute;mo efectuar la validaci&oacute;n se hace, como ya se ha visto, en dos ficheros de
+configuraci&oacute;n separados:</p>
+<ul>
+  
+<li>
+<span class="codefrag">validator-rules.xml</span>: en el que se definen los validadores. Un validador
+  comprobar&aacute; que un dato cumple ciertas condiciones. Por ejemplo, podemos tener un validador
+  que compruebe fechas y otro que compruebe n&uacute;meros de DNI con la letra del NIF. Ya hay
+  bastantes validadores predefinidos, aunque si el usuario lo necesita podr&iacute;a definir los
+  suyos propios (ser&iacute;a este el caso de validar el NIF).  <strong>En la mayor parte de casos podemos
+  usar el fichero que viene por defecto con la distribuci&oacute;n de Struts</strong>. Definir nuevos validadores queda fuera del &aacute;mbito
+  de estos apuntes introductorios.</li>
+  
+<li>
+<span class="codefrag">validation.xml</span>: en &eacute;l se asocian las propiedades de 
+    los <span class="codefrag">actionForm</span> a alguno o varios de los validadores definidos 
+    en el fichero anterior. Las posibilidades de Validator se ven mejor con
+    un fichero de ejemplo que abordando todas las etiquetas XML una por una:</li>
+
+
+</ul>
+<pre class="code">&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
+&lt;!DOCTYPE form-validation PUBLIC
+   "-//Apache Software Foundation//DTD Commons Validator 
+   Rules Configuration 1.0//EN"
+   "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd"&gt;
+&lt;form-validation&gt;
+  &lt;formset&gt;
+    &lt;form name="registro"&gt;
+      &lt;field property="nombre" depends="required,minlength"&gt;
+         &lt;var&gt;
+            &lt;var-name&gt;minlength&lt;/var-name&gt;
+            &lt;var-value&gt;6&lt;/var-value&gt;
+         &lt;/var&gt;
+      &lt;/field&gt;
+      ...
+    &lt;/form&gt;
+  &lt;/formset&gt;
+  ...
+&lt;/form-validation&gt;
+</pre>
+<p>Simplificando, un <span class="codefrag">&lt;formset&gt; </span>es un conjunto de <span class="codefrag">ActionForms</span> 
+  a validar. Cada <span class="codefrag">ActionForm</span> viene representado por la etiqueta <span class="codefrag">&lt;form&gt;</span>. 
+  Dentro de &eacute;l, cada propiedad del bean se especifica con <span class="codefrag">&lt;field&gt;</span>. 
+  Cada propiedad tiene su nombre (atributo <span class="codefrag">property</span>) y una lista 
+  de los validadores que debe cumplir (atributo <span class="codefrag">depends</span>). Algunos validadores tienen par&aacute;metros, por ejemplo el 
+  validador <span class="codefrag">minlength</span> requiere especificar la longitud m&iacute;nima 
+  deseada. Los par&aacute;metros se pasan con la etiqueta <span class="codefrag">&lt;var&gt;</span>, 
+  dentro de la cual <span class="codefrag">&lt;var-name&gt;</span> es el nombre del par&aacute;metro 
+  y <span class="codefrag">&lt;var-value&gt;</span> su valor.</p>
+<p>Resumiendo, en el ejemplo anterior estamos diciendo que el campo "nombre" debe contener alg&uacute;n valor no vac&iacute;o (<span class="codefrag">required</span>) y
+  que su longitud m&iacute;nima (<span class="codefrag">minLength</span>) debe ser de 6 caracteres</p>
+</div>
+
+<a name="N1009D"></a><a name="Los+validadores+est%C3%A1ndar"></a>
+<h2 class="underlined_10">Los validadores est&aacute;ndar</h2>
+<div class="section">
+<p>Validator incluye 14 validadores b&aacute;sicos ya implementados, los cuales 
+  se muestran en la tabla siguiente</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr> 
+    
+<td colspan="1" rowspan="1"><strong>Validador</strong></td>
+    <td colspan="1" rowspan="1"><strong>Significado</strong></td>
+    <td colspan="1" rowspan="1"><strong>Par&aacute;metros</strong></td>
+
+  
+</tr>
+  
+<tr> 
+    
+<td colspan="1" rowspan="1"><span class="codefrag">required</span></td>
+    <td colspan="1" rowspan="1">dato requerido y no vac&iacute;o (no todo blancos)</td>
+    <td colspan="1" rowspan="1">ninguno</td>
+  
+</tr>
+  
+<tr> 
+    
+<td colspan="1" rowspan="1"><span class="codefrag">mask</span></td>
+
+    <td colspan="1" rowspan="1">emparejar con una expresi&oacute;n regular</td>
+    <td colspan="1" rowspan="1"><span class="codefrag">mask</span>: e.r. a cumplir. Se usan las librer&iacute;as de Jakarta RegExp.</td>
+  
+</tr>
+  
+<tr> 
+    
+<td colspan="1" rowspan="1"><span class="codefrag">intRange,longRange,floatRange,doubleRange</span></td>
+    <td colspan="1" rowspan="1">valor dentro de un rango</td>
+
+    <td colspan="1" rowspan="1"><span class="codefrag">min</span>, <span class="codefrag">max</span>. Estos validadores dependen respectivamente
+    de <span class="codefrag">int</span>,<span class="codefrag">long</span>,... por tanto en el <span class="codefrag">depends</span>
+    de por ejemplo un <span class="codefrag">intRange</span> debe aparecer tambi&eacute;n <span class="codefrag">int</span>.  </td>
+  
+</tr>
+  
+<tr> 
+    
+<td colspan="1" rowspan="1"><span class="codefrag">maxLength</span></td>
+    <td colspan="1" rowspan="1">m&aacute;xima longitud para un dato</td>
+    <td colspan="1" rowspan="1"><span class="codefrag">maxLength</span></td>
+
+  
+</tr>
+  
+<tr> 
+    
+<td colspan="1" rowspan="1"><span class="codefrag">minLength</span></td>
+    <td colspan="1" rowspan="1">longitud m&iacute;nima para un dato</td>
+    <td colspan="1" rowspan="1"><span class="codefrag">minLength</span></td>
+  
+</tr>
+  
+<tr> 
+    
+<td colspan="1" rowspan="1"><span class="codefrag">byte</span>,<span class="codefrag">short</span>, <span class="codefrag">integer</span>, <span class="codefrag">long</span>, 
+      <span class="codefrag">double</span>, <span class="codefrag">float</span></td>
+
+    <td colspan="1" rowspan="1">dato v&aacute;lido si se puede convertir al tipo especificado </td>
+    <td colspan="1" rowspan="1">ninguno</td>
+  
+</tr>
+  
+<tr> 
+    
+<td colspan="1" rowspan="1"><span class="codefrag">date</span></td>
+    <td colspan="1" rowspan="1">verificar fecha</td>
+    <td colspan="1" rowspan="1"><span class="codefrag">datePattern</span>, formato de fecha especificado como lo hace <span class="codefrag">java.text.SimpleDateFormat</span>. 
+      Si se utiliza el par&aacute;metro <span class="codefrag">datePatternStrict</span> se verifica 
+      el formato de modo estricto. Por ejemplo, si el formato especifica dos d&iacute;as 
+      para el mes, hay que poner 08, no valdr&iacute;a con 8, que s&iacute; valdr&iacute;a 
+      con datePattern</td>
+
+  
+</tr>
+  
+<tr> 
+    
+<td colspan="1" rowspan="1"><span class="codefrag">creditCard</span></td>
+    <td colspan="1" rowspan="1">verificar n&uacute;mero de tarjeta de cr&eacute;dito</td>
+    <td colspan="1" rowspan="1">ninguno</td>
+  
+</tr>
+  
+<tr> 
+    
+<td colspan="1" rowspan="1"><span class="codefrag">email</span></td>
+
+    <td colspan="1" rowspan="1">verificar direccion de e-mail</td>
+    <td colspan="1" rowspan="1">ninguno</td>
+  
+</tr>
+  
+<tr> 
+    
+<td colspan="1" rowspan="1"><span class="codefrag">url</span></td>
+
+    <td colspan="1" rowspan="1">verificar URL</td>
+    <td colspan="1" rowspan="1">Varios. Consultar documentaci&oacute;n de Struts</td>
+  
+</tr>
+
+</table>
+<p>Por ejemplo, supongamos que tenemos un campo en el que el usuario debe escribir un porcentaje, permitiendo
+decimales. Podr&iacute;amos usar el siguiente validador:</p>
+<pre class="code">
+
+&lt;field property="porcentaje" depends="required,double,doubleRange"&gt;
+        &lt;var&gt;&lt;var-name&gt;min&lt;/var-name&gt;&lt;var-value&gt;100&lt;/var-value&gt;&lt;/var&gt;
+        &lt;var&gt;&lt;var-name&gt;max&lt;/var-name&gt;&lt;var-value&gt;0&lt;/var-value&gt;&lt;/var&gt;
+&lt;/field&gt;
+
+</pre>
+<p>Obs&eacute;rvese que <span class="codefrag">doubleRange</span> usa tambi&eacute;n <span class="codefrag">double</span>
+y por eso lo hemos tenido que incluir en el <span class="codefrag">depends</span>.</p>
+</div>
+
+<a name="N101BF"></a><a name="Mensajes+de+error"></a>
+<h2 class="underlined_10">Mensajes de error</h2>
+<div class="section">
+<a name="N101C5"></a><a name="%C2%BFD%C3%B3nde+est%C3%A1n+definidos+realmente+los+mensajes+de+error%3F"></a>
+<h3 class="underlined_5">&iquest;D&oacute;nde est&aacute;n definidos realmente los mensajes de error?</h3>
+<p>Lo normal ser&aacute; mostrar alg&uacute;n mensaje de error si alg&uacute;n validador detecta que los datos no son correctos. Para
+ello podemos usar las etiquetas de Struts <span class="codefrag">&lt;html:messages&gt;</span> o <span class="codefrag">&lt;html:errors&gt;</span>
+que vimos en sesiones anteriores. Recordemos que dichas etiquetas asumen que el error est&aacute; en un fichero
+.properties almacenado bajo una determinada clave. Validator supone autom&aacute;ticamente que la clave asociada
+a cada validador es "errors.<em>nombre_del_validador</em>". Por tanto, para personalizar los mensajes del ejemplo
+anterior, deberemos incluir en el fichero .properties algo como:</p>
+<pre class="code">
+errors.required=campo vac&iacute;o
+errors.minLength=no se ha cumplido la longitud m&iacute;nima
+</pre>
+<p>Por razones hist&oacute;ricas,el mensaje de error asociado al validador <span class="codefrag">mask</span> no se busca bajo la clave
+<span class="codefrag">errors.mask</span>, sino <span class="codefrag">errors.invalid</span>. N&oacute;tese que si no definimos estas claves e intentamos mostrar el error, Struts nos dir&aacute; que no se encuentra el mensaje
+de error (es decir, Struts no define mensajes de error por defecto). No obstante, si no nos gusta el nombre
+de la clave por defecto, podemos cambiarlo mediante la etiqueta <span class="codefrag">&lt;msg&gt;</span>
+</p>
+<pre class="code">
+&lt;form name="registro"&gt;
+  &lt;field property="nombre" depends="required,minlength"&gt;
+  <strong>&lt;msg name="required" key="campo.nombre.noexiste"/&gt;</strong>
+     &lt;var&gt;
+         &lt;var-name&gt;minlength&lt;/var-name&gt;
+         &lt;var-value&gt;6&lt;/var-value&gt;
+     &lt;/var&gt;
+  &lt;/field&gt;
+  ...
+&lt;/form&gt;
+</pre>
+<p>Y en el fichero <span class="codefrag">.properties</span>, tendr&iacute;amos:</p>
+<pre class="code">
+campo.nombre.noexiste=el nombre no puede estar vac&iacute;o
+</pre>
+<p>Con lo cual personalizamos el mensaje, pudiendo poner mensajes distintos en caso de que el campo vac&iacute;o sea otro. En el siguiente
+apartado veremos una forma mejor de personalizar los mensajes: pasarles par&aacute;metros.</p>
+<a name="N101FE"></a><a name="Mensajes+de+error+con+par%C3%A1metros"></a>
+<h3 class="underlined_5">Mensajes de error con par&aacute;metros</h3>
+<p>Es mucho m&aacute;s intuitivo para el usuario personalizar el mensaje de error, adapt&aacute;ndolo al error concreto
+que se ha producido. En el ejemplo anterior, es mucho mejor un mensaje "el campo nombre est&aacute; vac&iacute;o" que simplemente
+"campo vac&iacute;o". Podemos usar las etiquetas <span class="codefrag">&lt;arg0&gt;...&lt;arg4&gt;</span> para pasar par&aacute;metros a los
+mensajes de error.</p>
+<pre class="code">
+&lt;form name="registro"&gt;
+  &lt;field property="nombre" depends="required,minlength"&gt;
+  <strong>&lt;arg0 name="required" key="nombre" resource="false"/&gt;</strong>
+     &lt;var&gt;
+         &lt;var-name&gt;minlength&lt;/var-name&gt;
+         &lt;var-value&gt;6&lt;/var-value&gt;
+     &lt;/var&gt;
+  &lt;/field&gt;
+  ...
+&lt;/form&gt;
+</pre>
+<p>El atributo <span class="codefrag">name</span> indica que este argumento solo se usar&aacute; para el mensaje de error del validador
+<span class="codefrag">required</span>. Si el atributo no est&aacute; presente, el argumento se usa para todos (Es decir, en este caso, tambi&eacute;n
+para <span class="codefrag">minlength</span>). En principio, el atributo <span class="codefrag">key</span> es el valor del argumento, aunque
+ahora lo discutiremos con m&aacute;s profundidad, junto con el significado del atributo <span class="codefrag">resource</span>.</p>
+<p>Ahora en el fichero .properties debemos reservar un lugar para colocar el argumento 0. Como ya vimos
+en la primera sesi&oacute;n, esto se hace poniendo el n&uacute;mero del argumento entre llaves:</p>
+<pre class="code">
+errors.required=campo {0} vac&iacute;o
+...
+</pre>
+<p>Por tanto, el mensaje final que se mostrar&aacute; a trav&eacute;s de <span class="codefrag">&lt;html:messages&gt;</span> o <span class="codefrag">&lt;html:errors&gt;</span> ser&aacute;
+"campo nombre vac&iacute;o". En el ejemplo anterior, el par&aacute;metro <span class="codefrag">resource="false"</span> de la etiqueta
+<span class="codefrag">&lt;arg0&gt;</span> se usa para indicarle a validator que el valor de <span class="codefrag">key</span> debe tomarse
+como un literal. En caso de ponerlo a <span class="codefrag">false</span> (y tambi&eacute;n por defecto) el valor de <span class="codefrag">key</span>
+se toma como una clave en el fichero <span class="codefrag">.properties</span>, es decir, que <span class="codefrag">nombre</span> no se tomar&iacute;a literalmente sino que 
+en el <span class="codefrag">.properties</span> deber&iacute;a aparecer algo como:</p>
+<pre class="code">
+nombre=nombre
+</pre>
+<p>Donde la parte de la izquierda es la clave y la de la derecha el valor literal. N&oacute;tese que en este ejemplo
+ambos son el mismo valor pero nada nos impide por ejemplo poner <span class="codefrag">nombre=nombre de usuario</span> o cualquier otra cosa.
+A primera vista, este nivel de indirecci&oacute;n en los argumentos de los mensajes puede parecer absurdo, pero n&oacute;tese
+que si se tradujera la aplicaci&oacute;n a otro idioma solo necesitar&iacute;amos un nuevo <span class="codefrag">.properties</span>, mientras que de la otra
+forma tambi&eacute;n habr&iacute;a que modificar el <span class="codefrag">validation.xml</span>. Veremos m&aacute;s sobre internacionalizaci&oacute;n de aplicaciones
+en la siguiente sesi&oacute;n.</p>
+<p>Con algunos validadores es &uacute;til mostrarle al usuario los par&aacute;metros del propio validador, por ejemplo ser&iacute;a &uacute;til
+indicarle que el nombre debe tener como m&iacute;nimo 6 caracteres (sin tener que poner literalmente el "6" como parte
+del mensaje, por supuesto). Esto se puede hacer usando el lenguaje de expresiones (EL) en el par&aacute;metro
+<span class="codefrag">key</span> del argumento:</p>
+<pre class="code">
+&lt;form name="registro"&gt;
+  &lt;field property="nombre" depends="required,minlength"&gt;
+  &lt;arg0 key="nombre" resource="false"/&gt;
+  <strong>&lt;arg1 name="minlength" key="${var:minlength}" resource="false"/&gt;</strong>
+     &lt;var&gt;
+         &lt;var-name&gt;minlength&lt;/var-name&gt;
+         &lt;var-value&gt;6&lt;/var-value&gt;
+     &lt;/var&gt;
+  &lt;/field&gt;
+  ...
+&lt;/form&gt;
+</pre>
+<p>Y modificamos el <span class="codefrag">.properties</span> para que quede:</p>
+<pre class="code">
+errors.required=campo {0} requerido
+errors.minlength={0} debe tener una longitud m&iacute;nima de {1} caracteres
+</pre>
+</div>
+ 
+<a name="N10274"></a><a name="Modificar+el+ActionForm+para+Validator"></a>
+<h2 class="underlined_10">Modificar el ActionForm para Validator</h2>
+<div class="section">
+<p>Si deseamos usar Validator, en lugar de <span class="codefrag">ActionForm</span> lo que debemos 
+  utilizar es una clase llamada <span class="codefrag">ValidatorForm</span>. As&iacute; nuestra 
+  clase extender&aacute; dicha clase, teniendo un encabezado similar al siguiente</p>
+<pre class="code">public class LoginForm extends org.apache.struts.validator.action.ValidatorForm { </pre>
+<p>Cuando se utiliza un ValidatorForm ya no es necesario implementar el m&eacute;todo 
+  <span class="codefrag">validate</span>. Cuando deber&iacute;a dispararse este m&eacute;todo, entra en acci&oacute;n 
+  Validator, verificando que se cumplen los validadores especificados en el fichero 
+  XML. </p>
+</div>
+
+<a name="N1028E"></a><a name="Validaci%C3%B3n+en+el+cliente"></a>
+<h2 class="underlined_10">Validaci&oacute;n en el cliente</h2>
+<div class="section">
+<p>Se puede generar c&oacute;digo JavaScript para validar los errores de manera 
+  autom&aacute;tica en el cliente. Esto se har&iacute;a con un c&oacute;digo similar 
+  al siguiente:</p>
+<pre class="code">
+&lt;%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %&gt;
+...
+&lt;html:form action="/login.do" 
+           <strong>onsubmit="return validateLoginForm(this)"</strong>&gt;
+...
+&lt;/html:form&gt;
+
+<strong>&lt;html:javascript formName="loginForm"/&gt;</strong>
+</pre>
+<p>El JavaScript encargado de la validaci&oacute;n de un Form se genera con la 
+  etiqueta <span class="codefrag">&lt;html:javascript&gt;</span>, especificando en el atributo 
+  <span class="codefrag">formName</span> el nombre del <span class="codefrag">Form</span> a validar. En el evento 
+  de env&iacute;o del formulario HTML (<span class="codefrag">onsubmit</span>) hay que poner "<span class="codefrag">return 
+  validateXXX(this)</span>" donde <span class="codefrag">XXX</span> es el nombre del Form 
+  a validar. Validator genera la funci&oacute;n JavaScript <span class="codefrag">validateXXX</span> 
+  de manera que devuelva <span class="codefrag">false</span> si hay alg&uacute;n error de validaci&oacute;n. 
+  De este modo el formulario no se enviar&aacute;. Hay que destacar que aunque 
+  se pase con &eacute;xito la validaci&oacute;n de JavaScript, Validator sigue 
+  efectuando la validaci&oacute;n en el lado del servidor, para evitar problemas 
+  de seguridad o problemas en la ejecuci&oacute;n del JavaScript.</p>
+</div>
+ 
+<p class="pageBreakAfter"></p>
+ 
+ 
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2008-2009 Depto. CCIA</div>
+</div>
+</body>
+</html>

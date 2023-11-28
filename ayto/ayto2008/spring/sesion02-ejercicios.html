@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Ejercicios de Acceso a datos en Spring</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Spring" src="images/baner_j2ee_der.gif" title="Spring"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-web.html'">Aplicaciones Web</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-ent.html'">Aplicaciones Enterprise</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../charlas.html'">Charlas</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto</a>
+</li>
+<li>
+<a class="base-not-selected" href="index.html">Spring</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion02-ejercicios.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Ejercicios de Acceso a datos en Spring</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Uso+de+JDBC+en+Spring">Uso de JDBC en Spring</a>
+</li>
+<li>
+<a href="#Transaccionalidad+declarativa">Transaccionalidad declarativa</a>
+</li>
+</ul>
+</div>
+
+<p>Continuaremos en esta sesi&oacute;n con la aplicaci&oacute;n AmigosSpring, simplificando el c&oacute;digo de los DAOS
+gracias a Spring y a&ntilde;adiendo transaccionalidad declarativa.</p>
+
+<a name="N1000F"></a><a name="Uso+de+JDBC+en+Spring"></a>
+<h2 class="underlined_10">Uso de JDBC en Spring</h2>
+<div class="section">
+<p>Refactoriza el c&oacute;digo de <span class="codefrag">MensajeDAO</span> (ya que es el m&aacute;s sencillo de los dos DAOs)
+para que use una <span class="codefrag">SimpleJdbcTemplate</span>. Ten en cuenta que:</p>
+<ul>
+
+<li>Puedes reutilizar parte del m&eacute;todo <span class="codefrag">crearMensaje</span> para el <span class="codefrag">RowMapper</span>,
+ya que hace pr&aacute;cticamente lo mismo (construir un objeto rellen&aacute;ndolo con los datos de un registro).</li>
+
+<li>Gran parte de la gesti&oacute;n de excepciones desaparece en los DAOs.  A cambio, <strong>los objetos de negocio recibir&aacute;n <span class="codefrag">DataAccessException</span></strong>
+en lugar de <span class="codefrag">DAOException</span>, por lo que tambi&eacute;n tendr&aacute;s que cambiar parte de su c&oacute;digo</li>
+
+    
+</ul>
+</div>
+
+<a name="N10036"></a><a name="Transaccionalidad+declarativa"></a>
+<h2 class="underlined_10">Transaccionalidad declarativa</h2>
+<div class="section">
+<p>El env&iacute;o de mensajes tiene un problema: primero se env&iacute;a el mensaje y luego se cobra. Compru&eacute;balo entrando
+    como "jsf" con password "jsf" y enviando un mensaje a "pepe", por ejemplo. No se le pueden cobrar los dos cr&eacute;ditos por el env&iacute;o pero el mensaje se queda en la tabla.
+    A&ntilde;adir transaccionalidad declarativa a <span class="codefrag">GestorMensajes.enviar()</span> para que se anule el env&iacute;o (inserci&oacute;n
+en la tabla de "recibidos") si el cobro genera un <span class="codefrag">SinPermisoException</span>. Ten en cuenta
+que puedes necesitar <span class="codefrag">DataSourceUtils</span>
+para poder liberar la conexi&oacute;n sin cerrarla. Finalmente, comprueba que ahora la pobre jsf ya no puede mandar mensajes gratis.</p>
+</div>
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2006-2007 Depto. CCIA</div>
+</div>
+</body>
+</html>

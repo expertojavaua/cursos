@@ -1,0 +1,914 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Sesi&oacute;n 4: Componentes (1)</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/banner-aplicaciones-ria.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/baner_j2ee_der.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Apuntes</a>
+</li>
+<li>
+<a class="base-not-selected" href="software.html">Software</a>
+</li>
+<li>
+<a class="base-not-selected" href="doc.html">Documentaci&oacute;n</a>
+</li>
+<li>
+<a class="base-not-selected" href="enlaces.html">Enlaces</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Apuntes</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 4</div>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesion 10</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion04-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Sesi&oacute;n 4: Componentes (1)</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#El+%C3%A1rboles+de+componentes">El &aacute;rboles de componentes</a>
+<ul class="minitoc">
+<li>
+<a href="#Componentes">Componentes</a>
+</li>
+<li>
+<a href="#P%C3%A1gina+y+Escritorio">P&aacute;gina y Escritorio</a>
+</li>
+<li>
+<a href="#Objetos+impl%C3%ADcitos">Objetos impl&iacute;citos</a>
+</li>
+<li>
+<a href="#%C3%81rboles+de+componentes+UI">&Aacute;rboles de componentes UI</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Componentes-N10187">Componentes</a>
+</li>
+<li>
+<a href="#Componentes+simples">Componentes simples</a>
+<ul class="minitoc">
+<li>
+<a href="#Label">Label</a>
+</li>
+<li>
+<a href="#Button">Button</a>
+</li>
+<li>
+<a href="#Imagen">Imagen</a>
+</li>
+<li>
+<a href="#Imagemap">Imagemap</a>
+</li>
+<li>
+<a href="#Entrada">Entrada</a>
+</li>
+<li>
+<a href="#Ejercicio">Ejercicio</a>
+</li>
+<li>
+<a href="#Rangos">Rangos</a>
+</li>
+<li>
+<a href="#Ejercicio-N105B2">Ejercicio</a>
+</li>
+<li>
+<a href="#Selecci%C3%B3n">Selecci&oacute;n</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+<a name="N1000C"></a><a name="El+%C3%A1rboles+de+componentes"></a>
+<h2 class="underlined_10">El &aacute;rboles de componentes</h2>
+<div class="section">
+<a name="N10012"></a><a name="Componentes"></a>
+<h3 class="underlined_5">Componentes</h3>
+<p>Un componente es un objeto de la Interfaz de Usuario, como una etiqueta (<span class="codefrag">label</span>), un bot&oacute;n (<span class="codefrag">button</span>) o un &aacute;rbol (<span class="codefrag">tree</span>). Define una preseintaci&oacute;n visual y una conducta en una interfaz de usuario. Al manipularlos, los desarrolladores pueden controlar la apariencia visual de la aplicaci&oacute;n en el cliente. Un componente debe implementar la interfaz <span class="codefrag">org.zkoss.zk.ui.Component</span>.</p>
+<p>Adem&aacute;s de ser un objeto Java en el servidor, un componente tiene una correspondencia en el navegador, pero s&oacute;lo si pertenece a una p&aacute;gina. Cuando un componente se conecta a una p&aacute;gina, se crea su parte visual. Cuando un componente se elimina de una p&aacute;gina, se borra su parte visual. En el cliente, el navegador, la representaci&oacute;n visual se implementa en forma de un DOM. Este DOM es actualizado autom&aacute;ticamente cuando modificamos la estructura del &aacute;rbol de componentes en el servidor.</p>
+<p>En Java hay dos formas de insertar un componente en una p&aacute;gina. En primer lugar, se puede llamar al m&eacute;todo <span class="codefrag">setPage</span> para hacer que el componente se convierte en el componente ra&iacute;z de la p&aacute;gina especificada. En segundo lugar, se puede llamar a los m&eacute;todos <span class="codefrag">setParent</span>, <span class="codefrag">insertBefore</span> o <span class="codefrag">appendChild</span> para hacer que el componente sea hijo de otro. De esta forma, el componente hijo pasa a formar parte de la misma p&aacute;gina que su padre.</p>
+<p>De forma similar, es posible desconectar un componente ra&iacute;z de una p&aacute;gina llamando a <span class="codefrag">setPage</span> con <span class="codefrag">null</span>. Un hijo es desconectado si es desconectado de su padre o si su padre es esconectado de la p&aacute;gina.</p>
+<p>Cada componente tiene un identificador &uacute;nico que se inicializa automaticamente cuando se crea el componente. Los desarrolladores lo pueden cambiar en cualquier momento. El identificador se utiliza principalmente para poder acceder al componente directamente en el c&oacute;digo Java y en las expresiones EL embebidas en la p&aacute;gina ZUML.</p>
+<p>Un ejemplo:</p>
+<pre class="code">&lt;window title="Vota" border="normal"&gt;
+	&iquest;Te gusta ZK? &lt;label id="label1"/&gt;
+	&lt;separator/&gt;
+	&lt;button label="Si" onClick="label1.value = self.label"/&gt;
+	&lt;button label="No" onClick="label1.value = self.label"/&gt;
+&lt;/window&gt;</pre>
+<p>Vemos la facilidad con la que se puede acceder a los componentes en el c&oacute;digo Java escrito en ZUML. Cuando se actualiza la variable <span class="codefrag">label1</span> en los manejadores de los eventos de los botones se est&aacute; accediendo al identificador con la etiqueta <span class="codefrag">label1</span> y se est&aacute; cambiando su valor (que estaba vac&iacute;o) a la etiqueta del bot&oacute;n que se ha pulsado (la variable <span class="codefrag">self</span>).</p>
+<p>ZK proporciona m&aacute;s de 150 componentes con los que trabajar. &iquest;C&oacute;mo elegir el m&aacute;s adecuado? Dedicaremos una sesi&oacute;n completa a ver ejemplos de todos los componentes. Se pueden repasar tambi&eacute;n en la siguiente documentaci&oacute;n:</p>
+<ul>
+   
+<li>Gu&iacute;a de referencia de ZK (<a href="http://docs.zkoss.org/wiki/Developer%27s_Reference">web de ZK</a>, <a href="./doc/ZK-devref.pdf">PDF local</a>), donde se detalla la lista completa de componentes y sus propiedades.</li>
+   
+<li>
+<a href="http://www.zkoss.org/zkdemo/userguide/">Aplicaci&oacute;n de demostraci&oacute;n</a> de los componentes de ZK, en su web.</li>
+   
+<li>Javadoc de ZK. Los componentes son clases definidas en los siguientes paquetes:
+      <ul>
+          
+<li>
+<a href="http://www.zkoss.org/javadoc/latest/zk/org/zkoss/zul/package-summary.html">Paquete org.zkoss.zul</a>: contiene el conjunto de componentes usados para los clientes HTML.</li>
+          
+<li>
+<a href="http://www.zkoss.org/javadoc/latest/zk/org/zkoss/zkex/zul/package-summary.html">Paquete org.zkoss.zkex.zul</a>: contiene la librer&iacute;a de extensiones, componentes no HTML como <span class="codefrag">Fisheye</span> o <span class="codefrag">Jasperreport</span>.</li>
+           
+<li>En el proyecto ZK Forge se encuentran los componentes <a href="http://www.zkoss.org/javadoc/zkforge/fckez/">FCKeditor</a> y <a href="http://www.zkoss.org/javadoc/zkforge/gmapsz/">gmaps</a>.</li>
+      
+</ul>
+   
+</li>
+
+</ul>
+<p>Cuando escribimos c&oacute;digo Java los atributos en ZUML se convierten en m&eacute;todos getters y setters. Por ejemplo: </p>
+<pre class="code">&lt;button label="ok"&gt;</pre>
+<p>se corresponde con un objeto de la clase <span class="codefrag">Button</span> y el m&eacute;todo <span class="codefrag">setLabel</span>:</p>
+<pre class="code">
+Button button = new Button();
+button.setLabel("ok")</pre>
+<a name="N100A7"></a><a name="P%C3%A1gina+y+Escritorio"></a>
+<h3 class="underlined_5">P&aacute;gina y Escritorio</h3>
+<p> Una p&aacute;gina (<span class="codefrag">org.zkoss.ui.Page</span>) es una colecci&oacute;n de componentes. Una p&aacute;gina confina los componentes que pertenecen a ella, y por ello se mostrar&aacute;n obligatoriamente en una cierta parte del navegador, en la que se muestra la p&aacute;gina. Se crea automaticamente una p&aacute;gina cuando el cargador de ZK (<em>ZK Loader</em>) interpreta una p&aacute;gina ZUML.</p>
+<p>Una p&aacute;gina ZUML puede incluir otras p&aacute;ginas ZUML directa o indirectamente. Ya que esas p&aacute;gina se crean para servir a la misma petici&oacute;n URL, se agrupan en un unidad llamada escritorio (<em>desktop</em>, <span class="codefrag">org.zkboss.ui.Desktop</span>). En otras palabras, un escritorio es una colecci&oacute;n de p&aacute;ginas que sirven una petici&oacute;n URL de un usuario. Conforme la aplicaci&oacute;n ZK interacciona con el usuario se pueden a&ntilde;adir m&aacute;s p&aacute;ginas al escritorio o se pueden eliminar las ya existentes. De forma similar, un componente puede ser a&ntilde;adido o eliminado de una p&aacute;gina.</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/desktop-page.png" width="600"></p>
+<p>Tanto las p&aacute;ginas como los escritorios son creados y eliminados impl&iacute;citamente. No hay ninguna funci&oacute;n del API para eliminarlos o crearlos. Una p&aacute;gina se crea cada vez que el cargador ZK carga una p&aacute;gina ZUML y se elimina cuando ZK encuentra que ya no es referenciada. Un escritorio se crea cuando se carga la primera p&aacute;gina ZUML.</p>
+<a name="N100CA"></a><a name="Objetos+impl%C3%ADcitos"></a>
+<h3 class="underlined_5">Objetos impl&iacute;citos</h3>
+<p>Adem&aacute;s de los componentes creados por el desarrollador para configurar la IU, existen objetos impl&iacute;citos creados autom&aacute;ticamente. Estos objetos permiten a los desarrolladores acceder a los componentes m&aacute;s eficientemente, obtener informaci&oacute;n acerca del sistema y del cliente. Tambi&eacute;n pueden usarse para pasar variables.</p>
+<p>La lista de objetos impl&iacute;citos incluye los siguientes:  <span class="codefrag">self</span>, <span class="codefrag">spaceOwner</span>, <span class="codefrag">page</span>, <span class="codefrag">desktop</span>, <span class="codefrag">execution</span>, <span class="codefrag">session</span>, <span class="codefrag">application</span>, <span class="codefrag">componentScope</span>, <span class="codefrag">spaceScope</span>, <span class="codefrag">pageScope</span>, <span class="codefrag">desktopScope</span>, <span class="codefrag">sessionScope</span>, <span class="codefrag">applicationScope</span>, <span class="codefrag">requestScope</span>, <span class="codefrag">arg</span>, <span class="codefrag">each</span>, <span class="codefrag">forEachStatus</span>, <span class="codefrag">event</span>. </p>
+<p>Algunos de estos objetos son construcciones del lenguaje de script que se utilizan como variables para acceder a caracter&iacute;sticas de la IU, del &aacute;rbol de componentes, o para hacer iteraciones.</p>
+<a name="N10110"></a><a name="%C3%81rboles+de+componentes+UI"></a>
+<h3 class="underlined_5">&Aacute;rboles de componentes UI</h3>
+<p>Los componentes de la IU se estructuran en forma de &aacute;rbol. Tal y como sucede con los elementos de los &aacute;rboles XML, un componente puede tener como m&aacute;ximo un padre y un n&uacute;mero indeterminado de hijos. El cargador ZK construye un &aacute;rbol DOM con la especificaci&oacute;n XML de la IU y luego la transforma en un &aacute;rbol de objetos Java componentes. Al final env&iacute;a al cliente otro &aacute;rbol DOM con los elementos HTML que debe mostrar.</p>
+<p>Por ejemplo, en el siguiente c&oacute;digo definimos un formulario compuesto de una ventana, dentro de la que se define una rejilla con cuatro filas. </p>
+<pre class="code">&lt;?page title="Listbox" contentType="text/html;charset=UTF-8"?&gt;
+&lt;zk&gt;
+  &lt;window id="window" title="Formulario examen" width="450px"&gt;
+    &lt;grid id="grid" fixedLayout="true" &gt;
+      &lt;rows id="rows"&gt;
+        &lt;row id="r1"&gt;
+          &lt;label value="Nombre de asignatura" /&gt;
+          &lt;textbox id="nombreAsignatura" constraint="no empty" /&gt;
+        &lt;/row&gt;
+        &lt;row id="r2"&gt;
+          &lt;label value="Fecha examen" /&gt;
+          &lt;datebox id="fechaExamen" constraint="no empty"/&gt;
+        &lt;/row&gt;
+        &lt;row id="r3"&gt;
+          &lt;label value="Tipo de evaluaci&oacute;n"/&gt;
+          &lt;listbox id="lbox"&gt;
+            &lt;listitem label="Examen final"/&gt; 
+            &lt;listitem label="Ex&aacute;menes parciales"/&gt;
+            &lt;listitem label="Trabajo de investigaci&oacute;n"/&gt;
+          &lt;/listbox&gt;
+        &lt;/row&gt;
+        &lt;row id="r4"&gt;
+          &lt;button id="b1" label="Save" onClick="submit()" /&gt;
+          &lt;button id="b2" label="Cancel" onClick="addCustomerWin.detach()" /&gt;
+        &lt;/row&gt;
+      &lt;/rows&gt;
+    &lt;/grid&gt;
+  &lt;/window&gt;
+&lt;/zk&gt;</pre>
+<p>La estructura de &aacute;rbol ser&iacute;a la siguiente:</p>
+<p>Es importante saber qu&eacute; componentes pueden contener a qu&eacute; otros componentes. Algunos componentes s&oacute;lo pueden aceptar ciertos tipos de componentes como hijos. Algunos otros s&oacute;lo pueden ser hijos de un cierto tipo de componentes. Otros no permiten ning&uacute;n tipo de hijos.</p>
+<p>Por ejemplo, <span class="codefrag">Listbox</span> s&oacute;lo acepta como hijos <span class="codefrag">Listcols</span> y <span class="codefrag">Listitem</span>.</p>
+<p>Un componente sin padre se denomina un componente ra&iacute;z. Aunque ZK permite que una p&aacute;gina tenga m&uacute;ltiples componentes ra&iacute;z (una p&aacute;gina no es un componente y no est&aacute; en el &aacute;rbol de componentes), la definici&oacute;n de XML impide que esto sea as&iacute; en la descripci&oacute;n ZUML. El elemento <span class="codefrag">&lt;zk&gt;</span> permite eliminar esta limitaci&oacute;n.</p>
+<p>Es fundamental el concepto de los &aacute;rboles de componentes, porque una de las formas de modificar la IU es a&ntilde;adiendo y eliminando componentes al vuelo, cuando se disparan eventos y se procesan en c&oacute;digo Java o zscript.</p>
+<p>Cuando un componente se crea en el c&oacute;digo Java o zscript no se a&ntilde;ade a ninguna p&aacute;gina autom&aacute;ticamente, no aparece en el navegador. Para a&ntilde;adirlo, hay que incluirlo en el &aacute;rbol de componentes, invocando alguno de los siguientes m&eacute;todos. Todos pertenecen a la interfaz <span class="codefrag">org.zkoss.zk.ui.Component</span>
+</p>
+<ul>
+   
+<li>
+<span class="codefrag">void </span><strong><span class="codefrag">setParent</span></strong><span class="codefrag">(Component otroComponente)</span>: se a&ntilde;ade un componente a un &aacute;rbol de componentes, definiendo su padre. </li>
+   
+<li>
+<strong><span class="codefrag">getParent</span></strong>: obtiene el padre de un componente.</li>
+   
+<li>
+<span class="codefrag">boolean </span><strong><span class="codefrag">appendChild</span></strong><span class="codefrag">(Component child)</span>: a&ntilde;ade un hijo.</li>
+   
+<li>
+<span class="codefrag">boolean </span><strong><span class="codefrag">insertBefore</span></strong><span class="codefrag">(Component newChild, Componente refChild)</span>: inserta un nuevo componente <span class="codefrag">newChild</span> antes del componente que se usa como referencia.</li>
+   
+<li>
+<span class="codefrag">java.util.List </span><strong><span class="codefrag">getChildren</span></strong><span class="codefrag">()</span>: devuelve una lista con los componentes hijos. Es posible a&ntilde;adir o eliminar hijos manipulando la lista directamente.</li>
+
+</ul>
+<p>Un ejemplo de uso de <span class="codefrag">setParent()</span>:</p>
+<pre class="code">&lt;zk&gt;
+&lt;zscript&gt;
+   public void nuevaEtiqueta() {
+      Label label = new Label();
+      label.setValue("Nueva etiqueta ");
+      label.setParent(win_2);
+   }
+&lt;/zscript&gt;
+&lt;hbox&gt;
+   &lt;window id="win_1" title="Ventana 1" border="normal"&gt;
+      &lt;button label="a&ntilde;ade" onClick="nuevaEtiqueta()" /&gt;
+   &lt;/window&gt;
+   &lt;window id="win_2" title="Ventana 2" border="normal"&gt;
+   &lt;/window&gt;
+&lt;/hbox&gt;
+&lt;/zk&gt;</pre>
+<p>Para tener una idea completa del resto de funciones que proporciona ZK para trabajar con &aacute;rboles de componentes se puede consultar la p&aacute;gina de la interfaz <a href="http://www.zkoss.org/javadoc/latest/zk/org/zkoss/zk/ui/Component.html">org.zkoss.zk.ui.Component</a> y buscar todas las apariciones de las palabras "parent" y "child".</p>
+</div>
+
+
+
+<a name="N10187"></a><a name="Componentes-N10187"></a>
+<h2 class="underlined_10">Componentes</h2>
+<div class="section">
+<p>Interesante mirar las siguientes URLs:</p>
+<ul>
+
+<li>
+<a href="https://developer.mozilla.org/en/XUL_Tutorial">Componentes XUL</a>
+</li>
+
+<li>
+<a href="http://books.zkoss.org/wiki/ZK_Component_Reference">ZK Componente Reference</a>
+</li>
+
+<li>
+<a href="http://docs.zkoss.org/wiki/Developer%27s_Guide#Part_C.__ZUL_Component">Gu&iacute;a del desarrollador de ZK</a>
+</li>
+
+<li>
+<a href="http://docs.zkoss.org/wiki/Developer%27s_Reference">Gu&iacute;a de referencia del desarrollador</a>
+</li>
+
+<li>
+<a href="http://www.zkoss.org/javadoc/latest/zk/org/zkoss/zul/package-summary.html">Java doc de ZK</a>
+</li>
+
+</ul>
+<p>Lista de componentes que vamos a estudiar:</p>
+<p>Elementos simples</p>
+<ul>
+
+<li>B&aacute;sicos: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Button"><span class="codefrag">button</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Label"><span class="codefrag">label</span></a>
+</li>
+
+<li>Im&aacute;genes: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Image"><span class="codefrag">image</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Imagemap"><span class="codefrag">imagemap</span></a>
+</li>
+
+<li>Input: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Textbox"><span class="codefrag">textbox</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Intbox"><span class="codefrag">intbox</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Doublebox"><span class="codefrag">doublebox</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Datebox"><span class="codefrag">datebox</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Timebox"><span class="codefrag">timebox</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Spinner"><span class="codefrag">spinner</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Slider"><span class="codefrag">slider</span></a>
+</li>
+
+<li>Selecci&oacute;n: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Checkbox"><span class="codefrag">checkbox</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Radio"><span class="codefrag">radio</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Combobox"><span class="codefrag">combobox</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Bandbox"><span class="codefrag">bandbox</span></a>
+</li>
+
+<li>Elementos XHTML</li>
+
+<li>Varios: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Progressmeter"><span class="codefrag">progressmeter</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Timer"><span class="codefrag">timer</span></a>
+</li>
+
+</ul>
+<p>Contenedores y di&aacute;logos (http://docs.zkoss.org/wiki/Layout_and_Windows)</p>
+<ul>
+
+<li>Contenedores: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Window"><span class="codefrag">window</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Panel"><span class="codefrag">panel</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Tabbox"><span class="codefrag">tabbox</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Tabs"><span class="codefrag">tabs</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Tabpanels"><span class="codefrag">tabpanels</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Tabpanel"><span class="codefrag">tabpanel</span></a>
+</li>
+
+<li>Di&aacute;logos: 
+<a href="http://docs.zkoss.org/wiki/Message_Box"><span class="codefrag">Messagebox</span></a>, 
+<a href="http://docs.zkoss.org/wiki/File_Upload"><span class="codefrag">fileupload</span></a>, 
+<a href="http://docs.zkoss.org/wiki/File_Download"><span class="codefrag">Filedownload</span></a>
+</li>
+
+</ul>
+<p>Disposici&oacute;n de componentes (<em>layout</em>) (http://docs.zkoss.org/wiki/Layout_and_Windows)</p>
+<ul>
+
+<li>Disposici&oacute;n por defecto: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Space"><span class="codefrag">space</span></a>
+</li>
+
+<li>Modelo de caja: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Box"><span class="codefrag">box</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Vbox"><span class="codefrag">vbox</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Hbox"><span class="codefrag">hbox</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Splitter"><span class="codefrag">splitter</span></a>
+</li>
+
+<li>Border layout: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Borderlayout"><span class="codefrag">borderlayout</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_North"><span class="codefrag">north</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_South"><span class="codefrag">south</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Center"><span class="codefrag">center</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_East"><span class="codefrag">east</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_West"><span class="codefrag">west</span></a> 
+</li>
+
+<li>Tablas de paneles: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Columnlayout"><span class="codefrag">columnlayout</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Columnchildren"><span class="codefrag">columnchildren</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_TableLayout"><span class="codefrag">tablelayout</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_TableChildren"><span class="codefrag">tablechildren</span></a>
+</li>
+
+<li>Agrupaciones: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Groupbox"><span class="codefrag">groupbox</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Toolbar"><span class="codefrag">toolbar</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Toolbarbutton"><span class="codefrag">toolbarbutton</span></a>
+</li>
+
+</ul>
+<p>M&uacute;ltiples elementos. Contienen m&uacute;ltiples elementos y soportan <em>live data</em> y paginadores. (http://docs.zkoss.org/wiki/Grids%2C_Trees_and_Listbox)</p>
+<ul>
+
+<li>Listas: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Listbox"><span class="codefrag">listbox</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Listhead"><span class="codefrag">listhead</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Listheader"><span class="codefrag">listheader</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Listitem"><span class="codefrag">listitem</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Listcell"><span class="codefrag">listcell</span></a>
+</li>
+
+<li>Rejillas: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Grid"><span class="codefrag">grid</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Columns"><span class="codefrag">columns</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Column"><span class="codefrag">column</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Rows"><span class="codefrag">rows</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Row"><span class="codefrag">row</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Detail"><span class="codefrag">detail</span></a>
+</li>
+
+<li>&Aacute;rboles: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Tree"><span class="codefrag">tree</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Treechildren"><span class="codefrag">treechildren</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Treeitem"><span class="codefrag">treeitem</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Treerow"><span class="codefrag">treerow</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Treecell"><span class="codefrag">treecell</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Treecols"><span class="codefrag">treecols</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Treecol"><span class="codefrag">treecol</span></a>,
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Treefooter"><span class="codefrag">treefooter</span></a>,
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Treefoot"><span class="codefrag">treefoot</span></a>
+</li>
+
+</ul>
+<p>Men&uacute;s:</p>
+<ul>
+
+<li>Men&uacute;s: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Menubar"><span class="codefrag">menubar</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Menupopup"><span class="codefrag">menupopup</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Menu"><span class="codefrag">menu</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Menuitem"><span class="codefrag">menuitem</span></a>, 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Menuseparator"><span class="codefrag">menuseparator</span></a>
+</li>
+
+<li>Men&uacute;s contextuales: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Popup"><span class="codefrag">popup</span></a>
+</li>
+
+</ul>
+<p>Especializados:</p>
+<ul>
+
+<li>Captcha: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Captcha"><span class="codefrag">captcha</span></a>
+</li>
+
+<li>Gr&aacute;ficos: 
+<a href="http://docs.zkoss.org/wiki/Developer_reference_The_XUL_Components_Components_Chart"><span class="codefrag">chart</span></a>
+</li>
+
+<li>Mapas: 
+<a href="http://docs.zkoss.org/wiki/Wrapped_gmaps_fckeditor#Gmaps"><span class="codefrag">gmaps</span></a>
+</li>
+
+<li>Editor: 
+<a href="http://docs.zkoss.org/wiki/Wrapped_gmaps_fckeditor#Fckeditor"><span class="codefrag">fckeditor</span></a>
+</li>
+
+<li>L&iacute;nea temporal: 
+<a href="http://docs.zkoss.org/wiki/Wrapped_gmaps_fckeditor#Timeline"><span class="codefrag">timeline</span></a>
+</li>
+
+<li>Plots de datos: 
+<a href="http://docs.zkoss.org/wiki/Wrapped_gmaps_fckeditor#Timeplot"><span class="codefrag">timeplot</span></a>
+</li>
+
+</ul>
+</div>
+
+
+
+<a name="N10388"></a><a name="Componentes+simples"></a>
+<h2 class="underlined_10">Componentes simples</h2>
+<div class="section">
+<p>Comenzamos viendo los elementos m&aacute;s sencillos. Todos los componentes simples deben estar dentro de alg&uacute;n componente contenedor. Vamos a utilizar una ventana y un componente <span class="codefrag">vbox</span> que los distribuya de forma vertical.</p>
+<a name="N10394"></a><a name="Label"></a>
+<h3 class="underlined_5">Label</h3>
+<p>Una etiqueta (<span class="codefrag">label</span>) muestra un texto en pantalla.</p>
+<p>Sus atributos m&aacute;s importantes son:</p>
+<ul>
+
+<li>
+<span class="codefrag">value</span>: el texto que queremos mostrar.</li>
+
+<li>
+<span class="codefrag">pre</span>: booleano que indica si se preservan los espacios en blanco y los fines de l&iacute;nea.</li>
+
+<li>
+<span class="codefrag">maxlength</span>: tama&ntilde;o m&aacute;ximo en caracteres</li>
+
+<li>
+<span class="codefrag">style</span>: estilo CSS que se aplica al texto</li>
+
+</ul>
+<p>Ejemplo:</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/label.png" width="605"></p>
+<pre class="code">&lt;window title="Label Demo" border="normal" width="600px"&gt;
+   &lt;vbox&gt;
+      &lt;label pre="true" value="Esta etiqueta tiene su valor fijo."/&gt;
+      &lt;label id="lb1"/&gt;
+      &lt;label id="lb2" style="color:red"/&gt;
+      &lt;label id="lb3" style="font-weight:bold"/&gt;
+      &lt;label id="lb4" style="font-size:14pt"/&gt;
+      &lt;label id="lb5" maxlength="5"/&gt;
+      &lt;label id="lb6" pre="true"/&gt;
+      &lt;textbox id="txt" rows="2"&gt;&lt;attribute name="onChange"&gt;
+            lb1.value=self.value;
+            lb2.value=self.value;
+            lb3.value=self.value;
+            lb4.value=self.value;
+            lb5.value=self.value;
+            lb6.value=self.value;
+          &lt;/attribute&gt;&lt;/textbox&gt;
+   &lt;/vbox&gt;
+&lt;/window&gt;</pre>
+<a name="N103C9"></a><a name="Button"></a>
+<h3 class="underlined_5">Button</h3>
+<p>El componente <span class="codefrag">button</span> muestra un bot&oacute;n que puede ser pinchado. El contenido del bot&oacute;n puede ser una imagen, una etiqueta o ambos.</p>
+<p>Sus atributos m&aacute;s importantes son:</p>
+<ul>
+
+<li>
+<span class="codefrag">label</span>: texto del bot&oacute;n</li>
+
+<li>
+<span class="codefrag">image</span>: ruta de la imagen a colocar en el bot&oacute;n</li>
+
+<li>
+<span class="codefrag">width</span>: ancho del bot&oacute;n</li>
+
+<li>
+<span class="codefrag">disabled</span>: booleano indicando si est&aacute; deshabilitado</li>
+
+<li>
+<span class="codefrag">orient</span>: posicionamiento de la imagen y el texto del bot&oacute;n (<span class="codefrag">horizontal</span>, <span class="codefrag">vertical</span>)</li>
+
+<li>
+<span class="codefrag">dir</span>: primero se muestra la imagen y despu&eacute;s el texto (<span class="codefrag">normal</span>); si utilizamos <span class="codefrag">reverse</span> es al rev&eacute;s</li>
+
+</ul>
+<p>Algunas p&aacute;ginas para buscar iconos:</p>
+<ul>
+
+<li>
+<a href="http://www.iconfinder.com/">iconfinder.com</a>
+</li>
+
+<li>
+<a href="http://iconspedia.com/">iconspedia.com</a>
+</li>
+
+<li>
+<a href="http://www.famfamfam.com/lab/icons/silk/">famfamfam.com</a>
+</li>
+
+<li>
+<a href="http://www.maxpower.ca/free-icons/2006/03/05/">www.maxpower.ca/free-icons</a>
+</li>
+
+</ul>
+<p>Ejemplo:</p>
+<p>
+<img alt="" content-width="2cm" src="imagenes/button.png" width="155"></p>
+<pre class="code">&lt;button label ="Cambiar" image="images/ok.png" orient="vertical" width="150px"/&gt;
+</pre>
+<p>Imagen para el ejemplo:</p>
+<p>
+<img alt="" content-width="1cm" src="imagenes/ok.png" width="48"></p>
+<a name="N10438"></a><a name="Imagen"></a>
+<h3 class="underlined_5">Imagen</h3>
+<p>El componente <span class="codefrag">image</span> hace que el navegador acceda a la URL que se le pasa y muestre la imagen. Igual que la etiqueta <span class="codefrag">img</span> de HTML. La ventaja es que es un componente ZK y puede ser modificado por otros componentes de la p&aacute;gina.</p>
+<p>Sus atributos y propiedades m&aacute;s importantes son:</p>
+<ul>
+
+<li>
+<span class="codefrag">src</span>: ruta de la imagen a mostrar</li>
+
+<li>
+<span class="codefrag">content</span>: imagen del elemento; se puede usar para modificar la imagen de forma programativa</li>
+
+</ul>
+<p>Ejemplo:</p>
+<p>
+<img alt="" content-width="11cm" src="imagenes/imagen.png" width="700"></p>
+<pre class="code">&lt;window title="Imagen" border="normal"&gt;
+   &lt;hbox&gt;
+   &lt;image src="images/earth.jpg"/&gt;
+   &lt;label value="Nombre de fichero : "/&gt;
+   &lt;textbox onChange="updateImage(self.value)"/&gt;
+   &lt;label value="Imagen:"/&gt; 
+   &lt;image id="image"/&gt;
+   &lt;zscript&gt;&lt;![CDATA[
+      void updateImage(String location) {
+         if (location.length() &gt; 0) {
+            org.zkoss.image.AImage img = new org.zkoss.image.AImage(location);
+            image.setContent(img);
+         }
+      }
+   ]]&gt;
+   &lt;/zscript&gt;
+   &lt;/hbox&gt;
+&lt;/window&gt;</pre>
+<p>Las im&aacute;genes pueden generarse din&aacute;micamente en el servidor utilizando librer&iacute;as Java como <span class="codefrag">java.awt</span>.</p>
+<p>
+<img alt="" content-width="7cm" src="imagenes/liveimage.png" width="504"></p>
+<pre class="code">   &lt;window title="Test of Live Image" width="500px" border="normal"&gt;
+      &lt;image id="img" /&gt;
+      &lt;zscript&gt;
+   import java.awt.*;
+   import java.awt.image.*;
+   import java.awt.geom.*;
+
+   void draw(int x1, int y1, int r1) {
+      BufferedImage bi = new BufferedImage(400, 300,
+            BufferedImage.TYPE_INT_RGB);
+      Graphics2D g2d = bi.createGraphics();
+      Ellipse2D circle = new Ellipse2D.Double(x1, y1, r1, r1);
+      g2d.setColor(Color.blue);
+      g2d.setStroke(new BasicStroke(3));
+      g2d.draw(circle);
+      img.setContent(bi);
+   }
+   int x = 100, y = 100, radius = 10;
+   draw(x, y, radius);
+&lt;/zscript&gt;
+      &lt;button label="change" onClick="draw(x, y, radius += 10)" /&gt;
+   &lt;/window&gt;</pre>
+<a name="N10477"></a><a name="Imagemap"></a>
+<h3 class="underlined_5">Imagemap</h3>
+<p>El componente <span class="codefrag">imagemap</span> muestra una imagen y permite que el usuario pueda seleccionar una coordenada.</p>
+<p>Tiene los mismos atributos que <span class="codefrag">image</span>, pero adem&aacute;s procesa el evento <span class="codefrag">onClick</span> y permite obtener las coordenadas en las que el usuario ha hecho click.</p>
+<p>Ejemplo:</p>
+<p>
+<img alt="" content-width="7cm" src="imagenes/imagemap.png" width="477"></p>
+<pre class="code">&lt;imagemap src="images/earth.jpg" onClick='alert(event.x + ", " +event.y)'/&gt;</pre>
+<a name="N1049B"></a><a name="Entrada"></a>
+<h3 class="underlined_5">Entrada</h3>
+<p>Los componentes <span class="codefrag">textbox</span>, <span class="codefrag">intbox</span>, <span class="codefrag">decimalbox</span>, <span class="codefrag">doublebox</span>, <span class="codefrag">datebox</span>, <span class="codefrag">timebox</span> muestran un campo en el que el usuario debe teclear sus datos.</p>
+<p>El componente <span class="codefrag">textbox</span> se utiliza para obtener datos de texto. Sus atributos m&aacute;s importantes son:</p>
+<ul>
+
+<li>
+<span class="codefrag">value</span>: el valor introducido por el usuario o por defecto</li>
+
+<li>
+<span class="codefrag">type</span>: puede ponerse como <span class="codefrag">password</span> para que no aparezcan los caracteres tecleados</li>
+
+<li>
+<span class="codefrag">rows</span>: n&uacute;mero de filas; 1 por defecto</li>
+
+<li>
+<span class="codefrag">cols</span>: n&uacute;mero de columnas</li>
+
+<li>
+<span class="codefrag">constraint</span>: restricci&oacute;n que debe cumplir el valor introducido y mensaje de error en caso de que no la cumpla.</li>
+
+</ul>
+<p>La restricci&oacute;n se define utilizando un lenguaje de expresiones regulares y consta de una expresi&oacute;n regular entre barras ("/") y (opcionalmente) un mensaje de error separados por dos puntos (":"):</p>
+<pre class="code">/&lt;expresi&oacute;n regular&gt;/:&lt;mensaje de error&gt;</pre>
+<p>Por ejemplo, podemos formular la restricci&oacute;n para que el usuario rellene una direcci&oacute;n de correo electr&oacute;nico de la siguiente forma:</p>
+<pre class="code">constraint="/.+@.+\.[a-z]+/: 
+      Por favor introduce una direcci&oacute;n e-mail correcta</pre>
+<p>Ejemplo:</p>
+<p>
+<img alt="" content-width="9cm" src="imagenes/textbox.png" width="591"></p>
+<pre class="code">&lt;textbox value="Texto por defecto" /&gt;
+&lt;textbox value="secreto" type="password" /&gt;
+&lt;textbox cols="40"
+   constraint="/.+@.+\.[a-z]+/: 
+      Por favor introduce una direcci&oacute;n e-mail correcta" /&gt;
+&lt;textbox rows="5" cols="40"&gt;
+   &lt;attribute name="value"&gt;
+texto linea1...
+texto linea2...&lt;/attribute&gt;
+&lt;/textbox&gt;</pre>
+<p>Los componentes <span class="codefrag">intbox</span>, <span class="codefrag">decimalbox</span>, <span class="codefrag">doublebox</span> y <span class="codefrag">datebox</span> permiten pedir al usuario valores enteros (<span class="codefrag">int</span>), reales (<span class="codefrag">double</span>) y fechas. Son similares y adaptan las restricciones al tipo de valor. Tambi&eacute;n permiten definir el formato de presentaci&oacute;n:</p>
+<pre class="code">&lt;decimalbox format="#,##0.##"/&gt;</pre>
+<pre class="code">&lt;intbox constraint="no negative,no zero"/&gt;</pre>
+<pre class="code">&lt;datebox constraint="no empty, no future: now or never"/&gt;</pre>
+<pre class="code">&lt;datebox constraint="between 20071225 and 20071203"/&gt;</pre>
+<pre class="code">&lt;datebox constraint="after 20071225"/&gt;</pre>
+<p>Es posible modificar el estilo utilizando propiedades CSS:</p>
+<pre class="code">&lt;style&gt; 
+   .blue { 
+      color: blue; 
+      font-style: oblique;
+   }
+&lt;/style&gt;
+&lt;textbox sclass="blue" /&gt;
+&lt;textbox style="color: red; font-style: oblique;"/&gt;</pre>
+<a name="N10528"></a><a name="Ejercicio"></a>
+<h3 class="underlined_5">Ejercicio</h3>
+<p>Escribir un formulario (<span class="codefrag">registro.zul</span>) que pida los siguientes datos:</p>
+<ul>
+   
+<li>Nombre (Texto): S&oacute;lo se permiten letras y espacios</li>
+   
+<li>Contrase&ntilde;a (Texto)</li>
+   
+<li>Re-escribir contrase&ntilde;a (Texto)</li>
+   
+<li>Edad (Entero)</li>
+   
+<li>Fecha de nacimiento (Fecha)</li>
+   
+<li>Email (Texto): S&oacute;lo se permiten direcciones de correo que terminen en .es</li>
+
+</ul>
+<p>Utilizar como contenedor un <span class="codefrag">grid</span> con dos columnas: <em>Dato</em> y <em>Contenido</em>:</p>
+<p>
+<img alt="" content-width="9cm" src="imagenes/registro.png" width="593"></p>
+<pre class="code">&lt;grid fixedLayout="true"&gt;
+   &lt;columns&gt;
+      &lt;column label="Dato" width="150px" /&gt;
+      &lt;column label="Contenido" /&gt;
+   &lt;/columns&gt;
+   &lt;rows&gt;
+      &lt;row&gt;
+         Nombre
+         &lt;textbox /&gt;
+      &lt;/row&gt;
+      ...
+   &lt;/rows&gt;
+&lt;/grid&gt;</pre>
+<a name="N10561"></a><a name="Rangos"></a>
+<h3 class="underlined_5">Rangos</h3>
+<p>Es posible pedir rangos utilizando el <span class="codefrag">spinner</span> y <span class="codefrag">slider</span>.</p>
+<p>Algunos atributos de <span class="codefrag">spinner</span>
+</p>
+<ul>
+
+<li>
+<span class="codefrag">value</span>: valor entero introducido</li>
+
+<li>
+<span class="codefrag">step</span>: incremento de cada click</li>
+
+</ul>
+<p>Algunos atributos de <span class="codefrag">slider</span>:</p>
+<ul>
+
+<li>
+<span class="codefrag">curpos</span>: valor seleccionado (entero de 0 a <span class="codefrag">maxpos</span>)</li>
+
+<li>
+<span class="codefrag">maxpos</span>: m&aacute;ximo valor (100 por defecto)</li>
+
+<li>
+<span class="codefrag">orient</span>: orientaci&oacute;n (<span class="codefrag">horizontal</span> o <span class="codefrag">vertical</span>)</li>
+
+</ul>
+<p>Ejemplo:</p>
+<p>
+<img alt="" content-width="5cm" src="imagenes/rango.png" width="307"></p>
+<pre class="code">&lt;vbox&gt;
+  &lt;spinner value="20" step="5"/&gt;
+  &lt;slider /&gt;
+  &lt;slider curpos="1" maxpos="20" orient="vertical" height="30px"/&gt;
+  &lt;slider mold="sphere"/&gt;
+&lt;/vbox&gt;</pre>
+<a name="N105B2"></a><a name="Ejercicio-N105B2"></a>
+<h3 class="underlined_5">Ejercicio</h3>
+<p>A&ntilde;adir un slider al ejemplo de la imagen generada din&aacute;micamente, para que podamos controlar el tama&ntilde;o del c&iacute;rculo.</p>
+<p>
+<img alt="" content-width="8cm" src="imagenes/liveimage-slider.png" width="506"></p>
+<a name="N105C3"></a><a name="Selecci%C3%B3n"></a>
+<h3 class="underlined_5">Selecci&oacute;n</h3>
+<p>Para realizar una selecci&oacute;n entre m&uacute;ltiples opciones podemos utilizar los componentes <span class="codefrag">checkbox</span>, <span class="codefrag">radio</span>, <span class="codefrag">combobox</span> o <span class="codefrag">bandbox</span>.</p>
+<p>Los componentes <span class="codefrag">radio</span> se agrupan en un <span class="codefrag">radiogroup</span>. S&oacute;lo un componente puede estar seleccionado. Los atributos m&aacute;s importantes de <span class="codefrag">radio</span> son:</p>
+<ul>
+
+<li>
+<span class="codefrag">label</span>: etiqueta de la opci&oacute;n</li>
+
+<li>
+<span class="codefrag">image</span>: imagen de la opci&oacute;n</li>
+
+</ul>
+<p>Un ejemplo:</p>
+<pre class="code">&lt;groupbox&gt;
+   &lt;caption label="Elige una fruta" /&gt;
+   &lt;radiogroup orient="vertical"
+      onCheck="alert(self.selectedItem.label)"&gt;
+      &lt;radio label="Manzana" /&gt;
+      &lt;radio label="Naranja" /&gt;
+      &lt;radio label="Pera" /&gt;
+   &lt;/radiogroup&gt;
+&lt;/groupbox&gt;</pre>
+<p>Los componentes <span class="codefrag">checkbox</span> definen ticks que puede chequear el usuario. Sus atributos principales son: </p>
+<ul>
+
+<li>
+<span class="codefrag">label</span>: etiqueta de la opci&oacute;n</li>
+
+<li>
+<span class="codefrag">image</span>: imagen de la opci&oacute;n</li>
+
+</ul>
+<pre class="code">&lt;groupbox&gt;
+   &lt;zscript&gt;&lt;![CDATA[
+      void doChecked() {
+         seleccion.value = (f1.isChecked() ? f1.label + ' ' : "")
+                         + (f2.isChecked() ? f2.label + ' ' : "")
+                         + (f3.isChecked() ? f3.label + ' ' : "");
+      }
+   ]]&gt;
+   &lt;/zscript&gt;
+   &lt;caption label="Elige varias frutas" /&gt;
+   &lt;vbox&gt;
+      &lt;checkbox id="f1" label="Manzana" onCheck="doChecked()" /&gt;
+      &lt;checkbox id="f2" label="Naranja" onCheck="doChecked()" /&gt;
+      &lt;checkbox id="f3" label="Pera" onCheck="doChecked()" /&gt;
+   &lt;/vbox&gt;
+&lt;/groupbox&gt;
+Has seleccionado:
+&lt;label id="seleccion" /&gt;</pre>
+<p>
+<img alt="" content-width="8cm" src="imagenes/seleccion.png" width="470"></p>
+<p>Los otros componentes <span class="codefrag">combobox</span> y <span class="codefrag">bandbox</span> permiten crear cajas de selecci&oacute;n m&aacute;s complicadas en las que se utilizan men&uacute;s desplegables.</p>
+<p>El <span class="codefrag">combobox</span> permite definir m&uacute;ltiples elementos <span class="codefrag">comboitem</span> que aparecen cuando el usuario pulsa el desplegable:</p>
+<p>
+<img alt="" content-width="3cm" src="imagenes/combosimple.png" width="172"></p>
+<pre class="code">&lt;combobox&gt;
+   &lt;comboitem label="Simple and Rich" /&gt;
+   &lt;comboitem label="Cool!" /&gt;
+   &lt;comboitem label="Ajax and RIA" /&gt;
+&lt;/combobox&gt;</pre>
+<p>Los <span class="codefrag">comboitem</span> pueden tener los siguientes atributos:</p>
+<ul>
+   
+<li>
+<span class="codefrag">label</span>: etiqueta del &iacute;tem</li>
+   
+<li>
+<span class="codefrag">image</span>: imagen</li>
+   
+<li>
+<span class="codefrag">description</span>: descripci&oacute;n</li>
+
+</ul>
+<p>Si a&ntilde;adimos el atributo <span class="codefrag">image</span> al combobox anterior queda as&iacute;:</p>
+<p>
+<img alt="" content-width="3cm" src="imagenes/combostar.png" width="168"></p>
+<p>Como el <span class="codefrag">combobox</span> tambi&eacute;n es un <span class="codefrag">textbox</span> procesa el evento <span class="codefrag">onChanging</span>. Con ese evento es posible implementar un autocompletado y rellenar sus items din&aacute;micamente:</p>
+<p>
+<img alt="" content-width="5cm" src="imagenes/combobox.png" width="311"></p>
+<pre class="code">&lt;zscript&gt;&lt;![CDATA[
+   void suggest() {
+      String[] palabras = { "Ace", "Ajax", "Apple", "Best",
+            "Blog" };
+      combo.getItems().clear();
+      for (String str : palabras)
+         if (str.startsWith(event.value))
+            combo.appendItem(str);
+   }
+   ]]&gt;
+   &lt;/zscript&gt;
+   &lt;combobox id="combo" autodrop="true" onChanging="suggest()" /&gt;</pre>
+</div>
+
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010 Depto. CCIA</div>
+</div>
+</body>
+</html>

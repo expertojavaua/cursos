@@ -1,0 +1,419 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Sesi&oacute;n 9: Acciones en el cliente y CSS</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/banner-aplicaciones-ria.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/baner_j2ee_der.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Apuntes</a>
+</li>
+<li>
+<a class="base-not-selected" href="software.html">Software</a>
+</li>
+<li>
+<a class="base-not-selected" href="doc.html">Documentaci&oacute;n</a>
+</li>
+<li>
+<a class="base-not-selected" href="enlaces.html">Enlaces</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Apuntes</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 9</div>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesion 10</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion09-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Sesi&oacute;n 9: Acciones en el cliente y CSS</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Acciones+en+el+cliente">Acciones en el cliente</a>
+</li>
+<li>
+<a href="#Modificando+el+aspecto+de+los+componentes+con+CSS">Modificando el aspecto de los componentes con CSS</a>
+<ul class="minitoc">
+<li>
+<a href="#Modificando+el+CSS+de+componentes+individuales">Modificando el CSS de componentes individuales</a>
+</li>
+<li>
+<a href="#Cambiando+el+aspecto+de+todos+los+componentes+de+un+determinado+tipo">Cambiando el aspecto de todos los componentes de un determinado tipo</a>
+</li>
+<li>
+<a href="#Cambiando+las+propiedes+globales">Cambiando las propiedes globales</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="Acciones+en+el+cliente"></a>
+<h2 class="underlined_10">Acciones en el cliente</h2>
+<div class="section">
+<p>ZK introduce algunas funcionalidades para poder implementar acciones JavaScript en el cliente. Algunas de ellas son:</p>
+<ul>
+
+<li>
+<a href="http://docs.zkoss.org/wiki/Client_Side_Actions">Acciones CSA para realizar animaciones</a> (ZK 3.6.4)</li>
+
+<li>
+<a href="http://docs.zkoss.org/wiki/ZK_5.0_and_jQuery">Integraci&oacute;n con JQuery</a> (ZK 5.0)</li>
+
+<li>
+<a href="http://docs.zkoss.org/wiki/ZK5:_Client_Computing_with_ZUML">Client computing</a> (ZK 5.0)</li>
+
+</ul>
+<p>Vamos a ver &uacute;nicamente una de las caracter&iacute;sticas: las acciones CSA.</p>
+<p>Algunas acciones como animaciones o carruseles de im&aacute;genes se deben realizar en el cliente utilizando JavaScript. Para hacer esto, ZK introduce el concepto de CSA (<em>Client Side Actions</em>, acciones en el lado del cliente). Con CSA es posible desarrollar c&oacute;digo que escucha los eventos de JavaScript as&iacute; como llamar a c&oacute;digo JavaScript en el cliente.</p>
+<p>Un script CSA es similar a un gestor de eventos, con la excepci&oacute;n de que la acci&oacute;n est&aacute; escrita en JavaScript y se ejecuta en el cliente. Es posible definir acciones para cualquier evento JavaScript, tales como <span class="codefrag">onfocus</span>, <span class="codefrag">onblur</span>, <span class="codefrag">onmouseover</span> y <span class="codefrag">onmouseout</span>.</p>
+<p>Las acciones en el cliente est&aacute;n restringidas a efectos visuales que permiten mostrar o esconder componentes.</p>
+<p>La sintaxis es:</p>
+<pre class="code">action="[onfocus|onblur|onmouseover|onmouseout|onclick|onshow|onhide...]: ''javascript'';"</pre>
+<p>Las acciones en el cliente se combinan con los componentes ZK, de forma que es posible modificar ciertos atributos (visible o no visible, por ejemplo) en el propio cliente. Esto es &uacute;til en casos especiales en los que se quiere dar m&aacute;s agilidad a ciertas acciones en la aplicaci&oacute;n.</p>
+<p>Para identificar el componente sobre el que realizamos la acci&oacute;n, debemos utilizar una sintaxis especial similar a las expresiones EL, que nos permite referenciar los componentes en el cliente: "#{}</p>
+<pre class="code">&lt;button action="onmouseover: action.show(#{id1})"/&gt;</pre>
+<p>Un ejemplo:</p>
+<p>
+<img alt="" content-width="8cm" src="imagenes/client1.png" width="555"></p>
+<pre class="code">
+&lt;grid&gt;
+   &lt;columns&gt;
+      &lt;column width="20%"/&gt;
+      &lt;column width="40%"/&gt;
+      &lt;column width="40%"/&gt;
+   &lt;/columns&gt;
+   &lt;rows&gt;
+      &lt;row&gt;
+         &lt;label value="text1: " /&gt;
+         &lt;textbox
+            action="onfocus: action.show(#{help1}); onblur: action.hide(#{help1})" /&gt;
+         &lt;label id="help1" visible="false" value="This is help for text1." /&gt;
+      &lt;/row&gt;
+      &lt;row&gt;
+         &lt;label value="text2: " /&gt;
+         &lt;textbox
+            action="onfocus: action.show(#{help2}); onblur: action.hide(#{help2})" /&gt;
+         &lt;label id="help2" visible="false" value="This is help for text2." /&gt;
+      &lt;/row&gt;
+   &lt;/rows&gt;
+&lt;/grid&gt;</pre>
+<p>El objeto <span class="codefrag">action</span> permite llamar a los m&eacute;todos <span class="codefrag">show</span> y <span class="codefrag">hide</span> para mostrar o esconder cualquier componente de la interfaz:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">action.show(cmp)</span></td>
+<td colspan="1" rowspan="1">Hace visible el componente que se pasa como par&aacute;metro con una expresi&oacute;n #{}.</td>
+
+</tr>
+
+<tr>
+
+<td colspan="1" rowspan="1"><span class="codefrag">action.hide(cmp)</span></td>
+<td colspan="1" rowspan="1">Hace invisible el componente que se pasa como par&aacute;metro con una expresi&oacute;n #{}.</td>
+
+</tr>
+
+</table>
+<p>Otro objeto que es posible utilizar para definir efectos es el objeto <span class="codefrag">anima</span> (basado en scriptaculous). Permite realizar efectos de animaci&oacute;n sobre componentes <span class="codefrag">div</span>. Posibles apariciones:</p>
+<ul>
+  
+<li>
+<span class="codefrag">anima.appear()</span>: hace visible el componente que incrementando su opacidad</li>
+  
+<li>
+<span class="codefrag">anima.slideDown()</span>: hace visible el componente movi&eacute;ndolo hacia abajo</li>
+
+</ul>
+<p>Desapariciones:</p>
+<ul>
+  
+<li>
+<span class="codefrag">anima.slideUp()</span>
+</li>
+  
+<li>
+<span class="codefrag">anima.fade()</span>
+</li>
+  
+<li>
+<span class="codefrag">anima.appear()</span>
+</li>
+  
+<li>
+<span class="codefrag">anima.puff()</span>
+</li>
+  
+<li>
+<span class="codefrag">anima.dropOut()</span>
+</li>
+
+</ul>
+<p>Ejemplo:</p>
+<p>
+<img alt="" content-width="8cm" src="imagenes/anima.png" width="308"></p>
+<pre class="code">   &lt;window title="Animation Effects" width="300px" border="normal"&gt;
+      &lt;style&gt;
+         .ctl{ 
+            border: 1px outset #777; 
+            background: #ddeecc; 
+            margin: 2px;
+            margin-right: 10px; 
+            padding-left: 2px; 
+            padding-right: 2px; }
+      &lt;/style&gt;
+      &nbsp;
+      &lt;label value="Slide" sclass="ctl"
+         action="onmouseover:anima.slideDown(#{t});
+     onmouseout:anima.slideUp(#{t})" /&gt;
+      &lt;label value="Fade" sclass="ctl"
+         action="onmouseover:anima.appear(#{t});        
+            onmouseout:anima.fade(#{t})" /&gt;
+      &lt;label value="Puff" sclass="ctl"
+         action="onmouseover:anima.appear(#{t});        
+            onmouseout:anima.puff(#{t})" /&gt;
+      &lt;label value="Drop Out" sclass="ctl"
+         action="onmouseover:                
+            anima.appear(#{t});onmouseout:anima.dropOut(#{t})" /&gt;
+      &nbsp;
+      &lt;div id="t" visible="false"&gt;
+         &lt;div&gt;
+            &lt;groupbox&gt;
+               &lt;caption label="Dynamic Content" /&gt;
+               Content to show and hide dynamically.
+               &lt;image src="imagenes/pinguino.png" /&gt;
+            &lt;/groupbox&gt;
+         &lt;/div&gt;
+      &lt;/div&gt;
+   &lt;/window&gt;</pre>
+</div>
+
+
+<a name="N100CE"></a><a name="Modificando+el+aspecto+de+los+componentes+con+CSS"></a>
+<h2 class="underlined_10">Modificando el aspecto de los componentes con CSS</h2>
+<div class="section">
+<p>El aspecto de todos los componentes es modificable mediante directivas CSS. Es posible hacer dos tipos de cambios en los componentes:</p>
+<ul>
+
+<li>Cambios en el aspecto de componentes individuales: utilizando los atributos <span class="codefrag">sclass</span> y <span class="codefrag">style</span> de los componentes para especificar las propiedades CSS.</li>
+
+<li>Cambios en el aspecto de todos los componentes de una misma clase: modificando las clases CSS que ZK ha definido para las propiedades de los componentes.</li>
+
+</ul>
+<p>Vamos a ver ejemplos de ambas t&eacute;cnicas.</p>
+<p>Comenzamos examinando el CSS que genera ZK mediante Firebug. Definimos un componente en una p&aacute;gina ZUL, por ejemplo un textbox, y examinamos la p&aacute;gina resultante con Firebug para comprobar la definici&oacute;n de CSS. Debe ser consistente con la definici&oacute;n de la documentaci&oacute;n de ZK de <a href="http://docs.zkoss.org/wiki/StyleGuide_Textbox">textbox</a>. La gu&iacute;a de dise&ntilde;o en la que se definen las clases CSS aplicadas a todos los componentes se encuentra en <a href="http://docs.zkoss.org/wiki/Style_Guide">esta p&aacute;gina</a>.</p>
+<p>Las clases CSS que se definen para el textbox y sus valores por defecto son:</p>
+<pre class="code">.z-textbox {
+   background: #FFF url(${c:encodeURL('~./zul/img/grid/text-bg.gif')}) repeat-x 0 0; 
+   border: 1px solid #7F9DB9; 
+   font-family: ${fontFamilyC};
+   font-size: ${fontSizeM}; 
+   font-weight: normal;
+}
+.z-textbox-readonly, .z-textbox-text-disd {
+   background: #ECEAE4;
+}</pre>
+<p>Probamos a modificar en Firebug algunas de las propiedades y comprobar el aspecto resultante.</p>
+<p>En las gu&iacute;as de estilo podemos encontrar todas las clases CSS aplicables a todos los components. Por ejemplo:</p>
+<ul>
+
+<li>Gu&iacute;a de estilo de <a href="http://docs.zkoss.org/wiki/StyleGuide_Button">Button</a>
+</li>
+
+<li>Gu&iacute;a de estilo de <a href="http://docs.zkoss.org/wiki/StyleGuide_Toolbar">Toolbar</a>
+</li>
+
+</ul>
+<a name="N10110"></a><a name="Modificando+el+CSS+de+componentes+individuales"></a>
+<h3 class="underlined_5">Modificando el CSS de componentes individuales</h3>
+<p>La primera forma de hacerlo es utilizando el atributo <span class="codefrag">style</span> para configurar los elementos CSS del componente:</p>
+<pre class="code"> &lt;label value="Hello, World!"
+      style="border: 1px outset;background-color:yellow;padding:5px"/&gt;</pre>
+<p>
+<img alt="" content-width="2cm" src="imagenes/css1.png" width="96"></p>
+<p>La otra forma de hacer esto mismo (m&aacute;s general) es definiendo un estilo CSS con <span class="codefrag">style</span> y aplic&aacute;ndolo con <span class="codefrag">sclass</span> en la etiqueta:</p>
+<pre class="code">&lt;window title="CSS Class"&gt;
+&lt;style&gt;
+.blue {
+ color: white; background-color: blue;
+}
+&lt;/style&gt;
+&lt;button label="OK" sclass="blue"/&gt;
+&lt;/window&gt;</pre>
+<p>
+<img alt="" content-width="1cm" src="imagenes/css2.png" width="43"></p>
+<a name="N1013C"></a><a name="Cambiando+el+aspecto+de+todos+los+componentes+de+un+determinado+tipo"></a>
+<h3 class="underlined_5">Cambiando el aspecto de todos los componentes de un determinado tipo</h3>
+<p>Basta con redefinir las clases ZK que est&aacute;n definidas para el componente (consultar documentaci&oacute;n):</p>
+<ul>
+
+<li>Gu&iacute;a de estilo de <a href="http://docs.zkoss.org/wiki/StyleGuide_Button">Button</a>
+</li>
+
+<li>Gu&iacute;a de estilo de <a href="http://docs.zkoss.org/wiki/StyleGuide_Toolbar">Toolbar</a>
+</li>
+
+</ul>
+<p>Un ejemplo con un bot&oacute;n:</p>
+<pre class="code">&lt;zk&gt;
+&lt;style&gt;
+.z-button {
+    color: red;    
+}
+.z-button-over {
+    color: blue;    
+}
+.z-button-clk {
+    color: black;    
+}&lt;/style&gt;
+&lt;button label="click" onClick="" /&gt;
+&lt;/zk&gt;</pre>
+<p>Y un ejemplo con un toolbar:</p>
+<pre class="code">&lt;zk&gt;
+&lt;style&gt;
+.z-toolbar {
+   border-width: 5px 5px 5px 5px;
+   border-color: red;
+}&lt;/style&gt;
+&lt;toolbar&gt;
+   &lt;toolbarbutton label="button1"/&gt;
+   &lt;toolbarbutton label="button2"/&gt;
+ &lt;/toolbar&gt;
+&lt;/zk&gt;</pre>
+<a name="N10163"></a><a name="Cambiando+las+propiedes+globales"></a>
+<h3 class="underlined_5">Cambiando las propiedes globales</h3>
+<p>Hemos visto que muchos componentes se basan en propiedades comunes como <span class="codefrag">fontSizeM</span> o <span class="codefrag">fontFamily</span>. Los valores por defecto de estas variables son los siguientes:</p>
+<ul>
+
+<li>
+<span class="codefrag">org.zkoss.zul.theme.fontSizeM</span>: 12px. El tama&ntilde;o de fuente por defecto.</li>
+
+<li>
+<span class="codefrag">org.zkoss.zul.theme.fontSizeS</span>: 11px. Se usa en los componentes que requieren fuentes peque&ntilde;as, como <span class="codefrag">toolbar</span>
+</li>
+
+<li>
+<span class="codefrag">org.zkoss.zul.theme.fontSizeXS</span>: 10px. Fuente extremadamente peque&ntilde;a; se usa raramente.</li>
+
+<li>
+<span class="codefrag">org.zkoss.zul.theme.fontSizeMS</span>: 11px. El tama&ntilde;o de fuente usado en los men&uacute;s</li>
+
+<li>
+<span class="codefrag">org.zkoss.zul.theme.fontFamilyT</span>: Por defecto: <span class="codefrag"> Verdana, Tahoma, Arial, Helvetica, sans-serif</span>. El tipo de fuente utilizado en los t&iacute;tulos de men&uacute;s.</li>
+
+<li>
+<span class="codefrag">org.zkoss.zul.theme.fontFamilyC</span>: Por defecto: <span class="codefrag">Verdana, Tahoma, Arial, serif</span>. El tipo de fuente utilizado en los contenidos.</li>
+
+</ul>
+<p>Se pueden modificar los valores por defecto definiendo otros valores en el fichero de configuraci&oacute;n <span class="codefrag">WEB-INF/zk.xml</span>:</p>
+<pre class="code"> &lt;library-property&gt;
+     &lt;name&gt;org.zkoss.zul.theme.fontSizeM&lt;/name&gt;
+     &lt;value&gt;12px&lt;/value&gt;
+ &lt;/library-property&gt;
+ &lt;library-property&gt;
+     &lt;name&gt;org.zkoss.zul.theme.fontSizeS&lt;/name&gt;
+     &lt;value&gt;10px&lt;/value&gt;
+ &lt;/library-property&gt;
+     &lt;library-property&gt;
+         &lt;name&gt;org.zkoss.zul.theme.fontSizeXS&lt;/name&gt;
+         &lt;value&gt;9px&lt;/value&gt;
+ &lt;/library-property&gt;</pre>
+</div>
+
+
+
+<p class="pageBreakAfter"></p>
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010 Depto. CCIA</div>
+</div>
+</body>
+</html>

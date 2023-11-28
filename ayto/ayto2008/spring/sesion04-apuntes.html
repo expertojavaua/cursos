@@ -1,0 +1,366 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Acceso remoto  a componentes</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Spring" src="images/baner_j2ee_der.gif" title="Spring"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-web.html'">Aplicaciones Web</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-ent.html'">Aplicaciones Enterprise</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../charlas.html'">Charlas</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto</a>
+</li>
+<li>
+<a class="base-not-selected" href="index.html">Spring</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion04-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Acceso remoto  a componentes</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Evaluaci%C3%B3n+de+las+alternativas">Evaluaci&oacute;n de las alternativas</a>
+</li>
+<li>
+<a href="#RMI+en+Spring">RMI en Spring</a>
+</li>
+<li>
+<a href="#Hessian+y+Burlap">Hessian y Burlap</a>
+<ul class="minitoc">
+<li>
+<a href="#Uso+de+los+protocolos">Uso de los protocolos</a>
+</li>
+<li>
+<a href="#Autentificaci%C3%B3n+HTTP+con+Hessian+y+Burlap">Autentificaci&oacute;n HTTP con Hessian y Burlap</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#HTTP+invoker">HTTP invoker</a>
+</li>
+</ul>
+</div>
+
+<p>Uno de los puntos que hacen atractivos a los EJB es que permiten simplificar la programaci&oacute;n distribuida, proporcionando
+un acceso a objetos remotos "casi transparente" para el programador. Sin m&aacute;s que hacer una llamada a JNDI se puede localizar un
+objeto remoto y llamar a sus m&eacute;todos "casi" como si estuviera en la m&aacute;quina local. En este tema veremos alternativas para
+conseguir el mismo objetivo, que si bien no son tan sofisticadas, son mucho m&aacute;s ligeras que la implementaci&oacute;n de muchos
+contenedores de EJBs.</p>
+
+<a name="N1000F"></a><a name="Evaluaci%C3%B3n+de+las+alternativas"></a>
+<h2 class="underlined_10">Evaluaci&oacute;n de las alternativas</h2>
+<div class="section">
+<p>Spring no proporciona una &uacute;nica alternativa a EJBs para acceso remoto. Seg&uacute;n los requerimientos de la aplicaci&oacute;n y las 
+caracter&iacute;sticas de la implementaci&oacute;n ser&aacute; m&aacute;s apropiada una u otra alternativa. Veamos cu&aacute;les son:</p>
+<ul>
+
+<li>
+<strong>RMI:</strong> A pesar de que usar RMI directamente pueda parecer algo "primitivo", Spring implementa una serie de clases que proporcionan 
+una capa de abstracci&oacute;n sobre el RMI "puro", de modo que por ejemplo no hay que gestionar directamente el servidor de nombres, ni
+ejecutar manualmente <span class="codefrag">rmic</span> y el cliente puede abstraerse totalmente de que el servicio es remoto. RMI ser&aacute; la alternativa adecuada
+cuando nos interese <strong>buen rendimiento, clientes Java y sepamos que el servidor de nombres no es un problema 
+(p.ej. con firewalls)</strong>
+</li>
+
+<li>
+<strong>HTTP invoker:</strong> Es una opci&oacute;n muy similar a la de RMI, usando serializaci&oacute;n de Java, pero a trav&eacute;s del puerto HTTP est&aacute;ndar, con lo que eliminamos 
+los posibles problemas de firewalls. N&oacute;tese que el cliente tambi&eacute;n debe ser Spring, ya que el protocolo
+est&aacute; implementado en librer&iacute;as propias del framework (un cliente RMI podr&iacute;a ser no-Spring). Ser&aacute; apropiado cuando nos interese <strong>buen rendimiento, 
+clientes Spring y tengamos posibles problemas con los puertos permitidos.</strong> .</li>
+
+<li>
+<strong>Protocolos Hessian y Burlap:</strong> son protocolos que funcionan a trav&eacute;s del puerto HTTP est&aacute;ndar. Hessian
+es binario y Burlap XML, por lo que el primero es m&aacute;s eficiente. Te&oacute;ricamente pueden funcionar con clientes no-Java, aunque con ciertas
+limitaciones. No son protocolos originalmente dise&ntilde;ados en el seno de Spring, sino de una empresa llamada Caucho (aunque son tambi&eacute;n
+<em>open source</em>). Ser&aacute; interesante cuando queramos <strong>buen rendimiento, clientes no-Java y
+tengamos posibles problemas con los puertos permitidos.</strong>
+</li>
+
+<li>
+<strong>Servicios web:</strong> son la "tecnolog&iacute;a dominante" en la actualidad para el acceso a componentes
+remotos en plataformas heterog&eacute;neas (con clientes escritos en casi cualquier lenguaje). Su punto d&eacute;bil es b&aacute;sicamente
+el rendimiento: la necesidad de transformar los mensajes que intercambian cliente servidor a formato neutro en XML hace que 
+sean poco eficientes, pero es lo que al mismo tiempo los hace portables. Ser&aacute;n apropiados cuando <strong>El rendimiento no
+sea cr&iacute;tico, y queramos la m&aacute;xima portabilidad en cuanto a clientes.</strong>
+</li>
+
+</ul>
+<p>N&oacute;tese que en el acceso remoto a componentes los EJBs siguen teniendo ciertas ventajas sobre Spring, en particular la
+propagaci&oacute;n remota de transacciones. Ser&aacute; una cuesti&oacute;n de prioridades la decisi&oacute;n de si esta caracter&iacute;stica es vital 
+para nuestra aplicaci&oacute;n o bien puede sacrificarse en aras de un mejor rendimiento y una mayor simplicidad.</p>
+<p>Discutiremos a continuaci&oacute;n con m&aacute;s detalle las caracter&iacute;sticas de las tres primeras alternativas (ya que la cuarta se ver&aacute; en profundidad en 
+el m&oacute;dulo de servicios web) y c&oacute;mo usarlas y configurarlas dentro de Spring.</p>
+<p>En todos los casos vamos a usar el siguiente ejemplo, muy sencillo, de componente al que deseamos acceder de forma
+remota, con su interfaz: </p>
+<pre class="code">
+package servicios;
+
+public interface ServicioSaludo {
+   public String getSaludo();
+}
+</pre>
+<pre class="code">
+package servicios;
+
+public class ServicioSaludoImpl implements ServicioSaludo {
+   String[] saludos = {"hola, &iquest;qu&eacute; tal?", "me alegra verte", "yeeeeeey"};
+   
+   public String getSaludo() {
+	 int pos = (int)(Math.random() * saludos.length);
+	 return saludos[pos];
+   }
+}
+</pre>
+</div>
+
+<a name="N10050"></a><a name="RMI+en+Spring"></a>
+<h2 class="underlined_10">RMI en Spring</h2>
+<div class="section">
+<p>Aunque el uso directo de RMI puede resultar tedioso, Spring ofrece una capa de abstracci&oacute;n sobre el RMI "puro" que
+permite acceder de forma sencilla y casi transparente a objetos remotos.</p>
+<p>Usando la clase <span class="codefrag">RmiServiceExporter</span> podemos exponer la interfaz de nuestro servicio como un objeto RMI. 
+Se puede acceder desde el cliente usando RMI "puro" o bien, de modo m&aacute;s sencillo con un <span class="codefrag">RmiProxyFactoryBean</span>.
+	</p>
+<p>La configuraci&oacute;n en el lado del servidor quedar&aacute; como sigue:</p>
+<pre class="code">
+
+&lt;bean id="miSaludador" class="servicios.ServicioSaludoImpl"&gt;
+&lt;/bean&gt;				
+
+&lt;bean class="org.springframework.remoting.rmi.RmiServiceExporter"&gt;
+    &lt;!-- En este caso el nombre del servicio y del bean son iguales, pero no tiene por que --&gt;
+    &lt;property name="serviceName" value="miSaludador"/&gt;
+    &lt;property name="service" ref="miSaludador"/&gt;
+    &lt;property name="serviceInterface" value="servicios.ServicioSaludo"/&gt;
+    &lt;!-- El puerto por defecto es el 1099 --&gt;
+    &lt;property name="registryPort" value="1199"/&gt;
+&lt;/bean&gt;
+
+</pre>
+<p>En la configuraci&oacute;n anterior se ha cambiado el puerto del servidor de nombres RMI para evitar posibles conflictos
+con el del servidor de aplicaciones. A partir de este momento, el objeto remoto es accesible a trav&eacute;s de la URL
+<span class="codefrag"> rmi://localhost:1199/miSaludador</span>.</p>
+<p>La configuraci&oacute;n en el cliente quedar&iacute;a como sigue:</p>
+<pre class="code">
+
+&lt;bean id="saludadorRMI" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"&gt;
+	&lt;property name="serviceUrl" value="rmi://localhost:1199/miSaludador"/&gt;
+	&lt;property name="serviceInterface" value="servicios.ServicioSaludo"/&gt;
+&lt;/bean&gt;
+
+</pre>
+<p>Y para acceder al objeto de forma remota todo lo que necesitar&iacute;amos es (teniendo accesible en el cliente 
+el c&oacute;digo de <span class="codefrag">ServicioSaludo</span>).</p>
+<pre class="code">
+   ClassPathXmlApplicationContext contexto = new ClassPathXmlApplicationContext("clienteRMI.xml");
+   ServicioSaludo ss =  (ServicioSaludo) contexto.getBean("saludadorRMI");
+   System.out.println(ss.getSaludo());
+</pre>
+<p>Suponiendo que el fichero de configuraci&oacute;n en el cliente lo hemos llamado <span class="codefrag">clienteRMI.xml</span>
+</p>
+</div>
+
+<a name="N10086"></a><a name="Hessian+y+Burlap"></a>
+<h2 class="underlined_10">Hessian y Burlap</h2>
+<div class="section">
+<p>Hessian y Burlap son dos protocolos dise&ntilde;ados originalmente por la empresa Caucho, desarrolladora de un servidor
+de aplicaciones J2EE de c&oacute;digo abierto llamado <span class="codefrag">Resin</span>. Ambos son protocolos para acceso a servicios
+remotos usando conexiones HTTP est&aacute;ndar. La diferencia b&aacute;sica entre ambos es que Hessian es binario (y por tanto m&aacute;s eficiente
+que Burlap) y este es XML (y por tanto las comunicaciones son m&aacute;s sencillas de depurar). Para ambos tambi&eacute;n
+se han desarrollado implementaciones en distintos lenguajes de manera que el cliente de nuestra aplicaci&oacute;n podr&iacute;a
+estar escrito en C++, Python, C#, PHP u otros.</p>
+<a name="N10092"></a><a name="Uso+de+los+protocolos"></a>
+<h3 class="underlined_5">Uso de los protocolos</h3>
+<p>Usaremos Hessian en el siguiente ejemplo, aunque la configuraci&oacute;n de Burlap es pr&aacute;cticamente id&eacute;ntica. Hessian
+se comunica mediante HTTP con un servlet . Por tanto el primer paso ser&aacute; crear dicho servlet en nuestro <span class="codefrag">web.xml</span>.
+Nos apoyaremos en la clase <span class="codefrag">DispatcherServlet</span> propia de Spring, ya que se integra de manera autom&aacute;tica
+con el resto de elementos de nuestra configuraci&oacute;n. A continuaci&oacute;n se muestra el fragmento significativo del <span class="codefrag">web.xml</span>.</p>
+<pre class="code">
+
+&lt;servlet&gt;
+	&lt;servlet-name&gt;remoting&lt;/servlet-name&gt;
+	&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+	&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+	&lt;servlet-name&gt;remoting&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;/remoting/*&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+
+</pre>
+<p>Esto hace accesible el servlet a trav&eacute;s de la URL <span class="codefrag">http://localhost:8080/remoting</span> (si por ejemplo
+usamos Tomcat cuyo puerto por defecto es el 8080). En Spring, la configuraci&oacute;n de cada <span class="codefrag">DispatcherServlet</span>
+se debe guardar en un xml con nombre <em>nombreDelServlet</em>-servlet.xml (en nuestro caso 
+<span class="codefrag">remoting-servlet.xml</span>).</p>
+<pre class="code">
+
+&lt;bean id="miSaludador" class="servicios.ServicioSaludoImpl"&gt;
+&lt;/bean&gt;	
+
+&lt;bean name="/saludador" class="org.springframework.remoting.caucho.HessianServiceExporter"&gt;
+  &lt;property name="service" ref="miSaludador"/&gt;
+  &lt;property name="serviceInterface" value="servicios.ServicioSaludo"/&gt;
+&lt;/bean&gt;
+
+</pre>
+<p>Aqu&iacute; hacemos uso de la clase <span class="codefrag">HessianServiceExporter</span>, que nos permite exportar de forma sencilla
+un servicio Hessian. En nuestro caso estar&aacute; accesible en la URL <span class="codefrag">http://localhost:8080/contexto-web/remoting/saludador</span>.
+Nos falta la configuraci&oacute;n del cliente y el c&oacute;digo que llama al servicio:</p>
+<pre class="code">
+&lt;bean id="miSaludador" class="org.springframework.remoting.caucho.HessianProxyFactoryBean"&gt;
+        &lt;property name="serviceUrl" value="http://localhost:8080/<em>contexto-web</em>/remoting/saludador"/&gt;
+        &lt;property name="serviceInterface" value="servicios.ServicioSaludo"/&gt;
+&lt;/bean&gt;
+</pre>
+<p>Suponiendo que el c&oacute;digo XML anterior se guarda en un fichero llamado <span class="codefrag">clienteHessian.xml</span>
+</p>
+<pre class="code">
+ClassPathXmlApplicationContext contexto = new ClassPathXmlApplicationContext("clienteHessian.xml");
+ServicioSaludo ss =  (ServicioSaludo) contexto.getBean("miSaludador");
+System.out.println(ss.getSaludo());
+</pre>
+<p>En el ejemplo anterior bastar&iacute;a con escribir <span class="codefrag">Burlap</span> all&iacute; donde aparece <span class="codefrag">Hessian</span>
+y todo deber&iacute;a funcionar igual, pero ahora usando este procolo basado en mensajes XML.</p>
+<a name="N100DE"></a><a name="Autentificaci%C3%B3n+HTTP+con+Hessian+y+Burlap"></a>
+<h3 class="underlined_5">Autentificaci&oacute;n HTTP con Hessian y Burlap</h3>
+<p>Al ser una conexi&oacute;n HTTP est&aacute;ndar podemos usar autentificaci&oacute;n BASIC. De este modo podemos usar la seguridad
+declarativa del contenedor web tambi&eacute;n para controlar el acceso a componentes remotos. En la configuraci&oacute;n
+del servidor podr&iacute;amos a&ntilde;adir el siguiente c&oacute;digo:</p>
+<pre class="code">
+
+&lt;bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"&gt;
+   &lt;property name="interceptors"&gt;
+      &lt;list&gt;
+         &lt;ref bean="authorizationInterceptor"/&gt;
+      &lt;/list&gt;
+   &lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean id="authorizationInterceptor" 
+   class="org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor"&gt;
+   &lt;property name="authorizedRoles"&gt;
+    &lt;list&gt;
+      &lt;value&gt;admin&lt;/value&gt;
+      &lt;value&gt;subadmin&lt;/value&gt;
+    &lt;/list&gt;
+   &lt;/property&gt;	
+&lt;/bean&gt;
+		
+</pre>
+<p>Usando AOP a&ntilde;adimos un interceptor que resulta ser de la clase <span class="codefrag">UserRoleAuthorizationInterceptor</span>.
+Dicho interceptor solo permite el acceso al bean si el usuario resulta estar en uno de los roles especificados
+en la propiedad <span class="codefrag">authorizedRoles</span>. El <span class="codefrag">BeanNameUrlHandlerMapping</span> es el objeto que "tras las bambalinas" se encarga de asociar los beans
+que comienzan con "/" con los servicios en la URL del mismo nombre (en nuestro caso el bean "/saludador").</p>
+</div>
+
+<a name="N100F9"></a><a name="HTTP+invoker"></a>
+<h2 class="underlined_10">HTTP invoker</h2>
+<div class="section">
+<p>Esta es una implementaci&oacute;n propia de Spring, que utiliza la serializaci&oacute;n est&aacute;ndar de Java para transmitir
+objetos a trav&eacute;s de una conexi&oacute;n HTTP est&aacute;ndar. Ser&aacute; la opci&oacute;n a elegir cuando los objetos sean demasiado complejos
+para que funcionen los mecanismos de serializaci&oacute;n de Hessian y Burlap.</p>
+<p>La configuraci&oacute;n es muy similar al apartado anterior, podemos usar el mismo <span class="codefrag">DispatcherServlet</span> pero ahora
+para el acceso al servicio se debe emplear la clase
+<span class="codefrag">HttpInvokerServiceExporter</span> en lugar de <span class="codefrag">HessianServiceExporter</span>
+</p>
+<pre class="code">
+
+&lt;bean name="/saludadorHTTP" 
+      class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter"&gt;
+  &lt;property name="service" ref="miSaludador"/&gt;
+  &lt;property name="serviceInterface" value="servicios.ServicioSaludo"/&gt;
+&lt;/bean&gt;
+
+</pre>
+<p>En la parte del cliente la definici&oacute;n del bean ser&iacute;a:</p>
+<pre class="code">
+
+&lt;bean id="httpProxy" 
+      class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean"&gt;
+  &lt;property name="serviceUrl" value="http://localhost:8080/CONTEXTO-WEB/remoting/saludadorHTTP"/&gt;
+  &lt;property name="serviceInterface" value="servicios.ServicioSaludo"/&gt;
+&lt;/bean&gt;
+
+</pre>
+<p>Por defecto en el cliente se usan las clases est&aacute;ndar de J2SE para abrir la conexi&oacute;n HTTP. Adem&aacute;s Spring
+proporciona soporte para el <span class="codefrag">HttpClient</span> de Jakarta Commons. Bastar&iacute;a con poner una propiedad adicional
+en el <span class="codefrag">HttpInvokerProxyFactoryBean</span>:</p>
+<pre class="code">
+
+&lt;bean id="httpProxy" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean"&gt;
+  ...
+  &lt;property name="httpInvokerRequestExecutor"&gt;
+    &lt;bean class="org.springframework.remoting.httpinvoker.CommonsHttpInvokerRequestExecutor"/&gt;
+  &lt;/property&gt;
+  ...
+&lt;/bean&gt;
+
+</pre>
+</div>
+
+
+<p class="pageBreakAfter"> 
+</p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2006-2007 Depto. CCIA</div>
+</div>
+</body>
+</html>

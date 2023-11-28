@@ -1,0 +1,574 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Seguridad a nivel de mensaje. Firma digital</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/cursos/sws"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servicios Web seguros" src="images/baner_j2ee_der.gif" title="Servicios Web seguros"></a>
+</div>
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Apuntes</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Servicios Web seguros</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Servicios Web seguros">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesi&oacute;n 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesi&oacute;n 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesi&oacute;n 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesi&oacute;n 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesi&oacute;n 5</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesi&oacute;n 6</div>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesi&oacute;n 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesi&oacute;n 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesi&oacute;n 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesi&oacute;n 10</a>
+</div>
+<div class="menuitem">
+<a href="sesion11-apuntes.html">Sesi&oacute;n 11</a>
+</div>
+<div class="menuitem">
+<a href="sesion12-apuntes.html">Sesi&oacute;n 12</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html" title="Roadmap">Roadmap</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion06-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Seguridad a nivel de mensaje. Firma digital</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Firma+digital+de+mensajes">Firma digital de mensajes</a>
+<ul class="minitoc">
+<li>
+<a href="#Cliente+con+CXF">Cliente con CXF</a>
+</li>
+<li>
+<a href="#Servidor+con+CXF">Servidor con CXF</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Ejercicios">Ejercicios</a>
+<ul class="minitoc">
+<li>
+<a href="#Calculadora+con+firma+digital+con+CXF">Calculadora con firma digital con CXF</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+
+<a name="N1000E"></a><a name="Firma+digital+de+mensajes"></a>
+<h2 class="underlined_10">Firma digital de mensajes</h2>
+<div class="section">
+<p>En las pr&oacute;ximas secciones vamos a firmar y encriptar partes del mensaje 
+SOAP. Este tipo de seguridad es a nivel de mensaje y es necesario cuando 
+los mensajes van a pasar por distintos nodos que procesar&aacute;n sus cabeceras, 
+o incluso partes del contenido. Por otro lado, si esto no es necesario 
+se podr&iacute;a realizar seguridad a nivel de transporte, que consiste simplemente 
+en realizar una conexi&oacute;n SSL entre el cliente y el servidor. El mensaje ir&iacute;a 
+cifrado a trav&eacute;s de ella, y adem&aacute;s se habr&aacute; comprobado la autenticidad de 
+cliente y de servidor. Sin embargo, una vez llegado al servidor, el mensaje 
+ser&aacute; visto y podr&aacute; ser modificado. Si de ah&iacute; tiene que ser enviado a otro 
+sitio, la seguridad depender&aacute; de si confiamos en dicho servidor o no. Para 
+este tipo de situaci&oacute;n, SOAP nos permite encriptar y firmar partes del 
+mensaje, manteniendo sus cabeceras en formato XML sin encriptar. 
+Axis2 necesita el plugin Rampart para implementar este tipo de seguridad.</p>
+<a name="N10017"></a><a name="Cliente+con+CXF"></a>
+<h3 class="underlined_5">Cliente con CXF</h3>
+<p>Vamos a copiar el proyecto <span class="codefrag">SWCliente</span> y pegarlo con el nombre 
+<span class="codefrag">SWSeguroCliente</span>. Empecemos por modificar su <span class="codefrag">pom.xml</span>, 
+cambi&aacute;ndole el Group Id y el Artifact Id a "<span class="codefrag">SWSeguroCliente</span>". 
+En la secci&oacute;n de dependencias a&ntilde;adimos las versiones 1.5 de <span class="codefrag">rampart-core</span> y 
+<span class="codefrag">rampart-policy</span>, del dominio <span class="codefrag">org.apache.rampart</span>. 
+Si las a&ntilde;adimos desde el editor gr&aacute;fico, no hay que olvidar borrar las 
+etiquetas type y scope. Guardamos el pom.xml y esperamos hasta que las 
+dependencias se hayan descargado (Bulding workspace, indicado abajo a la 
+derecha) y el proyecto no indique ning&uacute;n error. 
+</p>
+<p>Repetimos lo mismo con el proyecto del <span class="codefrag">SWServicio</span>, copi&aacute;ndolo como 
+<span class="codefrag">SWSeguroServicio</span>, y realizando los mismos cambios en el 
+<span class="codefrag">pom.xml</span>: el Group Id y Artifact Id a "<span class="codefrag">SWSeguroServicio</span>", y las dos 
+dependencias de rampart. </p>
+<p>Ahora volvemos a <span class="codefrag">SWSeguroCliente</span> y cambiamos el nombre de su 
+WSDL a <span class="codefrag">Seguro.wsdl</span> con el bot&oacute;n derecho sobre el archivo, 
+Refactor / Rename. Una vez renombrado lo editamos y cambiamos todas las 
+ocurrencias de la cadena "<span class="codefrag">Servicio</span>" por "<span class="codefrag">Seguro</span>". 
+(Incluido <span class="codefrag">ServicioSOAP</span> a <span class="codefrag">SeguroSOAP</span>).</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Nota: si hacemos los cambios desde el dise&ntilde;ador gr&aacute;fico de WSDL, 
+despu&eacute;s debemos abrir el archivo en modo xml porque no se habr&aacute; cambiado 
+en todos los sitios.</div>
+</div>
+<p>Ahora vamos a a&ntilde;adir los nombres de espacio correspondientes a las 
+pol&iacute;ticas que vamos a utilizar. En la etiqueta 
+<span class="codefrag">&lt;wsdl:definitions</span> a&ntilde;adimos, despu&eacute;s del 
+<span class="codefrag">xmln:soap, tns, wsdl</span> y <span class="codefrag">xsd</span>, los siguientes atributos:
+</p>
+<pre class="code">
+xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"
+xmlns:wsp="http://www.w3.org/2006/07/ws-policy"
+xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-
+                                         wssecurity-utility-1.0.xsd"
+
+</pre>
+<p>Despu&eacute;s a&ntilde;adimos la etiqueta:</p>
+<pre class="code"> 
+      &lt;wsp:PolicyReference URI="#p1" wsdl:required="true"/&gt;
+
+</pre>
+<p>justo a continuaci&oacute;n de la l&iacute;nea 
+<span class="codefrag">&lt;wsdl:operation name="saluda"&gt;</span>, con lo cu&aacute;l estamos 
+indicando que se aplique la pol&iacute;tica con identificador "<span class="codefrag">p1</span>" 
+a la operaci&oacute;n saluda. La definici&oacute;n de la pol&iacute;tica la vamos a insertar 
+entre la etiqueta <span class="codefrag">&lt;wsdl:definitions.../&gt;</span> y la etiqueta 
+<span class="codefrag">&lt;wsdl:types&gt;</span>, y va a consistir en:
+</p>
+<pre class="code"> 
+  &lt;wsp:Policy wsu:Id="p1"&gt;
+    &lt;sp:AsymmetricBinding&gt;
+      &lt;wsp:Policy&gt;
+        &lt;sp:InitiatorToken&gt;
+          &lt;wsp:Policy&gt;
+          	&lt;sp:X509Token sp:IncludeToken="http://docs.oasis-open.org/ws-sx/
+          	         ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient"&gt;
+          	  &lt;wsp:Policy&gt;
+          	  	&lt;sp:WssX509V3Token10 /&gt;
+          	  &lt;/wsp:Policy&gt;
+          	&lt;/sp:X509Token&gt;
+          &lt;/wsp:Policy&gt;
+        &lt;/sp:InitiatorToken&gt;
+        &lt;sp:RecipientToken&gt;
+          &lt;wsp:Policy&gt;
+          	&lt;sp:X509Token sp:IncludeToken="http://docs.oasis-open.org/ws-sx/
+          	                     ws-securitypolicy/200702/IncludeToken/Never"&gt;
+          	  &lt;wsp:Policy&gt;
+          	  	&lt;sp:WssX509V3Token10 /&gt;
+          	  &lt;/wsp:Policy&gt;
+          	&lt;/sp:X509Token&gt;
+          &lt;/wsp:Policy&gt;
+        &lt;/sp:RecipientToken&gt;
+        &lt;sp:AlgorithmSuite&gt;
+          &lt;wsp:Policy&gt;
+            &lt;sp:TripleDesRsa15 /&gt;
+          &lt;/wsp:Policy&gt;
+        &lt;/sp:AlgorithmSuite&gt;
+      &lt;/wsp:Policy&gt;
+    &lt;/sp:AsymmetricBinding&gt;
+    &lt;sp:Wss10&gt;
+      &lt;wsp:Policy&gt;
+        &lt;sp:MustSupportRefEmbeddedToken /&gt;
+        &lt;sp:MustSupportRefIssuerSerial /&gt;
+      &lt;/wsp:Policy&gt;
+    &lt;/sp:Wss10&gt;
+    &lt;sp:SignedParts&gt;
+    	&lt;sp:Body /&gt;
+    &lt;/sp:SignedParts&gt;
+  &lt;/wsp:Policy&gt;
+
+</pre>
+<p>En la etiqueta <span class="codefrag">&lt;wsp:Policy&gt;</span> se especifica el 
+identificador "<span class="codefrag">p1</span>" de la pol&iacute;tica. Dentro de esta secci&oacute;n se 
+especifican el <span class="codefrag">InitiatorToken</span> que obligamos que sea X509, es decir, un 
+certificado, el <span class="codefrag">RecipientToken</span>, donde se indica que tambi&eacute;n es un 
+certificado X509 y que el servicio nunca debe enviar su certificado al 
+cliente y el <span class="codefrag">AlgorithmSuite</span> que utiliza 3DES para encriptar y RSA 1.5 
+para firmar. En la secci&oacute;n Wss10 se especifica que tanto cliente como 
+servicio deben ser capaces de tratar con tokens de seguridad (certificados) 
+que est&eacute;n incluidos directamente en el mensaje, y que deben buscarlos a trav&eacute;s 
+de su nombre y su n&uacute;mero de serie. Finalmente, en <span class="codefrag">SignedParts</span> indicamos 
+que hay que firmar el cuerpo del mensaje.
+</p>
+<p>Validamos el <span class="codefrag">Seguro.wsdl</span> y si no da ning&uacute;n error, 
+vamos a pasar a generar el c&oacute;digo. Eliminamos el paquete 
+<span class="codefrag">es.ua.jtech.servicio</span> junto con todos sus .java, y editamos 
+<span class="codefrag">GeneraCodigo.java</span>, para cambiar la ruta del WSDL, que ahora pasa 
+a ser "<span class="codefrag">src/main/resources/Seguro.wsdl</span>". Ejecutamos como 
+aplicaci&oacute;n java y pulsamos Refresh sobre el proyecto. 
+Vamos a mover una de las clases generadas a un paquete diferente, ya que 
+vamos a modificar su c&oacute;digo y no queremos que se sobreescriba en futuras 
+generaciones de c&oacute;digo. Abrimos <span class="codefrag">Seguro_SeguroSOAP_Client.java</span> y 
+a&ntilde;adimos el subpaquete "<span class="codefrag">.custom</span>" en la primera l&iacute;nea donde se 
+define el paquete:
+</p>
+<pre class="code">package es.ua.jtech.seguro.custom;</pre>
+<p>Enseguida lo resaltar&aacute; como error. Pulsamos sobre la bombilla que indica 
+sugerencia, y seleccionamos la opci&oacute;n "Move to package es.ua.jtech.seguro.custom". 
+Se crear&aacute; el paquete correspondiente y la clase estar&aacute; dentro, pero con 
+errores debido a que no encuentra algunas clases en su mismo paquete. 
+Para arreglarlo deber&iacute;amos a&ntilde;adir sus imports. Una manera autom&aacute;tica de 
+hacerlo es pulsando Mayus - Ctrl - O, o bien con el bot&oacute;n derecho sobre el 
+c&oacute;digo, Source / Oganize imports. Guardamos y los errores desaparecen. 
+Ahora podemos continuar editando este mismo archivo. Despu&eacute;s de las l&iacute;neas: </p>
+<pre class="code">
+        Seguro_Service ss = new Seguro_Service(wsdlURL, SERVICE_NAME);
+        Seguro port = ss.getSeguroSOAP();  
+
+</pre>
+<p>a&ntilde;adimos: </p>
+<pre class="code"> 
+        Map&lt;String, Object&gt; properties = ((BindingProvider)port).
+          getRequestContext();
+        properties.put(SecurityConstants.SIGNATURE_USERNAME, "cliente1");
+        properties.put(SecurityConstants.CALLBACK_HANDLER, 
+          new CallbackHandler() {
+			
+			@Override
+			public void handle(Callback[] callbacks) throws IOException,
+					UnsupportedCallbackException {
+				for(Callback cb : callbacks){ 
+					WSPasswordCallback pcb = (WSPasswordCallback)cb; 						if(pcb.getIdentifier().equals("cliente1")){
+						pcb.setPassword("cliente1-pass");
+					}
+				}
+			}
+		});
+        properties.put(SecurityConstants.SIGNATURE_PROPERTIES, 
+          "crypto.properties");
+        properties.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, 
+          "http://localhost:1234/Seguro");
+
+</pre>
+<p>siendo necesarios los siguientes imports (cuidado, porque puede haber 
+clases con el mismo nombre en paquetes diferentes, como por ejemplo 
+Map o Callback, y hay que poner el import adecuado):
+</p>
+<pre class="code"> 
+import java.io.IOException;
+import java.util.Map;
+import javax.security.auth.callback.Callback;
+import javax.security.auth.callback.CallbackHandler;
+import javax.security.auth.callback.UnsupportedCallbackException;
+import javax.xml.ws.BindingProvider;
+import org.apache.cxf.ws.security.SecurityConstants;
+import org.apache.ws.security.WSPasswordCallback;
+
+</pre>
+<p>Tambi&eacute;n introducimos valores en los par&aacute;metros de la llamada a 
+la operaci&oacute;n saluda:
+</p>
+<pre class="code"> 
+        System.out.println("Invoking saluda...");
+        java.lang.String _saluda_nombre = "Boyan";
+        java.lang.String _saluda_apellido = "Bonev";
+        java.lang.String _saluda__return = 
+          port.saluda(_saluda_nombre, _saluda_apellido);
+        System.out.println("saluda.result=" + _saluda__return);
+
+</pre>
+<p>Para terminar el cliente s&oacute;lo falta crear el archivo 
+<span class="codefrag">crypto.properties</span> en la carpeta <span class="codefrag">src/main/resources</span>:
+</p>
+<pre class="code">
+org.apache.ws.security.crypto.provider=
+  org.apache.ws.security.components.crypto.Merlin
+org.apache.ws.security.crypto.merlin.keystore.type=JKS
+org.apache.ws.security.crypto.merlin.file=/home/servicios/claves/cliente.ks
+org.apache.ws.security.crypto.merlin.keystore.password=cliente1-ks-pass
+</pre>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Nota: Cada propiedad debe ir en una l&iacute;nea, a pesar de que en la impresi&oacute;n
+aparezca en dos.</div>
+</div>
+<p>En &eacute;l indicamos el paquete y el nombre de la clase que har&aacute; de proveedor 
+criptogr&aacute;fico, y ponemos tres par&aacute;metros que &eacute;ste necesita: el tipo de 
+almac&eacute;n de claves (JKS es el Java Keystore), la ruta del almac&eacute;n de claves, 
+y la contrase&ntilde;a que se necesita para abrirlo.</p>
+<p>El cliente ya est&aacute; terminado. Si queremos lanzarlo debemos asegurarnos 
+de que el TCPMonitor est&aacute; escuchando en el puerto 1234 y reenviando al 
+puerto 8080, y que a su vez hay un servicio en el puerto 8080. 
+Podemos lanzar el <span class="codefrag">SWServicio</span>, pero &eacute;ste no est&aacute; preparado 
+para tratar mensajes firmados y responder&aacute; con un mensaje que contendr&aacute; 
+una excepci&oacute;n. De todas maneras el mensaje generado por parte del cliente 
+tiene el siguiente aspecto:</p>
+<pre class="code"> 
+POST /Seguro HTTP/1.1 
+Content-Type: text/xml; charset=UTF-8 
+SOAPAction: "http://jtech.ua.es/Seguro/saluda" 
+Accept: */* 
+User-Agent: Apache CXF 2.2.5 
+Cache-Control: no-cache 
+Pragma: no-cache 
+Host: 127.0.0.1:1234 
+Connection: keep-alive 
+Content-Length: 3234 
+
+&lt;soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+   &lt;soap:Header&gt;
+      &lt;wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/
+        oasis-200401-wss-wssecurity-secext-1.0.xsd" soap:mustUnderstand="1"&gt;
+         &lt;wsse:BinarySecurityToken xmlns:wsse="http://docs.oasis-open.org/wss/
+               2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" 
+             xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/
+               oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+             EncodingType="http://docs.oasis-open.org/wss/2004/01/
+                 oasis-200401-wss-soap-message-security-1.0#Base64Binary"
+               ValueType="http://docs.oasis-open.org/wss/2004/01/
+                 oasis-200401-wss-x509-token-profile-1.0#X509v3" 
+               wsu:Id="CertId-897C23E154C65197...
+						...
+						...
+						...
+...rZSJE3b16AceZPJbXnKsORMBstU=&lt;/wsse:BinarySecurityToken&gt;
+         &lt;ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" 
+           Id="Signature-1"&gt;
+            &lt;ds:SignedInfo&gt;
+               &lt;ds:CanonicalizationMethod 
+                 Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /&gt;
+               &lt;ds:SignatureMethod 
+                 Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /&gt;
+               &lt;ds:Reference URI="#Id-7182746"&gt;
+                  &lt;ds:Transforms&gt;
+                     &lt;ds:Transform 
+                       Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /&gt;
+                  &lt;/ds:Transforms&gt;
+                  &lt;ds:DigestMethod 
+                    Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /&gt;
+                  &lt;ds:DigestValue&gt;ectcL2EGiN2H2+WcnFo/BxfQ89g=&lt;/ds:DigestValue&gt;
+               &lt;/ds:Reference&gt;
+            &lt;/ds:SignedInfo&gt;
+            &lt;ds:SignatureValue&gt;IC7YAzDpY93JCUGLI3HD79R+Exn9LBpEecq2wTTzFRA
+            /ztCiZkSrdOPVG7t5cRAVCMN+czXspfhl124p/6rXvazqcX42Vv7VwycyZzNa6
+            OifZlJOypUqgh7++sJjrIW46gD2HnZT+/YjKZSIDttBJ331iv+AlZyBbZZQmaq
+            1XP4=&lt;/ds:SignatureValue&gt;
+            &lt;ds:KeyInfo Id="KeyId-897C23E154C65197B312740255507352"&gt;
+               &lt;wsse:SecurityTokenReference xmlns:wsse="http://
+                  docs.oasis-open.org/wss/2004/01/
+                  oasis-200401-wss-wssecurity-secext-1.0.xsd" 
+                 xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/
+                  oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+                 wsu:Id="STRId-897C23E154C65197B312740255507453"&gt;
+                  &lt;wsse:Reference xmlns:wsse="http://docs.oasis-open.org/wss/
+                    2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" 
+                   URI="#CertId-897C23E154C65197B312740255507091" 
+                   ValueType="http://docs.oasis-open.org/wss/2004/01/
+                    oasis-200401-wss-x509-token-profile-1.0#X509v3" /&gt;
+               &lt;/wsse:SecurityTokenReference&gt;
+            &lt;/ds:KeyInfo&gt;
+         &lt;/ds:Signature&gt;
+      &lt;/wsse:Security&gt;
+   &lt;/soap:Header&gt;
+   &lt;soap:Body xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/
+     oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="Id-7182746"&gt;
+      &lt;ns2:saluda xmlns:ns2="http://jtech.ua.es/Seguro/"&gt;
+         &lt;nombre&gt;Boyan&lt;/nombre&gt;
+         &lt;apellido&gt;Bonev&lt;/apellido&gt;
+      &lt;/ns2:saluda&gt;
+   &lt;/soap:Body&gt;
+&lt;/soap:Envelope&gt;
+
+</pre>
+<p>El <span class="codefrag">Header</span> ha pasado a ocupar bastante m&aacute;s que el propio mensaje 
+(en este caso) porque contiene la secci&oacute;n <span class="codefrag">Security</span>, con la 
+firma digital. Obs&eacute;rvese que la firma hace referencia al id del cuerpo, 
+en este caso  <span class="codefrag">wsu:Id="Id-7182746"</span>, ya que s&oacute;lo est&aacute; firmando el 
+cuerpo. Obs&eacute;rvese tambi&eacute;n que el certificado con el cu&aacute;l se ha generado 
+la firma tambi&eacute;n est&aacute; incluido (es el <span class="codefrag">BinarySecurityToken</span>).</p>
+<a name="N100FF"></a><a name="Servidor+con+CXF"></a>
+<h3 class="underlined_5">Servidor con CXF</h3>
+<p>Abrimos el proyecto <span class="codefrag">SWSeguroServicio</span> (que hab&iacute;amos copiado a 
+partir de <span class="codefrag">SWServicio</span> y le hab&iacute;amos a&ntilde;adido las dependencias 
+<span class="codefrag">rampart-core</span> y <span class="codefrag">rampart-policy</span>) y eliminamos su WSDL. 
+En su lugar copiamos el <span class="codefrag">Seguro.wsdl</span> y el <span class="codefrag">crypto.properties</span> 
+del proyecto <span class="codefrag">SWSeguroCliente</span>. Modificamos el 
+<span class="codefrag">crypto.properties</span> para que utilice el almac&eacute;n del servidor:
+</p>
+<pre class="code">
+org.apache.ws.security.crypto.provider=
+  org.apache.ws.security.components.crypto.Merlin
+org.apache.ws.security.crypto.merlin.keystore.type=JKS
+org.apache.ws.security.crypto.merlin.file=/home/servicios/claves/servidor.ks
+org.apache.ws.security.crypto.merlin.keystore.password=servidor1-kspass
+</pre>
+<p>
+Eliminamos todo el paquete <span class="codefrag">es.ua.jtech.servicio</span>, editamos 
+<span class="codefrag">GeneraCodigo.java</span> para indicar la ruta correcta del WSDL que ahora se 
+llama <span class="codefrag">Seguro.wsdl</span>, y ejecutamos el generador, refrescando despu&eacute;s. 
+Habr&aacute; un error en <span class="codefrag">Seguro_SeguroSOAP_Server.java</span>, porque falta la 
+implementaci&oacute;n del servicio. Vamos a mover esta clase fuera del paquete. 
+La editamos y cambiamos su primera l&iacute;nea a: 
+</p>
+<pre class="code">package es.ua.jtech.seguro.custom;</pre>
+<p>La resalta como error y hacemos click sobre la sugerencia 
+</p>
+<pre class="code">Move 'Seguro_SeguroSOAP_server.java' to package 
+'es.ua.jtech.seguro.custom'. </pre>
+<p>El error contin&uacute;a estando, porque seguimos sin tener una clase llamada 
+<span class="codefrag">SeguroImpl()</span>. Aceptamos la sugerencia de: </p>
+<pre class="code">Create class 'SeguroImpl'</pre>
+<p>y en el asistente le a&ntilde;adimos la interfaz Seguro:</p>
+<p>
+<img alt="Implementar SeguroImpl" content-width="7.42cm" src="imagenes/sws/29.png" width="618"></p>
+<p>Rellenamos nuestro c&oacute;digo de saludo. Adem&aacute;s, hay que a&ntilde;adir la anotaci&oacute;n 
+de servicio web a la clase <span class="codefrag">SeguroImpl</span>, para indicarle a Rampart 
+d&oacute;nde se encuentra el documento wsdl. La interfaz <span class="codefrag">Seguro.java</span> 
+ya incluye esta modificaci&oacute;n y podr&iacute;amos a&ntilde;adir esta informaci&oacute;n ah&iacute;, 
+pero lo vamos a hacer en la implementaci&oacute;n. La anotaci&oacute;n es:
+</p>
+<pre class="code">
+WebService(targetNamespace = "http://jtech.ua.es/Seguro/",
+			serviceName = "Seguro",
+			endpointInterface = "es.ua.jtech.seguro.Seguro",
+			wsdlLocation = "file:src/main/resources/Seguro.wsdl")
+</pre>
+<p>De manera que el c&oacute;digo queda as&iacute;:</p>
+<p>
+<img alt="C&oacute;digo de SeguroImpl.java" content-width="10.49cm" src="imagenes/sws/30.png" width="700"></p>
+<p>Ahora editamos de nuevo la clase <span class="codefrag">Seguro_SeguroSOAP_Server</span> 
+que es la que lanza el servidor. Vamos a sustituir la l&iacute;nea:
+</p>
+<pre class="code">Endpoint.publish(address,implemento);</pre>
+<p>por el siguiente c&oacute;digo:</p>
+<pre class="code"> 
+        Endpoint endpoint = Endpoint.create(implementor); 
+        Map&lt;String,Object&gt; properties = endpoint.getProperties(); 
+        properties.put(SecurityConstants.SIGNATURE_USERNAME, "servidor1"); 
+        properties.put(SecurityConstants.CALLBACK_HANDLER, 
+          new CallbackHandler() { 
+			 
+			@Override 
+			public void handle(Callback[] callbacks) throws IOException, 
+					UnsupportedCallbackException { 
+				for(Callback cb : callbacks){ 
+					WSPasswordCallback pcb = (WSPasswordCallback)cb; 
+					if(pcb.getIdentifier().equals("servidor1")){ 
+						pcb.setPassword("servidor1-pass"); 
+					} 
+				} 
+				 
+			} 
+		}); 
+        properties.put(SecurityConstants.SIGNATURE_PROPERTIES, 
+          "crypto.properties"); 
+        endpoint.publish(address); 
+
+</pre>
+<p>Al arreglar los imports, debemos elegir los siguientes:
+</p>
+<pre class="code">
+java.util.Map
+javax.security.auth.callback.Callback
+org.apache.cxf.ws.security.SecurityConstants
+</pre>
+<p>El proyecto deber&iacute;a mostrarse sin ning&uacute;n error. 
+Ejecutamos el servidor <span class="codefrag">Seguro_SeguroSOAP_Server.java</span>, y 
+una vez iniciado, ejecutamos el cliente <span class="codefrag">Seguro_SeguroSOAP_Client.java</span>, 
+con el TCPMonitor escuchando en 1234 y reenviando a 8080. 
+Si no queremos usar el TCPMonitor, debemos cambiar el endpoint del 
+servicio al puerto 8080. En ambos casos en la consola aparece el resultado 
+deseado:
+</p>
+<pre class="code">
+Invoking saluda...
+16-may-2010 20:40:33 org.apache.cxf.ws.policy.AssertionBuilderRegistryImpl build
+ADVERTENCIA: No assertion builder for type {http://docs.oasis-open.org/ws-sx/
+  ws-securitypolicy/200702}WssX509V3Token10 registered.
+saluda.result=&iexcl;Hola, B. Bonev!
+</pre>
+</div> 
+
+
+<p class="pageBreakAfter"></p>
+
+<a name="N10197"></a><a name="Ejercicios"></a>
+<h2 class="underlined_10">Ejercicios</h2>
+<div class="section">
+<a name="N1019C"></a><a name="Calculadora+con+firma+digital+con+CXF"></a>
+<h3 class="underlined_5">Calculadora con firma digital con CXF</h3>
+<p>Implem&eacute;ntese un servicio de calculadora que realice la operaci&oacute;n
+suma de dos n&uacute;meros y la operaci&oacute;n resta de dos n&uacute;meros, devolviendo
+un &uacute;nico resultado de tipo double en cada una de ellas. El servicio
+deber&aacute; soportar firma digital, y el cliente deber&aacute; firmar los mensajes
+SOAP.</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010 Depto. CCIA</div>
+</div>
+</body>
+</html>

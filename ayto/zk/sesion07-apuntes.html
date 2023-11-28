@@ -1,0 +1,829 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Sesi&oacute;n 7: El patr&oacute;n MVC</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/banner-aplicaciones-ria.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/baner_j2ee_der.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Apuntes</a>
+</li>
+<li>
+<a class="base-not-selected" href="software.html">Software</a>
+</li>
+<li>
+<a class="base-not-selected" href="doc.html">Documentaci&oacute;n</a>
+</li>
+<li>
+<a class="base-not-selected" href="enlaces.html">Enlaces</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Apuntes</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 7</div>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesion 10</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion07-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Sesi&oacute;n 7: El patr&oacute;n MVC</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Breve+descripci%C3%B3n+del+patr%C3%B3n+modelo-vista-controlador">Breve descripci&oacute;n del patr&oacute;n modelo-vista-controlador</a>
+</li>
+<li>
+<a href="#Ejecutando+c%C3%B3digo+Java">Ejecutando c&oacute;digo Java</a>
+<ul class="minitoc">
+<li>
+<a href="#ZUML+y+Java">ZUML y Java</a>
+</li>
+<li>
+<a href="#Use">Use</a>
+</li>
+<li>
+<a href="#El+atributo+apply">El atributo apply</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Ejemplo+de+controlador">Ejemplo de controlador</a>
+</li>
+<li>
+<a href="#Un+controlador+completo">Un controlador completo</a>
+</li>
+<li>
+<a href="#ToDo%3A+un+gestor+de+tareas+pendientes">ToDo: un gestor de tareas pendientes</a>
+<ul class="minitoc">
+<li>
+<a href="#El+modelo+de+dominio">El modelo de dominio</a>
+</li>
+<li>
+<a href="#La+capa+de+datos">La capa de datos</a>
+</li>
+<li>
+<a href="#Un+singleton+que+simula+la+BD">Un singleton que simula la BD</a>
+</li>
+<li>
+<a href="#El+controlador">El controlador</a>
+</li>
+<li>
+<a href="#La+vista">La vista</a>
+</li>
+<li>
+<a href="#Seleccionando+una+tarea">Seleccionando una tarea</a>
+</li>
+<li>
+<a href="#Actualizaci%C3%B3n+del+modelo">Actualizaci&oacute;n del modelo</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="Breve+descripci%C3%B3n+del+patr%C3%B3n+modelo-vista-controlador"></a>
+<h2 class="underlined_10">Breve descripci&oacute;n del patr&oacute;n modelo-vista-controlador</h2>
+<div class="section">
+<p>El patr&oacute;n modelo-vista-controlador es un patr&oacute;n muy usado para el dise&ntilde;o de la arquitectura de aplicaciones con interfaces de usuario. El objetivo del patr&oacute;n es definir una separaci&oacute;n clara entre los datos que se muestran en la aplicaci&oacute;n (el <em>modelo</em>) y la representaci&oacute;n visual de los mismos (la <em>vista</em>). El controlador es el encargado de mantener la vista y el modelo sincronizados y de procesar los eventos generados por la interfaz de usuario y cambiar la vista de forma adecuada.</p>
+<p>Por ejemplo, supongamos que tenemos una aplicaci&oacute;n que gestiona una lista de clientes. El modelo ser&aacute; el conjunto de clases que nos permiten representar la l&oacute;gica de negocio de la aplicaci&oacute;n. Tenemos <em>Personas</em>, <em>Grupos</em>, <em>Direcciones de correo</em>, <span class="codefrag">Numeros de tel&eacute;fono</span>, etc. Todos estas clases tienen sus propias funciones que deben ser independientes del aspecto final de la aplicaci&oacute;n, de si estamos realizando una aplicaci&oacute;n para un tel&eacute;fono m&oacute;vil o para un escritorio. Por ejemplo, tendremos m&eacute;todos c&oacute;mo:</p>
+<ul>
+
+<li>Dame la foto y el e-mail del cliente XXX</li>
+
+<li>Dame los identificadores de los clientes que no han realizado ninguna compra en el &uacute;ltimo a&ntilde;o</li>
+
+<li>A&ntilde;ade un cliente nuevo</li>
+
+<li>Cambia el tel&eacute;fono del cliente XXX</li>
+
+</ul>
+<p>Estas funciones son independientes del aspecto de la aplicaci&oacute;n. Constituyen la "l&oacute;gica de negocio" que la sustenta. En el mundo Java estas funciones se define con clases que agrupan la informaci&oacute;n y los m&eacute;todos. </p>
+<p>El modelo a su vez suele estar dividido en dos capas: </p>
+<ul>
+   
+<li>L&oacute;gica de negocio: funciones que contienen la informaci&oacute;n de las reglas de funcionamiento de la aplicaci&oacute;n (por ejemplo, qu&eacute; hacer cuando un cliente hace una reclamaci&oacute;n)</li>
+   
+<li>Capa de datos: capa que gestiona la persistencia de los datos en una base de datos</li>
+
+</ul>
+<p>La separaci&oacute;n entre la vista y el modelo permite localizar y aislar distintas responsabilidades en el dise&ntilde;o y desarrollo de la aplicaci&oacute;n. Una aplicaci&oacute;n no est&aacute; bien dise&ntilde;ada si caracter&iacute;sticas espec&iacute;ficas de la vista se codifican en el modelo, o si decisiones y c&aacute;lculos del modelo se realizan en la vista. La separaci&oacute;n entre estas tres capas permite independizar el desarrollo, el test y el mantenimiento. Por ejemplo, un cambio en la vista (cambiar un grid por un listbox, o un men&uacute; desplegable por una barra de botones) no debe afectar al modelo.</p>
+<p>Otra ventaja de separar las responsabilidades es poder reutilizar los distintos m&oacute;dulos de la aplicaci&oacute;n. Separando el modelo del controlador y de las vistas permitimos que otras aplicaciones lo utilicen con otras vistas y otros controladores.</p>
+<p>Un ejercicio muy recomendable es pensar en c&oacute;mo ser&iacute;a la aplicaci&oacute;n que estamos desarrollando con una interfaz de usuario completamente distinta, por ejemplo, una interfaz de l&iacute;nea de comando o de un tel&eacute;fono m&oacute;vil. En cada caso s&oacute;lo deber&iacute;a de cambiar la vista, el modelo deber&iacute;a ser com&uacute;n a las distintas vistas. Cada vista adaptar&iacute;a la respuesta proporcionada por el modelo a sus particularidades.</p>
+<p>Por ejemplo, supongamos una aplicaci&oacute;n en la que hay que realizar un listado de ventas de art&iacute;culos y marcar en rojo aquellos art&iacute;culos cuyas ventas se han incrementado en un 10 por cierto en el &uacute;ltimo mes. &iquest;Qu&eacute; pondr&iacute;amos en el modelo y en la vista? La soluci&oacute;n de Martin Fowler, en su libro <em>Patterns of Enterprise Application Architecture</em> es definir en el modelo una funci&oacute;n que determina si un art&iacute;culo ha mejorado las ventas. Esta funci&oacute;n consulta las ventas del art&iacute;culo en los dos &uacute;ltimos meses y devuelve un valor booleano. La vista llama a esta funci&oacute;n y pinta en rojo el art&iacute;culo si se devuelve true. De esta forma, el proceso se divide en dos partes: decidir si algo tiene que ser marcado y decir c&oacute;mo marcarlo.</p>
+<p>Entre las caracter&iacute;sticas de cada una de las partes se encuentran las siguientes:</p>
+<ul>
+	
+<li>
+<strong>Modelo</strong>:
+	<ul>
+		
+<li>Encapsula el estado de la aplicaci&oacute;n</li>
+		
+<li>Responde a preguntas sobre el estado</li>
+		
+<li>Expone las funcionalidades de la aplicaci&oacute;n</li>
+		
+<li>Notifica a la vista de cambios sucedidos en el estado</li>
+	
+</ul>
+</li>
+	
+<li>
+<strong>Vista</strong>:
+	<ul>
+		
+<li>Muestra el estado</li>
+		
+<li>Solicita actualizaciones desde el modelo</li>
+		
+<li>Captura los eventos del usuario y los manda al controlador cuando es necesario</li>
+		
+<li>Permite al controlador modificar la vista</li>
+	
+</ul>
+</li>
+	
+<li>
+<strong>Controlador</strong>:
+	<ul>
+		
+<li>Define la conducta de la aplicaci&oacute;n, transformando los eventos recibidos desde la vista en cambios de estado del modelo</li>
+		
+<li>Selecciona la vista a mostrar, normalmente una vista por cada funcionalidad</li>
+	
+</ul>
+</li>
+
+</ul>
+<p>En la siguiente figura se muestran las responsabilidades de cada una de las partes, as&iacute; como la forma de comunicaci&oacute;n entre ellas. Las flechas continuas representan invocaci&oacute;n s&iacute;ncrona de m&eacute;todos. La parte que realiza la llamada se queda a la espera de que la otra parte realice el procesamiento y devuelva un resultado. Las l&iacute;neas discontinuas representan eventos. En este caso, la parte que lanza el evento lo hace de forma as&iacute;ncrona y no espera ninguna respuesta ni, por tanto, modifica su estado ni su comportamiento en funci&oacute;n de &eacute;sta.</p>
+<p>
+<img alt="" content-width="9cm" src="imagenes/modelo-vista-controlador.png" width="550"></p>
+<p>Un ejemplo de aplicaci&oacute;n del patr&oacute;n en una aplicaci&oacute;n web Java:</p>
+<ul>
+	
+<li>Modelo: clases Java y objetos Java beans</li>
+	
+<li>Vista: p&aacute;ginas JSP</li>
+	
+<li>Controlador: servlets</li>
+
+</ul>
+<p>En el caso de ZK, la separaci&oacute;n entre vista, modelo y controlador no es obligatoria en la arquitectura. El framework est&aacute; basado en las p&aacute;ginas ZUL que son procesadas por el motor ZK. Esto permite m&uacute;ltiples opciones, como incluir el controlador en las propias p&aacute;ginas e incluir tambi&eacute;n en ellas el c&oacute;digo Java que gestiona el modelo. Como el framework no obliga a realizar una separaci&oacute;n estricta entre las capas, deberemos imponer nosotros mismos esta arquitectura en el dise&ntilde;o de nuestras aplicaciones.</p>
+<p>Para aplicar el patr&oacute;n a ZK deber&iacute;amos separar el c&oacute;digo al menos en dos grupos de ficheros:</p>
+<ul>
+
+<li>Clases Java en las que se gestiona el modelo de la aplicaci&oacute;n</li>
+
+<li>Ficheros ZUL en donde se implementan las vistas y el controlador</li>
+
+</ul>
+<p>Esta estructura definir&iacute;a un modelo "MV+C", en el que la vista y el controlador se encuentran en los mismos ficheros.</p>
+<p>Si queremos ir m&aacute;s all&aacute; para, por ejemplo, poder reutilizar en distintos componentes el c&oacute;digo del controlador, es recomendable separar a su vez la vista y el controlador. De esta forma tendr&iacute;amos:</p>
+<ul>
+
+<li>Modelo: Clases Java</li>
+
+<li>Vista: Ficheros .zul</li>
+
+<li>Parte del controlador: Clases Java que manejan los eventos de la vista</li>
+
+</ul>
+<p>Adem&aacute;s de esta separaci&oacute;n de ficheros, es importante lo que se hace en el c&oacute;digo. Por ejemplo, una recomendaci&oacute;n muy importante es que el controlador no debe cambiar los datos de la vista para dejarla sincronizada con el modelo (como se hac&iacute;a en los primeros ejemplos de datos din&aacute;micos en listas). Hay que utilizar las caracter&iacute;sticas de data binding de ZK para ello. El controlador debe modificar el modelo y el data binding se debe encargar de pintar el cambio en la vista.</p>
+</div>
+
+
+
+<a name="N100CE"></a><a name="Ejecutando+c%C3%B3digo+Java"></a>
+<h2 class="underlined_10">Ejecutando c&oacute;digo Java</h2>
+<div class="section">
+<a name="N100D4"></a><a name="ZUML+y+Java"></a>
+<h3 class="underlined_5">ZUML y Java</h3>
+<p>Como hemos visto, la forma de dise&ntilde;ar la interfaz de usuario en ZK es mediante un fichero XML en el que se define el &aacute;rbol de componentes. Se trata de una forma <em>declarativa</em>, frente a otro tipo de enfoques como el de GWT o Swing en los que la interfaz se construye ejecutando un programa Java. En los enfoques declarativos (tambi&eacute;n usado por JavaFX, por ejemplo) la interfaz se especifica en un lenguaje XML y el m&oacute;dulo runtime del lenguaje interpreta esa definici&oacute;n y la construye.</p>
+<p>De esta forma queda muy claro que el c&oacute;digo de scripting y el c&oacute;digo Java se va a utilizar en su mayor parte para gestionar los eventos producidos en la interfaz. Cuando ocurre un evento en la IU, ZK notifica autom&aacute;ticamente al servidor que lanza el correspondiente gestor del evento (escrito en Java o en el lenguaje de script). Ese c&oacute;digo se ejecuta completamente en el servidor, pudiendo acceder a otras librer&iacute;as o frameworks o acceder a bases de datos, por ejemplo.</p>
+<p>En la mayor&iacute;a de ocasiones ZUML se utiliza para componer la disposici&oacute;n (<em>layout</em>) de la IU y Java se encarga de todo lo dem&aacute;s. Realmente, como ya hemos comentado, es posible escribir c&oacute;digo Java en ZUML en forma de zscript. Incluso se podr&iacute;a escribir todo en ZUML, o todo usando Java. Sin embargo, no es una buena pr&aacute;ctica definir toda la interfaz de usuario en zscript. Esto genera c&oacute;digo poco reusable y dif&iacute;cil de mantener. En el otro extremo, es tedioso usar s&oacute;lo Java para construir uno a uno los componentes y enlazarlos formando un &aacute;rbol para componer la IU.</p>
+<p>Se pueden usar las clases Java en los programas ZK para las siguientes tareas.</p>
+<p>
+<strong>Manejo de eventos</strong>: para manejar los eventos es posible utilizar zscript en ZUML para hacer el prototipado de la interfaz. O, como hemos visto, podemos escribir clases Java que se asocian a los componentes mediante los atributos <span class="codefrag">use</span> y <span class="codefrag">apply</span>. En la clase se definen m&eacute;todos cuyos nombres coinciden con el nombre del evento que se trata. Hemos visto ya un ejemplo de esto.</p>
+<p>Fichero ZUML:</p>
+<pre class="code">&lt;window id="win" title="MVC" apply="MyComposer"&gt;
+   &lt;button label="Di hola" forward="onDiHola" /&gt;
+&lt;/window&gt;</pre>
+<p>Fichero MyComposer.java</p>
+<pre class="code">//MyComposer.java
+ import org.zkoss.zk.ui.event.Event;
+ import org.zkoss.zk.ui.util.GenericComposer;
+ import org.zkoss.zul.Label;
+ 
+ public class MyComposer extends GenericComposer {
+ 	public void onSayHello(Event evt) {
+ 		evt.getTarget().appendChild(new Label("Hello")); 
+ 	}
+ }</pre>
+<p>
+<strong>Modificar la IU al vuelo</strong>. En el ejemplo anterior, se a&ntilde;ade un nuevo componente hijo a la interfaz utilizando el m&eacute;todo <span class="codefrag">appendChild</span> del componente. En este caso, el componente receptor del evento es la ventana (la instrucci&oacute;n <span class="codefrag">forward</span> reenv&iacute;a el evento al componente padre), que se obtiene del par&aacute;metro del manejador del evento con el m&eacute;todo <span class="codefrag">getTarget()</span>.</p>
+<p>
+<strong>Conectarse con otras capas y librer&iacute;as</strong>. Todo el c&oacute;digo Java, ya sea en zscript o en clases Java, se ejecuta en el servidor. Por eso, es posible utilizar cualquier librer&iacute;a Java. La parte del cliente en el navegador s&oacute;lo obtiene el contenido HTML y el motor ZK del cliente escrito en JavaScript.</p>
+<a name="N10119"></a><a name="Use"></a>
+<h3 class="underlined_5">Use</h3>
+<p>El atributo <span class="codefrag">use</span> define una clase Java que es utilizada como controlador del elemento. Por defecto, cada componente ZK tiene una clase Java asociada. Hemos visto que el &aacute;rbol de componentes que forma la interfaz de usuario est&aacute; mapeado en el servidor por un &aacute;rbol de objetos Java instancias de las clases de los componentes. Mediante el atributo <span class="codefrag">use</span> podemos mapear el componente en una clase definida por el desarrollador que especializa la clase por defecto.</p>
+<p>Por ejemplo, un componente ventana (<span class="codefrag">window</span>) se mapea en una instancia de la clase <span class="codefrag">org.zkoss.zul.Window</span>. Podemos sobreescribir esta clase con la siguiente declaraci&oacute;n:</p>
+<pre class="code">&lt;window use="MyWindow"&gt;
+...
+&lt;/window&gt;</pre>
+<p>Y podemos definir la clase <span class="codefrag">MyWindow</span> como una clase que especializa la original:</p>
+<pre class="code">import org.zkoss.zul.Window;
+&nbsp;
+public class MyWindow extends Window {
+   public void onCreate(){
+      this.setTitle("mi ventana");
+   }
+}</pre>
+<p>Podemos sobreescribir los m&eacute;todos que queramos modificar. En el ejemplo, modificamos el m&eacute;todo <span class="codefrag">onCreate()</span> llamado justo despu&eacute;s de crear el componente. Podemos tambi&eacute;n escribir manejadores de eventos en la clase.</p>
+<p>En el ejemplo anterior, combinando el atributo <span class="codefrag">use</span> y el atributo <span class="codefrag">each</span> podemos hacer que la definici&oacute;n de los objetos iniciales se haga en un fichero Java.</p>
+<p>Por ejemplo, declaramos la clase Java MyWindow como la clase componente de la ventana, y despu&eacute;s accedemos con la expresi&oacute;n EL <span class="codefrag">${win_1.strings}</span> al m&eacute;todo <span class="codefrag">getStrings()</span> del componente (utilizamos el identificador que hemos definido para el componente) y asignamos la colecci&oacute;n resultante a la variable <span class="codefrag">forEach</span> para realizar la iteraci&oacute;n por todas las cadenas.</p>
+<pre class="code">&lt;window id="win_1" use="MyWindow"&gt;
+	&lt;listbox&gt;
+		&lt;listitem label="${each}" forEach="${win_1.strings}"/&gt;
+	&lt;/listbox&gt;
+&lt;/window&gt;
+</pre>
+<p>La definici&oacute;n de <span class="codefrag">MyWindow</span> es como sigue:</p>
+<pre class="code">
+import org.zkoss.zul.Window;
+&nbsp;
+public class MyWindow extends Window {
+   String[] contacts = new String[] {"Lunes", "Martes", "Mi&eacute;rcoles"};
+   public String[] getContacts(){
+      return contacts;
+   }
+}</pre>
+<p>Adem&aacute;s de usar m&eacute;todos getters, podemos tambi&eacute;n invocar m&eacute;todos espec&iacute;ficos de la clase que especializa el componente. Por ejemplo, en el siguiente ejemplo se llama al m&eacute;todo <span class="codefrag">onTest()</span> cuando se pulsa un bot&oacute;n. Dentro de ese m&eacute;todo se utiliza <span class="codefrag">appendChild</span> para a&ntilde;adir <span class="codefrag">listItem</span>s al <span class="codefrag">listbox</span>. Para que funcione correctamente tenemos que poner el identificador <span class="codefrag">lb_1</span> en el <span class="codefrag">listbox</span>. El m&eacute;todo <span class="codefrag">getFellow</span> se ejecuta sobre el propio objeto <span class="codefrag">win_1</span> y devuelve el componente denominado <span class="codefrag">lb_1</span> en el espacio de identificadores (<em>ID space</em>) de la ventana. Es la forma de acceder al <span class="codefrag">listbox</span>.</p>
+<pre class="code">import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Listitem;
+import org.zkoss.zul.Window;
+&nbsp;
+public class MyWindow extends Window {
+	String[] contacts = new String[] { "Monday", "Tuesday", "Wednesday" };
+&nbsp;
+	public void onTest() {
+		Listbox lb = (Listbox) getFellow("lb_1");
+		for (int i = 0; i &lt; contacts.length; i++) {
+			Listitem li = new Listitem();
+			li.setLabel(contacts[i]);
+			lb.appendChild(li);
+		}
+	}
+}</pre>
+<a name="N10191"></a><a name="El+atributo+apply"></a>
+<h3 class="underlined_5">El atributo apply</h3>
+<p>El otro atributo ZK relacionado con las clases Java es <span class="codefrag">apply</span>. Su sintaxis es similar a <span class="codefrag">use</span>, con la diferencia de que permite especificar una o m&aacute;s clases:</p>
+<pre class="code">apply="a-class-name"
+ apply="class1, class2,..."
+ apply="${EL_returns_a_class_or_a_collection_of_classes}"
+ apply="${EL_returns_an_instance_or_a_collection_of_Composer_instances}"
+</pre>
+<p>Especifica una colecci&oacute;n de clases que se utilizan para inicializar el componente y gestionar sus eventos. Estas clases deben implementar la interfaz <span class="codefrag">org.zkoss.zk.util.Composer</span>. La forma de inicializar el componente es reescribiendo el m&eacute;todo <span class="codefrag">doAfterCompose</span>, que es llamado despu&eacute;s de que el comonente y sus hijos hayan sido inicializados. Se puede llamar al m&eacute;todo <span class="codefrag">addEventListener</span> dentro de este m&eacute;todo para registrar un menejador de eventos.</p>
+<p>Un ejemplo:</p>
+<pre class="code">&lt;window apply="MyController"&gt;
+   &lt;button id="btn_1" label="test" forward="onClick=onTest" /&gt;
+&lt;/window&gt;</pre>
+<pre class="code">import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.util.Composer;
+import org.zkoss.zul.Button;
+ 
+public class MyController implements Composer {
+   private Button btn;
+ 
+   public void doAfterCompose(Component win) throws Exception {
+      btn = (Button) win.getFellow("btn_1");
+      // define and register event listeners
+      win.addEventListener("onTest", new EventListener() {
+         public void onEvent(Event event) throws Exception {
+         btn.setLabel("event handled");
+         }
+      });
+   }
+}</pre>
+<p>Una &uacute;ltima forma de conectar el evento y la clase Java (sin usar <span class="codefrag">forward</span>) es utilizando las convenciones de los nombres de ZK. Es lo que en ZK se denomina <em>autowired</em>. En este caso, el m&eacute;todo que inicializa el componente debe extender la clase <span class="codefrag">GenericForwardComposer</span>:</p>
+<pre class="code">&lt;window apply="MyController"&gt;
+   &lt;button id="btn_1" label="test"/&gt;
+&lt;/window&gt;</pre>
+<pre class="code">import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.util.GenericForwardComposer;
+import org.zkoss.zul.Button;
+&nbsp;
+//Must extend from GenericForwardComposer to omit forward.
+public class MyController extends GenericForwardComposer {
+   private Button btn_1;
+&nbsp;
+   //onClick event from btn_1 component
+   public void onClick$btn_1(Event event) { 
+      btn_1.setLabel("event handled");
+   }
+}</pre>
+<p>Vemos que como nombre de funci&oacute;n se utiliza el nombre del evento (<span class="codefrag">onClick</span>) y el nombre del componente dentro de la ventana que lo va a manejar (<span class="codefrag">btn_1</span>). Incluso dentro de la funci&oacute;n que maneja el evento se utiliza este nombre para acceder a una propiedad del bot&oacute;n. Autom&aacute;ticamente, ZK instancia la variable <span class="codefrag">btn_1</span> con el bot&oacute;n que tiene ese identificador dentro del espacio de identificadores de la ventana.</p>
+</div>
+
+
+
+<a name="N101DD"></a><a name="Ejemplo+de+controlador"></a>
+<h2 class="underlined_10">Ejemplo de controlador</h2>
+<div class="section">
+<p>La forma m&aacute;s recomendable de implementar los controladores en ZK es utilizando el atributo <span class="codefrag">apply</span> para definir la clase Java que gestiona los eventos de un determinado componente y que modifica la interfaz (<em>vista</em>) en respuesta a ellos. Vamos a ver un ejemplo.</p>
+<p>En el fichero <span class="codefrag">di-hola.zul</span> se definen los componentes ZK. El atributo <span class="codefrag">apply</span> de la ventana indica la clase Java que va a gestionar los eventos que se lancen sobre la ventana. El atributo <span class="codefrag">forward</span> del bot&oacute;n hace los eventos del bot&oacute;n sean redirigidos al componente padre (la ventana en este caso). </p>
+<pre class="code">&lt;?page title="Controller" contentType="text/html;charset=UTF-8"?&gt;
+&lt;zk&gt;
+&lt;zscript&gt;
+   Date now = new Date();
+&lt;/zscript&gt;
+&lt;window id="win_1" title="Ventana1" border="normal" apply="controller.MiControlador"&gt;
+   &lt;button label="Cambia t&iacute;tulo" forward="onCambiaTitulo" /&gt;
+   &lt;button label="Di fecha" forward="onDiFecha(${now})"/&gt;
+   &lt;button label="Di hola" forward="onDiHola"/&gt;
+&lt;/window&gt;
+&lt;/zk&gt;</pre>
+<p>En la clase Java <span class="codefrag">controller.MiControlador</span> se define un m&eacute;todo p&uacute;blico <span class="codefrag">onDiHola</span> con un par&aacute;metro de tipo <span class="codefrag">Event</span> en el que se recoge la informaci&oacute;n del evento. En este caso, se a&ntilde;ade un componente hijo de tipo <span class="codefrag">Label</span> a la ventana que ha recibido el evento.</p>
+<pre class="code">package controller;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import org.zkoss.zk.ui.util.GenericComposer;
+import org.zkoss.zk.ui.event.Event; 
+import org.zkoss.zul.Label;
+import org.zkoss.zul.Window;
+import org.zkoss.zk.ui.Path;
+
+public class MiControlador extends GenericComposer {
+	private static final long serialVersionUID = 1L;
+	String tituloAntiguo = null;
+	
+	public void onDiHola(Event evt) {
+		evt.getTarget().appendChild(new Label("Hola"));
+		String a="1";
+		for(int i = 0; i&lt;0; i++) {
+			a=a+"1";
+		}
+	}
+	
+	public void onDiFecha(Event evt) {
+		Date fecha = (Date) evt.getData();
+		Locale locale = new Locale("es");
+		DateFormat formatter = new SimpleDateFormat("EEEE, d 'de' MMMM 'de' yyyy", locale);
+		String strFecha = formatter.format(fecha);
+		evt.getTarget().appendChild(new Label(strFecha));
+	}
+	
+	public void onCambiaTitulo(Event evt) {		
+		Window win = (Window) Path.getComponent("/win_1");
+		if (tituloAntiguo == null)
+			tituloAntiguo = win.getTitle();
+		if (win.getTitle().equals("T&iacute;tulo de Java"))
+			win.setTitle(tituloAntiguo);
+		else win.setTitle("T&iacute;tulo de Java");
+	}
+}</pre>
+</div>
+
+
+
+<a name="N10210"></a><a name="Un+controlador+completo"></a>
+<h2 class="underlined_10">Un controlador completo</h2>
+<div class="section">
+<p>La clase <span class="codefrag">GenericForwardComposer</span> proporciona utilizades para hacer que nuestro controlador sea mucho m&aacute;s sencillo. Para ello utiliza una serie de convenciones de c&oacute;digo que permiten no tener que localizar los componentes expl&iacute;citamente (utilizando m&eacute;todos como <span class="codefrag">getFellow</span> o clases como <span class="codefrag">Path</span>), ni tener que registrar los eventos, ni tener que utilizar el atributo <span class="codefrag">forward</span> en la vista.</p>
+<p>Ve&aacute;moslo con un ejemplo ya conocido: dos campos en los que definimos nombre y unos apellidos. El fichero ZUL se define como sigue:</p>
+<pre class="code">&lt;?page title="Nombre" contentType="text/html;charset=UTF-8"?&gt;
+&lt;window title="composer1 example" border="normal" width="300px" apply="controller.NombreComposer"&gt;
+    &lt;grid&gt;
+        &lt;rows&gt;
+            &lt;row&gt;First Name: &lt;textbox id="firstName"/&gt;&lt;/row&gt;
+            &lt;row&gt;Last Name: &lt;textbox id="lastName"/&gt;&lt;/row&gt;
+            &lt;row&gt;Full Name: &lt;label id="fullName"/&gt;&lt;/row&gt;
+        &lt;/rows&gt;
+    &lt;/grid&gt;
+&lt;/window&gt;</pre>
+<p>Y la clase <span class="codefrag">controller.NombreComposer</span>:</p>
+<pre class="code">package controller;
+
+import org.zkoss.zk.ui.event.InputEvent;
+import org.zkoss.zk.ui.util.GenericForwardComposer;
+import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Label;
+
+public class NombreComposer extends GenericForwardComposer {
+   private static final long serialVersionUID = 1L;
+   private Textbox firstName;
+   private Textbox lastName;
+   private Label fullName;
+   
+   public void doAfterCompose(Component comp) throws Exception {
+      super.doAfterCompose(comp);
+      Window win = (Window) comp;
+      win.setTitle("T&iacute;tulo del controller");
+      win.doOverlapped();
+   }
+   
+   //onChange event from firstName component
+   public void onChanging$firstName(InputEvent event) { 
+       fullName.setValue(event.getValue() +" "+lastName.getValue());
+   }
+   
+   //onChange event from lastName component
+   public void onChanging$lastName(InputEvent event) {
+       fullName.setValue(firstName.getValue()+" "+event.getValue());
+   }
+}</pre>
+</div>
+
+
+
+<a name="N10237"></a><a name="ToDo%3A+un+gestor+de+tareas+pendientes"></a>
+<h2 class="underlined_10">ToDo: un gestor de tareas pendientes</h2>
+<div class="section">
+<p>Vamos a ver un ejemplo de una aplicaci&oacute;n un poco m&aacute;s complicada de las que hemos visto hasta ahora. Vamos a definir una gestor de tareas pendientes con el que podamos a&ntilde;adir, borrar y modificar tareas de una lista.</p>
+<p>Cuando est&eacute; terminada, el aspecto de la aplicaci&oacute;n ser&aacute; el siguiente:</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/todo.png" width="652"></p>
+<p>Vamos a ir construyendo la aplicaci&oacute;n de forma iterativa, asegur&aacute;ndonos de que funciona correctamente despu&eacute;s de cada nuevo cambio.</p>
+<a name="N1024D"></a><a name="El+modelo+de+dominio"></a>
+<h3 class="underlined_5">El modelo de dominio</h3>
+<pre class="code">
+package model;
+
+import java.util.Date;
+
+public class ToDoEvent {
+   private int id = 0;
+   private String name;
+   private int priority;
+   private Date date;
+
+   public ToDoEvent() {
+   }
+
+   public ToDoEvent(int id, String name, int priority, Date date) {
+      this.id = id;
+      this.name = name;
+      this.priority = priority;
+      this.date = date;
+   }
+
+   public int getId() {
+      return this.id;
+   }
+
+   public void setId(int id) {
+      this.id = id;
+   }
+
+   public String getName() {
+      return name;
+   }
+
+   public void setName(String name) {
+      this.name = name;
+   }
+
+   public int getPriority() {
+      return priority;
+   }
+
+   public void setPriority(int priority) {
+      this.priority = priority;
+   }
+
+   public Date getDate() {
+      return date;
+   }
+
+   public void setDate(Date date) {
+      this.date = date;
+   }
+
+   // copia (clonado) de un customer
+   public ToDoEvent copy() {
+      ToDoEvent copy = new ToDoEvent();
+      copy.setId(this.getId());
+      copy.setName(this.getName());
+      copy.setDate(this.getDate());
+      copy.setPriority(this.getPriority());
+      return copy;
+   }
+}</pre>
+<a name="N10258"></a><a name="La+capa+de+datos"></a>
+<h3 class="underlined_5">La capa de datos</h3>
+<pre class="code">package model;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import model.ToDoEvent;
+
+public class EventDao {
+   MyEventsSingleton model;
+
+   public EventDao() {
+      model = MyEventsSingleton.getInstance();
+   }
+
+   public List&lt;ToDoEvent&gt; findAll() {
+      ArrayList&lt;ToDoEvent&gt; allEvents = new ArrayList&lt;ToDoEvent&gt;();
+      for (Iterator&lt;ToDoEvent&gt; iterator = model.getEvents()
+            .iterator(); iterator.hasNext();) {
+         ToDoEvent event = (ToDoEvent) iterator.next();
+         allEvents.add(event.copy());
+      }
+      return allEvents;
+   }
+
+   private ToDoEvent find(int id) {
+      List&lt;ToDoEvent&gt; events = model.getEvents();
+      ToDoEvent foundEvent = null;
+      for (ToDoEvent event : events)
+         if (event.getId() == id)
+            foundEvent = event;
+      return foundEvent;
+   }
+
+   public boolean delete(int id) {
+      boolean deleted = false;
+      ToDoEvent event = find(id);
+      if (event != null) {
+         model.getEvents().remove(event);
+         deleted = true;
+      }
+      return deleted;
+   }
+
+   public boolean insert(ToDoEvent evt) {
+      boolean inserted = false;
+      List&lt;ToDoEvent&gt; events = model.getEvents();
+      if (find(evt.getId()) == null) {
+         ToDoEvent event = evt.copy();
+         int id = model.getLastEventId() + 1;
+         event.setId(id);
+         model.setLastEventId(id);
+         events.add(event);
+         inserted = true;
+      }
+      return inserted;
+   }
+
+   public boolean update(ToDoEvent evt) {
+      boolean updated = false;
+      ToDoEvent event = find(evt.getId());
+      if (event != null) {
+         event.setName(evt.getName());
+         event.setDate(evt.getDate());
+         event.setPriority(evt.getPriority());
+         updated = true;
+      }
+      return updated;
+   }
+}</pre>
+<a name="N10263"></a><a name="Un+singleton+que+simula+la+BD"></a>
+<h3 class="underlined_5">Un singleton que simula la BD</h3>
+<pre class="code">
+package model;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class MyEventsSingleton {
+   private static MyEventsSingleton instance = null;
+   List&lt;ToDoEvent&gt; events;
+   int lastEventId;
+
+   public static MyEventsSingleton getInstance() {
+      if (instance == null) {
+         instance = new MyEventsSingleton();
+         ArrayList&lt;ToDoEvent&gt; events = new ArrayList&lt;ToDoEvent&gt;();
+         events.add(new ToDoEvent(1, "Leer el tutorial de ZK",
+               1, new Date()));
+         events.add(new ToDoEvent(2, "Preparar la clase de POO",
+               1, new Date()));
+         instance.setMyEvents(events);
+         instance.setLastEventId(2);
+      }
+      return instance;
+   }
+
+   public void setMyEvents(List&lt;ToDoEvent&gt; events) {
+      this.events = events;
+   }
+
+   public List&lt;ToDoEvent&gt; getEvents() {
+      return this.events;
+   }
+
+   public int getLastEventId() {
+      return lastEventId;
+   }
+
+   public void setLastEventId(int lastEventId) {
+      this.lastEventId = lastEventId;
+   }
+
+}</pre>
+<a name="N1026E"></a><a name="El+controlador"></a>
+<h3 class="underlined_5">El controlador</h3>
+<p>Comenzamos con un controlador casi vac&iacute;o, que define un m&eacute;todo <span class="codefrag">getAllEvents</span> que devuelve la lista de todas las tareas:</p>
+<pre class="code">package controller;
+
+import java.util.List;
+import model.EventDao;
+import model.ToDoEvent;
+
+import org.zkoss.zk.ui.util.GenericForwardComposer;
+
+public class EventController extends GenericForwardComposer {
+
+   private static final long serialVersionUID = 1L;
+   EventDao evtdao = new EventDao();
+ 
+   public List&lt;ToDoEvent&gt; getAllEvents() {
+      return evtdao.findAll();
+   }
+   public void addEvent() {}  
+   public void updateEvent() {}
+   public void deleteEvent() {}
+}</pre>
+<a name="N1027F"></a><a name="La+vista"></a>
+<h3 class="underlined_5">La vista</h3>
+<p>Creamos la p&aacute;gina principal de la aplicaci&oacute;n. Definimos el controlador del componente <span class="codefrag">window</span> y el modelo de la lista utilizando data binding.</p>
+<p>Con la expresi&oacute;n <span class="codefrag">@{win$composer.allEvents}</span> utilizamos como modelo la colecci&oacute;n devuelta por el m&eacute;todo <span class="codefrag">getAllEvents</span> del controlador. La variable <span class="codefrag">composer</span> es una variable impl&iacute;cita que permite acceder al objeto controlador de la ventana.</p>
+<pre class="code">&lt;?page title="Auto Generated index.zul"?&gt;
+&lt;?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?&gt;
+&lt;window id="win" title="To do list" width="640px" border="normal" 
+    apply="controller.EventController"&gt;
+    &lt;listbox id="box" multiple="true" rows="5" model="@{win$composer.allEvents}"&gt;
+      &lt;listhead&gt;
+         &lt;listheader label="Item" /&gt;
+         &lt;listheader label="Priority" width="50px" /&gt;
+         &lt;listheader label="Date" width="90px" /&gt;
+      &lt;/listhead&gt;
+      &lt;listitem self="@{each='event'}" value="@{event}"&gt;       
+         &lt;listcell label="@{event.name}" /&gt;
+         &lt;listcell label="@{event.priority}" /&gt;
+         &lt;listcell label="@{event.date}" /&gt;
+      &lt;/listitem&gt;
+   &lt;/listbox&gt;
+&lt;/window&gt;</pre>
+<a name="N1029C"></a><a name="Seleccionando+una+tarea"></a>
+<h3 class="underlined_5">Seleccionando una tarea</h3>
+<p>Definimos en el controlador la variable <span class="codefrag">current</span> en la que guardaremos la tarea seleccionada:</p>
+<pre class="code">public class EventController extends GenericForwardComposer {
+   ....
+   ToDoEvent current = new ToDoEvent();   
+   public ToDoEvent getCurrent() {
+      return current;
+   }
+   public void setCurrent(ToDoEvent current) {
+      this.current = current;
+   }
+   ....
+}</pre>
+<p>Modificamos la vista para relacionar mediante data binding el elemento seleccionado de la lista con la variable <span class="codefrag">current</span>:</p>
+<pre class="code">&lt;listbox id="box" multiple="true" rows="5" model="@{win$composer.allEvents}" 
+      selectedItem="@{win$composer.current}"&gt;
+....
+&lt;groupbox&gt;
+      &lt;caption label="Event" /&gt;
+      Item: &lt;textbox id="name" cols="25" value="@{win$composer.current.name}" /&gt;
+      Priority: &lt;intbox id="priority" cols="1" value="@{win$composer.current.priority}" /&gt;
+      Date: &lt;datebox id="date" cols="8" value="@{win$composer.current.date}" /&gt;
+&lt;/groupbox&gt;</pre>
+<a name="N102B7"></a><a name="Actualizaci%C3%B3n+del+modelo"></a>
+<h3 class="underlined_5">Actualizaci&oacute;n del modelo</h3>
+<p>Modificamos el controlador para a&ntilde;adir los manejadores de los eventos que van a a&ntilde;adir, borrar y modificar las tareas. Estos eventos estar&aacute; generados por botones distintos.</p>
+<pre class="code">
+   ...
+   private Listbox box;
+   ...
+   public void onClick$add(Event event) {      
+      // insert into database      
+      ToDoEvent newEvt = new ToDoEvent(0,current.getName(), 
+                      current.getPriority(), 
+                      current.getDate());
+      evtdao.insert(newEvt);      
+   }   
+   public void onClick$update(Event event) {      
+      if (box.getSelectedItem() != null) {
+         // update database
+         evtdao.update((ToDoEvent) box.getSelectedItem().getValue());
+      }
+   }
+   public void onClick$delete(Event event) {      
+      if (box.getSelectedItem() != null) {
+         ToDoEvent todo = (ToDoEvent) box.getSelectedItem().getValue();
+         evtdao.delete(todo.getId());
+      }
+   }
+...</pre>
+<p>A&ntilde;adimos los botones que generan los eventos:</p>
+<pre class="code">&lt;button id="add" label="Add" width="36px" height="24px" /&gt;
+&lt;button id="update" label="Update" width="46px" height="24px" /&gt;
+&lt;button id="delete" label="Delete" width="46px" height="24px" /&gt;</pre>
+<p>Y, por &uacute;ltimo, hacemos que se actualice la vista tras estos eventos utilizando la etiqueta <span class="codefrag">load-after</span> del data binding:</p>
+<pre class="code">model="@{win$composer.allEvents, load-after='add.onClick, delete.onClick, update.onClick'}" </pre>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010 Depto. CCIA</div>
+</div>
+</body>
+</html>

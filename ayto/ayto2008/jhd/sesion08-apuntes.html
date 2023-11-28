@@ -1,0 +1,813 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Depuraci&oacute;n y gesti&oacute;n de logs</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Java y Herramientas de Desarrollo" src="images/baner_j2ee_der.gif" title="Java y Herramientas de Desarrollo"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Java y Herramientas de Desarrollo</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Materiales</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Java y Herramientas de Desarrollo">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Teor&iacute;a</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 8</div>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesion 10</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html">Roadmap</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', 'skin/')" id="menu_1.1.3Title" class="menutitle">Ejercicios</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-ejercicios.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-ejercicios.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-ejercicios.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-ejercicios.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-ejercicios.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-ejercicios.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-ejercicios.html">Sesion 10</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion08-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Depuraci&oacute;n y gesti&oacute;n de logs</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Depuraci%C3%B3n+con+Eclipse">Depuraci&oacute;n con Eclipse</a>
+<ul class="minitoc">
+<li>
+<a href="#Primeros+pasos+para+depurar+un+proyecto">Primeros pasos para depurar un proyecto</a>
+</li>
+<li>
+<a href="#Establecer">Establecer breakpoints</a>
+</li>
+<li>
+<a href="#Evaluar+expresiones">Evaluar expresiones</a>
+</li>
+<li>
+<a href="#Explorar+variables">Explorar variables</a>
+</li>
+<li>
+<a href="#Cambiar+c%C3%B3digo+%22en+caliente%22">Cambiar c&oacute;digo "en caliente"</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Gesti%C3%B3n+de+logs+con+Log4Java">Gesti&oacute;n de logs con Log4Java</a>
+<ul class="minitoc">
+<li>
+<a href="#Estructura+de+Log4J">Estructura de Log4J</a>
+</li>
+<li>
+<a href="#Niveles+de+log+%28loggers%29">Niveles de log (loggers)</a>
+</li>
+<li>
+<a href="#Salidas+de+log+%28appenders%29">Salidas de log (appenders)</a>
+</li>
+<li>
+<a href="#Formato+del+log+%28layout%29">Formato del log (layout)</a>
+</li>
+<li>
+<a href="#Configurar+Log4J">Configurar Log4J</a>
+<ul class="minitoc">
+<li>
+<a href="#Configuraci%C3%B3n+b%C3%A1sica+de+Log4J">Configuraci&oacute;n b&aacute;sica de Log4J</a>
+</li>
+<li>
+<a href="#Configuraci%C3%B3n+mediante+ficheros+de+propiedades">Configuraci&oacute;n mediante ficheros de propiedades</a>
+</li>
+<li>
+<a href="#Configuraci%C3%B3n+mediante+un+fichero+XML">Configuraci&oacute;n mediante un fichero XML</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#La+librer%C3%ADa+commons-logging">La librer&iacute;a commons-logging</a>
+<ul class="minitoc">
+<li>
+<a href="#Definir+mensajes+de+logs+en+nuestras+aplicaciones+con+commons-logging">Definir mensajes de logs en nuestras aplicaciones con commons-logging</a>
+</li>
+<li>
+<a href="#Enlazar+con+nuestra+librer%C3%ADa%3A+Log4J">Enlazar con nuestra librer&iacute;a: Log4J</a>
+</li>
+<li>
+<a href="#Enlazar+con+otras+librer%C3%ADas">Enlazar con otras librer&iacute;as</a>
+</li>
+<li>
+<a href="#Conclusiones">Conclusiones</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<p>En esta sesi&oacute;n veremos c&oacute;mo podemos depurar nuestro c&oacute;digo al ejecutarlo, mediante el depurador incorporado en Eclipse. Para las aplicaciones donde no sea posible su auto-ejecuci&oacute;n (por ejemplo, aplicaciones basadas en web), debemos recurrir a otras t&eacute;cnicas de depurado, como son la emisi&oacute;n de mensajes de estado (logs), que indiquen qu&eacute; va haciendo el programa en cada momento. Para esto veremos c&oacute;mo utilizar una librer&iacute;a llamada <strong>Log4Java</strong>, y las posibilidades que ofrece.</p>
+
+<a name="N10012"></a><a name="Depuraci%C3%B3n+con+Eclipse"></a>
+<h2 class="underlined_10">Depuraci&oacute;n con Eclipse</h2>
+<div class="section">
+<p>En este apartado veremos c&oacute;mo podemos depurar el c&oacute;digo de nuestras aplicaciones desde el depurador que incorpora Eclipse, encontrando el origen de los errores que provoque nuestro programa. Este depurador incorpora muchas funcionalidades, como la ejecuci&oacute;n paso a paso, establecimiento de <em>breakpoints</em>, consulta y establecimiento de valores de variables, parar y reanudar hilos de ejecuci&oacute;n, etc. Tambi&eacute;n podremos depurar aplicaciones que se est&eacute;n ejecutando en m&aacute;quinas remotas, e incluso utilizar el depurador a la hora de trabajar con otros lenguajes como C o C++ (instalando las <em>C/C++ Development Tools (CDT)</em>).</p>
+<p>Eclipse proporciona una vista de depuraci&oacute;n (<em>debug view</em>) que permite controlar el depurado y ejecuci&oacute;n de programas. En &eacute;l se muestra la pila de los procesos e hilos que tengamos ejecutando en cada momento. </p>
+<a name="N10027"></a><a name="Primeros+pasos+para+depurar+un+proyecto"></a>
+<h3 class="underlined_5">Primeros pasos para depurar un proyecto</h3>
+<p>En primer lugar, debemos tener nuestro proyecto hecho y correctamente compilado. Por ejemplo: </p>
+<p>
+<img alt="Creaci&oacute;n de un proyecto para su depuraci&oacute;n" content-width="5cm" height="151" src="imagenes/herramientas/debug_proyecto.gif" width="253"></p>
+<p>Una vez hecho eso, vamos a <strong>Run - Debug</strong>, y creamos una nueva configuraci&oacute;n de depuraci&oacute;n, estableciendo la clase que debemos considerar como principal al depurar. Podremos tener tantas configuraciones de depuraci&oacute;n sobre un proyecto como queramos (en el caso de que queramos probar varias clases principales). </p>
+<p>
+<img alt="Creaci&oacute;n de una nueva configuraci&oacute;n de depuraci&oacute;n" content-width="16cm" height="535" src="imagenes/herramientas/debug_nuevo.gif" width="797"></p>
+<p>Una vez configurada la depuraci&oacute;n, cerramos el di&aacute;logo. Pulsando en <strong>Debug </strong>se ejecutar&aacute; el programa, y pulsando <strong>Close</strong> lo dejaremos configurado sin m&aacute;s. </p>
+<p>En algunas versiones de Eclipse, al depurar el c&oacute;digo pasamos directamente a la perspectiva de depuraci&oacute;n (<em>Debug perspective</em>), pero para cambiar manualmente, vamos a <strong>Window - Open perspective - Debug</strong>. </p>
+<p>
+<img alt="Perspectiva de depuraci&oacute;n" content-width="15cm" height="536" src="imagenes/herramientas/debug_perspectiva.gif" width="792"></p>
+<p>En la parte superior izquierda vemos los hilos que se ejecutan, y su estado. Arriba a la derecha vemos los <em>breakpoints</em> que establezcamos, y los valores de las variables que entran en juego. Despu&eacute;s tenemos el c&oacute;digo fuente, para poder establecer marcas y <em>breakpoints</em> en &eacute;l, y debajo la ventana con la salida del proyecto. </p>
+<a name="N1006A"></a><a name="Establecer"></a>
+<h3 class="underlined_5">Establecer breakpoints</h3>
+<p>Una de las operaciones m&aacute;s habituales a la hora de depurar es establecer <em>breakpoints</em>, puntos en los que la ejecuci&oacute;n del programa se detiene para permitir al programador examinar cu&aacute;l es el estado del mismo en ese momento. </p>
+<p>Para establecer <em>breakpoints</em>, vamos en la ventana de c&oacute;digo hasta la l&iacute;nea que queramos marcar, y hacemos doble click en el margen izquierdo: </p>
+<p>
+<img alt="Establecer breakpoints" content-width="11cm" height="137" src="imagenes/herramientas/debug_breakpoint.gif" width="536"></p>
+<p>El <em>breakpoint</em> se a&ntilde;adir&aacute; a la lista de <em>breakpoints</em> de la pesta&ntilde;a superior derecha. Una vez hecho esto, re-arrancamos el programa desde <strong>Run - Debug</strong>, seleccionando la configuraci&oacute;n deseada y pulsando en <strong>Debug</strong>. </p>
+<p>
+<img alt="Control del estado del programa" content-width="15cm" height="118" src="imagenes/herramientas/debug_breakpoint_2.gif" width="757"></p>
+<p>En la parte superior podemos ver el estado de las variables (pesta&ntilde;a <em>Variables</em>), y de los hilos de ejecuci&oacute;n. Tras cada <em>breakpoint</em>, podemos reanudar el programa pulsando el bot&oacute;n de <em>Resume</em> (la flecha verde), en la parte superior. </p>
+<p>
+<strong>Breakpoints condicionales</strong> 
+</p>
+<p>Podemos establecer tambi&eacute;n <em>breakpoints</em> condicionales, que se disparen &uacute;nicamente cuando el valor de una determinada expresi&oacute;n o variable cambie. Para ello, pulsamos con el bot&oacute;n derecho sobre la marca del <em>breakpoint</em> en el c&oacute;digo, y elegimos <strong>Breakpoint Properties</strong>. All&iacute; veremos una casilla que indica <strong>Enable Condition</strong>. Basta con marcarla y poner la expresi&oacute;n que queremos verificar. Podremos hacer que se dispare el <em>breakpoint</em> cuando la condici&oacute;n sea cierta, o cuando el valor de esa condici&oacute;n cambie: </p>
+<p>
+<img alt="Breakpoints condicionales" content-width="8cm" height="247" src="imagenes/herramientas/debug_breakpoint_cond.gif" width="402"></p>
+<a name="N100C9"></a><a name="Evaluar+expresiones"></a>
+<h3 class="underlined_5">Evaluar expresiones</h3>
+<p>Podemos evaluar una expresi&oacute;n del c&oacute;digo si, durante la depuraci&oacute;n, seleccionamos la expresi&oacute;n a evaluar, y con el bot&oacute;n derecho elegimos <strong>Inspect</strong>. El valor nos lo muestra en un <em>popup</em>, pero podemos verlo en la vista de expresiones pulsando <strong>Control + Mayus + I</strong>. </p>
+<p>
+<img alt="" content-width="11cm" height="228" src="imagenes/herramientas/debug_expresion.gif" width="558"></p>
+<p>
+<img alt="Ejemplo de evaluaci&oacute;n de expresiones (en este caso, i++)" content-width="4cm" height="109" src="imagenes/herramientas/debug_expresion_2.gif" width="206"></p>
+<a name="N100EC"></a><a name="Explorar+variables"></a>
+<h3 class="underlined_5">Explorar variables</h3>
+<p>Como hemos dicho, en la parte superior derecha, en el cuadro <strong>Variables</strong> podemos ver el valor que tienen las variables en cada momento. Una vez que la depuraci&oacute;n alcanza un <em>breakpoint</em>, podemos desde el men&uacute; <strong>Run</strong> ir a la opci&oacute;n <strong>Step Over</strong> (o pulsar <strong>F6</strong>), para ir ejecutando paso a paso a partir del <em>breakpoint</em>, y ver en cada paso qu&eacute; variables cambian (se ponen en rojo), y qu&eacute; valores toman. </p>
+<p>Tambi&eacute;n podemos, en el cuadro de variables, pulsar con el bot&oacute;n derecho sobre una, y elegir <strong>Change Value</strong>, para cambiar a mano su valor y ver c&oacute;mo se comporta el programa. </p>
+<p>
+<img alt="Exploraci&oacute;n de variables" content-width="7cm" height="123" src="imagenes/herramientas/debug_variables.gif" width="336"></p>
+<a name="N10116"></a><a name="Cambiar+c%C3%B3digo+%22en+caliente%22"></a>
+<h3 class="underlined_5">Cambiar c&oacute;digo "en caliente"</h3>
+<p>Si utilizamos Java 1.4, desde el depurador de Eclipse podemos, durante la depuraci&oacute;n, cambiar el c&oacute;digo de nuestra aplicaci&oacute;n y seguir depurando. Basta con modificar el c&oacute;digo durante una parada por un <em>breakpoint</em> o algo similar, y despu&eacute;s pulsar en <em>Resume</em> para seguir ejecutando. </p>
+<p>Esto se debe a que Java 1.4 es compatible con la JPDA (<em>Java Platform Debugger Architecture)</em>, que permite modificar c&oacute;digo en una aplicaci&oacute;n en ejecuci&oacute;n. Esto es &uacute;til cuando es muy pesado re-arrancar la aplicaci&oacute;n, o llegar al punto donde falla. </p>
+</div>
+
+<a name="N1012D"></a><a name="Gesti%C3%B3n+de+logs+con+Log4Java"></a>
+<h2 class="underlined_10">Gesti&oacute;n de logs con Log4Java</h2>
+<div class="section">
+<p>Log4Java (log4j) es una librer&iacute;a <em>open source</em> que permite a los desarrolladores de software controlar la salida de los mensajes que generen sus aplicaciones, y hacia d&oacute;nde direccionarlos, con una cierta granularidad. Es configurable en tiempo de ejecuci&oacute;n, lo que permite establecer el tipo de mensajes que queremos mostrar y d&oacute;nde mostrarlos, sin tener que detener ni recompilar nuestra aplicaci&oacute;n.</p>
+<p>Para encontrar m&aacute;s informaci&oacute;n acerca de Log4J, as&iacute; como &uacute;ltimas versiones que vayan saliendo, consultad la p&aacute;gina del proyecto Jakarta: <a href="http://jakarta.apache.org/log4j/"><strong>http://jakarta.apache.org/log4j/</strong></a>.</p>
+<a name="N10141"></a><a name="Estructura+de+Log4J"></a>
+<h3 class="underlined_5">Estructura de Log4J</h3>
+<p>El funcionamiento de Log4J se basa en 3 elementos b&aacute;sicos: <em>loggers</em>, <em>appenders</em> y <em>layouts</em>.</p>
+<p>Los <strong>loggers</strong> son entidades asociadas a nombres (de paquetes o clases), que recogen los mensajes de log que emiten dichos paquetes o clases. Se dice que un <em>logger</em> es un <strong>antecesor</strong> de otro si su nombre, seguido de un punto, es un prefijo del nombre del otro log. Un <em>logger</em> es el <strong>padre</strong> de otro, si es su antecesor m&aacute;s cercano. Por ejemplo: el logger <em>com.foo</em> es padre del logger <em>com.foo.Bar</em>, y antecesor de <em>com.foo.otroPaquete.UnaClase</em>.</p>
+<p>Existe siempre un logger ra&iacute;z (<em>root logger</em>), a partir del cual se genera toda la jerarqu&iacute;a de nuestra aplicaci&oacute;n.</p>
+<p>Una vez controlado el mensaje de log, se debe mostrar por alguna parte. Ese <em>d&oacute;nde</em> se env&iacute;a el mensaje de log es lo que llamamos <strong>appender</strong>. Podremos tener como <em>appenders</em> la propia pantalla, un fichero de texto, o una base de datos, entre otros, como veremos a continuaci&oacute;n.</p>
+<p>Finalmente, podemos dar un formato a los mensajes de log, para que se muestren con la apariencia que queramos. Por ejemplo, mostrar la fecha actual, tipo de mensaje, y texto del mensaje. Todo esto se consigue definiendo el correspondiente <strong>layout</strong> de los logs.</p>
+<p>Veremos cada uno de estos elementos con m&aacute;s detalle a continuaci&oacute;n.</p>
+<a name="N1018A"></a><a name="Niveles+de+log+%28loggers%29"></a>
+<h3 class="underlined_5">Niveles de log (loggers)</h3>
+<p>Una ventaja que debe tener una librer&iacute;a de logging sobre los tradicionales <em>System.out.println</em> o <em>printf</em> que nos ayudaban a ver por d&oacute;nde iba el programa y qu&eacute; pasaba, es que deben permitir omitir estos mensajes de forma c&oacute;moda, cuando no necesitemos que se muestren, sin tener que quitarlos a mano del c&oacute;digo y recompilar la aplicaci&oacute;n.</p>
+<p>Los mensajes de log que maneja log4j se categorizan en 5 niveles de prioridad:</p>
+<ul>
+			
+<li>
+<strong>DEBUG</strong>: para mensajes de depuraci&oacute;n, mientras se est&aacute; desarrollando la aplicaci&oacute;n, para ver c&oacute;mo se comporta.</li>
+			
+<li>
+<strong>INFO</strong>: para mensajes que muestren informaci&oacute;n del programa durante su ejecuci&oacute;n (por ejemplo, versi&oacute;n que se est&eacute; ejecutando, inicios o fines de procesos que se lancen, etc)</li>
+			
+<li>
+<strong>WARN</strong>: para mensajes de alerta sobre situaciones an&oacute;malas que se produzcan, pero que no afecten el funcionamiento correcto del programa.</li>
+			
+<li>
+<strong>ERROR</strong>: para guardar constancia de errores del programa que, aunque le permitan seguir funcionando, afecten al funcionamiento del mismo. Por ejemplo, que un par&aacute;metro de configuraci&oacute;n tenga un valor incorrecto, o que no se encuentre un fichero no cr&iacute;tico.</li>
+			
+<li>
+<strong>FATAL</strong>: se utiliza para mensajes cr&iacute;ticos, por errores que hacen que el programa generalmente aborte su ejecuci&oacute;n.</li>
+		
+</ul>
+<p>Se podr&aacute; habilitar que se muestren los mensajes pertenecientes a ciertas categor&iacute;as de las anteriores, en cualquier momento, seg&uacute;n la informaci&oacute;n que nos interese mantener.</p>
+<p>Para mostrar mensajes de log en una clase, debemos crear un objeto de tipo <strong>org.apache.log4j.Logger</strong>, asign&aacute;ndole el nombre asociado (normalmente nos basamos en el nombre de la clase que lo usa), y luego tenemos en ella m&eacute;todos para generar mensajes de cada uno de los 5 niveles:</p>
+<pre class="code">debug (String mensaje)
+info  (String mensaje)
+warn  (String mensaje)
+error (String mensaje)
+fatal (String mensaje)</pre>
+<p>Por ejemplo:</p>
+<pre class="code">
+<strong>import org.apache.log4j.*;
+
+</strong>public class MiClase
+{
+	<strong>static Logger logger = Logger.getLogger(MiClase.class);
+</strong>	...
+	public static void main(String[] args)
+	{
+<strong>		logger.info("Entrando en la aplicacion");
+		...
+		logger.warn("Esto es una advertencia");
+		...
+		logger.fatal("Error fatal");</strong>
+	}
+}</pre>
+<p>Adem&aacute;s, existen dos niveles extras que s&oacute;lo se utilizan en el fichero de configuraci&oacute;n:</p>
+<ul>
+			
+<li>
+<strong>ALL</strong>: el nivel m&aacute;s bajo posible, habilita todos los niveles anteriores</li>
+			
+<li>
+<strong>OFF</strong>: el nivel m&aacute;s alto, deshabilita todos los niveles anteriores.</li>
+		
+</ul>
+<p>Veremos m&aacute;s adelante c&oacute;mo configurar la habilitaci&oacute;n o deshabilitaci&oacute;n de los niveles que interesen.</p>
+<a name="N101E8"></a><a name="Salidas+de+log+%28appenders%29"></a>
+<h3 class="underlined_5">Salidas de log (appenders)</h3>
+<p>Adem&aacute;s, log4j permite que un nivel de log se muestre por una o varias salidas establecidas. Cada una de las salidas por las que puede mostrarse un log se llama <em>appender</em>. Algunos de los disponibles (cuyas clases est&aacute;n en el paquete <strong>org.apache.log4j</strong>) son:</p>
+<ul>
+			
+<li>
+				
+<p>
+<strong>ConsoleAppender</strong>: muestra el log en la pantalla. Tiene 3 opciones configurables:</p>
+    			
+<ul>
+					
+<li>
+<strong>Threshold=WARN</strong>: indica que no muestre ning&uacute;n mensaje con nivel menor que el indicado</li>
+					
+<li>
+<strong>ImmediateFlush=true</strong>: si est&aacute; a <em>true</em>, indica que los mensajes no se almacenan en un buffer, sino que se env&iacute;an directamente al destino</li>
+					
+<li>
+<strong>Target=System.err</strong>: por defecto env&iacute;a los mensajes a <em>System.out</em>. Establece la salida a utilizar</li>
+    			
+</ul>
+			
+</li>
+			
+<li>
+				
+<p>
+<strong>FileAppender</strong>: vuelca el log a un fichero. Tiene 4 opciones configurables:</p>
+				
+<ul>
+					
+<li>
+<strong>Threshold=WARN</strong>: sirve para lo mismo que en <em>ConsoleAppender</em>
+</li>
+					
+<li>
+<strong>ImmediateFlush=true</strong>: sirve para lo mismo que en <em>ConsoleAppender</em>
+</li>
+					
+<li>
+<strong>File=logs.txt</strong>: nombre del archivo donde guardar los logs</li>
+					
+<li>
+<strong>Append=false</strong>: a <em>true</em> indica que los nuevos mensajes se a&ntilde;adan al final del fichero, y a <em>false</em>, cuando se reinicie la aplicaci&oacute;n el archivo se sobreescribir&aacute;.</li>
+				
+</ul>
+			
+</li>
+			
+<li>
+				
+<p>
+<strong>RollingFileAppender</strong>: como <em>FileAppender</em>, pero permite definir pol&iacute;ticas de rotaci&oacute;n en los ficheros, para que no crezcan indefinidamente. Tiene 6 opciones configurables:</p>
+				
+<ul>
+					
+<li>
+<strong>Threshold=WARN</strong>: sirve para lo mismo que en <em>ConsoleAppender</em>
+</li>
+					
+<li>
+<strong>ImmediateFlush=true</strong>: sirve para lo mismo que en <em>ConsoleAppender</em>
+</li>
+					
+<li>
+<strong>File=logs.txt</strong>: sirve para lo mismo que en <em>FileAppender</em>
+</li>
+					
+<li>
+<strong>Append=false</strong>: sirve para lo mismo que en <em>FileAppender</em>
+</li>
+					
+<li>
+<strong>MaxFileSize=100KB</strong>: los sufijos pueden ser KB, MB o GB. Rota el archivo de log (copia su contenido en otro fichero auxiliar para vaciarse) cuando el log alcanza el tama&ntilde;o indicado.</li>
+					
+<li>
+<strong>MaxBackupIndex=2</strong>: mantiene los archivos de respaldo auxiliares que se indiquen como m&aacute;ximo. Los archivos de respaldo sirven para no borrar los logs antiguos cuando lleguen nuevos, sino guardarlos en otros ficheros mientras quepan. Sin esta opci&oacute;n, el n&uacute;mero de archivos de respaldo ser&iacute;a ilimitado.</li>
+				
+</ul>
+				
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">Existe una variante de este <em>appender</em>, que es <strong>DailyRollingFileAppender</strong>, que permite definir pol&iacute;ticas de rotaci&oacute;n basadas en fechas (pol&iacute;ticas diarias, semanales, mensuales... etc).</div>
+</div>
+			
+</li>
+			
+<li>
+				
+<p>
+<strong>JDBCAppender</strong>: redirecciona los mensajes hacia una base de datos. Se espera que este appender sea modificado en un futuro. Sus opciones son:</p>
+				
+<ul>
+					
+<li>
+<strong>Threshold=WARN</strong>: sirve para lo mismo que en <em>ConsoleAppender</em>
+</li>
+					
+<li>
+<strong>ImmediateFlush=true</strong>: sirve para lo mismo que en <em>ConsoleAppender</em>
+</li>
+					
+<li>
+<strong>Driver=mm.mysql.Driver</strong>: define el driver de conexi&oacute;n por JDBC</li>
+					
+<li>
+<strong>URL=jdbc:mysql://localhost/LOG4JDemo</strong>:indica la URL de la base de datos en el servidor de base de datos</li>
+					
+<li>
+<strong>user=default</strong>: login del usuario</li>
+					
+<li>
+<strong>password=default</strong>: password del usuario</li>
+					
+<li>
+<strong>sql=INSERT INTO Logs(mensaje) VALUES ('%d - %c - %p - %m')</strong>: sentencia SQL que se utiliza para dar de alta el mensaje en la BD.</li>
+				
+</ul>
+			
+</li>
+			
+<li>
+				
+<p>Otros <em>appenders</em>:</p>
+    			
+<ul>
+					
+<li>
+<strong>SocketAppender</strong>: redirecciona los mensajes hacia un servidor remoto</li>
+					
+<li>
+<strong>SMTPAppender</strong>: env&iacute;a un email con los mensajes de log</li>
+					
+<li>
+<strong>SyslogAppender</strong>: redirecciona los mensajes hacia el demonio <em>syslog</em> de Unix</li>
+					
+<li>... etc.</li>
+    			
+</ul>
+  			
+</li>
+		
+</ul>
+<p>Los <em>appenders</em> se establecen en la configuraci&oacute;n que se proporcione, que se ver&aacute; m&aacute;s adelante.</p>
+<a name="N102DB"></a><a name="Formato+del+log+%28layout%29"></a>
+<h3 class="underlined_5">Formato del log (layout)</h3>
+<p>Los <em>layouts</em> son los responsables de dar formato de salida a los mensajes de log, de acuerdo a las especificaciones que indique el desarrollador de software. Algunos de los tipos disponibles son:</p>
+<ul>
+			
+<li>
+				
+<p>
+<strong>SimpleLayout</strong>: consiste en la prioridad del mensaje, seguida de un gui&oacute;n, y el mensaje:</p>
+				
+<pre class="code">DEBUG - Hola, esto es una prueba</pre>
+			
+</li>
+  			
+<li>
+				
+<p>
+<strong>PatternLayout</strong>: establece el formato de salida del mensaje de acuerdo a unos patrones similares al comando <em>printf</em> de C. Algunos de los patrones disponibles son:</p>
+				
+<ul>
+					
+<li>
+<strong>c</strong>: para desplegar la categor&iacute;a del evento de log. Puede tener una precisi&oacute;n, dada entre llaves, que indique qu&eacute; parte de la categor&iacute;a mostrar. Por ejemplo: <strong>%c</strong>, <strong>%c{2}</strong>.</li>
+					
+<li>
+<strong>C</strong>: para desplegar el nombre completo de la clase que gener&oacute; el evento de log. Tambi&eacute;n puede tener una precisi&oacute;n entre llaves. Por ejemplo, si la clase en cuesti&oacute;n es <em>org.apache.MiClase</em>, si ponemos <strong>%C</strong> mostrar&aacute; "<em>org.apache.MiClase"</em>, pero si ponemos <strong>%C{1}</strong> mostrar&aacute; "<em>MiClase</em>".</li>
+					
+<li>
+<strong>d</strong>: muestra la fecha en que se genera el evento de log. Entre llaves podemos indicar el formato de la misma. Por ejemplo: <strong>d{dd/MM/yyyy HH:mm:ss}</strong>
+</li>
+					
+<li>
+<strong>L</strong>: muestra el n&uacute;mero de l&iacute;nea donde se ha generado el evento de log</li>
+					
+<li>
+<strong>m</strong>: muestra el mensaje del evento de log</li>
+					
+<li>
+<strong>M</strong>: muestra el nombre del m&eacute;todo que gener&oacute; el evento de log</li>
+					
+<li>
+<strong>n</strong>: genera un salto de l&iacute;nea en el formato</li>
+					
+<li>
+<strong>p</strong>: muestra la prioridad del evento de log</li>
+					
+<li>
+<strong>r</strong>: muestra los milisegundos desde que se inici&oacute; la aplicaci&oacute;n hasta que se produjo el error</li>
+					
+<li>... existen otros muchos modificadores que no se comentan aqu&iacute;, por simplificar.</li>
+				
+</ul>
+			
+</li>
+			
+<li>
+				
+<p>
+<strong>HTMLLayout</strong>: establece como salida de log una tabla HTML. Tiene como atributos:</p>
+				
+<ul>
+					
+<li>
+<strong>LocationInfo=true</strong>: a <em>true</em> muestra la clase Java y el n&uacute;mero de l&iacute;nea donde se produjo el mensaje</li>
+					
+<li>
+<strong>Title=T&iacute;tulo de mi aplicaci&oacute;n</strong>: indica el valor a incluir en el tag <em>&lt;title&gt;</em> de HTML</li>
+				
+</ul>
+			
+</li>
+			
+<li>
+				
+<p>
+<strong>XMLLayout</strong>: la salida ser&aacute; un archivo XML, que cumple con la DTD <em>log4j.dtd</em>. Tiene como atributo:</p>
+				
+<ul>
+					
+<li>
+<strong>LocationInfo=true</strong>: a <em>true</em> muestra la clase Java y el n&uacute;mero de l&iacute;nea donde se produjo el mensaje</li>
+				
+</ul>
+			
+</li>
+			
+<li>
+<strong>TTCCLayout</strong>: consiste en la fecha, hilo, categor&iacute;a y NDC (Nested Diagnostic Context) del evento.</li>
+		
+</ul>
+<p>El formato de log tambi&eacute;n se establece en los ficheros de configuraci&oacute;n, como se ver&aacute; m&aacute;s adelante.</p>
+<a name="N10385"></a><a name="Configurar+Log4J"></a>
+<h3 class="underlined_5">Configurar Log4J</h3>
+<p>Log4J permite configurarse mediante archivos, bien sean XML, o archivos de propiedades de java (donde cada l&iacute;nea tiene el aspecto <em>clave=valor</em>).</p>
+<p>Vemos un ejemplo de c&oacute;mo incluir logs en una aplicaci&oacute;n. Los pasos a seguir son:</p>
+<ul>
+			
+<li>Incluir los paquetes (<strong>org.apache.log4j.*</strong>)</li>
+			
+<li>Definir una variable de tipo <strong>Logger</strong> con el nombre de la clase que queremos loggear</li>
+			
+<li>Crear una configuraci&oacute;n (por ejemplo, con <strong>BasicConfigurator.configure(...)</strong>)</li>
+		
+</ul>
+<a name="N103A9"></a><a name="Configuraci%C3%B3n+b%C3%A1sica+de+Log4J"></a>
+<h4>Configuraci&oacute;n b&aacute;sica de Log4J</h4>
+<p>Veamos c&oacute;mo ser&iacute;a la configuraci&oacute;n m&aacute;s sencilla de Log4J con un ejemplo:</p>
+<pre class="code">
+<strong>import org.apache.log4j.*;
+
+</strong>public class MiClase
+{
+	<strong>static Logger logger = Logger.getLogger(MiClase.class);
+</strong>	...
+	public static void main(String[] args)
+	{
+		<strong>BasicConfigurator.configure();
+		logger.info("Entrando en la aplicacion");
+		</strong>MiOtraClase mc = new MiOtraClase();
+		mc.hola();<strong>
+		logger.info("Finalizando aplicacion");</strong>
+	}
+}</pre>
+<p>El log se configura en la clase principal de la aplicaci&oacute;n (la que la arranca), y despu&eacute;s todas las subclases ya parten de esa configuraci&oacute;n para mostrar sus logs. Por ejemplo, en el caso anterior, si quisi&eacute;ramos mostrar informaci&oacute;n de log desde la clase <em>MiOtraClase</em>, s&oacute;lo tendr&iacute;amos que declarar el <em>Logger</em> y mostrar los mensajes que queramos:</p>
+<pre class="code">
+<strong>import org.apache.log4j.*;
+
+</strong>public class MiOtraClase
+{
+	<strong>static Logger logger = Logger.getLogger(MiOtraClase.class);
+</strong>	...
+	public MiOtraClase()
+	{
+<strong>		logger.info("Constructor de MiOtraClase");
+		...
+</strong>	}
+
+	public void hola()
+	{
+		...
+	}
+}</pre>
+<p>En este caso se ha tomado una configuraci&oacute;n por defecto, que es la que establece el m&eacute;todo <strong>BasicConfigurator.configure()</strong>. Tenemos tambi&eacute;n opci&oacute;n de pasar como configuraci&oacute;n de log un fichero de <em>Properties</em> (mediante un <strong>PropertyConfigurator</strong>), o un fichero XML (con un <strong>DomConfigurator</strong>), llamando a sus m&eacute;todos <strong>configure()</strong> respectivos.</p>
+<a name="N103E9"></a><a name="Configuraci%C3%B3n+mediante+ficheros+de+propiedades"></a>
+<h4>Configuraci&oacute;n mediante ficheros de propiedades</h4>
+<p>
+<strong>Configuraci&oacute;n mediante fichero de propiedades</strong>
+</p>
+<p>Por ejemplo, si queremos pasarle a la clase <em>MiClase</em> un fichero de <em>Properties</em> para configurar el logging, har&iacute;amos algo como:</p>
+<pre class="code">
+<strong>import org.apache.log4j.*;
+
+</strong>public class MiClase
+{
+	<strong>static Logger logger = Logger.getLogger(MiClase.class);
+</strong>	...
+	public static void main(String[] args)
+	{
+		<strong>PropertyConfigurator.configure(args[0]);
+		logger.info("Entrando en la aplicacion");
+		</strong>MiOtraClase mc = new MiOtraClase();
+		mc.hola();<strong>
+		logger.info("Finalizando aplicacion");</strong>
+	}
+}</pre>
+<p>En este caso en el primer par&aacute;metro al ejecutar le pasar&iacute;amos el nombre del fichero de <em>Properties</em>. Adicionalmente, se tienen los m&eacute;todos <strong>PropertyConfigurator.configureAndWatch(...)</strong> y <strong>DomConfigurator.configureAndWatch(...)</strong>, que establecen la configuraci&oacute;n, como <em>configure()</em>, pero revisan en tiempo de ejecuci&oacute;n el fichero de configuraci&oacute;n para aplicar los cambios que sobre &eacute;l podamos hacer.</p>
+<p>Un ejemplo de archivo de configuraci&oacute;n es:</p>
+<pre class="code">
+<strong># Coloca el nivel root del logger en DEBUG (muestra mensajes de DEBUG hacia arriba)
+# A&ntilde;ade dos appenders, llamados A1 y A2
+</strong>log4j.rootLogger=DEBUG, A1, A2<strong>
+
+# A1 se redirige a la consola
+</strong>log4j.appender.A1=org.apache.log4j.ConsoleAppender
+
+<strong># A1 utiliza PatternLayout
+</strong>log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+log4j.appender.A1.layout.ConversionPattern=%r [%t] %-5p %c %x %m
+
+<strong># A2  se redirige a un fichero
+</strong>log4j.appender.A2=org.apache.log4j.RollingFileAppender
+
+<strong># A2 solo muestra mensajes de tipo WARN o superior, en el fichero logs.txt, hasta 1 MB
+</strong>log4j.appender.A2.Threshold=WARN
+log4j.appender.A2.File=logs.txt
+log4j.appender.A2.MaxFileSize=1MB
+
+<strong># En el paquete mipaq.otropaq solo muestra mensajes de tipo WARN o superior
+</strong>log4j.logger.mipaq.otropaq=WARN</pre>
+<p>Si no indicamos ning&uacute;n fichero de configuraci&oacute;n (lo que ocurr&iacute;a antes con <span class="codefrag">BasicConfigurator.configure()</span>, por defecto Log4J buscar&aacute; en el CLASSPATH un fichero que se llame <span class="codefrag">log4j.properties</span> y tomar&aacute; la configuraci&oacute;n de &eacute;l (si lo encuentra, si no aplicar&aacute; una configuraci&oacute;n por defecto). As&iacute; que una alternativa es crearnos ese fichero con la configuraci&oacute;n que queramos, en lugar de llamar a otro distinto.</p>
+<a name="N1043C"></a><a name="Configuraci%C3%B3n+mediante+un+fichero+XML"></a>
+<h4>Configuraci&oacute;n mediante un fichero XML</h4>
+<p>Si queremos hacer la misma configuraci&oacute;n anterior desde un fichero XML, har&iacute;amos algo como:</p>
+<pre class="code">
+<strong>import org.apache.log4j.*;
+
+</strong>public class MiClase
+{
+	<strong>static Logger logger = Logger.getLogger(MiClase.class);
+</strong>	...
+	public static void main(String[] args)
+	{
+		<strong>DOMConfigurator.configure(args[0]);
+		logger.info("Entrando en la aplicacion");
+		</strong>MiOtraClase mc = new MiOtraClase();
+		mc.hola();<strong>
+		logger.info("Finalizando aplicacion");</strong>
+	}
+}</pre>
+<p>y como par&aacute;metro le pasar&iacute;amos el fichero XML de configuraci&oacute;n. Un ejemplo de archivo de configuraci&oacute;n es:</p>
+<pre class="code">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;!DOCTYPE log4j:configuration SYSTEM "log4j.dtd"&gt;
+
+&lt;log4j:configuration&gt;
+
+<strong>  &lt;!-- Definimos appender A1 de tipo ConsoleAppender --&gt;
+</strong>  &lt;appender name="A1" class="org.apache.log4j.ConsoleAppender"&gt;
+    &lt;layout class="org.apache.log4j.PatternLayout"&gt;
+      &lt;param name="ConversionPattern" 
+             value="%r [%t] %-5p %c %x %m"/&gt;
+    &lt;/layout&gt;
+  &lt;/appender&gt;
+
+<strong>  &lt;!-- Definimos appender A2 de tipo FileAppender --&gt;
+</strong>  &lt;appender name="A1" class="org.apache.log4j.FileAppender"&gt;
+    &lt;param name="File" value="logs.txt"/&gt;
+    &lt;param name="Threshold" value="warn"/&gt;
+    &lt;param name="MaxFileSize" value="1MB"/&gt;
+    &lt;layout class="org.apache.log4j.SimpleLayout"&gt;
+  &lt;/appender&gt;
+
+<strong>  &lt;!-- Configuramos el root logger --&gt;
+</strong>  &lt;root&gt;
+    &lt;priority value ="debug" /&gt;
+    &lt;appender-ref ref="A1"/&gt;
+    &lt;appender-ref ref="A2"/&gt;
+  &lt;/root&gt;
+
+&lt;/log4j:configuration&gt;</pre>
+</div>
+
+
+<a name="N10467"></a><a name="La+librer%C3%ADa+commons-logging"></a>
+<h2 class="underlined_10">La librer&iacute;a commons-logging</h2>
+<div class="section">
+<p>Aunque Log4J es una librer&iacute;a muy potente para logging, puede que no se adapte a nuestras necesidades, o a las de nuestra empresa. En ese caso, tenemos una alternativa m&aacute;s flexible: utilizar las librer&iacute;as <strong>commons-logging</strong> de Jakarta: <a href="http://jakarta.apache.org/commons/logging/"><strong>http://jakarta.apache.org/commons/logging/</strong></a>.</p>
+<p>Esta librer&iacute;a no proporciona herramientas de logging propiamente dichas, sino una envoltura (<em>wrapper</em>) con la que colocar los mensajes de log en nuestras aplicaciones, y bajo la cual podemos poner la librer&iacute;a de logs que queramos, como puedan ser Log4Java, la librer&iacute;a de logging de Java (<em>SimpleLog</em>), u otras, configurando adecuadamente el puente entre el wrapper de <span class="codefrag">commons-logging</span> y nuestra librer&iacute;a de log.</p>
+<a name="N10484"></a><a name="Definir+mensajes+de+logs+en+nuestras+aplicaciones+con+commons-logging"></a>
+<h3 class="underlined_5">Definir mensajes de logs en nuestras aplicaciones con commons-logging</h3>
+<p>Para colocar los mensajes de log en nuestros programas utilizando <span class="codefrag">commons-logging</span>, basta con tener cargada la librer&iacute;a JAR correspondiente (normalmente, el fichero <em>commons-logging-1.1.jar</em> o similar que venga en la distribuci&oacute;n que nos descarguemos). Despu&eacute;s, en cada clase sobre la que queramos generar logs, creamos un objeto de tipo <span class="codefrag">org.apache.commons.logging.Log</span>, como veremos en el siguiente ejemplo, y llamamos a sus m&eacute;todos <span class="codefrag">info(), debug(), error(), warn(), fatal()</span>, como hac&iacute;amos con Log4J:</p>
+<pre class="code">import org.apache.commons.logging.*;
+
+public class ClaseAuxiliar
+{
+	String mensaje = null;
+	<strong>static Log logger = LogFactory.getLog(ClaseAuxiliar.class);</strong>
+
+	public ClaseAuxiliar()
+	{
+		<strong>logger.info("Clase auxiliar inicializada");</strong>
+	}
+
+	public String mensaje()
+	{
+		if (mensaje == null)
+		{
+			<strong>logger.warn(
+			   "Atencion, el mensaje es null");</strong>
+			return "";
+		}
+		return mensaje;
+	}
+}</pre>
+<a name="N104A7"></a><a name="Enlazar+con+nuestra+librer%C3%ADa%3A+Log4J"></a>
+<h3 class="underlined_5">Enlazar con nuestra librer&iacute;a: Log4J</h3>
+<p>Ya tenemos colocados nuestros mensajes de log en la aplicaci&oacute;n, pero... &iquest;c&oacute;mo le decimos al programa que queremos utilizar Log4J, y un fichero de configuraci&oacute;n de Log4J?</p>
+<p>Simplemente tenemos que dejar en el CLASSPATH de nuestra aplicaci&oacute;n dos ficheros de propiedades: Uno llamado <strong>commons-logging.properties</strong>, en cuyo contenido indicamos, con la siguiente l&iacute;nea, que vamos a utilizar Log4J como logger interno:</p>
+<pre class="code">org.apache.commons.logging.Log=
+        org.apache.commons.logging.impl.Log4JLogger</pre>
+<p>El segundo fichero debe llamarse <strong>log4j.properties</strong>, que contendr&aacute; la configuraci&oacute;n que le queremos dar a Log4Java, como hemos visto antes. Un ejemplo de este fichero ser&iacute;a:</p>
+<pre class="code"># Coloca el nivel root del logger en DEBUG (muestra mensajes de DEBUG hacia arriba)
+# A&ntilde;ade appender A1
+log4j.rootLogger=DEBUG, A1
+
+# A1 se redirige a la consola
+log4j.appender.A1=org.apache.log4j.ConsoleAppender
+log4j.appender.A1.Threshold=INFO
+
+# A1 utiliza PatternLayout
+log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+log4j.appender.A1.layout.ConversionPattern=%d{dd/MM/yyyy HH:mm:ss} - %p - %m %n</pre>
+<p>Recordemos que Log4J, si no se especifica ning&uacute;n fichero de configuraci&oacute;n, buscar&aacute; el fichero <em>log4j.properties</em> en el CLASSPATH, por eso tenemos que llamarlo as&iacute;.</p>
+<a name="N104CA"></a><a name="Enlazar+con+otras+librer%C3%ADas"></a>
+<h3 class="underlined_5">Enlazar con otras librer&iacute;as</h3>
+<p>Si en lugar de trabajar con Log4J queremos trabajar con otras librer&iacute;as, tendremos que consultar la documentaci&oacute;n de <span class="codefrag">commons-logging</span> para ver c&oacute;mo se hace. Por ejemplo, podemos utilizar la librer&iacute;a de logging que viene con JDK. Para eso, simplemente necesitamos, como antes, dos ficheros de propiedades en el classpath: uno llamado <strong>commons-logging.properties</strong>, como antes, en cuyo contenido indicamos, con la siguiente l&iacute;nea, que vamos a utilizar la librer&iacute;a de JDK como logger interno:</p>
+<pre class="code">org.apache.commons.logging.Log=
+        org.apache.commons.logging.impl.SimpleLog</pre>
+<p>El segundo fichero debe llamarse <strong>simplelog.properties</strong>, y contendr&aacute; la configuraci&oacute;n espec&iacute;fica para este tipo de loggers. Un ejemplo sencillo de fichero ser&iacute;a:</p>
+<pre class="code"># Nivel de log general
+# ("trace", "debug", "info", "warn", "error", o "fatal"). Por defecto es "info"
+org.apache.commons.logging.simplelog.defaultlog=warn
+
+# A true si queremos que el nombre del Log aparezca en cada mensaje en la salida
+org.apache.commons.logging.simplelog.showlogname=false
+
+# A true si queremos que el nombre corto del Log (su &uacute;ltimo t&eacute;rmino) aparezca en cada mensaje en la salida
+org.apache.commons.logging.simplelog.showShortLogname=true
+
+# A true si queremos poner fecha y hora actuales en cada mensaje en la salida
+org.apache.commons.logging.simplelog.showdatetime=true</pre>
+<a name="N104E8"></a><a name="Conclusiones"></a>
+<h3 class="underlined_5">Conclusiones</h3>
+<p>Observad que la principal ventaja de utilizar <span class="codefrag">commons-logging</span> es que, una vez colocados los mensajes de log en nuestra aplicaci&oacute;n, ya no tenemos que tocar nada del c&oacute;digo fuente para configurarla, ni para cambiar de librer&iacute;a de log si queremos. Basta con colocar en el CLASSPATH los ficheros de propiedades correspondientes, y reajustar en ellos la configuraci&oacute;n de logging que deseamos.</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2008-2009 Depto. CCIA</div>
+</div>
+</body>
+</html>

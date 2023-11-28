@@ -1,0 +1,661 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Sesi&oacute;n 1: Introducci&oacute;n al framework ZK</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/banner-aplicaciones-ria.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/baner_j2ee_der.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Apuntes</a>
+</li>
+<li>
+<a class="base-not-selected" href="software.html">Software</a>
+</li>
+<li>
+<a class="base-not-selected" href="doc.html">Documentaci&oacute;n</a>
+</li>
+<li>
+<a class="base-not-selected" href="enlaces.html">Enlaces</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Apuntes</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menupage">
+<div class="menupagetitle">Sesion 1</div>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesion 10</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion01-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Sesi&oacute;n 1: Introducci&oacute;n al framework ZK</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#El+framework+ZK">El framework ZK</a>
+<ul class="minitoc">
+<li>
+<a href="#Aplicaciones+RIA">Aplicaciones RIA</a>
+</li>
+<li>
+<a href="#Caracter%C3%ADsticas+de+ZK">Caracter&iacute;sticas de ZK</a>
+</li>
+<li>
+<a href="#El+lenguaje+ZUML">El lenguaje ZUML</a>
+</li>
+<li>
+<a href="#Otros+frameworks+RIA">Otros frameworks RIA</a>
+</li>
+<li>
+<a href="#P%C3%A1ginas+%C3%BAtiles+sobre+ZK">P&aacute;ginas &uacute;tiles sobre ZK</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Arquitectura+de+ZK">Arquitectura de ZK</a>
+<ul class="minitoc">
+<li>
+<a href="#Arquitectura+Ajax">Arquitectura Ajax</a>
+</li>
+<li>
+<a href="#Frameworks+basados+en+el+servidor">Frameworks basados en el servidor</a>
+</li>
+<li>
+<a href="#Arquitectura+de+ZK-N101C6">Arquitectura de ZK</a>
+</li>
+<li>
+<a href="#El+motor+ZK">El motor ZK</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Instalaci%C3%B3n+y+ejecuci%C3%B3n+del+servicio+Tomcat+de+Windows">Instalaci&oacute;n y ejecuci&oacute;n del servicio Tomcat de Windows</a>
+</li>
+<li>
+<a href="#Configuraci%C3%B3n+b%C3%A1sica+de+ZK">Configuraci&oacute;n b&aacute;sica de ZK</a>
+</li>
+<li>
+<a href="#Una+aplicaci%C3%B3n+de+prueba">Una aplicaci&oacute;n de prueba</a>
+</li>
+<li>
+<a href="#Instalaci%C3%B3n+de+Eclipse">Instalaci&oacute;n de Eclipse</a>
+</li>
+<li>
+<a href="#Instalaci%C3%B3n+de+ZK+Studio">Instalaci&oacute;n de ZK Studio</a>
+</li>
+<li>
+<a href="#Una+primera+aplicaci%C3%B3n+con+gmaps">Una primera aplicaci&oacute;n con gmaps</a>
+</li>
+</ul>
+</div>
+
+
+<a name="N1000C"></a><a name="El+framework+ZK"></a>
+<h2 class="underlined_10">El framework ZK</h2>
+<div class="section">
+<a name="N10012"></a><a name="Aplicaciones+RIA"></a>
+<h3 class="underlined_5">Aplicaciones RIA</h3>
+<p>ZK es un framework Java para el desarrollo de aplicaciones web ricas. Estas aplicaciones pretenden proporcionar al usuario una interacci&oacute;n similar a las aplicaciones de escritorio, sin abandonar las ventajas del residir en un navegador y poder comunicarse on-line con el servidor. Est&aacute;n basadas en widgets o componentes (m&aacute;s de 130 en el caso de ZK) que es posible utilizar en una p&aacute;gina web. Y, lo m&aacute;s importante, permiten la interacci&oacute;n con el servidor y la modificaci&oacute;n de los componentes sin tener que recargar la p&aacute;gina en el navegador ni construir una nueva.</p>
+<p>De esta forma, las aplicaciones RIA se separan de las tradicionales aplicaciones web en las que el usuario navega por p&aacute;ginas para introducir datos, pulsa un bot&oacute;n para enviar la informaci&oacute;n y se recarga una p&aacute;gina en la que se muestra el resultado. Las aplicaciones RIA suelen tener una &uacute;nica p&aacute;gina cuyos datos se comunican al servidor y se actualizan mediante la detecci&oacute;n de los distintos eventos que el usuario provoca cuando utiliza los componentes.</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/google-maps.png" width="600"></p>
+<p>Google es uno de los m&aacute;s avanzados promotores de este tipo de aplicaciones, con ejemplos como Google Maps. En esta aplicaci&oacute;n web utiliza JavaScript de forma intensiva para interactuar con el propio mapa y para seleccionar opciones, definir acciones (<em>imprimir</em>, <em>enviar</em>, etc.) o refrescar la vista del mapa. Todas estas acciones se realizan en una &uacute;nica p&aacute;gina del navegador.</p>
+<p>
+<img alt="" content-width="5cm" src="imagenes/zk-window-demo.png" width="352"></p>
+<p>Aunque tiene algunos componentes multimedia, y tambi&eacute;n el componente Google Maps, la propuesta de ZK es algo m&aacute;s modesta en cuanto a componentes. La lista de componentes est&aacute; basada en el est&aacute;ndar XUL de la fundaci&oacute;n Mozilla, e incluye paneles, men&uacute;s desplegables, rejillas, cajas o listas.</p>
+<p>En la <a href="http://www.zkoss.org/zkdemo/userguide/">demo</a> de ZK que ofrecen sus desarrolladores se pueden comprobar la diversidad de componentes, eventos y posibilidades de ZK.</p>
+<a name="N10040"></a><a name="Caracter%C3%ADsticas+de+ZK"></a>
+<h3 class="underlined_5">Caracter&iacute;sticas de ZK</h3>
+<p>
+<img alt="" content-width="4cm" src="imagenes/zklogos.png" width="251"></p>
+<p>El framework ZK fue desarrollado por Tom M. Yeh y Henri Chen, fundadores de Potix en Taipei (Taiwan) y hecho p&uacute;blico a la comunidad en 2006. Desde entonces se han ido desarrollando y publicando nuevas versiones de forma ininterrupida.</p>
+<p>ZK es un framework open-source de desarrollo de aplicaciones web Ajax, que permite la creaci&oacute;n de interfaces de usuario para las aplicaciones web sin utilizar JavaScript. El dise&ntilde;o de las interfaces se hace mediante componentes basados en el est&aacute;ndar XUL de Mozilla.</p>
+<p>ZK utiliza un enfoque centrado en el servidor mediante el que las p&aacute;ginas de descripci&oacute;n de la interfaz residen en el servidor y son all&iacute; procesadas y transformadas en p&aacute;ginas HTML+JavaScript que se env&iacute;an al navegador. En este sentido es muy similar a la estrategia de otros frameworks Java como JSF.</p>
+<p>La historia de versiones en <a href="http://sourceforge.net/projects/zk1/files/">sourceforge</a> nos da una idea del intenso trabajo desarrollado en el framework y de su madurez:</p>
+<ul>
+   
+<li>zk-1.0.0 (13.3 MB): 02/2006</li>
+   
+<li>zk-1.1.0 (14.7 MB): 03/2006</li>
+   
+<li>zk-2.0.0 (27.5 MB): 06/2006</li>
+   
+<li>zk-2.1.0 (30.3 MB): 08/2006</li>
+   
+<li>zk-2.2.0 (36.4 MB): 12/2006</li>
+   
+<li>zk-2.3.0 (66.1 MB): 03/2007</li>
+   
+<li>zk-2.4.0 (63.3 MB): 06/2007. Mantenida con bug fixes hasta 2.4.3 (06/2008)</li>
+   
+<li>zk-3.0.0 (68.2 MB): 11/2007. Mantenida hasta 3.0.8 (08/2008)</li>
+   
+<li>zk-3.5.0 (115.4 MB): 09/2008</li>
+   
+<li>zk-3.6.0 (150.7 MB): 03/2009. Mantenida hasta la actualidad 3.6.4 (03/2010)</li>
+   
+<li>zk-5.0.0 (154.0 MB): 01/2010</li>
+
+</ul>
+<p>Entre las caracter&iacute;sticas que hacen de ZK un framework digno de destacar se encuentran las siguientes:</p>
+<ul>
+
+<li>Open Source y comunidad: ZK es uno framework open source m&aacute;s activos. El framework tiene m&aacute;s de 100.000 l&iacute;neas de c&oacute;digo y m&aacute;s de 1.000.000 de descargas (se encuentra situado en el puesto 399 de los <a href="http://sourceforge.net/top/topalltime.php?type=downloads">proyectos m&aacute;s descargados de sourceforge</a>). La comunidad contiene usuarios de m&aacute;s de 190 paises y, junto con los desarrolladores de Potix, han escrito m&aacute;s de 100 art&iacute;culos y tutoriales y m&aacute;s de 40.000 mensajes en los <a href="http://www.zkoss.org/forum/">foros de ayuda</a> y soporte de Potix.</li>
+
+<li>Experiencia de usuario ricas: m&aacute;s de 170 componentes compatibles XUL/HTML basados en Ajax. Gran cantidad de widgets basados en otros proyectos OS: JFreeChart, JasperReports, Google Maps, FCKeditor, Timeline, Timeplot, ExtJS o jQuery.</li>
+
+<li>Basado en est&aacute;ndares: ZK est&aacute; basado en est&aacute;ndares aceptados como XUL, XML o JSP/Servlets.</li>
+
+<li>Facilidad de integraci&oacute;n: tanto en el lado del cliente como en el servidor, ZK se integra f&aacute;cilmente con otras tecnolog&iacute;as como HTML, jQuery (cliente) o Spring, JPA, JSF (servidor).</li>
+
+<li>Acceso m&oacute;viles: ZK soporta Java Mobile, Android y varios browsers para m&oacute;viles.</li>
+
+<li>Licencia: la <a href="http://www.zkoss.org/license/faq.dsp">licencia de ZK 5</a> es LGPL, la licencia m&aacute;s abierta de GNU. Esta licencia permite comercializar la aplicaci&oacute;n en la que se utilice ZK y no obliga a abrir su c&oacute;digo.</li>
+
+</ul>
+<a name="N100A6"></a><a name="El+lenguaje+ZUML"></a>
+<h3 class="underlined_5">El lenguaje ZUML</h3>
+<p>Las aplicaciones ZK son aplicaciones web Java (ficheros WAR) que pueden incluir clases y librer&iacute;as Java como cualquier aplicaci&oacute;n basada en Servlets o JSP. La definici&oacute;n de la interfaz de usuario de la aplicaci&oacute;n se realiza mediante el lenguaje ZUML (ZK User Interface Markup Language).</p>
+<p>Los ficheros que definen las p&aacute;ginas ZUML suelen tener la extensi&oacute;n <span class="codefrag">.zul</span>. Estas p&aacute;ginas son procesadas por el motor de ZK (en concreto por el <em>ZK Loader</em>) para construir una p&aacute;gina HTML en la que se incluyen todos los elementos y componentes definidos.</p>
+<p>Uno de los puntos fuertes de ZK es la potencia del lenguaje ZUML, por la cantidad de elementos que podemos definir en estas p&aacute;ginas. En la misma p&aacute;gina ZUML se puede definir los componentes que forman la interfaz, el c&oacute;digo que gestiona los eventos del usuario o la interacci&oacute;n entre los componentes y los datos Java. Los principales elementos que forman parte del lenguaje ZUML son:</p>
+<ul>
+   
+<li>
+<strong>Componentes ZUL</strong>: componentes que aparecen en la interfaz de usuario que tienen un comportamiento definido procesando los eventos del usuario y mostrando la informaci&oacute;n de la aplicaci&oacute;n. Est&aacute;n basados en los componentes definidos en el <a href="https://developer.mozilla.org/en/XUL">est&aacute;ndar XUL</a> de Mozilla: ventanas, paneles, listas, cajas, men&uacute;s desplegables, etc.</li>
+   
+<li>
+<strong>Expresiones EL</strong>: es posible utilizar expresiones EL similares a las definidas en JSP para definir valores de los distintos atributos que definen el comportamiento de los componentes.</li>
+   
+<li>
+<strong>Data binding</strong>: mediante las expresiones de <em>data binding</em> es posible asociar distintos valores de los componentes a objetos Java definidos en la aplicaci&oacute;n. </li>
+   
+<li>
+<strong>C&oacute;digo de script</strong>: es posible incluir en las p&aacute;ginas ZUML c&oacute;digo de script que se ejecuta en el servidor utilizando Java (con el int&eacute;rprete BeanShell), JavaScript (con el int&eacute;rprete Rhino), Ruby (con el int&eacute;rprete JRuby) o Groovy.</li>
+   
+<li>
+<strong>Instrucciones de procesamiento</strong>: expresiones que ejecuta el motor de ZK antes de procesar el &aacute;rbol de componentes y que sirven para inicializar algunos elementos y estados de la interfaz.</li>
+   
+<li>
+<strong>Clases Java</strong>: es posible tambi&eacute;n conectar los componentes definidos en las p&aacute;ginas ZUML con clases Java que funciona de controladores, en las que se define la gesti&oacute;n de los eventos.</li>
+
+</ul>
+<p>
+<img alt="" content-width="10cm" src="imagenes/zk-modulos.png" width="600"></p>
+<p>El siguiente c&oacute;digo muestra un ejemplo de una p&aacute;gina ZUML en la que se definen varios componentes, entre los que se encuentra un <em>gmap</em> basado en el componente de Google Map de Google.</p>
+<pre class="code">&lt;!-- resort.zul --&gt;
+&lt;window id="win" use="org.zkforge.resort.ui.ResortController" 
+   title="ZK Tutorial" width="1024px" border="normal"&gt;
+&lt;script src="http://maps.google.com/maps?file=api&amp;v=2&amp;
+key=ABQIAAAACZ90QS5pNiEvbXhI0k2NLRTGXUEQDrMr1bP0DVG
+8X36ZVCheaRQMK05Rsdneh4skNF6KXaLI8maLlA" type="text/javascript"/&gt;
+&lt;hbox&gt;
+   &lt;listbox id="lb" onSelect="win.refreshUI()"&gt;
+      &lt;listhead sizable="true"&gt;
+         &lt;listheader label="Name" width="100px"/&gt;
+         &lt;listheader label="Description" width="250px"/&gt;   
+     &lt;/listhead&gt;
+     &lt;listitem forEach="${win.resorts}" value="${each}"&gt;
+        &lt;listcell label="${each.name}" /&gt;
+        &lt;listcell label="${each.description}" /&gt;   
+     &lt;/listitem&gt;
+   &lt;/listbox&gt;
+   &lt;gmaps id="gmap" zoom="16" showTypeCtrl="true" mapType="satellite" 
+      showLargeCtrl="true" width="610px" height="400px"&gt;
+      &lt;ginfo id="ginfo"/&gt;
+   &lt;/gmaps&gt;
+&lt;/hbox&gt;
+&lt;groupbox mold="3d" width="100%"&gt;
+  &lt;caption label="Resort"/&gt;
+  Name:       &lt;textbox id="name" disabled="true"/&gt;
+  Description:&lt;textbox id="desc" disabled="true"/&gt; 
+  Latitude:   &lt;doublebox id="lat" disabled="true"/&gt;
+  Longitude:  &lt;doublebox id="lng" disabled="true"/&gt;
+ &lt;/groupbox&gt; 
+&lt;/window&gt;</pre>
+<p>En la siguiente imagen podemos ver el resultado de la p&aacute;gina. La interfaz de usuario recoge los datos (nombres, descripciones, latitudes y longitudes) de la aplicaci&oacute;n y los muestra en una <span class="codefrag">listbox</span>. El usuario puede pulsar en cualquiera de las filas y los datos de la posici&oacute;n se actualizan en la tabla inferior y el mapa de google la muestra.</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/resort.png" width="600"></p>
+<a name="N10102"></a><a name="Otros+frameworks+RIA"></a>
+<h3 class="underlined_5">Otros frameworks RIA</h3>
+<p>Una ventaja de ZK con respecto a otros frameworks como GWT, Flex o JavaFX es que la mayor parte del c&oacute;digo de la aplicaci&oacute;n se ejecuta en el servidor. En el servidor se transforma la p&aacute;gina ZUML en un &aacute;rbol de componentes, se ejecuta el c&oacute;digo de scripting, se llaman a las funciones Java que procesan los eventos, etc.</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/server-centric.png" width="600"></p>
+<p>Ventajas de utilizar un framework basado en el servidor:</p>
+<ul>
+   
+<li> M&aacute;s f&aacute;cil de portar a distintos navegadores y plataformas (m&oacute;viles, por ejemplo).</li>
+   
+<li> M&aacute;s sencillo de utilizar: es muy f&aacute;cil acceder a los objetos de negocio y de datos desde la presentaci&oacute;n.</li> 
+   
+<li> Mayor robustez y seguridad.</li>
+   
+<li> Mayor facilidad de mantener, probar y modificar.</li>
+
+</ul>
+<p>Otros frameworks basados en el servidor son JSF, con todas sus implementaciones como RichFaces o IceFaces. Frente a estos frameworks, la utilizaci&oacute;n de ZK tiene como principales ventajas:</p>
+<ul>
+   
+<li>Facilidad de desarrollo de prototipos gracias a los lenguajes de scripting en las propias p&aacute;ginas.</li>
+   
+<li>Integraci&oacute;n con XML y HTML.</li>
+   
+<li>Modelo de multi-threading de gesti&oacute;n de eventos.</li>
+
+</ul>
+<a name="N10134"></a><a name="P%C3%A1ginas+%C3%BAtiles+sobre+ZK"></a>
+<h3 class="underlined_5">P&aacute;ginas &uacute;tiles sobre ZK</h3>
+<p>Cuando comenzamos a aprender a programar con ZK es &uacute;til tener a mano un conjunto de p&aacute;ginas web de referencia en las que consultar y resolver las dudas y problemas. Destacamos algunas:</p>
+<ul>
+   
+<li>
+<a href="http://sourceforge.net/projects/zk1/">Proyecto en sourceforge</a>. Desde la p&aacute;gina del proyecto en sourceforge se puede descargar las distintas versiones que van apareciendo del proyecto, acceder a proyectos hermanos de ZK (como ZK ZKEditor o ZK Google Maps) y consultar el estado de los bugs de las distintas distribuciones.</li>
+   
+<li>
+<a href="http://docs.zkoss.org/wiki/Small_Talks">Small Talks</a>. La documentaci&oacute;n de ZK est&aacute; publicada en una wiki similar a la que gestion la Wikipedia. Las <em>Small Talks</em> son p&aacute;ginas con tutoriales y art&iacute;culos bastante interesantes sobre el framework. Est&aacute;n elaborados por personas de la comunidad o de la empresa Potix. </li>
+   
+<li>
+<a href="http://docs.zkoss.org/wiki/Developer%27s_Guide">Gu&iacute;a de desarrollador</a> (<a href="doc/ZK-devguide.pdf">versi&oacute;n PDF local</a>) y <a href="http://docs.zkoss.org/wiki/Developer%27s_Reference">gu&iacute;a de referencia</a> (<a href="doc/ZK-devref.pdf">versi&oacute;n PDF local</a>). </li>
+   
+<li>
+<a href="http://en.wikibooks.org/wiki/ZK/How-Tos">ZK/How-Tos</a>: una extensa colecci&oacute;n de consejos y recetas.</li>
+   
+<li>
+<a href="http://sourceforge.net/projects/zksample2/">Una aplicaci&oacute;n completa</a> desarrollada por <a href="http://www.forsthaus.de/blog/">Stephan Gerth</a>
+</li>
+   
+<li>
+<a href="http://www.zkoss.org/javadoc/">Java APIs</a>, (<a href="doc/zk-javadoc-5.0.1.zip">fichero ZIP</a>)</li>
+   
+<li>
+<a href="http://www.zkoss.org/forum/">Foro</a>
+</li>
+   
+<li>
+<a href="http://www.zkoss.org/news/">Noticias</a>
+</li>
+
+</ul>
+</div>
+
+
+
+
+
+<a name="N10186"></a><a name="Arquitectura+de+ZK"></a>
+<h2 class="underlined_10">Arquitectura de ZK</h2>
+<div class="section">
+<p>Las aplicaciones de escritorio tienen una interfaz de usuario mucho m&aacute;s rica que las aplicaciones tradicionales de internet, pero sufren de los problemas fundamentales de su car&aacute;cter local: dificultad de acceso a un servidor centralizado y dificultad en la distribuci&oacute;n y actualizaci&oacute;n de nuevas versiones.</p>
+<p>Frente a las aplicaciones locales, las aplicaciones web tienen el problema de que se ejecutan en un navegador y est&aacute;n limitadas al tipo de interfaz soportada por este medio. La web se ha desarrollado utilizando el HTML como lenguaje est&aacute;ndar de definici&oacute;n de p&aacute;ginas. Los navegadores y las aplicaciones web se han orientado a mostrar este tipo de p&aacute;ginas, basando las interfaces de usuario en formularios que recogen la informaci&oacute;n del usuario y en sucesivas p&aacute;ginas que muestran informaci&oacute;n.</p>
+<a name="N10192"></a><a name="Arquitectura+Ajax"></a>
+<h3 class="underlined_5">Arquitectura Ajax</h3>
+<p>JavaScript y la arquitectura Ajax ofrecen una soluci&oacute;n a este planteamiento, permitiendo la actualizaci&oacute;n din&aacute;mica de las p&aacute;ginas HTML con los datos devueltos por el servidor.</p>
+<p>La siguiente figura muestra el flujo de peticiones entre el navegador y el servidor en una aplicaci&oacute;n web tradicional y en una aplicaci&oacute;n con arquitectura Ajax.</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/ajax.png" width="591"></p>
+<p>En el modelo basado en Ajax, las p&aacute;ginas HTML contienen c&oacute;digo JavaScript que ejecuta el navegador, y con el que se construyen interfaces de usuario din&aacute;micas que se ejecutan en la misma p&aacute;gina (men&uacute;s, listas, paneles, etc.). Este c&oacute;digo JavaScript interactua con el usuario y termina realizando peticiones HTTP al servidor. El servidor recibe la petici&oacute;n, la procesa y devuelve datos XML como respuesta. Es importante la diferencia con el enfoque tradicional. El servidor no devuelve una nueva p&aacute;gina HTML, sino un conjunto de datos en formato XML. Estos datos sirven al motor de Ajax para actualizar distintos componentes de la misma p&aacute;gina en la que se ha realizado la petici&oacute;n.</p>
+<a name="N101A9"></a><a name="Frameworks+basados+en+el+servidor"></a>
+<h3 class="underlined_5">Frameworks basados en el servidor</h3>
+<p>Uno de los problemas del enfoque de los frameworks Ajax es que obliga a incluir c&oacute;digo JavaScript (&iexcl;y a programarlo!) en las p&aacute;ginas HTML. Este c&oacute;digo es dif&iacute;cil de desarrollar, de probar y de mantener. El c&oacute;digo JavaScript que gestiona la interfaz es dif&iacute;cil de reutilizar de una forma organizada. Adem&aacute;s, es muy complicado incluir su comprobaci&oacute;n en sistemas automatizados de prueba en los que se integre el proyecto. Por ello, este c&oacute;digo se convierte muchas veces en el punto d&eacute;bil de un proyecto robusto, bien comprobado y mantenible.</p>
+<p>La soluci&oacute;n nos la proporcionan los frameworks basados en el servidor, en los que el c&oacute;digo JavaScript se encapsula en <em>componentes</em> de alto nivel que pueden ser combinados y reutilizados con facilidad. Por ejemplo, en ZK se utiliza un lenguaje XML (ZUML, <em>ZK User interface Markup Language</em>) para definir las interfaces interfaces de usuario. En este lenguaje descriptivo los componentes se combinan y se incluyen unos dentro de otros formando elaborados &aacute;rboles sin escribir ni una sola l&iacute;nea de c&oacute;digo JavaScript. El servidor genera las p&aacute;ginas HTML que contienen todo el c&oacute;digo JavaScript necesario para que el navegador muestre los componentes y permita al usuario interactuar con ellos.</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/generacion-codigo-ajax.png" width="600"></p>
+<p>Una de las ventajas de este enfoque es que se simplifica enormemente el desarrollo, ya que s&oacute;lo es necesario un &uacute;nico elemento para definir la interfaz: el lenguaje ZUML. El c&oacute;digo Ajax se genera autom&aacute;ticamente a partir de p&aacute;ginas definidas en este lenguaje. De esta forma se automatizan las tareas tediosas y propensas a errores relacionadas con el c&oacute;digo Ajax: compatibilidad de navegadores, mantenibilidad de distintas versiones, modificaci&oacute;n y ampliaci&oacute;n de la interfaz, etc.</p>
+<a name="N101C6"></a><a name="Arquitectura+de+ZK-N101C6"></a>
+<h3 class="underlined_5">Arquitectura de ZK</h3>
+<p>El funcionamiento de ZK es distinto seg&uacute;n se realice una petici&oacute;n a una p&aacute;gina por primera vez o se actualice una p&aacute;gina ya generada por el framework. El n&uacute;cleo de todo el proceso es el <em>motor ZK</em>, encargado de recibir las peticiones y realizar todo el proceso que termina en la respuesta al navegador. La siguiente figura muestra el proceso de generaci&oacute;n de una p&aacute;gina.</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/zk-generando-html.png" width="600"></p>
+<p>En la figura vemos como se construye por primera vez una p&aacute;gina ZUL. El navegador lanza una petici&oacute;n de una p&aacute;gina ZUL. El motor ZK recibe la petici&oacute;n y localiza la p&aacute;gina ZUL asociada. Analiza el &aacute;rbol XML de la p&aacute;gina y crea el &aacute;rbol de objetos Java componentes ZK. Con el &aacute;rbol ya creado, el motor ZK lanza los eventos opcionales relacionados con la creaci&oacute;n de la p&aacute;gina y ejecuta el c&oacute;digo Java existente en la p&aacute;gina con el que se accede a las capas del modelo de la aplicaci&oacute;n. Por &uacute;ltimo, este c&oacute;digo modifica los componentes con el resultado de las llamadas a la l&oacute;gica de negocio y el motor de ZK termina transformando el &aacute;rbol de componentes en un p&aacute;gina HTML en la que los componentes se transforman en objetos HTML y c&oacute;digo JavaScript. El navegador recibe esta p&aacute;gina y la muestra. Junto con la p&aacute;gina, se carga en el navegador un motor ZK cliente que es el encargado de procesar la interacci&oacute;n con el usuario, modificar &aacute;rbol DOM de componentes en el cliente y generar las peticiones y consultas de nuevo al servidor.</p>
+<p>La siguiente figura muestra el resultado de la interacci&oacute;n del usuario con la p&aacute;gina generada.</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/zk-actualizando-html.png" width="600"></p>
+<p>En la figura vemos c&oacute;mo la p&aacute;gina mantiene un &aacute;rbol DOM de componentes ZK en forma de c&oacute;digo JavaScript y componentes HTML. El motor ZK en el cliente detecta el evento JavaScript <em>onClick</em> y lo convierte en una petici&oacute;n HTTP al servidor. All&iacute; lo recibe el motor ZK de actualizaci&oacute;n que mantiene su propio &aacute;rbol de componentes ZK en forma de objetos Java. El motor ZK actualiza la cola de eventos de la aplicaci&oacute;n (puede haber m&aacute;s de uno, generado por alguna petici&oacute;n previa) y gestiona la cola de hilos de eventos, activ&aacute;ndolos y suspendi&eacute;ndolos. Consulta y ejecuta el c&oacute;digo de la aplicaci&oacute;n relacionado con el evento, lo que permite acceder a las capas de l&oacute;gica de negocio de la aplicaci&oacute;n. Por &uacute;ltimo, se actualiza el &aacute;rbol de componentes y se devuelve una respuesta al motor ZK en el cliente, que actualiza el DOM del cliente de forma adecuada.</p>
+<a name="N101ED"></a><a name="El+motor+ZK"></a>
+<h3 class="underlined_5">El motor ZK</h3>
+<p>Podemos separar el funcionamiento del framework ZK en tres grandes m&oacute;dulos:</p>
+<ul>
+   
+<li>
+<strong>ZK Layout Engine</strong>: tambi&eacute;n llamado <em>ZK Loader</em>, es el motor de ZK encargado generar el &aacute;rbol de componentes y la p&aacute;gina HTML inicial a partir de una petici&oacute;n de una p&aacute;gina ZUML.</li>
+    
+<li>
+<strong>ZK Client Engine</strong>: motor de ZK en la p&aacute;gina cargada en el navegador. Se trata de c&oacute;digo JavaScript encargado de capturar los eventos del usuario, comunicarse con el servidor y recibir sus respuestas. Con estas respuestas se actualiza el &aacute;rbol DOM de la p&aacute;gina, modific&aacute;ndose sus componentes. Se trata de la parte cliente de la arquitectura Ajax.</li>
+	
+<li>
+<strong>ZK Update Engine</strong>: tambi&eacute;n llamado <em>ZK AU (Asychronous Update) Engine</em> es la parte del servidor de la arquitectura Ajax.</li>
+
+</ul>
+</div>
+
+<a name="N10210"></a><a name="Instalaci%C3%B3n+y+ejecuci%C3%B3n+del+servicio+Tomcat+de+Windows"></a>
+<h2 class="underlined_10">Instalaci&oacute;n y ejecuci&oacute;n del servicio Tomcat de Windows</h2>
+<div class="section">
+<p>Suponemos tambi&eacute;n que tenemos instalada la &uacute;ltima versi&oacute;n de Tomcat (la versi&oacute;n 6.0.26 en el momento de escribir esto). Si no es as&iacute;, puedes descargar y ejecutar la aplicaci&oacute;n que lo instala como un servicio de Windows (disponible en la p&aacute;gina de software): </p>
+<ul>
+	
+<li>
+<a href="soft/apache-tomcat-6.0.24.exe">apache-tomcat-6.0.24.exe</a>
+</li>
+
+</ul>
+<p>1. Lanzamos el instalador de Tomcat y aceptamos todas las opciones que nos ofrece por defecto. En la pantalla para elegir componentes escogemos tambi&eacute;n los ejemplos, que no est&aacute;n marcados por defecto. Y cuando solicite un usuario y contrase&ntilde;a de administrador podemos escoger 'admin' y 'adminadmin'.</p>
+<p>El instalador extrae por defecto el programa en el directorio:</p>
+<pre class="code">C:\Archivos de programa\Apache Software Foundation\Tomcat 6.0</pre>
+<p>Llamaremos a este directorio <em>$TOMCAT_HOME</em>.</p>
+<p>2. Deberemos lanzar y detener Tomcat desde el administrador de servicios de Windows. Para acceder a esta herramienta podemos ejecutar el comando <span class="codefrag">services.msc</span> en el lanzador del men&uacute; de inicio. Hacemos un doble click en el servicio <em>Apache Tomcat 6</em> y aparecer&aacute; la ventana desde la que podemos administrar este servicio:</p>
+<p>
+<img alt="" content-width="7cm" src="imagenes/servicio-tomcat.png" width="431"></p>
+<p>3. Para comprobar que el servidor est&aacute; funcionando podemos acceder a la direcci&oacute;n <em>http://localhost:8080/</em> donde aparecer&aacute; una p&aacute;gina HTML proporcionada por Tomcat. Desde esa p&aacute;gina es posible tambi&eacute;n ejecutar servlets y p&aacute;ginas JSP.</p>
+<p>4. Por &uacute;ltimo, una vez iniciado el servicio podemos detenerlo pulsando el bot&oacute;n correspondiente. Debemos tener en cuenta que s&oacute;lo puede haber un proceso escuchando un determinado puerto (el 8080 en este caso) y que cuando estemos desarrollando y probando aplicaciones web en Eclipse deberemos tener detenido el servicio Tomcat, para permitir que se lance el proceso interno utilizado por Eclipse.</p>
+<p>
+<img alt="" content-width="7cm" src="imagenes/detener-servicio-tomcat.png" width="428"></p>
+</div>
+
+<a name="N10252"></a><a name="Configuraci%C3%B3n+b%C3%A1sica+de+ZK"></a>
+<h2 class="underlined_10">Configuraci&oacute;n b&aacute;sica de ZK</h2>
+<div class="section">
+<p>Las aplicaciones ZK son aplicaciones web que hay que desplegar en un contenedor web. En esta secci&oacute;n veremos c&oacute;mo instalar una primera aplicaci&oacute;n web ZK, compuesta por todas las librer&iacute;as ZK, el fichero de configuraci&oacute;n <em>web.xml</em> y una p&aacute;gina ZUL. Suponemos que ya tenemos instalado y en marcha el servicio Tomcat en Windows.</p>
+<p>Comenzamos descargando la distribuci&oacute;n 5.0.1 del framework ZK:</p>
+<ul>
+	
+<li>
+<a href="soft/zk-bin-5.0.1.zip">Versi&oacute;n 5.0.1 del framework ZK</a>
+</li>
+
+</ul>
+<p>Una vez descargado el fichero ZIP crearemos en el directorio <em>$TOMCAT_HOME\webaps</em> una aplicaci&oacute;n web que contenga las librer&iacute;as de ZK, el fichero <em>web.xml</em> que configura la aplicaci&oacute;n ZK y el fichero de saludo <em>index.zul</em>. La estructura final del directorio ser&aacute; la siguiente:</p>
+<pre class="code">+miZK
+   index.zul
+   +WEB-INF
+      web.xml
+      zk.xml
+      +lib
+         zk.jar
+         ...</pre>
+<p>1. En el directorio <em>$TOMCAT_HOME\webapps</em> crea un nuevo directorio llamado <em>miZK</em>. Ese ser&aacute; el nombre de la aplicaci&oacute;n.</p>
+<p>2. Dentro de <em>miZK</em> crea el directorio <em>WEB-INF</em>. Dentro de &eacute;l crea el directorio <em>lib</em> y copia en &eacute;l todos los ficheros <em>jar</em> que contiene la distribuci&oacute;n de ZK:</p>
+<pre class="code">
+zk-bin-5.0.1\dist\lib\*.jar
+zk-bin-5.0.1\dist\lib\ext\*.jar
+</pre>
+<p>3. Dentro del directorio <em>WEB-INF</em> crea el siguiente fichero de configuraci&oacute;n <em>web.xml</em>:</p>
+<p>
+<strong>Fichero <em>miZK\WEB-INF\web.xml</em></strong>:</p>
+<pre class="code">&lt;web-app&gt;
+  &lt;!-- ZK --&gt;
+  &lt;listener&gt;
+    &lt;description&gt;Used to clean up when a session is destroyed&lt;/description&gt;
+    &lt;display-name&gt;ZK Session Cleaner&lt;/display-name&gt;
+    &lt;listener-class&gt;org.zkoss.zk.ui.http.HttpSessionListener&lt;/listener-class&gt;
+  &lt;/listener&gt;
+  &lt;servlet&gt;
+    &lt;description&gt;ZK loader for ZUML pages&lt;/description&gt;
+    &lt;servlet-name&gt;zkLoader&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;org.zkoss.zk.ui.http.DHtmlLayoutServlet&lt;/servlet-class&gt;
+    &lt;init-param&gt;
+      &lt;param-name&gt;update-uri&lt;/param-name&gt;
+      &lt;param-value&gt;/zkau&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+  &lt;/servlet&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;zkLoader&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;*.zul&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;zkLoader&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;*.zhtml&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+  &lt;servlet&gt;
+    &lt;description&gt;The asynchronous update engine for ZK&lt;/description&gt;
+    &lt;servlet-name&gt;auEngine&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;org.zkoss.zk.au.http.DHtmlUpdateServlet&lt;/servlet-class&gt;
+  &lt;/servlet&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;auEngine&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/zkau/*&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+  &lt;welcome-file-list&gt;
+    &lt;welcome-file&gt;index.zul&lt;/welcome-file&gt;
+    &lt;welcome-file&gt;index.zhtml&lt;/welcome-file&gt;
+    &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;
+    &lt;welcome-file&gt;index.htm&lt;/welcome-file&gt;
+  &lt;/welcome-file-list&gt;
+&lt;/web-app&gt;</pre>
+<p>4. Por &uacute;ltimo, vamos ya a crear la p&aacute;gina ZK con un ejemplo de un componente. Va a ser una sencilla ventana en la que aparezca el t&iacute;pico mensaje "Hola mundo".</p>
+<p>En el directorio <em>miZK</em> crea el fichero zk <em>index.zul</em> (lo salvamos con codificaci&oacute;n UTF-8):</p>
+<p>
+<strong>Fichero <em>miZK\index.zul</em></strong>:</p>
+<pre class="code">&lt;?page title="Hola Mundo" contentType="text/html;charset=UTF-8"?&gt;
+&lt;zk&gt;
+&lt;window title="Mi primera ventana" border="normal" width="200px"&gt; 
+   &iexcl;Hola, mundo!
+&lt;/window&gt;
+&lt;/zk&gt;</pre>
+<p>5. Abrimos un navegador, nos aseguramos de que Tomcat est&aacute; funcionando conect&aacute;ndonos a <em>http://localhost:8080/</em> y accedemos a la p&aacute;gina que acabamos de crear abriendo la URL: <em>http://localhost:8080/miZK/</em>. Aparecer&aacute; un sencillo panel con el t&iacute;tulo y el contenido que acabamos de definir:</p>
+<p>
+<img alt="" content-width="4cm" src="imagenes/primera-ventana.png" width="206"></p>
+</div>
+
+
+<a name="N102D1"></a><a name="Una+aplicaci%C3%B3n+de+prueba"></a>
+<h2 class="underlined_10">Una aplicaci&oacute;n de prueba</h2>
+<div class="section">
+<p>Vamos a instalar una aplicaci&oacute;n de prueba para comprobar el funcionamiento de ZK. Se trata del ejemplo que hemos visto en el que se listan un conjunto de lugares y se muestran en Google Maps.</p>
+<p>1. En primer lugar, descargamos el fichero <a href="./soft/zkresort.zip">zkresort.zip</a>. Lo descomprimimos y veremos el fichero <em>resort.war</em>.</p>
+<p>2. Copiamos el fichero WAR en el directorio  <em>$TOMCAT_HOME\webapps</em>. Esperamos unos segundos y vemos que Tomcat detecta la aplicaci&oacute;n WAR y la descomprime en el directorio con el mismo nombre <em>resort</em>. Si miramos dentro de la carpeta veremos una estructura similar a la aplicaci&oacute;n ejemplo que hicimos anteriormente:</p>
+<pre class="code">+resort
+   resort.zul
+   resort_databind.zul
+   +META-INF
+   +WEB-INF
+      web.xml
+      zk.xml
+      +lib
+         ## ficheros .jar con las librer&iacute;as de ZK 
+      +classes
+         ## clases Java: 
+         ##    org.zkforge.resort.model.Resort
+         ##    org.zkforge.resort.ui.ResortController
+</pre>
+<p>El fichero <em>resort_databind.zul</em> contiene otra versi&oacute;n de la demo en la que se utiliza data binding para acceder a los datos Java.</p>
+<p>3. Comprobamos que la aplicaci&oacute;n funciona correctamente accediendo con el navegador a la URL: <em>http://localhost:8080/resort/resort.zul</em>.</p>
+<p>4. Por &uacute;ltimo, abrimos el fichero <em>resort.zul</em> en un editor de texto y modificamos algunas etiquetas. Comprobamos que se ha modificado tambi&eacute;n la aplicaci&oacute;n web.</p>
+</div>
+
+
+<a name="N10304"></a><a name="Instalaci%C3%B3n+de+Eclipse"></a>
+<h2 class="underlined_10">Instalaci&oacute;n de Eclipse</h2>
+<div class="section">
+<p>El desarrollo de ZK se realiza en el entorno de programaci&oacute;n Eclipse. Para instalarlo, puedes descargar la versi&oacute;n de Eclipse Galileo (Eclipse 3.5) para Windows disponible en la p&aacute;gina de software:</p>
+<ul>
+	
+<li>
+<a href="soft/eclipse-jee-galileo-SR2-win32.zip">eclipse-jee-galileo-SR2-win32.zip</a>
+</li>
+
+</ul>
+<p>1. Instalamos Eclipse y abrimos un nuevo espacio de trabajo llamado <em>zk-workspace</em> en el que vamos a desarrollar todos los proyectos del curso.</p>
+<p>Debemos instalar un servidor Tomcat en el espacio de trabajo que acabamos de crear. Suponemos que ya hemos ejecutado el instalador de Apache Tomcat como un servicio Windows. Tras la instalaci&oacute;n se habr&aacute; creado el directorio <span class="codefrag">C:\Archivos de programa\Apache Software Foundation\Tomcat 6.0</span>, en el que se habr&aacute;n copiado todos los programas y ficheros necesarios. Este directorio es el que habr&aacute; que indicar en la instalaci&oacute;n del servidor en Eclipse.</p>
+<p>2. Para instalar Tomcat en Eclipse debemos escoger la opci&oacute;n <em>File &gt; New &gt; Other &gt; Server &gt; Server</em>. Seleccionamos el tipo de servidor <em>Apache &gt; Tomcat v6.0 Server</em> y el directorio de instalaci&oacute;n indicado previamente.</p>
+<p>3. Una vez instalado, probamos a arrancar el servidor. Para ello activamos la vista <em>Servers</em> que estar&aacute; situada en el panel inferior de Eclipse y pulsamos el bot&oacute;n de <em>Start</em>.</p>
+<p>
+<img alt="" content-width="12cm" src="imagenes/eclipse-server.png" width="720"></p>
+<p>Si el servicio de Tomcat de Windows est&aacute; activo, aparecer&aacute; un mensaje de error cuando activamos el servidor en Eclipse, debido a que el puerto 8080 est&aacute; ya ocupado. Detenemos el servicio de Windows y ya podemos trabajar normalmente en Eclipse.</p>
+</div>
+
+
+<a name="N1033E"></a><a name="Instalaci%C3%B3n+de+ZK+Studio"></a>
+<h2 class="underlined_10">Instalaci&oacute;n de ZK Studio</h2>
+<div class="section">
+<p>En esta secci&oacute;n vamos a detallar una gu&iacute;a para instalar el entorno ZK Studio, que se ejecuta como un <em>plug-in</em> de Eclipse. Si no lo tenemos instalado, podemos descargarlo e instalar la versi&oacute;n de Galileo que tenemos disponible en la p&aacute;gina de <a href="software.html">software</a>:</p>
+<ul>
+	
+<li>
+<a href="soft/eclipse-jee-galileo-SR2-win32.zip">eclipse-jee-galileo-SR2-win32.zip</a>
+</li>
+
+</ul>
+<p>1. Abrimos eclipse en el espacio de trabajo <em>zk-workspace</em>. Este ser&aacute; el espacio de trabajo en el que crearemos todos los proyectos del curso.</p>
+<p>2. Vamos a instalar ZK Studio. Seleccionamos <em>Help &gt; Install New Software...</em>.</p>
+<p>3. A&ntilde;adimos el sitio de ZK Studio. Pulsamos <em>Add...</em> y a&ntilde;adimos la URL <em>http://studioupdate.zkoss.org/studio/update</em> con el nombre <em>ZK Studio</em>
+</p>
+<p>
+<img alt="" content-width="7cm" src="imagenes/instalacion-zkstudio01.png" width="409"></p>
+<p>4. Seleccionamos el sitio que acabamos de a&ntilde;adir en la opci&oacute;n <em>Work with</em>, esperamos a que Eclipse se conecte al servidor de actualizaci&oacute;n y escogemos el paquete a instalar: <em>ZK Studio</em>. </p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/instalacion-zkstudio02.png" width="612"></p>
+<p>5. Pulsamos varias veces <em>Next</em> y aceptamos los t&eacute;rminos de la licencia. Se descargar&aacute;n bastantes paquetes necesarios para ZK Studio.</p>
+<p>6. Reiniciamos Eclipse. Para usar ZK Studio es recomendable registrarse con una cuenta. Podemos usar la cuenta ya creada para el curso: <em>javaua</em> con contrase&ntilde;a <em>javaua</em>, o registrarnos en la <a href="http://www.zkoss.org/forum/signup.zul">p&aacute;gina de registro de zkoss</a> con otro login.</p>
+<p>
+<strong>Instalaci&oacute;n off-line</strong>
+</p>
+<p>En el caso en que no tengamos acceso a la URL anterior para realizar una instalaci&oacute;n on-line, podemos utilizar el archivo ZIP <em>zk-studio.0.9.6.zip</em> disponible en la p&aacute;gina de <a href="software.html">software</a>:</p>
+<ul>
+   
+<li>
+<a href="soft/zk-studio.0.9.6.zip">zk-studio.0.9.6.zip</a>
+</li>
+
+</ul>
+<p> En el paso 3 seleccionamos la opci&oacute;n <em>Archive...</em>, utilizamos el fichero anterior y seguimos los mismos pasos.</p>
+<p>7. Una vez instalado, podemos comprobar que se ha creado la perspectiva <em>ZK</em>. Pinchamos en la esquina superior derecha sobre el icono para abrir una nueva perspectiva. Seleccionamos <em>Other &gt; ZK</em> y activamos la perspectiva ZK. </p>
+<p>
+<img alt="" content-width="3cm" src="imagenes/zk.png" width="152"></p>
+<p>Se activa la vista <em>ZK Welcome Page</em> en la que se muestran enlaces de inter&eacute;s sobre ZK elaborados por la propia compa&ntilde;&iacute;a Potix y acciones de Eclipse para aprender m&aacute;s a p&aacute;ginas de </p>
+<p>Es recomendable activar algunas vistas adicionales. Entre ellas las m&aacute;s importantes son el <em>ZUL Visual Editor</em> y la <em>ZUL Palette</em>. En el editor visual ZUL podremos comprobar una previsulizaci&oacute;n de la p&aacute;gina ZUL que estamos editando. Veremos m&aacute;s adelante que tambi&eacute;n es posible utilizarlo como editor gr&aacute;fico de la p&aacute;gina, arrastrando aqu&iacute; componentes ZK.</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/zul-visual-editor.png" width="656"></p>
+<p>Otra vista importante es la paleta de componentes de ZK. En ella podemos explorar los distintos componentes de ZK, agrupados por categor&iacute;as.</p>
+<p>
+<img alt="" content-width="3cm" src="imagenes/zk-palette.png" width="187"></p>
+<p>8. Terminamos creando un primer proyecto ZK con el asistente. Escogemos la opci&oacute;n <em>File &gt; New &gt; Other &gt; ZK &gt; ZK Project</em>. Damos como nombre del proyecto <em>01-gmap</em>. El asistente crea por defecto un fichero inicial <em>index.zul</em>.</p>
+<p>
+<img alt="" content-width="4cm" src="imagenes/proyecto-zk.png" width="230"></p>
+<p>9. Seleccionamos el navegador externo del sistema como navegador por defecto de Eclipse. Para ello escogemos: <em>Window &gt; Web Browser &gt; 1 Default system Web browser</em>. </p>
+<p>10. Podemos ya lanzar la aplicaci&oacute;n, pulsando con el bot&oacute;n derecho sobre el nombre de proyecto <em>01-gmap</em> y seleccionando la opci&oacute;n <em>Run As &gt; Run on Server</em>. Al lanzar la aplicaci&oacute;n, se abrir&aacute; el navegador del sistema y veremos lo que muestra la p&aacute;gina <em>index.zul</em>.</p>
+</div>
+
+
+<a name="N10409"></a><a name="Una+primera+aplicaci%C3%B3n+con+gmaps"></a>
+<h2 class="underlined_10">Una primera aplicaci&oacute;n con gmaps</h2>
+<div class="section">
+<p>Terminamos esta primera sesi&oacute;n con un ejemplo de aplicaci&oacute;n en la se usa el componente <span class="codefrag">gmap</span> y se pueden comprobar algunas caracter&iacute;sticas de ZK:</p>
+<ul>
+
+<li>Procesamiento de eventos</li>
+
+<li>Distintos componentes: <span class="codefrag">button</span>, <span class="codefrag">slider</span> y <span class="codefrag">label</span>
+</li>
+
+<li>Comunicaci&oacute;n entre atributos de los componentes</li>
+
+</ul>
+<p>
+<img alt="" content-width="8cm" src="imagenes/gmap.png" width="507"></p>
+<pre class="code">&lt;?page title="Gmap" contentType="text/html;charset=UTF-8"?&gt;
+&lt;zk&gt;
+&lt;script src="http://maps.google.com/maps?file=api&amp;amp;v=2&amp;amp;key=abcdefg"
+    type="text/javascript"&gt;&lt;/script&gt;
+&lt;gmaps id="map" width="500px" showSmallCtrl="true" height="300px" 
+               lat="38.358215" lng="-0.490437"&gt;
+    &lt;attribute name="onMapMove"&gt;
+      center.setValue(""+self.lat+","+self.lng);
+    &lt;/attribute&gt;
+&lt;/gmaps&gt;
+&lt;button label="panTo" onClick="map.panTo(38.384862, -0.513783)"/&gt;
+&lt;slider maxpos="17" curpos="${map.zoom}" onScroll="map.setZoom(self.curpos)"/&gt;
+&lt;label id="center" value="${map.lat}, ${map.lng}"/&gt;
+&lt;/zk&gt;</pre>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010 Depto. CCIA</div>
+</div>
+</body>
+</html>

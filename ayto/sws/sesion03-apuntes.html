@@ -1,0 +1,799 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Desarrollo de servicios web</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/cursos/sws"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servicios Web seguros" src="images/baner_j2ee_der.gif" title="Servicios Web seguros"></a>
+</div>
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Apuntes</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Servicios Web seguros</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Servicios Web seguros">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesi&oacute;n 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesi&oacute;n 2</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesi&oacute;n 3</div>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesi&oacute;n 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesi&oacute;n 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesi&oacute;n 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesi&oacute;n 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesi&oacute;n 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesi&oacute;n 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesi&oacute;n 10</a>
+</div>
+<div class="menuitem">
+<a href="sesion11-apuntes.html">Sesi&oacute;n 11</a>
+</div>
+<div class="menuitem">
+<a href="sesion12-apuntes.html">Sesi&oacute;n 12</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html" title="Roadmap">Roadmap</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion03-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Desarrollo de servicios web</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Dise%C3%B1o+del+documento+WSDL">Dise&ntilde;o del documento WSDL</a>
+</li>
+<li>
+<a href="#Cliente+con+CXF">Cliente con CXF</a>
+</li>
+<li>
+<a href="#Servicio+con+CXF">Servicio con CXF</a>
+</li>
+<li>
+<a href="#Cliente+con+Axis2">Cliente con Axis2</a>
+</li>
+<li>
+<a href="#Servicio+con+Axis2">Servicio con Axis2</a>
+<ul class="minitoc">
+<li>
+<a href="#Instalaci%C3%B3n+de+Axis2">Instalaci&oacute;n de Axis2</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Ejercicios">Ejercicios</a>
+<ul class="minitoc">
+<li>
+<a href="#Validaci%C3%B3n+de+NIFs">Validaci&oacute;n de NIFs</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+
+
+<p>Vamos a desarrollar servicios a partir del documento WSDL. 
+En el siguiente apartado 
+vamos a ver c&oacute;mo dise&ntilde;arlo con el editor gr&aacute;fico de Eclipse. </p>
+
+
+
+<a name="N10011"></a><a name="Dise%C3%B1o+del+documento+WSDL"></a>
+<h2 class="underlined_10">Dise&ntilde;o del documento WSDL</h2>
+<div class="section">
+<p>A la hora de dise&ntilde;ar el documento WSDL hay que tomar una serie de 
+decisiones sobre el formato del mensaje. Una de ellas es el formato de 
+binding que vamos a utilizar: rpc/encoded o document/literal. El modo 
+rpc/encoded est&aacute; desaprobado porque, aunque es un WSDL legal, no es 
+compatible con WS-I. El problema que tiene es que no es f&aacute;cil validarlo, 
+debido a que contiene tags definidos en un schema, mientras que el resto 
+del cuerpo contiene tags que provienen de definiciones WSDL. Por tanto a 
+lo largo del curso utilizaremos siempre el binding document/literal.
+</p>
+<p>Otra decisi&oacute;n a tomar es si pasar los par&aacute;metros en modo bare o 
+modo wrapped (envuelto). De cara al c&oacute;digo java, la principal 
+diferencia es que en el modo bare, los par&aacute;metros deben introducirse 
+en una &uacute;nica estructura de datos, como pasa en el ejemplo del HolaMundo:</p>
+<pre class="code">
+		Saluda entrada = new Saluda();
+		entrada.setNombre("Boyan");
+		SaludaResponse respuesta = servicio.saluda(entrada);
+		System.out.println(respuesta.getSaludaReturn( ));
+</pre>
+<p>En el modo wrapped, sin embargo, las llamadas ser&iacute;an as&iacute;:</p>
+<pre class="code">
+		String respuesta = servicio.saluda("Boyan");
+		System.out.println(respuesta);
+</pre>
+<p>Para utilizar el estilo wrapped hay que dar el mismo nombre al 
+element que contiene el <span class="codefrag">complexType</span>, y a la operaci&oacute;n definida en 
+el <span class="codefrag">portType</span>. En cuanto a los par&aacute;metros de respuesta, hay que llamar 
+el element con el mismo nombre, concatenando "<span class="codefrag">Response</span>" al final, y 
+ya no hay que indicar el tipo. El tipo ir&aacute; indicado dentro del 
+<span class="codefrag">complexType</span> definido en el element:
+</p>
+<pre class="code"> 
+&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+ xmlns:tns="http://jtech.ua.es/Servicio/" 
+ xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+ name="Servicio" targetNamespace="http://jtech.ua.es/Servicio/"&gt;
+  &lt;wsdl:types&gt;
+    &lt;xsd:schema targetNamespace="http://jtech.ua.es/Servicio/"&gt;
+      &lt;xsd:element name="saluda"&gt;
+      	&lt;xsd:complexType&gt;
+      		&lt;xsd:sequence&gt;
+      			&lt;xsd:element name="nombre" type="xsd:string" /&gt;
+      			&lt;xsd:element name="apellido" type="xsd:string" /&gt;
+      		&lt;/xsd:sequence&gt;
+      	&lt;/xsd:complexType&gt;
+      &lt;/xsd:element&gt;
+      &lt;xsd:element name="saludaResponse"&gt;
+        &lt;xsd:complexType&gt;
+          &lt;xsd:sequence&gt;
+            &lt;xsd:element name="saludo" type="xsd:string"/&gt;
+          &lt;/xsd:sequence&gt;
+        &lt;/xsd:complexType&gt;
+      &lt;/xsd:element&gt;
+    &lt;/xsd:schema&gt;
+  &lt;/wsdl:types&gt;
+  &lt;wsdl:message name="saludaRequest"&gt;
+    &lt;wsdl:part element="tns:saluda" name="parameters"/&gt;
+  &lt;/wsdl:message&gt;
+  &lt;wsdl:message name="saludaResponse"&gt;
+    &lt;wsdl:part element="tns:saludaResponse" name="parameters"/&gt;
+  &lt;/wsdl:message&gt;
+  &lt;wsdl:portType name="Servicio"&gt;
+    &lt;wsdl:operation name="saluda"&gt;
+      &lt;wsdl:input message="tns:saludaRequest"/&gt;
+      &lt;wsdl:output message="tns:saludaResponse"/&gt;
+    &lt;/wsdl:operation&gt;
+  &lt;/wsdl:portType&gt;
+  &lt;wsdl:binding name="ServicioSOAP" type="tns:Servicio"&gt;
+    &lt;soap:binding style="document" 
+      transport="http://schemas.xmlsoap.org/soap/http"/&gt;
+    &lt;wsdl:operation name="saluda"&gt;
+      &lt;soap:operation soapAction="http://jtech.ua.es/Servicio/saluda"/&gt;
+      &lt;wsdl:input&gt;
+        &lt;soap:body use="literal"/&gt;
+      &lt;/wsdl:input&gt;
+      &lt;wsdl:output&gt;
+        &lt;soap:body use="literal"/&gt;
+      &lt;/wsdl:output&gt;
+    &lt;/wsdl:operation&gt;
+  &lt;/wsdl:binding&gt;
+  &lt;wsdl:service name="Servicio"&gt;
+    &lt;wsdl:port binding="tns:ServicioSOAP" name="ServicioSOAP"&gt;
+      &lt;soap:address location="http://localhost:8080/"/&gt;
+    &lt;/wsdl:port&gt;
+  &lt;/wsdl:service&gt;
+&lt;/wsdl:definitions&gt;
+
+</pre>
+<p>Vamos a dise&ntilde;ar este archivo WSDL con el editor gr&aacute;fico de Eclipse. 
+Primero podemos crear un nuevo proyecto y a&ntilde;adirle las dependencias 
+de CXF como ya se ha visto, o bien copiar el proyecto 
+<span class="codefrag">HolaMundoCliente</span> a un nuevo proyecto que llamaremos 
+<span class="codefrag">SWCliente</span>. Eliminamos el documento WSDL actual y 
+en la misma carpeta (<span class="codefrag">src/main/resources</span>) creamos un nuevo WSDL 
+usando el asistente: New / Other / Web Services / WSDL. Lo llamamos 
+<span class="codefrag">Servicio</span> y pulsamos Next. En la siguiente pantalla, 
+como Target namespace vamos a indicar 
+<a href="http://jtech.ua.es/Servicio/">http://jtech.ua.es/Servicio/</a>, 
+y vamos a dejar el resto de opciones con los valores por defecto:
+</p>
+<p>
+<img alt="Asistente de creaci&oacute;n de WSDL" content-width="7.33cm" src="imagenes/sws/14.png" width="611"></p>
+<p>El nuevo fichero queda abierto, y puede verse o bien en modo xml, 
+o bien en modo de dise&ntilde;o. En el modo de dise&ntilde;o podemos ver el servicio 
+con el nombre del puerto y el endpoint, conectados con la interfaz que 
+define los par&aacute;metros de entrada y de salida. Vamos a cambiar el 
+endpoint por defecto e introducir <a href="http://localhost:8080/">http://localhost:8080/</a>. 
+Tambi&eacute;n vamos a cambiar el nombre de la operaci&oacute;n a saluda. 
+Autom&aacute;ticamente se cambiar&aacute;n los nombres de los par&aacute;metros de 
+entrada y de salida, quedando la figura as&iacute;:</p>
+<p>
+<img alt="Servicio.wsdl" content-width="8.93cm" src="imagenes/sws/15.png" width="700"></p>
+<p>Ahora vamos a pulsar sobre la flecha que hay a la derecha del 
+par&aacute;metro de entrada <span class="codefrag">saluda</span>, y entraremos en el 
+"Inline schema of Servicio.wsdl". </p>
+<p>
+<img alt="Inline schema of Servicio.wsdl" content-width="4.86cm" src="imagenes/sws/16.png" width="405"></p>
+<p>Pulsamos sobre los tres puntos que significan "secuencia", y 
+con el men&uacute; contextual pulsamos "Add element". Vamos a cambiar los 
+nombres de los dos elementos de la secuencia para que sean 
+"<span class="codefrag">nombre</span>" y "<span class="codefrag">apellido</span>":</p>
+<p>
+<img alt="Elementos del tipo 'saluda'" content-width="4.56cm" src="imagenes/sws/17.png" width="380"></p>
+<p>Guardamos y cerramos, volviendo a la pesta&ntilde;a con la vista general del 
+documento. De la misma manera entramos en la definici&oacute;n del par&aacute;metro 
+de salida, el <span class="codefrag">saludaResponse</span>, donde podemos cambiar el 
+nombre por defecto, "<span class="codefrag">out</span>" a "<span class="codefrag">saludo</span>". </p>
+<p>
+<img alt="Elementos del tipo 'saludaResponse'" content-width="5.15cm" src="imagenes/sws/18.png" width="429"></p>
+<p>Guardamos y cerramos esta pesta&ntilde;a, y si ahora editamos el 
+WSDL en modo XML, veremos que coincide con el anteriormente listado. 
+En la vista de los paquetes hacemos click con el bot&oacute;n derecho sobre el 
+<span class="codefrag">Servicio.wsdl</span> y pulsamos Validate, que debe darnos el 
+mensaje de que no ha habido ning&uacute;n error de validaci&oacute;n.</p>
+</div> 
+
+
+<a name="N1009C"></a><a name="Cliente+con+CXF"></a>
+<h2 class="underlined_10">Cliente con CXF</h2>
+<div class="section">
+<p>Ahora podemos generar el nuevo cliente. Para ello borramos el 
+paquete <span class="codefrag">es.ua.jtech.servcweb.hola.sw</span> y cambiamos el archivo 
+<span class="codefrag">GeneraCodigo.java</span> para que lea el nuevo WSDL:</p>
+<pre class="code">"src/main/resources/Servicio.wsdl"</pre>
+<p>Lo ejecutamos y refrescamos el proyecto. Abrimos el archivo cliente, 
+el <span class="codefrag">Servicio_ServicioSOAP_Client.java</span> e introducimos dos 
+cadenas en los par&aacute;metros de la llamada del servicio:</p>
+<pre class="code">
+        System.out.println("Invoking saluda...");
+        java.lang.String _saluda_nombre = "Boyan";
+        java.lang.String _saluda_apellido = "Bonev";
+        java.lang.String _saluda__return = port.saluda(
+                           _saluda_nombre, _saluda_apellido);
+        System.out.println("saluda.result=" + _saluda__return);
+</pre>
+<p>Ya tenemos hecho el cliente con CXF, ahora vamos a generar el servicio.</p>
+</div> 
+
+
+<a name="N100BF"></a><a name="Servicio+con+CXF"></a>
+<h2 class="underlined_10">Servicio con CXF</h2>
+<div class="section">
+<p>Copiamos el proyecto <span class="codefrag">SWCliente</span> y lo pegamos con el nombre 
+<span class="codefrag">SWServicio.</span> 
+Eliminamos el paquete <span class="codefrag">es.ua.jtech.servcweb.hola.sw</span> y editamos el 
+<span class="codefrag">GeneraCodigo.java</span> para que genere el c&oacute;digo del servicio:
+</p>
+<pre class="code">
+		WSDLToJava.main(new String[]{
+				"-server",
+				"-d","src/main/java",
+				"src/main/resources/Servicio.wsdl"
+			});
+</pre>
+<p>Lo ejecutamos y refrescamos. Nos marca un error en 
+<span class="codefrag">Servicio_ServicioSOAP_Server.java</span> porque no tenemos la 
+implementaci&oacute;n de la interfaz del servicio. 
+</p>
+<p>
+<img alt="Error: falta ServicioImpl.java" content-width="6.76cm" src="imagenes/sws/19.png" width="563"></p>
+<p>Haciendo click sobre la 
+se&ntilde;al de error nos sugiere, entre las primeras opciones, 
+"Create class 'ServicioImpl'". La seleccionamos y en el asistente de 
+creaci&oacute;n de nueva clase, a&ntilde;adimos la interfaz que &eacute;sta debe implementar, 
+<span class="codefrag">es.ua.jtech.servicio.Servicio</span>: 
+</p>
+<p>
+<img alt="Creaci&oacute;n de nueva clase" content-width="7.44cm" src="imagenes/sws/20.png" width="620"></p>
+<p>Pulsamos Finish y completamos el c&oacute;digo de la implementaci&oacute;n, 
+haciendo que devuelva un saludo hacia el nombre + apellido, con el 
+nombre abreviado (primer car&aacute;cter). </p>
+<pre class="code">
+package es.ua.jtech.servicio;
+
+public class ServicioImpl implements Servicio {
+
+	@Override
+	public String saluda(String nombre, String apellido) {
+		return "&iexcl;Hola, "+nombre.substring(0,1) + ". " + apellido + "!";
+	}
+
+}
+</pre>
+<p>Guardamos, y ejecutamos el servidor, que se encuentra en el archivo 
+<span class="codefrag">Servicio_ServicioSOAP_Server.java</span> (lo ejecutamos como 
+Java Application). Debe arrancar, lanzando por la salida est&aacute;ndar una 
+serie de mensajes tales como:</p>
+<pre class="code">
+Starting Server
+14-may-2010 16:20:58 org.springframework.context.support.
+                       AbstractApplicationContext prepareRefresh
+INFO: Refreshing org.apache.cxf.bus.spring.BusApplicationContext@169e11: 
+display name [org.apache.cxf.bus.spring.BusApplicationContext@169e11]; 
+startup date [Fri May 14 16:20:58 CEST 2010]; root of context hierarchy
+[...]
+INFO: Creating Service {http://servicio.jtech.ua.es/}ServicioImplService 
+                                from class es.ua.jtech.servicio.Servicio
+14-may-2010 16:21:01 org.apache.cxf.endpoint.ServerImpl initDestination
+INFO: Setting the server's publish address to be http://localhost:8080/
+14-may-2010 16:21:01 org.mortbay.log.Slf4jLog info
+INFO: Logging to org.slf4j.impl.JDK14LoggerAdapter(org.mortbay.log) via 
+                                               org.mortbay.log.Slf4jLog
+14-may-2010 16:21:01 org.mortbay.log.Slf4jLog info
+INFO: jetty-6.1.21
+14-may-2010 16:21:02 org.mortbay.log.Slf4jLog info
+INFO: Started SelectChannelConnector@localhost:8080
+Server ready...
+</pre>
+<p>En caso de que ocurra alg&uacute;n error, el m&aacute;s com&uacute;n es el de que el 
+puerto (en este caso el 8080) est&eacute; ocupado. Eso suele ocurrir durante 
+el desarrollo porque nos dejamos otro proceso de servidor en ese puerto. 
+Se tratar&iacute;a de localizar qu&eacute; proceso es y terminarlo, o bien utilizar otro 
+puerto diferente.</p>
+<p>Nota: el servidor est&aacute; configurado para que por defecto se apague 
+y termine el proceso (con el mensaje "Server exiting" en consola), una 
+vez pasados 5 minutos, ya que la funci&oacute;n main es:
+</p>
+<pre class="code">
+    public static void main(String args[]) throws Exception { 
+        new Servicio_ServicioSOAP_Server();
+        System.out.println("Server ready..."); 
+        
+        Thread.sleep(5 * 60 * 1000); 
+        System.out.println("Server exiting");
+        System.exit(0);
+    }
+</pre>
+<p>Se puede modificar este c&oacute;digo para cambiar este comportamiento. 
+Por otro lado, si queremos matar el proceso del servidor (necesitaremos 
+hacerlo si realizamos un cambio y queremos volver a probarlo), podemos 
+hacer click en el bot&oacute;n de la consola, para cambiar a la consola asociada al 
+proceso, y entonces veremos que se ilumina el bot&oacute;n rojo de stop, en caso de 
+que el proceso todav&iacute;a est&eacute; en ejecuci&oacute;n. Pulsamos el bot&oacute;n de stop y el 
+proceso termina (liber&aacute;ndose tambi&eacute;n el puerto 8080, en nuestro caso). </p>
+<p>
+<img alt="Consolas" content-width="9.12cm" src="imagenes/sws/21.png" width="700"></p>
+<p>Ahora podemos lanzar el cliente para que establezca la comunicaci&oacute;n 
+con el servidor. En el proyecto <span class="codefrag">SWCliente</span>, ejecutamos como aplicaci&oacute;n 
+java el fichero <span class="codefrag">es.ua.jtech.servicio.Servicio_ServicioSOAP_Client.java</span>.
+</p>
+<p>El resultado debe ser:</p>
+<pre class="code">
+[...]
+14-may-2010 16:33:51 org.apache.cxf.service.factory.
+                      ReflectionServiceFactoryBean buildServiceFromWSDL
+INFO: Creating Service {http://jtech.ua.es/Servicio/}Servicio from WSDL: 
+                                  file:src/main/resources/Servicio.wsdl
+Invoking saluda...
+saluda.result=&iexcl;Hola, B. Bonev!
+</pre>
+<p>Tambi&eacute;n podemos comprobar con nuestro navegador c&oacute;mo el servicio 
+ofrece el documento WSDL en la direcci&oacute;n 
+<a href="http://localhost:8080/saluda?wsdl">http://localhost:8080/saluda?wsdl</a>:</p>
+<p>
+<img alt="WSDL ofrecido por el servicio" content-width="11.94cm" src="imagenes/sws/23.png" width="700"></p>
+</div> 
+
+
+<a name="N10138"></a><a name="Cliente+con+Axis2"></a>
+<h2 class="underlined_10">Cliente con Axis2</h2>
+<div class="section">
+<p>Aunque ya hemos visto c&oacute;mo generar clientes con Axis2, 
+aqu&iacute; vamos a introducir un par&aacute;metro m&aacute;s en la generaci&oacute;n del c&oacute;digo, 
+que indicar&aacute; que los par&aacute;metros son de tipo Wrapped. Empezamos copiando 
+el proyecto <span class="codefrag">Axis2HolaMundoCliente</span> y peg&aacute;ndolo con el nombre 
+<span class="codefrag">Axis2SWCliente</span>. 
+Eliminamos el documento WSDL que contiene y los tres paquetes de la carpeta 
+<span class="codefrag">src/main/java</span>. Ahora creamos una nueva clase en 
+<span class="codefrag">src/main/java</span>, e indicamos al asistente que la ponga en el paquete 
+<span class="codefrag">es.ua.jtech.servcweb.generador</span>, que la llame <span class="codefrag">GeneraCodigo</span>, 
+y que cree el m&eacute;todo main.
+</p>
+<p>Introducimos la llamada al m&eacute;todo <span class="codefrag">WSDL2Code.main</span>, pero esta 
+vez con el par&aacute;metro <span class="codefrag">"-uw"</span> adicional, que indica que hay que 
+realizar el "unwrapping" de los par&aacute;metros.  Tambi&eacute;n cambiamos el nombre 
+del documento WSDL a <span class="codefrag">Servicio.wsdl</span>. El 
+<span class="codefrag">GeneraCodigo.java</span> debe quedar as&iacute;:
+</p>
+<pre class="code">
+package es.ua.jtech.servcweb.generador;
+import org.apache.axis2.wsdl.WSDL2Code;
+public class GeneraCodigo {
+	public static void main(String[] args) throws Exception {
+		WSDL2Code.main(new String[]{
+				"-uw",
+				"-S","src/main/java",
+				"-uri","src/main/resources/Servicio.wsdl"
+			});
+		System.out.println("Generado, no olvide hacer Refresh.");
+	}
+}
+</pre>
+<p>Copiamos el <span class="codefrag">Servicio.wsdl</span> a la carpeta de recursos, 
+ejecutamos y refrescamos. Ahora nos falta hacer un cliente ejecutable 
+que realice la llamada al servicio web. Creamos una nueva clase que 
+llamamos <span class="codefrag">SWCliente</span> y que est&aacute; en el paquete 
+<span class="codefrag">es.ua.jtech.servcweb.llamada</span>. Marcamos la casilla de 
+creaci&oacute;n del m&eacute;todo main.
+</p>
+<p>Introducimos la llamada a <span class="codefrag">ServicioStub</span>, dejando que 
+Eclipse nos autocomplete los m&eacute;todos. Descubriremos que existe el 
+m&eacute;todo saluda que acepta Strings y devuelve tambi&eacute;n un String. 
+El c&oacute;digo queda as&iacute;:
+</p>
+<pre class="code">
+package es.ua.jtech.servcweb.llamada;
+import java.rmi.RemoteException;
+import es.ua.jtech.servicio.ServicioStub;
+public class SWCliente {
+	public static void main(String[] args) throws RemoteException {
+		ServicioStub servicio = new ServicioStub(
+		"http://jtech.ua.es/HolaMundo/services/HolaMundoSW");
+		System.out.println(servicio.saluda("Boyan", "Bonev"));
+	}
+}
+</pre>
+<p>Comp&aacute;rese con la versi&oacute;n de 
+<span class="codefrag">Axis2HolaMundoCliente</span>, donde se utilizan par&aacute;metros bare en 
+lugar de wrapped.</p>
+</div>
+
+<a name="N10183"></a><a name="Servicio+con+Axis2"></a>
+<h2 class="underlined_10">Servicio con Axis2</h2>
+<div class="section">
+<p>Ahora pasamos a crear el servicio. Copiamos el proyecto 
+<span class="codefrag">Axis2SWCliente</span> y lo pegamos como <span class="codefrag">Axis2SWServicio</span>. 
+Eliminamos los paquete <span class="codefrag">es.ua.jtech.servcweb.llamada</span>
+y <span class="codefrag">es.ua.jtech.servicio</span> y editamos <span class="codefrag">GeneraCodigo.java</span> 
+para que genere el servidor, con el par&aacute;metro <span class="codefrag">"-uw"</span> incluido:
+</p>
+<pre class="code">
+package es.ua.jtech.servcweb.generador;
+import org.apache.axis2.wsdl.WSDL2Code;
+public class GeneraCodigo {
+	public static void main(String[] args) throws Exception {
+		WSDL2Code.main(new String[]{
+				"-ss",
+				"-sd",
+				"-uw",
+				"-S","src/main/java",
+				"-R","src/main/resources/META-INF",
+				"-uri","src/main/resources/Servicio.wsdl"
+			});
+		System.out.println("Generado, no olvide hacer Refresh.");
+	}
+}
+</pre>
+<p>Lo ejecutamos y refrescamos el proyecto.</p>
+<p>
+<img alt="Vista de paquetes" content-width="4.03cm" src="imagenes/sws/22.png" width="336"></p>
+<p>La clase <span class="codefrag">es.ua.jtech.servicio.ServicioSkeleton</span> es la que 
+debemos editar para introducir la operaci&oacute;n que realiza el servicio. 
+Eliminamos la excepci&oacute;n que por defecto lanza la funci&oacute;n <span class="codefrag">saluda( )</span>, 
+e introducimos nuestro <span class="codefrag">return</span>:</p>
+<pre class="code">
+	public java.lang.String saluda
+         (
+             java.lang.String nombre,java.lang.String apellido
+         )
+         {
+           	 return "&iexcl;Hola, "+nombre.charAt(0)+". "+ apellido+"!";
+         }
+</pre>
+<p>Hasta este punto el proyecto no deber&iacute;a dar ning&uacute;n error. 
+Si es as&iacute;, hemos terminado y debemos generar un paquete AAR, 
+que es la extensi&oacute;n por defecto para los paquetes de servicios que se 
+ejecutan en el servidor de Axis2. Para generar el paquete debemos ejecutar el 
+proyecto como paquete de Maven: bot&oacute;n derecho, Run as / Maven package. 
+</p>
+<p>Nota: si nos aparece en consola el error:</p>
+<pre class="code">
+[ERROR] Error executing Maven.
+[ERROR] The specified user settings file does not exist: 
+                        /home/servicios/.m2/settings.xml
+</pre>
+<p>es debido a un bug de Maven. Para solucionar el problema crearemos 
+un archivo XML vac&iacute;o en cuanto a contenido XML. Creamos en nuestra carpeta 
+</p>
+<pre class="code">~/.m2/ el archivo settings.xml</pre>
+<p>La carpeta es la que indica el error. En nuestro la ruta completa 
+del archivo ser&iacute;a</p>
+<pre class="code">/home/servicios/.m2/settings.xml</pre>
+<p>El archivo deber&aacute; contener lo siguiente:</p>
+<pre class="code"> 
+&lt;settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 
+http://maven.apache.org/xsd/settings-1.0.0.xsd"&gt; 
+&lt;/settings&gt; 
+
+</pre>
+<p>Volvemos a ejecutar el proyecto como Maven package y, si no hay 
+problemas de conexi&oacute;n a la red, se descargan las dependencias necesarias y 
+se genera el paquete, obteniendo una salida en consola como la siguiente:</p>
+<pre class="code">
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ----------------------------------------------------
+[INFO] Building Unnamed - SWServicio:SWServicio:jar:
+                              0.0.1-SNAPSHOT 0.0.1-SNAPSHOT
+[INFO] ----------------------------------------------------
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.1:resources (default-
+                                resources) @ SWServicio ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy 
+      filtered resources, i.e. build is platform dependent!
+[INFO] Copying 3 resources
+
+[...]
+
+[INFO] --- maven-jar-plugin:2.2:jar (default-jar) @ 
+                                             SWServicio ---
+[INFO] Building jar: /home/servicios/workspace/
+       Axis2SWServicio/target/SWServicio-0.0.1-SNAPSHOT.jar
+[INFO] ----------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ----------------------------------------------------
+[INFO] Total time: 3.583s
+[INFO] Finished at: Sat May 15 20:17:50 CEST 2010
+[INFO] Final Memory: 7M/17M
+[INFO] ----------------------------------------------------
+</pre>
+<p>El archivo generado est&aacute; en un paquete de tipo JAR, en la ruta:</p>
+<pre class="code">/home/servicios/workspace/Axis2SWServicio/
+              target/SWServicio-0.0.1-SNAPSHOT.jar</pre>
+<p>como indica la salida de la consola.</p>
+<p>Una vez que instalemos Axis2, copiaremos este .jar cambi&aacute;ndole la 
+extensi&oacute;n a .aar. Este archivo contiene todos los recursos del proyecto, 
+incluidas las clases, el documento WSDL y la carpeta <span class="codefrag">META-INF</span>.</p>
+<a name="N101F2"></a><a name="Instalaci%C3%B3n+de+Axis2"></a>
+<h3 class="underlined_5">Instalaci&oacute;n de Axis2</h3>
+<p>Tenemos dos formas de utilizar Axis2: o bien integrado con 
+Tomcat, o bien utilizando directamente el proceso de Axis2 como 
+servidor de http. En los pr&oacute;ximos ejemplos vamos a utilizar Axis2 sin Tomcat. 
+</p>
+<p>El servidor de Axis2 se puede descargar desde la web oficial:
+<a href="http://ws.apache.org/axis2/">http://ws.apache.org/axis2/</a>
+Descargamos la Binary distribution, la versi&oacute;n 1.5.1. Descomprimimos el 
+<span class="codefrag">archivo axis2-1.5.1-bin.zip</span> en alguna ruta, por ejemplo, en 
+nuestro home: <span class="codefrag">/home/servicios</span>. Abrimos una terminal y 
+entramos en la carpeta <span class="codefrag">~/axis2-1.5.1/bin</span>:</p>
+<pre class="code">cd ~/axis2-1.5.1/bin</pre>
+<p>donde tendremos que ejecutar el archivo <span class="codefrag">axis2server.sh</span>, 
+pero antes de hacerlo vamos a comprobar si la variable de entorno 
+<span class="codefrag">JAVA_HOME</span> contiene la ruda del JDK:
+</p>
+<pre class="code">echo $JAVA_HOME</pre>
+<p>Si muestra una ruta, por ejemplo, </p>
+<pre class="code">/opt/jdk1.6.0_20/</pre>
+<p>entonces est&aacute; configurada (siempre y cu&aacute;ndo esta sea la ruta 
+correcta del JDK). En caso contrario tendremos que a&ntilde;adir la instrucci&oacute;n </p>
+<pre class="code">export JAVA_HOME=/opt/jdk1.6.0_20/</pre>
+<p>o bien en las primeras l&iacute;neas del archivo <span class="codefrag">axis2server.sh</span>, 
+o bien en las primeras l&iacute;neas del archivo</p>
+<pre class="code">~/.bashrc</pre>
+<p>Se recomienda la segunda opci&oacute;n, pero una vez hecho, 
+habr&aacute; que abrir una nueva terminal para que el archvio 
+<span class="codefrag">.bashrc</span> sea ejecutado al abrirla. Si no ha habido ning&uacute;n error, 
+el script que lanza el servidor de Axis2, detectar&aacute; la variable de entorno 
+y podr&aacute; arrancar. Lo probamos (desde la carpeta <span class="codefrag">bin/</span> del 
+directorio donde se encuentra axis2):</p>
+<pre class="code">./axis2server.sh</pre>
+<p>Nota: Si no tiene permisos de ejecuci&oacute;n los a&ntilde;adimos con 
+<span class="codefrag">chmod a+x axis2server.sh</span>
+</p>
+<p>El servidor arranca mostrando una salida como la siguiente:
+</p>
+<pre class="code">
+servicios@servicios:~/axis2-1.5.1/bin$ ./axis2server.sh 
+ Using AXIS2_HOME:   /home/servicios/axis2-1.5.1
+ Using JAVA_HOME:       /opt/jdk1.6.0_20/
+[INFO] [SimpleAxisServer] Starting
+[INFO] [SimpleAxisServer] Using the Axis2 Repository/home/
+                          servicios/axis2-1.5.1/repository
+[SimpleAxisServer] Using the Axis2 Repository/home/servicios/
+                                       axis2-1.5.1/repository
+[SimpleAxisServer] Using the Axis2 Configuration File/home/
+                       servicios/axis2-1.5.1/conf/axis2.xml
+[INFO] Clustering has been disabled
+[INFO] Deploying module: metadataExchange-1.5.1 - file:/home/
+       servicios/axis2-1.5.1/repository/modules/mex-1.5.1.mar
+[INFO] Deploying module: ping-1.5.1 - file:/home/servicios/
+              axis2-1.5.1/repository/modules/ping-1.5.1.mar
+[INFO] Deploying module: mtompolicy-1.5.1 - file:/home/servicios/
+              axis2-1.5.1/repository/modules/mtompolicy-1.5.1.mar
+[INFO] Deploying module: script-1.5.1 - file:/home/servicios/
+           axis2-1.5.1/repository/modules/scripting-1.5.1.mar
+[INFO] Deploying module: soapmonitor-1.5.1 - file:/home/
+    servicios/axis2-1.5.1/repository/modules/soapmonitor-1.5.1.mar
+[INFO] Deploying module: addressing-1.5.1 - file:/home/servicios/
+              axis2-1.5.1/repository/modules/addressing-1.5.1.mar
+[INFO] Deploying module: metadataExchange-1.5.1 - file:/home/
+                      servicios/axis2-1.5.1/lib/mex-1.5.1.jar
+[INFO] Deploying Web service: version.aar - file:/home/servicios/
+                      axis2-1.5.1/repository/services/version.aar
+[INFO] [SimpleAxisServer] Started
+[SimpleAxisServer] Started
+[INFO] Listening on port 8080
+</pre>
+<p>Para desplegar el servicio Axis2 que acabamos de crear, 
+abrimos una nueva terminal (no cerramos la otra, de lo contrario 
+matar&iacute;amos el proceso de axis) y copiamos el .jar que Maven gener&oacute;, 
+con extensi&oacute;n .aar en la carpeta <span class="codefrag">repository/services/</span> de la 
+carpeta de axis:</p>
+<pre class="code">cp /home/servicios/workspace/Axis2SWServicio/target/
+     SWServicio-0.0.1-SNAPSHOT.jar ~/axis2-1.5.1/repository/
+                                    services/SWServicio.aar</pre>
+<p>Ahora observamos la salida de axis2 que mantenemos ejecutado en la otra 
+terminal, y vemos que pasados pocos segundos, el servidor detecta el archivo 
+y despliega el servicio:
+</p>
+<pre class="code">[INFO] Deploying Web service: SWServicio.aar - 
+   file:/home/servicios/axis2-1.5.1/repository/services/SWServicio.aar
+</pre>
+<p>Ahora podemos abrir el navegador web y empezar accediendo a la url 
+<a href="http://localhost:8080/">http://localhost:8080/</a>, 
+que nos redirigir&aacute; a <a href="http://localhost:8080/axis2/services/">http://localhost:8080/axis2/services/</a>, 
+donde veremos una lista de los servicios desplegados. Uno de ellos deber&aacute; 
+ser nuestro Servicio y si hacemos click sobre su t&iacute;tulo, se mostrar&aacute;  el 
+documento WSDL que define:</p>
+<p>
+<img alt="Servicios desplegados en Axis2" content-width="8.04cm" src="imagenes/sws/24.png" width="670"></p>
+<p>Tan s&oacute;lo nos falta probar el cliente que ya tenemos preparado para 
+este servicio. Abrimos el archivo 
+<span class="codefrag">es.ua.jtech.servcweb.llamada.SWCliente.java</span> del proyecto 
+<span class="codefrag">Axis2SWCliente</span> y cambiamos el endpoint del servicio a 
+"<a href="http://localhost:8080/axis2/services/Servicio">http://localhost:8080/axis2/services/Servicio</a>":</p>
+<pre class="code">
+package es.ua.jtech.servcweb.llamada;
+import java.rmi.RemoteException;
+import es.ua.jtech.servicio.ServicioStub;
+public class SWCliente {
+	public static void main(String[] args) throws RemoteException {
+		ServicioStub servicio = new ServicioStub(
+		"http://localhost:8080/axis2/services/Servicio");
+		System.out.println(servicio.saluda("Boyan", "Bonev"));
+	}
+}
+</pre>
+<p>Lo ejecutamos y obtenemos por consola:</p>
+<pre class="code">&iexcl;Hola, B. Bonev!</pre>
+<p>Si en el servicio hubiera ocurrido alguna excepci&oacute;n de Java, 
+hubi&eacute;ramos podido verla en la terminal donde est&aacute; ejecut&aacute;ndose el 
+servidor de Axis2. 
+</p>
+</div> 
+
+
+
+<p class="pageBreakAfter"></p>
+
+
+<a name="N10292"></a><a name="Ejercicios"></a>
+<h2 class="underlined_10">Ejercicios</h2>
+<div class="section">
+<a name="N10298"></a><a name="Validaci%C3%B3n+de+NIFs"></a>
+<h3 class="underlined_5">Validaci&oacute;n de NIFs</h3>
+<p>Vamos a implementar un servicio con una serie de m&eacute;todos que nos permitan validar 
+un NIF. El servicio tendr&aacute; como nombre <span class="codefrag">ValidaDniSW</span>, y estar&aacute; dentro
+de un proyecto <span class="codefrag">DNIServicio</span>. Se pide:</p>
+<p>
+<em>a)</em> Implementar la siguiente operaci&oacute;n:</p>
+<pre class="code">boolean validarDni(String dni)</pre>
+<p>Esta funci&oacute;n tomar&aacute; como entrada un DNI, y como salida nos dir&aacute; si es correcto 
+o no. El resultado ser&aacute; <span class="codefrag">true</span> si el DNI es correcto (est&aacute; formado por 
+8 d&iacute;gitos), y <span class="codefrag">false</span> en caso contrario. Podemos utilizar un c&oacute;digo
+similar al siguiente para validar el DNI:</p>
+<pre class="code">Pattern pattern =  Pattern.compile("[0-9]{8,8}");
+Matcher matcher = pattern.matcher(dni);
+return matcher.matches();</pre>
+<p>
+<em>b)</em> Implementar la siguiente operaci&oacute;n:</p>
+<pre class="code">char obtenerLetra(String dni)</pre>
+<p>Esta funci&oacute;n tomar&aacute; como entrada un DNI, y como salida nos dir&aacute; la letra que 
+corresponde a dicho DNI. Lo primero que deber&aacute; hacer es validar el DNI (puede 
+utilizar para ello el m&eacute;todo definido en el apartado anterior), y en caso de 
+no ser correcto lanzar&aacute; una excepci&oacute;n de tipo <span class="codefrag">DniFaultException</span> (que deberemos crear)
+indicando el mensaje de error adecuado. Una vez validado, calcularemos 
+la letra que corresponda al DNI. Para ello deberemos:</p>
+<ul>
+
+<li>Obtener el &iacute;ndice de la letra correspondiente con:</li>
+
+</ul>
+<pre class="code">dni % 23</pre>
+<ul>
+
+<li>La letra ser&aacute; el car&aacute;cter de la siguiente cadena que est&eacute; en la posici&oacute;n 
+obtenida anteriormente:</li>
+
+</ul>
+<pre class="code">"TRWAGMYFPDXBNJZSQVHLCKE"</pre>
+<p>
+<em>c)</em> Implementar la siguiente operaci&oacute;n:</p>
+<pre class="code">boolean validarNif(String nif)</pre>
+<p>Esta funci&oacute;n tomar&aacute; como entrada un NIF, y como salida nos dir&aacute; si es correcto 
+o no. El resultado ser&aacute; <span class="codefrag">true</span> si el NIF es correcto (est&aacute; formado por 
+8 d&iacute;gitos seguidos de la letra correcta), y <span class="codefrag">false</span> en caso contrario. 
+Para hacer esta comprobaci&oacute;n se pueden utilizar las dos funciones anteriores: se 
+comprobar&aacute;n los 8 primeros caracteres con la funci&oacute;n <span class="codefrag">validarDni</span> y 
+posteriormente se comprobar&aacute; si la letra es la correcta utilizando la funci&oacute;n 
+<span class="codefrag">obtenerLetra</span>.</p>
+<p>
+<em>d)</em> Implementar un cliente Java que acceda a dicho servicio e invoque la operaci&oacute;n <em>obtenerLetra</em>. 
+El cliente deber&aacute; crearse en un proyecto <span class="codefrag">DNICliente</span>. Tened en cuenta que deb&eacute;is capturar la
+excepci&oacute;n que hemos definido en el apartado (b). La clase correspondiente del <em>stub</em> la pod&eacute;is ver en <em>Files</em>, dentro
+del directorio <em>build</em>, con el sufijo <em>_Exception</em>.</p>
+</div>
+
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010 Depto. CCIA</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Nacho">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<title>Ejercicios sesi&oacute;n 1: Introducci&oacute;n a Java y entorno de desarrollo</title>
+<link rel="stylesheet" href="../apuntes.css" type="text/css">
+</head>
+<body>
+
+<h2>Ejercicios de Introducci&oacute;n a Java y entorno de desarrollo</h2>
+<p><strong>1.1. </strong>Proyecto b&aacute;sico en Eclipse</p>
+  <p>Crear un proyecto en Eclipse de nombre <em>sesion1</em>.     Introducir los siguientes elementos en dicho proyecto:</p>
+  <p> <em>a)</em> Establecer como directorio de fuentes un directorio src, y como       directorio de destino un directorio bin.</p>
+<p> <em>b)</em> Crear un paquete <em>es.ua.jtech.sesion01</em>.</p>
+  <p> <em>c)</em> Introducir las clases Java que encontrar&aacute;s en las plantillas de       esta sesi&oacute;n en el proyecto. Cada clase deber&aacute; copiarse al paquete       que corresponda.</p>
+  <p> <em>d)</em> Introducir en el proyecto la librer&iacute;a JAR que encontrar&aacute;s       en las plantillas de esta sesi&oacute;n. Hacer que esta librer&iacute;a forme       parte del classpath del proyecto.</p>
+<p> <em>e)</em> A&ntilde;adidle una nueva clase llamada Prueba en el paquete
+es.ua.jtech.sesion01,     que tenga el siguiente c&oacute;digo (NO COPIEIS Y PEGUEIS EL CODIGO, TECLEADLO A MANO). </p>
+<pre class="codigo">package es.ua.jtech.jhd.sesion1.ejerc1;    
+
+import es.ua.j2ee.animales.*;  
+import es.ua.j2ee.insectos.Mosca;  
+import es.ua.j2ee.plantas.*;    
+
+public class Prueba   
+{  	
+	public static void main(String[] args)   	
+	{    		
+		// Datos del insecto  		
+		Mosca m = new Mosca();  		
+		m.nombre();  		
+		int edad3 = m.edad() + 2;  		
+		System.out.println (&quot;Edad Insecto: &quot; + edad3);    		
+		
+		// Datos del animal  		
+		Elefante e = new Elefante();  		
+		e.nombre();  		
+		int edad2 = e.edad() + 5;  		
+		System.out.println (&quot;Edad Animal: &quot; + edad2);    		
+		
+		// Datos de la planta  		
+		Geranio g = new Geranio();  		
+		g.nombre();  		
+		int edad5 = g.edad();  		
+		System.out.println (&quot;Edad Planta: &quot; + edad5);  	
+	}  
+}</pre>
+  <p> <em>f)</em> Ejecutad la nueva clase Prueba.</p>
+<br /><br />
+<p><strong>1.2.</strong>C&aacute;lculo del factorial</p>
+<p>A&ntilde;adid a la clase<strong>  Factorial.java </strong>el c&oacute;digo necesario para     que calcule el factorial de un n&uacute;mero. Intentad hacer tanto la versi&oacute;n     recursiva como la iterativa: </p>
+  <ul>
+    <li> La versi&oacute;n recursiva (en el m&eacute;todo <em>factorialRec</em>()) consiste       en un m&eacute;todo que se llama a s&iacute; mismo hasta completar el resultado:</li>
+  </ul>
+  
+  <blockquote>
+    <pre class="codigo">    <em>factorialRec(n) = n · factorialRec(n - 1)</em>     </pre>
+    <p>Cuando n sea 0 se devuelve 1 y se termina la recursividad.</p>
+  </blockquote>
+  <ul>
+    <li> La versi&oacute;n iterativa (en el m&eacute;todo <em>factorialIter</em>()) consiste       en realizar un bucle que vaya acumulando el resultado.</li>
+  </ul>
+  <p>Comprobad que los programas devuelven lo mismo, dejando en el main() el   c&oacute;digo necesario para ver el resultado de los factoriales de 30, 5, 1 y 0, por   ejemplo.</p>
+<br /><br />
+<p><strong>1.3.</strong>Ecuaci&oacute;n de segundo grado</p>
+<p> A&ntilde;adid a la clase<strong>  Ecuacion.java </strong>el c&oacute;digo necesario (dentro     del m&eacute;todo <em>solucion</em>(...)) para que resuelva una ecuaci&oacute;n de segundo     grado <em>ax&sup2; + bx + c = 0</em>: </p>
+  <p><img src="imagenes/java/ecuacion.jpg" width="142" height="68"></p>
+  <p>El m&eacute;todo <em>solucion</em>(...) devuelve un array de dos doubles, que son las     dos soluciones al sistema. Si no hubiese soluci&oacute;n, se devolver&iacute;a null.</p>
+<pre class="codigo">public double[] solucion(...)  
+{     
+	double []sol = new double[2];     
+	... //Codigo para resolver el sistema     
+	return sol;  
+}</pre>
+  <p>Probad que el ejemplo funciona para cada uno de los casos:</p>
+  <ul>
+    <li> a = 4, b = 1, c = -6</li>
+    <li> a = 4, b = 1, c = 6</li>
+    <li> a = 0, b = 3, c = -1</li>
+    <li> a = 2, b = 0, c = -1</li>
+    <li> a = 2, b = 2, c = 0</li>
+  </ul>
+  <p>Algunos no tienen soluciones reales, otros tienen coeficientes cero que pueden     dar problemas al dividir, etc. Controlar o no cada uno de estos casos se deja     como optativo.</p>
+<br /><br />
+<p><strong>1.4.</strong>Clases abstractas y herencia</p>
+  <p>Vamos a ver un ejemplo de clases abstractas y herencia. Se tiene     una clase abstracta <em>Persona</em>, de la que hereda una clase <em>Hombre</em>     para definir los m&eacute;todos abstractos. Adem&aacute;s, se tiene otra clase <em>Anciano</em>,     que hereda de <em>Hombre</em> para modificar el valor de alguno de esos m&eacute;todos.     La clase principal del grupo es <em>Ej4</em>, que se encarga de ejecutarlo todo.     Se pide:</p>
+  <p> <em>a)</em> Probar a ejecutar la clase <em>Ej4</em> y comprobar el resultado       producido.</p>
+  <p> <em>b)</em> Convertid el ejemplo para utilizar interfaces en lugar de clases       abstractas. Es decir, haced que <em>Persona</em> sea una interfaz (para ello       no deber&aacute; implementar ning&uacute;n m&eacute;todo, sino dejarlos definidos).</p>
+  <p> <em>c)</em> Indicad los cambios que sufren las clases <em>Hombre</em>       y <em>Anciano</em> con eso. Probad el ejemplo con los cambios y comprobad       que el resultado que devuelve es el mismo.</p>
+<p>&nbsp;</p>
+</body>
+</html>

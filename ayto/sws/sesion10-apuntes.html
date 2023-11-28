@@ -1,0 +1,382 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Seguridad a nivel de transporte con Rampart</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/cursos/sws"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Servicios Web seguros" src="images/baner_j2ee_der.gif" title="Servicios Web seguros"></a>
+</div>
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Apuntes</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Servicios Web seguros</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="Servicios Web seguros">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesi&oacute;n 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesi&oacute;n 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesi&oacute;n 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesi&oacute;n 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesi&oacute;n 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesi&oacute;n 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesi&oacute;n 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesi&oacute;n 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesi&oacute;n 9</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesi&oacute;n 10</div>
+</div>
+<div class="menuitem">
+<a href="sesion11-apuntes.html">Sesi&oacute;n 11</a>
+</div>
+<div class="menuitem">
+<a href="sesion12-apuntes.html">Sesi&oacute;n 12</a>
+</div>
+<div class="menuitem">
+<a href="roadmap-apuntes.html" title="Roadmap">Roadmap</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion10-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Seguridad a nivel de transporte con Rampart</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Configuraci%C3%B3n+de+Tomcat">Configuraci&oacute;n de Tomcat</a>
+</li>
+<li>
+<a href="#Servicio+con+SSL">Servicio con SSL</a>
+</li>
+<li>
+<a href="#Cliente+con+SSL">Cliente con SSL</a>
+</li>
+<li>
+<a href="#Ejercicios">Ejercicios</a>
+<ul class="minitoc">
+<li>
+<a href="#Cat%C3%A1logo+de+productos+por+SSL">Cat&aacute;logo de productos por SSL</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+<a name="N1000E"></a><a name="Configuraci%C3%B3n+de+Tomcat"></a>
+<h2 class="underlined_10">Configuraci&oacute;n de Tomcat</h2>
+<div class="section">
+<p>Para configurar SSL en Apache-Tomcat, apagamos el servidor y editamos el 
+archivo <span class="codefrag">apache-tomcat-6.0.26/conf/server.xml</span> y descomentamos o 
+a&ntilde;adimos el siguiente tag de configuraci&oacute;n:
+</p>
+<pre class="code"> 
+    &lt;Connector port="8443" protocol="HTTP/1.1" SSLEnabled="true" 
+               maxThreads="150" scheme="https" secure="true" 
+               clientAuth="false" sslProtocol="TLS" 
+                minSpareThreads="25" maxSpareThreads="75" 
+                enableLookups="false" 
+                keystoreFile="/home/servicios/claves/tomcat.keystore" 
+                keystorePass="tomcat-kspass" 
+                acceptCount="100" /&gt; 
+
+</pre>
+<p>En &eacute;l estamos indicando cu&aacute;l es el almac&eacute;n de certificados, y con qu&eacute; 
+contrase&ntilde;a se puede abrir, para que Tomcat pueda establecer conexiones 
+SSL con otras m&aacute;quinas (clientes). Para crear el almac&eacute;n utilizamos la 
+herramienta keytool que se distribuye con el JDK:
+</p>
+<pre class="code">
+servicios@servicios:~/claves$ $JAVA_HOME/bin/keytool -genkey -alias tomcat 
+                                   -keyalg RSA -keystore ./tomcat.keystore
+</pre>
+<p>Ponemos la misma password (tomcat-kspass) tanto para el 
+almac&eacute;n como para el certificado. 
+</p>
+<p>El puerto ser&aacute; el est&aacute;ndar para las conexiones https: el 8443. 
+Guardamos el archivo e iniciamos Tomcat. Nuestro navegador deber&iacute;a 
+permitirnos establecer conexi&oacute;n segura en la URL 
+<a href="https://localhost:8443">https://localhost:8443</a>, as&iacute; como en 
+<a href="https://localhost:8443/axis2/">https://localhost:8443/axis2/</a>. 
+La primera vez que accedamos con determinado navegador a localhost de 
+forma segura, se nos mostrar&aacute; una advertencia de seguridad.
+</p>
+<p>
+<img alt="A&ntilde;adir excepci&oacute;n de seguridad en Firefox" content-width="11.44cm" src="imagenes/sws/32.png" width="700"></p>
+<p>Esto es debido a que nuestro certificado no va firmado por una autoridad 
+certificadora. A&ntilde;adimos la excepci&oacute;n para nuestro certificado en localhost 
+y ya podemos usar la conexi&oacute;n de forma segura.
+</p>
+</div>
+
+<a name="N1003F"></a><a name="Servicio+con+SSL"></a>
+<h2 class="underlined_10">Servicio con SSL</h2>
+<div class="section">
+<p>Aunque vamos a crear un servicio b&aacute;sico, que s&oacute;lo tenga seguridad 
+de nivel de transporte, empezaremos copiando el proyecto 
+<span class="codefrag">Axis2SWSeguroServidor</span> como <span class="codefrag">Axis2SWSSLServidor</span>, 
+para aprovechar las dependencias, que vamos a dejar igual. 
+S&oacute;lo es necesario que cambiemos el ID de la aplicaci&oacute;n en el 
+<span class="codefrag">pom.xml</span>, para que no se confunda con otra en Axis2. 
+</p>
+<p>Vamos a volver a generar el c&oacute;digo porque vamos a cambiar el WSDL, 
+as&iacute; que eliminamos el paquete <span class="codefrag">es.ua.jtech.seguro</span>, y la carpeta 
+<span class="codefrag">META-INF</span> de los resources. Editamos el <span class="codefrag">Seguro.wsdl</span> y 
+sustituimos toda la <span class="codefrag">Policy</span> por la siguiente:
+</p>
+<pre class="code"> 
+  &lt;wsp:Policy wsu:Id="p1"&gt;
+		&lt;wsp:ExactlyOne&gt;
+		  &lt;wsp:All&gt;
+			&lt;sp:TransportBinding 
+			   xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy"&gt;
+			  &lt;wsp:Policy&gt;
+				&lt;sp:TransportToken&gt;
+				  &lt;wsp:Policy&gt;
+					&lt;sp:HttpsToken RequireClientCertificate="false"/&gt;
+				  &lt;/wsp:Policy&gt;
+				&lt;/sp:TransportToken&gt;
+				&lt;sp:AlgorithmSuite&gt;
+				  &lt;wsp:Policy&gt;
+					&lt;sp:Basic256/&gt;
+				  &lt;/wsp:Policy&gt;
+				&lt;/sp:AlgorithmSuite&gt;
+				&lt;sp:Layout&gt;
+				  &lt;wsp:Policy&gt;
+					&lt;sp:Lax/&gt;
+				  &lt;/wsp:Policy&gt;
+				&lt;/sp:Layout&gt;
+				&lt;sp:IncludeTimestamp/&gt;
+			  &lt;/wsp:Policy&gt;
+			&lt;/sp:TransportBinding&gt;
+			&lt;sp:SignedSupportingTokens 
+			   xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy"&gt;
+				&lt;wsp:Policy&gt;
+				 &lt;sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/
+				    ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient" /&gt;
+			    &lt;/wsp:Policy&gt;
+			&lt;/sp:SignedSupportingTokens&gt;
+		  &lt;/wsp:All&gt;
+		&lt;/wsp:ExactlyOne&gt;
+  &lt;/wsp:Policy&gt;
+
+</pre>
+<p>Tambi&eacute;n reemplazamos todas las ocurrencias de "<span class="codefrag">Seguro</span>" por 
+"<span class="codefrag">SegTransporte</span>" en nuestro WSDL. Guardamos el WSDL y le cambiamos el 
+nombre a <span class="codefrag">SegTranporte.wsdl</span> y generamos el c&oacute;digo (cambiando 
+tambi&eacute;n el nombre en el <span class="codefrag">GeneraCodigo.java</span>), refrescando a continuaci&oacute;n. 
+Eliminamos el archivo <span class="codefrag">es.ua.jtech.seguro.SeguroSkeleton.java</span> 
+que se ha generado, ya que tenemos el nuestro propio en el subpaquete 
+<span class="codefrag">custom</span>. Arreglamos el error que se genera, cambiando el nombre 
+(con el Refactor) de la clase <span class="codefrag">SeguroSkeleton</span> a 
+<span class="codefrag">SegTransporteSkeleton</span> y a&ntilde;adiendo el <span class="codefrag">import</span> correspondiente en 
+<span class="codefrag">SegTransporteMessageRecieverInOut.java</span>, y el c&oacute;digo queda 
+compilable sin errores. Tambi&eacute;n podemos eliminar el manejador 
+de contrase&ntilde;as, que no se va a utilizar en este ejemplo sencillo. 
+(Recu&eacute;rdese que la contrase&ntilde;a enviada como informaci&oacute;n de login 
+se comprueba en el <span class="codefrag">Skeleton</span> del servicio).</p>
+<p>Tambi&eacute;n se ha generado la carpeta <span class="codefrag">META-INF</span> con el archivo 
+<span class="codefrag">services.xml</span>, el cu&aacute;l editamos para configurar Rampart. 
+A&ntilde;adimos la etiqueta <span class="codefrag">&lt;module ref="rampart"&gt;</span> y pegamos la 
+pol&iacute;tica de seguridad, la misma que tenemos en el WSDL. 
+Debemos especificar en ella los espacios de nombres, ya que en 
+<span class="codefrag">services.xml</span> no est&aacute;n especificados:</p>
+<pre class="code"> 
+&lt;serviceGroup&gt; 
+	&lt;service name="SegTransporte"&gt; 
+
+[...]	 
+		&lt;module ref="rampart" /&gt; 
+		&lt;wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+			xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy" 
+			xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/
+			                        oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+			wsu:Id="p1"&gt; 
+			&lt;wsp:ExactlyOne&gt; 
+				&lt;wsp:All&gt; 
+
+[...] 
+
+				&lt;/wsp:All&gt; 
+			&lt;/wsp:ExactlyOne&gt; 
+		&lt;/wsp:Policy&gt; 
+	&lt;/service&gt; 
+&lt;/serviceGroup&gt; 
+
+</pre>
+<p>Una vez efectuados todos estos cambios, podemos ejecutar el proyecto como 
+Maven package, y copiar el .jar generado en la carpeta de servicios de Axis2:</p>
+<pre class="code">
+/opt/apache-tomcat-6.0.26/webapps/axis2/WEB-INF/services/
+</pre>
+<p>A los pocos segundos aparecer&aacute; publicado el servicio, si refrescamos la 
+p&aacute;gina de Axis2. Podremos descargarnos su WSDL por conexi&oacute;n segura si 
+accedemos a:</p>
+<p>
+<a href="https://localhost:8443/axis2/services/SegTransporte?wsdl">https://localhost:8443/axis2/services/SegTransporte?wsdl</a>
+</p>
+</div>
+
+<a name="N100AC"></a><a name="Cliente+con+SSL"></a>
+<h2 class="underlined_10">Cliente con SSL</h2>
+<div class="section">
+<p>Ahora tenemos que configurar un cliente del servicio web que sea capaz 
+de conectarse por SSL. Para aprovechar las dependencias y el WSDL 
+vamos a copiar el anterior proyecto, el <span class="codefrag">Axis2SWSSLServidor</span> 
+y lo vamos a pegar como <span class="codefrag">Axis2SWSSLCliente</span>. Eliminamos la carpeta 
+<span class="codefrag">META-INF</span> que ya no har&aacute; falta, y el paquete <span class="codefrag">es.ua.jtech.segtransporte</span>, 
+que volveremos a generar. Tambi&eacute;n podemos eliminar 
+<span class="codefrag">SegTransporteSkeleton.java</span>, que pertenece al servidor. Para generar el 
+c&oacute;digo de cliente, editamos el <span class="codefrag">GeneraCodigo.java</span> y cambiamos la llamada por:
+</p>
+<pre class="code">
+		WSDL2Code.main(new String[]{"-uw",
+				"-S", "src/main/java",
+				"-uri", "src/main/resources/SegTransporte.wsdl"});
+</pre>
+<p>Lo ejecutamos y refrescamos. Ahora s&oacute;lo falta crear el cliente para 
+configurar la conexi&oacute;n segura. Podemos copiar el <span class="codefrag">Cliente.java</span> del proyecto 
+<span class="codefrag">Axis2SWSeguroCliente</span> y modificarlo. <span class="codefrag">Cliente.java</span> debe quedar as&iacute;:</p>
+<pre class="code"> 
+package es.ua.jtech.seguro.custom; 
+
+import java.io.FileNotFoundException; 
+import java.rmi.RemoteException; 
+
+import es.ua.jtech.segtransporte.SegTransporteStub; 
+
+import javax.xml.stream.XMLStreamException; 
+
+import org.apache.axis2.context.ConfigurationContext; 
+import org.apache.axis2.context.ConfigurationContextFactory; 
+import org.apache.neethi.Policy; 
+import org.apache.rampart.policy.model.RampartConfig; 
+
+public class Cliente { 
+
+	public static void main(String[] args) 
+	         throws FileNotFoundException, XMLStreamException, RemoteException { 
+		ConfigurationContext context = ConfigurationContextFactory.
+		                 createConfigurationContextFromFileSystem("repository"); 
+		SegTransporteStub stub = new SegTransporteStub(context,
+		                 "https://localhost:8443/axis2/services/SegTransporte"); 
+		stub._getServiceClient().engageModule("rampart"); 
+		Policy rampartConfig = new Policy(); 
+		rampartConfig.addPolicyComponent(new RampartConfig()); 
+		stub._getServiceClient().getAxisService().getPolicySubject().
+		                                           attachPolicy(rampartConfig); 
+		stub._getServiceClient().getOptions().setPassword("boyan-pass"); 
+		stub._getServiceClient().getOptions().setUserName("boyan"); 
+		 
+		System.setProperty("javax.net.ssl.trustStore", 
+		                              "/home/servicios/claves/tomcat.keystore"); 
+		System.setProperty("javax.net.ssl.trustStorePassword", "tomcat-kspass");		 
+
+		System.out.println(stub.saluda("Boyan","Bonev")); 
+	} 
+
+} 
+
+</pre>
+<p>El cliente genera la configuraci&oacute;n de rampart usando el repositorio 
+local que debe contener los m&oacute;dulos de rampart. O bien creamos la carpeta 
+<span class="codefrag">repository/modules</span> con los archivos <span class="codefrag">rahas-1.5.mar</span> y <span class="codefrag">rampart-1.5.mar</span> 
+dentro, o bien la copiamos desde la raiz del proyecto cliente 
+<span class="codefrag">Axis2SWSeguroCliente</span>. </p>
+<p>El cliente est&aacute; listo para ejecutarlo y comprobar que se conecta de forma 
+segura con el servidor de Axis2 integrado en Apache-Tomcat.
+</p>
+</div>
+
+<p class="pageBreakAfter"></p>
+
+<a name="N100F2"></a><a name="Ejercicios"></a>
+<h2 class="underlined_10">Ejercicios</h2>
+<div class="section">
+<a name="N100F7"></a><a name="Cat%C3%A1logo+de+productos+por+SSL"></a>
+<h3 class="underlined_5">Cat&aacute;logo de productos por SSL</h3>
+<p>Ad&aacute;ptese el ejemplo del cat&aacute;logo de productos con MTOM para que
+se conecte por conexi&oacute;n segura. Deben modificarse tanto el cliente,
+como el servidor. El servidor debe desplegarse en Tomcat.</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010 Depto. CCIA</div>
+</div>
+</body>
+</html>

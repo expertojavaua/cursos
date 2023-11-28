@@ -1,0 +1,1016 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Sesi&oacute;n 5: Componentes (2)</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/banner-aplicaciones-ria.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Aplicaciones RIA con ZK" src="images/baner_j2ee_der.gif" title="Aplicaciones RIA con ZK"></a>
+</div>
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Apuntes</a>
+</li>
+<li>
+<a class="base-not-selected" href="software.html">Software</a>
+</li>
+<li>
+<a class="base-not-selected" href="doc.html">Documentaci&oacute;n</a>
+</li>
+<li>
+<a class="base-not-selected" href="enlaces.html">Enlaces</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Apuntes</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', 'skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Sesiones</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 5</div>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="sesion09-apuntes.html">Sesion 9</a>
+</div>
+<div class="menuitem">
+<a href="sesion10-apuntes.html">Sesion 10</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion05-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Sesi&oacute;n 5: Componentes (2)</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Contenedores">Contenedores</a>
+<ul class="minitoc">
+<li>
+<a href="#Window">Window</a>
+</li>
+<li>
+<a href="#Panel">Panel</a>
+</li>
+<li>
+<a href="#Pesta%C3%B1as">Pesta&ntilde;as</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Disposici%C3%B3n">Disposici&oacute;n</a>
+<ul class="minitoc">
+<li>
+<a href="#Modelo+de+caja">Modelo de caja</a>
+</li>
+<li>
+<a href="#Modelo+de+bordes">Modelo de bordes</a>
+</li>
+<li>
+<a href="#Tablas+de+paneles">Tablas de paneles</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#M%C3%BAltiples+%C3%ADtems">M&uacute;ltiples &iacute;tems</a>
+<ul class="minitoc">
+<li>
+<a href="#Listas">Listas</a>
+</li>
+<li>
+<a href="#Grid">Grid</a>
+</li>
+<li>
+<a href="#Contenido+din%C3%A1mico">Contenido din&aacute;mico</a>
+</li>
+<li>
+<a href="#Paginado">Paginado</a>
+</li>
+<li>
+<a href="#%C3%81rboles">&Aacute;rboles</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Men%C3%BAs">Men&uacute;s</a>
+<ul class="minitoc">
+<li>
+<a href="#Barra+de+men%C3%BAs">Barra de men&uacute;s</a>
+</li>
+<li>
+<a href="#Men%C3%BA+popup">Men&uacute; popup</a>
+</li>
+<li>
+<a href="#Toolbar">Toolbar</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+<a name="N1000C"></a><a name="Contenedores"></a>
+<h2 class="underlined_10">Contenedores</h2>
+<div class="section">
+<a name="N10012"></a><a name="Window"></a>
+<h3 class="underlined_5">Window</h3>
+<p>Las ventanas contienen otros elementos en su interior.</p>
+<p>Atributos y elementos m&aacute;s importantes:</p>
+<ul>
+
+<li>
+<span class="codefrag">title</span>: El t&iacute;tulo de la ventana</li>
+
+<li>
+<span class="codefrag">caption</span>: Grupo de elementos en la parte derecha del t&iacute;tulo (puede contener una imagen como atributo)</li>
+
+<li>
+<span class="codefrag">closable</span>: Booleano que indica que la ventana puede ser cerrada (evento relacionado: <span class="codefrag">onClose</span>)</li>
+
+<li>
+<span class="codefrag">sizable</span>: Booleano que indica que el tama&ntilde;o de la ventana puede ser modificado (evento relacionado: <span class="codefrag">onSize</span>)</li>
+
+<li>
+<span class="codefrag">contentStyle</span>: permite definir scroll con <span class="codefrag">overflow:auto</span>
+</li>
+
+<li>
+<span class="codefrag">mode</span>: modo de aparici&oacute;n</li>
+
+</ul>
+<ul>
+
+<li>
+<span class="codefrag">toolbar</span>: barra de herramientas en el panel</li>
+
+</ul>
+<p>
+<img alt="" content-width="5cm" src="imagenes/ventana.png" width="310"></p>
+<pre class="code">&lt;window title="   Manual de usuario" border="normal" width="300px"
+   closable="true" sizable="true" contentStyle="overflow:auto"&gt;
+   &lt;caption image="images/light-bulb.png"&gt;
+      &lt;toolbarbutton image="images/question.png" /&gt;
+   &lt;/caption&gt;
+   Los espacios de nombres se utilizan en XML para distinguir nombres
+   de elementos y atributos iguales que pertenecen a distintos
+   vocabularios. La forma de implementarlos es a&ntilde;adiendo un prefijo a
+   cada elemento y atributo. Los prefijos se mapean a URIs con
+   atributos de la forma xmlns:prefijo. Los elementos y atributos que
+   se mapean a una misma URI comparten el mismo espacio de nombres.
+   Por ejemplo, un documento XHTML puede contener dibujos SVG y
+   ecuaciones MathML y ambos contienen elementos con el mismo nombre.
+   Un documento ZUML puede contener elementos XHTML y elementos ZUL
+   con el mismo nombre. Es necesario identificar el espacio de
+   nombres al que pertenece cada elemento para reconocer si se trata
+   de uno u otro caso.
+&lt;/window&gt;</pre>
+<p>Las ventanas pueden vivir en la p&aacute;gina con distintos modos de aparici&oacute;n:</p>
+<ul>
+
+<li>
+<strong>Embed</strong>: embebido en otros componentes</li>
+
+<li>
+<strong>Overlap</strong>: solapada con otros componentes; el usuario puede moverla</li>
+
+<li>
+<strong>Popup</strong>: igual que overlap, con la diferencia de que la ventana se cierra si el usuario pincha en otra parte</li>
+
+<li>
+<strong>Modal</strong>: igual que overlap, pero se suspende la ejecuci&oacute;n del resto de componentes y el usuario no puede interactuar con ellos. Si se llama en c&oacute;digo zscript a <span class="codefrag">win.doModal()</span> se suspende la ejecuci&oacute;n de la siguiente instrucci&oacute;n hasta que la ventana no se cierra.</li>
+
+<li>
+<strong>Highlighted</strong>: igual que modal, con la diferencia de que no se suspende la ejecuci&oacute;n.</li>
+
+</ul>
+<p>Podemos probar a poner el identificador <span class="codefrag">win</span> en la ventana anterior y a&ntilde;adir estos botones para probar todos los modos:</p>
+<pre class="code"> 
+    &lt;button label="Overlap" onClick="win.doOverlapped();"/&gt;
+    &lt;button label="Popup" onClick="win.doPopup();"/&gt;
+    &lt;button label="Modal" onClick="win.doModal();"/&gt;
+    &lt;button label="Embed" onClick="win.doEmbedded();"/&gt;
+    &lt;button label="Highlighted" onClick="win.doHighlighted();"/&gt;</pre>
+<a name="N10087"></a><a name="Panel"></a>
+<h3 class="underlined_5">Panel</h3>
+<p>Un panel es un elemento parecido a las ventanas, pero con algunas caracter&iacute;sticas propias que le hacen el elemento perfecto para componer las interfaces de usuario.</p>
+<p>Atributos:</p>
+<ul>
+
+<li>
+<span class="codefrag">title</span>: El t&iacute;tulo del panel</li>
+
+<li>
+<span class="codefrag">caption</span>: Grupo de elementos en la parte derecha del t&iacute;tulo (puede contener una imagen como atributo)</li>
+
+<li>
+<span class="codefrag">framable</span>: Booleano que indica si el panel tiene un aspecto redondeado</li>
+
+<li>
+<span class="codefrag">closable</span>: Booleano que indica que el panel puede ser cerrado (evento relacionado: <span class="codefrag">onClose</span>)</li>
+
+<li>
+<span class="codefrag">collapsible</span>: Booleano que indica si puede ser colapsado </li>
+
+<li>
+<span class="codefrag">open</span>: Booleano que indica el estado inicial del panel</li>
+
+<li>
+<span class="codefrag">maximizable</span>: Boolean que indica si puede ser maximizable</li>
+
+<li>
+<span class="codefrag">maximized</span>: Booleano que indica si el panel est&aacute; inicialmente maximizado</li>
+
+<li>
+<span class="codefrag">minimizable</span>: Booleano que indica si puede ser minimizable</li>
+
+<li>
+<span class="codefrag">minimized</span>: Booleano que indica si el panel est&aacute; inicialmente minimizado</li>
+
+<li>
+<span class="codefrag">floatable</span>: Booleano que indica si el flota sobre el resto de componentes</li>
+
+<li>
+<span class="codefrag">movable</span>: Booleano que indica si el usuario puede moverlo</li>
+
+</ul>
+<p>Elementos:</p>
+<ul>
+
+<li>
+<span class="codefrag">panelchildren</span>: contenedor en el que se define el contenido del panel</li>
+
+<li>
+<span class="codefrag">caption</span>: contenedor que define un grupo de elementos a la derecha del t&iacute;tulo</li>
+
+<li>
+<span class="codefrag">toolbar</span>: barra de herramientas en el panel</li>
+
+</ul>
+<p>Ejemplo:</p>
+<p>
+<img alt="" content-width="5cm" src="imagenes/panel.png" width="308"></p>
+<pre class="code">   &lt;panel title="   Manual de usuario" border="normal" width="300px"
+      closable="true" collapsible="true" maximizable="true" floatable="true" 
+      movable="true"&gt;
+      &lt;caption image="images/light-bulb.png"&gt;
+         &lt;toolbarbutton image="images/question.png" /&gt;
+      &lt;/caption&gt;
+   &lt;panelchildren&gt;
+         Los espacios de nombres se utilizan en XML para distinguir nombres
+      de elementos y atributos iguales que pertenecen a distintos
+      vocabularios. La forma de implementarlos es a&ntilde;adiendo un prefijo a
+      cada elemento y atributo. Los prefijos se mapean a URIs con
+      atributos de la forma xmlns:prefijo. Los elementos y atributos que
+      se mapean a una misma URI comparten el mismo espacio de nombres.
+      Por ejemplo, un documento XHTML puede contener dibujos SVG y
+      ecuaciones MathML y ambos contienen elementos con el mismo nombre.
+      Un documento ZUML puede contener elementos XHTML y elementos ZUL
+      con el mismo nombre. Es necesario identificar el espacio de
+      nombres al que pertenece cada elemento para reconocer si se trata
+      de uno u otro caso.   
+   &lt;/panelchildren&gt;
+   &lt;/panel&gt;</pre>
+<a name="N100F9"></a><a name="Pesta%C3%B1as"></a>
+<h3 class="underlined_5">Pesta&ntilde;as</h3>
+<p>Con el elemento <span class="codefrag">tabbox</span> podemos definir un conjunto de pesta&ntilde;as.</p>
+<p>
+<img alt="" content-width="5cm" src="imagenes/tabs.png" width="310"></p>
+<pre class="code">&lt;tabbox&gt;
+   &lt;tabs&gt;
+      &lt;tab label="Primero"/&gt;
+      &lt;tab label="Segundo"/&gt;
+   &lt;/tabs&gt;
+   &lt;tabpanels&gt;
+      &lt;tabpanel&gt;El primer panel&lt;/tabpanel&gt;
+      &lt;tabpanel&gt;El segundo panel&lt;/tabpanel&gt;
+   &lt;/tabpanels&gt;
+&lt;/tabbox&gt;</pre>
+<p>Podemos cambiar el panel seleccionado de dos formas:</p>
+<ul>
+   
+<li>Llamando al m&eacute;todo <span class="codefrag">setSelected()</span> del <span class="codefrag">Tab</span> que queremos seleccionar</li>
+   
+<li>Llamando al m&eacute;todo <span class="codefrag">setSelectedTab(Tab)</span> del <span class="codefrag">Tabbox</span>
+</li>
+
+</ul>
+</div>
+
+
+<a name="N10129"></a><a name="Disposici%C3%B3n"></a>
+<h2 class="underlined_10">Disposici&oacute;n</h2>
+<div class="section">
+<p>En ZK se definen distintos gestores de disposici&oacute;n de los componentes en los contenedores: modelo de caja, de bordes, tablas de paneles y agrupaciones.</p>
+<p>Vamos a ver un ejemplo de cada uno.</p>
+<a name="N10135"></a><a name="Modelo+de+caja"></a>
+<h3 class="underlined_5">Modelo de caja</h3>
+<p>
+<img alt="" content-width="3cm" src="imagenes/box-model.png" width="154"></p>
+<pre class="code">&lt;window title="Box Layout Demo" border="normal"&gt;
+   &lt;hbox spacing="0"&gt;
+      &lt;window border="normal"&gt;0&lt;/window&gt;
+      &lt;vbox spacing="0"&gt;
+         &lt;hbox spacing="0"&gt;
+            &lt;window border="normal"&gt;1&lt;/window&gt;
+            &lt;window border="normal"&gt;2&lt;/window&gt;
+            &lt;vbox spacing="0"&gt;
+               &lt;window border="normal"&gt;3&lt;/window&gt;
+               &lt;window border="normal"&gt;4&lt;/window&gt;
+            &lt;/vbox&gt;
+         &lt;/hbox&gt;
+         &lt;hbox spacing="0"&gt;
+            &lt;vbox spacing="0"&gt;
+               &lt;window border="normal"&gt;5&lt;/window&gt;
+               &lt;window border="normal"&gt;6&lt;/window&gt;
+            &lt;/vbox&gt;
+            &lt;window border="normal"&gt;7&lt;/window&gt;
+            &lt;window border="normal"&gt;8&lt;/window&gt;
+            &lt;window border="normal"&gt;9&lt;/window&gt;
+         &lt;/hbox&gt;
+      &lt;/vbox&gt;
+   &lt;/hbox&gt;
+&lt;/window&gt;</pre>
+<a name="N10147"></a><a name="Modelo+de+bordes"></a>
+<h3 class="underlined_5">Modelo de bordes</h3>
+<p>El modelo de bordes es id&eacute;ntico al utilizando en Swing. Define cinco zonas: north, center, south, east y west. Distribuimos los componentes coloc&aacute;ndolos en cada una de las zonas. Es posible tambi&eacute;n definir restricciones de tama&ntilde;o m&aacute;ximo y m&iacute;nimo en las zonas.</p>
+<p>Atributos de cada borde:</p>
+<ul>
+
+<li>
+<span class="codefrag">splittable</span>: indica si el borde puede ser movido por el usuario</li>
+
+<li>
+<span class="codefrag">maxsize</span>, <span class="codefrag">minsize</span>: tama&ntilde;o m&aacute;ximo y m&iacute;nimo del panel</li>
+
+<li>
+<span class="codefrag">size</span>: tama&ntilde;o (en pixeles o %)</li>
+
+</ul>
+<p>Ejemplo:</p>
+<p>
+<img alt="" content-width="9cm" src="imagenes/border.png" width="553"></p>
+<pre class="code">&lt;borderlayout height="500px"&gt;
+   &lt;north size="20%" splittable="true" collapsible="true"/&gt;
+   &lt;east size="20%" splittable="true" collapsible="true" /&gt;
+   &lt;center border="normal" /&gt;
+   &lt;west size="20%" splittable="true" collapsible="true" /&gt;
+   &lt;south size="30%" border="normal" splittable="true" collapsible="true" /&gt;
+&lt;/borderlayout&gt;</pre>
+<a name="N10177"></a><a name="Tablas+de+paneles"></a>
+<h3 class="underlined_5">Tablas de paneles</h3>
+<p>
+<img alt="" content-width="8cm" src="imagenes/table-panel.png" width="509"></p>
+<pre class="code">&lt;tablelayout columns="3"&gt;
+   &lt;tablechildren colspan="3"&gt;
+      &lt;panel width="500px" title="table1" border="normal"&gt;
+         &lt;panelchildren&gt;Panel&lt;/panelchildren&gt;
+      &lt;/panel&gt;
+   &lt;/tablechildren&gt;
+   &lt;tablechildren&gt;
+      &lt;panel title="table2" border="normal"&gt;
+         &lt;panelchildren&gt;Panel&lt;/panelchildren&gt;
+      &lt;/panel&gt;
+   &lt;/tablechildren&gt;
+   &lt;tablechildren&gt;
+      &lt;panel title="table3" border="normal"&gt;
+         &lt;panelchildren&gt;Panel&lt;/panelchildren&gt;
+      &lt;/panel&gt;
+   &lt;/tablechildren&gt;
+   &lt;tablechildren rowspan="2"&gt;
+      &lt;panel title="table4" border="normal" height="90px"&gt;
+         &lt;panelchildren&gt;Panel&lt;/panelchildren&gt;
+      &lt;/panel&gt;
+   &lt;/tablechildren&gt;
+   &lt;tablechildren&gt;
+      &lt;panel title="table5" border="normal"&gt;
+         &lt;panelchildren&gt;Panel&lt;/panelchildren&gt;
+      &lt;/panel&gt;
+   &lt;/tablechildren&gt;
+   &lt;tablechildren&gt;
+      &lt;panel title="table6" border="normal"&gt;
+         &lt;panelchildren&gt;Panel&lt;/panelchildren&gt;
+      &lt;/panel&gt;
+   &lt;/tablechildren&gt;
+&lt;/tablelayout&gt;</pre>
+</div>
+
+
+<a name="N1018A"></a><a name="M%C3%BAltiples+%C3%ADtems"></a>
+<h2 class="underlined_10">M&uacute;ltiples &iacute;tems</h2>
+<div class="section">
+<a name="N10190"></a><a name="Listas"></a>
+<h3 class="underlined_5">Listas</h3>
+<p>El componente <span class="codefrag">listbox</span> define una lista de &iacute;tems entre los que el usuario puede seleccionar uno o m&aacute;s.</p>
+<p>Atributos:</p>
+<ul>
+
+<li>
+<span class="codefrag">maxlength</span>: m&aacute;xima longitud en caracteres de las etiquetas de los &iacute;tems</li>
+
+<li>
+<span class="codefrag">multiple</span>: permite la selecci&oacute;n de m&uacute;ltiples &iacute;tems</li>
+
+<li>
+<span class="codefrag">checkmark</span>: se muestra una marca de chequeo en cada &iacute;tem</li>
+
+<li>
+<span class="codefrag">rows</span>: n&uacute;mero de filas de la lista; se muestra una barra de scroll si hay m&aacute;s &iacute;tems</li>
+
+</ul>
+<p>Componentes:</p>
+<ul>
+
+<li>
+<span class="codefrag">listhead</span>: cabecera de la lista</li>
+
+<li>
+<span class="codefrag">listitem</span>: item de la lista</li>
+
+<li>
+<span class="codefrag">listcell</span>: celda del &iacute;tem</li>
+
+<li>
+<span class="codefrag">listfoot</span>: pie de p&aacute;gina de la lista</li>
+
+</ul>
+<p>Ejemplo:</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/lista.png" width="509"></p>
+<pre class="code">&lt;?page title="Listas" contentType="text/html;charset=UTF-8"?&gt;
+&lt;zk&gt;
+&lt;window title="Listas" border="normal"&gt;
+&lt;zscript&gt;&lt;![CDATA[
+   void doSelect() {
+      int seleccionado = libros.getSelectedIndex();
+      String titulo = libros.getItemAtIndex(seleccionado).getLabel();
+      alert(titulo);
+   }
+]]&gt;&lt;/zscript&gt;
+&lt;listbox id="libros" width="500px"&gt;
+   &lt;listhead&gt;
+      &lt;listheader width="80%" label="T&iacute;tulo" sort="auto" /&gt;
+      &lt;listheader label="Estado" /&gt;
+   &lt;/listhead&gt;
+   &lt;listitem&gt;
+      &lt;listcell label="Designing Web Interfaces" /&gt;
+      &lt;listcell label="Prestado" /&gt;
+   &lt;/listitem&gt;
+   &lt;listitem&gt;
+      &lt;listcell label="Head First Java" /&gt;
+      &lt;listcell label="Disponible" /&gt;
+   &lt;/listitem&gt;
+   &lt;listitem&gt;
+      &lt;listcell label="Patterns of Enterprise Application Architecture" /&gt;
+      &lt;listcell label="Prestado" /&gt;
+   &lt;/listitem&gt;
+   &lt;listitem&gt;
+      &lt;listcell label="The Art of Agile Development" /&gt;
+      &lt;listcell label="Prestado" /&gt;
+   &lt;/listitem&gt;
+   &lt;/listbox&gt;
+   &lt;button label="Seleccionar" onClick="doSelect()" /&gt;
+&lt;/window&gt;
+&lt;/zk&gt;</pre>
+<p>Otro ejemplo en el que se combinan dos listas y dos botones para construir una interfaz en la que se permite mover &iacute;tems de una lista a otra:</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/mover-items.png" width="505"></p>
+<pre class="code">&lt;hbox&gt;
+  &lt;listbox id="src" width="250px" &gt;
+      &lt;listhead&gt;
+         &lt;listheader label="Matriculados" /&gt;
+      &lt;/listhead&gt;
+      &lt;listitem&gt;
+         &lt;listcell label="Antonio Medina" /&gt;
+      &lt;/listitem&gt;
+      &lt;listitem&gt;
+         &lt;listcell label="Julia L&oacute;pez" /&gt;
+      &lt;/listitem&gt;
+      &lt;listitem&gt;
+         &lt;listcell label="Mar&iacute;a Pomares" /&gt;
+      &lt;/listitem&gt;
+      &lt;listitem id="d" value="D"&gt;
+         &lt;listcell label="Pedro Reig" /&gt;
+      &lt;/listitem&gt;
+   &lt;/listbox&gt;
+   &lt;vbox&gt;
+      &lt;button label="=&amp;gt;" onClick="move(src, dst)" /&gt;
+      &lt;button label="&amp;lt;=" onClick="move(dst, src)" /&gt;
+   &lt;/vbox&gt;
+   &lt;listbox id="dst" width="200px"&gt;
+      &lt;listhead&gt;
+         &lt;listheader label="Alumnos" /&gt;
+      &lt;/listhead&gt;
+      &lt;listitem&gt;
+         &lt;listcell label="Raquel Mu&ntilde;oz" /&gt;
+      &lt;/listitem&gt;
+      &lt;listitem&gt;
+         &lt;listcell label="Juan P&eacute;rez" /&gt;
+      &lt;/listitem&gt;
+   &lt;/listbox&gt;
+   &lt;zscript&gt;
+   void move(Listbox src, Listbox dst) {
+      Listitem s = src.getSelectedItem();
+      if (s == null)
+         Messagebox.show("Select an item first");
+      else
+         s.setParent(dst);
+   }
+&lt;/zscript&gt;
+&lt;/hbox&gt;</pre>
+<a name="N101ED"></a><a name="Grid"></a>
+<h3 class="underlined_5">Grid</h3>
+<p>El componente <span class="codefrag">grid</span> permite disponer &iacute;tems en una rejilla. Es muy &uacute;til para presentar datos y para construir formularios.</p>
+<p>Los &iacute;tems est&aacute;n alineados en filas y columnas. Se definen las columnas y en cada fila hay que colocar tantos componentes como columnas se han definido. Es posible que una celda ocupe m&aacute;s de una fila y columna utilizando el atributo <span class="codefrag">span</span>.</p>
+<p>Atributos:</p>
+<ul>
+
+<li>
+<span class="codefrag">height</span>: si se especifica la altura y no caben los componentes aparece una barra de scroll; pasa igual con el ancho (width)</li>
+
+<li>
+<span class="codefrag">sizable</span>: valor booleano que indica si el usuario puede modificar el tama&ntilde;o de las columnas</li>
+
+</ul>
+<p>Componentes:</p>
+<ul>
+
+<li>
+<span class="codefrag">auxheader</span>: cabeceras auxiliares</li>
+
+<li>
+<span class="codefrag">columns</span>: columnas</li>
+
+<li>
+<span class="codefrag">column</span>: cada una de las columnas</li>
+
+<li>
+<span class="codefrag">rows</span>: filas</li>
+
+<li>
+<span class="codefrag">row</span>: cada una de las filas</li>
+
+</ul>
+<p>Ejemplo de una rejilla sencilla:</p>
+<p>
+<img alt="" content-width="8cm" src="imagenes/grid-simple.png" width="508"></p>
+<pre class="code">&lt;grid width="500px"&gt;
+    &lt;columns&gt;
+        &lt;column label="Head 1"/&gt;
+        &lt;column label="Head 2" align="center"/&gt;
+        &lt;column label="Head 3" align="right"/&gt;
+    &lt;/columns&gt;
+    &lt;rows&gt;
+        &lt;row&gt;
+            &lt;listbox mold="select"&gt;
+                &lt;listitem label="Faster"/&gt;
+                &lt;listitem label="Fast"/&gt;
+                &lt;listitem label="Average"/&gt;
+            &lt;/listbox&gt;
+            &lt;datebox/&gt;
+            &lt;textbox rows="2"/&gt;
+        &lt;/row&gt;
+        &lt;row&gt;
+            &lt;checkbox checked="true" label="Option 1"/&gt;
+            &lt;checkbox label="Option 2"/&gt;
+            &lt;radiogroup&gt;
+                &lt;radio label="Apple"/&gt;
+                &lt;radio label="Orange" checked="true"/&gt;
+                &lt;radio label="Lemon"/&gt;
+            &lt;/radiogroup&gt;
+        &lt;/row&gt;
+        &lt;row&gt;
+            &lt;checkbox checked="true" label="Option 1"/&gt;
+            &lt;checkbox label="Option 2"/&gt;
+            &lt;radiogroup orient="vertical"&gt;
+                &lt;radio label="Apple"/&gt;
+                &lt;radio label="Orange" checked="true"/&gt;
+                &lt;radio label="Lemon"/&gt;
+            &lt;/radiogroup&gt;
+        &lt;/row&gt;
+    &lt;/rows&gt;
+&lt;/grid&gt;
+</pre>
+<p>Ejemplo de un grid con celdas que ocupan varias filas y columnas utilizando la etiqueta <span class="codefrag">span</span>:</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/grid-span.png" width="660"></p>
+<pre class="code">&lt;grid&gt;
+    &lt;columns&gt;
+        &lt;column label="Left" align="left"/&gt;&lt;column label="Center" align="center"/&gt;
+        &lt;column label="Right" align="right"/&gt;&lt;column label="Column 4"/&gt;
+        &lt;column label="Column 5"/&gt;&lt;column label="Column 6"/&gt;
+    &lt;/columns&gt;
+    &lt;rows&gt;
+        &lt;row&gt;
+            &lt;label value="Item A.1"/&gt;&lt;label value="Item A.2"/&gt;
+            &lt;label value="Item A.3"/&gt;&lt;label value="Item A.4"/&gt;
+            &lt;label value="Item A.5"/&gt;&lt;label value="Item A.6"/&gt;
+        &lt;/row&gt;
+        &lt;row spans="1,2,2"&gt;
+            &lt;label value="Item B.1"/&gt;&lt;label value="Item B.2"/&gt;
+            &lt;label value="Item B.4"/&gt;&lt;label value="Item B.6"/&gt;
+        &lt;/row&gt;
+        &lt;row spans="3"&gt;
+            &lt;label value="Item C.1"/&gt;&lt;label value="Item C.4"/&gt;
+            &lt;label value="Item C.5"/&gt;&lt;label value="Item C.6"/&gt;
+        &lt;/row&gt;
+        &lt;row spans=",,2,2"&gt;
+            &lt;label value="Item D.1"/&gt;&lt;label value="Item D.2"/&gt;
+            &lt;label value="Item D.3"/&gt;&lt;label value="Item D.5"/&gt;
+        &lt;/row&gt;
+    &lt;/rows&gt;
+&lt;/grid&gt;</pre>
+<p>Ejemplo de un grid con columnas auxiliares:</p>
+<p>
+<img alt="" content-width="10cm" src="imagenes/grid-headers.png" width="660"></p>
+<pre class="code">&lt;grid&gt;
+    &lt;auxhead&gt;
+        &lt;auxheader label="H1'07" colspan="6"/&gt;
+        &lt;auxheader label="H2'07" colspan="6"/&gt;
+    &lt;/auxhead&gt;
+    &lt;auxhead&gt;
+        &lt;auxheader label="Q1" colspan="3"/&gt;
+        &lt;auxheader label="Q2" colspan="3"/&gt;
+        &lt;auxheader label="Q3" colspan="3"/&gt;
+        &lt;auxheader label="Q4" colspan="3"/&gt;
+    &lt;/auxhead&gt;
+    &lt;columns&gt;
+        &lt;column label="Jan"/&gt;&lt;column label="Feb"/&gt;&lt;column label="Mar"/&gt;
+        &lt;column label="Apr"/&gt;&lt;column label="May"/&gt;&lt;column label="Jun"/&gt;
+        &lt;column label="Jul"/&gt;&lt;column label="Aug"/&gt;&lt;column label="Sep"/&gt;
+        &lt;column label="Oct"/&gt;&lt;column label="Nov"/&gt;&lt;column label="Dec"/&gt;
+    &lt;/columns&gt;
+    &lt;rows&gt;
+        &lt;row&gt;
+        &lt;label value="1,000"/&gt;&lt;label value="1,100"/&gt;&lt;label value="1,200"/&gt;
+        &lt;label value="1,300"/&gt;&lt;label value="1,400"/&gt;&lt;label value="1,500"/&gt;
+        &lt;label value="1,600"/&gt;&lt;label value="1,700"/&gt;&lt;label value="1,800"/&gt;
+        &lt;label value="1,900"/&gt;&lt;label value="2,000"/&gt;&lt;label value="2,100"/&gt;
+        &lt;/row&gt;
+    &lt;/rows&gt;
+&lt;/grid&gt;</pre>
+<p>Ejemplo de un grid que define un formulario HTML:</p>
+<p>
+<img alt="" content-width="5cm" src="imagenes/form-html.png" width="310"></p>
+<pre class="code">&lt;h:form id="updateForm" action="/updateProfile" xmlns:h="http://www.w3.org/1999/xhtml"&gt;
+   &lt;grid width="400px"&gt;
+     &lt;rows&gt;
+       &lt;row&gt;Firt Name &lt;textbox id="firstName" name="firstName" 
+            value="John" constraint="no empty"/&gt;
+       &lt;/row&gt;
+       &lt;row&gt;Last Name &lt;textbox id="lastName" name="lastName" 
+           value="Wells" constraint="no empty"/&gt;
+       &lt;/row&gt;
+       &lt;row&gt;Birthday &lt;datebox id="birthday" name="birthday" 
+           constraint="no empty"/&gt;&lt;/row&gt;
+       &lt;row&gt;Title
+   &lt;combobox id="title" name="title" value="Programmer" constraint="no empty"&gt;
+     &lt;comboitem label="Programmer" description="Software developer"/&gt;
+     &lt;comboitem label="Architect" description="Software architect"/&gt;
+     &lt;comboitem label="Project Manager" description="Techinical lead, project manager"/&gt;
+   &lt;/combobox&gt;
+       &lt;/row&gt;
+       &lt;row&gt;Role
+   &lt;listbox name="role" multiple="true"&gt;
+     &lt;listitem value="1" label="Determine need"/&gt;
+     &lt;listitem value="2" label="Evaluate products/sesrvices"/&gt;
+     &lt;listitem value="3" label="Recommend products/sesrvices"/&gt;
+     &lt;listitem value="4" label="Implement products/sesrvices"/&gt;
+     &lt;listitem value="5" label="Techinical decision maker"/&gt;
+     &lt;listitem value="6" label="Financial decision maker"/&gt;
+   &lt;/listbox&gt;
+       &lt;/row&gt;
+       &lt;row&gt;
+         &lt;button label="Update" onClick="update()"/&gt;
+         &lt;h:input type="reset"/&gt;
+       &lt;/row&gt;
+     &lt;/rows&gt;
+   &lt;/grid&gt;
+&lt;zscript&gt;&lt;![CDATA[     void update() {
+       //validate data
+       firstName.getValue();
+       lastName.getValue();
+       birthday.getValue();
+       title.getValue();
+
+       //submit the form
+       Clients.submitForm(updateForm);
+     }
+]]&gt;&lt;/zscript&gt;
+   &lt;/h:form&gt;</pre>
+<a name="N1026A"></a><a name="Contenido+din%C3%A1mico"></a>
+<h3 class="underlined_5">Contenido din&aacute;mico</h3>
+<p>Vimos que era posible utilizar el atributo <span class="codefrag">foreach</span> para realizar una iteraci&oacute;n por una colecci&oacute;n y contruir los &iacute;tems de una lista en tiempo de carga de una p&aacute;gina. El problema de este enfoque es que s&oacute;lo funciona en el momento de la carga de la p&aacute;gina. Si despu&eacute;s realizamos modificaciones en la colecci&oacute;n Java con la que est&aacute; asociada la lista, la lista no se actualiza.</p>
+<p>Una forma de solucionar el problema es actualizando manualmente el componente y los datos. El siguiente ejemplo muestra c&oacute;mo se podr&iacute;a hacer.</p>
+<p>El c&oacute;digo zscript crea una variable <span class="codefrag">personas</span> donde se guarda el <em>modelo</em>; la lista de personas que deben mostrarse por pantalla. Tambi&eacute;n se define la funci&oacute;n <span class="codefrag">add()</span> que a&ntilde;ade una nueva persona a la colecci&oacute;n Java y al componente (<span class="codefrag">listbox</span>).</p>
+<p>Para inicializar el componente <span class="codefrag">listbox</span> utilizamos los elementos ZK <span class="codefrag">foreach</span> y <span class="codefrag">each</span> para iterar por la colecci&oacute;n. Despu&eacute;s, a&ntilde;adimos nuevos elementos tanto en el arrayList (modelo) como en el listitem (vista).</p>
+<p>
+<img alt="" content-width="6cm" src="imagenes/list-update.png" width="357"></p>
+<pre class="code">&lt;window title="Actualizar vista" border="normal"&gt;
+&lt;zscript&gt;&lt;![CDATA[
+   import model.Persona;
+   
+   ArrayList personas = new ArrayList();
+
+   for (int j = 0; j &lt; 10; j++) {
+      Persona p = new Persona("Tom"+j,
+                           "Hanks"+k, j);
+      personas.add(p);
+   }
+   
+   void add() {
+      int i = personas.size();
+      Persona p = new Persona("Tom"+i,
+                        "Hanks"+i,i);
+      personas.add(p);
+      
+      // insert a new item into the listbox 
+      Listitem li = new Listitem();
+
+      // insertamos el objeto persona como valor;
+      // para poder utilizarlo si lo necesitamos
+      li.setValue(p)
+
+      // creamos las celdas y rellenamos su contenido
+      li.appendChild(new Listcell(p.getNombre()));
+      li.appendChild(new Listcell(p.getApellidos()));
+      li.appendChild(new Listcell(Integer.toString(p.getEdad())));
+      lista.appendChild(li);
+   }
+]]&gt;&lt;/zscript&gt;
+
+&lt;listbox width="300px" id="lista"&gt;
+   &lt;listhead&gt;
+      &lt;listheader label="Nombre" sort="auto" /&gt;
+      &lt;listheader label="Apellidos" sort="auto" /&gt;
+      &lt;listheader label="Edad"/&gt;
+   &lt;/listhead&gt;
+   &lt;listitem forEach="${personas}"&gt;
+      &lt;listcell label="${each.nombre}" /&gt;
+      &lt;listcell label="${each.apellidos}" /&gt;
+        &lt;listcell label="${each.edad}" /&gt;
+   &lt;/listitem&gt;
+&lt;/listbox&gt;
+&lt;button label="A&ntilde;ade" onClick="add()" /&gt;
+
+&lt;/window&gt;</pre>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content">En un patr&oacute;n MVC este ejemplo no ser&iacute;a estrictamente correcto, ya que el controlador no debe actualizar los datos en la vista. Los datos en la vista s&oacute;lo deben depender del modelo. M&aacute;s adelante veremos otra soluci&oacute;n m&aacute;s correcta basada en las facilidades de <span class="codefrag">data binding</span> de ZK.</div>
+</div>
+<a name="N102A6"></a><a name="Paginado"></a>
+<h3 class="underlined_5">Paginado</h3>
+<p>Para paginar un componente de datos como una lista o un grid basta con definir el mold <em>paging</em> indicando el n&uacute;mero de elementos de cada p&aacute;gina. ZK calcula autom&aacute;ticamente las p&aacute;ginas a partir del n&uacute;mero de elementos del listbox y coloca los botones de paginado en la lista o rejilla:</p>
+<p>Para ver un ejemplo, bastan con modificar en el ejemplo anterior la declaraci&oacute;n de la lista, a&ntilde;adi&eacute;ndole el mold <em>paging</em>:</p>
+<p>
+<img alt="" content-width="6cm" src="imagenes/list-paging.png" width="358"></p>
+<pre class="code">&lt;listbox width="300px" id="lista" mold="paging" pageSize="4"&gt;
+</pre>
+<p>Con este enfoque tenemos que tener todos los datos cargados en la interfaz de usuario. Si estamos paginando un gran n&uacute;mero de datos y queremos que la paginaci&oacute;n obtenga nuevos datos del modelo (o de la base de datos) y actualice la interfaz modificando los datos que hay cargados en la lista, este enfoque no sirve. Veremos en el apartado de Data Binding c&oacute;mo hacerlo utilizando el componente <span class="codefrag">paging</span>
+</p>
+<a name="N102C9"></a><a name="%C3%81rboles"></a>
+<h3 class="underlined_5">&Aacute;rboles</h3>
+<p>El componente <span class="codefrag">tree</span> permite definir elementos en forma de &aacute;rbol, as&iacute; como a&ntilde;adir columnas. Por simplificar, vamos a ver &uacute;nicamente alg&uacute;n ejemplo en el que definimos los elementos. El funcionamiento de las columnas es muy similar al del componente <span class="codefrag">grid</span>.</p>
+<p>Atributos y componentes incluidos:</p>
+<ul>
+
+<li>
+<span class="codefrag">open</span>: atributo boolean de los <span class="codefrag">treeitem</span> que indica si un sub&aacute;rbol est&aacute; abierto inicialimente o no</li>
+
+<li>
+<span class="codefrag">treeitem</span>: cada uno de los &iacute;tems del &aacute;rbol; puede contener una etiqueta o una imagen</li>
+
+<li>
+<span class="codefrag">treechildren</span>: componente que agrupa un sub&aacute;rbol. Se define dentro de un <span class="codefrag">treeitem</span> y contiene, a su vez, otros <span class="codefrag">treeitems</span>
+</li>
+
+</ul>
+<p>Entre los eventos procesados por el &aacute;rbol se encuentran:</p>
+<ul>
+
+<li>
+<span class="codefrag">onOpen</span>: el usuario ha abierto un sub&aacute;rbol</li>
+
+<li>
+<span class="codefrag">onSelect</span>: el usuario ha seleccionado un &iacute;tem. El evento generado es un objeto de la clase <span class="codefrag">SelectEvent</span>.</li>
+
+</ul>
+<p>Un &aacute;rbol sencillo:</p>
+<p>
+<img alt="" content-width="6cm" src="imagenes/tree.png" width="127"></p>
+<pre class="code">&lt;zscript&gt;
+   void doSelect() {
+      Set setItems = tree.getSelectedItems();
+      Iterator it = setItems.iterator();
+      String str="";
+      while (it.hasNext()) {
+         Treeitem tItem = (Treeitem) it.next();
+         str += tItem.getLabel() + " ";
+      }
+      alert(str);
+   }&lt;/zscript&gt;
+      &lt;tree id="tree" multiple="true" width="120px" onSelect="doSelect()"&gt;
+      &lt;treechildren&gt;
+         &lt;treeitem label="Item 1"&gt;
+            &lt;treechildren&gt;
+               &lt;treeitem label="Item 1.1" /&gt;
+               &lt;treeitem label="Item 1.2" /&gt;
+               &lt;treeitem label="Item 1.3" /&gt;
+            &lt;/treechildren&gt;
+         &lt;/treeitem&gt;
+         &lt;treeitem label="Item 2" /&gt;
+         &lt;treeitem label="Item 3"&gt;
+            &lt;treechildren&gt;
+               &lt;treeitem label="Item 3.1" /&gt;
+               &lt;treeitem label="Item 3.2" /&gt;
+               &lt;treeitem label="Item 3.3" /&gt;
+            &lt;/treechildren&gt;
+         &lt;/treeitem&gt;
+      &lt;/treechildren&gt;
+   &lt;/tree&gt;</pre>
+</div>
+
+
+<a name="N10318"></a><a name="Men%C3%BAs"></a>
+<h2 class="underlined_10">Men&uacute;s</h2>
+<div class="section">
+<a name="N1031E"></a><a name="Barra+de+men%C3%BAs"></a>
+<h3 class="underlined_5">Barra de men&uacute;s</h3>
+<p>El componente <span class="codefrag">menubar</span> permite definir una barra de men&uacute;s desplegables. Est&aacute; compuesto de <span class="codefrag">menupopup</span> asociados a objetos <span class="codefrag">menu</span>. Cada <span class="codefrag">menupopu</span> contiene un grupo de <span class="codefrag">menuitem</span>.</p>
+<p>En muchas ocasiones las opciones del men&uacute; necesitan cambiar alguna zona de la interfaz de usuario, cargando un nuevo fichero ZUL en ella. Una forma de hacer esto es modificando el atributo <span class="codefrag">src</span> de la instrucci&oacute;n <span class="codefrag">include</span> que previamente ha cargado esa zona a modificar. Tambi&eacute;n es posible utilizar una instrucci&oacute;n <span class="codefrag">include</span> vac&iacute;a como indicador del lugar en el que van a ir los nuevos componentes creados por la p&aacute;gina.</p>
+<p>
+<img alt="" content-width="3cm" src="imagenes/menubar.png" width="166"></p>
+<pre class="code">&lt;zk&gt;
+   &lt;menubar&gt;
+      &lt;menu label="File"&gt;
+         &lt;menupopup&gt;
+            &lt;menuitem label="Dos botones"&gt;
+               &lt;attribute name="onClick"&gt;
+                  principal.src = "dos-botones.zul";
+               &lt;/attribute&gt;
+            &lt;/menuitem&gt;
+            &lt;menuitem label="Di hola"&gt;
+               &lt;attribute name="onClick"&gt;
+                  principal.src = "di-hola.zul";
+               &lt;/attribute&gt;
+            &lt;/menuitem&gt;
+            &lt;menuseparator /&gt;
+            &lt;menuitem label="Exit" /&gt;
+         &lt;/menupopup&gt;
+      &lt;/menu&gt;
+      &lt;menu label="Help"&gt;
+         &lt;menupopup&gt;
+            &lt;menuitem label="Index" /&gt;
+            &lt;menu label="About"&gt;
+               &lt;menupopup&gt;
+                  &lt;menuitem label="About ZK" /&gt;
+                  &lt;menuitem label="About Potix"
+                     href="http://www.zkoss.org/" /&gt;
+               &lt;/menupopup&gt;
+            &lt;/menu&gt;
+         &lt;/menupopup&gt;
+      &lt;/menu&gt;
+   &lt;/menubar&gt;
+   &lt;include id="principal" /&gt;
+&lt;/zk&gt;</pre>
+<p>Otra forma de cargar nuevos componentes es llamando al m&eacute;todo <span class="codefrag">createComponentes</span> de la interfaz <span class="codefrag">Executions</span>:</p>
+<pre class="code">
+&lt;zscript&gt;&lt;![CDATA[
+void doWindow() {
+   Window win = (Window) Executions.createComponents("di-hola.zul", null,
+            null);
+      win.setClosable(true);
+      win.setMaximizable(true);
+      win.setWidth("200px");
+      win.setHeight("200px");
+      win.setSizable(true);
+    win.doEmbedded();
+ }
+]]&gt;&lt;/zscript&gt;
+</pre>
+<a name="N1035B"></a><a name="Men%C3%BA+popup"></a>
+<h3 class="underlined_5">Men&uacute; popup</h3>
+<p>El componente <span class="codefrag">menupopup</span> puede utilizarse fuera de una barra de men&uacute;s. Por ejemplo, podemos asociarlo a la acci&oacute;n de pulsar el bot&oacute;n derecho con el atributo context:</p>
+<p>
+<img alt="" content-width="5cm" src="imagenes/popup.png" width="320"></p>
+<pre class="code">   &lt;menupopup id="editPopup"&gt;
+       &lt;menuitem label="Undo"/&gt;
+       &lt;menuitem label="Redo"/&gt;
+ 
+       &lt;menu label="Sort"&gt;
+           &lt;menupopup&gt;
+               &lt;menuitem label="Sort by Name" autocheck="true"/&gt;
+               &lt;menuitem label="Sort by Date" autocheck="true"/&gt;
+           &lt;/menupopup&gt;
+       &lt;/menu&gt;
+   &lt;/menupopup&gt;
+ 
+   &lt;label value="Right Click Me!" context="editPopup"/&gt;
+   &lt;separator bar="true"/&gt;
+   &lt;label value="Right Click Me!" onRightClick="alert(self.value)"/&gt;</pre>
+<p>Dentro de un menupop puede haber cualquier otro componente:</p>
+<p>
+<img alt="" content-width="6cm" src="imagenes/popup2.png" width="364"></p>
+<pre class="code">&lt;label value="Right Click Me!" context="any"/&gt;
+ 
+&lt;popup id="any" width="300px"&gt;
+   &lt;vbox&gt;
+      It can be anything.
+      &lt;toolbarbutton label="ZK" href="http://zk1.sourceforge.net"/&gt;
+   &lt;/vbox&gt;
+&lt;/popup&gt;</pre>
+<a name="N10381"></a><a name="Toolbar"></a>
+<h3 class="underlined_5">Toolbar</h3>
+<p>Un <span class="codefrag">toolbar</span> define una barra de botones (<span class="codefrag">toolbarbutton</span>).</p>
+<p>Ejemplo:</p>
+<p>
+<img alt="" content-width="5cm" src="imagenes/toolbar.png" width="307"></p>
+<pre class="code">&lt;window title="Toolbar window" border="normal" width="300px"&gt;
+   &lt;toolbar&gt;
+      &lt;toolbarbutton label="Buscar" /&gt;
+      &lt;toolbarbutton label="Sincronizar" /&gt;
+      &lt;toolbarbutton label="Imprimir" /&gt;
+      &lt;toolbarbutton image="imagenes/light-bulb.png"/&gt;
+      &lt;toolbarbutton image="imagenes/question.png"/&gt;
+   &lt;/toolbar&gt;
+&lt;/window&gt;</pre>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2010 Depto. CCIA</div>
+</div>
+</body>
+</html>

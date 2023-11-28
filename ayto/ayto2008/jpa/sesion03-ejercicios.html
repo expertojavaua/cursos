@@ -1,0 +1,330 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Ejercicios sesi&oacute;n 3: Mapeado entidad-relaci&oacute;n, tablas</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="JPA con Hibernate" src="images/baner_j2ee_der.gif" title="JPA con Hibernate"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto SIGEM</a>
+</li>
+<li class="current">
+<a class="base-selected" href="index.html">Persistencia</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">JPA</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html" title="JPA">&Iacute;ndice</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.2', 'skin/')" id="menu_1.1.2Title" class="menutitle">Teor&iacute;a</div>
+<div id="menu_1.1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="sesion01-apuntes.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-apuntes.html">Sesion 2</a>
+</div>
+<div class="menuitem">
+<a href="sesion03-apuntes.html">Sesion 3</a>
+</div>
+<div class="menuitem">
+<a href="sesion04-apuntes.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-apuntes.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-apuntes.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-apuntes.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-apuntes.html">Sesion 8</a>
+</div>
+<div class="menuitem">
+<a href="roadmap.html">Roadmap JPA</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.3', 'skin/')" id="menu_selected_1.1.3Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Ejercicios</div>
+<div id="menu_selected_1.1.3" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="sesion01-ejercicios.html">Sesion 1</a>
+</div>
+<div class="menuitem">
+<a href="sesion02-ejercicios.html">Sesion 2</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Sesion 3</div>
+</div>
+<div class="menuitem">
+<a href="sesion04-ejercicios.html">Sesion 4</a>
+</div>
+<div class="menuitem">
+<a href="sesion05-ejercicios.html">Sesion 5</a>
+</div>
+<div class="menuitem">
+<a href="sesion06-ejercicios.html">Sesion 6</a>
+</div>
+<div class="menuitem">
+<a href="sesion07-ejercicios.html">Sesion 7</a>
+</div>
+<div class="menuitem">
+<a href="sesion08-ejercicios.html">Sesion 8</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<div id="credit2"></div>
+</div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion03-ejercicios.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Ejercicios sesi&oacute;n 3: Mapeado entidad-relaci&oacute;n, tablas</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Creaci%C3%B3n+de+la+nueva+entidad">Creaci&oacute;n de la nueva entidad Tag</a>
+</li>
+<li>
+<a href="#Creaci%C3%B3n+de+la+nueva+entidad-N10078">Creaci&oacute;n de la nueva entidad Recurso</a>
+</li>
+<li>
+<a href="#Creaci%C3%B3n+de+las+entidades+hijas">Creaci&oacute;n de las entidades hijas</a>
+</li>
+<li>
+<a href="#Interfaz+web+para+etiquetas">Interfaz web para etiquetas</a>
+</li>
+<li>
+<a href="#Interfaz+web+para+recursos">Interfaz web para recursos</a>
+</li>
+</ul>
+</div>
+
+
+<p>En esta sesi&oacute;n de ejercicios vamos a practicar con el mapeado de entidades en tablas y columnas. El mapeado de relaciones lo dejamos para la sesi&oacute;n siguiente.</p>
+
+
+<p>Vamos a continuar con el ejemplo anterior en el que defin&iacute;amos autores y mensajes. En esta sesi&oacute;n de ejercicios a&ntilde;adiremos algunas funcionalidades m&aacute;s, introduciendo la posibilidad de que la aplicaci&oacute;n que estamos construyendo sirva para anotar la autor&iacute;a de diversos tipos de recursos y etiquetarlos. Este escenario nos servir&aacute; para practicar el mapeado de las relaciones de herencia, introduciendo dos tipos de recursos: p&aacute;ginas HTML y documentos PDF.</p>
+
+
+
+<a name="N10012"></a><a name="Creaci%C3%B3n+de+la+nueva+entidad"></a>
+<h2 class="underlined_10">Creaci&oacute;n de la nueva entidad Tag</h2>
+<div class="section">
+<p>Vamos a a&ntilde;adir nuevas entidades a las que ya tenemos. Vamos a definir recursos y etiquetas. En la pr&oacute;xima sesi&oacute;n relacionaremos los autores con los recursos, definiendo una relaci&oacute;n uno-a-muchos entre autores y recursos y una relaci&oacute;n muchos-a-muchos entre recursos y tags.</p>
+<p>La idea es definir las bases para una aplicaci&oacute;n web con la que los autores pueden crear mensajes y recursos, y a&ntilde;adir etiquetas a estos &uacute;ltimos.</p>
+<p>1. Comencemos por crear el nuevo proyecto <span class="codefrag">jsf-sesion3-web</span> copiando y pegando el proyecto del ejercicio anterior. Recuerda del ejercicio 2 que hay que tocar el fichero <span class="codefrag">.settings/org.eclipse.wst.common.component</span> y modificar a mano el nombre del proyecto en un par de elementos XML.</p>
+<p>2. Una vez creado el nuevo proyecto, tenemos que crear la entidad <span class="codefrag">Tag</span>. Las instancias de esta entidad van a servir para etiquetar mensajes y recursos con una cadena de texto. La entidad debe tener los siguientes atributos:</p>
+<ul>
+		
+<li>
+<span class="codefrag">int id</span>: identificador de la etiqueta (autogenerado)</li>
+		
+<li>
+<span class="codefrag">String cadena</span>: cadena de texto que representa la etiqueta. Puede contener espacios.</li>
+		
+<li>
+<span class="codefrag">java.util.Date fCreacion</span>: fecha en la que se creo por primera vez la etiqueta</li>
+		
+<li>
+<span class="codefrag">int ocurrencias</span>: n&uacute;mero de documentos etiquetados con ese tag</li>
+	
+</ul>
+<p>Algunos ejemplos de cadenas de etiquetas: <span class="codefrag">'curso'</span>, <span class="codefrag">'java'</span>, <span class="codefrag">'tutorial'</span>
+</p>
+<p>Define la clase entidad <span class="codefrag">Tag</span> con los atributos anteriores. Define un constructor vac&iacute;o <span class="codefrag">protected</span> y los setters y getters necesarios. En la aplicaci&oacute;n que ya tienes montada del ejercicio anterior, crea una funci&oacute;n privada <span class="codefrag">addTag()</span> (sin par&aacute;metros) que cree una nueva <span class="codefrag">Tag</span> y que la haga persistente en la base de datos. Despliega la aplicaci&oacute;n web, ejecuta la nueva acci&oacute;n y comprueba la nueva tabla con el administrador de MySQL. &iquest;Qu&eacute; tipos de columna se han definido?</p>
+<p>3. Define la clase <span class="codefrag">TagEAO</span> en el mismo paquete con los m&eacute;todos que vamos a usar para trabajar con la entidad persistente:</p>
+<ul>
+		
+<li>
+<span class="codefrag">Tag createTag(String cadena)</span>: crea una etiqueta, la inicializa con la fecha actual del sistema, le pone el numero de ocurrencias a 0 y la hace persistente.</li>
+		
+<li>
+<span class="codefrag">Tag cambiaCadena(Tag tag, String cadena): sustituye la etiqueta de la cadena por una nueva.</span>
+</li>
+		
+<li>
+<span class="codefrag">List&lt;Tag&gt; listaTags()</span>: devuelve todas las etiquetas creadas</li>
+	
+</ul>
+</div>
+
+
+<a name="N10078"></a><a name="Creaci%C3%B3n+de+la+nueva+entidad-N10078"></a>
+<h2 class="underlined_10">Creaci&oacute;n de la nueva entidad Recurso</h2>
+<div class="section">
+<p>Vamos ahora a realizar la construcci&oacute;n de la entidad con la que representamos los recursos.</p>
+<p>1. Crea un tipo embebido <span class="codefrag">DatosFichero</span> con los siguientes atributos:</p>
+<ul>
+		
+<li>
+<span class="codefrag">String nombre</span>: nombre del fichero (incluyendo su ruta y extensi&oacute;n)</li>
+		
+<li>
+<span class="codefrag">Double size</span>: tama&ntilde;o en Kbytes del fichero</li>
+		
+<li>
+<span class="codefrag">java.util.Date fCreacion</span>: fecha de creaci&oacute;n del fichero</li>
+	
+</ul>
+<p>2. Crea la nueva entidad <span class="codefrag">Recurso</span> con los siguientes atributos:</p>
+<ul>
+		
+<li>
+<span class="codefrag">int idRecurso</span>: identificador del recurso (autogenerado)</li>
+		
+<li>
+<span class="codefrag">DatosFichero fichero</span>: datos del fichero</li>
+		
+<li>
+<span class="codefrag">String resumen</span>: descripci&oacute;n larga con el contenido del recurso. Debe ser un tipo LOB.</li>
+		
+<li>
+<span class="codefrag">int visitas</span>: n&uacute;mero de veces que se ha consultado el recurso</li>
+	
+</ul>
+<p>Define un constructor vac&iacute;o y los getters y setters necesarios. En la aplicaci&oacute;n que ya tienes montada, crea una funci&oacute;n <span class="codefrag">addRecurso()</span> (sin par&aacute;metros) que cree un nuevo <span class="codefrag">Recurso</span> y que lo haga persistente en la base de datos. Despliega la aplicaci&oacute;n web, ejecuta la nueva acci&oacute;n  y comprueba la nueva tabla con el administrador de MySQL. &iquest;Qu&eacute; tipos de columna se han definido?</p>
+</div>
+
+
+<a name="N100C2"></a><a name="Creaci%C3%B3n+de+las+entidades+hijas"></a>
+<h2 class="underlined_10">Creaci&oacute;n de las entidades hijas</h2>
+<div class="section">
+<p>Crea las nuevas entidades <span class="codefrag">PaginaHtml</span> y <span class="codefrag">FicheroPDF</span>, subentidades de <span class="codefrag">Recurso</span>. Utiliza el m&eacute;todo de la tabla &uacute;nica, y escoge tu mismo la columna y el valor discriminante.</p>
+<p>En la entidad <span class="codefrag">PaginaHTML</span> define los siguientes atributos:</p>
+<ul>
+		
+<li>
+<span class="codefrag">String contenido</span>: Contenido HTML de la p&aacute;gina. Debe ser un tipo LOB</li>
+		
+<li>
+<span class="codefrag">boolean imagenes</span>: True o false, dependiendo de si la p&aacute;gina enlaza a im&aacute;genes</li>
+	
+</ul>
+<p>En la entidad <span class="codefrag">FicheroPDF</span> define los siguientes atributos adicionales:</p>
+<ul>
+		
+<li>
+<span class="codefrag">int p&aacute;ginas</span>: n&uacute;mero de p&aacute;ginas</li>
+		
+<li>
+<span class="codefrag">String titulo</span>: t&iacute;tulo del PDF</li>
+	
+</ul>
+<p>1. Implementa ambas clases y modifica la funci&oacute;n <span class="codefrag">addRecurso</span> para comprobar la tabla creada en el mapeado.</p>
+<p>2. Implementa una clase <span class="codefrag">RecursoEAO</span> que implemente los siguientes m&eacute;todos de acceso a las entidades persistentes:</p>
+<ul>
+		
+<li>Recurso createRecurso(String nombreFichero, String resumen, TipoRecurso tipo)</li>
+		
+<li>void updatePaginaHTML(PaginaHTML pagina, String contenido, boolean imagenes)</li>
+		
+<li>void updateFicheroPDF(FicheroPDF pdf, int paginas, String titulo)</li>
+		
+<li>Recurso findRecursoById(int idRecurso)</li>
+		
+<li>Collection&lt;Recurso&gt; findRecursoByName(String name)</li>
+	
+</ul>
+</div>
+
+
+<a name="N10119"></a><a name="Interfaz+web+para+etiquetas"></a>
+<h2 class="underlined_10">Interfaz web para etiquetas</h2>
+<div class="section">
+<p>Define un servlet <span class="codefrag">doActionTag</span>, similar al implementado en la sesi&oacute;n 2, con el que podamos probar las distintas funcionalidades del <span class="codefrag">TagEAO</span>.</p>
+<p>Define una p&aacute;gina HTML con la que podamos introducir los par&aacute;metros necesarios para el servlet. Debes pedir la cadena del tag y una acci&oacute;n a realizar.</p>
+<p>Implementa como m&iacute;nimo las acciones:</p>
+<ul>
+		
+<li>
+<span class="codefrag">add-tag</span>: a&ntilde;ade una etiqueta</li>
+		
+<li>
+<span class="codefrag">listar-tags</span>: lista todas las etiquetas</li>
+		
+<li>
+<span class="codefrag">buscar-tag</span>: busca una etiqueta</li>
+	
+</ul>
+<p>Implementa una p&aacute;gina JSP que muestre el resultado de cada acci&oacute;n.</p>
+</div>
+
+	
+<a name="N10144"></a><a name="Interfaz+web+para+recursos"></a>
+<h2 class="underlined_10">Interfaz web para recursos</h2>
+<div class="section">
+<p>Haz lo mismo para el <span class="codefrag">RecursoEAO</span>.</p>
+<p>Define una p&aacute;ginas HTML con las que podamos introducir nuevos recursos, llamando al m&eacute;todo <span class="codefrag">createRecurso</span> del RecursoEAO. Implementa como m&iacute;nimo las acciones:</p>
+<ul>
+			
+<li>
+<span class="codefrag">add-pagina</span>: a&ntilde;ade una p&aacute;gina</li>
+			
+<li>
+<span class="codefrag">buscar-pagina</span>: busca una p&aacute;gina por el nombre</li>
+		
+</ul>
+<p>Implementa una p&aacute;gina JSP que muestre el resultado de cada acci&oacute;n.</p>
+</div>
+
+
+<p class="pageBreakAfter"></p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2007-2008 Depto. CCIA</div>
+</div>
+</body>
+</html>

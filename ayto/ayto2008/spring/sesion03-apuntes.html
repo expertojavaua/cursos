@@ -1,0 +1,804 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.7">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Introducci&oacute;n a MVC en Spring</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<div class="header">
+<div class="grouplogo">
+<a href="http://www.jtech.ua.es/j2ee"><img class="logoImage" alt="jtech" src="images/baner_j2ee_izq.gif" title="Especialista Universitario Java Enterprise"></a>
+</div>
+<div class="projectlogoA1">
+<a href="http://www.dccia.ua.es/"><img class="logoImage" alt="Spring" src="images/baner_j2ee_der.gif" title="Spring"></a>
+</div>
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="javascript:location.href='../index.html'">Home</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-web.html'">Aplicaciones Web</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../aplic-ent.html'">Aplicaciones Enterprise</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../charlas.html'">Charlas</a>
+</li>
+<li>
+<a class="base-not-selected" href="javascript:location.href='../proy-int/index.html'">Proyecto</a>
+</li>
+<li>
+<a class="base-not-selected" href="index.html">Spring</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<div id="level2tabs"></div>
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="sesion03-apuntes.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Introducci&oacute;n a MVC en Spring</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Spring+MVC+vs.+Struts">Spring MVC vs. Struts</a>
+</li>
+<li>
+<a href="#Procesamiento+de+una+petici%C3%B3n+en+Spring+MVC">Procesamiento de una petici&oacute;n en Spring MVC</a>
+</li>
+<li>
+<a href="#Configuraci%C3%B3n+b%C3%A1sica">Configuraci&oacute;n b&aacute;sica</a>
+</li>
+<li>
+<a href="#Caso+1%3A+petici%C3%B3n+sin+procesamiento+de+datos+de+entrada">Caso 1: petici&oacute;n sin procesamiento de datos de entrada</a>
+<ul class="minitoc">
+<li>
+<a href="#Controlador+totalmente+basado+en+anotaciones">Controlador totalmente basado en anotaciones</a>
+</li>
+<li>
+<a href="#Controlador+%22al+estilo+cl%C3%A1sico%22">Controlador "al estilo cl&aacute;sico"</a>
+</li>
+<li>
+<a href="#Resolver+el+nombre+l%C3%B3gico+de+la+vista">Resolver el nombre l&oacute;gico de la vista</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Caso+2%3A+procesamiento+de+un+formulario">Caso 2: procesamiento de un formulario</a>
+<ul class="minitoc">
+<li>
+<a href="#Controlador+totalmente+basado+en+anotaciones-N1025B">Controlador totalmente basado en anotaciones</a>
+</li>
+<li>
+<a href="#Controlador+%22cl%C3%A1sico%22">Controlador "cl&aacute;sico"</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<p>En este tema se har&aacute; una introducci&oacute;n a las caracter&iacute;sticas del <em>framework</em> modelo-vista-controlador
+que incorpora Spring. Veremos que tiene una completa y bien pensada arquitectura, altamente configurable,
+ que a primera vista lo hace parecer bastante complejo, siendo a&uacute;n as&iacute; f&aacute;cil de usar en los casos m&aacute;s simples.
+ </p>
+ 
+<p>Aqu&iacute; veremos la versi&oacute;n 2.5, que como principal novedad incluye la posibilidad de usar anotaciones
+para definir los beans necesarios, lo que elimina en gran medida el uso de XML.</p>
+
+<a name="N10015"></a><a name="Spring+MVC+vs.+Struts"></a>
+<h2 class="underlined_10">Spring MVC vs. Struts</h2>
+<div class="section">
+<p>Spring MVC tiene algunos puntos en com&uacute;n con Struts, y tambi&eacute;n muchas diferencias. Vamos
+a comentar unos y otras brevemente.</p>
+<p>En cuanto a las semejanzas:</p>
+<ul>
+
+<li>Tanto Spring como Struts son representantes del tipo "push" de MVC, en que primero se realiza
+el trabajo y se obtienen los resultados y la vista se limita a mostrarlos. Por ello el flujo
+de procesamiento de la petici&oacute;n resultar&aacute; familiar hasta cierto punto a los que ya hayan trabajado con Struts. En JSF, como recordar&eacute;is,
+la vista es la que dispara la l&oacute;gica de negocio.</li>
+
+<li>Ambos ofrecen mecanismos conceptualmente similares para encapsular los par&aacute;metros de la petici&oacute;n HTTP (recordemos
+los ActionForm de Struts) y validar los datos antes de disparar la l&oacute;gica de negocio. 
+Spring tambi&eacute;n tiene validaci&oacute;n programada y declarativa.</li>
+
+</ul>
+<p>No obstante, tambi&eacute;n hay muchas diferencias. La fundamental, que permea todo el <em>framework</em>, es
+que Spring tiene una arquitectura mejor estructurada y que resuelve mejor ciertos problemas, lo cual
+no es sorprendente si tenemos en cuenta que Spring es mucho m&aacute;s moderno que Struts y que ha podido aprovechar
+la experiencia ganada en el uso durante a&ntilde;os de Struts y otros <em>frameworks</em>
+MVC. Vamos a ver brevemente algunas diferencias, que quedar&aacute;n m&aacute;s claras cuando expliquemos con m&aacute;s
+detalle el funcionamiento:</p>
+<ul>
+
+<li>Aunque el flujo de procesamiento de la petici&oacute;n HTTP es similar al de Struts, es m&aacute;s complejo, ofreciendo
+muchos puntos en el mismo para que el desarrollador coloque sus propias clases que hagan tareas particulares.</li>
+
+<li>El papel de las acciones de Struts aqu&iacute; lo desempe&ntilde;an los denominados <span class="codefrag">Controllers</span>
+</li>
+
+<li>Aunque en Struts todas las acciones son en principio "iguales" y pueden hacer cualquier tarea, 
+en Spring distintos tipos de <span class="codefrag">Controllers</span> est&aacute;n pensados para hacer distintas tareas. Por ejemplo, 
+para procesar los datos de un formulario no heredar&iacute;amos del mismo <span class="codefrag">Controller</span> que para
+simplemente mostrar todos los registros de una tabla (aqu&iacute; no necesitamos formulario).</li>
+
+<li>En lugar de usar Javabeans que hereden de <span class="codefrag">ActionForm</span> para recoger los datos
+de la petici&oacute;n HTTP, aqu&iacute; se usan JavaBeans comunes, es decir, no tienen que heredar de ninguna clase especial.</li>
+
+</ul>
+</div>
+
+<a name="N1004E"></a><a name="Procesamiento+de+una+petici%C3%B3n+en+Spring+MVC"></a>
+<h2 class="underlined_10">Procesamiento de una petici&oacute;n en Spring MVC</h2>
+<div class="section">
+<p>A continuaci&oacute;n se describe el flujo de procesamiento t&iacute;pico para una petici&oacute;n HTTP en Spring MVC. Este
+diagrama est&aacute; simplificado y no tiene en cuenta ciertos elementos que luego comentaremos.</p>
+<ul>
+
+<li>Como pr&aacute;cticamente en todos los <em>frameworks</em> MVC, en Spring se canalizan todas las peticiones
+HTTP a trav&eacute;s de un solo servlet, en este caso uno de la clase <span class="codefrag">DispatcherServlet</span>
+implementada por Spring.</li>
+
+<li>El servlet se ayuda de un <span class="codefrag">HandlerMapping</span> para averiguar, normalmente a partir de la URL,
+a qu&eacute; <span class="codefrag">Controller</span> hay que llamar para servir la petici&oacute;n. </li>
+
+<li>Se llama al <span class="codefrag">Controller</span>, que ejecuta la l&oacute;gica de negocio, obtiene los resultados y los
+devuelve al servlet, junto con el nombre l&oacute;gico de la vista a mostrar, encapsulados en un objeto
+de la clase <span class="codefrag">ModelAndView</span> .</li>
+
+<li>Un <span class="codefrag">ViewResolver</span> se encarga de averiguar el nombre f&iacute;sico de la vista que se corresponde
+con el nombre l&oacute;gico del paso anterior.</li>
+
+<li>Finalmente, el <span class="codefrag">DispatcherServlet</span> redirige la petici&oacute;n hacia la vista, que muestra los
+resultados de la operaci&oacute;n realizada.</li>
+
+</ul>
+<p>En realidad, el procesamiento es m&aacute;s complejo. Nos hemos saltado algunos pasos en aras de una mayor claridad.
+Por ejemplo, en Spring se pueden usar interceptores, que son como los filtros del API de servlets, pero
+adaptados a Spring MVC. Estos interceptores pueden pre y postprocesar la petici&oacute;n alrededor de la ejecuci&oacute;n
+del <span class="codefrag">Controller</span>. No obstante, todas estas cuestiones deben quedar por fuerza fuera de una breve
+introduccion a Spring MVC como la de estas p&aacute;ginas.</p>
+</div> 
+
+<a name="N1008A"></a><a name="Configuraci%C3%B3n+b%C3%A1sica"></a>
+<h2 class="underlined_10">Configuraci&oacute;n b&aacute;sica</h2>
+<div class="section">
+<p>La implementaci&oacute;n de las clases necesarias para el m&oacute;dulo MVC est&aacute; inclu&iacute;da en un JAR
+distinto del n&uacute;cleo de Spring, <span class="codefrag">spring-webmvc.jar</span>, que debemos incluir en nuestro proyecto. 
+Como ocurr&iacute;a en Struts necesitaremos
+configurar el <span class="codefrag">web.xml</span> para que todas las peticiones HTTP con un determinado patr&oacute;n se 
+canalicen a trav&eacute;s del mismo servlet, en este caso de la clase <span class="codefrag">DispatcherServlet</span> de Spring. Como m&iacute;nimo necesitaremos incluir
+algo como esto:</p>
+<pre class="code">
+
+&lt;servlet&gt;
+   &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;
+   &lt;servlet-class&gt;
+      org.springframework.web.servlet.DispatcherServlet
+   &lt;/servlet-class&gt;
+   &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+   &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;
+   &lt;url-pattern&gt;*.mvc&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+
+</pre>
+<p>Con esta configuraci&oacute;n, todas las peticiones acabadas en <span class="codefrag">.mvc</span> se redirigir&iacute;an
+al servlet principal, por ejemplo <span class="codefrag">getPedido.mvc</span> o <span class="codefrag">verClientes.mvc</span>.</p>
+<p>Necesitaremos tambi&eacute;n un fichero de configuraci&oacute;n XML para definir los beans de la capa web.
+Este fichero por defecto se supone colocado en <span class="codefrag">WEB-INF</span> y con el nombre <em>nombre_del_servlet</em><span class="codefrag">-servlet.xml</span>.
+Como en nuestro ejemplo el servlet se llamaba "dispatcher", el nombre esperado ser&iacute;a
+<span class="codefrag">dispatcher-servlet.xml</span>. No obstante tanto la localizaci&oacute;n como el nombre del fichero se puede configurar pas&aacute;ndoselo
+al <span class="codefrag">DispatcherServlet</span> como par&aacute;metro bajo el nombre <span class="codefrag">contextConfigLocation</span>.
+Consultar la documentaci&oacute;n de Spring o el formato del web.xml para m&aacute;s detalles.</p>
+<p>Por tanto, la forma habitual de trabajar es usar un XML para los beans de la capa web y otro (u otros)
+distinto para los de la capa de negocio y DAOs. Spring establece una jerarqu&iacute;a de contextos de modo
+que en el XML de la capa web se heredan autom&aacute;ticamente los otros beans, lo que nos permite
+referenciar los objetos de negocio en nuestro c&oacute;digo MVC.</p>
+<p>Si vamos a usar anotaciones en la capa web y queremos que Spring examine autom&aacute;ticamente
+las clases en su b&uacute;squeda, debemos usar la etiqueta ya conocida <strong><span class="codefrag">component-scan</span> 
+en el XML de la capa web, no basta con que est&eacute; colocada en el XML de los otros
+beans.</strong>. Suponiendo que nuestros componentes web est&aacute;n implementados en el paquete
+<span class="codefrag">es.ua.jtech.spring.mvc</span>, en el <span class="codefrag">dispatcher-servlet.xml</span> aparecer&iacute;a:</p>
+<pre class="code">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-2.5.xsd"&gt;
+ 
+  ...         
+       &lt;context:component-scan base-package="es.ua.jtech.spring.mvc"/&gt;
+  ...
+&lt;/beans&gt;    
+</pre>
+</div>
+
+<a name="N100D6"></a><a name="Caso+1%3A+petici%C3%B3n+sin+procesamiento+de+datos+de+entrada"></a>
+<h2 class="underlined_10">Caso 1: petici&oacute;n sin procesamiento de datos de entrada</h2>
+<div class="section">
+<p>La elaborada arquitectura de Spring MVC, y las muchas posibilidades que tiene el usuario
+de configurar a su medida el procesamiento que hace el <em>framework</em> hacen que sea poco
+intuitivo hacer una descripci&oacute;n general de Spring MVC, al menos si no se dispone del suficiente
+tiempo para hacerlo de manera pausada, lo que no es el caso. En su lugar, hemos preferido aqu&iacute; describir
+c&oacute;mo se implementar&iacute;an un par
+de casos t&iacute;picos en una aplicaci&oacute;n web, indicando c&oacute;mo implementar cada caso y las posibilidades
+adicionales que ofrece Spring MVC. El lector tendr&aacute; que consultar fuentes adicionales para ver
+con detalle el resto de opciones.</p>
+<p>El primer caso ser&iacute;a el de una petici&oacute;n que no necesita interacci&oacute;n por parte del usuario en
+el sentido de proceso de datos de entrada: por ejemplo sacar un listado de clientes, mostrar
+los datos de un pedido, etc. La "no interacci&oacute;n" aqu&iacute; se entiende como que no hay que procesar
+y validar datos de entrada. Es decir, que no hay un formulario HTML. Esto no quiere decir que no haya
+ par&aacute;metros HTTP, pero entonces suelen estar fijos en la URL de un enlace o de modo similar,
+ no introducidos directamente por el usuario. Estas peticiones suelen ser simplemente listados de informaci&oacute;n de "solo lectura". </p>
+<p>Vamos a poner estos ejemplos en el contexto de una hipot&eacute;tica aplicaci&oacute;n web para un hotel, en la cual
+ se pueden ver y buscar ofertas de habitaciones, disponibles con un determinado precio
+ hasta una fecha l&iacute;mite. Aqu&iacute; tendr&iacute;amos lo que define a una oferta:</p>
+<pre class="code">
+ package es.ua.jtech.spring.dominio;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+public class Oferta {
+	private BigDecimal precio;
+	private Date fechaLimite;
+	private TipoHabitacion tipoHab;
+	private int minNoches;
+	
+	//..aqu&iacute; vendr&iacute;an los getters y setters
+}	
+ </pre>
+<p>TipoHabitaci&oacute;n es un tipo enumerado que puede ser <span class="codefrag">individual</span> o <span class="codefrag">doble</span>.</p>
+<p>Lo primero es definir el controlador. Esto ser&iacute;a el equivalente a la acci&oacute;n de Struts. Con la aparici&oacute;n de la versi&oacute;n 2.5 de Spring
+ aparece un "nuevo estilo" de controladores. Con los controladores "pre-2.5" pasa algo parecido a lo que ocurre
+ con las acciones de Struts: heredan de una determinada clase y eso nos obliga a implementar ciertos
+ m&eacute;todos con una signatura determinada para procesar la petici&oacute;n. Eso s&iacute;, con la diferencia de que en Spring
+ hay varias clases de las que podemos heredar, dependiendo del tipo de trabajo que deba hacer
+ nuestro controlador. A partir de la generaci&oacute;n 2.5 surge la posibilidad de usar cualquier clase
+con cualquier m&eacute;todo para procesar las peticiones. Con anotaciones le indicamos a Spring qu&eacute; m&eacute;todos
+procesar&aacute;n las peticiones y c&oacute;mo enlazar sus par&aacute;metros con los par&aacute;metros HTTP.</p>
+<div class="frame note">
+<div class="label">Nota</div>
+<div class="content"> Estrictamente hablando, en los controladores "pre-2.5" en realidad no necesitamos heredar de ninguna clase
+ sino simplemente implementar un interfaz. No obstante, en la pr&aacute;ctica se suele usar la herencia porque las clases base 
+ que implementa Spring aportan
+ cierta funcionalidad &uacute;til.</div>
+</div>
+<a name="N100FB"></a><a name="Controlador+totalmente+basado+en+anotaciones"></a>
+<h3 class="underlined_5">Controlador totalmente basado en anotaciones</h3>
+<p>Nuestro controlador ser&aacute; simplemente un POJO con ciertas anotaciones. Supongamos que queremos sacar un listado de ofertas del mes. As&iacute;, el
+ esqueleto b&aacute;sico de nuestro <span class="codefrag">Controller</span> ser&iacute;a:
+ </p>
+<pre class="code">
+import es.ua.jtech.spring.negocio.IGestorOfertas;
+
+<strong>@Controller
+@RequestMapping("/listaOfertas.do")</strong>
+public class ListaOfertasController  {
+   @Autowired 
+   private IGestorOfertas miGestor;
+   
+   ...
+}
+</pre>
+<p>La anotaci&oacute;n <span class="codefrag">@Controller</span> indica que la clase es un bean controlador y nos ahorra el trabajo
+de definir en XML el bean correspondiente. Con <span class="codefrag">@RequestMapping</span> asociamos una URL a este
+controlador.</p>
+<p>Por supuesto, cualquier <span class="codefrag">Controller</span> necesitar&aacute; para hacer su trabajo de la colaboraci&oacute;n de uno
+ o m&aacute;s objetos de negocio. Lo l&oacute;gico es que estos objetos sean beans
+ de Spring y que instanciemos las dependencias haciendo uso del contenedor. En nuestro caso
+  dicho objeto es "miGestor". Supondremos que &eacute;l es el que "sabe" sacar las ofertas del mes con el m&eacute;todo <span class="codefrag">public List&lt;Oferta&gt; getOfertasDelMes(int mes)</span>.
+ Probablemente a su vez este gestor deba ayudarse de un DAO para hacer su trabajo, pero
+ esto no nos interesa aqu&iacute;.</p>
+<p>Por tanto, hemos usado <span class="codefrag">@Autowired</span>
+para resolver dependencias por tipo, suponiendo para simplificar que no hay ambig&uuml;edad (solo existe una clase
+que implemente <span class="codefrag">IGestorOfertas</span>)</p>
+<p>Para que Spring sepa qu&eacute; m&eacute;todo del controlador debe procesar la petici&oacute;n HTTP
+se puede usar de nuevo la anotaci&oacute;n <span class="codefrag">@RequestMapping</span>. Podemos especificar qu&eacute; m&eacute;todo HTTP (GET, POST,...)
+asociaremos al m&eacute;todo java.</p>
+<pre class="code">
+@Controller
+@RequestMapping("/listaOfertas.do")
+public class ListaOfertasController {
+   @Autowired
+   private GestorOfertas miGestor;
+	
+
+   <strong>@RequestMapping(method=RequestMethod.GET)</strong>
+   public String procesar(HttpServletRequest req) {
+      int mes = Integer.parseInt(req.getParameter("mes"));
+      ...
+   }
+}   
+</pre>
+<p>Aqu&iacute; estamos asociando una llamada a "listaOfertas.do" de tipo GET con el m&eacute;todo java
+<span class="codefrag">procesar</span>. Una llamada a la misma URL con POST producir&iacute;a un error HTTP de tipo 404
+ya que no habr&iacute;a nada asociado a dicha petici&oacute;n. Si no necesitamos tanto control sobre el m&eacute;todo HTTP asociado podemos poner la anotaci&oacute;n 
+<span class="codefrag">@RequestMapping("/listaOfertas.do")</span> directamente en el m&eacute;todo <span class="codefrag">procesar</span> en lugar de en la clase.</p>
+<p>La primera tarea que debe hacer un m&eacute;todo de procesamiento de una petici&oacute;n
+es <strong>leer el valor de los par&aacute;metros HTTP</strong>. Spring autom&aacute;ticamente detectar&aacute; que <span class="codefrag">procesar</span> tiene un argumento de tipo <span class="codefrag">HttpServletRequest</span>
+y lo asociar&aacute; a la petici&oacute;n actual. Esta "magia" funciona tambi&eacute;n con otros tipos
+de datos: por ejemplo, un par&aacute;metro de tipo <span class="codefrag">Writer</span> se asociar&aacute; autom&aacute;ticamente a la respuesta HTTP
+y uno de tipo <span class="codefrag">Locale</span> al <em>locale</em> de la petici&oacute;n. Consultar la documentaci&oacute;n de Spring
+para ver m&aacute;s detalladamente las asociaciones que se realizan autom&aacute;ticamente.</p>
+<p>Otra posibilidad es asociar expl&iacute;citamente par&aacute;metros HTTP con par&aacute;metros java mediante
+la anotaci&oacute;n <span class="codefrag">@RequestParam</span>. Usando esta anotaci&oacute;n, el ejemplo quedar&iacute;a:</p>
+<pre class="code">
+@Controller
+@RequestMapping("/listaOfertas.do")
+public class ListaOfertasController {
+   @Autowired
+   private GestorOfertas miGestor;
+	
+
+   @RequestMapping(method=RequestMethod.GET)
+   public String procesar(<strong>@RequestParam("mes")</strong> int mes) {
+      ...
+   }
+}   
+</pre>
+<p>De este modo Spring hace por nosotros el trabajo de extraer el par&aacute;metro y convertir el tipo 
+de String a int. Hay que tener en cuenta que esta
+forma de trabajar puede generar m&uacute;ltiples excepciones. Si el par&aacute;metro no est&aacute; presente en la petici&oacute;n HTTP se producir&aacute; una excepci&oacute;n
+de tipo <span class="codefrag">MissingServletRequestParameterException</span>. Si est&aacute; presente y no se puede convertir
+se generar&aacute; una <span class="codefrag">TypeMismatchException</span>. Para especificar que el par&aacute;metro
+no es obligatorio, podemos hacer:</p>
+<pre class="code">
+public String procesar(<strong>@RequestParam(value="mes",required=false)</strong> int mes) {
+    ...
+}    
+</pre>
+<p>En este caso, se recomienda usar un Integer en lugar de un int para que si no existe
+el par&aacute;metro Spring nos pueda pasar el valor null (si no existe Spring no lo interpreta como 0).</p>
+<p>Una vez le&iacute;dos los par&aacute;metros, lo siguiente suele ser <strong>disparar la l&oacute;gica de negocio y colocar los
+resultados en alg&uacute;n &aacute;mbito al que pueda acceder la vista</strong>. Spring ofrece algunas clases
+auxiliares para almacenar de manera conveniente los datos obtenidos. En realidad son simplemente
+<span class="codefrag">Map</span> gracias a los que se puede almacenar un conjunto de objetos dispares, cada uno con su nombre.
+Spring hace accesible el modelo a la vista como un atributo de la petici&oacute;n y al controlador
+si le pasamos un par&aacute;metro de tipo <span class="codefrag">ModelMap</span>. Aqu&iacute; tenemos la l&oacute;gica de <span class="codefrag">procesar</span>:</p>
+<pre class="code">
+@RequestMapping(method=RequestMethod.GET)
+public String procesar(@RequestParam("mes") int mes, 
+                       <strong>ModelMap modelo</strong>) {
+   <strong>modelo.addAttribute("ofertas", miGestor.getOfertasDelMes(mes));</strong>
+   return "listaOfertas";         
+}
+    
+</pre>
+<p>Finalmente, nos queda <strong>especificar qu&eacute; vista hemos de mostrar</strong>. Hemos estado viendo en todos los ejemplos que el m&eacute;todo <span class="codefrag">procesar</span> devuelve un String.
+Dicho String se interpreta como el nombre "l&oacute;gico" de la vista a mostrar tras ejecutar el controlador.
+Consultar el siguiente apartado para ver c&oacute;mo asociar un nombre l&oacute;gico de vista a un nombre
+f&iacute;sico (de p&aacute;gina JSP, por ejemplo). En el JSP ser&aacute; sencillo mostrar los datos ya que, como hemos
+dicho, se guardan en un atributo de la petici&oacute;n: </p>
+<pre class="code">
+&lt;%@taglib uri="http://java.sun.com/jsp/jstl/core"prefix="c"%&gt;    
+...
+&lt;c:forEach items="${ofertas}" var="o"&gt;
+	Habitaci&oacute;n ${o.tipoHab} un m&iacute;nimo de
+        ${o.minNoches} noches por solo ${o.precio}eur./noche
+&lt;/c:forEach&gt;
+...
+</pre>
+<a name="N101A0"></a><a name="Controlador+%22al+estilo+cl%C3%A1sico%22"></a>
+<h3 class="underlined_5">Controlador "al estilo cl&aacute;sico"</h3>
+<p>En realidad, vamos a usar aqu&iacute; un modelo "mixto" en el que empleamos
+    anotaciones para definir el propio controlador y el mapeo con la URL 
+    pero el m&eacute;todo de procesamiento de la petici&oacute;n no va a ser arbitrario.
+    Estos controladores normalmente heredan de una cierta clase propia de Spring, y por
+tanto deben sobreescribir ciertos m&eacute;todos con una determinada signatura. En el caso que nos ocupa (no hay procesamiento
+de datos de formulario) la clase m&aacute;s indicada es 
+ <span class="codefrag">AbstractController</span>.</p>
+<pre class="code">
+...
+@Controller
+@RequestMapping("/listaOfertas.do")
+public class ListaOfertasController <strong>extends AbstractController</strong> {
+
+        @Autowired
+	private GestorOfertas miGestor;
+	
+        //Falta el m&eacute;todo para procesar la petici&oacute;n...
+}
+ </pre>
+<p>En un <span class="codefrag">AbstractController</span> la l&oacute;gica de procesamiento del controlador se debe implementar en el m&eacute;todo <span class="codefrag">handleRequestInternal</span>,
+ que se sobreescribe de la clase base <span class="codefrag">AbstractController</span>. Dicho m&eacute;todo tiene
+ dos par&aacute;metros: la petici&oacute;n y la respuesta HTTP.</p>
+<p>El m&eacute;todo <span class="codefrag">handleRequestInternal</span> debe devolver un objeto de la clase <span class="codefrag">ModelAndView</span>,
+ en el que se encapsula tanto el nombre l&oacute;gico de la vista como el modelo con los resultados de la operaci&oacute;n
+ realizada, en nuestro caso la lista de ofertas. El modelo es simplemente un <span class="codefrag">Map</span>
+ en el que podemos ir a&ntilde;adiendo objetos para luego acceder a ellos por el mismo nombre en la vista. 
+Aqu&iacute; tenemos una posible implementaci&oacute;n para dicho m&eacute;todo:</p>
+<pre class="code">
+...
+<strong>protected ModelAndView handleRequestInternal(HttpServletRequest arg0,
+                                 HttpServletResponse arg1) throws Exception {</strong>
+   int mes = Integer.parseInt(argo.getParameter("mes"));
+   <em>//Creamos un nuevo ModelAndView que por ahora
+   //solo tiene el nombre l&oacute;gico de la vista</em>
+   <strong>ModelAndView mav = new ModelAndView("listaOfertas");</strong>
+   <em>//Llamamos al objeto de negocio y obtenemos el resultado</em>
+   <strong>List&lt;Oferta&gt; ofertas = miGestor.getOfertasDelMes(mes);</strong>
+   <em>//Guardamos el resultado en el ModelAndView, con el nombre "ofertas"</em>
+   <strong>mav.addObject("ofertas",ofertas);</strong>
+   <em>//Devolvemos el ModelAndView</em>
+   <strong>return mav;
+}</strong>
+...
+</pre>
+<a name="N101EB"></a><a name="Resolver+el+nombre+l%C3%B3gico+de+la+vista"></a>
+<h3 class="underlined_5">Resolver el nombre l&oacute;gico de la vista</h3>
+<p>La &uacute;ltima tarea que queda es resolver el nombre l&oacute;gico de la vista, asoci&aacute;ndolo a una vista f&iacute;sica.
+ Para ello necesitamos un <span class="codefrag">ViewResolver</span>. Debemos definir un bean en el XML
+ con el <span class="codefrag">id=viewResolver</span> y
+  la clase que nos interese. De las que proporciona Spring una de las m&aacute;s sencillas de usar es
+  <span class="codefrag">InternalResourceViewResolver</span>. Esta clase usa dos par&aacute;metros b&aacute;sicos: <span class="codefrag">prefix</span>
+  y <span class="codefrag">suffix</span>, que puestos respectivamente delante y detr&aacute;s del nombre l&oacute;gico de la vista
+  nos dan el nombre f&iacute;sico. Por ejemplo: </p>
+<pre class="code">
+
+&lt;bean id="viewResolver" 
+      class="org.springframework.web.servlet.view.InternalResourceViewResolver"&gt;
+ 	&lt;property name="prefix" value="/jsp/"/&gt;
+ 	&lt;property name="suffix" value=".jsp"/&gt;
+&lt;/bean&gt;  
+
+  </pre>
+<p>As&iacute;, si el nombre l&oacute;gico de la vista de nuestro ejemplo era <span class="codefrag">ofertas</span>, se acabar&iacute;a
+  buscando el recurso f&iacute;sico <span class="codefrag">/jsp/ofertas.jsp</span>.</p>
+</div>
+
+<a name="N10212"></a><a name="Caso+2%3A+procesamiento+de+un+formulario"></a>
+<h2 class="underlined_10">Caso 2: procesamiento de un formulario</h2>
+<div class="section">
+<p>Este caso es m&aacute;s complejo ya que implica varios pasos:</p>
+<ul>
+
+<li>El usuario introduce los datos, normalmente a trav&eacute;s de un formulario HTML</li>
+
+<li>Los datos se validan, y en caso de no ser correctos se vuelve a mostrar el formulario
+para que el usuario pueda corregirlos.</li>
+
+<li>En caso de pasar la validaci&oacute;n, los datos se "empaquetan" en un objeto Java para que el <span class="codefrag">controller</span>
+pueda acceder a ellos de modo m&aacute;s sencillo que a trav&eacute;s de la petici&oacute;n HTTP.</li>
+
+<li>El <span class="codefrag">controller</span> se ejecuta, toma los datos, realiza la tarea y cede el control para
+que se muestre la vista.</li>
+
+</ul>
+<p> Esto en Struts lo har&iacute;amos normalmente con dos acciones, una de ellas para mostrar inicialmente
+el formulario y otra para procesar los datos introducidos. En Spring la pr&aacute;ctica habitual es mostrar el 
+formulario y procesar los datos dentro del mismo controlador. Por otro lado en Struts se usar&iacute;a un <em>actionform</em>
+ para empaquetar y validar los datos. En Spring se usa un objeto similar (aunque aqu&iacute; se le llama <span class="codefrag">Command</span>), con la diferencia de que la clase
+ que lo implementa no es necesario que herede de ninguna clase en especial, &uacute;nicamente debe ser un JavaBean.
+ Recordemos que en Struts un <em>actionform</em> debe ser un javabean y <em>adem&aacute;s</em> heredar
+ de <span class="codefrag">ActionForm</span> o de <span class="codefrag">DynaActionForm</span>.</p>
+<p>Por ejemplo, este podr&iacute;a ser un <span class="codefrag">Command</span> apropiado para buscar ofertas.Solo
+ contiene los campos estrictamente necesarios para la b&uacute;squeda, no todos los datos
+ que puede contener una oferta:</p>
+<pre class="code">
+package es.ua.jtech.spring.mvc;
+
+
+import es.ua.jtech.spring.dominio.TipoHabitacion;
+
+public class BusquedaOfertas {
+	private int precioMax;
+	private TipoHabitacion tipoHab;
+	
+	//..ahora vendr&iacute;an los getters y setters	
+}	
+</pre>
+<p>Desde el punto de vista de lo que tenemos que implementar, este caso solo se diferenciar&aacute; del caso 1 (sin procesamiento
+ de datos de entrada) en el <span class="codefrag">controller</span> y en que para la vista podemos usar <em>tags</em>
+ de Spring, del mismo modo que en Struts us&aacute;bamos las suyas propias, para que se conserve el valor
+ de los campos y el usuario no tenga que volver a escribirlo todo si hay un error de validaci&oacute;n. La
+ asociaci&oacute;n entre la URL y el controlador y entre la vista l&oacute;gica y el recurso f&iacute;sico ser&aacute;n igual que antes. Adem&aacute;s, por supuesto,
+ tendremos que implementar la validaci&oacute;n de datos.</p>
+<p>Igual que antes, vamos a ver dos formas de hacerlo: con una clase propia con m&eacute;todos
+arbitrarios, gracias al uso de anotaciones, y heredando de las clases base de Spring.</p>
+<a name="N1025B"></a><a name="Controlador+totalmente+basado+en+anotaciones-N1025B"></a>
+<h3 class="underlined_5">Controlador totalmente basado en anotaciones</h3>
+<p>Mediante la anotaci&oacute;n <span class="codefrag">@RequestMapping</span> mapearemos la petici&oacute;n que muestra
+el formulario a un m&eacute;todo java (ser&aacute; con GET) y la que lo procesa a otro distinto (POST):</p>
+<pre class="code">
+...    
+@Controller
+@RequestMapping("/busquedaOfertas.do")
+public class BusquedaOfertasController {
+    @Autowired
+    private GestorOfertas miGestor;
+    
+    <strong>@RequestMapping(method=RequestMethod.GET)</strong>
+    public String preparaForm(ModelMap modelo) {
+       ...
+    }
+    
+    <strong>@RequestMapping(method=RequestMethod.POST)</strong>
+    public String procesaForm(@ModelAttribute("bo") BusquedaOfertas bo,
+                              BindingResult result, ModelMap modelo) {
+       ...
+    }
+}    
+</pre>
+<p>Como ya hemos dicho, los datos del formulario se van a almacenar en un objeto
+de tipo <span class="codefrag">BusquedaOferta</span>. El m&eacute;todo <span class="codefrag">preparaForm</span>, que se ejecutar&aacute;
+<em>antes</em> de mostrar el formulario, debe crear un <span class="codefrag">BusquedaOferta</span>
+con los valores por defecto y colocarlo en el modelo para que puedan salir en el formulario.
+Finalmente, devolver&aacute; el nombre l&oacute;gico de la vista que contiene el formulario. Aqu&iacute; tenemos
+el c&oacute;digo:</p>
+<pre class="code">
+@RequestMapping(method=RequestMethod.GET)
+public String preparaForm(ModelMap modelo) {
+    modelo.addAttribute("bo", new BusquedaOfertas());
+    return "busquedaOfertas";
+}    
+</pre>
+<p>En la p&aacute;gina <span class="codefrag">busquedaOfertas.jsp</span> colocaremos un formulario usando las <em>taglibs</em>
+de Spring. Estas etiquetas nos permiten vincular el modelo al formulario de forma sencilla y adem&aacute;s mostrar
+los errores de validaci&oacute;n como veremos posteriormente.</p>
+<pre class="code">
+
+<strong>&lt;%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %&gt;</strong>
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Esto es busquedaOfertas.jsp&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        <strong>&lt;form:form modelAttribute="bo"&gt;
+            &lt;form:input path="precioMax"/&gt; &lt;br/&gt;
+            &lt;form:select path="tipoHab"&gt;
+                &lt;form:option value="individual"/&gt;
+                &lt;form:option value="doble"/&gt;
+            &lt;/form:select&gt;
+            &lt;input type="submit" value="buscar"/&gt;
+        &lt;/form:form&gt;</strong>    
+    &lt;/body&gt;
+&lt;/html&gt;    
+</pre>
+<p>Obs&eacute;rvense varios puntos interesantes:</p>
+<ul>
+    
+<li>La vinculaci&oacute;n entre el formulario y el objeto <span class="codefrag">BusquedaOfertas</span> del modelo
+se hace con el atributo <span class="codefrag">modelAttribute</span> de la etiqueta "form". Como es l&oacute;gico, se le ha
+dado el mismo nombre ("bo") que en el c&oacute;digo java de <span class="codefrag">preparaForm</span>
+</li>
+
+<li>Las etiquetas de Spring para formularios son muy similares a su contrapartida HTML. El atributo
+<span class="codefrag">path</span> de cada una indica la propiedad de <span class="codefrag">BusquedaOfertas</span> a la que est&aacute;n
+asociadas.</li>
+
+<li>El bot&oacute;n de enviar del formulario no necesita usar ninguna etiqueta propia de Spring, es
+HTML convencional</li>
+
+<li>El formulario no tiene "action" ya que llamar&aacute; a la misma p&aacute;gina. Impl&iacute;citamente Spring
+lo convierte en un formulario con action vac&iacute;o y m&eacute;todo POST.   </li>
+
+</ul>
+<p>Llegados a este punto, el usuario rellena el formulario, lo env&iacute;a y nosotros debemos procesarlo.
+Esto lo hace el controlador en el m&eacute;todo <span class="codefrag">procesaForm</span>. Veamos su c&oacute;digo:</p>
+<pre class="code">
+@RequestMapping(method=RequestMethod.POST)
+public String procesaForm(@ModelAttribute("bo") BusquedaOfertas bo, 
+                          BindingResult result, ModelMap modelo) {
+   //validamos los datos
+   if (bo.getPrecioMax()&lt;0)
+       result.rejectValue("precioMax", "intPositivo");
+   //si Spring o nosotros hemos detectado error, volvemos al formulario    
+   if (result.hasErrors()) {
+       return "busquedaOfertas";
+   }            
+   //si no, realizamos la operaci&oacute;n
+   modelo.addAttribute("ofertas", miGestor.BuscaOfertas(bo));
+   //y saltamos a la vista que muestra los resultados
+   return "listaOfertas";
+ }    
+</pre>
+<p>
+<em>Antes</em> de ejecutar este m&eacute;todo Spring habr&aacute; tomado los
+datos del formulario y creado un <span class="codefrag">BusquedaOferta</span> con ellos. Lo hacemos
+accesible al m&eacute;todo a trav&eacute;s del par&aacute;metro <span class="codefrag">bo</span>, enlaz&aacute;ndolo
+con el atributo "bo" del modelo gracias a la anotaci&oacute;n <span class="codefrag">@ModelAttribute("bo")</span>.</p>
+<p>Antes de disparar la l&oacute;gica de negocio hay que <strong>validar los datos</strong>. Spring
+habr&aacute; hecho una pre-validaci&oacute;n comprobando que los datos son del tipo adecuado para encajar
+en un <span class="codefrag">BusquedaOfertas</span>: por ejemplo, que el precio es convertible a <span class="codefrag">int</span>.
+El resultado de esta "pre-validaci&oacute;n" es accesible a trav&eacute;s del segundo par&aacute;metro. "Semi-m&aacute;gicamente"
+cuando tenemos un par&aacute;metro de tipo <span class="codefrag">BindingResult</span> que viene justo despu&eacute;s
+de un atributo del modelo Spring lo asocia al resultado de su validaci&oacute;n. La clase <span class="codefrag">BindingResult</span>
+tiene m&eacute;todos para averiguar qu&eacute; errores se han producido, y como ahora veremos, a&ntilde;adir nuevos.
+</p>
+<p>Nuestra l&oacute;gica de negocio puede tener requerimientos adicionales a la mera conversi&oacute;n de tipos.
+Por ejemplo, en nuestro caso est&aacute; claro que un precio no puede ser un valor negativo. Por tanto, lo
+comprobamos y si es negativo usamos el m&eacute;todo <span class="codefrag">rejectValue</span> para informar de que hay un
+nuevo error. Este m&eacute;todo tiene dos par&aacute;metros: el nombre de la propiedad asociada al error y la clave
+del mensaje de error. El mensaje estar&aacute; guardado en un fichero properties bajo esa clave. Si hay errores
+retornamos a la vista del formulario. Si no, disparamos la l&oacute;gica de negocio, obtenemos los resultados,
+los a&ntilde;adimos al modelo y saltamos a la vista que los muestra. Estas &uacute;ltimas operaciones
+son equivalentes a las que hac&iacute;amos en el ejemplo de MVC sin procesamiento de datos de entrada.</p>
+<p>Menci&oacute;n aparte merecen los mensajes de error. Al igual que en Struts, son claves
+ en un fichero <span class="codefrag">.properties</span>, asociadas con nombres de propiedades del Command.
+ Como se ve, en nuestro caso la propiedad a la que se asocian los errores
+ es precioMax, como es l&oacute;gico. En el <span class="codefrag">dispatcher-servlet.xml</span>
+ definimos un bean que representa al archivo de mensajes, simplemente necesitamos
+ un bean de la clase <span class="codefrag">ResourceBundleMessageSource</span>cuyo <span class="codefrag">id</span> sea <span class="codefrag">messageSource</span>
+</p>
+<pre class="code">
+ 
+&lt;bean id="messageSource"
+     class="org.springframework.context.support.ResourceBundleMessageSource"&gt;
+     &lt;property name="basename" value="es/ua/jtech/spring/mvc/mensajesWeb"/&gt;
+&lt;/bean&gt;
+ 
+ </pre>
+<p>Y aqu&iacute; tenemos el archivo <span class="codefrag">mensajesWeb.properties</span> (que, como indicaba la
+ propiedad "basename", est&aacute; colocado dentro del paquete <span class="codefrag">es.ua.jtech.spring.mvc</span>:</p>
+<pre class="code">
+precioVacio = el precio est&aacute; vac&iacute;o
+precNoVal = precio no v&aacute;lido
+typeMismatch.precioMax = el precio no es un n&uacute;mero
+ </pre>
+<p>La clave <span class="codefrag">typeMismatch.precioMax</span> la referencia autom&aacute;ticamente Spring
+cuando se introduce en el campo un valor no compatible, en este caso uno que
+no sea un n&uacute;mero. Si no definimos un <span class="codefrag">typeMismatch.XXXX</span> Spring
+muestra un mensaje de error por defecto.</p>
+<p>Para mostrar los errores se usa la etiqueta <span class="codefrag">errors</span>. Dicha etiqueta
+tiene un atributo <span class="codefrag">path</span> con el mismo significado que en el resto. De
+este modo, para mostrar los mensajes de error asociados al campo "tipoMax" pondr&iacute;amos:</p>
+<pre class="code">
+&lt;form:form modelAttribute="bo"&gt;
+   &lt;form:input path="precioMax"/&gt; <strong>&lt;form:errors path="precioMax"/&gt;</strong> &lt;br/&gt;
+   ...		
+</pre>
+<a name="N10325"></a><a name="Controlador+%22cl%C3%A1sico%22"></a>
+<h3 class="underlined_5">Controlador "cl&aacute;sico"</h3>
+<p>La clase de la que vamos a heredar es <span class="codefrag">SimpleFormController</span>, ya que nos parece
+ el m&aacute;s sencillo de usar, aunque
+en Spring hay otras variantes para trabajar
+ con formularios, m&aacute;s sofisticadas.</p>
+<p>En el constructor del <span class="codefrag">SimpleFormController</span> se suele dar valor a las propiedades
+ que controlan su funcionamiento, en concreto</p>
+<ul>
+ 
+<li>Al nombre l&oacute;gico del <span class="codefrag">Command</span>,el equivalente al <em>actionform</em> de Struts (propiedad <span class="codefrag">CommandName</span>)</li>
+
+<li>A la clase que implementa este <span class="codefrag">Command</span> (propiedad <span class="codefrag">CommandClass</span>)</li>
+ 
+<li>A la vista que muestra el formulario para introducir datos (propiedad <span class="codefrag">FormView</span>),
+ y a la que se volver&aacute; si hay un error de validaci&oacute;n.</li>
+ 
+<li>A la vista que muestra los resultados de la operaci&oacute;n (propiedad <span class="codefrag">SuccessView</span>)</li>
+ 
+</ul>
+<p>Estas propiedades se asignan simplemente con <em>setters</em>.</p>
+<p>Por otro lado, el procesamiento de los datos, una vez se ha rellenado el formulario, se hace en el m&eacute;todo <span class="codefrag">onSubmit</span>.
+ Este m&eacute;todo recibe como par&aacute;metro un <span class="codefrag">Command</span>, del que tomaremos los datos. Al igual
+ que en Struts, <strong>si hemos llegado a este punto es que ya se ha hecho la validaci&oacute;n y ha tenido
+ &eacute;xito</strong>. No obstante aqu&iacute; la validaci&oacute;n la tratamos despu&eacute;s por no complicar 
+ por el momento la discusi&oacute;n.</p>
+<pre class="code">
+...
+@Controller
+@RequestMapping("/buscarOfertas.do")
+public class BuscarOfertasController extends SimpleFormController {
+	@Autowired
+        private GestorOfertas miGestorOfertas;
+
+	public BuscarOfertasController() {
+		setCommandName("busquedaOfertas");
+		setCommandClass(BusquedaOfertas.class);
+		setFormView("buscarOfertas");
+		setSuccessView("resultBuscarOfertas");
+	}
+
+        
+      	@Override
+	protected ModelAndView onSubmit(Object command) throws Exception {
+		BusquedaOfertas bo = (BusquedaOfertas) command;
+		List&lt;Oferta&gt; encontradas = 
+                     miGestorOfertas.buscarOfertas(bo);
+		ModelAndView mav = new ModelAndView(getSuccessView());
+		mav.addObject("ofertas", encontradas);
+		return mav;
+	}
+
+ }
+ </pre>
+<p>Para validar los datos necesitamos una clase
+ que implemente el interfaz <span class="codefrag">org.springframework.validation.Validator
+ </span>. Supongamos que queremos rechazar la oferta buscada si el precio est&aacute; vac&iacute;o
+ o bien no es un n&uacute;mero positivo (para simplificar vamos a obviar la validaci&oacute;n del tipo de habitaci&oacute;n).
+ El c&oacute;digo ser&iacute;a:</p>
+<pre class="code">
+ package es.ua.jtech.spring.mvc;
+
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
+
+
+public class OfertaValidator implements Validator {
+
+	public boolean supports(Class arg0) {
+		return arg0.isAssignableFrom(BusquedaOfertas.class);
+	}
+
+	public void validate(Object obj, Errors errors) {
+		ValidationUtils.rejectIfEmpty(errors, "precioMax", "precioVacio");
+		BusquedaOfertas bo = (BusquedaOfertas) obj;
+		//comprobar que el precio no est&eacute; vac&iacute;o (para que no haya null pointer m&aacute;s abajo)
+		if (bo.getPrecioMax()==null)
+			return;
+		//comprobar que el n&uacute;mero sea positivo
+		if (bo.getPrecioMax().floatValue()&lt;0)
+			errors.rejectValue("precioMax", "precNoVal");
+	}
+
+}
+ </pre>
+<p>Como vemos, un <span class="codefrag">Validator</span> debe implementar al menos dos m&eacute;todos:</p>
+<ul>
+ 
+<li>supports: indica de qu&eacute; clase debe ser el <span class="codefrag">Command</span> creado
+ para que se considere aceptable. En nuestro caso debe ser de la clase 
+ <span class="codefrag">BusquedaOfertas</span>
+</li>
+ 
+<li>validate: es donde se efect&uacute;a la validaci&oacute;n. El primer par&aacute;metro es el <span class="codefrag">Command</span>,
+ que se pasa como un <span class="codefrag">Object</span> gen&eacute;rico (l&oacute;gico, ya que Spring no nos
+ obliga a implementar ning&uacute;n interfaz ni heredar de ninguna clase determinada). El 
+ segundo es una especie de lista de errores. Como vemos, hay m&eacute;todos para rechazar
+ un campo si es vac&iacute;o o bien por c&oacute;digo podemos generar errores a medida (en este
+ caso, si el precio es un n&uacute;mero negativo).
+ </li>
+ 
+</ul>
+</div>
+ 
+  
+
+<p class="pageBreakAfter"> 
+</p>
+
+</div>
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("<text>Last Published:</text> " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2006-2007 Depto. CCIA</div>
+</div>
+</body>
+</html>
