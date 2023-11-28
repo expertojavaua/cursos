@@ -74,21 +74,21 @@ MySQL. Para ello instalaremos MySQL y crearemos una nueva base de datos llamada
     <li>Instalar MySQL, por ejemplo en <i>c:\mysql</i>.</li>
     <li>Crear una nueva base de datos. Para esto deberemos crear un
       subdirectorio con el nombre de la base de datos (<i>paj</i>) en <i>c:\mysql\data</i>.</li>
-    <li>Iniciamos la aplicación de administración <a href="file:///c:/mysql/bin/winmysqladmin">c:\mysql\bin\winmysqladmin</a>,
-      que nos permitirá conectar y desconectar el servidor de la base de datos
+    <li>Iniciamos la aplicaciÃ³n de administraciÃ³n <a href="file:///c:/mysql/bin/winmysqladmin">c:\mysql\bin\winmysqladmin</a>,
+      que nos permitirÃ¡ conectar y desconectar el servidor de la base de datos
       y ver su estado.&nbsp;</li>
-    <li>La primera vez que arranquemos esta aplicación nos pedirá login y
-      password. Si pulsamos cancelar no hará falta utilizar login y password
-      para acceder a la administración de MySQL.</li>
-    <li>Una vez hecho esto, aparecerá como un semáforo en la barra de tareas.
-      Si está en verde el servidor estará conectado. Pinchando sobre el
-      semáforo podremos abrir la aplicación y activar o desactivar el
+    <li>La primera vez que arranquemos esta aplicaciÃ³n nos pedirÃ¡ login y
+      password. Si pulsamos cancelar no harÃ¡ falta utilizar login y password
+      para acceder a la administraciÃ³n de MySQL.</li>
+    <li>Una vez hecho esto, aparecerÃ¡ como un semÃ¡foro en la barra de tareas.
+      Si estÃ¡ en verde el servidor estarÃ¡ conectado. Pinchando sobre el
+      semÃ¡foro podremos abrir la aplicaciÃ³n y activar o desactivar el
       servidor.&nbsp;</li>
     <li>Ahora para mayor comodidad, podemos instalar <i>mysqlfront</i>
-      descomprimiéndolo en cualquier directorio. Se trata de un frontal de la
-      base de datos que nos permitirá manipular tablas y datos de forma visual,
-      en lugar de tener que utilizar comandos SQL. Arrancamos la aplicación y
-      creamos una nueva conexión a base de datos, indicando que nos queremos
+      descomprimiÃ©ndolo en cualquier directorio. Se trata de un frontal de la
+      base de datos que nos permitirÃ¡ manipular tablas y datos de forma visual,
+      en lugar de tener que utilizar comandos SQL. Arrancamos la aplicaciÃ³n y
+      creamos una nueva conexiÃ³n a base de datos, indicando que nos queremos
       conectar a la BD <i>paj</i>.</li>
     <li>Una vez conectados podremos crear la tabla USUARIOS con sus campos, e
       insertar algunos datos de usuarios en ella para las pruebas.&nbsp;</li>
@@ -102,36 +102,36 @@ datos? A&ntilde;adir el driver MySQL al CLASSPATH con:</p>
 la base de datos que hemos creado.</p>
    </blockquote>
    
-<p><b>2.</b> <b> (CHAT) </b>Vamos a seguir ampliando nuestra aplicación de chat. 
+<p><b>2.</b> <b> (CHAT) </b>Vamos a seguir ampliando nuestra aplicaciÃ³n de chat. 
   Ahora haremos que tome los datos de los usuarios de la BD MySQL que hemos creado. 
   Para ello tenemos la clase <b>AccesoBDUsuarios </b>en el paquete <i>usuarios</i>, 
   de la cual podemos encontrar una plantilla en <i>usuarios\AccesoBDUsuarios.java</i>. 
-  En el fichero <i>Ej2.java</i> tenemos un conductor para probar el módulo de 
+  En el fichero <i>Ej2.java</i> tenemos un conductor para probar el mÃ³dulo de 
   acceso a la BD. Se pide:</p>
    
   <blockquote>     
     <p><i>a) </i>Insertar el driver y la url de la base de datos en el
     constructor de la clase <b>AccesoBDUsuarios</b>. Compilar y probar que se
     conecta y que valida los usuarios correctamente (el registro de usuarios
-    todavía no está implementado).</p>
+    todavÃ­a no estÃ¡ implementado).</p>
      
-    <p><i>b)</i>   Vuelve a abrir el código de la clase y mira la función <i>valida(login,password)</i>.
-    ¿Qué hace esta función? Explica qué hace para comprobar si ha encontrado
+    <p><i>b)</i>   Vuelve a abrir el cÃ³digo de la clase y mira la funciÃ³n <i>valida(login,password)</i>.
+    Â¿QuÃ© hace esta funciÃ³n? Explica quÃ© hace para comprobar si ha encontrado
     el login y el password en la base de datos.</p>
      
-    <p><i>c)</i>   Por último realizaremos el registro de usuarios, para lo
-    cual la función <i>registro(login,password)</i> deberá hacer una
-    inserción en la BD después de comprobar que el login es válido. La cadena
-    <i>insert </i>contiene la sentencia SQL de la inserción que deberemos
-    ejecutar. Añade la instrucción necesaria para ejecutar esta sentencia.
+    <p><i>c)</i>   Por Ãºltimo realizaremos el registro de usuarios, para lo
+    cual la funciÃ³n <i>registro(login,password)</i> deberÃ¡ hacer una
+    inserciÃ³n en la BD despuÃ©s de comprobar que el login es vÃ¡lido. La cadena
+    <i>insert </i>contiene la sentencia SQL de la inserciÃ³n que deberemos
+    ejecutar. AÃ±ade la instrucciÃ³n necesaria para ejecutar esta sentencia.
     Compilar y probar que registra usuarios correctamente.</p>
-    <p><i>d)</i>    Como último paso nos queda integrar nuestro módulo de
+    <p><i>d)</i>    Como Ãºltimo paso nos queda integrar nuestro mÃ³dulo de
     acceso a la BD en el chat. Integrar y hacer los cambios necesarios en el
-    chat para que se utilice como módulo de acceso a los usuarios la clase <b>AccesoBDUsuarios
-    </b>en lugar de <b>AccesoFicheroUsuarios</b>. (NOTA: Sólo es necesario
-    cambiar una línea de código en la clase <b>ServidorChat </b>para adaptarlo). ¿Qué cambios hemos tenido
-    que hacer? ¿Cuál es la ventaja de haber definido la interfaz <b><i>AccesoUsuarios</i></b>
-    para los módulos de acceso a los datos de los usuarios? Hacer el cambio
+    chat para que se utilice como mÃ³dulo de acceso a los usuarios la clase <b>AccesoBDUsuarios
+    </b>en lugar de <b>AccesoFicheroUsuarios</b>. (NOTA: SÃ³lo es necesario
+    cambiar una lÃ­nea de cÃ³digo en la clase <b>ServidorChat </b>para adaptarlo). Â¿QuÃ© cambios hemos tenido
+    que hacer? Â¿CuÃ¡l es la ventaja de haber definido la interfaz <b><i>AccesoUsuarios</i></b>
+    para los mÃ³dulos de acceso a los datos de los usuarios? Hacer el cambio
     necesario y probar que el chat funciona correctamente.</p>
    </blockquote>
    

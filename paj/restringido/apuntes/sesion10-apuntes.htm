@@ -7,8 +7,8 @@
 
 <body bgcolor="#FFFFFF" text="#000000">
 <h1><span class="section">4. Acceso a bases de datos con JDBC</span> </h1>
-<p>JDBC nos permitir· acceder a bases de datos desde Java. Para ello necesitaremos 
-  contar con un SGBD (sistema gestor de bases de datos) adem·s de un driver especÌfico 
+<p>JDBC nos permitir√° acceder a bases de datos desde Java. Para ello necesitaremos 
+  contar con un SGBD (sistema gestor de bases de datos) adem√°s de un driver espec√≠fico 
   para poder acceder a este SGBD.&nbsp;La ventaja de JDBC es que nos permitir&aacute; 
   acceder a cualquier tipo de base de datos, siempre que contemos con un driver 
   apropiado para ella.</p>
@@ -28,40 +28,40 @@
   siempre utilizaremos la API de JDBC dentro de nuestra aplicaci&oacute;n, y si 
   cambiamos de SGBD no ser&aacute; necesario realizar ning&uacute;n cambio.</p>
 <div align="center"><img src="imagenes/jdbc/img_jdbc2.gif" width="397" height="235"></div>
-<p align="center" class="caption">Figura 2. ConexiÛn de JDBC a distintos SGBDs</p>
+<p align="center" class="caption">Figura 2. Conexi√≥n de JDBC a distintos SGBDs</p>
 <p align="left">El &uacute;nico cambio que tendremos que hacer ser&aacute; cargar 
   al comienzo el driver apropiado para la BD que estemos utilizando. El resto 
   de nuestro c&oacute;digo permanecer&aacute; inalterado sea cual sea la BD a 
   la que nos conectemos.</p>
-<h2 class="subsection">4.1. InstalaciÛn de drivers</h2>
+<h2 class="subsection">4.1. Instalaci√≥n de drivers</h2>
 <p>Los drivers para poder acceder a cada SGBD no forman parte de la
-distribuciÛn de Java por lo que deberemos obtenerlos por separado. El ˙nico
-driver incluido es el puente JDBC-ODBC que nos permitir· acceder a cualquier
+distribuci√≥n de Java por lo que deberemos obtenerlos por separado. El √∫nico
+driver incluido es el puente JDBC-ODBC que nos permitir√° acceder a cualquier
 fuente de datos ODBC instalada.</p>
-<p>Si queremos trabajar directamente con un SGBD ser· necesario obtener el
+<p>Si queremos trabajar directamente con un SGBD ser√° necesario obtener el
 driver correspondiente. Vamos a utilizar MySQL, por lo que deberemos descargar e
-instalar el SGBD y el driver, que puede ser obtenido en la direcciÛn <a href="http://www.mysql.com/downloads/api-jdbc.html">http://www.mysql.com/downloads/api-jdbc.html</a>.</p>
-<p>Para instalar el driver lo ˙nico que deberemos hacer es incluir el fichero
+instalar el SGBD y el driver, que puede ser obtenido en la direcci√≥n <a href="http://www.mysql.com/downloads/api-jdbc.html">http://www.mysql.com/downloads/api-jdbc.html</a>.</p>
+<p>Para instalar el driver lo √∫nico que deberemos hacer es incluir el fichero
 JAR que lo contiene en el CLASSPATH:</p>
 <pre class="codigo">set CLASSPATH=%CLASSPATH%;<b>c:\mmsql\mm.mysql-2.0.4-bin.jar</b></pre>
-<p>Con el driver instalado, podremos cargarlo desde nuestra aplicaciÛn
-simplemente cargando din·micamente la clase correspondiente al driver:</p>
+<p>Con el driver instalado, podremos cargarlo desde nuestra aplicaci√≥n
+simplemente cargando din√°micamente la clase correspondiente al driver:</p>
 <pre class="codigo">Class.forName(&quot;<b>org.gjt.mm.mysql.Driver</b>&quot;);</pre>
 <p>Si quisiesemos cargar el driver JDBC-ODBC deberemos hacerlo como se muestra a
-continuaciÛn:</p>
+continuaci√≥n:</p>
 <pre class="codigo">Class.forName(&quot;<b>sun.jdbc.odbc.JdbcOdbcDriver</b>&quot;);</pre>
-<p>La carga del driver se deber· hacer siempre antes de conectar con la BD.</p>
-<h2 class="subsection">4.2. ConexiÛn a la BD</h2>
+<p>La carga del driver se deber√° hacer siempre antes de conectar con la BD.</p>
+<h2 class="subsection">4.2. Conexi√≥n a la BD</h2>
 <p>Una vez cargado el driver apropiado para nuestro SGBD deberemos establecer la
-conexiÛn con la BD. Para ello utilizaremos el siguiente mÈtodo:</p>
+conexi√≥n con la BD. Para ello utilizaremos el siguiente m√©todo:</p>
 <pre class="codigo"><b><span class="codigo">Connection</span></b><span class="codigo"> con = DriverManager.<b>getConnection</b>(url, login, password);</span></pre>
-<p>La conexiÛn a la BD est· encapsulada en un objeto <b>Connection</b>, y como
-hemos visto para su creaciÛn debemos proporcionar la <i> url</i> de la BD y el <i>login</i>
+<p>La conexi√≥n a la BD est√° encapsulada en un objeto <b>Connection</b>, y como
+hemos visto para su creaci√≥n debemos proporcionar la <i> url</i> de la BD y el <i>login</i>
 y <i>
-password</i> para acceder a ella. El formato de la <i> url</i> variar· seg˙n el driver que
+password</i> para acceder a ella. El formato de la <i> url</i> variar√° seg√∫n el driver que
 utilicemos.</p>
 <p>En el caso de MySQL, si queremos conectarnos a una BD de nombre <i>paj</i>
-alojada en la m·quina local (<i>localhost</i>), lo haremos de la siguiente
+alojada en la m√°quina local (<i>localhost</i>), lo haremos de la siguiente
 forma:</p>
 <pre class="codigo"><b><span class="codigo">Connection</span></b><span class="codigo"> con = DriverManager.getConnection(
                   &quot;<b>jdbc:mysql://localhost/paj</b>&quot;, null, null);</span></pre>
@@ -70,22 +70,22 @@ utilizaremos la siguiente URL:</p>
 <pre class="codigo"><b><span class="codigo">Connection</span></b><span class="codigo"> con = DriverManager.getConnection(
                   &quot;<b>jdbc:odbc:paj</b>&quot;, null, null);</span></pre>
 <p>En este caso no hemos especificado <i>login </i>ni <i>password</i> por lo que
-sÛlo se nos permitir· acceder si la BD no est· protegida con contraseÒa.</p>
-<h2 class="subsection">4.3. CreaciÛn y ejecuciÛn de sentencias SQL</h2>
-<p>Una vez obtenida la conexiÛn a la BD, podemos utilizarla para crear
-sentencias. Estas sentencias est·n encapsuladas en la clase <b>Statement</b>, y
+s√≥lo se nos permitir√° acceder si la BD no est√° protegida con contrase√±a.</p>
+<h2 class="subsection">4.3. Creaci√≥n y ejecuci√≥n de sentencias SQL</h2>
+<p>Una vez obtenida la conexi√≥n a la BD, podemos utilizarla para crear
+sentencias. Estas sentencias est√°n encapsuladas en la clase <b>Statement</b>, y
 podemos crearlas de la siguiente forma:</p>
 <pre class="codigo"><b><span class="codigo">Statement</span></b><span class="codigo"> stmt = con.<b>createStatement</b>();</span></pre>
 <p>Una vez obtenido este objeto podemos ejecutar sentencias utilizando su
-mÈtodo <b>executeUpdate() </b>al que proporcionaremos una cadena con la
+m√©todo <b>executeUpdate() </b>al que proporcionaremos una cadena con la
 sentencia SQL que queramos ejecutar:</p>
 <pre class="codigo">stmt.<b>executeUpdate</b>(sentenciaSQL);</pre>
-<p>Estas sentencias pueden utilizarse para creaciÛn de tablas, y para la
-inserciÛn, actualizaciÛn y borrado de datos en ellas. Para ello utilizaremos
+<p>Estas sentencias pueden utilizarse para creaci√≥n de tablas, y para la
+inserci√≥n, actualizaci√≥n y borrado de datos en ellas. Para ello utilizaremos
 las correspondientes sentencias SQL.</p>
-<p>Vamos a ver a continuaciÛn un ejemplo de estas operaciones. Crearemos una
-tabla ALUMNOS en nuestra base de datos y aÒadiremos datos a la misma. La
-sentencia para la creaciÛn de la tabla ser· la siguiente:</p>
+<p>Vamos a ver a continuaci√≥n un ejemplo de estas operaciones. Crearemos una
+tabla ALUMNOS en nuestra base de datos y a√±adiremos datos a la misma. La
+sentencia para la creaci√≥n de la tabla ser√° la siguiente:</p>
 <pre class="codigo">   String st_crea = &quot;<b>CREATE TABLE</b> ALUMNOS (
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exp <b>INTEGER</b>,
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nombre <b>VARCHAR</b>(32),
@@ -96,7 +96,7 @@ sentencia para la creaciÛn de la tabla ser· la siguiente:</p>
    <span class="codigo">stmt.<b>executeUpdate</b>(st_crea);</span>
 </pre>
 <p>Una vez creada la tabla podremos insertar datos en ella como se muestra a
-continuaciÛn:</p>
+continuaci√≥n:</p>
 <pre class="codigo">   String st_inserta = &quot;<b>INSERT</b> <b>INTO</b> ALUMNOS(exp, nombre) 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>VALUES</b>(1285, 'Manu')&quot;;
 
@@ -109,14 +109,14 @@ para ello una sentencia UPDATE:</p>
 
    stmt.<b>executeUpdate</b>(st_actualiza);</pre>
 <p>Si queremos eliminar un registro de la tabla utilizaremos una sentencia
-DELETE como se muestra a continuaciÛn:</p>
+DELETE como se muestra a continuaci√≥n:</p>
 <pre class="codigo">   String st_borra = &quot;<b>DELETE FROM</b> ALUMNOS
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>WHERE</b> exp = 1285&quot;;
 
    stmt.<b>executeUpdate</b>(st_borra);</pre>
-<p>Como hemos visto mediante el mÈtodo <b>executeUpdate() </b>del objeto <b>Statement</b> 
+<p>Como hemos visto mediante el m√©todo <b>executeUpdate() </b>del objeto <b>Statement</b> 
   podremos ejecutar cualquier sentencia SQL en la base de datos a la que nos hayamos 
-  conectado, pudiendo asÌ&nbsp; realizar cualquier acciÛn que nos permita SQL 
+  conectado, pudiendo as√≠&nbsp; realizar cualquier acci√≥n que nos permita SQL 
   de manera sencilla.</p>
 <pre class="codigo">int n = stmt.<b>executeUpdate</b>(sentencia);</pre>
 <p>Como resultado nos devolver&aacute; un entero que podremos consultar, y que 
@@ -125,22 +125,22 @@ DELETE como se muestra a continuaciÛn:</p>
   (Lenguaje de definici&oacute;n de datos), como puede ser por ejemplo la creaci&oacute;n 
   de una tabla, como no afecta a los datos contenidos en la BD nos devolver&aacute; 
   siempre 0.</p>
-<h2 class="subsection">4.4. ObtenciÛn de datos</h2>
+<h2 class="subsection">4.4. Obtenci√≥n de datos</h2>
 <p>Para obtener datos almacenados en la BD podemos utilizar una consulta SQL (<i>query</i>).
 Podemos ejecutar la consulta utilizando el objeto <b>Statement</b>, con el
-mÈtodo <b>executeQuery() </b>al que le pasaremos una cadena con la consulta
-SQL. Los datos resultantes nos los devolver· como un objeto <b>ResultSet</b>.</p>
+m√©todo <b>executeQuery() </b>al que le pasaremos una cadena con la consulta
+SQL. Los datos resultantes nos los devolver√° como un objeto <b>ResultSet</b>.</p>
 <pre class="codigo"><b><span class="codigo">ResultSet</span></b><span class="codigo"> result = stmt.<b>executeQuery</b>(query);</span></pre>
-<p>La consulta SQL nos devolver· una tabla, que tendr· una serie de campos y
-un conjunto de registros, cada uno de los cuales consistir· en una tupla de
+<p>La consulta SQL nos devolver√° una tabla, que tendr√° una serie de campos y
+un conjunto de registros, cada uno de los cuales consistir√° en una tupla de
 valores correspondientes a los campos de la tabla.&nbsp; </p>
 <p> Los campos que tenga la tabla
-resultante depender·n de la consulta que hagamos, de los datos que solicitemos
+resultante depender√°n de la consulta que hagamos, de los datos que solicitemos
 que nos devuelva. Por ejemplo, podemos solicitar que una consulta nos devuelva
 los campos <i>expediente </i>y <i>nombre</i> de los alumnos. </p>
-<p> Adem·s en la consulta impondremos unas restricciones a los datos que queremos 
-  ver, devolviÈndonos ˙nicamente aquellos registros que cumplan dichas restricciones. 
-  Por ejemplo, podemos solicitar que nos devuelva sÛlo los registros de aquellos 
+<p> Adem√°s en la consulta impondremos unas restricciones a los datos que queremos 
+  ver, devolvi√©ndonos √∫nicamente aquellos registros que cumplan dichas restricciones. 
+  Por ejemplo, podemos solicitar que nos devuelva s√≥lo los registros de aquellos 
   alumnos cuya nota sea suspenso. </p>
 <p>Veamos el funcionamiento de las consultas SQL mediante un ejemplo:</p>
 <pre class="codigo">String query = &quot;<b>SELECT </b>*<b> FROM </b>ALUMNOS 
@@ -150,7 +150,7 @@ los campos <i>expediente </i>y <i>nombre</i> de los alumnos. </p>
 ResultSet</b> result = stmt.<b>executeQuery</b>(query);</pre>
 <p>En esta consulta estamos solicitando todos los registros de la tabla ALUMNOS 
   en los que la nota sea suspenso ('SUS'), pidiendo que nos devuelva todos los 
-  campos (indicado con *) de dicha tabla. Nos devolver· una tabla como la siguiente:</p>
+  campos (indicado con *) de dicha tabla. Nos devolver√° una tabla como la siguiente:</p>
 <table border="1" width="100%">
   <tr>
     <td width="33%"><b>exp</b></td>
@@ -173,15 +173,15 @@ ResultSet</b> result = stmt.<b>executeQuery</b>(query);</pre>
     <td width="34%">SUS</td>
   </tr>
 </table>
-<p>Estos datos nos los devolver· como un objeto <b>ResultSet</b>. A continuaciÛn 
+<p>Estos datos nos los devolver√° como un objeto <b>ResultSet</b>. A continuaci√≥n 
   veremos el acceso a estos valores dentro de dicho objeto.</p>
-<p>En el objeto <b>ResultSet </b>existe un <i>cursor</i> que estar· situado en 
+<p>En el objeto <b>ResultSet </b>existe un <i>cursor</i> que estar√° situado en 
   el registro que podemos consultar en cada momento. Este <i>cursor</i> en un 
-  principio estar· situado en una posiciÛn anterior al primer registro de la tabla. 
-  Podemos mover el cursor al siguiente registro con el mÈtodo <b>next()</b> del 
-  <b>ResultSet</b>. La llamada a este mÈtodo nos devolver· <b>true</b> mientras 
-  pueda pasar al siguiente registro, y <b>false </b>en el caso de que ya estuviÈsemos 
-  en el ˙ltimo registro de la tabla. Para la consulta de todos los registros obtenidos 
+  principio estar√° situado en una posici√≥n anterior al primer registro de la tabla. 
+  Podemos mover el cursor al siguiente registro con el m√©todo <b>next()</b> del 
+  <b>ResultSet</b>. La llamada a este m√©todo nos devolver√° <b>true</b> mientras 
+  pueda pasar al siguiente registro, y <b>false </b>en el caso de que ya estuvi√©semos 
+  en el √∫ltimo registro de la tabla. Para la consulta de todos los registros obtenidos 
   utilizaremos normalmente un bucle como el siguiente:</p>
 <pre class="codigo">while(result.<strong>next</strong>())
 {
@@ -189,12 +189,12 @@ ResultSet</b> result = stmt.<b>executeQuery</b>(query);</pre>
 }</pre>
 <p>Ahora necesitamos obtener los datos del registro que marca el <i>cursor</i>,
 para lo cual podremos acceder a los campos de dicho registro. Esto lo haremos
-utilizando los mÈtodos <b>getXXXX(campo)</b> donde <b>XXXX</b> ser· el tipo de
+utilizando los m√©todos <b>getXXXX(campo)</b> donde <b>XXXX</b> ser√° el tipo de
 datos de Java en el que queremos que nos devuelva el valor del campo. Hemos de
 tener en cuenta que el tipo del campo en la tabla debe ser convertible al tipo
 de datos Java solicitado. Para especificar el campo que queremos leer podremos
-utilizar bien su nombre en forma de cadena, o bien su Ìndice que depender· de
-la ordenaciÛn de los campos que devuelve la consulta.</p>
+utilizar bien su nombre en forma de cadena, o bien su √≠ndice que depender√° de
+la ordenaci√≥n de los campos que devuelve la consulta.</p>
 <p>Los tipos principales que podemos obtener son los siguientes:</p>
 <table border="1" width="100%">
   <tr>
@@ -231,17 +231,17 @@ while(result.<strong>next</strong>())
 	nota = result.<strong>getString</strong>(&quot;nota&quot;);
 	System.out.println(exp + &quot;\t&quot; + nombre + &quot;\t&quot; + nota);
 }</pre>
-<p>Igual que los mÈtodos <b>getXXXX </b>tenemos tambiÈn mÈtodos <b>updateXXXX
+<p>Igual que los m√©todos <b>getXXXX </b>tenemos tambi√©n m√©todos <b>updateXXXX
 </b>que nos permiten actualizar el campo especificado en el registro actual. La
-actualizaciÛn se hace sobre los datos en memoria, si queremos que este cambio
+actualizaci√≥n se hace sobre los datos en memoria, si queremos que este cambio
 se aplique a la BD deberemos llamar a <b>updateRow()</b> tras modificar los
 datos del registro.</p>
 <p>Existe un registro especial al que no se puede acceder como hemos visto anteriormente, 
-  que es el registro de inserciÛn. Este registro se utiliza para insertar nuevos 
-  registros en la tabla. Para situarnos en Èl deberemos llamar al mÈtodo <b>moveToInsertRow()</b>. 
-  Una vez situados en Èl deberemos asignar los datos y una vez hecho esto llamar 
+  que es el registro de inserci√≥n. Este registro se utiliza para insertar nuevos 
+  registros en la tabla. Para situarnos en √©l deberemos llamar al m√©todo <b>moveToInsertRow()</b>. 
+  Una vez situados en √©l deberemos asignar los datos y una vez hecho esto llamar 
   a <b>insertRow() </b>para que el registro se inserte en la BD. Podemos volver 
-  al registro donde nos encontr·bamos antes de movernos al registro de inserciÛn 
+  al registro donde nos encontr√°bamos antes de movernos al registro de inserci√≥n 
   llamando a <b>moveToCurrentRow()</b>. Si queremos eliminar el registro actual 
   de la BD podemos llamar a <b>deleteRow()</b>.</p>
 <p>En la interfaz <b>Statement</b> podemos observar un tercer m&eacute;todo que 
@@ -409,7 +409,7 @@ cs.executeUpdate();</pre>
 		INTO RESERVAS(pasajero, origen, destino)
 		VALUES('Paquito', 'Amsterdam', 'Osaka')&quot;);
 } catch(SQLException e) {
-	// øDÛnde ha fallado? øQuÈ hacemos ahora?
+	// ¬øD√≥nde ha fallado? ¬øQu√© hacemos ahora?
 }</pre>
 <p>En este caso, vemos que si falla la reserva de uno de los tres vuelos obtendremos 
   una excepci&oacute;n, pero en ese caso, &iquest;c&oacute;mo podremos saber donde 

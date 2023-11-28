@@ -23,7 +23,7 @@
   <li> <b>Error</b>: Se refiere a errores graves en la m&aacute;quina virtual de Java, 
     como por ejemplo fallos al enlazar con alguna librer&iacute;a. Normalmente en los programas 
     Java no se tratar&aacute;n este tipo de errores.</li>
-  <li><b>Exception</b>: Representa errores que no son crÌticos y por lo tanto pueden ser 
+  <li><b>Exception</b>: Representa errores que no son cr√≠ticos y por lo tanto pueden ser 
     tratados y continuar la ejecuci&oacute;n de la aplicaci&oacute;n. La mayor&iacute;a 
     de los programas Java utilizan estas excepciones para el tratamiento de los 
     errores que puedan ocurrir durante la ejecuci&oacute;n del c&oacute;digo.</li>
@@ -74,26 +74,26 @@ procesar un fichero. Adem&aacute;s de almacenar
   <i>catch</i>, cada uno de ellos para un tipo/grupo de excepciones distinto. 
   La forma de hacer esto ser&aacute; la siguiente:</p>
   <pre class="codigo"><b><span class="codigo">try</span></b><span class="codigo"> {
-	// CÛdigo regular del programa
+	// C√≥digo regular del programa
 	// Puede producir excepciones
 } <b>catch(TipoDeExcepcion1 e1)</b> {
-	// CÛdigo que trata las excepciones de tipo 
+	// C√≥digo que trata las excepciones de tipo 
 	// TipoDeExcepcion1 o subclases de ella.
-	// Los datos sobre la excepciÛn los encontraremos 
+	// Los datos sobre la excepci√≥n los encontraremos 
 	// en el objeto e1.
 } <b>catch(TipoDeExcepcion2 e2)</b> {
-</span><span class="codigo">	// CÛdigo que trata las excepciones de tipo 
+</span><span class="codigo">	// C√≥digo que trata las excepciones de tipo 
 	// TipoDeExcepcion2 o subclases de ella.
-	// Los datos sobre la excepciÛn los encontraremos 
+	// Los datos sobre la excepci√≥n los encontraremos 
 	// en el objeto e2.
 ...
 } <b>catch(TipoDeExcepcionN eN)</b> {
-</span><span class="codigo">	// CÛdigo que trata las excepciones de tipo 
+</span><span class="codigo">	// C√≥digo que trata las excepciones de tipo 
 	// TipoDeExcepcionN o subclases de ella.
-	// Los datos sobre la excepciÛn los encontraremos 
+	// Los datos sobre la excepci√≥n los encontraremos 
 	// en el objeto eN.
 } <b>finally</b> {
-	// CÛdigo de finalizaciÛn (opcional)
+	// C√≥digo de finalizaci√≥n (opcional)
 }</span></pre>
 <p>
 Si como tipo de excepci&oacute;n especificamos un grupo de excepciones este 
@@ -104,14 +104,14 @@ Si como tipo de excepci&oacute;n especificamos un grupo de excepciones este
 
 </p>
 <p>
-En el bloque <i>catch</i> pueden ser ˙tiles algunos mÈtodos de la excepciÛn
+En el bloque <i>catch</i> pueden ser √∫tiles algunos m√©todos de la excepci√≥n
 (que podemos ver en la API de la clase padre <i>Exception</i>):
 
 </p>
   <pre class="codigo">String getMessage()
 void printStackTrace()</pre>
 <p>con <b>getMessage()</b> obtenemos una cadena descriptiva del error (si la
-hay). Con <b>printStackTrace()</b> se muestra por la salida est·ndar la traza
+hay). Con <b>printStackTrace()</b> se muestra por la salida est√°ndar la traza
 de errores que se han producido (en ocasiones la traza es muy larga y no puede
 seguirse toda en pantalla con algunos sistemas operativos).
 
@@ -127,10 +127,10 @@ seguirse toda en pantalla con algunos sistemas operativos).
 	e.printStackTrace();
 }</pre>
 <h3 class="subsection">2.1.3. Lanzamiento de excepciones</h3>
-<p>Hemos visto cÛmo capturar excepciones que se produzcan en el c&oacute;digo, 
+<p>Hemos visto c√≥mo capturar excepciones que se produzcan en el c&oacute;digo, 
   pero en lugar de capturarlas tambi&eacute;n podemos hacer que se propaguen al 
-  m&eacute;todo de nivel superior (desde el cual se ha llamado al mÈtodo actual). Para esto,
-en el mÈtodo donde se vaya a lanzar la excepciÛn, se siguen 2 pasos:</p>
+  m&eacute;todo de nivel superior (desde el cual se ha llamado al m√©todo actual). Para esto,
+en el m√©todo donde se vaya a lanzar la excepci√≥n, se siguen 2 pasos:</p>
 <ul>
   <li>Indicar en el m&eacute;todo que determinados tipos 
   de excepciones o grupos de ellas pueden ser lanzados, cosa que haremos de la siguiente
@@ -139,10 +139,10 @@ en el mÈtodo donde se vaya a lanzar la excepciÛn, se siguen 2 pasos:</p>
   <pre class="codigo">public void lee_fichero() <b>
 throws </b>IOException, FileNotFoundException
 {
-    // Cuerpo de la funciÛn
+    // Cuerpo de la funci√≥n
 }</pre>
 <blockquote>
-<p>Podremos indicar tantos tipos de excepciones como queramos en la cla˙sula <i><b>throws</b></i>. 
+<p>Podremos indicar tantos tipos de excepciones como queramos en la cla√∫sula <i><b>throws</b></i>. 
   Si alguna de estas clases de excepciones tiene subclases, tambi&eacute;n se 
   considerar&aacute; que puede lanzar todas estas subclases.</p>
 </blockquote>
@@ -165,14 +165,14 @@ throws </b>IOException, FileNotFoundException
     ...
 }</pre>
 </blockquote>
-<p>Podremos lanzar asÌ excepciones en nuestras funciones para indicar 
+<p>Podremos lanzar as√≠ excepciones en nuestras funciones para indicar 
   que algo no es como debiera ser a las funciones llamadoras. Por ejemplo, si
 estamos procesando un fichero que debe tener un determinado formato, ser&iacute;a 
   buena idea lanzar excepciones de tipo <b> ParseException</b> en caso de que la sintaxis 
   del fichero de entrada no sea correcta.&nbsp;</p>
 <p>NOTA: para las excepciones que no son de tipo <i> checked</i> no har&aacute; falta
-la cl·usula <i>throws</i> en la declaraciÛn del mÈtodo, pero seguir&aacute;n el mismo comportamiento que el resto, si 
-  no son capturadas pasar&aacute;n al mÈtodo de nivel superior, y seguir&aacute;n 
+la cl√°usula <i>throws</i> en la declaraci√≥n del m√©todo, pero seguir&aacute;n el mismo comportamiento que el resto, si 
+  no son capturadas pasar&aacute;n al m√©todo de nivel superior, y seguir&aacute;n 
   as&iacute; hasta llegar a la funci&oacute;n principal, momento en el que si 
   no se captura provocar&aacute; la salida de nuestro programa mostrando el error 
   correspondiente.</p>
@@ -197,42 +197,42 @@ excepciones que se tienen definidas en Java.</p>
 
 <h2><span class="section">2.2. Reflection </span> </h2>
 <p>La API de <i>Reflection</i> de Java representa (refleja) las clases,
-interfaces y objetos existentes en la actual JVM (M·quina Virtual de Java).
+interfaces y objetos existentes en la actual JVM (M√°quina Virtual de Java).
 Mediante este API podremos: </p>
 <ul>
   <li>Determinar la clase a la que pertenece un objeto</li>
   <li>Crear instancias de clases cuyo nombre no se conoce hasta tiempo de
-    ejecuciÛn</li>
-  <li>Acceder y obtener informaciÛn sobre los elementos de una clase
-    (constructores, mÈtodos, campos, superclases, etc). Podremos llamar
+    ejecuci√≥n</li>
+  <li>Acceder y obtener informaci√≥n sobre los elementos de una clase
+    (constructores, m√©todos, campos, superclases, etc). Podremos llamar
     constructores de una clase, modificar valores de campos, llamar a
-    mÈtodos... etc, en tiempo de ejecuciÛn.</li>
+    m√©todos... etc, en tiempo de ejecuci√≥n.</li>
 </ul>
 <h3> <span class="subsection">2.2.1. Estructura de clases</span></h3>
 <p>La API de reflection se compone de las siguientes clases. Salvo las clases <i>Class</i>
-y <i>Object</i> (que est·n en el paquete <i>java.lang</i>), el resto pertenecen
+y <i>Object</i> (que est√°n en el paquete <i>java.lang</i>), el resto pertenecen
 al paquete <b>java.lang.reflect</b>.</p>
 <ul>
-  <li><b>Array</b>: proporciona mÈtodos para crear y acceder a arrays
-    din·micamente</li>
+  <li><b>Array</b>: proporciona m√©todos para crear y acceder a arrays
+    din√°micamente</li>
   <li><b>Class</b>: representa clases e interfaces</li>
-  <li><b>Constructor</b>: proporciona informaciÛn y acceso a los constructores
-    de una clase. Permite crear instancias de una clase din·micamente</li>
-  <li><b>Field</b>: proporciona informaciÛn y acceso a los campos de una clase</li>
-  <li><b>Method</b>: proporciona informaciÛn y acceso a los mÈtodos de una
+  <li><b>Constructor</b>: proporciona informaci√≥n y acceso a los constructores
+    de una clase. Permite crear instancias de una clase din√°micamente</li>
+  <li><b>Field</b>: proporciona informaci√≥n y acceso a los campos de una clase</li>
+  <li><b>Method</b>: proporciona informaci√≥n y acceso a los m√©todos de una
     clase</li>
-  <li><b>Modifier</b>: proporciona informaciÛn y acceso a los modificadores de
-    una clase y de sus elementos (campos, mÈtodos, etc)</li>
+  <li><b>Modifier</b>: proporciona informaci√≥n y acceso a los modificadores de
+    una clase y de sus elementos (campos, m√©todos, etc)</li>
   <li><b>Object</b>: clase padre de todas las clases Java. Proporciona acceso a
-    una clase mediante su mÈtodo <i>getClass()</i>.</li>
+    una clase mediante su m√©todo <i>getClass()</i>.</li>
 </ul>
 <h3><span class="subsection">2.2.2. Examinar clases</span></h3>
 <p>Para cada clase e interfaz se mantiene un objeto <b>Class</b> que contiene
-informaciÛn sobre la misma.</p>
+informaci√≥n sobre la misma.</p>
 <p><b>1. Obtener objetos Class</b></p>
 <p>Podemos obtener objetos <i>Class </i>de varias formas:</p>
 <ul>
-  <li>Si tenemos un objeto, podemos utilizar el mÈtodo <i>getClass()</i> del
+  <li>Si tenemos un objeto, podemos utilizar el m√©todo <i>getClass()</i> del
     objeto para acceder a su clase:</li>
 </ul>
 <blockquote>
@@ -247,77 +247,77 @@ informaciÛn sobre la misma.</p>
 <pre class="codigo">Class c = java.awt.Button.class;</pre>
 </blockquote>
 <ul>
-  <li>Si el nombre de la clase no se conoce en tiempo de compilaciÛn, pero sÌ
-    podemos acceder a Èl en tiempo de ejecuciÛn, podemos utilizar el mÈtodo
-    est·tico <i>forName() </i>de <i>Class</i>, al que se le pasa como
-    par·metro el nombre de la clase que buscamos:</li>
+  <li>Si el nombre de la clase no se conoce en tiempo de compilaci√≥n, pero s√≠
+    podemos acceder a √©l en tiempo de ejecuci√≥n, podemos utilizar el m√©todo
+    est√°tico <i>forName() </i>de <i>Class</i>, al que se le pasa como
+    par√°metro el nombre de la clase que buscamos:</li>
 </ul>
 <blockquote>
 <pre class="codigo">Class c = Class.forName(&quot;java.awt.Button&quot;);</pre>
 </blockquote>
 <p><b>2. Obtener elementos de la clase </b></p>
-<p>El mÈtodo <i>getName()</i> de <i>Class</i> obtiene el nombre de la clase
-cuya informaciÛn se guarda en el objeto <i>Class</i>, incluyendo los paquetes y
+<p>El m√©todo <i>getName()</i> de <i>Class</i> obtiene el nombre de la clase
+cuya informaci√≥n se guarda en el objeto <i>Class</i>, incluyendo los paquetes y
 subpaquetes a los que pertenece, separados por '.' (por ejemplo, <i>&quot;java.awt.Button&quot;</i>):</p>
 <pre class="codigo">Class c = unobjeto.getClass();
 ...
 String s = c.getName();</pre>
-<p>En <i>Class </i>tambiÈn se tienen otros mÈtodos para acceder a elementos de
+<p>En <i>Class </i>tambi√©n se tienen otros m√©todos para acceder a elementos de
 la clase, como por ejemplo <i>getSuperClass()</i> (para acceder a su
-superclase), y otros. A continuaciÛn veremos cÛmo acceder a algunos objetos
-especÌficos de una clase, mediante mÈtodos de <i>Class.</i></p>
+superclase), y otros. A continuaci√≥n veremos c√≥mo acceder a algunos objetos
+espec√≠ficos de una clase, mediante m√©todos de <i>Class.</i></p>
 <p><b>3. Campos</b></p>
-<p>Para obtener los <b>campos</b> de una clase se tienen los mÈtodos <i>getField(),</i> 
+<p>Para obtener los <b>campos</b> de una clase se tienen los m√©todos <i>getField(),</i> 
   <i>getFields(), getDeclaredField() </i>y <i>getDeclaredFields() </i>del objeto 
   <i>Class</i>. El primero y tercero devuelven un campo con un nombre dado, y 
   el segundo y cuarto devuelven un array de <i>Field</i> con los campos accesibles 
-  que tenga. Los mÈtodos <i>...Declared...</i> obtienen todos los campos declarados 
+  que tenga. Los m√©todos <i>...Declared...</i> obtienen todos los campos declarados 
   en la misma clase, ya sean p&uacute;blicos o privados, pero no en las superclases 
-  que tenga, mientras que los otros dos obtienen los campos p˙blicos que ofrece 
+  que tenga, mientras que los otros dos obtienen los campos p√∫blicos que ofrece 
   el objeto tanto si se han definido en la misma clase como en superclases de 
   &eacute;sta.</p>
 <pre class="codigo">Class c = unobjeto.getClass();
 ...
 Field campo = c.getField(&quot;nombrecampo&quot;);
 Field[] campos = c.getFields();</pre>
-<p>En la clase <b>Field</b> se tienen luego mÈtodos para manipular cada campo.</p>
+<p>En la clase <b>Field</b> se tienen luego m√©todos para manipular cada campo.</p>
 <p><b>4. Constructores</b></p>
 <p>Para obtener los <b>constructores</b> de una clase se tienen, entre otros, 
-  los mÈtodos <i>getConstructors() </i>y <i>getDeclaredConstructors()</i>. Con 
+  los m√©todos <i>getConstructors() </i>y <i>getDeclaredConstructors()</i>. Con 
   el primero obtendremos todos los constructores declarados en la misma clase, 
   ya sean p&uacute;blicos o privados, pero no en las superclases que tenga, mientras 
-  que en el segundo obtendremos los constructures p˙blicos que ofrece el objeto 
+  que en el segundo obtendremos los constructures p√∫blicos que ofrece el objeto 
   tanto si se han definido en la misma clase como en superclases de &eacute;sta:</p>
 <pre class="codigo">Class c = unobjeto.getClass();
 ...
 Constructor[] constructores = c.getDeclaredConstructors();</pre>
-<p>En la clase <b>Constructor</b> se tienen luego mÈtodos para acceder a la
-informaciÛn del constructor (nombre, par·metros, tipos de los par·metros,
-etc). Con el mÈtodo <b>newInstance()</b> de <i>Constructor</i> podremos crear
+<p>En la clase <b>Constructor</b> se tienen luego m√©todos para acceder a la
+informaci√≥n del constructor (nombre, par√°metros, tipos de los par√°metros,
+etc). Con el m√©todo <b>newInstance()</b> de <i>Constructor</i> podremos crear
 objetos llamando al constructor correspondiente.</p>
-<p><b>5. MÈtodos</b></p>
-<p>Para obtener los <b>mÈtodos</b> de una clase se tienen, entre otros, los mÈtodos 
+<p><b>5. M√©todos</b></p>
+<p>Para obtener los <b>m√©todos</b> de una clase se tienen, entre otros, los m√©todos 
   <i>getMethods() </i>y <i>getDeclaredMethods()</i>. Con el primero obtendremos 
   todos los m&eacute;todos declarados en la misma clase, ya sean p&uacute;blicos 
   o privados, pero no en las superclases que tenga, mientras que en el segundo 
-  obtendremos los m&eacute;todos p˙blicos que ofrece el objeto tanto si se han 
+  obtendremos los m&eacute;todos p√∫blicos que ofrece el objeto tanto si se han 
   definido en la misma clase como en superclases de &eacute;sta:</p>
 <pre class="codigo">Class c = unobjeto.getClass();
 ...
 Method[] metodos = c.getDeclaredMethods();</pre>
-<p>En la clase <b>Method</b> se tienen luego mÈtodos para acceder a la
-informaciÛn del mÈtodo (nombre, par·metros, tipos de los par·metros, etc).
-Con el mÈtodo <b>invoke()</b> de <i>Method</i> podremos llamar al mÈtodo
+<p>En la clase <b>Method</b> se tienen luego m√©todos para acceder a la
+informaci√≥n del m√©todo (nombre, par√°metros, tipos de los par√°metros, etc).
+Con el m√©todo <b>invoke()</b> de <i>Method</i> podremos llamar al m√©todo
 correspondiente.</p>
 <p><b>6. Modificadores</b></p>
 <p>Para obtener los <b>modificadores</b> de una clase (es decir, ver si es <i>public</i>,
-<i>abstract</i>, <i>final</i>...), se tiene el mÈtodo <i>getModifiers() </i>del
+<i>abstract</i>, <i>final</i>...), se tiene el m√©todo <i>getModifiers() </i>del
 objeto <i>Class</i>:</p>
 <pre class="codigo">Class c = unobjeto.getClass();
 ...
 int mod = c.getModifiers();</pre>
-<p>El mÈtodo devuelve un entero que codifica los modificadores de la clase.
-Luego podemos utilizar los mÈtodos de la clase <i>Modifier</i> para ver si es <i>public</i>,
+<p>El m√©todo devuelve un entero que codifica los modificadores de la clase.
+Luego podemos utilizar los m√©todos de la clase <i>Modifier</i> para ver si es <i>public</i>,
 <i>abstract</i>, etc:</p>
 <pre class="codigo">Class c = unobjeto.getClass();
 ...
@@ -328,10 +328,10 @@ if (Modifier.isPublic(mod))
 else if (Modifier.isAbstract(mod))
 ...</pre>
 <p>Podemos utilizar la clase <i>Modifier </i>para obtener los modificadores de
-campos (<i>Field</i>), constructores (<i>Constructor</i>), mÈtodos (<i>Method</i>),
-etc, sin m·s que llamar al mÈtodo <i>getModifiers()</i> de cada una de estas
-clases, y luego llamar a los mÈtodos de <i>Modifier</i> para comprobar si se
-tienen cada uno de los modificadores que se quieran.<i> </i>Se tienen mÈtodos
+campos (<i>Field</i>), constructores (<i>Constructor</i>), m√©todos (<i>Method</i>),
+etc, sin m√°s que llamar al m√©todo <i>getModifiers()</i> de cada una de estas
+clases, y luego llamar a los m√©todos de <i>Modifier</i> para comprobar si se
+tienen cada uno de los modificadores que se quieran.<i> </i>Se tienen m√©todos
 en la clase <i>Modifier</i> para cada uno de los posibles modificadores:</p>
 <pre class="codigo">Class c = unobjeto.getClass();
 Method[] metodos = c.getMethods();
@@ -343,26 +343,26 @@ else if (Modifier.isAbstract(mod))
 ...</pre>
 <h3><span class="subsection">2.2.3. Manipular objetos</span></h3>
 <p><b>1. Crear nuevos objetos</b></p>
-<p>Si no conocemos el nombre de una clase hasta tiempo de ejecuciÛn, tendremos
+<p>Si no conocemos el nombre de una clase hasta tiempo de ejecuci√≥n, tendremos
 que crear los objetos de esa clase mediante <i>Reflection</i>. Distinguimos dos
-tipos de creaciÛn de objetos:</p>
+tipos de creaci√≥n de objetos:</p>
 <ul>
-  <li>Crearlos con un constructor <b>sin par·metros</b>: para crear un objeto
-    utilizando un constructor sin par·metros, utilizamos el mÈtodo <b>newInstance()</b>
-    de la clase <i>Class</i> que contiene su informaciÛn: </li>
+  <li>Crearlos con un constructor <b>sin par√°metros</b>: para crear un objeto
+    utilizando un constructor sin par√°metros, utilizamos el m√©todo <b>newInstance()</b>
+    de la clase <i>Class</i> que contiene su informaci√≥n: </li>
 </ul>
 <blockquote>
   <pre class="codigo">Class c = Class.forName(&quot;NombreClase&quot;);
 Object o = c.newInstance();</pre>
 </blockquote>
 <ul>
-  <li>Crearlos con un constructor <b>con par·metros</b>: para crear un objeto
-    utilizando un constructor con par·metros, utilizamos el mÈtodo <b>newInstance()</b>
+  <li>Crearlos con un constructor <b>con par√°metros</b>: para crear un objeto
+    utilizando un constructor con par√°metros, utilizamos el m√©todo <b>newInstance()</b>
     de la clase <i>Constructor</i>. Primero accedemos al constructor que
-    queremos utilizar, y luego le pasamos al mÈtodo <i>newInstance()</i> del
-    mismo un array de <i>Object</i>, con los par·metros que necesita (Èl se
-    encarga luego de convertir cada par·metro al tipo adecuado). Por ejemplo,
-    suponiendo que el constructor utiliza dos par·metros: un entero y un <i>String</i>:
+    queremos utilizar, y luego le pasamos al m√©todo <i>newInstance()</i> del
+    mismo un array de <i>Object</i>, con los par√°metros que necesita (√©l se
+    encarga luego de convertir cada par√°metro al tipo adecuado). Por ejemplo,
+    suponiendo que el constructor utiliza dos par√°metros: un entero y un <i>String</i>:
   </li>
 </ul>
 <blockquote>
@@ -373,31 +373,31 @@ parametros[0] = new Integer(2);
 parametros[1] = &quot;Hola&quot;;
 Object o = cons[0].newInstance(parametros);</pre>
 </blockquote>
-<p>Luego podemos utilizar el <i>Object</i> para llamar a mÈtodos, convertir a
+<p>Luego podemos utilizar el <i>Object</i> para llamar a m√©todos, convertir a
 un objeto concreto, etc.</p>
 <p><b>2. Acceso a campos</b></p>
-<p>La clase <b>Field</b> cuenta con mÈtodos para poder obtener o modificar el
+<p>La clase <b>Field</b> cuenta con m√©todos para poder obtener o modificar el
 valor de los campos de un objeto:</p>
 <pre class="codigo">Class c = Class.forName(&quot;NombreClase&quot;);
 Object o = c.newInstance();
 Field f = c.getField(&quot;campo1&quot;);
 f.set(o, new Integer(3));
 int valor = (Integer)(f.get(o));</pre>
-<p>A los mÈtodos <i>get()</i> y <i>set()</i> se les pasa como primer par·metro
-el objeto a cuyo campo se accede. Se tienen mÈtodos para obtener/establecer
+<p>A los m√©todos <i>get()</i> y <i>set()</i> se les pasa como primer par√°metro
+el objeto a cuyo campo se accede. Se tienen m√©todos para obtener/establecer
 otros tipos de datos (<i>int, char</i>, <i>double</i>..., etc, y <i>Object</i>
 para el caso general).</p>
-<p><b>3. Invocar mÈtodos</b></p>
-<p>El mÈtodo <b>invoke() </b>de la clase <b>Method</b> permite llamar al
-mÈtodo en cuestiÛn. Se le pasan dos par·metros:</p>
+<p><b>3. Invocar m√©todos</b></p>
+<p>El m√©todo <b>invoke() </b>de la clase <b>Method</b> permite llamar al
+m√©todo en cuesti√≥n. Se le pasan dos par√°metros:</p>
 <ul>
-  <li>El primero es el objeto donde se invoca el mÈtodo (un <i>Object</i>)</li>
-  <li>El segundo es un array de <i>Object</i> con los par·metros que se le
-    pasan al mÈtodo (como se hacÌa con los constructores).</li>
+  <li>El primero es el objeto donde se invoca el m√©todo (un <i>Object</i>)</li>
+  <li>El segundo es un array de <i>Object</i> con los par√°metros que se le
+    pasan al m√©todo (como se hac√≠a con los constructores).</li>
 </ul>
-<p>La conversiÛn de los <i>Object</i> que se pasan en los par·metros al tipo
-de datos adecuado se realiza autom·ticamente. Por ejemplo, suponiendo que
-llamamos a un mÈtodo que toma un <i>String</i> y un <i>double</i>:</p>
+<p>La conversi√≥n de los <i>Object</i> que se pasan en los par√°metros al tipo
+de datos adecuado se realiza autom√°ticamente. Por ejemplo, suponiendo que
+llamamos a un m√©todo que toma un <i>String</i> y un <i>double</i>:</p>
 <pre class="codigo">Class c = Class.forName(&quot;NombreClase&quot;);
 Object o = c.newInstance();
 Method[] m = c.getMethods();
@@ -406,13 +406,13 @@ parametros[0] = &quot;Pepe&quot;;
 parametros[1] = new Double(4.0);
 m.invoke(o, parametros);</pre>
 <p>&nbsp; </p>
-<p>NOTA: las llamadas a los mÈtodos de <i>Reflection</i> lanzan algunas
-excepciones, dependiendo del mÈtodo. Es conveniente ponerlas en bloques <i>try-catch</i>. </p>
-<p>NOTA: Hay que hacer notar que, si podemos emplear herramientas m·s f·ciles
+<p>NOTA: las llamadas a los m√©todos de <i>Reflection</i> lanzan algunas
+excepciones, dependiendo del m√©todo. Es conveniente ponerlas en bloques <i>try-catch</i>. </p>
+<p>NOTA: Hay que hacer notar que, si podemos emplear herramientas m√°s f√°ciles
 que <i>Reflection</i>, debemos utilizarlas. Por ejemplo, si sabemos que vamos a
 crear un objeto de tipo <i>MiClase</i>, debemos crear este objeto en tiempo de
-compilaciÛn (con un <i>new MiClase()</i>), y no poner cÛdigo <i>Reflection</i>
-para crearlo en tiempo de ejecuciÛn. </p>
+compilaci√≥n (con un <i>new MiClase()</i>), y no poner c√≥digo <i>Reflection</i>
+para crearlo en tiempo de ejecuci√≥n. </p>
 <p>&nbsp; </p>
 
 </body>

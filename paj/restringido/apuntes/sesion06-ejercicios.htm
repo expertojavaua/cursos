@@ -10,23 +10,23 @@
  <body bgcolor="#ffffff" text="#000000">
 <h1><span class="section">Red </span> </h1>
 <p><b>1.</b> El fichero <i> Ej1.java</i> es un programa que tomar&aacute; una 
-  URL como par&aacute;metro, acceder· a ella y leer· su contenido mostr·ndolo 
+  URL como par&aacute;metro, acceder√° a ella y leer√° su contenido mostr√°ndolo 
   por pantalla. Deberemos a&ntilde;adir c&oacute;digo para: </p>
  
  <blockquote>
-  <p>a) Crear un objeto URL para la <i> url</i> especificada en el mÈtodo <i>creaURL</i>, capturando las posibles
+  <p>a) Crear un objeto URL para la <i> url</i> especificada en el m√©todo <i>creaURL</i>, capturando las posibles
   excepciones que se pueden producir si est&aacute; mal formada y mostrando
 el mensaje de error correspondiente por la salida de error. Compilar y comprobar
   que ocurre al pasar URLs correctas e incorrectas.
 </p>
  
   <p>
-b) Abrir un flujo de entrada desde la URL indicada en el mÈtodo <i>leeURL</i>.
+b) Abrir un flujo de entrada desde la URL indicada en el m√©todo <i>leeURL</i>.
   Deberemos obtener un <b>InputStream<i> </i></b>de la URL, y convertirlo a un
   objeto <b>BufferedReader</b>, aplicando las transformaciones intermedias
-  necesarias, para poder leer de la URL los caracteres lÌnea a lÌnea.
+  necesarias, para poder leer de la URL los caracteres l√≠nea a l√≠nea.
   Comprobar que lee correctamente algunas URLs conocidas. Descomentar el bloque
-  de cÛdigo que realiza la lectura de la URL.
+  de c√≥digo que realiza la lectura de la URL.
 </p>
  
  </blockquote>
@@ -35,15 +35,15 @@ b) Abrir un flujo de entrada desde la URL indicada en el mÈtodo <i>leeURL</i>.
   en el caso anterior, pero en lugar de leer una p&aacute;gina web mediante una 
   URL, lo haremos conect&aacute;ndonos a la m&aacute;quina donde est&aacute; alojada 
   mediante <i>sockets</i>. Para ello, vamos a crear una clase <b>ConexionSocket<i> 
-  </i></b>en el paquete <b>es</b> que maneje una conexiÛn establecida mediante 
-  <i>sockets </i>permitiÈndonos leer y escribir lÌneas de texto en el <i>socket</i>. 
+  </i></b>en el paquete <b>es</b> que maneje una conexi√≥n establecida mediante 
+  <i>sockets </i>permiti√©ndonos leer y escribir l√≠neas de texto en el <i>socket</i>. 
   Esta clase la reutilizaremos posteriormente para nuestro chat. En este caso 
   deberemos tener en cuenta los siguientes aspectos: </p>
   <ul>
     <li>Para establecer la conexi&oacute;n con la p&aacute;gina, indicaremos
 como <i> host</i> la direcci&oacute;n de la m&aacute;quina donde est&aacute; alojada
 la p&aacute;gina (por ejemplo <a href="http://www.ua.es">www.ua.es</a> o su
-      direcciÛn IP). Como puerto indicaremos el n&uacute;mero
+      direcci√≥n IP). Como puerto indicaremos el n&uacute;mero
 de puerto en el que atiende el servidor en esa m&aacute;quina (normalmente es el 80).</li>
     <li>Tras establecer la conexi&oacute;n deberemos mandar al servidor web
 una petici&oacute;n de alg&uacute;n recurso. Por ejemplo, para obtener la
@@ -58,32 +58,32 @@ enviar&aacute; el c&oacute;digo de la p&aacute;gina web solicitada.
     </li>
   </ul>
  
-<p>El fichero <i>Ej2.java </i>ser· el conductor que nos permita probar la clase 
+<p>El fichero <i>Ej2.java </i>ser√° el conductor que nos permita probar la clase 
   <b>ConexionSocket</b>, que es la que deberemos crear. En el fichero <i>es/ConexionSocket.java</i> 
   se proporciona una plantilla de dicha clase que deberemos completar. Se pide:</p>
  <blockquote>
   <p><i>
-a)</i> AÒadir al constructor de la clase el cÛdigo necesario para crear un <i>socket</i>
-  que se conecte a la direcciÛn y puerto especificados. Capturar las
+a)</i> A√±adir al constructor de la clase el c√≥digo necesario para crear un <i>socket</i>
+  que se conecte a la direcci√≥n y puerto especificados. Capturar las
   excepciones que sean necesarias para que compile correctamente, mostrando en
   cada caso el mensaje de error oportuno. Compilar y probar a conectar a
-  distintas direcciones, viendo lo que ocurre cuando la conexiÛn es aceptada,
-  cuando es rechazada, o cuando no existe la m·quina destino que hayamos
+  distintas direcciones, viendo lo que ocurre cuando la conexi√≥n es aceptada,
+  cuando es rechazada, o cuando no existe la m√°quina destino que hayamos
   indicado.</p>
   <p><i>b)</i> Crear en ambos constructores un objeto <b>BufferedReader </b>a 
     partir del flujo de entrada del <i>socket</i>, y un objeto <b>PrintStream</b> 
-    a partir del flujo de salida. Estos objetos nos permitir·n leer y escribir 
-    lÌnea a lÌnea en el <i>socket</i> con los mÈtodos <i>envia </i>y <i>recibe</i> 
-    ya definidos. Descomentar de <i>Ej2.java</i> el bloque de cÛdigo que realiza 
+    a partir del flujo de salida. Estos objetos nos permitir√°n leer y escribir 
+    l√≠nea a l√≠nea en el <i>socket</i> con los m√©todos <i>envia </i>y <i>recibe</i> 
+    ya definidos. Descomentar de <i>Ej2.java</i> el bloque de c√≥digo que realiza 
     la lectura del <i>socket</i>, compilar y probar que funciona correctamente.<br>
   </p>
  </blockquote>
  
 <b>3. (CHAT)</b> Realizar un chat sencillo en Java comunicado mediante <i>sockets</i>. 
 Para ello deberemos crear los clientes del chat y un servidor que comunique los 
-distintos clientes. Deberemos establecer el protocolo de comunicaciÛn entre clientes 
-y servidor. Los distintos elementos de los mensajes se enviar·n por lÌneas (separados 
-por el car·cter fin de lÌnea). Distinguimos los siguientes tipos de mensajes: 
+distintos clientes. Deberemos establecer el protocolo de comunicaci√≥n entre clientes 
+y servidor. Los distintos elementos de los mensajes se enviar√°n por l√≠neas (separados 
+por el car√°cter fin de l√≠nea). Distinguimos los siguientes tipos de mensajes: 
 <table border="1" width="100%">
   <tr>
     <td width="20%">&nbsp;</td>
@@ -140,56 +140,56 @@ Si no:
     </td>
   </tr>
  </table>
- <p>Podemos distinguir dos fases: una primera fase en la que el cliente podr·
+ <p>Podemos distinguir dos fases: una primera fase en la que el cliente podr√°
  enviar mensajes de <b>LOGIN </b>y de <b>REGISTRO</b>, hasta que el servidor
- acepte el <b>LOGIN</b>, momento en el que entrar· en la fase de chat, en la
- que el cliente podr· enviar mensajes, y el servidor difundir· a todos los
+ acepte el <b>LOGIN</b>, momento en el que entrar√° en la fase de chat, en la
+ que el cliente podr√° enviar mensajes, y el servidor difundir√° a todos los
  clientes conectados todos los mensajes que le lleguen de cualquier
  cliente.&nbsp;
  </p>
  <p>La clase <b>ClienteChat </b>ubicada en el paquete <b>chat </b>proporciona
- mÈtodos para enviar estos cuatro tipos de mensajes. Por otro lado tendremos la
- clase <b>ServidorChat</b> en el mismo paquete que tendr· que atender
+ m√©todos para enviar estos cuatro tipos de mensajes. Por otro lado tendremos la
+ clase <b>ServidorChat</b> en el mismo paquete que tendr√° que atender
  peticiones de los clientes.&nbsp;
  </p>
  
-<p>La clase <b>Ej3</b> ser· la clase principal de la aplicaciÛn cliente de chat, 
-  y la que se encargar· de hacer de interfaz con el usuario, utilizando <b>ClienteChat</b> 
-  para invocar las distintas funciones del chat. Tanto cliente como servidor deber·n 
+<p>La clase <b>Ej3</b> ser√° la clase principal de la aplicaci√≥n cliente de chat, 
+  y la que se encargar√° de hacer de interfaz con el usuario, utilizando <b>ClienteChat</b> 
+  para invocar las distintas funciones del chat. Tanto cliente como servidor deber√°n 
   seguir el protocolo anteriormente descrito. Se pide: </p>
   
-<blockquote><i>a)</i> La clase <b>ClienteChat</b> utilizar· la clase genÈrica 
+<blockquote><i>a)</i> La clase <b>ClienteChat</b> utilizar√° la clase gen√©rica 
   <b>ConexionSocket</b> desarrollada en el ejercicio anterior para enviar los 
-  mensajes que acepta el servidor del chat. Estos son los mÈtodos necesarios para 
-  la funcionalidad del chat, øquÈ ventaja tiene haber definido esta clase separando 
-  funcionalidad del chat (<b>ClienteChat</b>) y presentaciÛn (<b>Ej3</b>)? 
+  mensajes que acepta el servidor del chat. Estos son los m√©todos necesarios para 
+  la funcionalidad del chat, ¬øqu√© ventaja tiene haber definido esta clase separando 
+  funcionalidad del chat (<b>ClienteChat</b>) y presentaci√≥n (<b>Ej3</b>)? 
   <p><i>b)</i>  Ahora tenemos que desarrollar un servidor web que permita
-    aceptar y atender peticiones de m˙ltiples usuarios simult·neamente. øQuÈ
-    tendremos que utilizar para que sea capaz de realizar m˙ltiples tareas
-    simult·neamente?</p>
+    aceptar y atender peticiones de m√∫ltiples usuarios simult√°neamente. ¬øQu√©
+    tendremos que utilizar para que sea capaz de realizar m√∫ltiples tareas
+    simult√°neamente?</p>
     <p><i>c)</i>  Vamos a crear el bucle principal del servidor en el
-    constructor de la clase <b>ServidorChat</b>. Este bucle deber· aceptar
+    constructor de la clase <b>ServidorChat</b>. Este bucle deber√° aceptar
     peticiones de los clientes, y para cada una de ellas crear un objeto <b>HiloServidor</b>
-    que se encargar· de atenderla. Al aceptar una peticiÛn nos devolver· un
+    que se encargar√° de atenderla. Al aceptar una petici√≥n nos devolver√° un
     objeto <b>Socket</b> para comunicarnos con el cliente que acaba de
     conectarse, por lo que deberemos proporcionar dicho <i>socket </i>al hilo
     que creemos para que este hilo se comunique con el cliente. La plantilla
     de la clase que deberemos completar se encuentra en <i>chat\ServidorChat.java</i>.
     Compilar y comprobar que el chat funciona correctamente. Se debe tener en
-    cuenta que la clase <b>ServidorChat</b> a ejecutar est· en un subpaquete,
+    cuenta que la clase <b>ServidorChat</b> a ejecutar est√° en un subpaquete,
     por lo que tendremos que poner el nombre completo de la clase incluyendo el
     paquete para cargarla con <i>java </i>(<b>chat.ServidorChat</b>).</p>
     <p><i>d)</i>  Hemos visto que cada cliente es atendido por un hilo
-    independiente. Pero, si lo que envÌa un cliente debe ser visto por los
-    dem·s, øcÛmo se comunican los distintos hilos? Estudiar el cÛdigo fuente
+    independiente. Pero, si lo que env√≠a un cliente debe ser visto por los
+    dem√°s, ¬øc√≥mo se comunican los distintos hilos? Estudiar el c√≥digo fuente
     del servidor y explicar el mecanismo que se usa para difundir los mensajes
     entre los usuarios conectados.</p>
     <p><i>e)</i>  Por otro lado, si todos los hilos acceden de forma concurrente
-    al <b>Vector</b> de usuarios registrados, øpodrÌamos tener conflictos en
+    al <b>Vector</b> de usuarios registrados, ¬øpodr√≠amos tener conflictos en
     el acceso a los elementos del <b>Vector</b>? (Consultar la API de la clase <b>Vector</b>)
-    øY si en lugar de un <b>Vector</b> utiliz·semos un objeto <b>ArrayList</b>?
-    Por lo tanto, øquÈ ventaja tendr· cada una de estas dos listas
-    din·micas? øCu·ndo ser· m·s conveniente utilizar cada una de ellas?<br>
+    ¬øY si en lugar de un <b>Vector</b> utiliz√°semos un objeto <b>ArrayList</b>?
+    Por lo tanto, ¬øqu√© ventaja tendr√° cada una de estas dos listas
+    din√°micas? ¬øCu√°ndo ser√° m√°s conveniente utilizar cada una de ellas?<br>
     </p>
     </blockquote>
  

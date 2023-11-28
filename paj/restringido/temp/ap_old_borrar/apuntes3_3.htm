@@ -52,7 +52,7 @@
   g)</strong>. Sobrescribiremos el m&eacute;todo de la siguiente forma:</p>
 <pre class="codigo">public class MiCanvas <strong>extends Canvas</strong> {
 	public void <strong>paint(Graphics g)</strong> {
-		// Dibujamos en el área del canvas
+		// Dibujamos en el Ã¡rea del canvas
 		// usando el objeto g proporcionado
 	}
 }</pre>
@@ -357,7 +357,7 @@ mc.<strong>repaint()</strong>;</pre>
 
 	public void paint(Graphics g) {
 		// Solo creamos la imagen la primera vez 
-		// o si el componente ha cambiado de tamaño
+		// o si el componente ha cambiado de tamaÃ±o
 		if( backbuffer == null || 
 			width != getWidth() || 
 			height != getHeight() )
@@ -369,7 +369,7 @@ mc.<strong>repaint()</strong>;</pre>
 
 		Graphics offScreen = backbuffer.<strong>getGraphics</strong>();
 
-		// Vaciamos el área de dibujo
+		// Vaciamos el Ã¡rea de dibujo
 
 		offScreen.<strong>clearRect</strong>(0,0,getWidth(), getHeight());
 
@@ -415,7 +415,7 @@ mc.<strong>repaint()</strong>;</pre>
   desde cualquier respuesta a un evento, como puede ser la pulsaci&oacute;n de 
   un boton:</p>
 <pre class="codigo">public void actionPerformed(ActionEvent e) {
-	// ¡¡¡ No hay que hacer esto !!!
+	// Â¡Â¡Â¡ No hay que hacer esto !!!
 	mc.<strong>anima</strong>();
 }</pre>
 <p>&iquest;Por qu&eacute; no debemos hacer esto? Parece dificil ver que esto pueda 
@@ -443,7 +443,7 @@ mc.<strong>repaint()</strong>;</pre>
 <p>Ahora si que podremos invocar la animaci&oacute;n desde el c&oacute;digo de 
   los eventos creando un hilo independiente que se encargue de ella:</p>
 <pre class="codigo">public void actionPerformed(ActionEvent e) {
-	// Así si que funciona
+	// AsÃ­ si que funciona
 	Thread t = new Thread(mc);
 	t.start();
 }</pre>
@@ -644,14 +644,14 @@ mc.<strong>repaint()</strong>;</pre>
 <pre class="codigo">// Carga la imagen suponiendo que se trata de un Applet
 Image img = getImage(getCodeBase(), &quot;foto.jpg&quot;);	
 
-// this hace referencia al componente AWT donde se cargan las imágenes 
+// this hace referencia al componente AWT donde se cargan las imÃ¡genes 
 MediaTracker tracker = new <b>MediaTracker</b>(this); 	
 
-// Añade la imagen img bajo el identificador 0.
-// Pueden añadirse multiples imágenes bajo un mismo identificador
+// AÃ±ade la imagen img bajo el identificador 0.
+// Pueden aÃ±adirse multiples imÃ¡genes bajo un mismo identificador
 tracker.<b>addImage</b>(img,0);	
 
-// Bloquea el código hasta que se hayan cargado todas las imágenes
+// Bloquea el cÃ³digo hasta que se hayan cargado todas las imÃ¡genes
 // con identificador 0
 tracker.<b>waitForId</b>(0);	</pre>
 <p><b>Filtrado de im&aacute;genes</b></p>
@@ -724,7 +724,7 @@ Image img = createImage(
 int alto = 100;
 int [] pixels = new int[ancho*alto];
 
-// Capturamos la región de la imagen img que comienza en (x,y) 
+// Capturamos la regiÃ³n de la imagen img que comienza en (x,y) 
 // con dimensiones de ancho x alto
 
 PixelGrabber pg = 

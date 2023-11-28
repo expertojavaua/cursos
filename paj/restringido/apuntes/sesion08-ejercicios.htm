@@ -12,8 +12,8 @@
 <h1>Swing y Applets</h1>
 <p>
 <b>1. (CHAT) </b>El ejercicio de esta sesi&oacute;n es el mismo que el de la sesi&oacute;n
-de AWT: construir la aplicaci&oacute;n de chat. Si lo termin·is y os da tiempo,
-os proponemos aÒadirle algunas de las
+de AWT: construir la aplicaci&oacute;n de chat. Si lo termin√°is y os da tiempo,
+os proponemos a√±adirle algunas de las
 siguientes
 mejoras:</p>
 <ul>
@@ -22,21 +22,21 @@ Mejorar la apariencia poniendo controles Swing: cambiar todos los controles de
 AWT (<i>Frame</i>, <i>Button</i>, <i>TextField</i>, <i>TextArea</i>, etc) por
 los respectivos controles Swing (<i>JFrame</i>, <i>JButton</i>, <i>JTextField</i>,
 <i>JTextArea</i>, etc). Tened en cuenta que el <i>JTextArea</i> tiene un
-constructor distinto, y las barras de desplazamiento se deben poner aÒadiendo
+constructor distinto, y las barras de desplazamiento se deben poner a√±adiendo
 el <i>JTextArea</i> sobre un <i>JScrollPane </i>(consultad la API para esta
 clase):
 <ul>
   <li>Construir un <i>JTextArea </i>con un constructor por defecto.</li>
-  <li>Construir un <i>JScrollPane</i> pas·ndole como par·metro el JTextArea
+  <li>Construir un <i>JScrollPane</i> pas√°ndole como par√°metro el JTextArea
     que va a contener.</li>
-  <li>AÒadir el <i>JScrollPane</i> al <i>JFrame</i>.</li>
+  <li>A√±adir el <i>JScrollPane</i> al <i>JFrame</i>.</li>
 </ul>
 </li>
 
 </ul>
 
 <blockquote>
-  <p>AsÌ, se sustituye el cÛdigo que incluÌa el <i>TextArea</i>:</p>
+  <p>As√≠, se sustituye el c√≥digo que inclu√≠a el <i>TextArea</i>:</p>
   <pre class="codigo">TextArea txtBuffer = new TextArea(&quot;&quot;, 5, 5, 
 		     TextArea.SCROLLBARS_BOTH);
 add(txtBuffer, BorderLayout.CENTER);</pre>
@@ -44,7 +44,7 @@ add(txtBuffer, BorderLayout.CENTER);</pre>
   <pre class="codigo">JTextArea txtBuffer = new JTextArea();
 JScrollPane panelBuffer = new JScrollPane(txtBuffer);
 getContentPane().add(panelBuffer, BorderLayout.CENTER);</pre>
-  Hay que tener en cuenta que para aÒadir elementos y cambiar algunas
+  Hay que tener en cuenta que para a√±adir elementos y cambiar algunas
   propiedades de un <i>JFrame</i> es distinto a como se hace en un <i>Frame</i>.
   Por ejemplo, en un <i>Frame</i> se hace:<pre class="codigo">setLayout(new BorderLayout());
 add(panelSup, BorderLayout.NORTH);</pre>
@@ -52,61 +52,61 @@ add(panelSup, BorderLayout.NORTH);</pre>
   <pre class="codigo">getContentPane().setLayout(new BorderLayout());
 getContentPane().add(panelSup, BorderLayout.NORTH);</pre>
   <p>Es decir, se obtiene el <i>ContentPane </i>(el contenedor) de la ventana, y
-  se llama a los mÈtodos del mismo.</p>
+  se llama a los m√©todos del mismo.</p>
 </blockquote>
 <ul>
 
 <li>
-Deshabilitar (mediante el mÈtodo <i>setEnabled()</i>) los botones que no puedan
+Deshabilitar (mediante el m√©todo <i>setEnabled()</i>) los botones que no puedan
 pulsarse en determinados momentos:
 <ul>
-  <li>Al principio sÛlo se podr· pulsar el botÛn <i>Conectar</i>.</li>
-  <li>Una vez conectado con Èxito, podr·n pulsarse tambiÈn los botones de <i>Registrar</i> o <i>Validar</i></li>
-  <li>Una vez que el usuario se haya validado, se puede pulsar tambiÈn el botÛn de <i>Enviar</i>.</li>
+  <li>Al principio s√≥lo se podr√° pulsar el bot√≥n <i>Conectar</i>.</li>
+  <li>Una vez conectado con √©xito, podr√°n pulsarse tambi√©n los botones de <i>Registrar</i> o <i>Validar</i></li>
+  <li>Una vez que el usuario se haya validado, se puede pulsar tambi√©n el bot√≥n de <i>Enviar</i>.</li>
 </ul>
 </li>
 
-<li>Permitir que se pueda enviar el mensaje al servidor tambiÈn al pulsar <i>Enter</i>
+<li>Permitir que se pueda enviar el mensaje al servidor tambi√©n al pulsar <i>Enter</i>
   sobre el cuadro de texto de enviar (mediante un <i>KeyListener</i> sobre el
   cuadro de texto, comprobando que la tecla pulsada en el <i>KeyEvent</i> sea <i>KeyEvent.VK_ENTER</i>)</li>
-<li>Limpiar el cuadro de texto de enviar tras enviar cada mensaje (aÒadir un <i>setText(&quot;&quot;)</i>
+<li>Limpiar el cuadro de texto de enviar tras enviar cada mensaje (a√±adir un <i>setText(&quot;&quot;)</i>
   en el evento de enviar el mensaje, tras enviarlo)</li>
 <li>
   <p align="left">Colocar el password con asteriscos (mediante un <i>JPasswordField
   </i>en lugar de un <i>JTextField</i>). Para ello se debe haber convertido la
-  aplicaciÛn a Swing previamente.</li>
+  aplicaci√≥n a Swing previamente.</li>
 
 </ul>
 
 <blockquote>
   <p align="left">Hay que tener en cuenta que para obtener el texto del <i>JPasswordField</i>
-  se tiene que llamar al mÈtodo <i>getPassword()</i>, que devuelve un array de <i>char</i>.
+  se tiene que llamar al m√©todo <i>getPassword()</i>, que devuelve un array de <i>char</i>.
   Para convertirlo luego a cadena hay que utilizar un constructor de la clase <i>String</i>,
   de forma que en lugar de poner:<pre class="codigo">txtPassword.getText();</pre>
   Se pone:<pre class="codigo">new String(txtPassword.getPassword());</pre>
   <p>(siendo el objeto <i>txtPassword</i> de tipo <i>JPasswordField </i>en este
-  ˙ltimo caso, y de tipo <i>JTextField</i> en el anterior).</p>
+  √∫ltimo caso, y de tipo <i>JTextField</i> en el anterior).</p>
 </blockquote>
 <ul>
 
 <li>
 A&ntilde;adir alguna opci&oacute;n para guardar el texto del buffer (el
-chat) en un fichero. Se puede colocar un botÛn que al pulsarlo guarde el
+chat) en un fichero. Se puede colocar un bot√≥n que al pulsarlo guarde el
 contenido del <i>TextArea </i>(o <i>JTextArea</i>) en un fichero.</li>
 
 <li>
 Convertir la aplicaci&oacute;n en Applet o JApplet. Para ello, siguiendo la
-estructura que tenemos, sÛlo hay que:
+estructura que tenemos, s√≥lo hay que:
 <ul>
   <li>Sustituir <i>Frame</i> por <i>Applet</i> (o <i>JFrame</i> por <i>JApplet</i>
     si hemos convertido a Swing)</li>
-  <li>Quitar el mÈtodo <i>main(...)</i></li>
-  <li>Crear una p·gina HTML con el cÛdigo necesario para poder ver el applet.</li>
+  <li>Quitar el m√©todo <i>main(...)</i></li>
+  <li>Crear una p√°gina HTML con el c√≥digo necesario para poder ver el applet.</li>
 </ul>
 </li>
 </ul>
 
-<p><b>Para entregar:</b>   DebÈis entregar un ZIP
+<p><b>Para entregar:</b>   Deb√©is entregar un ZIP
 <i>e3_2.zip</i> con:</p>
 <ul>
   <li>El fichero <i>AplicChat.java</i> con las mejoras realizadas</li>

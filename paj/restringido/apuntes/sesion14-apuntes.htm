@@ -17,35 +17,35 @@
 <h1>Anexo A. Novedades en Java 1.5</h1>
 <h2>&nbsp;</h2>
       </b><p>En este documento se resumen las principales novedades que ofrece
-      la versiÛn 1.5 de Java, separ·ndolas en diferentes ·reas. Para una
-      explicaciÛn m·s detallada, consultar la p·gina de Sun:</p>
+      la versi√≥n 1.5 de Java, separ√°ndolas en diferentes √°reas. Para una
+      explicaci√≥n m√°s detallada, consultar la p√°gina de Sun:</p>
       <p align="center"><a href="http://java.sun.com/j2se/1.5.0/docs/relnotes/features.html">http://java.sun.com/j2se/1.5.0/docs/relnotes/features.html</a></p>
       <b>      
 <h2>&nbsp;</h2>
-<h2>1. Novedades en la m·quina virtual</h2>
+<h2>1. Novedades en la m√°quina virtual</h2>
       </b>
       <blockquote>
         <h4>Autoajuste de memoria mejorado</h4>
            
         <p>La capacidad de autoajustar la cantidad de memoria necesaria (pila,
-        recolector de basura, etc) se ve mejorada en esta versiÛn.</p>
+        recolector de basura, etc) se ve mejorada en esta versi√≥n.</p>
         <h4>Compartir clases</h4>
            
-        <p>Al instalar la m·quina virtual, se cargan en memoria un conjunto de
-        clases del sistema, en forma de representaciÛn interna, de forma que
-        las siguientes llamadas a la m·quina virtual ya encuentren estas clases
+        <p>Al instalar la m√°quina virtual, se cargan en memoria un conjunto de
+        clases del sistema, en forma de representaci√≥n interna, de forma que
+        las siguientes llamadas a la m√°quina virtual ya encuentren estas clases
         mapeadas en memoria, y se permita que los datos de estas clases se
-        compartan entre m˙ltiples procesos dentro de la JVM.</p>
+        compartan entre m√∫ltiples procesos dentro de la JVM.</p>
         <h4>Ajuste del recolector de basura</h4>
            
         <p>Relacionado con el autoajuste de memoria, el recolector de basura
-        tambiÈn se autoadapta a las necesidades de memoria de la aplicaciÛn,
-        para evitar que el usuario tenga que ajustar su tamaÒo y
-        caracterÌsticas desde lÌnea de comandos.</p>
+        tambi√©n se autoadapta a las necesidades de memoria de la aplicaci√≥n,
+        para evitar que el usuario tenga que ajustar su tama√±o y
+        caracter√≠sticas desde l√≠nea de comandos.</p>
         <h4>Tratamiento de errores fatales</h4>
            
         <p>El mecanismo de listado de errores fatales se ha mejorado de forma
-        que se obtengan mejores diagnÛsticos a partir de las salidas generadas
+        que se obtengan mejores diagn√≥sticos a partir de las salidas generadas
         por dichos errores.</p>
         <p>&nbsp;</p>
       </blockquote>
@@ -58,16 +58,16 @@
         <p>Esta mejora permite tener colecciones de tipos concretos de datos, lo
         que permite asegurar que los datos que se van a almacenar van a ser
         compatibles con un determinado tipo o tipos. Por ejemplo, podemos crear
-        un <i>Vector</i> que sÛlo almacene <i>Strings</i>, o una <i>HashMap</i>
-        que tome como claves <i>Integers</i> y como valores <i>Vectors. </i>Adem·s,
+        un <i>Vector</i> que s√≥lo almacene <i>Strings</i>, o una <i>HashMap</i>
+        que tome como claves <i>Integers</i> y como valores <i>Vectors. </i>Adem√°s,
         con esto nos ahorramos las conversiones <i>cast</i> al tipo que
-        deseemos, puesto que la colecciÛn ya se asume que ser· de dicho tipo.</p>
+        deseemos, puesto que la colecci√≥n ya se asume que ser√° de dicho tipo.</p>
         <p><b>Ejemplo</b></p>
         <pre class="codigo"><b>// Vector de cadenas</b>
 Vector&lt;String&gt; v = new Vector&lt;String&gt;();
 v.addElement(&quot;Hola&quot;);
 String s = v.getElementAt(0);
-v.addElement(new Integer(20));			// DarÌa error!!
+v.addElement(new Integer(20));			// Dar√≠a error!!
 
 <b>// HashMap con claves enteras y valores de vectores</b>
 HashMap&lt;Integer, Vector&gt; hm = new HashMap&lt;Integer, Vector&gt;();
@@ -76,7 +76,7 @@ Vector v2 = hm.get(1);</pre>
            
         <h4><i>Autoboxing</i></h4>
            
-        <p>Esta nueva caracterÌstica evita al programador tener que establecer
+        <p>Esta nueva caracter√≠stica evita al programador tener que establecer
         correspondencias manuales entre los tipos simples (<i>int, double</i>,
         etc) y sus correspondientes <i>wrappers</i> o tipos complejos (<i>Integer,
         Double, </i>etc). Podremos utilizar un <i>int</i> donde se espere un
@@ -90,7 +90,7 @@ n = n+1;</pre>
         <h4>Mejoras en bucles</h4>
            
         <p>Se mejoran las posibilidades de recorrer colecciones y arrays,
-        previniendo Ìndices fuera de rango, y pudiendo recorrer colecciones sin
+        previniendo √≠ndices fuera de rango, y pudiendo recorrer colecciones sin
         necesidad de acceder a sus iteradores (<i>Iterator</i>).</p>
         <p><b>Ejemplo</b></p>
         <pre class="codigo"><b>// Recorre e imprime todos los elementos de un array</b>
@@ -109,7 +109,7 @@ for(String cadena: v)
         posibles valores o estados, que luego podremos utilizar donde queramos:</p>
         <p><b>Ejemplo</b></p>
         <pre class="codigo"><b>// Define una lista de 3 valores y luego comprueba en un switch 
-// cu·l es el valor que tiene un objeto de ese tipo</b>
+// cu√°l es el valor que tiene un objeto de ese tipo</b>
 enum EstadoCivil {soltero, casado, divorciado};
 EstadoCivil ec = EstadoCivil.casado;
 ec = EstadoCivil.soltero;
@@ -123,13 +123,13 @@ switch(ec)
 			break;
 }</pre>
            
-        <h4><i>Imports</i> est·ticos</h4>
+        <h4><i>Imports</i> est√°ticos</h4>
            
-        <p>Los <i>imports</i> est·ticos permiten importar los elementos
-        est·ticos de una clase, de forma que para referenciarlos no tengamos
+        <p>Los <i>imports</i> est√°ticos permiten importar los elementos
+        est√°ticos de una clase, de forma que para referenciarlos no tengamos
         que poner siempre como prefijo el nombre de la clase. Por ejemplo,
         podemos utilizar las constantes de color de la clase <i>java.awt.Color</i>,
-        o bien los mÈtodos matem·ticos de la case <i>Math</i>.</p>
+        o bien los m√©todos matem√°ticos de la case <i>Math</i>.</p>
         <p><b>Ejemplo</b></p>
         <pre class="codigo">import static java.awt.Color;
 import static java.lang.Math;
@@ -138,19 +138,19 @@ public class...
 {
 ...
 	JLabel lbl = new JLabel();
-	lbl.setBackground(white);		// Antes serÌa Color.white
+	lbl.setBackground(white);		// Antes ser√≠a Color.white
 ...
-	double raiz = sqrt(1252.2);		// Antes serÌa Math.sqrt(...)
+	double raiz = sqrt(1252.2);		// Antes ser√≠a Math.sqrt(...)
 }</pre>
            
         <h4>Argumentos variables</h4>
-        <p>Ahora Java permite pasar un n˙mero variable de argumentos a una
-        funciÛn (como sucede con funciones como <i>printf</i> en C). Esto se
-        consigue mediante la expresiÛn &quot;...&quot; a partir del momento en
-        que queramos tener un n˙mero variable de argumentos.</p>
+        <p>Ahora Java permite pasar un n√∫mero variable de argumentos a una
+        funci√≥n (como sucede con funciones como <i>printf</i> en C). Esto se
+        consigue mediante la expresi√≥n &quot;...&quot; a partir del momento en
+        que queramos tener un n√∫mero variable de argumentos.</p>
         <p><b>Ejemplo</b></p>
-        <pre class="codigo"><b>// Funcion que tiene un par·metro <i>String</i> obligatorio
-// y n par·metros <i>int </i>opcionales</b>
+        <pre class="codigo"><b>// Funcion que tiene un par√°metro <i>String</i> obligatorio
+// y n par√°metros <i>int </i>opcionales</b>
 
 public void miFunc(String param, int... args) 
 {
@@ -167,21 +167,21 @@ public void miFunc(String param, int... args)
 miFunc(&quot;Hola&quot;, 1, 20, 30, 2);
 miFunc(&quot;Adios&quot;);</pre>
            
-        <h4>MetainformaciÛn</h4>
-        <p>Se tiene la posibilidad de aÒadir ciertas anotaciones en campos,
-        mÈtodos, clases y otros elementos, que permitan a las herramientas de
+        <h4>Metainformaci√≥n</h4>
+        <p>Se tiene la posibilidad de a√±adir ciertas anotaciones en campos,
+        m√©todos, clases y otros elementos, que permitan a las herramientas de
         desarrollo o de despliegue leerlas y realizar ciertas tareas. Por
         ejemplo, generar ficheros fuentes, ficheros XML, o un <i>Stub</i> de
-        mÈtodos para utilizar remotamente con RMI.</p>
-        <p>Un ejemplo m·s claro lo tenemos en las anotaciones que ya se
+        m√©todos para utilizar remotamente con RMI.</p>
+        <p>Un ejemplo m√°s claro lo tenemos en las anotaciones que ya se
         utilizan para la herramienta Javadoc. Las marcas <i>@deprecated</i> no
-        afectan al comportamiento de los mÈtodos que las llevan, pero previenen
-        al compilador para que muestre una advertencia indicando que el mÈtodo
-        que se utiliza est· desaconsejado. TambiÈn se tienen otras marcas <i>@param</i>,
+        afectan al comportamiento de los m√©todos que las llevan, pero previenen
+        al compilador para que muestre una advertencia indicando que el m√©todo
+        que se utiliza est√° desaconsejado. Tambi√©n se tienen otras marcas <i>@param</i>,
         <i>@return</i>, @<i>see</i>, etc, que utiliza Javadoc para generar las
-        p·ginas de documentaciÛn y las relaciones entre ellas.</p>
+        p√°ginas de documentaci√≥n y las relaciones entre ellas.</p>
         <p><b>Ejemplo</b></p>
-        <pre class="codigo"><b>// DefiniciÛn de una interfaz mediante metainformacion</b>
+        <pre class="codigo"><b>// Definici√≥n de una interfaz mediante metainformacion</b>
 
 public @interface MiInterfaz
 {
@@ -191,16 +191,16 @@ public @interface MiInterfaz
            
       </blockquote>
       <b>      
-<h2>3. Novedades en librerÌas principales</h2>
+<h2>3. Novedades en librer√≠as principales</h2>
       </b>
       <blockquote>
         <h4>Red</h4>
            
-        <p>Se han aÒadido cambios y mejoras para el trabajo en red, como:</p>
+        <p>Se han a√±adido cambios y mejoras para el trabajo en red, como:</p>
         <ul>
           <li>Soporte para IPv6 en Windows XP y 2003</li>
           <li>Establecimiento de <i>timeouts</i> para conectar y leer</li>
-          <li>API para lanzar aplicaciones RMI a travÈs de <i>inetd</i></li>
+          <li>API para lanzar aplicaciones RMI a trav√©s de <i>inetd</i></li>
           <li>La clase <i>InetAddress</i> permite testear si una URL es
             alcanzable (utilidad <i>ping</i>)</li>
           <li>Otras mejoras en el tratamiento de cookies, servidores proxy,
@@ -208,42 +208,42 @@ public @interface MiInterfaz
         </ul>
         <h4>Seguridad</h4>
            
-        <p>Hay bastantes mejoras en seguridad. Se da soporte a m·s est·ndares
+        <p>Hay bastantes mejoras en seguridad. Se da soporte a m√°s est√°ndares
         de seguridad (SASL, OCSP, TSP, etc), hay mejoras en la escalabilidad a
-        travÈs de SSLEngine, en criptografÌa, etc.</p>
+        trav√©s de SSLEngine, en criptograf√≠a, etc.</p>
       </blockquote>
       <blockquote>
-        <h4>InternacionalizaciÛn</h4>
+        <h4>Internacionalizaci√≥n</h4>
            
-        <p>Mediante la internacionalizaciÛn podemos construir una aplicaciÛn
+        <p>Mediante la internacionalizaci√≥n podemos construir una aplicaci√≥n
         que se adapte a varios idiomas, formatos monetarios, de fecha, etc, sin
-        tener que reprogramarla. En este aspecto, se aÒaden mejoras en la
-        versiÛn 1.5, relacionadas con:</p>
+        tener que reprogramarla. En este aspecto, se a√±aden mejoras en la
+        versi√≥n 1.5, relacionadas con:</p>
         <ul>
-          <li>La gestiÛn de juegos de caracteres se basa en el formato Unicode
+          <li>La gesti√≥n de juegos de caracteres se basa en el formato Unicode
             4.0, lo que afecta a las clases <i>Character</i> y <i>String</i>,
             entre otras.&nbsp; </li>
           <li>La clase <i>DecimalFormat</i> se ha modificado para poder procesar
             elementos de tipo <i>BigDecimal</i> o <i>BigInteger</i> sin perder
-            precisiÛn</li>
-          <li>Se han aÒadido nuevos <i>Locales</i> soportados, como el
+            precisi√≥n</li>
+          <li>Se han a√±adido nuevos <i>Locales</i> soportados, como el
             vietnamita.</li>
         </ul>
         <h4>Formateador</h4>
            
-        <p>La clase <i>Formatter</i> permite dar formato (justificaciÛn y
-        alineamiento, formatos numÈricos, de fecha, etc) a las cadenas y otros
+        <p>La clase <i>Formatter</i> permite dar formato (justificaci√≥n y
+        alineamiento, formatos num√©ricos, de fecha, etc) a las cadenas y otros
         tipos de datos, siguiendo un estilo parecido al <i>printf</i> de C.
-        TambiÈn se permite mediante la interfaz <i>Formattable</i> dar formatos
+        Tambi√©n se permite mediante la interfaz <i>Formattable</i> dar formatos
         (limitados) a tipos creados por el usuario.</p>
         <p><b>Ejemplo</b></p>
         <pre class="codigo"><b>// Uso de formatter para construir cadenas formateadas</b>
 StringBuilder sb = new StringBuilder();
 Formatter f = new Formatter(sb, Locale.US);
 f.format(&quot;Hola, %1$2s, esta es tu visita numero %2$d&quot;, &quot;Pepe&quot;, 20);
-<i>// ResultarÌa: &quot;Hola, Pepe, esta es tu visita numero 20&quot;
+<i>// Resultar√≠a: &quot;Hola, Pepe, esta es tu visita numero 20&quot;
 
-</i><b>// TambiÈn se tienen unos mÈtodos predefinidos en ciertas clases
+</i><b>// Tambi√©n se tienen unos m√©todos predefinidos en ciertas clases
 </b>System.out.format(&quot;Hola, %1$2s, esta es tu visita numero %2$d&quot;, &quot;Pepe&quot;, 20);
 System.err.printf(&quot;Hola, %1$2s, esta es tu visita numero %2$d&quot;, &quot;Pepe&quot;, 20);
 String s = String.format(&quot;Hola, %1$2s&quot;, &quot;Pepe&quot;);</pre>
@@ -252,10 +252,10 @@ String s = String.format(&quot;Hola, %1$2s&quot;, &quot;Pepe&quot;);</pre>
            
         <p>La clase <i>Scanner</i> permite parsear un flujo de entrada (fichero,
         cadena de texto, stream de datos, etc), y extraer tokens siguiendo un
-        determinado patrÛn o tipo de datos. TambiÈn se permite trabajar con
-        expresiones regulares para indicar quÈ patrones se deben buscar.</p>
+        determinado patr√≥n o tipo de datos. Tambi√©n se permite trabajar con
+        expresiones regulares para indicar qu√© patrones se deben buscar.</p>
         <p><b>Ejemplo</b></p>
-        <pre class="codigo"><b>// Lectura de enteros de la entrada est·ndar</b>
+        <pre class="codigo"><b>// Lectura de enteros de la entrada est√°ndar</b>
 Scanner sc = Scanner.create(System.in);
 int n = sc.nextInt();<i>
 
@@ -270,7 +270,7 @@ while (sc.hasNextDouble())
 System.out.println(sc.next());
 System.out.println(sc.next());
 System.out.println(sc.next());
-<i>// SacarÌa Esto \n es \n 1</i></pre>
+<i>// Sacar√≠a Esto \n es \n 1</i></pre>
            
       <b>      
 <h4>Arquitectura de JavaBeans</h4>
@@ -278,13 +278,13 @@ System.out.println(sc.next());
       </b>
            
         <p>La arquitectura de JavaBeans se encuentra dentro del paquete <i>java.beans</i>.&nbsp;
-        Se ha aÒadido una nueva clase, <i>IndexedPropertyChangeEvent</i>,
+        Se ha a√±adido una nueva clase, <i>IndexedPropertyChangeEvent</i>,
         subclase de <i>PropertyChangeEvent</i>, para dar soporte a eventos que
         respondan a cambios en propiedades indexadas (propiedades que utilicen
-        un Ìndice para identificar la parte del bean que haya cambiado).
-        TambiÈn se han aÒadido mejoras a la hora de crear editores de
-        propiedades de beans (<i>PropertyEditor</i>), como el mÈtodo <i>createPropertyEditor(...)</i>,
-        y constructores p˙blicos para la clase <i>PropertyEditorSupport</i>.&nbsp;</p>
+        un √≠ndice para identificar la parte del bean que haya cambiado).
+        Tambi√©n se han a√±adido mejoras a la hora de crear editores de
+        propiedades de beans (<i>PropertyEditor</i>), como el m√©todo <i>createPropertyEditor(...)</i>,
+        y constructores p√∫blicos para la clase <i>PropertyEditorSupport</i>.&nbsp;</p>
       <b>      
 <h4>Arquitectura de colecciones</h4>
            
@@ -292,14 +292,14 @@ System.out.println(sc.next());
            
         <p>Como se ha comentado antes, las colecciones (estructura que contiene
         clases e interfaces como <i>Collection</i>, <i>Vector</i>, <i>ArrayList</i>,
-        etc) dan soporte a nuevas caracterÌsticas del lenguaje, como el
+        etc) dan soporte a nuevas caracter√≠sticas del lenguaje, como el
         autoboxing, mejoras en los bucles (<i>for</i>) , y el uso de <i>generics</i>.
-        Adem·s, se han aÒadido interfaces nuevos, como <i>Queue, BlockingQueue</i>
+        Adem√°s, se han a√±adido interfaces nuevos, como <i>Queue, BlockingQueue</i>
         y <i>ConcurrentMap</i>, con algunas implementaciones concretas de dichas
-        interfaces. Adem·s, se tienen nuevas implementaciones de <i>List</i>, <i>Set
+        interfaces. Adem√°s, se tienen nuevas implementaciones de <i>List</i>, <i>Set
         </i>y <i>Map</i>.</p>
       <b>      
-<h4>ManipulaciÛn de bits</h4>
+<h4>Manipulaci√≥n de bits</h4>
            
       </b>
            
@@ -307,22 +307,22 @@ System.out.println(sc.next());
         Long, Double, Char</i>) soportan operaciones de bits, como <i>highestOneBit,
         lowestOneBit, rotateLeft, rotateRight, reverse</i>, etc.&nbsp;</p>
       <b>      
-<h4>Elementos matem·ticos</h4>
+<h4>Elementos matem√°ticos</h4>
            
       </b>
            
-        <p>El paquete <i>java.math</i> tambiÈn ha sufrido modificaciones, como
-        la adiciÛn en la clase <i>BigDecimal</i> de soporte para c·lculo en
-        coma flotante de precisiÛn fija. Clases como <i>Math</i> o <i>StrictMath</i>
-        adem·s incluyen soporte para senos y cosenos hiperbÛlicos, raÌces
-        c˙bicas o logaritmos en base 10. Por ˙ltimo, tambiÈn se da soporte al
-        uso de n˙meros hexadecimales con coma flotante.</p>
+        <p>El paquete <i>java.math</i> tambi√©n ha sufrido modificaciones, como
+        la adici√≥n en la clase <i>BigDecimal</i> de soporte para c√°lculo en
+        coma flotante de precisi√≥n fija. Clases como <i>Math</i> o <i>StrictMath</i>
+        adem√°s incluyen soporte para senos y cosenos hiperb√≥licos, ra√≠ces
+        c√∫bicas o logaritmos en base 10. Por √∫ltimo, tambi√©n se da soporte al
+        uso de n√∫meros hexadecimales con coma flotante.</p>
       <b>      
-<h4>SerializaciÛn</h4>
+<h4>Serializaci√≥n</h4>
            
       </b>
            
-        <p>Adem·s de corregir errores previos en la serializaciÛn, se&nbsp;da
+        <p>Adem√°s de corregir errores previos en la serializaci√≥n, se&nbsp;da
         soporte para serializar el nuevo tipo <i>enum</i>, aunque la forma de
         serializarlo difiere ligeramente de los tipos tradicionales.</p>
       <b>      
@@ -330,36 +330,36 @@ System.out.println(sc.next());
            
       </b>
            
-        <p>Se&nbsp;han aÒadido los paquetes <i>java.util.concurrent</i>, <i>java.util.concurrent.atomic</i>
+        <p>Se&nbsp;han a√±adido los paquetes <i>java.util.concurrent</i>, <i>java.util.concurrent.atomic</i>
         y <i>java.util.concurrent.locks</i>, que permiten crear diversas
         infraestructuras de hilos, como pooling de hilos o colas de bloqueos,
         liberando al programador de tener que controlar todas estas estructuras
         &quot;a mano&quot;. En definitiva, se da soporte para automatizar la
-        programaciÛn concurrente.</p>
-        <p>Adem·s, a la clase <i>Thread</i> se le han aÒadido los mÈtodos <i>getStackTrace</i>
+        programaci√≥n concurrente.</p>
+        <p>Adem√°s, a la clase <i>Thread</i> se le han a√±adido los m√©todos <i>getStackTrace</i>
         y <i>getAllStackTraces</i> para obtener la traza de los hilos en un
         momento dado.</p>
       <b>      
            
-        <h4>MonitorizaciÛn y gestiÛn</h4>
+        <h4>Monitorizaci√≥n y gesti√≥n</h4>
            
       </b>
            
-        <p>Se&nbsp;tienen mejoras en el control o la monitorizaciÛn tanto de
-        las aplicaciones Java como de la m·quina virtual (JVM), a travÈs de la
+        <p>Se&nbsp;tienen mejoras en el control o la monitorizaci√≥n tanto de
+        las aplicaciones Java como de la m√°quina virtual (JVM), a trav√©s de la
         API de JMX.</p>
            
       </blockquote>
       <b>      
-<h2>4. Novedades en librerÌas adicionales</h2>
+<h2>4. Novedades en librer√≠as adicionales</h2>
       </b>
       <blockquote>
         <h4>RMI</h4>
            
         <p>Se tienen dos mejoras fundamentales en RMI: </p>
         <ul>
-          <li>GeneraciÛn din·mica de Stubs: se generan en tiempo de
-            ejecuciÛn, sin necesidad de utilizar <i>rmic</i> previamente. SÛlo
+          <li>Generaci√≥n din√°mica de Stubs: se generan en tiempo de
+            ejecuci√≥n, sin necesidad de utilizar <i>rmic</i> previamente. S√≥lo
             tendremos que utilizarlo para generar <i>Stubs</i> para clientes que
             funcionen con versiones anteriores de Java.</li>
           <li>Lanzamiento de <i>rmid</i> o un servidor RMI Java desde <i>inetd/xinetd</i>.</li>
@@ -368,19 +368,19 @@ System.out.println(sc.next());
       <blockquote>
         <h4>JDBC</h4>
            
-        <p>En Java 1.4 se introdujo la interfaz <i>RowSet</i>, que permitÌa
+        <p>En Java 1.4 se introdujo la interfaz <i>RowSet</i>, que permit√≠a
         pasar datos entre componentes. En Java 1.5 se han desarrollado 5
         implementaciones de dicha interfaz, para cubrir 5 posibles casos de uso: </p>
         <ul>
           <li><i>JdbcRowSet</i>: para encapsular un <i>ResultSet</i> o un driver
-            que utilice tecnologÌa JDBC</li>
+            que utilice tecnolog√≠a JDBC</li>
           <li><i>CachedRowSet</i>: desconecta de la fuente de datos y trabaja
-            independientemente, salvo cuando estÈ obteniendo datos de dicha
+            independientemente, salvo cuando est√© obteniendo datos de dicha
             fuente o volcando datos en ella.</li>
           <li><i>FilteredRowSet</i>: hereda de la anterior, y se utiliza para
             obtener un subconjunto de datos</li>
           <li><i>JoinRowSet</i>: hereda de <i>CachedRowSet</i> y se emplea para
-            unir m˙ltiples objetos <i>RowSet</i>.</li>
+            unir m√∫ltiples objetos <i>RowSet</i>.</li>
           <li><i>WebRowSet</i>: hereda de <i>CachedRowSet</i> para procesar
             datos XML.</li>
         </ul>
@@ -391,7 +391,7 @@ System.out.println(sc.next());
         <ul>
           <li>Mejoras en la clase <i>javax.naming.NameClassPair</i> para poder
             acceder al nombre completo del servicio de directorio.</li>
-          <li>Soporte para controles est·ndar de LDAP</li>
+          <li>Soporte para controles est√°ndar de LDAP</li>
           <li>Soporte para manipular nombres de LDAP</li>
         </ul>
       </blockquote>
@@ -399,54 +399,54 @@ System.out.println(sc.next());
 <h2>5. Novedades en la interfaz de usuario</h2>
       </b>
       <blockquote>
-        <h4>InternacionalizaciÛn</h4>
+        <h4>Internacionalizaci√≥n</h4>
            
-        <p>Para permitir renderizar texto multiling¸e utilizando fuentes
-        lÛgicas, se tienen en cuenta tanto las fuentes del cliente como las del
-        <i>locale</i> que tengamos instalado. Adem·s, AWT utiliza APIs Unicode
+        <p>Para permitir renderizar texto multiling√ºe utilizando fuentes
+        l√≥gicas, se tienen en cuenta tanto las fuentes del cliente como las del
+        <i>locale</i> que tengamos instalado. Adem√°s, AWT utiliza APIs Unicode
         en Windows 2000 y XP, con lo que se puede manejar texto sin estar
-        limitado a la configuraciÛn de <i>locale</i> de Windows. </p>
+        limitado a la configuraci√≥n de <i>locale</i> de Windows. </p>
         <h4>Java Sound</h4>
            
-        <p>Para el tratamiento del sonido desde Java, se tienen tambiÈn los
+        <p>Para el tratamiento del sonido desde Java, se tienen tambi√©n los
         siguientes cambios, principalmente: </p>
         <ul>
           <li>Se permite el acceso a puertos en todas las plataformas</li>
-          <li>TambiÈn est· disponible la entrada/salida MIDI</li>
+          <li>Tambi√©n est√° disponible la entrada/salida MIDI</li>
         </ul>
         <h4>Java 2D</h4>
            
         <ul>
-          <li>Se cachean en memoria todas las im·genes construidas a partir de <i>BufferedImage</i></li>
-          <li>MÈtodos para controlar la aceleraciÛn hardware en im·genes</li>
-          <li>AÒadido soporte para aceleraciÛn hardware con OpenGL en Solaris
+          <li>Se cachean en memoria todas las im√°genes construidas a partir de <i>BufferedImage</i></li>
+          <li>M√©todos para controlar la aceleraci√≥n hardware en im√°genes</li>
+          <li>A√±adido soporte para aceleraci√≥n hardware con OpenGL en Solaris
             y Linux.</li>
-          <li>CreaciÛn de fuentes a partir de ficheros y flujos de entrada</li>
-          <li>Se ha mejorado la renderizaciÛn de texto.</li>
+          <li>Creaci√≥n de fuentes a partir de ficheros y flujos de entrada</li>
+          <li>Se ha mejorado la renderizaci√≥n de texto.</li>
         </ul>
-        <h4>Flujos de im·genes</h4>
+        <h4>Flujos de im√°genes</h4>
            
-        <p>Se permite, adem·s de los formatos de im·genes ya soportados (PNG,
-        JPG, etc), leer y escribir im·genes BMP y WBMP. </p>
+        <p>Se permite, adem√°s de los formatos de im√°genes ya soportados (PNG,
+        JPG, etc), leer y escribir im√°genes BMP y WBMP. </p>
         <h4>AWT</h4>
            
-        <p>Las novedades m·s significativas son:</p>
+        <p>Las novedades m√°s significativas son:</p>
            
         <ul>
-          <li>La clase <i>MouseInfo</i> almacena informaciÛn sobre la posiciÛn
-            del ratÛn en el escritorio</li>
-          <li>Se tienen nuevos mÈtodos en la clase <i>Window</i> para
-            especificar la posiciÛn para las nuevas ventanas que se creen.
-            TambiÈn se tienen mÈtodos para asegurar que una ventana permanezca
-            siempre en primer lugar (aunque esta caracterÌstica no funciona
+          <li>La clase <i>MouseInfo</i> almacena informaci√≥n sobre la posici√≥n
+            del rat√≥n en el escritorio</li>
+          <li>Se tienen nuevos m√©todos en la clase <i>Window</i> para
+            especificar la posici√≥n para las nuevas ventanas que se creen.
+            Tambi√©n se tienen m√©todos para asegurar que una ventana permanezca
+            siempre en primer lugar (aunque esta caracter√≠stica no funciona
             bien en algunas versiones de Solaris o Linux)</li>
-          <li>Nuevos mÈtodos para acceder y notificar sobre el contenido del
+          <li>Nuevos m√©todos para acceder y notificar sobre el contenido del
             portapapeles.</li>
           <li>Se han corregido errores existentes en los <i>layout managers</i>:
             <i>GridBagLayout </i>y<i> FlowLayout</i>.</li>
           <li>Cambios y correcciones en eventos de teclado (nuevos mapeos de
-            teclas, redefiniciÛn de mÈtodos, etc), y de acciÛn (correcciones
-            en cuanto al uso de Enter como evento de acciÛn).</li>
+            teclas, redefinici√≥n de m√©todos, etc), y de acci√≥n (correcciones
+            en cuanto al uso de Enter como evento de acci√≥n).</li>
         </ul>
         <h4>Swing</h4>
            
@@ -456,14 +456,14 @@ System.out.println(sc.next());
           <li>Se proporcionan nuevos look &amp; feels (uno de ellos, <i>Synth</i>,
             es <i>skinnable</i>, es decir, se puede personalizar el skin que
             muestra)</li>
-          <li>Se aÒade soporte para imprimir <i>JTables</i>.</li>
-          <li>Se permite definir men˙s contextuales (<i>popup menus</i>) en
+          <li>Se a√±ade soporte para imprimir <i>JTables</i>.</li>
+          <li>Se permite definir men√∫s contextuales (<i>popup menus</i>) en
             componentes, para que muestren las opciones que queramos. Para ello
             se tiene la clase <i>JPopupMenu</i>.</li>
-          <li>Se han aÒadido mejoras en <i>JTextArea</i> para facilitar el
-            scroll por su contenido, y la actualizaciÛn cuando se modifique su
+          <li>Se han a√±adido mejoras en <i>JTextArea</i> para facilitar el
+            scroll por su contenido, y la actualizaci√≥n cuando se modifique su
             texto.</li>
-          <li>Podremos utilizar el mÈtodo <i>JFrame.add(...)</i>, en lugar de <i>JFrame.getContentPane().add(...)</i></li>
+          <li>Podremos utilizar el m√©todo <i>JFrame.add(...)</i>, en lugar de <i>JFrame.getContentPane().add(...)</i></li>
         </ul>
         <blockquote>
           <pre class="codigo"><b>// Antes</b>
@@ -487,36 +487,36 @@ f.add(new JButton(&quot;Hola&quot;));</pre>
         <ul>
           <li>Se ha unido gran parte de la funcionalidad entre el Java Plug-in y
             Java Web Start, de modo que ahora tienen un <i>Java Control Panel</i>
-            com˙n para ambos</li>
+            com√∫n para ambos</li>
           <li>Las aplicaciones desplegadas se pueden configurar mediante un
-            fichero de configuraciÛn, que puede ser accedido a travÈs de una
-            URL, y establecer ciertos par·metros de la aplicaciÛn.</li>
-          <li>El formato de compresiÛn Pack200 permite tener ficheros JAR
-            ultra-comprimidos (hasta 1/8 de su tamaÒo original), reduciendo los
+            fichero de configuraci√≥n, que puede ser accedido a trav√©s de una
+            URL, y establecer ciertos par√°metros de la aplicaci√≥n.</li>
+          <li>El formato de compresi√≥n Pack200 permite tener ficheros JAR
+            ultra-comprimidos (hasta 1/8 de su tama√±o original), reduciendo los
             tiempos de descarga, o de despliegue mediante Java Web Start.</li>
-          <li>InclusiÛn de marcas de tiempo (<i>timestamps</i>) en los ficheros
-            JAR firmados, de forma que se sabe cu·ndo se concediÛ el
-            certificado para el fichero, y se previene asÌ el uso de JARs cuyo
-            permiso ya caducÛ.</li>
+          <li>Inclusi√≥n de marcas de tiempo (<i>timestamps</i>) en los ficheros
+            JAR firmados, de forma que se sabe cu√°ndo se concedi√≥ el
+            certificado para el fichero, y se previene as√≠ el uso de JARs cuyo
+            permiso ya caduc√≥.</li>
         </ul>
         <h4>Java Web Start</h4>
            
-        <p>Hay tambiÈn cambios especÌficos de Java Web Start, como son:</p>
+        <p>Hay tambi√©n cambios espec√≠ficos de Java Web Start, como son:</p>
         <ul>
-          <li>SupresiÛn del <i>Application Manager</i>, cuya mayor
+          <li>Supresi√≥n del <i>Application Manager</i>, cuya mayor
             funcionalidad se ha encapsulado dentro del nuevo <i>Java Control
             Panel</i>, y el <i>JNLP Cache Viewer</i>, una nueva herramienta que
             permite gestionar las aplicaciones descargadas.</li>
-          <li>SupersiÛn del <i>Developer Bundle</i>, ya que Java Web Start
-            est· completamente integrado con JRE y SDK, y los elementos que
-            contenÌa dicho <i>bundle</i> ahora est·n integrados en Java.</li>
-          <li>Se tiene una cachÈ de sistema, de forma que el administrador del
-            sistema puede cargar al inicio programas en la cachÈ de sistema, de
-            forma que sean compartidas y accesibles por m˙ltiples usuarios.</li>
-          <li>Hay tambiÈn una facilidad de importaciÛn, de forma que se
-            facilita la instalaciÛn desde CDs, donde el cÛdigo se carga
-            primero desde un lugar y luego se actualiza desde otro. TambiÈn
-            permite preinstalar aplicaciones y librerÌas en cachÈ, sin
+          <li>Supersi√≥n del <i>Developer Bundle</i>, ya que Java Web Start
+            est√° completamente integrado con JRE y SDK, y los elementos que
+            conten√≠a dicho <i>bundle</i> ahora est√°n integrados en Java.</li>
+          <li>Se tiene una cach√© de sistema, de forma que el administrador del
+            sistema puede cargar al inicio programas en la cach√© de sistema, de
+            forma que sean compartidas y accesibles por m√∫ltiples usuarios.</li>
+          <li>Hay tambi√©n una facilidad de importaci√≥n, de forma que se
+            facilita la instalaci√≥n desde CDs, donde el c√≥digo se carga
+            primero desde un lugar y luego se actualiza desde otro. Tambi√©n
+            permite preinstalar aplicaciones y librer√≠as en cach√©, sin
             ejecutarlas.</li>
         </ul>
       </blockquote>
@@ -527,42 +527,42 @@ f.add(new JButton(&quot;Hola&quot;));</pre>
         <h4>JPDA</h4>
            
         <p>JPDA es un conjunto de interfaces utilizadas para depurar en entornos
-        y sistemas de desarrollo. En la versiÛn 1.5 se tienen nuevas mejoras y
+        y sistemas de desarrollo. En la versi√≥n 1.5 se tienen nuevas mejoras y
         funcionalidades de esta herramienta. Muchas de estas nuevas
-        funcionalidades se han aÒadido para adaptar las nuevas caracterÌsticas
-        de la versiÛn 1.5 de Java, como los argumentos variables, <i>imports</i>
-        est·ticos, etc.</p>
+        funcionalidades se han a√±adido para adaptar las nuevas caracter√≠sticas
+        de la versi√≥n 1.5 de Java, como los argumentos variables, <i>imports</i>
+        est√°ticos, etc.</p>
         <h4>JVMTI</h4>
            
         <p>JVMTI (<i>Java Virtual Machine Tool Interface</i>) es una nueva
-        interfaz de programaciÛn nativa para utilizar en herramientas de
-        desarrollo y monitorizaciÛn. Forma parte de las interfaces contenidas
-        en JPDA para depuraciÛn. Permite chequear el estado y controlar la
-        ejecuciÛn de una aplicaciÛn. </p>
+        interfaz de programaci√≥n nativa para utilizar en herramientas de
+        desarrollo y monitorizaci√≥n. Forma parte de las interfaces contenidas
+        en JPDA para depuraci√≥n. Permite chequear el estado y controlar la
+        ejecuci√≥n de una aplicaci√≥n. </p>
         <h4>Compilador (<i>javac</i>)</h4>
            
-        <p>Se han aÒadido algunas caracterÌsticas a la hora de utilizar el
-        compilador, como son los par·metros:</p>
+        <p>Se han a√±adido algunas caracter√≠sticas a la hora de utilizar el
+        compilador, como son los par√°metros:</p>
         <ul>
-          <li><i>- source 1.5</i> : habilita las nuevas caracterÌsticas de la
-            versiÛn 1.5 de Java, para ser tenidas en cuenta por el compilador.
-            Lleva implÌcito tambiÈn un par·metro <i>-target 1.5</i></li>
+          <li><i>- source 1.5</i> : habilita las nuevas caracter√≠sticas de la
+            versi√≥n 1.5 de Java, para ser tenidas en cuenta por el compilador.
+            Lleva impl√≠cito tambi√©n un par√°metro <i>-target 1.5</i></li>
           <li><i>-target 1.5</i>: permite al compilador utilizar
-            caracterÌsticas especÌficas de Java 1.5 en las librerÌas y la
-            m·quina virtual.</li>
-          <li><i>-Xlint</i>: permite producir <i>warnings</i> sobre cÛdigo que,
-            aunque es correcto, puede ser problem·tico debido a su
-            construcciÛn.</li>
+            caracter√≠sticas espec√≠ficas de Java 1.5 en las librer√≠as y la
+            m√°quina virtual.</li>
+          <li><i>-Xlint</i>: permite producir <i>warnings</i> sobre c√≥digo que,
+            aunque es correcto, puede ser problem√°tico debido a su
+            construcci√≥n.</li>
         </ul>
         <h4>Herramienta <i>javadoc</i></h4>
            
         <p align="left">Se tienen nuevas funcionalidades en la herramienta <i>javadoc</i>.
         Como en otros elementos, muchos de los cambios dan soporte a
-        caracterÌsticas nuevas de Java 1.5 (<i>generics</i>, tipo <i>enum</i>,
-        etc). Se tienen tambiÈn marcas nuevas, como <i>regression</i> para
+        caracter√≠sticas nuevas de Java 1.5 (<i>generics</i>, tipo <i>enum</i>,
+        etc). Se tienen tambi√©n marcas nuevas, como <i>regression</i> para
         indicar funcionalidades que se desaconsejaron en versiones anteriores,
-        pero que han sido corregidas en la nueva. TambiÈn se da soporte a
-        anotaciones para generar metainformaciÛn que utilizar en otros
+        pero que han sido corregidas en la nueva. Tambi√©n se da soporte a
+        anotaciones para generar metainformaci√≥n que utilizar en otros
         programas.</p>
         <p>&nbsp;</p>
         <p>&nbsp;</p>

@@ -8,154 +8,154 @@
 <body bgcolor="#FFFFFF" text="#000000">
 <h1><span class="section">5. Seguridad</span> </h1>
 <p>Java realiza un importante control de seguridad en los programas, que impide
-que programas escritos en dicho lenguaje puedan daÒar nuestra informaciÛn
-(virus), accedan a informaciÛn privada, o realicen cualquier otra actividad
-daÒina.&nbsp; &nbsp;</p>
+que programas escritos en dicho lenguaje puedan da√±ar nuestra informaci√≥n
+(virus), accedan a informaci√≥n privada, o realicen cualquier otra actividad
+da√±ina.&nbsp; &nbsp;</p>
 <h2 class="subsection">5.1. Seguridad en JDK 1.0, 1.1 y 1.2</h2>
-<p>En principio, en JDK 1.0 Java ˙nicamente lo que hacÌa era aplicar una serie
-de restricciones de seguridad sobre el cÛdigo remoto que se ejecutase en
-nuestra m·quina (<i>Applets</i>).
+<p>En principio, en JDK 1.0 Java √∫nicamente lo que hac√≠a era aplicar una serie
+de restricciones de seguridad sobre el c√≥digo remoto que se ejecutase en
+nuestra m√°quina (<i>Applets</i>).
 Proporcionaba a estos programas un acceso restringido a los recursos de nuestro
 sistema.</p>
 <p>En JDK 1.1 se incorporan los llamados <i> Applets</i> <i>firmados</i>. En los
 <i> Applets</i>
-que tengan una <i>firma</i> de confianza, se relajar·n las restricciones de
-seguridad, seg˙n las necesidades del <i> Applet</i> en cuestiÛn. Esto permitir·
-incorporar m·s capacidades a los <i>Applets</i>, que podr·n ser utilizadas siempre
-que el usuario confÌe en la <i>firma</i> y acepte otorgar al <i> Applet</i> los
+que tengan una <i>firma</i> de confianza, se relajar√°n las restricciones de
+seguridad, seg√∫n las necesidades del <i> Applet</i> en cuesti√≥n. Esto permitir√°
+incorporar m√°s capacidades a los <i>Applets</i>, que podr√°n ser utilizadas siempre
+que el usuario conf√≠e en la <i>firma</i> y acepte otorgar al <i> Applet</i> los
 permisos que solicita.</p>
 <p>En JDK 1.2 se producen grandes cambios en el sistema de seguridad. Ahora ya
-no sÛlo se aplican las restricciones de seguridad a cÛdigo remoto, sino que
+no s√≥lo se aplican las restricciones de seguridad a c√≥digo remoto, sino que
 pueden ser aplicadas a cualquier programa Java, ya sea local o remoto. Las
 clases Java se organizan en una serie de <i>dominios</i>, de forma que cada <i>dominio</i>
-tiene una serie de permisos propios. Uno de estos <i>dominios </i>ser·n los <i>Applets</i>, que tendr·n una serie de restricciones de seguridad como en versiones
+tiene una serie de permisos propios. Uno de estos <i>dominios </i>ser√°n los <i>Applets</i>, que tendr√°n una serie de restricciones de seguridad como en versiones
 anteriores. Las aplicaciones por defecto no tienen restricciones, pero podemos
-ponÈrselas.</p>
+pon√©rselas.</p>
 <h2 class="subsection">5.2. Restricciones de seguridad en Applets y aplicaciones</h2>
 <p>Los <i> Applets</i> son programas Java que pueden encontrarse incrustados en la web,
-de forma que cuando entremos en la p·gina el cÛdigo del <i> Applet</i> se descarguÈ
-en nuestra m·quina y se ejecute autom·ticamente. Si dej·semos que cualquiera
-de estos programas accediese a todos los recursos podrÌa ser muy peligroso, ya
-que cualquiera simplemente colgando un <i> Applet</i> en su p·gina podrÌa tener
+de forma que cuando entremos en la p√°gina el c√≥digo del <i> Applet</i> se descargu√©
+en nuestra m√°quina y se ejecute autom√°ticamente. Si dej√°semos que cualquiera
+de estos programas accediese a todos los recursos podr√≠a ser muy peligroso, ya
+que cualquiera simplemente colgando un <i> Applet</i> en su p√°gina podr√≠a tener
 libertad para hacer casi cualquier cosa dentro de los ordenadores de todo aquel
 que visite la web. Por esto los <i> Applets</i> cuentan con una serie de restricciones
 importantes:</p>
 <ul>
-  <li>No pueden acceder a mÈtodos nativos.</li>
-  <li>No pueden leer ni escribir en ficheros de la m·quina local donde se
-    ejecute. SÛlo puede acceder a ficheros si proporciona la URL absoluta del
+  <li>No pueden acceder a m√©todos nativos.</li>
+  <li>No pueden leer ni escribir en ficheros de la m√°quina local donde se
+    ejecute. S√≥lo puede acceder a ficheros si proporciona la URL absoluta del
     fichero.</li>
-  <li>No pueden establecer conexiones de red a ning˙n <i>host</i> distinto al <i>host</i>
+  <li>No pueden establecer conexiones de red a ning√∫n <i>host</i> distinto al <i>host</i>
     desde el que nos hemos descargado el <i>Applet</i>.</li>
-  <li>No pueden ejecutar programas en la m·quina donde se est· ejecutando.</li>
+  <li>No pueden ejecutar programas en la m√°quina donde se est√° ejecutando.</li>
   <li>No pueden leer las propiedades del sistema.</li>
   <li>Las ventanas que muestran los <i> Applets</i> tienen una apariencia distinta a las
     ventanas del sistema operativo.</li>
 </ul>
-<p>Podremos cambiar la configuraciÛn de forma que se eliminen algunas de estas
+<p>Podremos cambiar la configuraci√≥n de forma que se eliminen algunas de estas
 restricciones, estableciendo los permisos necesarios para ello. De la misma
 forma, aunque las aplicaciones no tengan por defecto estas restricciones de
-seguridad, podremos hacer que tambiÈn se vean sujetas a ellas.</p>
-<h2 class="subsection">5.3. Ficheros de polÌticas de seguridad</h2>
-<p>Los ficheros de polÌtica (<i>policy</i>) establecen la polÌticas de
-seguridad (permisos) que se llevar·n a cabo en los programas
+seguridad, podremos hacer que tambi√©n se vean sujetas a ellas.</p>
+<h2 class="subsection">5.3. Ficheros de pol√≠ticas de seguridad</h2>
+<p>Los ficheros de pol√≠tica (<i>policy</i>) establecen la pol√≠ticas de
+seguridad (permisos) que se llevar√°n a cabo en los programas
 Java que utilicemos. Estos ficheros son ficheros de texto que pueden ser
 editados con cualquier editor ASCII o bien con la herramienta incluida en la
-distribuciÛn de JDK para tal fin: <i>Policy Tool</i>.</p>
-<p>Para ejecutar la aplicaciÛn <i>Policy Tool </i>deberemos introducir en la
-lÌnea de comando:</p>
+distribuci√≥n de JDK para tal fin: <i>Policy Tool</i>.</p>
+<p>Para ejecutar la aplicaci√≥n <i>Policy Tool </i>deberemos introducir en la
+l√≠nea de comando:</p>
 <pre class="codigo">policytool</pre>
-<p>Hecho esto se mostrar· la aplicaciÛn, que intentar· buscar el fichero de
-polÌticas por defecto (<b>.java.policy</b>) en el directorio HOME del usuario
-actual (o en el directorio donde estÈ instalado el S.O. en caso de que no sea
-multiusuario). Si no localiza dicho fichero la aplicaciÛn aparecer· en blanco:</p>
+<p>Hecho esto se mostrar√° la aplicaci√≥n, que intentar√° buscar el fichero de
+pol√≠ticas por defecto (<b>.java.policy</b>) en el directorio HOME del usuario
+actual (o en el directorio donde est√© instalado el S.O. en caso de que no sea
+multiusuario). Si no localiza dicho fichero la aplicaci√≥n aparecer√° en blanco:</p>
 <div align="center"><img border="0" src="imagenes/seguridad/7-1.gif" width="559" height="306"></div>
 <p>Para otorgar permisos deberemos <i>Agregar entrada de norma</i>. Al pulsar
-este botÛn se nos mostrar· la siguiente ventana:</p>
+este bot√≥n se nos mostrar√° la siguiente ventana:</p>
 <div align="center"><img border="0" src="imagenes/seguridad/7-2.gif" width="600" height="498"></div>
-<p>En esta ventana deberemos especificar a quÈ programas afectar· la norma
-creada. Si no se especifica nada, la norma afectar· a cualquier programa.
-Podemos restringir el n˙mero de programas afectados por la norma especificando:</p>
+<p>En esta ventana deberemos especificar a qu√© programas afectar√° la norma
+creada. Si no se especifica nada, la norma afectar√° a cualquier programa.
+Podemos restringir el n√∫mero de programas afectados por la norma especificando:</p>
 <ul>
-  <li><i>Base de cÛdigos</i> (CodeBase): Se refiere a la localizaciÛn de los
-    programas afectados por la norma. AquÌ podemos introducir una URL referida
-    a un directorio, de forma que la norma se aplicar· a todos los programas
-    alojados en dicho directorio. Si a la norma le ponemos el sufijo - (guiÛn),
-    la normal ser· aplicable a todos los ficheros del directorio especificado,
+  <li><i>Base de c√≥digos</i> (CodeBase): Se refiere a la localizaci√≥n de los
+    programas afectados por la norma. Aqu√≠ podemos introducir una URL referida
+    a un directorio, de forma que la norma se aplicar√° a todos los programas
+    alojados en dicho directorio. Si a la norma le ponemos el sufijo - (gui√≥n),
+    la normal ser√° aplicable a todos los ficheros del directorio especificado,
     y a los de todos sus subdirectorios.</li>
-  <li><i>Firmado por</i> (Signed by): AquÌ podemos especificar quien debe haber
+  <li><i>Firmado por</i> (Signed by): Aqu√≠ podemos especificar quien debe haber
     firmado el programa para que la norma le sea aplicable.</li>
 </ul>
 <p>Una vez definido el grupo de programas afectado por la norma, podemos pasar a
 agregar los permisos que deseemos otorgar a dichos programas. Para ello pulsamos
-en <i>Agregar permiso</i>, tras lo cual aparecer· la siguiente ventana:</p>
+en <i>Agregar permiso</i>, tras lo cual aparecer√° la siguiente ventana:</p>
 <div align="center"><img border="0" src="imagenes/seguridad/7-3.gif" width="600" height="249"></div>
-<p>En el men˙ de permisos deberemos seleccionar el tipo de permiso que queramos
-otorgar. Seg˙n el tipo de permiso seleccionado podremos o no dar valor al resto
-de campos, que se referir·n a datos sobre el permiso seleccionado.</p>
+<p>En el men√∫ de permisos deberemos seleccionar el tipo de permiso que queramos
+otorgar. Seg√∫n el tipo de permiso seleccionado podremos o no dar valor al resto
+de campos, que se referir√°n a datos sobre el permiso seleccionado.</p>
 <p>Una vez introducidos los datos, pulsamos <i>Aceptar</i> para que el permiso
-sea aÒadido a la norma. Cuando hayamos terminado de aÒadir permisos a la norma pulsamos <i>Terminar</i> y veremos la norma en la lista de normas. Ahora
-podemos grabar el fichero de polÌticas desde el men˙ <i>Archivo</i>, mediante
-la opciÛn <i>Guardar como</i>.</p>
-<p>Cuando se ejecuta una aplicaciÛn o <i>Applet</i> con un manejador de seguridad, los
-ficheros de polÌticas que se cargan son los definidos en el fichero de
+sea a√±adido a la norma. Cuando hayamos terminado de a√±adir permisos a la norma pulsamos <i>Terminar</i> y veremos la norma en la lista de normas. Ahora
+podemos grabar el fichero de pol√≠ticas desde el men√∫ <i>Archivo</i>, mediante
+la opci√≥n <i>Guardar como</i>.</p>
+<p>Cuando se ejecuta una aplicaci√≥n o <i>Applet</i> con un manejador de seguridad, los
+ficheros de pol√≠ticas que se cargan son los definidos en el fichero de
 propiedades de seguridad que se encuentra en el directorio <b>{java.home}/lib/security/java.security</b>.</p>
-<p>Para utilizar el fichero de polÌticas que hayamos definido, podemos optar
-bien por aÒadirlo a este fichero de propiedades de seguridad, o bien aÒadirlo
-como propiedad del sistema el ejecutar el intÈrprete Java, utilizando para ello
-el siguiente par·metro:</p>
+<p>Para utilizar el fichero de pol√≠ticas que hayamos definido, podemos optar
+bien por a√±adirlo a este fichero de propiedades de seguridad, o bien a√±adirlo
+como propiedad del sistema el ejecutar el int√©rprete Java, utilizando para ello
+el siguiente par√°metro:</p>
 <pre class="codigo">appletviewer <b>-J-Djava.security.policy=mipolitica</b> MiApplet</pre>
-<p>De esta manera estamos forzando a que se utilice la polÌtica definida en el
+<p>De esta manera estamos forzando a que se utilice la pol√≠tica definida en el
 fichero <b>mipolitica</b>.</p>
-<p>En una aplicaciÛn Java por defecto no se instala ning˙n gestor de
+<p>En una aplicaci√≥n Java por defecto no se instala ning√∫n gestor de
 seguridad. Si queremos imponer restricciones de seguridad podemos forzar que se
 cargue un gestor de seguridad por defecto llamando al interprete con el
-par·metro:</p>
+par√°metro:</p>
 <pre class="codigo">java <b>-Djava.security.manager</b> MiAplicacion</pre>
-<p>Podemos adem·s especificar el fichero de polÌticas que queremos que utilice
+<p>Podemos adem√°s especificar el fichero de pol√≠ticas que queremos que utilice
 el gestor de seguridad cargado, esto lo haremos de la siguiente forma:</p>
 <pre class="codigo">java -Djava.security.manager 
 		<b>-Djava.security.policy=mipolitica </b>MiAplicacion</pre>
 <h2 class="subsection">5.4. Gestor de seguridad</h2>
-<p>El gestor de seguridad (<b>SecurityManager</b>) ser· el objeto encargado de
-determinar si cierta operaciÛn es permitida o no, impidiendo su realizaciÛn en
-tal caso. Cuando una aplicaciÛn carga un gestor de seguridad todas las acciones
+<p>El gestor de seguridad (<b>SecurityManager</b>) ser√° el objeto encargado de
+determinar si cierta operaci√≥n es permitida o no, impidiendo su realizaci√≥n en
+tal caso. Cuando una aplicaci√≥n carga un gestor de seguridad todas las acciones
 que vaya a realizar sujetas a posibles restricciones de seguridad se
-comprobar·n en dicho gestor antes de ser realizadas.</p>
+comprobar√°n en dicho gestor antes de ser realizadas.</p>
 <p>En el caso de los <i>Applets</i> es el navegador el encargado de instalar en ellos
-el gestor de seguridad por defecto, por lo que siempre estar·n sujetos a
+el gestor de seguridad por defecto, por lo que siempre estar√°n sujetos a
 restricciones de seguridad.</p>
-<p>En las aplicaciones independientes no se carga por defecto ning˙n gestor de
-seguridad, pero podremos hacer que se cargue bien indic·ndolo en la lÌnea de
-comando como hemos visto en el punto anterior, o bien desde el mismo cÛdigo de
-nuestra aplicaciÛn.</p>
-<p>El gestor de seguridad por defecto (clase <b>SecurityManager</b>) ser· el
+<p>En las aplicaciones independientes no se carga por defecto ning√∫n gestor de
+seguridad, pero podremos hacer que se cargue bien indic√°ndolo en la l√≠nea de
+comando como hemos visto en el punto anterior, o bien desde el mismo c√≥digo de
+nuestra aplicaci√≥n.</p>
+<p>El gestor de seguridad por defecto (clase <b>SecurityManager</b>) ser√° el
 gestor que carguen los <i>Applets</i>, o las aplicaciones cuando lo especifiquemos en
-la lÌnea de comando. Este gestor de seguridad seguir· la polÌtica de
-seguridad indicada en los ficheros de polÌticas que hayamos indicado (tanto en
-el fichero de propiedades de seguridad como en la lÌnea de comando).</p>
-<h2 class="subsection">5.5. CreaciÛn de nuestro propio gestor de seguridad</h2>
-<p>Adem·s de poder utilizar el gestor de seguridad definido por defecto,
-tambiÈn podremos definir nuestro propio gestor de seguridad creando una
+la l√≠nea de comando. Este gestor de seguridad seguir√° la pol√≠tica de
+seguridad indicada en los ficheros de pol√≠ticas que hayamos indicado (tanto en
+el fichero de propiedades de seguridad como en la l√≠nea de comando).</p>
+<h2 class="subsection">5.5. Creaci√≥n de nuestro propio gestor de seguridad</h2>
+<p>Adem√°s de poder utilizar el gestor de seguridad definido por defecto,
+tambi√©n podremos definir nuestro propio gestor de seguridad creando una
 subclase de <b>SecurityManager</b> y sobrescribiendo en ella una serie de
-mÈtodos para darles el comportamiento que queramos.</p>
-<p>Esta clase tiene una serie de mÈtodos de nombre <b>checkXXXX</b> donde <b> XXXX</b>
-se refiere el tipo de operaciÛn de la que comprueban el permiso. Por ejemplo, <b>checkRead(String
-filename)</b> comprobar· si se permite la lectura de un determinado fichero,
-dado su nombre. Estos mÈtodos comprobar·n si la operaciÛn en cuestiÛn est·
-permitida. En caso de estar permitida, el mÈtodo simplemente devolver· el
-control al llamador y se continuar· la ejecuciÛn de forma normal, mientras que
-si no se permite la operaciÛn, lo que har· ser· lanzar una excepciÛn <b>SecurityException</b>,
-lo cual interrumpir· el flujo normal del programa.</p>
-<p>Por lo tanto, cuando se vaya a realizar una acciÛn susceptible de no tener
-permiso, lo que har· el mÈtodo que realice dicha operaciÛn ser· previamente
-comprobar si hay alg˙n manejador de seguridad instalado, y de ser asÌ llamar·
-al mÈtodo <b> checkXXXX</b> asociado a la operaciÛn que vaya a realizar. Si est·
-permitida nos devolver· el control de forma normal podremos realizar la
-operaciÛn, mientras que si no lo est· se producir· una excepciÛn
-interrumpiÈndose asÌ el flujo normal del programa e impidiÈndose por lo tanto
-la realizaciÛn de la operaciÛn.</p>
-<p>La implementaciÛn de la operaciÛn de salida, por ejemplo, ser· como la
+m√©todos para darles el comportamiento que queramos.</p>
+<p>Esta clase tiene una serie de m√©todos de nombre <b>checkXXXX</b> donde <b> XXXX</b>
+se refiere el tipo de operaci√≥n de la que comprueban el permiso. Por ejemplo, <b>checkRead(String
+filename)</b> comprobar√° si se permite la lectura de un determinado fichero,
+dado su nombre. Estos m√©todos comprobar√°n si la operaci√≥n en cuesti√≥n est√°
+permitida. En caso de estar permitida, el m√©todo simplemente devolver√° el
+control al llamador y se continuar√° la ejecuci√≥n de forma normal, mientras que
+si no se permite la operaci√≥n, lo que har√° ser√° lanzar una excepci√≥n <b>SecurityException</b>,
+lo cual interrumpir√° el flujo normal del programa.</p>
+<p>Por lo tanto, cuando se vaya a realizar una acci√≥n susceptible de no tener
+permiso, lo que har√° el m√©todo que realice dicha operaci√≥n ser√° previamente
+comprobar si hay alg√∫n manejador de seguridad instalado, y de ser as√≠ llamar√°
+al m√©todo <b> checkXXXX</b> asociado a la operaci√≥n que vaya a realizar. Si est√°
+permitida nos devolver√° el control de forma normal podremos realizar la
+operaci√≥n, mientras que si no lo est√° se producir√° una excepci√≥n
+interrumpi√©ndose as√≠ el flujo normal del programa e impidi√©ndose por lo tanto
+la realizaci√≥n de la operaci√≥n.</p>
+<p>La implementaci√≥n de la operaci√≥n de salida, por ejemplo, ser√° como la
 siguiente:</p>
 <pre class="codigo">public void exit(int status) {
 &nbsp;&nbsp;&nbsp; <b>SecurityManager</b> security = System.<b>getSecurityManager</b>();
@@ -164,18 +164,18 @@ siguiente:</p>
 		security.<b>checkExit</b>(status);
 &nbsp;&nbsp;&nbsp; }
 
-&nbsp;&nbsp;&nbsp; // Este cÛdigo sÛlo se ejecutar· si checkExit() termina.
-&nbsp;&nbsp;&nbsp; // AquÌ realizaremos la operaciÛn de salida de la aplicaciÛn.
+&nbsp;&nbsp;&nbsp; // Este c√≥digo s√≥lo se ejecutar√° si checkExit() termina.
+&nbsp;&nbsp;&nbsp; // Aqu√≠ realizaremos la operaci√≥n de salida de la aplicaci√≥n.
 }</pre>
 <p>Vemos en el ejemplo que para obtener el gestor de seguridad instalado
-actualmente se utiliza el mÈtodo <b>getSecurityManager </b>de la clase <b>System</b>.</p>
+actualmente se utiliza el m√©todo <b>getSecurityManager </b>de la clase <b>System</b>.</p>
 <p>Para escribir nuestro propio gestor de seguridad deberemos redefinir todos
-los mÈtodos <b>checkXXXX</b> de los cuales queramos cambiar el comportamiento,
-aÒadiendo cÛdigo que compruebe si se dan las condiciones para otorgar permiso,
-lanzando una excepciÛn <b>SecurityException&nbsp;</b> en caso de no permitirse
-la acciÛn.</p>
-<p>Por ejemplo, si queremos permitir ˙nicamente que una aplicaciÛn salga con
-cÛdigo de salida 0, podrÌamos crear el siguiente gestor de seguridad propio.</p>
+los m√©todos <b>checkXXXX</b> de los cuales queramos cambiar el comportamiento,
+a√±adiendo c√≥digo que compruebe si se dan las condiciones para otorgar permiso,
+lanzando una excepci√≥n <b>SecurityException&nbsp;</b> en caso de no permitirse
+la acci√≥n.</p>
+<p>Por ejemplo, si queremos permitir √∫nicamente que una aplicaci√≥n salga con
+c√≥digo de salida 0, podr√≠amos crear el siguiente gestor de seguridad propio.</p>
 <pre class="codigo">class MiGestor extends <b>SecurityManager</b> {
     public void <b>checkExit</b>(int status) throws <b>SecurityException</b> {
         if(status != 0)
@@ -184,24 +184,24 @@ cÛdigo de salida 0, podrÌamos crear el siguiente gestor de seguridad propio.</p>
 }</pre>
 <p>Una vez creado el gestor de seguridad, para que se haga efectivo deberemos
 instalarlo.</p>
-<h2 class="subsection">5.6. InstalaciÛn de un gestor de seguridad</h2>
+<h2 class="subsection">5.6. Instalaci√≥n de un gestor de seguridad</h2>
 <p>Para instalar un gestor de seguridad, de forma que sea utilizado para
-establecer las operaciones permitidas, utilizaremos el mÈtodo <b>setSecurityManager
+establecer las operaciones permitidas, utilizaremos el m√©todo <b>setSecurityManager
 </b>de la clase <b>System</b>. Por ejemplo, si queremos instalar el gestor de
 seguridad definido en el ejemplo anterior haremos:</p>
 <pre class="codigo">MiGestor gestor = new MiGestor();
 System.<b>setSecurityManager</b>(gestor);</pre>
-<p>Pero, øquÈ ocurrirÌa si un mÈtodo &quot;malicioso&quot; sustituyese el
+<p>Pero, ¬øqu√© ocurrir√≠a si un m√©todo &quot;malicioso&quot; sustituyese el
 gestor de seguridad actual por uno que otorgue todos los permisos? Si esto
 ocurriese, simplemente instalando un manejador de seguridad propio cualquier
-programa podrÌa saltarse las restricciones de seguridad y todo el sistema de
-seguridad de Java no servirÌa para nada. Para evitar este problema lo que
-ocurre es que si hay instalado un gestor de seguridad no se nos permitir·
+programa podr√≠a saltarse las restricciones de seguridad y todo el sistema de
+seguridad de Java no servir√≠a para nada. Para evitar este problema lo que
+ocurre es que si hay instalado un gestor de seguridad no se nos permitir√°
 instalar otro.</p>
-<p>Cualquier programa (aplicaciÛn o <i>Applet</i>) que se cargue con un gestor de
-seguridad instalado por defecto no permitir· que instalemos nuestro propio
-gestor dentro del cÛdigo. De igual forma, si en una aplicaciÛn instalamos un
-gestor de seguridad en tiempo de ejecuciÛn (dentro del cÛdigo), no podremos
+<p>Cualquier programa (aplicaci√≥n o <i>Applet</i>) que se cargue con un gestor de
+seguridad instalado por defecto no permitir√° que instalemos nuestro propio
+gestor dentro del c√≥digo. De igual forma, si en una aplicaci√≥n instalamos un
+gestor de seguridad en tiempo de ejecuci√≥n (dentro del c√≥digo), no podremos
 sustituirlo posteriormente por otro ni eliminarlo.</p>
 </body>
 </html>

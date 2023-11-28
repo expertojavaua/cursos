@@ -40,7 +40,7 @@ una referencia local en el cliente al objeto remoto). Por otra parte, el <i>Skel
 parte del servidor, es la parte del objeto remoto en el servidor que comunica con el <i>Stub</i>
  que hay en el cliente, y entre ambos circulan los datos por la red.
 <br>
-<h2>7.2. CreaciÛn de un servidor RMI</h2>
+<h2>7.2. Creaci√≥n de un servidor RMI</h2>
 <p>
 Un servidor RMI consiste en definir un objeto remoto que va a ser utilizado por los clientes. Para crear un objeto remoto, se define
 un <b>interfaz</b>, y el objeto remoto ser&aacute; una <b>clase</b> que implementa
@@ -80,17 +80,17 @@ implements MiInterfazRemoto
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp; public void miMetodo1() throws java.rmi.RemoteException
 &nbsp;&nbsp; {
-&nbsp;&nbsp;&nbsp; ... // AquÌ pondremos el cÛdigo que queramos
+&nbsp;&nbsp;&nbsp; ... // Aqu√≠ pondremos el c√≥digo que queramos
 &nbsp;&nbsp; }
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp; public int miMetodo2() throws java.rmi.RemoteException
 &nbsp;&nbsp; {
-&nbsp;&nbsp;&nbsp; ... // AquÌ pondremos el cÛdigo que queramos
+&nbsp;&nbsp;&nbsp; ... // Aqu√≠ pondremos el c√≥digo que queramos
 &nbsp;&nbsp; }
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp; public void otroMetodo()
 &nbsp;&nbsp; {
-&nbsp;&nbsp;&nbsp; ... // Si definieramos este mÈtodo no podrÌa llamarse 
+&nbsp;&nbsp;&nbsp; ... // Si definieramos este m√©todo no podr√≠a llamarse 
 	// remotamente al no ser del interfaz remoto
 &nbsp;&nbsp; }
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -115,8 +115,8 @@ poder utilizarlos remotamente.<p>Luego, dentro de la clase, definimos un <b>cons
 la excepci&oacute;n <i>RemoteException</i> porque tambi&eacute;n la lanza
 la superclase <i>UnicastRemoteObject</i>), y los <b>m&eacute;todos</b>
 de la/las interfaz/interfaces que implemente, adem&aacute;s de los m&eacute;todos
-adicionales que queramos definir (que no podr·n llamarse remotamente, ser·n
-locales a la m·quina servidor).
+adicionales que queramos definir (que no podr√°n llamarse remotamente, ser√°n
+locales a la m√°quina servidor).
 <p>Finalmente, en el m&eacute;todo <b>main</b> se define el c&oacute;digo
 para:
 <ul>
@@ -140,7 +140,7 @@ nombre identificativo (primer par&aacute;metro):</li>
   <pre class="codigo">Naming.rebind(nombre, objeto_remoto);</pre>
   <p> de forma que ante una
 petici&oacute;n del objeto se buscar&aacute; por su nombre. Dicho nombre
-  contiene la direcciÛn IP (y opcionalmente el puerto) donde se colocar· el
+  contiene la direcci√≥n IP (y opcionalmente el puerto) donde se colocar√° el
   servidor RMI, y el nombre que identifica al objeto remoto, quedando:</p>
   <pre class="codigo">&quot;//direccion_IP:puerto/nombre&quot;</pre>
   <p>En este caso:</p>
@@ -149,12 +149,12 @@ java.net.InetAddress.getLocalHost().getHostAddress() +
 &quot;:&quot; + 
 args[0] + 
 &quot;/PruebaRMI&quot;</pre>
-  <p>La clase <i>InetAddress </i>se utiliza para obtener la direcciÛn IP de la
-  m·quina local. Luego se concatena con el puerto por el que se escuchar·n las
-  peticiones de los clientes (que se pasa como par·metro del <i>main()</i>, y
+  <p>La clase <i>InetAddress </i>se utiliza para obtener la direcci√≥n IP de la
+  m√°quina local. Luego se concatena con el puerto por el que se escuchar√°n las
+  peticiones de los clientes (que se pasa como par√°metro del <i>main()</i>, y
   por defecto es el 1099). El final de la cadena (<i>PruebaRMI</i>) es el nombre
   que le damos al objeto RMI. Cuando un cliente quiera un objeto de este tipo,
-  buscar· un objeto con el nombre indicado, como veremos m·s adelante.</p>
+  buscar√° un objeto con el nombre indicado, como veremos m√°s adelante.</p>
 </blockquote>
 Notar que el m&eacute;todo <i>main()</i> se coloca dentro de la misma clase
 servidor por comodidad. Podr&iacute;a definirse otra clase aparte que fuese
@@ -238,19 +238,19 @@ Finalmente, <b>se lanza el servidor</b>:</li>
 &nbsp;    MiClaseRemota 1200</pre>
 </blockquote>
 
-<blockquote>Donde con <b>ñDjava.rmi.server.hostname</b> se indica el nombre
-del servidor (para asegurarnos de que RMI lo obtiene), con <b>ñDjava.rmi.server.codebase</b>
+<blockquote>Donde con <b>¬ñDjava.rmi.server.hostname</b> se indica el nombre
+del servidor (para asegurarnos de que RMI lo obtiene), con <b>¬ñDjava.rmi.server.codebase</b>
 se indica la URL donde est&aacute;n las clases que se env&iacute;an a otras
 m&aacute;quinas (es opcional, podr&iacute;a no ser necesario; har&iacute;a
 falta si el cliente no encuentra las clases del servidor a las que debe
-acceder), y finalmente <b>ñDjava.security.policy</b> indica el fichero
+acceder), y finalmente <b>¬ñDjava.security.policy</b> indica el fichero
 de pol&iacute;tica de seguridad que se tiene (el fichero
-creado antes).&nbsp;Al servidor se le pasaba como par·metro, recordemos, el puerto por el que
+creado antes).&nbsp;Al servidor se le pasaba como par√°metro, recordemos, el puerto por el que
   escuchar peticiones.
 </blockquote>
 
 <h2>&nbsp;</h2>
-<h2>7.3. CreaciÛn de un cliente RMI</h2>
+<h2>7.3. Creaci√≥n de un cliente RMI</h2>
 <p>Vamos a definir el cliente
 que acceder&aacute; a el/los objeto/s remoto/s que creemos.</p>
 <p><b>1. Definir la clase para obtener los objetos remotos que se quieran</b>
@@ -354,10 +354,10 @@ Luego, <b>se ejecuta el cliente</b>:</li>
 </ul>
 
 <blockquote>Donde los par&aacute;metros sirven para lo mismo que en el
-servidor. Al cliente se le pasan como par·metros la direcciÛn IP del servidor
-  y el puerto por el que estar· escuchando.</blockquote>
+servidor. Al cliente se le pasan como par√°metros la direcci√≥n IP del servidor
+  y el puerto por el que estar√° escuchando.</blockquote>
 <p>&nbsp;
-<h2>7.4. Acceso a objetos remotos. SerializaciÛn</h2>
+<h2>7.4. Acceso a objetos remotos. Serializaci√≥n</h2>
 <p>
 Los argumentos y los tipos de retorno que utilicemos en objetos remotos
 pueden ser de casi cualquier tipo Java, siempre que dicho tipo sea:</p>
@@ -374,7 +374,7 @@ interfaz <b>java.io.Serializable</b>.</li>
 </ul>
 Hay algunos objetos Java que no son serializables (por ejemplo, im&aacute;genes),
 y por lo tanto no pueden ser pasados a ni devueltos por objetos remotos, es
-decir, no pueden circular por la conexiÛn RMI.
+decir, no pueden circular por la conexi√≥n RMI.
 Pero muchas clases de utilidad s&iacute; definen dicho interfaz, y tambi&eacute;n
 podemos definirnos nuestras propias clases que lo implementen.<p>Por ejemplo, si queremos
 obtener un objeto de tipo <i>MiParametro</i>
@@ -431,12 +431,12 @@ implements MiInterfazRemoto
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp; public void&nbsp; miMetodo1() throws java.rmi.RemoteException
 &nbsp; {
-&nbsp;&nbsp;&nbsp; ... // AquÌ pondremos el cÛdigo que queramos
+&nbsp;&nbsp;&nbsp; ... // Aqu√≠ pondremos el c√≥digo que queramos
 &nbsp; }
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp; public int&nbsp; miMetodo2() throws java.rmi.RemoteException
 &nbsp; {
-&nbsp;&nbsp;&nbsp; ... // AquÌ pondremos el cÛdigo que queramos
+&nbsp;&nbsp;&nbsp; ... // Aqu√≠ pondremos el c√≥digo que queramos
 &nbsp; }
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp; public static void main(String[] args) throws Exception
@@ -470,37 +470,37 @@ El servidor es muy parecido al anterior, salvo porque en el constructor
 se pasan dos par&aacute;metros, y porque el m&eacute;todo <i>main()</i>
 tiene una forma distinta de registrarlo:
 <ul>
-  <li>Con el objeto <i>Properties</i> se establece el fichero de polÌtica de
+  <li>Con el objeto <i>Properties</i> se establece el fichero de pol√≠tica de
 seguridad.</li>
-  <li>El objeto <i>ActivationGroupDesc</i> es un descriptor de un grupo de activaciÛn. En
-un grupo de activaciÛn podremos activar objetos remotos para que puedan acceder
+  <li>El objeto <i>ActivationGroupDesc</i> es un descriptor de un grupo de activaci√≥n. En
+un grupo de activaci√≥n podremos activar objetos remotos para que puedan acceder
 los clientes.</li>
   <li>El objeto <i>ActivationGroupID</i> es un identificador para un grupo de
-    activaciÛn. Se registra el grupo creado con el <i>ActivationGroupDesc</i>,
+    activaci√≥n. Se registra el grupo creado con el <i>ActivationGroupDesc</i>,
     y se obtiene el identificador del registro.</li>
   <li>El objeto <i>MarshalledObject</i> se emplea para indicar datos de
-    inicializaciÛn, si se requieren</li>
+    inicializaci√≥n, si se requieren</li>
   <li>El objeto <i>ActivationDesc</i>
     registra el objeto en el demonio <i>rmid</i>. Al crearlo, se pasan como
-    par·metros:
+    par√°metros:
     <ul>
       <li>El identificador del grupo creado (el objeto <i>ActivationGroupID</i>)</li>
       <li>La clase del objeto remoto que se quiere registrar</li>
-      <li>La localizaciÛn de dicha clase</li>
-      <li>Un objeto <i>MarshalledObject</i> con datos de inicializaciÛn, si se
+      <li>La localizaci√≥n de dicha clase</li>
+      <li>Un objeto <i>MarshalledObject</i> con datos de inicializaci√≥n, si se
         necesitan</li>
     </ul>
   </li>
 </ul>
 <p>Con eso, se obtiene un objeto remoto (<i>MiInterfazRemoto</i>), llamando al
-mÈtodo <i>register()</i> de <i>Activatable</i>, pas·ndole como par·metro el <i>ActivationDesc</i>
-creado con todos los pasos anteriores. DespuÈs ya se tiene el mÈtodo <i>rebind()</i>
+m√©todo <i>register()</i> de <i>Activatable</i>, pas√°ndole como par√°metro el <i>ActivationDesc</i>
+creado con todos los pasos anteriores. Despu√©s ya se tiene el m√©todo <i>rebind()</i>
 visto en el servidor primero.
 <br>&nbsp;</p>
 <p><b>3. Compilar y ejecutar el servidor</b>
 <p>Para <b>compilar</b> el servidor se siguen los mismos pasos que para
 el servidor normal. Para ejecutarlo tambi&eacute;n, salvo que se debe lanzar
-tambi&eacute;n el demonio <i>rmid </i>(antes o despuÈs de lanzar el <i>rmiregistry</i>):
+tambi&eacute;n el demonio <i>rmid </i>(antes o despu√©s de lanzar el <i>rmiregistry</i>):
 <pre class="codigo">start rmid -J-Djava.security.policy=java.policy	
 (Windows)
 rmid -J-Djava.security.policy=java.policy &amp;	
@@ -509,14 +509,14 @@ Se debe indicar el fichero de pol&iacute;tica de seguridad para indicar
 al demonio que se permite acceder a dicho fichero como par&aacute;metro.
 <br>&nbsp;
 <p>&nbsp;</p>
-<p><b>NOTA</b>: tanto los par·metros <i>-Djava... </i>que se utilizan para
-ejecutar servidores y clientes como la gestiÛn de seguridad mediante ficheros <i>java.policy</i>
-y objetos <i>SecurityManager</i> son elementos opcionales. Se mencionan aquÌ
-para tener la forma general de una aplicaciÛn RMI, aunque dependiendo del tipo
-de aplicaciÛn se pueden omitir unos elementos u otros.</p>
+<p><b>NOTA</b>: tanto los par√°metros <i>-Djava... </i>que se utilizan para
+ejecutar servidores y clientes como la gesti√≥n de seguridad mediante ficheros <i>java.policy</i>
+y objetos <i>SecurityManager</i> son elementos opcionales. Se mencionan aqu√≠
+para tener la forma general de una aplicaci√≥n RMI, aunque dependiendo del tipo
+de aplicaci√≥n se pueden omitir unos elementos u otros.</p>
 
 <p>&nbsp;
-<p>AquÌ tenÈis un <a href="ejemplos/rmi/ejemploRMI.zip">fichero
+<p>Aqu√≠ ten√©is un <a href="ejemplos/rmi/ejemploRMI.zip">fichero
 ZIP</a> con el ejemplo completo de la sesi&oacute;n:</p>
 <ul>
   <li>En la carpeta <b>serializable</b> tenemos la clase serializable <b>MiParametro</b>
@@ -533,7 +533,7 @@ ZIP</a> con el ejemplo completo de la sesi&oacute;n:</p>
     JAR <i>objRemotos.jar</i> explicado antes, para localizar el interfaz a
     implementar y el objeto <i>MiParametro</i> que utiliza. Tiene un comando <b>compilar</b>
     para compilar el servidor, y para ejecutarlo se llama al comando <b>ejecutar</b>,
-    pas·ndole como par·metro el puerto por el que escuchar peticiones:</li>
+    pas√°ndole como par√°metro el puerto por el que escuchar peticiones:</li>
 </ul>
 <blockquote>
 <pre class="codigo">compilar
@@ -549,17 +549,17 @@ ejecutar 1200
   <li>En la carpeta <b>servidor2</b> tenemos la clase <b>MiClaseRemota2</b>,
     similar al anterior servidor, pero implementando el interfaz remoto mediante
     la clase <i>Activatable</i> (el segundo tipo de servidor visto). Tiene
-    tambiÈn los comandos <b>compilar</b> y <b>ejecutar</b>, que se utilizan
+    tambi√©n los comandos <b>compilar</b> y <b>ejecutar</b>, que se utilizan
     como en el primer servidor.</li>
   <li>En la carpeta <b>cliente</b> tenemos el cliente RMI <b>MiClienteRMI</b>.
     Utiliza el fichero JAR <i>objRemotos.jar</i> explicado antes, para localizar
     el interfaz del objeto remoto que debe solicitar, el objeto <i>MiParametro</i>
     que pide. Tiene el comando <b>compilar</b> para compilar el cliente, y <b>ejecutar</b>
     para ejecutarlo. Para ejecutar el cliente, tenemos que haber ejecutado antes
-    uno de los servidores, lÛgicamente, para poderse conectar a Èl. Luego,
+    uno de los servidores, l√≥gicamente, para poderse conectar a √©l. Luego,
     tenemos que tener copiado en la carpeta del cliente el fichero <i>Stub </i>del
     servidor al que nos conectamos. Con todo esto, llamamos al comando <i>ejecutar</i>
-    del cliente, pas·ndole como par·metros la IP del servidor al que conectar,
+    del cliente, pas√°ndole como par√°metros la IP del servidor al que conectar,
     y el puerto por el que escucha:</li>
 </ul>
 <blockquote>
@@ -568,8 +568,8 @@ ejecutar 1200
 . ./ejecutar.sh 192.168.12.1 1200	
 (Linux)</pre>
 </blockquote>
-<p>PodÈis probar a conectar un cliente con un servidor RMI colocado en una
-m·quina distinta, y probar asÌ la verdadera utilidad de RMI.</p>
+<p>Pod√©is probar a conectar un cliente con un servidor RMI colocado en una
+m√°quina distinta, y probar as√≠ la verdadera utilidad de RMI.</p>
 <p>
 <br></p>
 </body>

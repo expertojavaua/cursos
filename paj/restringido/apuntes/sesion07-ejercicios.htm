@@ -31,7 +31,7 @@ chat.</li>
 <li>
 La clase <b>AccesoFicheroUsuarios</b> implementa la interfaz anterior para
 gestionar los usuarios guardando sus datos en un fichero, y leyendo del
-fichero dichos datos. El fichero en cuestiÛn es <i>datos\usuarios</i>.<b> </b>M&aacute;s adelante se gestionar&aacute;n los usuarios
+fichero dichos datos. El fichero en cuesti√≥n es <i>datos\usuarios</i>.<b> </b>M&aacute;s adelante se gestionar&aacute;n los usuarios
 por base de datos (con lo que habr&aacute; que hacer otra clase que implemente
 la interfaz y acceda a bases de datos en lugar de a ficheros)</li>
 
@@ -73,7 +73,7 @@ modo texto, que muestra las opciones y permite conectar con un <i>ServidorChat</
 </ul>
 
 <p>Se tienen unos scripts (BAT para Windows, SH para Linux) para poder compilar y ejecutar el
-ejemplo. SÛlo hay que colocarse en el directorio donde estÈn y ejecutar el
+ejemplo. S√≥lo hay que colocarse en el directorio donde est√©n y ejecutar el
 comando apropiado.
 <ul>
   <li>El fichero <b>compilar</b> permite compilar todo el ejemplo</li>
@@ -92,8 +92,8 @@ comando apropiado.
 . ./servidor.sh		(Linux)</pre>
 </blockquote>
 <ul>
-  <li>El fichero <b>cliente</b> ejecuta el cliente, pas·ndole como par·metro
-    la direcciÛn IP del servidor al que conectar.</li>
+  <li>El fichero <b>cliente</b> ejecuta el cliente, pas√°ndole como par√°metro
+    la direcci√≥n IP del servidor al que conectar.</li>
 </ul>
 
 <blockquote>
@@ -125,34 +125,34 @@ Otra zona para poder enviar mensajes al chat</li>
 </blockquote>
 Se os proporciona un <b>esqueleto</b>
 de aplicaci&oacute;n en el fichero <i>AplicChat.java</i>, que iremos modificando
-hasta obtener la aplicaciÛn completa.&nbsp;
-<p> La clase sÛlo tiene el cÛdigo para
-conectar a la direcciÛn IP del servidor (sÛlo tiene los controles de la parte
-superior para conectar con la IP que se escriba en el cuadro de texto. TendrÈis
-que modificar el cÛdigo si utilizais vuestro propio motor de chat y es distinto
+hasta obtener la aplicaci√≥n completa.&nbsp;
+<p> La clase s√≥lo tiene el c√≥digo para
+conectar a la direcci√≥n IP del servidor (s√≥lo tiene los controles de la parte
+superior para conectar con la IP que se escriba en el cuadro de texto. Tendr√©is
+que modificar el c√≥digo si utilizais vuestro propio motor de chat y es distinto
 al que se os da).&nbsp;</p>
-<p> Lo que haremos ser· construir el resto de la aplicaciÛn (lo
-que queda abajo). Todo el cÛdigo lo ten&eacute;is
+<p> Lo que haremos ser√° construir el resto de la aplicaci√≥n (lo
+que queda abajo). Todo el c√≥digo lo ten&eacute;is
 que colocar en el m&eacute;todo <b>init()</b>, puesto que luego en posteriores
 sesiones se convertir&aacute; esta aplicaci&oacute;n en applet. Aparte
-pod&eacute;is definir vuestros propios m&eacute;todos si querÈis (sin tocar el <i>constructor</i>
+pod&eacute;is definir vuestros propios m&eacute;todos si quer√©is (sin tocar el <i>constructor</i>
 ni el m&eacute;todo <i>main()</i>).</p>
 <p>Todo el sistema de comunicaci&oacute;n cliente / servidor est&aacute;
 hecho en el motor ejemplo, o en el ejercicio que se hizo en el tema anterior.
 Ahora simplemente hay que hacer que <i>AplicChat </i>haga lo mismo que el <i>EjemploChat</i>
 del ejemplo proporcionado.<p><b>a) </b>Primero vamos a colocar los controles en
-la aplicaciÛn:
+la aplicaci√≥n:
 <ul>
-  <li>Podemos cambiar el <i>GridLayout</i> donde est·n colocados los controles
+  <li>Podemos cambiar el <i>GridLayout</i> donde est√°n colocados los controles
     de la IP, y hacer que sea de 3 filas,&nbsp; para que la segunda tenga el
-    login y el botÛn de registrar (o validar) y la tercera el password y el
-    botÛn de validar (o registrar):</li>
+    login y el bot√≥n de registrar (o validar) y la tercera el password y el
+    bot√≥n de validar (o registrar):</li>
 </ul>
 <blockquote>
   <pre class="codigo">panelSup.setLayout(new GridLayout(3, 3));</pre>
-  <p>Para colocar&nbsp; las dos filas que faltan, basta con replicar el cÛdigo
-  para la lÌnea de conexiÛn que hay (cambiando los nombres de las variables a
-  los que nos interese), y definir el evento correspondiente para cada botÛn:
+  <p>Para colocar&nbsp; las dos filas que faltan, basta con replicar el c√≥digo
+  para la l√≠nea de conexi√≥n que hay (cambiando los nombres de las variables a
+  los que nos interese), y definir el evento correspondiente para cada bot√≥n:
   <pre class="codigo">Label lblIP = new Label (&quot;IP Servidor:&quot;);
 txtIP = new TextField();
 panelSup.add(lblIP);
@@ -169,12 +169,12 @@ btnConectar.addActionListener(new ActionListener()
 panelSup.add(btnConectar);</pre>
 </blockquote>
 <ul>
-  <li>DespuÈs colocamos un <i>TextArea </i>en la zona central, donde se mostrar·n los datos
+  <li>Despu√©s colocamos un <i>TextArea </i>en la zona central, donde se mostrar√°n los datos
 que se reciban del servidor. Para
 construirlo podemos utilizar un constructor por defecto, pero en este caso
-cuando el texto crezca m·s que el cuadro no lo podremos ver. Hay que aÒadirle
+cuando el texto crezca m√°s que el cuadro no lo podremos ver. Hay que a√±adirle
 barras de desplazamiento, y para eso se utiliza un constructor con 4
-par·metros:
+par√°metros:
 <p align="center"><i>TextArea(String texto, int filas, int columnas, int barras)</i></p>
 <p>donde <i>barras</i> puede ser, la constante <i>TextArea.SCROLLBARS_BOTH</i>,
 que indica que se ponga tanto la barra horizontal como la vertical:</p>
@@ -188,8 +188,8 @@ add(txtBuffer, BorderLayout.CENTER);</pre>
 <ul>
   <li>Finalmente podemos crear un <i>GridLayout</i> para la zona Sur (de forma
     parecida al que se ha hecho para la parte superior), de 2 filas y 1 columna,
-    y aÒadirle en una celda el cuadro de texto (<i>TextField</i>) para enviar
-    mensajes, y en otra el botÛn para enviar.</li>
+    y a√±adirle en una celda el cuadro de texto (<i>TextField</i>) para enviar
+    mensajes, y en otra el bot√≥n para enviar.</li>
 </ul>
 <blockquote>
   <pre class="codigo">Panel panelInf = new Panel();
@@ -211,13 +211,13 @@ panelInf.add(btnEnviar);
 add(panelInf, BorderLayout.SOUTH);		</pre>
 </blockquote>
 <p><b>b)</b>  Una vez tenemos todos los controles colocados (compilad y ejecutad
-para ver que se colocan como querÌais), aÒadimos los eventos sobre los
+para ver que se colocan como quer√≠ais), a√±adimos los eventos sobre los
 botones:
 <ul>
   <li>Que al REGISTRAR un nuevo usuario se compruebe si los datos no son
-    correctos (utilizando los mÈtodos del motor de chat construido previamente,
+    correctos (utilizando los m√©todos del motor de chat construido previamente,
     y capturando las excepciones adecuadas), y muestre en el cuadro de texto
-    central un mensaje de error si no son datos v·lidos.</li>
+    central un mensaje de error si no son datos v√°lidos.</li>
 </ul>
 <blockquote>
   <pre class="codigo">try {
@@ -229,10 +229,10 @@ botones:
 </blockquote>
 <ul>
   <li>Que al VALIDAR un usuario existente compruebe si los datos son correctos
-    (utilizando los mÈtodos de validaciÛn del motor de chat construido, y
+    (utilizando los m√©todos de validaci√≥n del motor de chat construido, y
     capturando las excepciones adecuadas), y muestre en el cuadro de texto central
-    un mensaje de error si no son datos v·lidos. Al validar correctamente, se
-    deben empezar a tomar los datos del servidor periÛdicamente, actualizando
+    un mensaje de error si no son datos v√°lidos. Al validar correctamente, se
+    deben empezar a tomar los datos del servidor peri√≥dicamente, actualizando
     el cuadro de texto central con los mensajes que vayan llegando:
     <ul>
       <li>Se puede utilizar un hilo para tomar continuamente los datos. Para
@@ -250,9 +250,9 @@ implements Runnable
   <blockquote>
     <p>Le definimos un campo de tipo <i>Thread</i> (fuera del constructor):</p>
   <pre class="codigo">Thread t = new Thread(this);</pre>
-    <p>Finalmente, definimos el mÈtodo <i>run()</i> que se encargar· de ir
+    <p>Finalmente, definimos el m√©todo <i>run()</i> que se encargar√° de ir
     tomando continuamente los datos del servidor. Podemos hacer que los saque al
-    cuadro de texto central llamando al mÈtodo <i>append(...)</i> del mismo,
+    cuadro de texto central llamando al m√©todo <i>append(...)</i> del mismo,
     para no borrar el texto previo:</p>
   <pre class="codigo">public void run() 
 {		
@@ -262,7 +262,7 @@ implements Runnable
 	txtBuffer.append(msg + &quot;\n&quot;);
    }
 }</pre>
-    <p>En el evento del botÛn validar sÛlo habr· que iniciar el hilo si se
+    <p>En el evento del bot√≥n validar s√≥lo habr√° que iniciar el hilo si se
     valida correctamente:</p>
     <pre class="codigo">try {
    chat.loginUsuario(txtLogin.getText(), 
@@ -280,12 +280,12 @@ implements Runnable
 <blockquote>
   <pre class="codigo">chat.enviaMensaje(txtMensaje.getText());</pre>
 </blockquote>
-<p>Una vez estÈ todo colocado y compilado, a la hora de probarlo simplemente
-tenemos que ejecutar esta aplicaciÛn en lugar del <i>EjemploChat</i> o el
-programa ejemplo que estuviÈramos utilizando. El servidor no cambia.</p>
-<p><b>Para entregar:</b> DebÈis entregar un ZIP <i>e3_1.zip</i> con:</p>
+<p>Una vez est√© todo colocado y compilado, a la hora de probarlo simplemente
+tenemos que ejecutar esta aplicaci√≥n en lugar del <i>EjemploChat</i> o el
+programa ejemplo que estuvi√©ramos utilizando. El servidor no cambia.</p>
+<p><b>Para entregar:</b> Deb√©is entregar un ZIP <i>e3_1.zip</i> con:</p>
 <ul>
-  <li>La aplicaciÛn de chat, aÒadiÈndole el fichero <i>AplicChat.java</i> 
+  <li>La aplicaci√≥n de chat, a√±adi√©ndole el fichero <i>AplicChat.java</i> 
     construido.</li>
 </ul>
 </body>
